@@ -1,6 +1,7 @@
 import { createPlaceholderDays } from '../utils.js';
-// FIXED: Added curly braces { } to match the named export from unit2-merchandising.js
 import { unit2Data } from './unit2-merchandising.js'; 
+// NEW: Import the Unit 1 data
+import { unit1Data } from './unit1-accounting-cycle.js';
 
 export const courseData = {
     outline: {
@@ -67,12 +68,7 @@ export const courseData = {
                         {
                             id: "u1w1",
                             title: "Week 1: Service Business Review",
-                            days: createPlaceholderDays([
-                                "The 10 Steps of Accounting Cycle",
-                                "Journalizing Transactions",
-                                "Posting & Trial Balance",
-                                "Adjusting Entries & Financial Statements"
-                            ])
+                            days: unit1Data.week1 // NEW: Using imported data instead of placeholders
                         }
                     ]
                 },
