@@ -1,5 +1,6 @@
 import { createPlaceholderDays } from '../utils.js';
-import unit2Data from './unit2-merchandising.js';
+// FIXED: Use curly braces for named import
+import { unit2Data } from './unit2-merchandising.js'; 
 
 export const courseData = {
     outline: {
@@ -82,7 +83,7 @@ export const courseData = {
                         { 
                             id: "u2w1", 
                             title: "Week 1: Intro to Merchandising", 
-                            days: unit2Data.week1 // IMPORTED SPECIFIC CONTENT
+                            days: unit2Data.week1 
                         },
                         {
                             id: "u2w2",
