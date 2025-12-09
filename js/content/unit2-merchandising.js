@@ -1,66 +1,49 @@
-// --- DATA HELPERS ---
+// Content for Unit 2: Merchandising Business
+// We use 'export const' to create a named export, which avoids the "default" error.
 
-export function createPlaceholderDays(topics) {
-    const days = topics.map((t, i) => ({
-        day: `Day ${i + 1}`,
-        topic: t,
-        content: `
-            <h3 class="text-xl font-bold mb-4">Topic Focus</h3>
-            <p class="mb-4 text-gray-600">Content for <strong>${t}</strong> goes here. Edit the source code to update the lesson materials.</p>
-            <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-                <p class="font-bold text-blue-900">Learning Goal</p>
-                <p class="text-blue-800">Define the specific learning objective for this day.</p>
-            </div>
-        `,
-        exercises: [
-            {
-                type: "mcq",
-                question: "Placeholder Question: Update this with a relevant question for the topic.",
-                options: ["Option A", "Option B", "Option C", "Option D"],
-                correctIndex: 0,
-                explanation: "Add explanation here."
-            }
-        ]
-    }));
-
-    // Add Day 5 Quiz standard
-    days.push({
-        day: "Day 5",
-        topic: "Recorded Summary Quiz",
-        content: `
-            <h3 class="text-xl font-bold mb-4">Assessment Activity</h3>
-            <div class="space-y-4 text-gray-700">
-                <p><strong>Format:</strong> Short recorded quiz (video or audio submission).</p>
-                <p><strong>Content Coverage:</strong></p>
-                <ul class="list-disc pl-5">
-                    <li>Review of concepts covered in Days 1-4</li>
-                    <li>Practical application exercises</li>
-                    <li>Oral explanation of key terms</li>
+export const unit2Data = {
+    week1: [
+        {
+            day: "Day 1",
+            topic: "Foundations of Merchandising",
+            content: `
+                <h3 class="text-xl font-bold mb-4">Topic Focus</h3>
+                <ul class="list-disc pl-5 space-y-2 mb-6">
+                    <li><strong>Definition:</strong> Merchandising businesses buy and sell goods without changing their form.</li>
+                    <li><strong>Comparison:</strong> Service (sells time/skills) vs. Merchandising (sells tangible goods).</li>
+                    <li><strong>Inventory:</strong> The lifeblood of merchandising; the primary asset for generating revenue.</li>
+                    <li><strong>Flow:</strong> Purchase &rarr; Storage &rarr; Sale</li>
                 </ul>
-            </div>
-            <div class="mt-6 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-                <p class="font-bold text-blue-900">Purpose</p>
-                <p class="text-blue-800">Reinforce weekly learning, check comprehension, and encourage students to articulate concepts clearly.</p>
-            </div>
-        `,
-        exercises: []
-    });
-
-    return days;
-}
-
-// --- CALENDAR HELPERS ---
-
-export function formatRange(start, end) {
-    const options = { month: 'short', day: 'numeric', year: 'numeric' };
-    const startStr = start.toLocaleDateString('default', options);
-    
-    if (start.getTime() === end.getTime()) {
-        return startStr;
-    } else {
-        if (start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()) {
-            return `${start.toLocaleDateString('default', { month: 'short', day: 'numeric' })} - ${end.getDate()}, ${end.getFullYear()}`;
+                <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                    <p class="font-bold text-blue-900">Learning Goal</p>
+                    <p class="text-blue-800">Students understand why inventory systems are critical in merchandising operations.</p>
+                </div>
+            `,
+            exercises: [{ type: "mcq", question: "Primary source of revenue?", options: ["Service Fees", "Sales", "Interest", "Rent"], correctIndex: 1, explanation: "Merchandising = Sales of goods." }]
+        },
+        {
+            day: "Day 2",
+            topic: "The Periodic Inventory System",
+            content: `<h3 class="text-xl font-bold mb-4">Topic Focus</h3><p>Mechanisms of periodic updates and physical counts.</p>`,
+            exercises: [{ type: "mcq", question: "COGS is determined when?", options: ["Daily", "End of Period", "Never", "Hourly"], correctIndex: 1, explanation: "Periodic system updates at period end." }]
+        },
+        {
+            day: "Day 3",
+            topic: "The Perpetual Inventory System",
+            content: `<h3 class="text-xl font-bold mb-4">Topic Focus</h3><p>Continuous updates and real-time tracking.</p>`,
+            exercises: [{ type: "mcq", question: "Records COGS at time of sale?", options: ["Periodic", "Perpetual", "Both", "Neither"], correctIndex: 1, explanation: "Perpetual tracks cost immediately." }]
+        },
+        {
+            day: "Day 4",
+            topic: "Comparison & Applications",
+            content: `<h3 class="text-xl font-bold mb-4">Topic Focus</h3><p>Choosing the right system for business size/type.</p>`,
+            exercises: []
+        },
+        {
+            day: "Day 5",
+            topic: "Recorded Summary Quiz",
+            content: `<h3 class="text-xl font-bold mb-4">Assessment Activity</h3><p>Video/Audio submission.</p>`,
+            exercises: []
         }
-        return `${startStr} - ${end.toLocaleDateString('default', options)}`;
-    }
-}
+    ]
+};
