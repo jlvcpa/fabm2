@@ -35,26 +35,91 @@ export const courseData = {
             </div>
         `,
         full: `
-            <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-100 fade-in prose prose-blue max-w-none">
-                <h2 class="text-2xl font-bold text-slate-800 mb-4">Fundamentals of Accountancy, Business, and Management 2 (FABM 2)</h2>
-                <p><strong>Grade Level:</strong> 12 | <strong>Strand:</strong> ABM | <strong>Prerequisite:</strong> FABM 1</p>
-                
-                <hr class="my-6">
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-100 fade-in prose prose-blue max-w-none">
+    <h2 class="text-2xl font-bold text-slate-800 mb-4">
+        SUBJECT OUTLINE: Fundamentals of Accountancy, Business, and Management 2 (FABM 2)
+    </h2>
+    <p><strong>Grade Level:</strong> 12 | <strong>Strand:</strong> Accountancy, Business, and Management (ABM) | <strong>Prerequisite:</strong> Fundamentals of Accountancy, Business, and Management 1 (FABM 1)</p>
 
-                <h3 class="text-xl font-bold text-slate-700 mt-6 mb-3">I. Course Description</h3>
-                <p class="text-gray-600">The course deals with the preparation and analysis of financial statements of a merchandising business and practice of simple taxation. It introduces the nature of accounting for corporations, focusing on the basic structure of equity and shareholder transactions. It also covers the principles of taxation and the preparation of basic income tax returns for individuals and corporations.</p>
+    <hr class="my-6">
 
-                <h3 class="text-xl font-bold text-slate-700 mt-8 mb-3">II. Course Learning Objectives</h3>
-                <ul class="list-disc pl-5 text-gray-600 space-y-1">
-                    <li>Complete the accounting cycle for a service and merchandising business.</li>
-                    <li>Prepare and analyze the Statement of Comprehensive Income for a merchandising business.</li>
-                    <li>Understand the unique features of a Corporation and record basic equity transactions.</li>
-                    <li>Comprehend the principles of taxation and prepare basic Income Tax Returns (BIR Forms 1701 and 1702).</li>
-                </ul>
+    <!-- Course Description -->
+    <h3 class="text-xl font-bold text-slate-700 mt-6 mb-3">I. Course Description</h3>
+    <p class="text-gray-600">
+        The course deals with the preparation and analysis of financial statements of a merchandising business and practice of simple taxation. 
+        It introduces the nature of accounting for corporations, focusing on the basic structure of equity and shareholder transactions. 
+        It also covers the principles of taxation and the preparation of basic income tax returns for individuals and corporations.
+    </p>
 
-                <h3 class="text-xl font-bold text-slate-700 mt-8 mb-3">III. Detailed Learning Plan</h3>
-                <p class="italic text-gray-500">Refer to the weekly modules in the sidebar for daily breakdown.</p>
-            </div>
+    <!-- Learning Objectives -->
+    <h3 class="text-xl font-bold text-slate-700 mt-8 mb-3">II. Course Learning Objectives</h3>
+    <p class="text-gray-600">By the end of this course, learners will be able to:</p>
+    <ul class="list-disc pl-5 text-gray-600 space-y-1">
+        <li>Complete the accounting cycle for a service and merchandising business.</li>
+        <li>Prepare and analyze the Statement of Comprehensive Income for a merchandising business.</li>
+        <li>Understand the unique features of a Corporation and record basic equity transactions.</li>
+        <li>Comprehend the principles of taxation and prepare basic Income Tax Returns (BIR Forms 1701 and 1702).</li>
+    </ul>
+
+    <!-- Detailed Learning Plan -->
+    <h3 class="text-xl font-bold text-slate-700 mt-8 mb-3">III. Detailed Learning Plan</h3>
+
+    <!-- Unit 1 -->
+    <h4 class="text-lg font-semibold text-slate-600 mt-6">UNIT 1: Review of the Accounting Cycle (Service Business)</h4>
+    <p class="text-gray-600"><strong>Duration:</strong> 1 Week (Preliminaries)</p>
+    <p class="text-gray-600"><strong>Objective:</strong> Reinforce the fundamental skills acquired in FABM 1 to ensure readiness for complex merchandising transactions.</p>
+    <p class="text-gray-600"><strong>Content:</strong> Review of the 10 Steps of the Accounting Cycle, Analysis of business transactions, Journalizing, Posting, Trial Balance, Adjusting Entries, Financial Statements, Closing Entries.</p>
+    <p class="text-gray-600"><strong>Key Activity:</strong> Diagnostic Simulation: Completing the full 10-step manual accounting cycle for a service provider case study.</p>
+
+    <!-- Unit 2 -->
+    <h4 class="text-lg font-semibold text-slate-600 mt-6">UNIT 2: Accounting for Merchandising Business</h4>
+    <p class="text-gray-600"><strong>Duration:</strong> 7 Weeks | <strong>Focus:</strong> Inventory Systems, COGS, and Financial Reporting.</p>
+    <ul class="list-disc pl-5 text-gray-600 space-y-2">
+        <li><strong>Week 1:</strong> Introduction to Merchandising & Inventory Systems – Service vs. Merchandising models, Merchandise Inventory, Perpetual vs. Periodic Systems.</li>
+        <li><strong>Week 2:</strong> Purchases and Related Accounts – Recording purchases, discounts, returns, freight-in.</li>
+        <li><strong>Week 3:</strong> Sales Transactions – Recording sales, discounts, returns, Net vs. Gross Sales.</li>
+        <li><strong>Week 4:</strong> Cost of Goods Sold (COGS) – Formula, adjustments, Gross Profit.</li>
+        <li><strong>Week 5:</strong> Operating Expenses – Selling vs. Administrative, Freight-out, Product vs. Period Costs.</li>
+        <li><strong>Week 6:</strong> Income Statement – Multi-step format, comparison with service business.</li>
+        <li><strong>Week 7:</strong> Unit Performance Task – Merchandising Cycle Simulation (Transactions → Financial Statements).</li>
+    </ul>
+
+    <!-- Unit 3 -->
+    <h4 class="text-lg font-semibold text-slate-600 mt-6">UNIT 3: Corporation Accounting</h4>
+    <p class="text-gray-600"><strong>Duration:</strong> 4 Weeks | <strong>Focus:</strong> Corporate Structure, Equity, and Formation.</p>
+    <ul class="list-disc pl-5 text-gray-600 space-y-2">
+        <li><strong>Week 8:</strong> Corporation Basics – Nature, characteristics, Shareholders’ Equity, issuance of shares.</li>
+        <li><strong>Week 9:</strong> Dividends & Retained Earnings – Cash vs. Stock Dividends, crucial dates, restricted vs. unrestricted earnings. <em>Assessment: Quiz on Share Issuance and Dividends.</em></li>
+        <li><strong>Week 10:</strong> Formation & Legal Requirements – SEC steps, Articles of Incorporation, capitalization terms.</li>
+        <li><strong>Week 11:</strong> Early Operations – Initial contributions, corporate books, Statement of Changes in Equity. <em>Assessment: Case-based quiz.</em></li>
+    </ul>
+
+    <!-- Unit 4 -->
+    <h4 class="text-lg font-semibold text-slate-600 mt-6">UNIT 4: Income Taxation</h4>
+    <p class="text-gray-600"><strong>Duration:</strong> 3 Weeks | <strong>Focus:</strong> Principles, Computation, and Filing.</p>
+    <ul class="list-disc pl-5 text-gray-600 space-y-2">
+        <li><strong>Week 12:</strong> Foundations of Taxation – Purpose, principles, classification, taxpayers.</li>
+        <li><strong>Week 13:</strong> Computation & Compliance – Gross Income, deductions, individual & corporate tax computation, compliance deadlines. <em>Assessment: Quiz.</em></li>
+        <li><strong>Week 14:</strong> Preparing Tax Returns – Walkthrough of BIR Forms 1701 & 1702, simulation activity.</li>
+    </ul>
+
+    <!-- Grading System -->
+    <h3 class="text-xl font-bold text-slate-700 mt-8 mb-3">IV. Grading System</h3>
+    <ul class="list-disc pl-5 text-gray-600 space-y-1">
+        <li>Written Work: 30% (Quizzes, Summative Tests)</li>
+        <li>Performance Tasks: 50% (Simulations, Tax Forms, Accounting Cycle Sets)</li>
+        <li>Term Exams: 20% (Midterm and Final)</li>
+    </ul>
+
+    <!-- References -->
+    <h3 class="text-xl font-bold text-slate-700 mt-8 mb-3">V. References</h3>
+    <ul class="list-disc pl-5 text-gray-600 space-y-1">
+        <li>Basic Accounting by Win Ballada</li>
+        <li>Fundamentals of Accountancy, Business, and Management 2 by Beticon, et al.</li>
+        <li>Bureau of Internal Revenue (BIR) Regulations and Tax Code</li>
+        <li>International Financial Reporting Standards (IFRS) / PFRS</li>
+    </ul>
+</div>
         `
     },
     terms: [
