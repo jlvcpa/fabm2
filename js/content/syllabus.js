@@ -1,5 +1,5 @@
 import { createPlaceholderDays } from '../utils.js';
-// FIXED: Use curly braces for named import
+// FIXED: Added curly braces { } to match the named export from unit2-merchandising.js
 import { unit2Data } from './unit2-merchandising.js'; 
 
 export const courseData = {
