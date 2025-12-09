@@ -1,5 +1,5 @@
 // Content for Unit 2: Merchandising Business
-// We use 'export const' to create a named export, which avoids the "default" error.
+// FIXED: We use 'export const' to create a named export.
 
 export const unit2Data = {
     week1: [
