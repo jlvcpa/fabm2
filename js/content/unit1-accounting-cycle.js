@@ -414,8 +414,7 @@ export const unit1Data = {
                     <section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                         <h3 class="text-2xl font-bold text-slate-800 mb-4 border-b pb-2">Step 5: Adjustments & Worksheet</h3>
                         <!-- Expanded 5-Sentence Paragraph -->
-<div class="mb-6 mt-12 border-t pt-8">
-    <h4 class="font-bold text-slate-700 mb-2">Step 5: Adjusting Entries</h4>
+    <h4 class="font-bold text-slate-700 mb-2">Adjusting Entries</h4>
     <p class="mb-4 text-gray-600">Adhering to the <strong>Accrual Basis</strong>. Adjustments update accounts for time passage (Deferrals) or unrecorded activities (Accruals) to meet the Matching Principle.</p>
 
     <!-- 1. DEFERRED EXPENSES -->
@@ -713,7 +712,6 @@ export const unit1Data = {
             </g>
         </svg>
     </div>
-</div>
 
 <!-- Step 6: Worksheet Section -->
 <div class="mb-6 mt-12 border-t pt-8">
