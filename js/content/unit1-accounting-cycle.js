@@ -165,7 +165,7 @@ export const unit1Data = {
                                 <li>Credits are listed below debits and <strong>indented</strong> to the right.</li>
                                 <li>Each entry must include a clear <strong>date</strong> at the top.</li>
                                 <li>Provide a brief <strong>description</strong> or explanation under the entry.</li>
-                                <li>Amounts should be aligned in a single column for clarity.</li>
+                                <li>Ensure amounts are properly aligned under their respective Debit or Credit columns for clarity.</li>
                                 <li>Total debits must always equal total credits.</li>
                               </ul>
                             </div>
