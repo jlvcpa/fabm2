@@ -72,9 +72,7 @@ export const unit1Data = {
                       </g>
                     </svg>
                   </div>
-                </div>
-
-                        <div class="bg-blue-50 p-4 rounded-lg">
+                  <div class="bg-blue-50 p-4 rounded-lg">
   <h4 class="font-bold text-blue-800 text-sm uppercase mb-2">
     <i class="fas fa-list-ol mr-2"></i>Step-by-Step Guide
   </h4>
@@ -90,6 +88,9 @@ export const unit1Data = {
     <li><strong>Review for clarity:</strong> Ensure consistent account titles, correct column alignment, and readable notes for audit trail.</li>
   </ul>
 </div>
+                </div>
+
+                        
                     </section>
 
                     <!-- STEP 2 -->
