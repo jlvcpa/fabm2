@@ -1,4 +1,4 @@
-    // Content for Unit 1: Review of Accounting Cycle
+        // Content for Unit 1: Review of Accounting Cycle
 // Covers the 10 Steps for a Sole Proprietorship Service Business
 
 export const unit1Data = {
@@ -94,67 +94,67 @@ export const unit1Data = {
                         </p>
 
                        <div class="img-box" style="display: flex; justify-content: center; width: 100%; margin: 20px 0;">
-    <svg viewBox="0 0 500 230" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width: 600px;">
-        <!-- Background: Ledger Paper -->
-        <rect width="500" height="230" fill="#ffffff" stroke="#cbd5e0" stroke-width="1" />
-        <rect x="0" y="0" width="500" height="40" fill="#0038a8" /> <!-- Header Bar -->
+                            <svg viewBox="0 0 500 230" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width: 600px;">
+                                <!-- Background: Ledger Paper -->
+                                <rect width="500" height="230" fill="#ffffff" stroke="#cbd5e0" stroke-width="1" />
+                                <rect x="0" y="0" width="500" height="40" fill="#0038a8" /> <!-- Header Bar -->
         
-        <!-- Header Text -->
-        <text x="250" y="25" font-family="Arial, sans-serif" font-weight="bold" font-size="16" text-anchor="middle" fill="#ffffff">GENERAL JOURNAL</text>
-        <text x="480" y="25" font-family="Arial, sans-serif" font-weight="bold" font-size="10" text-anchor="end" fill="#bfdbfe">Page 1</text>
+                                <!-- Header Text -->
+                                    <text x="250" y="25" font-family="Arial, sans-serif" font-weight="bold" font-size="16" text-anchor="middle" fill="#ffffff">GENERAL JOURNAL</text>
+                                    <text x="480" y="25" font-family="Arial, sans-serif" font-weight="bold" font-size="10" text-anchor="end" fill="#bfdbfe">Page 1</text>
 
-        <!-- Column Headers -->
-        <g transform="translate(0, 40)">
-            <!-- Background strip for columns -->
-            <rect width="500" height="25" fill="#e2e8f0" stroke="#94a3b8" stroke-width="0.5"/>
+                                <!-- Column Headers -->
+                                    <g transform="translate(0, 40)">
+                                <!-- Background strip for columns -->
+                                    <rect width="500" height="25" fill="#e2e8f0" stroke="#94a3b8" stroke-width="0.5"/>
             
-            <!-- Vertical Dividers (Extended to y2=180 to cover 5 rows + header) -->
-            <line x1="60" y1="0" x2="60" y2="180" stroke="#94a3b8" stroke-width="0.5" /> <!-- Date end -->
-            <line x1="300" y1="0" x2="300" y2="180" stroke="#94a3b8" stroke-width="0.5" /> <!-- Title end -->
-            <line x1="340" y1="0" x2="340" y2="180" stroke="#94a3b8" stroke-width="0.5" /> <!-- PR end -->
-            <line x1="420" y1="0" x2="420" y2="180" stroke="#94a3b8" stroke-width="0.5" /> <!-- Debit end -->
+                                <!-- Vertical Dividers (Extended to y2=180 to cover 5 rows + header) -->
+                                     <line x1="60" y1="0" x2="60" y2="180" stroke="#94a3b8" stroke-width="0.5" /> <!-- Date end -->
+                                    <line x1="300" y1="0" x2="300" y2="180" stroke="#94a3b8" stroke-width="0.5" /> <!-- Title end -->
+                                    <line x1="340" y1="0" x2="340" y2="180" stroke="#94a3b8" stroke-width="0.5" /> <!-- PR end -->
+                                    <line x1="420" y1="0" x2="420" y2="180" stroke="#94a3b8" stroke-width="0.5" /> <!-- Debit end -->
             
-            <!-- Labels -->
-            <text x="30" y="17" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#334155">DATE</text>
-            <text x="180" y="17" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#334155">ACCOUNT TITLE & EXPLANATION</text>
-            <text x="320" y="17" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#334155">PR</text>
-            <text x="380" y="17" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#334155">DEBIT</text>
-            <text x="460" y="17" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#334155">CREDIT</text>
-        </g>
+                                <!-- Labels -->
+                                    <text x="30" y="17" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#334155">DATE</text>
+                                    <text x="180" y="17" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#334155">ACCOUNT TITLE & EXPLANATION</text>
+                                    <text x="320" y="17" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#334155">PR</text>
+                                    <text x="380" y="17" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#334155">DEBIT</text>
+                                    <text x="460" y="17" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#334155">CREDIT</text>
+                                    </g>
 
-        <!-- Journal Entry Rows -->
-        <g transform="translate(0, 65)" font-family="Courier New, monospace" font-size="12" fill="#1e293b">
-            <!-- Row 1: Year Only -->
-            <text x="30" y="20" text-anchor="middle" font-weight="bold" font-size="11">2023</text>
+                            <!-- Journal Entry Rows -->
+                                 <g transform="translate(0, 65)" font-family="Courier New, monospace" font-size="12" fill="#1e293b">
+                            <!-- Row 1: Year Only -->
+                                <text x="30" y="20" text-anchor="middle" font-weight="bold" font-size="11">2023</text>
 
-            <!-- Row 2: Date and Debit Entry -->
-            <text x="30" y="50" text-anchor="middle" font-weight="bold">Dec 1</text>
-            <text x="70" y="50" font-weight="bold">Cash</text>
-            <text x="410" y="50" text-anchor="end">₱ 100,000</text>
+                            <!-- Row 2: Date and Debit Entry -->
+                                <text x="30" y="50" text-anchor="middle" font-weight="bold">Dec 1</text>
+                                <text x="70" y="50" font-weight="bold">Cash</text>
+                                <text x="410" y="50" text-anchor="end">₱ 100,000</text>
             
-            <!-- Row 3: Credit Entry (Indented) -->
-            <text x="90" y="80" font-weight="bold">Juan, Capital</text> 
-            <text x="490" y="80" text-anchor="end">₱ 100,000</text>
+                            <!-- Row 3: Credit Entry (Indented) -->
+                                <text x="90" y="80" font-weight="bold">Juan, Capital</text> 
+                                <text x="490" y="80" text-anchor="end">₱ 100,000</text>
             
-            <!-- Row 4: Explanation (Indented 3 spaces more than Credit) -->
-            <text x="115" y="110" font-style="italic" fill="#64748b" font-family="Arial, sans-serif" font-size="10">(To record initial investment)</text>
+                            <!-- Row 4: Explanation (Indented 3 spaces more than Credit) -->
+                                <text x="115" y="110" font-style="italic" fill="#64748b" font-family="Arial, sans-serif" font-size="10">(To record initial investment)</text>
             
-            <!-- Row 5: Empty Row (just lines) -->
-        </g>
+                            <!-- Row 5: Empty Row (just lines) -->
+                                </g>
 
-        <!-- Horizontal Lines (Notebook style) -->
-        <g stroke="#cbd5e0" stroke-width="0.5" stroke-dasharray="2,2" transform="translate(0, 65)">
-            <line x1="0" y1="30" x2="500" y2="30" />  <!-- End of Row 1 (Year) -->
-            <line x1="0" y1="60" x2="500" y2="60" />  <!-- End of Row 2 (Debit) -->
-            <line x1="0" y1="90" x2="500" y2="90" />  <!-- End of Row 3 (Credit) -->
-            <line x1="0" y1="120" x2="500" y2="120" /> <!-- End of Row 4 (Explanation) -->
-            <line x1="0" y1="150" x2="500" y2="150" /> <!-- End of Row 5 (Empty) -->
-        </g>
+                            <!-- Horizontal Lines (Notebook style) -->
+                                <g stroke="#cbd5e0" stroke-width="0.5" stroke-dasharray="2,2" transform="translate(0, 65)">
+                                <line x1="0" y1="30" x2="500" y2="30" />  <!-- End of Row 1 (Year) -->
+                                <line x1="0" y1="60" x2="500" y2="60" />  <!-- End of Row 2 (Debit) -->
+                                <line x1="0" y1="90" x2="500" y2="90" />  <!-- End of Row 3 (Credit) -->
+                                <line x1="0" y1="120" x2="500" y2="120" /> <!-- End of Row 4 (Explanation) -->
+                                <line x1="0" y1="150" x2="500" y2="150" /> <!-- End of Row 5 (Empty) -->
+                                </g>
         
-        <!-- Bottom Border Accent (Visual closure) -->
-        <rect x="0" y="225" width="500" height="5" fill="#f1f5f9" />
-    </svg>
-</div>
+                            <!-- Bottom Border Accent (Visual closure) -->
+                                <rect x="0" y="225" width="500" height="5" fill="#f1f5f9" />
+                            </svg>
+                        </div>
 
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
