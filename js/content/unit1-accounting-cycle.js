@@ -74,7 +74,7 @@ export const unit1Data = {
                   </div>
                 </div>
 
-                        .<div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="bg-blue-50 p-4 rounded-lg">
   <h4 class="font-bold text-blue-800 text-sm uppercase mb-2">
     <i class="fas fa-list-ol mr-2"></i>Step-by-Step Guide
   </h4>
