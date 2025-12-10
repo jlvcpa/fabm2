@@ -72,17 +72,16 @@ export const unit1Data = {
                       </g>
                     </svg>
                   </div>
-                  <div class="bg-yellow-50 p-3 rounded border border-yellow-200">
-  <span class="font-bold text-yellow-800 block mb-1">Formatting Rules</span>
-  <ul class="list-disc list-inside text-sm text-yellow-900 space-y-1">
-    <li>Debits are listed first, left aligned.</li>
-    <li>Credits are listed below debits and <strong>indented</strong> to the right.</li>
-    <li>Each entry must include a clear <strong>date</strong> at the top.</li>
-    <li>Provide a brief <strong>description</strong> or explanation under the entry.</li>
-    <li>Amounts should be aligned in a single column for clarity.</li>
-    <li>Total debits must always equal total credits.</li>
-  </ul>
-</div>
+                  <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-bold text-blue-800 text-sm uppercase mb-2"><i class="fas fa-list-ol mr-2"></i>Step-by-Step Guide</h4>
+                            <ul class="space-y-1 text-sm text-blue-900 list-disc list-inside">
+                                <li><strong>Gather Source Documents:</strong> Collect receipts, invoices, checks.</li>
+                                <li><strong>Identify Accounts:</strong> Ask "What did we get? What did we give up?"</li>
+                                <li><strong>Classify Accounts:</strong> Asset, Liability, Equity, Revenue, or Expense?</li>
+                                <li><strong>Determine Direction:</strong> Increase or Decrease?</li>
+                                <li><strong>Apply Rules:</strong> Use Normal Balance rules (e.g., Asset Increase = Debit).</li>
+                            </ul>
+                        </div>
 
                 </div>
 
