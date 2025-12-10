@@ -190,20 +190,57 @@ export const unit1Data = {
         Posting is the official process of transferring transaction data from the General Journal to the individual accounts in the General Ledger. While the journal records financial events chronologically as they happen, the ledger reorganizes this information topically to track the history of specific items. This step is essential because it updates the running balances of accounts like Cash, Accounts Receivable, and Accounts Payable. The General Ledger is often referred to as the "Book of Final Entry" because it serves as the final destination for transaction details before financial statements are prepared. Ultimately, accurate posting provides the summarized data needed to prove the equality of debits and credits in the trial balance.
     </p>
 
-    <!-- Visual Representation of Posting Process (Standard Form Ledger) -->
+    <!-- Visual Representation of Posting Process (Journal to Standard Ledger) -->
     <div class="img-box" style="display: flex; justify-content: center; width: 100%; margin: 20px 0;">
-        <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width: 700px;">
+        <svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width: 700px;">
             <!-- Background -->
-            <rect width="700" height="300" fill="#f8fafc" rx="8" />
+            <rect width="700" height="380" fill="#f8fafc" rx="8" />
 
-            <!-- ARROW INDICATING FLOW -->
+            <!-- ================= SOURCE: GENERAL JOURNAL (Top) ================= -->
             <g transform="translate(50, 20)">
-                 <text x="0" y="10" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#64748b">FROM JOURNAL...</text>
-                 <path d="M100,5 L200,5" stroke="#cbd5e0" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#arrowhead)"/>
+                <!-- Journal Paper -->
+                <rect x="0" y="0" width="600" height="90" fill="#ffffff" stroke="#cbd5e0" stroke-width="1" />
+                <rect x="0" y="0" width="600" height="25" fill="#1e293b" /> <!-- Header Bar -->
+                <text x="300" y="17" font-family="Arial, sans-serif" font-weight="bold" font-size="12" text-anchor="middle" fill="#ffffff">GENERAL JOURNAL (Page 1)</text>
+                
+                <!-- Column Headers -->
+                <g transform="translate(0, 25)">
+                    <rect width="600" height="20" fill="#e2e8f0" stroke="#94a3b8" stroke-width="0.5"/>
+                    <text x="30" y="14" font-size="9" font-weight="bold" fill="#475569">DATE</text>
+                    <text x="150" y="14" font-size="9" font-weight="bold" fill="#475569">ACCOUNT TITLE</text>
+                    <text x="350" y="14" font-size="9" font-weight="bold" fill="#475569">PR</text>
+                    <text x="420" y="14" font-size="9" font-weight="bold" fill="#475569">DEBIT</text>
+                    <text x="520" y="14" font-size="9" font-weight="bold" fill="#475569">CREDIT</text>
+                    
+                    <!-- Vertical Lines -->
+                    <line x1="60" y1="0" x2="60" y2="65" stroke="#cbd5e0" stroke-width="1"/>
+                    <line x1="330" y1="0" x2="330" y2="65" stroke="#cbd5e0" stroke-width="1"/>
+                    <line x1="370" y1="0" x2="370" y2="65" stroke="#cbd5e0" stroke-width="1"/>
+                    <line x1="470" y1="0" x2="470" y2="65" stroke="#cbd5e0" stroke-width="1"/>
+                </g>
+
+                <!-- Journal Entry Row -->
+                <g transform="translate(0, 60)" font-family="Courier New, monospace" font-size="11" fill="#334155">
+                    <text x="30" y="0">Dec 1</text>
+                    <text x="70" y="0" font-weight="bold">Cash</text>
+                    <!-- Highlighted PR field in Journal -->
+                    <rect x="335" y="-10" width="30" height="15" fill="#fef08a" opacity="0.5" rx="2"/> 
+                    <text x="350" y="0" text-anchor="middle" fill="#ce1126">101</text> <!-- Posted Ref -->
+                    
+                    <!-- Highlighted Amount in Journal -->
+                    <rect x="380" y="-10" width="80" height="15" fill="#bfdbfe" opacity="0.5" rx="2"/>
+                    <text x="460" y="0" text-anchor="end" font-weight="bold">100,000</text>
+                </g>
             </g>
 
-            <!-- LEDGER ACCOUNT (Standard Form) -->
-            <g transform="translate(10, 40)">
+            <!-- ================= PROCESS: ARROW ================= -->
+            <!-- Connecting Arrow from Journal Debit to Ledger Debit -->
+            <path d="M490, 80 Q520, 140 400, 240" fill="none" stroke="#0038a8" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowhead)"/>
+            <circle cx="490" cy="80" r="4" fill="#0038a8" />
+            <text x="530" y="150" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#0038a8" font-style="italic">Posting...</text>
+
+            <!-- ================= DESTINATION: GENERAL LEDGER (Standard Form) ================= -->
+            <g transform="translate(10, 160)">
                 <!-- Main Container -->
                 <rect x="0" y="0" width="680" height="200" fill="#ffffff" stroke="#cbd5e0" stroke-width="1" />
                 
@@ -222,33 +259,34 @@ export const unit1Data = {
                 <!-- Header Row Background -->
                 <rect x="0" y="60" width="680" height="25" fill="#e2e8f0" stroke="#94a3b8" stroke-width="0.5"/>
 
-                <!-- ============ DEBIT SIDE (LEFT) ============ -->
-                <!-- Column Dividers -->
+                <!-- ============ DEBIT SIDE (LEFT - 4 Columns) ============ -->
                 <line x1="60" y1="60" x2="60" y2="200" stroke="#cbd5e0" stroke-width="1" /> <!-- Date -->
                 <line x1="230" y1="60" x2="230" y2="200" stroke="#cbd5e0" stroke-width="1" /> <!-- Particulars -->
                 <line x1="270" y1="60" x2="270" y2="200" stroke="#cbd5e0" stroke-width="1" /> <!-- PR -->
                 
-                <!-- Labels -->
                 <text x="30" y="76" font-family="Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="#475569">DATE</text>
                 <text x="145" y="76" font-family="Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="#475569">PARTICULARS</text>
                 <text x="250" y="76" font-family="Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="#475569">PR</text>
                 <text x="305" y="76" font-family="Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="#475569">DEBIT</text>
 
-                <!-- Sample Entry (Debit) -->
+                <!-- Posted Entry (Debit) -->
                 <g transform="translate(0, 95)" font-family="Courier New, monospace" font-size="11" fill="#334155">
                     <text x="30" y="0" text-anchor="middle">Dec 1</text>
                     <text x="70" y="0">Investment</text>
+                    <!-- Highlighted PR field in Ledger -->
+                    <rect x="235" y="-10" width="30" height="15" fill="#fef08a" opacity="0.5" rx="2"/>
                     <text x="250" y="0" text-anchor="middle">J-1</text>
+                    
+                    <!-- Highlighted Amount in Ledger -->
+                    <rect x="275" y="-10" width="60" height="15" fill="#bfdbfe" opacity="0.5" rx="2"/>
                     <text x="330" y="0" text-anchor="end" font-weight="bold" fill="#0038a8">100,000</text>
                 </g>
 
-                <!-- ============ CREDIT SIDE (RIGHT) ============ -->
-                <!-- Column Dividers -->
+                <!-- ============ CREDIT SIDE (RIGHT - 4 Columns) ============ -->
                 <line x1="400" y1="60" x2="400" y2="200" stroke="#cbd5e0" stroke-width="1" /> <!-- Date -->
                 <line x1="570" y1="60" x2="570" y2="200" stroke="#cbd5e0" stroke-width="1" /> <!-- Particulars -->
                 <line x1="610" y1="60" x2="610" y2="200" stroke="#cbd5e0" stroke-width="1" /> <!-- PR -->
 
-                <!-- Labels -->
                 <text x="370" y="76" font-family="Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="#475569">DATE</text>
                 <text x="485" y="76" font-family="Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="#475569">PARTICULARS</text>
                 <text x="590" y="76" font-family="Arial, sans-serif" font-size="9" font-weight="bold" text-anchor="middle" fill="#475569">PR</text>
@@ -261,13 +299,10 @@ export const unit1Data = {
                 <line x1="0" y1="160" x2="680" y2="160" stroke="#e2e8f0" stroke-width="1" />
             </g>
 
-            <!-- Bottom Note -->
-            <text x="350" y="260" font-family="Arial, sans-serif" font-size="10" font-style="italic" text-anchor="middle" fill="#64748b">"Standard Form" of the General Ledger Account</text>
-            
             <!-- Arrow Marker Definition -->
             <defs>
                 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#cbd5e0" />
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#0038a8" />
                 </marker>
             </defs>
         </svg>
