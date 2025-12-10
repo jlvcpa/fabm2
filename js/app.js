@@ -1,6 +1,6 @@
 import { loginUser } from './auth.js';
 import { courseData } from './content/syllabus.js';
-import { formatRange } from './utils.js';
+import { formatRanges } from './utils.js';
 
 // --- STATE MANAGEMENT ---
 let currentUser = null; 
@@ -36,6 +36,9 @@ function init() {
     setupEventListeners();
     setPhilippineTimeDefaults();
     generateFlatTopics();
+    
+    // Expose updateSchedule to window for HTML onchange attributes
+    window.updateSchedule = updateSchedule;
 }
 
 function setupEventListeners() {
@@ -509,9 +512,7 @@ function hideHoverMenu() {
     }, 200);
 }
 
-// --- CALENDAR LOGIC (Simplified for modularity) ---
-// Note: In a full refactor, this should also be its own module, 
-// but included here to keep file count reasonable for the response.
+// --- CALENDAR LOGIC (Full Implementation) ---
 
 function setPhilippineTimeDefaults() {
     const phDateStr = new Date().toLocaleString("en-US", {timeZone: "Asia/Manila"});
@@ -542,29 +543,184 @@ function generateFlatTopics() {
 function getDateForTopic(unitId, weekId, dayIndex) {
     const topicKey = `${unitId}|${weekId}|${dayIndex}`;
     const dates = [];
+    
+    // Find all matching dates
     for (const [date, assignedTopic] of Object.entries(calendarAssignments)) {
-        if (assignedTopic === topicKey) dates.push(date);
+        if (assignedTopic === topicKey) {
+            dates.push(date);
+        }
     }
+
     if (dates.length === 0) return null;
+
+    // Sort dates
     dates.sort();
-    return formatRangeDates(dates);
+
+    // Format into ranges using updated Util
+    return formatRanges(dates);
 }
 
-function formatRangeDates(dates) {
-    if (dates.length === 0) return "";
-    const dateObjs = dates.map(d => {
-        const [y, m, da] = d.split('-').map(Number);
-        return new Date(y, m - 1, da);
-    });
-    // Simplified range formatter for this view
-    return formatRange(dateObjs[0], dateObjs[dateObjs.length - 1]);
+function updateSchedule(dateStr, topicId) {
+    if (topicId === "") {
+        delete calendarAssignments[dateStr];
+    } else {
+        calendarAssignments[dateStr] = topicId;
+    }
+    localStorage.setItem('fabm2_calendar', JSON.stringify(calendarAssignments));
+    
+    const select = document.getElementById(`sel-${dateStr}`);
+    if (select) {
+        if (topicId) {
+            select.classList.add('border-purple-300', 'bg-purple-50', 'text-purple-900', 'font-medium');
+            select.classList.remove('text-gray-500');
+        } else {
+            select.classList.remove('border-purple-300', 'bg-purple-50', 'text-purple-900', 'font-medium');
+            select.classList.add('text-gray-500');
+        }
+    }
 }
 
 function renderCalendarPage() {
-    // Placeholder function for the Calendar Page render
-    // In a full implementation, move the calendar rendering logic here from the original HTML
-    elements.pageTitle().innerText = "Course Schedule";
-    elements.contentArea().innerHTML = '<div class="p-10 text-center">Calendar Module is active. (Logic moved to modular structure)</div>';
+    elements.pageTitle().innerText = "Course Schedule Settings";
+    const content = elements.contentArea();
+    content.innerHTML = '';
+
+    const container = document.createElement('div');
+    container.className = "max-w-4xl mx-auto pb-12 fade-in relative";
+
+    const infoBox = document.createElement('div');
+    infoBox.className = "mb-6 bg-purple-50 border border-purple-200 p-4 rounded-lg text-sm text-purple-800";
+    infoBox.innerHTML = "<i class='fas fa-info-circle mr-2'></i> Select Year and Month to view the calendar. Assign topics to dates to build your schedule (PH Time).";
+    container.appendChild(infoBox);
+
+    const controls = document.createElement('div');
+    controls.className = "flex flex-col md:flex-row gap-4 mb-6 calendar-controls bg-white p-4 rounded-lg border border-gray-200 shadow-sm";
+
+    const yearSelect = document.createElement('select');
+    yearSelect.className = "flex-1 border-gray-300 rounded-md shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 p-2 border";
+    const currentYear = new Date().getFullYear();
+    for(let y = 2024; y <= 2030; y++) {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.text = y;
+        if(y === currentCalendarYear) opt.selected = true;
+        yearSelect.appendChild(opt);
+    }
+    
+    const monthSelect = document.createElement('select');
+    monthSelect.className = "flex-1 border-gray-300 rounded-md shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 p-2 border";
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    months.forEach((m, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.text = m;
+        if(idx === currentCalendarMonth) opt.selected = true;
+        monthSelect.appendChild(opt);
+    });
+
+    const calendarContainer = document.createElement('div');
+    
+    // Event Listeners for controls
+    yearSelect.onchange = (e) => {
+        currentCalendarYear = parseInt(e.target.value);
+        renderMonthView(calendarContainer);
+    };
+    monthSelect.onchange = (e) => {
+        currentCalendarMonth = parseInt(e.target.value);
+        renderMonthView(calendarContainer);
+    };
+
+    controls.appendChild(yearSelect);
+    controls.appendChild(monthSelect);
+    container.appendChild(controls);
+
+    renderMonthView(calendarContainer); 
+    container.appendChild(calendarContainer);
+
+    content.appendChild(container);
+    
+    // Auto-scroll to today if present in current view
+    setTimeout(() => {
+        const todayRow = document.getElementById('today-row');
+        if (todayRow) {
+            todayRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            todayRow.classList.add('bg-purple-100'); // Highlight effect
+            setTimeout(() => todayRow.classList.remove('bg-purple-100'), 2000);
+        }
+    }, 100);
+}
+
+function renderMonthView(container) {
+    container.innerHTML = ''; 
+
+    const monthDiv = document.createElement('div');
+    monthDiv.className = "bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden fade-in";
+    
+    const monthName = new Date(currentCalendarYear, currentCalendarMonth).toLocaleString('default', { month: 'long' });
+    const monthHeader = document.createElement('div');
+    monthHeader.className = "bg-slate-800 text-white px-6 py-3 font-bold text-lg flex justify-between items-center";
+    monthHeader.innerHTML = `<span>${monthName} ${currentCalendarYear}</span> <span class="text-xs bg-slate-700 px-2 py-1 rounded">PH Time</span>`;
+    monthDiv.appendChild(monthHeader);
+
+    const daysInMonth = new Date(currentCalendarYear, currentCalendarMonth + 1, 0).getDate();
+    
+    // Get today's info for highlighting
+    const now = new Date();
+    const todayStr = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Manila"}));
+    const todayDay = todayStr.getDate();
+    const todayMonth = todayStr.getMonth();
+    const todayYear = todayStr.getFullYear();
+
+    if (daysInMonth > 0) {
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateObj = new Date(currentCalendarYear, currentCalendarMonth, d);
+            
+            const yyyy = currentCalendarYear;
+            const mm = String(currentCalendarMonth + 1).padStart(2, '0');
+            const dd = String(d).padStart(2, '0');
+            const dateStr = `${yyyy}-${mm}-${dd}`; 
+
+            const dayName = dateObj.toLocaleDateString('default', { weekday: 'short' });
+            const isWeekend = dayName === 'Sat' || dayName === 'Sun';
+            const currentAssignment = calendarAssignments[dateStr] || "";
+
+            // Check if it's today
+            const isToday = (d === todayDay && currentCalendarMonth === todayMonth && currentCalendarYear === todayYear);
+
+            const row = document.createElement('div');
+            if (isToday) row.id = "today-row";
+            
+            // Style adjustments for Today
+            const rowClass = `flex items-center border-b border-gray-100 last:border-0 p-3 hover:bg-gray-50 transition-colors duration-500 ${isWeekend ? 'bg-gray-50' : ''} ${isToday ? 'border-l-4 border-l-purple-500' : ''}`;
+            row.className = rowClass;
+            
+            const todayBadge = isToday ? '<span class="ml-2 text-xs bg-purple-600 text-white px-1.5 py-0.5 rounded font-bold">TODAY</span>' : '';
+
+            row.innerHTML = `
+                <div class="w-32 flex-shrink-0">
+                    <div class="font-bold text-slate-700 flex items-center">
+                        ${d} <span class="text-xs text-gray-400 font-normal uppercase ml-1">${dayName}</span>
+                        ${todayBadge}
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <select id="sel-${dateStr}" class="w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 p-2 border bg-white ${currentAssignment ? 'border-purple-300 bg-purple-50 text-purple-900 font-medium' : 'text-gray-500'}" onchange="updateSchedule('${dateStr}', this.value)">
+                        <option value="">-- No Class / Free Day --</option>
+                        ${generateOptionsHtml(currentAssignment)}
+                    </select>
+                </div>
+            `;
+            monthDiv.appendChild(row);
+        }
+    }
+    container.appendChild(monthDiv);
+}
+
+function generateOptionsHtml(selectedValue) {
+    return flatTopics.map(t => {
+        const isSelected = t.id === selectedValue ? 'selected' : '';
+        return `<option value="${t.id}" ${isSelected}>${t.label}: ${t.fullTitle}</option>`;
+    }).join('');
 }
 
 // Start the app
