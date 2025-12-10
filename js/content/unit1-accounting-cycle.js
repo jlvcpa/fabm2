@@ -1,4 +1,4 @@
-// Content for Unit 1: Review of Accounting Cycle
+    // Content for Unit 1: Review of Accounting Cycle
 // Covers the 10 Steps for a Sole Proprietorship Service Business
 
 export const unit1Data = {
@@ -19,60 +19,60 @@ export const unit1Data = {
                         <h3 class="text-2xl font-bold text-slate-800 mb-4 border-b pb-2">Step 1: Analyze Business Transactions</h3>
                         <p class="mb-4 text-gray-600">Financial accounting begins with identifying economic events. Only transactions measurable in monetary terms affecting financial position are recorded. This relies on <strong>source documents</strong> (invoices, receipts) as objective evidence.</p>
                         
-<div class="mb-6">
-  <h4 class="font-bold text-slate-700 mb-2">The Accounting Equation</h4>
-  <p class="text-sm text-gray-600 mb-2">
-    <strong>Assets = Liabilities + Equity</strong>. Every transaction must keep this in balance.
-  </p>
+                            <div class="mb-6">
+                              <h4 class="font-bold text-slate-700 mb-2">The Accounting Equation</h4>
+                                  <p class="text-sm text-gray-600 mb-2">
+                                    <strong>Assets = Liabilities + Equity</strong>. Every transaction must keep this in balance.
+                                  </p>
 
-  <!-- Accounting Equation Visual (Balance Scale) -->
-  <div class="img-box" 
-       style="width: 100%; max-width: 450px; margin: 10px auto; display: flex; justify-content: center;">
-    <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
-      <!-- Background -->
-      <rect width="400" height="220" fill="#f8fafc" rx="8" />
+                      <!-- Accounting Equation Visual (Balance Scale) -->
+                          <div class="img-box" 
+                               style="width: 100%; max-width: 450px; margin: 10px auto; display: flex; justify-content: center;">
+                                <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+                          <!-- Background -->
+                              <rect width="400" height="220" fill="#f8fafc" rx="8" />
 
-      <!-- SCALE STRUCTURE -->
-      <!-- Base -->
-      <path d="M170 190 L230 190 L200 140 Z" fill="#64748b" />
-      <rect x="140" y="190" width="120" height="10" rx="3" fill="#475569" />
-      <!-- Beam -->
-      <rect x="40" y="135" width="320" height="8" rx="4" fill="#94a3b8" />
-      <!-- Center Pivot Circle -->
-      <circle cx="200" cy="140" r="6" fill="#cbd5e0" />
+                      <!-- SCALE STRUCTURE -->
+                      <!-- Base -->
+                          <path d="M170 190 L230 190 L200 140 Z" fill="#64748b" />
+                          <rect x="140" y="190" width="120" height="10" rx="3" fill="#475569" />
+                      <!-- Beam -->
+                          <rect x="40" y="135" width="320" height="8" rx="4" fill="#94a3b8" />
+                      <!-- Center Pivot Circle -->
+                          <circle cx="200" cy="140" r="6" fill="#cbd5e0" />
 
-      <!-- LEFT SIDE: ASSETS (Blue) -->
-      <g transform="translate(60, 60)">
-        <line x1="50" y1="0" x2="50" y2="75" stroke="#cbd5e0" stroke-width="2" />
-        <rect x="0" y="25" width="100" height="80" rx="4" fill="#0038a8" />
-        <text x="50" y="65" font-family="Arial, sans-serif" font-weight="bold" font-size="14" text-anchor="middle" fill="#ffffff">ASSETS</text>
-        <text x="50" y="80" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#bfdbfe">Use of Funds</text>
-      </g>
+                      <!-- LEFT SIDE: ASSETS (Blue) -->
+                           <g transform="translate(60, 60)">
+                            <line x1="50" y1="0" x2="50" y2="75" stroke="#cbd5e0" stroke-width="2" />
+                            <rect x="0" y="25" width="100" height="80" rx="4" fill="#0038a8" />
+                            <text x="50" y="65" font-family="Arial, sans-serif" font-weight="bold" font-size="14" text-anchor="middle" fill="#ffffff">ASSETS</text>
+                            <text x="50" y="80" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#bfdbfe">Use of Funds</text>
+                          </g>
 
-      <!-- RIGHT SIDE: LIABILITIES & EQUITY -->
-      <g transform="translate(240, 60)">
-        <line x1="50" y1="0" x2="50" y2="75" stroke="#cbd5e0" stroke-width="2" />
-        <rect x="0" y="25" width="100" height="38" rx="2" fill="#ce1126" />
-        <text x="50" y="48" font-family="Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#ffffff">LIABILITIES</text>
-        <rect x="0" y="67" width="100" height="38" rx="2" fill="#fbbf24" />
-        <text x="50" y="90" font-family="Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#78350f">EQUITY</text>
+                      <!-- RIGHT SIDE: LIABILITIES & EQUITY -->
+                          <g transform="translate(240, 60)">
+                            <line x1="50" y1="0" x2="50" y2="75" stroke="#cbd5e0" stroke-width="2" />
+                            <rect x="0" y="25" width="100" height="38" rx="2" fill="#ce1126" />
+                            <text x="50" y="48" font-family="Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#ffffff">LIABILITIES</text>
+                            <rect x="0" y="67" width="100" height="38" rx="2" fill="#fbbf24" />
+                            <text x="50" y="90" font-family="Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#78350f">EQUITY</text>
 
-        <!-- Bracket Label -->
-        <text x="110" y="70" font-family="Arial, sans-serif" font-size="10" fill="#64748b" font-style="italic">
-          <tspan x="110" dy="0">Source</tspan>
-          <tspan x="110" dy="12">of Funds</tspan>
-        </text>
-        <path d="M105 30 L108 30 L108 100 L105 100" fill="none" stroke="#94a3b8" stroke-width="1"/>
-      </g>
+                        <!-- Bracket Label -->
+                            <text x="110" y="70" font-family="Arial, sans-serif" font-size="10" fill="#64748b" font-style="italic">
+                              <tspan x="110" dy="0">Source</tspan>
+                              <tspan x="110" dy="12">of Funds</tspan>
+                            </text>
+                            <path d="M105 30 L108 30 L108 100 L105 100" fill="none" stroke="#94a3b8" stroke-width="1"/>
+                          </g>
 
-      <!-- VISUAL EQUAL SIGN -->
-      <g transform="translate(200, 90)">
-        <circle cx="0" cy="0" r="18" fill="#ffffff" stroke="#cbd5e0" stroke-width="2"/>
-        <text x="0" y="6" font-family="Arial, sans-serif" font-weight="bold" font-size="22" text-anchor="middle" fill="#334155">=</text>
-      </g>
-    </svg>
-  </div>
-</div>
+                      <!-- VISUAL EQUAL SIGN -->
+                         <g transform="translate(200, 90)">
+                        <circle cx="0" cy="0" r="18" fill="#ffffff" stroke="#cbd5e0" stroke-width="2"/>
+                        <text x="0" y="6" font-family="Arial, sans-serif" font-weight="bold" font-size="22" text-anchor="middle" fill="#334155">=</text>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
 
                         <div class="bg-blue-50 p-4 rounded-lg">
                             <h4 class="font-bold text-blue-800 text-sm uppercase mb-2"><i class="fas fa-list-ol mr-2"></i>Step-by-Step Guide</h4>
@@ -105,9 +105,15 @@ export const unit1Data = {
                               </ul>
                             </div>
                             <div class="bg-yellow-50 p-3 rounded border border-yellow-200">
-                                <span class="font-bold text-yellow-800 block mb-1">Compound Entry</span>
-                                <span class="text-sm text-yellow-900">An entry affecting 3+ accounts (e.g., 1 Debit, 2 Credits).</span>
-                            </div>
+  <span class="font-bold text-yellow-800 block mb-1">Compound Entry</span>
+  <ul class="list-disc list-inside text-sm text-yellow-900 space-y-1">
+    <li>Affects three or more accounts in one transaction.</li>
+    <li>May include multiple debits and/or multiple credits.</li>
+    <li>Total debits must equal total credits for balance.</li>
+    <li>Used to record complex transactions (e.g., payroll, asset purchase with financing).</li>
+    <li>Provides a single, organized record instead of separate simple entries.</li>
+  </ul>
+</div>
                         </div>
                     </section>
 
