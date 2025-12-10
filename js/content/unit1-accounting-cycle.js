@@ -105,15 +105,15 @@ export const unit1Data = {
                               </ul>
                             </div>
                             <div class="bg-yellow-50 p-3 rounded border border-yellow-200">
-  <span class="font-bold text-yellow-800 block mb-1">Compound Entry</span>
-  <ul class="list-disc list-inside text-sm text-yellow-900 space-y-1">
-    <li>Affects three or more accounts in one transaction.</li>
-    <li>May include multiple debits and/or multiple credits.</li>
-    <li>Total debits must equal total credits for balance.</li>
-    <li>Used to record complex transactions (e.g., payroll, asset purchase with financing).</li>
-    <li>Provides a single, organized record instead of separate simple entries.</li>
-  </ul>
-</div>
+                                  <span class="font-bold text-yellow-800 block mb-1">Compound Entry</span>
+                                  <ul class="list-disc list-inside text-sm text-yellow-900 space-y-1">
+                                  <li>Affects three or more accounts in one transaction.</li>
+                                  <li>May include multiple debits and/or multiple credits.</li>
+                                  <li>Total debits must equal total credits for balance.</li>
+                                  <li>Used to record complex transactions (e.g., payroll, asset purchase with financing).</li>
+                                <li>Provides a single, organized record instead of separate simple entries.</li>
+                              </ul>
+                            </div>
                         </div>
                     </section>
 
