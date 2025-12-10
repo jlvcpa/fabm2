@@ -74,16 +74,22 @@ export const unit1Data = {
                   </div>
                 </div>
 
-                        <div class="bg-blue-50 p-4 rounded-lg">
-                            <h4 class="font-bold text-blue-800 text-sm uppercase mb-2"><i class="fas fa-list-ol mr-2"></i>Step-by-Step Guide</h4>
-                            <ul class="space-y-1 text-sm text-blue-900 list-disc list-inside">
-                                <li><strong>Gather Source Documents:</strong> Collect receipts, invoices, checks.</li>
-                                <li><strong>Identify Accounts:</strong> Ask "What did we get? What did we give up?"</li>
-                                <li><strong>Classify Accounts:</strong> Asset, Liability, Equity, Revenue, or Expense?</li>
-                                <li><strong>Determine Direction:</strong> Increase or Decrease?</li>
-                                <li><strong>Apply Rules:</strong> Use Normal Balance rules (e.g., Asset Increase = Debit).</li>
-                            </ul>
-                        </div>
+                        .<div class="bg-blue-50 p-4 rounded-lg">
+  <h4 class="font-bold text-blue-800 text-sm uppercase mb-2">
+    <i class="fas fa-list-ol mr-2"></i>Step-by-Step Guide
+  </h4>
+  <ul class="space-y-1 text-sm text-blue-900 list-disc list-inside">
+    <li><strong>Title the worksheet:</strong> Write the business name, “Worksheet,” and the accounting period at the top.</li>
+    <li><strong>Enter the unadjusted trial balance:</strong> List all accounts with debit/credit amounts as per the ledger; total both columns.</li>
+    <li><strongRecord adjustments:</strong> Add adjustments column(s); note each adjustment (account, amount, and debit/credit) with brief explanations.</li>
+    <li><strong>Compute adjusted balances:</strong> Apply adjustments to each account to derive the adjusted trial balance; re-total debits and credits.</li>
+    <li><strong>Extend to statements:</strong> Carry adjusted balances to the Income Statement (rev/exp) and Balance Sheet (assets/liabilities/equity) columns.</li>
+    <li><strong>Determine net income/loss:</strong> Foot the statement columns; the difference between Income Statement columns equals net income (or loss).</li>
+    <li><strong>Balance the Balance Sheet:</strong> Add net income/loss to the Balance Sheet equity column so both Balance Sheet columns agree.</li>
+    <li><strong>Cross-check and annotate:</strong> Cross-foot totals, verify debits = credits, add references/tick marks to link adjustments to journal entries.</li>
+    <li><strong>Review for clarity:</strong> Ensure consistent account titles, correct column alignment, and readable notes for audit trail.</li>
+  </ul>
+</div>
                     </section>
 
                     <!-- STEP 2 -->
