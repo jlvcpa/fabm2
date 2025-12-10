@@ -89,8 +89,14 @@ export const unit1Data = {
                     <!-- STEP 2 -->
                     <section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                         <h3 class="text-2xl font-bold text-slate-800 mb-4 border-b pb-2">Step 2: Journalize Transactions</h3>
-                        <p class="mb-4 text-gray-600">Recording in the <strong>General Journal</strong> (Book of Original Entry). This provides a chronological record using the <strong>Double-Entry System</strong> (Debits = Credits).</p>
-                        [Image of general journal entry format]
+                        <p class="mb-4 text-gray-600">
+                          Journalizing transactions involves recording business activities in the <strong>General Journal</strong>, also called the Book of Original Entry. Each entry is written in chronological order to show the sequence of events. The process follows the <strong>Double-Entry System</strong>, where every debit has a corresponding credit. This ensures that the accounting equation remains balanced at all times. Journalizing provides a detailed foundation for posting to the ledger and preparing accurate financial statements.
+</p>
+
+                       <div class="img-box" style="width:100%; max-width:500px; margin:0 auto; display:flex; justify-content:center;">
+  <img src="https://copilot.microsoft.com/th/id/BCO.0add29ca-6e1d-4dec-829a-6f367ce89426.png" alt="General Journal Entry Format" style="max-width:100%; height:auto;" />
+</div>
+
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
                             <div class="bg-yellow-50 p-3 rounded border border-yellow-200">
