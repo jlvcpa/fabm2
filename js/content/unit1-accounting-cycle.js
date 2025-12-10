@@ -868,7 +868,7 @@ export const unit1Data = {
   <ul class="space-y-1 text-sm text-blue-900 list-disc list-inside">
     <li><strong>Title the worksheet:</strong> Write the business name, “Worksheet,” and the accounting period at the top.</li>
     <li><strong>Enter the unadjusted trial balance:</strong> List all accounts with debit/credit amounts as per the ledger; total both columns.</li>
-    <li><strongRecord adjustments:</strong> Add adjustments column(s); note each adjustment (account, amount, and debit/credit) with brief explanations.</li>
+    <li><strong>Record adjustments:</strong> Input the adjustment amounts; note each adjustment (account, amount, and debit/credit) with brief explanations.</li>
     <li><strong>Compute adjusted balances:</strong> Apply adjustments to each account to derive the adjusted trial balance; re-total debits and credits.</li>
     <li><strong>Extend to statements:</strong> Carry adjusted balances to the Income Statement (rev/exp) and Balance Sheet (assets/liabilities/equity) columns.</li>
     <li><strong>Determine net income/loss:</strong> Foot the statement columns; the difference between Income Statement columns equals net income (or loss).</li>
