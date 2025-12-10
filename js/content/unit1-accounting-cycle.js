@@ -20,58 +20,58 @@ export const unit1Data = {
                         <p class="mb-4 text-gray-600">Financial accounting begins with identifying economic events. Only transactions measurable in monetary terms affecting financial position are recorded. This relies on <strong>source documents</strong> (invoices, receipts) as objective evidence.</p>
                         
 <div class="mb-6">
-    <h4 class="font-bold text-slate-700 mb-2">The Accounting Equation</h4>
-    <p class="text-sm text-gray-600 mb-2"><strong>Assets = Liabilities + Equity</strong>. Every transaction must keep this in balance.</p>
-    
-    <!-- Accounting Equation Visual (Balance Scale) -->
-    <div class="img-box" style="width: 100%; max-width: 450px; margin: 10px 0;">
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
-            <!-- Background -->
-            <rect width="400" height="220" fill="#f8fafc" rx="8" />
-            
-            <!-- SCALE STRUCTURE -->
-            <!-- Base -->
-            <path d="M170 190 L230 190 L200 140 Z" fill="#64748b" />
-            <rect x="140" y="190" width="120" height="10" rx="3" fill="#475569" />
-            <!-- Beam -->
-            <rect x="40" y="135" width="320" height="8" rx="4" fill="#94a3b8" />
-            <!-- Center Pivot Circle -->
-            <circle cx="200" cy="140" r="6" fill="#cbd5e0" />
+  <h4 class="font-bold text-slate-700 mb-2">The Accounting Equation</h4>
+  <p class="text-sm text-gray-600 mb-2">
+    <strong>Assets = Liabilities + Equity</strong>. Every transaction must keep this in balance.
+  </p>
 
-            <!-- LEFT SIDE: ASSETS (Blue) -->
-            <g transform="translate(60, 60)">
-                <!-- Rope -->
-                <line x1="50" y1="0" x2="50" y2="75" stroke="#cbd5e0" stroke-width="2" />
-                <!-- Box -->
-                <rect x="0" y="25" width="100" height="80" rx="4" fill="#0038a8" />
-                <text x="50" y="65" font-family="Arial, sans-serif" font-weight="bold" font-size="14" text-anchor="middle" fill="#ffffff">ASSETS</text>
-                <text x="50" y="80" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#bfdbfe">Use of Funds</text>
-            </g>
+  <!-- Accounting Equation Visual (Balance Scale) -->
+  <div class="img-box" 
+       style="width: 100%; max-width: 450px; margin: 10px auto; display: flex; justify-content: center;">
+    <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background -->
+      <rect width="400" height="220" fill="#f8fafc" rx="8" />
 
-            <!-- RIGHT SIDE: LIABILITIES & EQUITY (Red & Yellow) -->
-            <g transform="translate(240, 60)">
-                <!-- Rope -->
-                <line x1="50" y1="0" x2="50" y2="75" stroke="#cbd5e0" stroke-width="2" />
-                <!-- Liabilities Box (Top Half) -->
-                <rect x="0" y="25" width="100" height="38" rx="2" fill="#ce1126" />
-                <text x="50" y="48" font-family="Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#ffffff">LIABILITIES</text>
-                
-                <!-- Equity Box (Bottom Half) -->
-                <rect x="0" y="67" width="100" height="38" rx="2" fill="#fbbf24" />
-                <text x="50" y="90" font-family="Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#78350f">EQUITY</text>
-                
-                <!-- Bracket Label -->
-                <text x="110" y="70" font-family="Arial, sans-serif" font-size="10" fill="#64748b" font-style="italic">Source of Funds</text>
-                <path d="M105 30 L108 30 L108 100 L105 100" fill="none" stroke="#94a3b8" stroke-width="1"/>
-            </g>
+      <!-- SCALE STRUCTURE -->
+      <!-- Base -->
+      <path d="M170 190 L230 190 L200 140 Z" fill="#64748b" />
+      <rect x="140" y="190" width="120" height="10" rx="3" fill="#475569" />
+      <!-- Beam -->
+      <rect x="40" y="135" width="320" height="8" rx="4" fill="#94a3b8" />
+      <!-- Center Pivot Circle -->
+      <circle cx="200" cy="140" r="6" fill="#cbd5e0" />
 
-            <!-- VISUAL EQUAL SIGN -->
-            <g transform="translate(200, 90)">
-                <circle cx="0" cy="0" r="18" fill="#ffffff" stroke="#cbd5e0" stroke-width="2"/>
-                <text x="0" y="6" font-family="Arial, sans-serif" font-weight="bold" font-size="22" text-anchor="middle" fill="#334155">=</text>
-            </g>
-        </svg>
-    </div>
+      <!-- LEFT SIDE: ASSETS (Blue) -->
+      <g transform="translate(60, 60)">
+        <line x1="50" y1="0" x2="50" y2="75" stroke="#cbd5e0" stroke-width="2" />
+        <rect x="0" y="25" width="100" height="80" rx="4" fill="#0038a8" />
+        <text x="50" y="65" font-family="Arial, sans-serif" font-weight="bold" font-size="14" text-anchor="middle" fill="#ffffff">ASSETS</text>
+        <text x="50" y="80" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#bfdbfe">Use of Funds</text>
+      </g>
+
+      <!-- RIGHT SIDE: LIABILITIES & EQUITY -->
+      <g transform="translate(240, 60)">
+        <line x1="50" y1="0" x2="50" y2="75" stroke="#cbd5e0" stroke-width="2" />
+        <rect x="0" y="25" width="100" height="38" rx="2" fill="#ce1126" />
+        <text x="50" y="48" font-family="Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#ffffff">LIABILITIES</text>
+        <rect x="0" y="67" width="100" height="38" rx="2" fill="#fbbf24" />
+        <text x="50" y="90" font-family="Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#78350f">EQUITY</text>
+
+        <!-- Bracket Label -->
+        <text x="110" y="70" font-family="Arial, sans-serif" font-size="10" fill="#64748b" font-style="italic">
+          <tspan x="110" dy="0">Source</tspan>
+          <tspan x="110" dy="12">of Funds</tspan>
+        </text>
+        <path d="M105 30 L108 30 L108 100 L105 100" fill="none" stroke="#94a3b8" stroke-width="1"/>
+      </g>
+
+      <!-- VISUAL EQUAL SIGN -->
+      <g transform="translate(200, 90)">
+        <circle cx="0" cy="0" r="18" fill="#ffffff" stroke="#cbd5e0" stroke-width="2"/>
+        <text x="0" y="6" font-family="Arial, sans-serif" font-weight="bold" font-size="22" text-anchor="middle" fill="#334155">=</text>
+      </g>
+    </svg>
+  </div>
 </div>
 
                         <div class="bg-blue-50 p-4 rounded-lg">
