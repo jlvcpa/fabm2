@@ -503,7 +503,7 @@ export const unit1Data = {
 
 <!-- Step 5: Adjusting Entries Section -->
 <div class="mb-6 mt-12 border-t pt-8">
-    <h4 class="font-bold text-slate-700 mb-2">Step 5: Adjusting Entries</h4>
+    <h3 class="font-bold text-slate-700 mb-2">Step 5: Adjusting Entries and 10-Column Worksheet</h3>
     <p class="mb-4 text-gray-600">Adhering to the <strong>Accrual Basis</strong>. Adjustments update accounts for time passage (Deferrals) or unrecorded activities (Accruals) to meet the Matching Principle.</p>
 
     <!-- 1. DEFERRED EXPENSES -->
@@ -653,7 +653,302 @@ export const unit1Data = {
         </svg>
     </div>
                         
-                        <p class="text-sm text-gray-500 mt-2">The <strong>10-Column Worksheet</strong> is a rough draft tool. It includes: Unadjusted TB, Adjustments, Adjusted TB, Income Statement, and Balance Sheet columns.</p>
+                        <p class="mb-4 text-gray-600">Adhering to the <strong>Accrual Basis</strong>. Adjustments update accounts for time passage (Deferrals) or unrecorded activities (Accruals) to meet the Matching Principle.</p>
+
+    <!-- 1. DEFERRED EXPENSES -->
+    <h5 class="font-bold text-blue-800 mt-6 mb-2">1. Deferred Expenses (Prepayments)</h5>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+            <h6 class="font-bold text-sm text-slate-600">A. Asset Method</h6>
+            <p class="text-sm text-gray-600">Under the asset method, prepaid items are initially recorded as assets because they provide future economic benefits. As time passes or the asset is consumed, the used portion is transferred to an expense account to reflect consumption. This approach ensures that the balance sheet reports the remaining value of the asset at the end of the period. The adjusting entry involves debiting the expense account for the amount used and crediting the asset account. This method is preferred for monitoring resources that are consumed over a long period.</p>
+        </div>
+        <div>
+            <h6 class="font-bold text-sm text-slate-600">B. Expense Method</h6>
+            <p class="text-sm text-gray-600">The expense method initially records the entire payment for a future benefit as an expense for simplified record-keeping during the period. At the end of the accounting cycle, the portion that remains unused or unconsumed must be removed from expenses. This adjustment converts the unexpired portion back into an asset to correct the financial statements. The adjusting entry debits the asset account for the remaining value and credits the expense account. This method is often used for short-term prepayments where the item is likely to be consumed quickly.</p>
+        </div>
+    </div>
+
+    <!-- SVG Example: Deferred Expenses -->
+    <div class="img-box" style="display: flex; justify-content: center; width: 100%; margin: 10px 0;">
+        <svg viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg" width="100%">
+            <rect width="600" height="160" fill="#f1f5f9" rx="4" />
+            
+            <!-- Left: Asset Method Entry -->
+            <g transform="translate(20, 20)">
+                <rect width="270" height="120" fill="#fff" stroke="#cbd5e0" rx="4"/>
+                <text x="135" y="20" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="#0038a8">ASSET METHOD</text>
+                <line x1="10" y1="30" x2="260" y2="30" stroke="#0038a8" stroke-width="1"/>
+                <g transform="translate(10, 50)" font-family="Courier New" font-size="11">
+                    <text x="0" y="0" font-weight="bold">Rent Expense</text>
+                    <text x="180" y="0" text-anchor="end">1,000</text>
+                    <text x="20" y="20" font-weight="bold">Prepaid Rent</text>
+                    <text x="240" y="20" text-anchor="end">1,000</text>
+                    <text x="20" y="45" font-size="9" font-family="Arial" fill="#64748b" font-style="italic">(To record used portion)</text>
+                </g>
+            </g>
+
+            <!-- Right: Expense Method Entry -->
+            <g transform="translate(310, 20)">
+                <rect width="270" height="120" fill="#fff" stroke="#cbd5e0" rx="4"/>
+                <text x="135" y="20" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="#ce1126">EXPENSE METHOD</text>
+                <line x1="10" y1="30" x2="260" y2="30" stroke="#ce1126" stroke-width="1"/>
+                <g transform="translate(10, 50)" font-family="Courier New" font-size="11">
+                    <text x="0" y="0" font-weight="bold">Prepaid Rent</text>
+                    <text x="180" y="0" text-anchor="end">11,000</text>
+                    <text x="20" y="20" font-weight="bold">Rent Expense</text>
+                    <text x="240" y="20" text-anchor="end">11,000</text>
+                    <text x="20" y="45" font-size="9" font-family="Arial" fill="#64748b" font-style="italic">(To record unused portion)</text>
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <!-- 2. DEFERRED INCOME -->
+    <h5 class="font-bold text-blue-800 mt-8 mb-2">2. Deferred Income (Unearned Revenue)</h5>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+            <h6 class="font-bold text-sm text-slate-600">A. Liability Method</h6>
+            <p class="text-sm text-gray-600">Under the liability method, cash received in advance of performing services is recorded as a liability called Unearned Revenue. This recognizes the obligation to deliver goods or services in the future before revenue can be claimed. As the services are performed or goods delivered, the earned portion is transferred from the liability to revenue. The adjusting entry requires a debit to the liability account and a credit to the revenue account for the amount earned. This method keeps liabilities accurate by showing the remaining obligation.</p>
+        </div>
+        <div>
+            <h6 class="font-bold text-sm text-slate-600">B. Income Method</h6>
+            <p class="text-sm text-gray-600">The income method records the entire cash receipt initially as revenue, assuming it will be earned within the period. At the reporting date, if any portion of the service has not yet been performed, it must be removed from revenue. This unearned portion is transferred to a liability account to defer recognition to the correct period. The adjusting entry involves debiting the revenue account and crediting the liability account for the unearned amount. This approach is sometimes used when the service cycle is very short.</p>
+        </div>
+    </div>
+
+    <!-- SVG Example: Deferred Income -->
+    <div class="img-box" style="display: flex; justify-content: center; width: 100%; margin: 10px 0;">
+        <svg viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg" width="100%">
+            <rect width="600" height="160" fill="#f1f5f9" rx="4" />
+            
+            <!-- Left: Liability Method Entry -->
+            <g transform="translate(20, 20)">
+                <rect width="270" height="120" fill="#fff" stroke="#cbd5e0" rx="4"/>
+                <text x="135" y="20" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="#0038a8">LIABILITY METHOD</text>
+                <line x1="10" y1="30" x2="260" y2="30" stroke="#0038a8" stroke-width="1"/>
+                <g transform="translate(10, 50)" font-family="Courier New" font-size="11">
+                    <text x="0" y="0" font-weight="bold">Unearned Rev.</text>
+                    <text x="180" y="0" text-anchor="end">1,000</text>
+                    <text x="20" y="20" font-weight="bold">Service Revenue</text>
+                    <text x="240" y="20" text-anchor="end">1,000</text>
+                    <text x="20" y="45" font-size="9" font-family="Arial" fill="#64748b" font-style="italic">(To record earned portion)</text>
+                </g>
+            </g>
+
+            <!-- Right: Income Method Entry -->
+            <g transform="translate(310, 20)">
+                <rect width="270" height="120" fill="#fff" stroke="#cbd5e0" rx="4"/>
+                <text x="135" y="20" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="#ce1126">INCOME METHOD</text>
+                <line x1="10" y1="30" x2="260" y2="30" stroke="#ce1126" stroke-width="1"/>
+                <g transform="translate(10, 50)" font-family="Courier New" font-size="11">
+                    <text x="0" y="0" font-weight="bold">Service Revenue</text>
+                    <text x="180" y="0" text-anchor="end">11,000</text>
+                    <text x="20" y="20" font-weight="bold">Unearned Rev.</text>
+                    <text x="240" y="20" text-anchor="end">11,000</text>
+                    <text x="20" y="45" font-size="9" font-family="Arial" fill="#64748b" font-style="italic">(To record unearned portion)</text>
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <!-- 3. ACCRUALS -->
+    <h5 class="font-bold text-blue-800 mt-8 mb-2">3. Accruals</h5>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+            <h6 class="font-bold text-sm text-slate-600">A. Accrued Expense</h6>
+            <p class="text-sm text-gray-600">Accrued expenses refer to costs that have been incurred by the business but have not yet been paid or recorded in the books. These expenses typically accumulate over time, such as interest on loans, salaries of employees, or utilities used. To adhere to the matching principle, these costs must be recognized in the period they help generate revenue, regardless of payment. The adjusting entry involves debiting the specific expense account and crediting a payable liability account. This ensures that liabilities and expenses are fully reported at the end of the period.</p>
+        </div>
+        <div>
+            <h6 class="font-bold text-sm text-slate-600">B. Accrued Income</h6>
+            <p class="text-sm text-gray-600">Accrued income represents revenue that has been earned from providing goods or services but for which payment has not yet been received. This situation occurs when a business performs a service but bills the customer at a later date. The accrual basis requires this revenue to be recorded in the period it was earned to reflect true performance. The adjusting entry consists of debiting a receivable asset account and crediting an income account. This adjustment ensures that assets and revenues are not understated in the financial statements.</p>
+        </div>
+    </div>
+
+    <!-- SVG Example: Accruals -->
+    <div class="img-box" style="display: flex; justify-content: center; width: 100%; margin: 10px 0;">
+        <svg viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg" width="100%">
+            <rect width="600" height="160" fill="#f1f5f9" rx="4" />
+            
+            <!-- Left: Accrued Expense Entry -->
+            <g transform="translate(20, 20)">
+                <rect width="270" height="120" fill="#fff" stroke="#cbd5e0" rx="4"/>
+                <text x="135" y="20" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="#ce1126">ACCRUED EXPENSE</text>
+                <line x1="10" y1="30" x2="260" y2="30" stroke="#ce1126" stroke-width="1"/>
+                <g transform="translate(10, 50)" font-family="Courier New" font-size="11">
+                    <text x="0" y="0" font-weight="bold">Salaries Expense</text>
+                    <text x="180" y="0" text-anchor="end">5,000</text>
+                    <text x="20" y="20" font-weight="bold">Salaries Payable</text>
+                    <text x="240" y="20" text-anchor="end">5,000</text>
+                    <text x="20" y="45" font-size="9" font-family="Arial" fill="#64748b" font-style="italic">(To record unpaid salaries)</text>
+                </g>
+            </g>
+
+            <!-- Right: Accrued Income Entry -->
+            <g transform="translate(310, 20)">
+                <rect width="270" height="120" fill="#fff" stroke="#cbd5e0" rx="4"/>
+                <text x="135" y="20" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="#0038a8">ACCRUED INCOME</text>
+                <line x1="10" y1="30" x2="260" y2="30" stroke="#0038a8" stroke-width="1"/>
+                <g transform="translate(10, 50)" font-family="Courier New" font-size="11">
+                    <text x="0" y="0" font-weight="bold">Interest Receivable</text>
+                    <text x="180" y="0" text-anchor="end">500</text>
+                    <text x="20" y="20" font-weight="bold">Interest Income</text>
+                    <text x="240" y="20" text-anchor="end">500</text>
+                    <text x="20" y="45" font-size="9" font-family="Arial" fill="#64748b" font-style="italic">(To record earned interest)</text>
+                </g>
+            </g>
+        </svg>
+    </div>
+</div>
+
+<!-- Step 6: Worksheet Section -->
+<div class="mb-6 mt-12 border-t pt-8">
+    <h3 class="font-bold text-slate-700 mb-2">The Worksheet</h3>
+    
+    <!-- 5-Sentence Paragraph -->
+    <p class="mb-4 text-gray-600">
+        The 10-Column Worksheet is an optional but highly efficient internal tool used by accountants to organize financial data before preparing formal financial statements. It typically starts with the unadjusted trial balance, followed by columns for adjusting entries, the adjusted trial balance, the income statement, and the balance sheet. This document allows accountants to visualize the effects of adjustments and ensures that debits equal credits at every stage of the process. By separating accounts into their respective financial statement columns, it simplifies the calculation of net income or loss. Although not a formal report distributed to outsiders, the worksheet serves as a comprehensive draft that minimizes errors in the final reporting phase.
+    </p>
+
+    <!-- Visual Representation of 10-Column Worksheet -->
+    <div class="img-box" style="display: flex; justify-content: center; width: 100%; margin: 20px 0; overflow-x: auto;">
+        <svg viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg" width="100%" style="min-width: 700px;">
+            <!-- Background -->
+            <rect width="800" height="350" fill="#ffffff" stroke="#cbd5e0" stroke-width="1" />
+            <filter id="shadow"><feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#94a3b8"/></filter>
+            
+            <!-- HEADER -->
+            <text x="400" y="30" font-family="Arial" font-weight="bold" font-size="14" text-anchor="middle" fill="#0f172a">JUAN'S GENERAL MERCHANDISE</text>
+            <text x="400" y="50" font-family="Arial" font-weight="bold" font-size="12" text-anchor="middle" fill="#0038a8">Worksheet</text>
+            <text x="400" y="65" font-family="Arial" font-size="10" text-anchor="middle" fill="#64748b">For the Year Ended December 31, 2023</text>
+            
+            <!-- COLUMN HEADERS -->
+            <g transform="translate(10, 80)">
+                <!-- Column Backgrounds -->
+                <rect x="0" y="0" width="780" height="40" fill="#f1f5f9" />
+                <rect x="150" y="20" width="126" height="20" fill="#e2e8f0" stroke="#cbd5e0" stroke-width="0.5"/> <!-- Unadj TB -->
+                <rect x="276" y="20" width="126" height="20" fill="#e2e8f0" stroke="#cbd5e0" stroke-width="0.5"/> <!-- Adj -->
+                <rect x="402" y="20" width="126" height="20" fill="#e2e8f0" stroke="#cbd5e0" stroke-width="0.5"/> <!-- Adj TB -->
+                <rect x="528" y="20" width="126" height="20" fill="#e2e8f0" stroke="#cbd5e0" stroke-width="0.5"/> <!-- IS -->
+                <rect x="654" y="20" width="126" height="20" fill="#e2e8f0" stroke="#cbd5e0" stroke-width="0.5"/> <!-- BS -->
+
+                <!-- Main Labels -->
+                <text x="75" y="25" font-family="Arial" font-weight="bold" font-size="10" text-anchor="middle" fill="#475569">ACCOUNT TITLE</text>
+                <text x="213" y="15" font-family="Arial" font-weight="bold" font-size="9" text-anchor="middle" fill="#475569">UNADJUSTED TB</text>
+                <text x="339" y="15" font-family="Arial" font-weight="bold" font-size="9" text-anchor="middle" fill="#475569">ADJUSTMENTS</text>
+                <text x="465" y="15" font-family="Arial" font-weight="bold" font-size="9" text-anchor="middle" fill="#475569">ADJUSTED TB</text>
+                <text x="591" y="15" font-family="Arial" font-weight="bold" font-size="9" text-anchor="middle" fill="#475569">INCOME ST.</text>
+                <text x="717" y="15" font-family="Arial" font-weight="bold" font-size="9" text-anchor="middle" fill="#475569">BALANCE SHEET</text>
+
+                <!-- DR/CR Sub-labels -->
+                <g font-family="Arial" font-size="8" fill="#64748b" text-anchor="middle">
+                    <text x="181" y="34">DR</text> <text x="244" y="34">CR</text>
+                    <text x="307" y="34">DR</text> <text x="370" y="34">CR</text>
+                    <text x="433" y="34">DR</text> <text x="496" y="34">CR</text>
+                    <text x="559" y="34">DR</text> <text x="622" y="34">CR</text>
+                    <text x="685" y="34">DR</text> <text x="748" y="34">CR</text>
+                </g>
+            </g>
+
+            <!-- ROWS -->
+            <g transform="translate(10, 130)" font-family="Courier New" font-size="9" fill="#334155">
+                <!-- Row 1: Cash -->
+                <text x="5" y="0">Cash</text>
+                <text x="208" y="0" text-anchor="end">100</text> <!-- Unadj Dr -->
+                <text x="460" y="0" text-anchor="end">100</text> <!-- Adj TB Dr -->
+                <text x="712" y="0" text-anchor="end">100</text> <!-- BS Dr -->
+
+                <!-- Row 2: Supplies -->
+                <text x="5" y="20">Supplies</text>
+                <text x="208" y="20" text-anchor="end">50</text> <!-- Unadj Dr -->
+                <text x="396" y="20" text-anchor="end">20</text> <!-- Adj Cr -->
+                <text x="460" y="20" text-anchor="end">30</text> <!-- Adj TB Dr -->
+                <text x="712" y="20" text-anchor="end">30</text> <!-- BS Dr -->
+
+                <!-- Row 3: Equipment -->
+                <text x="5" y="40">Equipment</text>
+                <text x="208" y="40" text-anchor="end">200</text>
+                <text x="460" y="40" text-anchor="end">200</text>
+                <text x="712" y="40" text-anchor="end">200</text>
+
+                <!-- Row 4: Accounts Payable -->
+                <text x="5" y="60">Accts Payable</text>
+                <text x="270" y="60" text-anchor="end">50</text> <!-- Unadj Cr -->
+                <text x="522" y="60" text-anchor="end">50</text> <!-- Adj TB Cr -->
+                <text x="774" y="60" text-anchor="end">50</text> <!-- BS Cr -->
+
+                <!-- Row 5: Capital -->
+                <text x="5" y="80">Juan, Capital</text>
+                <text x="270" y="80" text-anchor="end">100</text>
+                <text x="522" y="80" text-anchor="end">100</text>
+                <text x="774" y="80" text-anchor="end">100</text>
+
+                <!-- Row 6: Service Revenue -->
+                <text x="5" y="100">Service Rev.</text>
+                <text x="270" y="100" text-anchor="end">300</text>
+                <text x="522" y="100" text-anchor="end">300</text>
+                <text x="648" y="100" text-anchor="end">300</text> <!-- IS Cr -->
+
+                <!-- Row 7: Salaries Exp -->
+                <text x="5" y="120">Salaries Exp.</text>
+                <text x="208" y="120" text-anchor="end">100</text>
+                <text x="460" y="120" text-anchor="end">100</text>
+                <text x="586" y="120" text-anchor="end">100</text> <!-- IS Dr -->
+
+                <!-- Row 8: Adj - Supplies Exp -->
+                <text x="5" y="140">Supplies Exp.</text>
+                <text x="334" y="140" text-anchor="end">20</text> <!-- Adj Dr -->
+                <text x="460" y="140" text-anchor="end">20</text> <!-- Adj TB Dr -->
+                <text x="586" y="140" text-anchor="end">20</text> <!-- IS Dr -->
+
+                <!-- Horizontal Lines -->
+                <line x1="0" y1="150" x2="780" y2="150" stroke="#cbd5e0" stroke-width="1"/>
+                
+                <!-- TOTALS ROW -->
+                <text x="100" y="165" font-weight="bold">Totals</text>
+                <text x="208" y="165" text-anchor="end" font-weight="bold">450</text>
+                <text x="270" y="165" text-anchor="end" font-weight="bold">450</text>
+                
+                <text x="334" y="165" text-anchor="end" font-weight="bold">20</text>
+                <text x="396" y="165" text-anchor="end" font-weight="bold">20</text>
+
+                <text x="460" y="165" text-anchor="end" font-weight="bold">450</text>
+                <text x="522" y="165" text-anchor="end" font-weight="bold">450</text>
+
+                <text x="586" y="165" text-anchor="end" font-weight="bold">120</text> <!-- IS Dr Total -->
+                <text x="648" y="165" text-anchor="end" font-weight="bold">300</text> <!-- IS Cr Total -->
+
+                <text x="712" y="165" text-anchor="end" font-weight="bold">330</text> <!-- BS Dr Total -->
+                <text x="774" y="165" text-anchor="end" font-weight="bold">150</text> <!-- BS Cr Total -->
+
+                <!-- NET INCOME CALC -->
+                <text x="80" y="185" font-weight="bold" fill="#166534">Net Income</text>
+                
+                <!-- Balancing Entry for IS (Debit side to balance) -->
+                <text x="586" y="185" text-anchor="end" font-weight="bold" fill="#166534">180</text>
+                
+                <!-- Balancing Entry for BS (Credit side to balance) -->
+                <text x="774" y="185" text-anchor="end" font-weight="bold" fill="#166534">180</text>
+
+                <!-- FINAL DOUBLE TOTALS -->
+                <line x1="550" y1="190" x2="780" y2="190" stroke="#333" stroke-width="1"/>
+                
+                <text x="586" y="205" text-anchor="end" font-weight="bold">300</text>
+                <text x="648" y="205" text-anchor="end" font-weight="bold">300</text>
+                <text x="712" y="205" text-anchor="end" font-weight="bold">330</text>
+                <text x="774" y="205" text-anchor="end" font-weight="bold">330</text>
+                
+                <!-- Double Underlines -->
+                <line x1="550" y1="208" x2="650" y2="208" stroke="#333" stroke-width="1"/>
+                <line x1="550" y1="211" x2="650" y2="211" stroke="#333" stroke-width="1"/>
+                
+                <line x1="680" y1="208" x2="780" y2="208" stroke="#333" stroke-width="1"/>
+                <line x1="680" y1="211" x2="780" y2="211" stroke="#333" stroke-width="1"/>
+            </g>
+        </svg>
+    </div>
                     </section>
                 </div>
             `,
