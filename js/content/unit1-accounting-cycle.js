@@ -94,8 +94,15 @@ export const unit1Data = {
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
                             <div class="bg-yellow-50 p-3 rounded border border-yellow-200">
-                                <span class="font-bold text-yellow-800 block mb-1">Formatting Rule</span>
-                                <span class="text-sm text-yellow-900">Debits first (left aligned). Credits below and <strong>indented</strong> right.</span>
+                              <span class="font-bold text-yellow-800 block mb-1">Formatting Rules</span>
+                              <ul class="list-disc list-inside text-sm text-yellow-900 space-y-1">
+                                <li>Debits are listed first, left aligned.</li>
+                                <li>Credits are listed below debits and <strong>indented</strong> to the right.</li>
+                                <li>Each entry must include a clear <strong>date</strong> at the top.</li>
+                                <li>Provide a brief <strong>description</strong> or explanation under the entry.</li>
+                                <li>Amounts should be aligned in a single column for clarity.</li>
+                                <li>Total debits must always equal total credits.</li>
+                              </ul>
                             </div>
                             <div class="bg-yellow-50 p-3 rounded border border-yellow-200">
                                 <span class="font-bold text-yellow-800 block mb-1">Compound Entry</span>
