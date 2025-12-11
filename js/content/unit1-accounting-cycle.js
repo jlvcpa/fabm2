@@ -897,6 +897,7 @@ export const unit1Data = {
                 }
             ]
         },
+        
         {
     day: "Day 2",
     topic: "Review: Reporting & Closing (Steps 6–10)",
@@ -1066,7 +1067,7 @@ export const unit1Data = {
                                     <div class="font-bold text-gray-800 mb-2 text-base">Revenues</div>
                                     <div class="flex justify-between pl-4 hover:bg-gray-50 py-1 transition-colors">
                                         <span>Service Revenue (Consulting)</span>
-                                        <span>$ 25,000.00</span>
+                                        <span>₱ 25,000.00</span>
                                     </div>
                                     <div class="flex justify-between pl-4 hover:bg-gray-50 py-1 transition-colors">
                                         <span>Service Revenue (Training)</span>
@@ -1074,7 +1075,7 @@ export const unit1Data = {
                                     </div>
                                     <div class="flex justify-between pl-4 font-bold text-gray-700 py-2">
                                         <span>Total Revenues</span>
-                                        <span class="text-blue-800">$ 30,000.00</span>
+                                        <span class="text-blue-800">₱ 30,000.00</span>
                                     </div>
                                 </div>
 
@@ -1085,7 +1086,7 @@ export const unit1Data = {
                                     <div class="space-y-1">
                                         <div class="flex justify-between pl-4 hover:bg-gray-50 py-1">
                                             <span>Salaries Expense</span>
-                                            <span>$ 8,000.00</span>
+                                            <span>₱ 8,000.00</span>
                                         </div>
                                         <div class="flex justify-between pl-4 hover:bg-gray-50 py-1">
                                             <span>Rent Expense (Office)</span>
@@ -1118,7 +1119,7 @@ export const unit1Data = {
                                 <!-- Operating Income -->
                                 <div class="flex justify-between font-bold text-gray-800 mb-4 py-2 border-b border-gray-300">
                                     <span>Operating Income</span>
-                                    <span>$ 16,600.00</span>
+                                    <span>₱ 16,600.00</span>
                                 </div>
 
                                 <!-- Non-Operating Items -->
@@ -1141,7 +1142,7 @@ export const unit1Data = {
                                 <!-- Bottom Line -->
                                 <div class="flex justify-between font-black text-emerald-800 bg-emerald-100 p-4 border-t-2 border-b-4 border-double border-emerald-800 text-lg shadow-inner">
                                     <span>NET INCOME</span>
-                                    <span>$ 16,700.00</span>
+                                    <span>₱ 16,700.00</span>
                                 </div>
                             </div>
                         </div>
@@ -1170,7 +1171,7 @@ export const unit1Data = {
                                     <div class="relative group">
                                         <div class="absolute -left-11 bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shadow-lg group-hover:scale-110 transition-transform">1</div>
                                         <h5 class="font-bold text-gray-800 text-lg">Beginning Capital</h5>
-                                        <p class="text-sm text-gray-500">The balance at the start of the period. For a new business, this is $0. For an existing one, it's the ending balance from last month.</p>
+                                        <p class="text-sm text-gray-500">The balance at the start of the period. For a new business, this is ₱0. For an existing one, it's the ending balance from last month.</p>
                                     </div>
                                     <div class="relative group">
                                         <div class="absolute -left-11 bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shadow-lg group-hover:scale-110 transition-transform">2</div>
@@ -1196,7 +1197,7 @@ export const unit1Data = {
                                         <tbody class="divide-y divide-gray-300">
                                             <tr class="bg-white">
                                                 <td class="p-3">Smith, Capital (Jan 1)</td>
-                                                <td class="p-3 text-right text-gray-500">$ 10,000</td>
+                                                <td class="p-3 text-right text-gray-500">₱ 10,000</td>
                                             </tr>
                                             <tr class="bg-green-50">
                                                 <td class="p-3 font-bold text-green-800">+ Net Income (from Step 1)</td>
@@ -1212,12 +1213,12 @@ export const unit1Data = {
                                             </tr>
                                             <tr class="bg-blue-600 text-white font-bold text-lg">
                                                 <td class="p-4">Smith, Capital (Jan 31)</td>
-                                                <td class="p-4 text-right border-t-4 border-double border-white">$ 24,700</td>
+                                                <td class="p-4 text-right border-t-4 border-double border-white">₱ 24,700</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <p class="mt-4 text-xs text-center text-gray-500">
-                                        This final number ($24,700) is the <strong>ONLY</strong> number that moves forward to the Balance Sheet.
+                                        This final number (₱24,700) is the <strong>ONLY</strong> number that moves forward to the Balance Sheet.
                                     </p>
                                 </div>
                             </div>
@@ -1258,7 +1259,7 @@ export const unit1Data = {
                                         <div class="mb-6">
                                             <p class="font-bold text-gray-600 mb-2 underline decoration-gray-300">Current Assets</p>
                                             <p class="text-[10px] text-gray-400 italic mb-2 ml-2">(Liquidity Order: Cash is first)</p>
-                                            <div class="flex justify-between pl-2 mb-1"><span>Cash</span><span>$ 15,000</span></div>
+                                            <div class="flex justify-between pl-2 mb-1"><span>Cash</span><span>₱ 15,000</span></div>
                                             <div class="flex justify-between pl-2 mb-1"><span>Accounts Receivable</span><span>8,200</span></div>
                                             <div class="flex justify-between pl-2 mb-1"><span>Supplies</span><span>1,500</span></div>
                                             <div class="flex justify-between pl-2 mb-1"><span>Prepaid Insurance</span><span class="border-b border-gray-400">1,100</span></div>
@@ -1276,7 +1277,7 @@ export const unit1Data = {
                                         <!-- Total Assets -->
                                         <div class="flex justify-between font-black text-white bg-slate-800 p-3 mt-12 rounded shadow-lg">
                                             <span>TOTAL ASSETS</span>
-                                            <span>$ 35,300</span>
+                                            <span>₱ 35,300</span>
                                         </div>
                                     </div>
 
@@ -1287,7 +1288,7 @@ export const unit1Data = {
                                         <!-- Current Liabilities -->
                                         <div class="mb-6">
                                             <p class="font-bold text-gray-600 mb-2 underline decoration-gray-300">Current Liabilities</p>
-                                            <div class="flex justify-between pl-2 mb-1"><span>Accounts Payable</span><span>$ 4,000</span></div>
+                                            <div class="flex justify-between pl-2 mb-1"><span>Accounts Payable</span><span>₱ 4,000</span></div>
                                             <div class="flex justify-between pl-2 mb-1"><span>Salaries Payable</span><span>300</span></div>
                                             <div class="flex justify-between pl-2 mb-1"><span>Unearned Revenue</span><span>6,200</span></div>
                                             <div class="flex justify-between pl-2 mb-1"><span>Interest Payable</span><span class="border-b border-gray-400">100</span></div>
@@ -1299,14 +1300,14 @@ export const unit1Data = {
                                             <p class="font-bold text-gray-600 mb-2 underline decoration-gray-300">Owner's Equity</p>
                                             <div class="flex justify-between pl-2 mb-1"><span>Smith, Capital</span><span class="border-b border-gray-800">24,700</span></div>
                                             <div class="bg-yellow-50 text-[10px] p-2 mt-2 rounded border border-yellow-200 text-yellow-800">
-                                                <strong>CHECKPOINT:</strong> This $24,700 must match the Ending Capital from Step 2. Do NOT use the Capital from the Trial Balance!
+                                                <strong>CHECKPOINT:</strong> This ₱24,700 must match the Ending Capital from Step 2. Do NOT use the Capital from the Trial Balance!
                                             </div>
                                         </div>
 
                                         <!-- Total L & E -->
                                         <div class="flex justify-between font-black text-white bg-slate-800 p-3 mt-12 rounded shadow-lg">
                                             <span>TOTAL LIAB. & EQUITY</span>
-                                            <span>$ 35,300</span>
+                                            <span>₱ 35,300</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1362,7 +1363,7 @@ export const unit1Data = {
                                 Cash was paid <em>before</em> the expense was incurred. We recorded an Asset initially. Now we must expense the part we used.
                             </p>
                             <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-xs mb-4">
-                                // Example: $100 Insurance used<br>
+                                // Example: ₱100 Insurance used<br>
                                 Dr. Insurance Expense .... 100<br>
                                 &nbsp;&nbsp;&nbsp;Cr. Prepaid Insurance .... 100
                             </div>
@@ -1382,7 +1383,7 @@ export const unit1Data = {
                                 Cash was received <em>before</em> the service was performed. We recorded a Liability initially. Now we must recognize revenue for work done.
                             </p>
                             <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-xs mb-4">
-                                // Example: $500 Service performed<br>
+                                // Example: ₱500 Service performed<br>
                                 Dr. Unearned Revenue ..... 500<br>
                                 &nbsp;&nbsp;&nbsp;Cr. Service Revenue ...... 500
                             </div>
@@ -1402,7 +1403,7 @@ export const unit1Data = {
                                 Expense happened, but cash has <em>not</em> been paid yet. We must record the expense and the liability (payable).
                             </p>
                             <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-xs mb-4">
-                                // Example: $300 Salaries owed<br>
+                                // Example: ₱300 Salaries owed<br>
                                 Dr. Salaries Expense ..... 300<br>
                                 &nbsp;&nbsp;&nbsp;Cr. Salaries Payable ..... 300
                             </div>
@@ -1422,7 +1423,7 @@ export const unit1Data = {
                                 Service performed, but cash has <em>not</em> been received. We must record the asset (receivable) and the revenue.
                             </p>
                             <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-xs mb-4">
-                                // Example: $200 Interest earned<br>
+                                // Example: ₱200 Interest earned<br>
                                 Dr. Interest Receivable .. 200<br>
                                 &nbsp;&nbsp;&nbsp;Cr. Interest Revenue ..... 200
                             </div>
@@ -1481,7 +1482,7 @@ export const unit1Data = {
                             <div class="text-6xl font-thin text-indigo-300">=</div>
 
                             <div class="text-center">
-                                <span class="block text-4xl font-bold text-indigo-900">$8,000</span>
+                                <span class="block text-4xl font-bold text-indigo-900">₱8,000</span>
                                 <span class="block text-indigo-600 font-medium">Net Book Value</span>
                             </div>
                         </div>
@@ -1714,6 +1715,92 @@ export const unit1Data = {
                         </p>
                     </div>
 
+                    <!-- Formal Post-Closing Trial Balance Table -->
+                    <div class="bg-white border-4 border-double border-gray-300 shadow-2xl mx-auto max-w-2xl font-mono text-sm p-8 mb-12">
+                        <div class="text-center mb-6">
+                            <h5 class="font-bold uppercase text-lg">Global Tech Services</h5>
+                            <p class="font-bold">Post-Closing Trial Balance</p>
+                            <p class="italic text-gray-500">December 31, 2024</p>
+                        </div>
+                        
+                        <table class="w-full mb-6">
+                            <thead class="border-b-2 border-gray-800">
+                                <tr>
+                                    <th class="text-left pb-2">Account Title</th>
+                                    <th class="text-right pb-2">Debit</th>
+                                    <th class="text-right pb-2">Credit</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr>
+                                    <td class="py-1">Cash</td>
+                                    <td class="text-right">₱ 15,000</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">Accounts Receivable</td>
+                                    <td class="text-right">8,200</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">Supplies</td>
+                                    <td class="text-right">1,500</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">Prepaid Insurance</td>
+                                    <td class="text-right">1,100</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">Office Equipment</td>
+                                    <td class="text-right">10,000</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 pl-8">Accumulated Depreciation - Equip.</td>
+                                    <td></td>
+                                    <td class="text-right">500</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1">Accounts Payable</td>
+                                    <td></td>
+                                    <td class="text-right">4,000</td>
+                                </tr>
+                                 <tr>
+                                    <td class="py-1">Salaries Payable</td>
+                                    <td></td>
+                                    <td class="text-right">300</td>
+                                </tr>
+                                 <tr>
+                                    <td class="py-1">Unearned Revenue</td>
+                                    <td></td>
+                                    <td class="text-right">6,200</td>
+                                </tr>
+                                 <tr>
+                                    <td class="py-1">Interest Payable</td>
+                                    <td></td>
+                                    <td class="text-right">100</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 font-bold text-blue-800">Smith, Capital</td>
+                                    <td></td>
+                                    <td class="text-right font-bold text-blue-800">24,700</td>
+                                </tr>
+                            </tbody>
+                            <tfoot class="border-t-2 border-gray-800 font-bold">
+                                <tr>
+                                    <td class="pt-2">Totals</td>
+                                    <td class="text-right pt-2 border-b-4 border-double border-gray-800">₱ 35,800</td>
+                                    <td class="text-right pt-2 border-b-4 border-double border-gray-800">₱ 35,800</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div class="text-center text-xs text-gray-400 italic">
+                            *Note: No Revenue, Expense, or Drawing accounts appear here.
+                        </div>
+                    </div>
+
                     <!-- The Graveyard Metaphor -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
                         <!-- Left: The Living -->
@@ -1832,7 +1919,7 @@ export const unit1Data = {
                     <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200 mb-12">
                         <h4 class="text-2xl font-bold text-slate-800 mb-6 text-center">Case Study: The Payroll Problem</h4>
                         <p class="text-center text-gray-500 mb-8 italic max-w-2xl mx-auto">
-                            Scenario: On Dec 31, we owe $300 in salaries. We pay total payroll of $1,000 on Jan 10 (covering the $300 old debt + $700 new work).
+                            Scenario: On Dec 31, we owe ₱300 in salaries. We pay total payroll of ₱1,000 on Jan 10 (covering the ₱300 old debt + ₱700 new work).
                         </p>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -1901,7 +1988,7 @@ export const unit1Data = {
                         <div class="mt-8 bg-blue-50 p-4 rounded text-center border border-blue-200">
                             <p class="text-sm text-blue-800">
                                 <strong>The Magic Math:</strong> In Method B, Expense was credited 300 (Jan 1) and debited 1000 (Jan 10).<br>
-                                Net Balance = 1000 - 300 = <strong>$700</strong>. This matches the correct new expense amount perfectly!
+                                Net Balance = 1000 - 300 = <strong>₱700</strong>. This matches the correct new expense amount perfectly!
                             </p>
                         </div>
                     </div>
