@@ -897,7 +897,7 @@ export const unit1Data = {
                 }
             ]
         },
-        export const day2Data = {
+        {
     day: "Day 2",
     topic: "Review: Reporting & Closing (Steps 6–10)",
     content: `
