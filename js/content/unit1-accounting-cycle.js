@@ -1971,7 +1971,7 @@ export const unit1Data = {
             explanation: "Accumulated Depreciation is a Contra-Asset (Real Account). It stays on the books. Depreciation Expense is a Nominal Account and is closed."
         }
     ]
-};
+},
 
         {
             day: "Day 3",
