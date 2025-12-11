@@ -897,101 +897,1082 @@ export const unit1Data = {
                 }
             ]
         },
-        {
-            day: "Day 2",
-            topic: "Review: Reporting & Closing (Steps 6–10)",
-            content: `
-                <div class="space-y-8 animate-fade-in">
-                    <div class="bg-emerald-50 p-6 rounded-xl border-l-4 border-emerald-500 shadow-sm">
-                        <h3 class="text-lg font-bold text-emerald-900 mb-2">Phase Overview</h3>
-                        <p class="text-emerald-800">Focus: Formal reporting to external parties, updating official books, and closing temporary accounts.</p>
-                        [Image of financial statement preparation flow]
+        export const day2Data = {
+    day: "Day 2",
+    topic: "Review: Reporting & Closing (Steps 6–10)",
+    content: `
+        <div class="space-y-24 animate-fade-in font-sans text-gray-800 leading-loose">
+            
+            <!-- ================================================================================== -->
+            <!-- PHASE OVERVIEW: THE BRIDGE TO THE FUTURE                                           -->
+            <!-- ================================================================================== -->
+            <div class="bg-gradient-to-br from-emerald-50 via-teal-50 to-white p-12 rounded-3xl border border-emerald-100 shadow-2xl relative overflow-hidden">
+                <!-- Decorative Background Elements -->
+                <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+                <div class="absolute -bottom-8 -left-8 w-96 h-96 bg-teal-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+                
+                <div class="relative z-10">
+                    <div class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6 mb-10">
+                        <div class="p-4 bg-emerald-600 rounded-2xl shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-300">
+                            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        </div>
+                        <div>
+                            <h2 class="text-4xl font-extrabold text-emerald-900 tracking-tight mb-2">Phase Overview: Reporting & Closing</h2>
+                            <p class="text-xl text-emerald-700 font-medium">The Cycle's Grand Finale: From Data to Wisdom</p>
+                        </div>
+                    </div>
+                    
+                    <div class="prose prose-lg text-emerald-900 max-w-none mb-12">
+                        <p>
+                            We have successfully navigated the chaotic waters of daily transactions (Journalizing) and organized them into specific accounts (Posting). We have even verified our math (Trial Balance) and adjusted for the passage of time (Adjustments). Now, we arrive at the "Output Phase." This is the most critical juncture for stakeholders.
+                        </p>
+                        <p>
+                            This phase answers the two most fundamental questions in business:
+                        </p>
+                        <ul class="list-none pl-0 space-y-2 font-bold italic">
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-emerald-500 rounded-full mr-3"></span>
+                                "Did we make a profit?" (Performance)
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-emerald-500 rounded-full mr-3"></span>
+                                "What is our financial health right now?" (Position)
+                            </li>
+                        </ul>
                     </div>
 
-                    <!-- STEP 6 -->
-                    <section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4 border-b pb-2">Step 6: Prepare Financial Statements</h3>
-                        <p class="mb-4 text-gray-600">The primary product for stakeholders, prepared directly from the Worksheet columns.</p>
-                        
-                        <div class="space-y-3">
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 text-blue-700 font-bold rounded px-2 py-1 text-xs mr-3 mt-1">1</div>
-                                <div><strong class="text-slate-700">Income Statement:</strong> Revenue - Expenses = Net Income.</div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Card A -->
+                        <div class="bg-white/90 backdrop-blur-md p-8 rounded-2xl border border-emerald-200 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-emerald-100 text-emerald-700 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-4">A</div>
+                                <h3 class="font-bold text-2xl text-emerald-900">External Reporting</h3>
                             </div>
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 text-blue-700 font-bold rounded px-2 py-1 text-xs mr-3 mt-1">2</div>
-                                <div><strong class="text-slate-700">Statement of Changes in Equity:</strong> Beg. Capital + Net Income - Withdrawals = End. Capital.</div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 text-blue-700 font-bold rounded px-2 py-1 text-xs mr-3 mt-1">3</div>
-                                <div><strong class="text-slate-700">Balance Sheet:</strong> Assets = Liabilities + End. Equity.</div>
+                            <p class="text-gray-600 leading-relaxed mb-4">
+                                Investors, creditors, and government agencies do not look at your General Ledger. They rely entirely on the <strong>Financial Statements</strong> (Step 6) to judge the health of your business. Accuracy here is non-negotiable. This is the "Public Face" of the company.
+                            </p>
+                            <div class="bg-emerald-50 p-3 rounded text-sm text-emerald-800 font-mono">
+                                Output: Income Stmt, Equity Stmt, Balance Sheet
                             </div>
                         </div>
-                    </section>
 
-                    <!-- STEP 7 -->
-                    <section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4 border-b pb-2">Step 7: Adjusting Entries (Journalize & Post)</h3>
-                        <p class="mb-4 text-gray-600">Making the Worksheet adjustments official. Without this, the Ledger would not match the Financial Statements.</p>
-                        <div class="bg-gray-50 p-4 rounded text-sm font-mono text-gray-700 border-l-4 border-gray-400">
-                            Example: <br>
-                            Dr. Depreciation Expense<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;Cr. Accumulated Depreciation
-                        </div>
-                    </section>
-
-                    <!-- STEP 8 -->
-                    <section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4 border-b pb-2">Step 8: Closing Entries</h3>
-                        <p class="mb-4 text-gray-600">Resetting <strong>Temporary (Nominal)</strong> accounts to zero (Revenue, Expense, Withdrawals). Permanent (Real) accounts remain open.</p>
-                        
-                        
-                        <div class="grid grid-cols-2 gap-4 mt-4">
-                            <div class="bg-purple-50 p-3 rounded text-center">
-                                <span class="block font-bold text-purple-800">R</span> Revenue -> Income Summary
+                        <!-- Card B -->
+                        <div class="bg-white/90 backdrop-blur-md p-8 rounded-2xl border border-emerald-200 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-teal-100 text-teal-700 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-4">B</div>
+                                <h3 class="font-bold text-2xl text-teal-900">Internal Reset</h3>
                             </div>
-                            <div class="bg-purple-50 p-3 rounded text-center">
-                                <span class="block font-bold text-purple-800">E</span> Expenses -> Income Summary
-                            </div>
-                            <div class="bg-purple-50 p-3 rounded text-center">
-                                <span class="block font-bold text-purple-800">I</span> Income Summary -> Capital
-                            </div>
-                            <div class="bg-purple-50 p-3 rounded text-center">
-                                <span class="block font-bold text-purple-800">D</span> Drawings -> Capital
+                            <p class="text-gray-600 leading-relaxed mb-4">
+                                Imagine a scoreboard at a basketball game. At the end of the game, the score is final (Reporting). Before the next game starts, the score must be reset to 0-0 (Closing). If we don't close, next year's score will be wrong. This ensures the <strong>Periodicity Assumption</strong> is upheld.
+                            </p>
+                            <div class="bg-teal-50 p-3 rounded text-sm text-teal-800 font-mono">
+                                Action: Close Revenue, Expenses, Drawings
                             </div>
                         </div>
-                    </section>
-
-                    <!-- STEP 9 -->
-                    <section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4 border-b pb-2">Step 9: Post-Closing Trial Balance</h3>
-                        <p class="mb-4 text-gray-600">Proves the ledger is balanced for the new period. Contains <strong>only Real Accounts</strong> (Assets, Liabilities, Capital). No Revenue or Expenses should appear here.</p>
-                    </section>
-
-                    <!-- STEP 10 -->
-                    <section class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4 border-b pb-2">Step 10: Reversing Entries (Optional)</h3>
-                        <p class="mb-4 text-gray-600">Performed on Day 1 of the new period. Exact opposite of adjusting entries for Accruals. Used for convenience in recording future cash flows.</p>
-                    </section>
+                    </div>
                 </div>
-            `,
-            exercises: [
-                {
-                    type: "mcq",
-                    question: "Which of the following accounts appears on a Post-Closing Trial Balance?",
-                    options: ["Service Revenue", "Rent Expense", "Accounts Receivable", "Owner's Withdrawals"],
-                    correctIndex: 2,
-                    explanation: "Only Permanent (Real) accounts appear post-closing. Revenue, Expenses, and Withdrawals are closed to zero."
-                },
-                {
-                    type: "mcq",
-                    question: "What is the correct order for closing entries (REID)?",
-                    options: ["Revenue, Expenses, Income Summary, Drawings", "Revenue, Equity, Income, Debt", "Rent, Expenses, Interest, Drawings", "Revenue, Expenses, Investments, Drawings"],
-                    correctIndex: 0,
-                    explanation: "Close Revenue, then Expenses, then Income Summary (Net Income/Loss), then Drawings."
-                }
-            ]
+            </div>
+
+            <!-- ================================================================================== -->
+            <!-- STEP 6: PREPARE FINANCIAL STATEMENTS                                               -->
+            <!-- ================================================================================== -->
+            <section class="group relative">
+                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                <div class="relative bg-white p-10 rounded-3xl border border-gray-200 shadow-2xl">
+                    
+                    <!-- Header Section -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between border-b-2 border-gray-100 pb-8 mb-10">
+                        <div class="flex items-center">
+                            <span class="text-8xl font-black text-slate-100 mr-6 -ml-4 select-none tracking-tighter">06</span>
+                            <div>
+                                <h3 class="text-4xl font-extrabold text-slate-800 tracking-tight">Financial Statements</h3>
+                                <p class="text-xl text-blue-600 font-medium mt-1">The Final Output Product</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 md:mt-0 flex flex-wrap gap-2">
+                            <span class="px-4 py-2 bg-blue-50 text-blue-700 text-xs font-bold uppercase rounded-full tracking-wider border border-blue-100">Income Statement</span>
+                            <span class="px-4 py-2 bg-blue-50 text-blue-700 text-xs font-bold uppercase rounded-full tracking-wider border border-blue-100">Changes in Equity</span>
+                            <span class="px-4 py-2 bg-blue-50 text-blue-700 text-xs font-bold uppercase rounded-full tracking-wider border border-blue-100">Balance Sheet</span>
+                        </div>
+                    </div>
+
+                    <!-- Introduction Text -->
+                    <div class="prose max-w-none text-gray-600 mb-12 leading-loose">
+                        <p class="text-lg">
+                            The Financial Statements are the primary means of communicating financial information to external parties. They are prepared directly from the adjusted account balances found in the Ledger (or the Worksheet). The order of preparation is strictly hierarchical because the mathematical result of one statement is a required input for the next.
+                        </p>
+                        <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-500 my-6">
+                            <h4 class="font-bold text-blue-900 mb-2">The Golden Rule of Order:</h4>
+                            <ol class="list-decimal list-inside space-y-1 text-blue-800 font-medium">
+                                <li><strong>Income Statement:</strong> Calculates Net Income.</li>
+                                <li><strong>Statement of Equity:</strong> Uses Net Income to find Ending Capital.</li>
+                                <li><strong>Balance Sheet:</strong> Uses Ending Capital to prove Assets = Liabilities + Equity.</li>
+                                <li><strong>Statement of Cash Flows:</strong> (Advanced topic) Explains cash changes.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================== -->
+                    <!-- SUB-SECTION 6.1: STATEMENT OF COMPREHENSIVE INCOME            -->
+                    <!-- ============================================================== -->
+                    <div class="mb-16 border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="bg-slate-50 p-6 border-b border-slate-200 flex justify-between items-center">
+                            <h4 class="text-2xl font-bold text-slate-700 flex items-center">
+                                <span class="bg-blue-600 text-white w-8 h-8 rounded flex items-center justify-center text-sm mr-3">1</span>
+                                The Income Statement (P&L)
+                            </h4>
+                            <span class="text-sm font-mono text-slate-500 bg-white px-3 py-1 rounded border">Type: Flow Report</span>
+                        </div>
+                        
+                        <div class="p-8 bg-white">
+                            <p class="text-gray-600 mb-8">
+                                This report measures performance over a specific time frame (e.g., "For the Month Ended..."). It applies the <strong>Matching Principle</strong> by matching Revenues earned against Expenses incurred to generate that revenue.
+                            </p>
+
+                            <!-- Mechanics of the Header -->
+                            <div class="mb-8 p-6 bg-gray-50 rounded-xl border border-gray-200 dashed-border">
+                                <h5 class="font-bold text-gray-700 mb-4 border-b pb-2">Anatomy of a Proper Header</h5>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                                    <div class="bg-white p-3 rounded shadow-sm">
+                                        <span class="block text-xs text-gray-400 uppercase font-bold">Who?</span>
+                                        <span class="font-bold text-slate-800">Global Tech Services</span>
+                                    </div>
+                                    <div class="bg-white p-3 rounded shadow-sm">
+                                        <span class="block text-xs text-gray-400 uppercase font-bold">What?</span>
+                                        <span class="font-bold text-slate-800">Income Statement</span>
+                                    </div>
+                                    <div class="bg-white p-3 rounded shadow-sm">
+                                        <span class="block text-xs text-gray-400 uppercase font-bold">When?</span>
+                                        <span class="font-bold text-slate-800">For Month Ended Dec 31</span>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-center text-red-500 mt-3 italic">
+                                    *Common Mistake: Writing "As of Dec 31" implies a snapshot. Income is a flow (movie), not a snapshot (photo).
+                                </p>
+                            </div>
+
+                            <!-- Detailed Financial Table -->
+                            <div class="bg-white border-2 border-gray-800 shadow-xl mx-auto max-w-3xl font-mono text-sm leading-relaxed p-10 relative">
+                                <div class="absolute top-0 left-0 bg-yellow-300 text-yellow-900 text-xs font-bold px-2 py-1">FORMAT: MULTI-STEP</div>
+                                
+                                <div class="text-center mb-8">
+                                    <h5 class="font-bold text-xl uppercase underline decoration-double underline-offset-4">Global Tech Services</h5>
+                                    <p class="font-bold text-lg">Income Statement</p>
+                                    <p class="italic text-gray-500">For the Month Ended December 31, 2024</p>
+                                </div>
+
+                                <!-- Revenue Block -->
+                                <div class="mb-6">
+                                    <div class="font-bold text-gray-800 mb-2 text-base">Revenues</div>
+                                    <div class="flex justify-between pl-4 hover:bg-gray-50 py-1 transition-colors">
+                                        <span>Service Revenue (Consulting)</span>
+                                        <span>$ 25,000.00</span>
+                                    </div>
+                                    <div class="flex justify-between pl-4 hover:bg-gray-50 py-1 transition-colors">
+                                        <span>Service Revenue (Training)</span>
+                                        <span class="border-b border-gray-800">5,000.00</span>
+                                    </div>
+                                    <div class="flex justify-between pl-4 font-bold text-gray-700 py-2">
+                                        <span>Total Revenues</span>
+                                        <span class="text-blue-800">$ 30,000.00</span>
+                                    </div>
+                                </div>
+
+                                <!-- Expense Block -->
+                                <div class="mb-6">
+                                    <div class="font-bold text-gray-800 mb-2 text-base">Operating Expenses</div>
+                                    
+                                    <div class="space-y-1">
+                                        <div class="flex justify-between pl-4 hover:bg-gray-50 py-1">
+                                            <span>Salaries Expense</span>
+                                            <span>$ 8,000.00</span>
+                                        </div>
+                                        <div class="flex justify-between pl-4 hover:bg-gray-50 py-1">
+                                            <span>Rent Expense (Office)</span>
+                                            <span>3,000.00</span>
+                                        </div>
+                                        <div class="flex justify-between pl-4 hover:bg-gray-50 py-1">
+                                            <span>Advertising Expense</span>
+                                            <span>1,200.00</span>
+                                        </div>
+                                        <div class="flex justify-between pl-4 hover:bg-gray-50 py-1">
+                                            <span>Depreciation Expense - Equipment</span>
+                                            <span>500.00</span>
+                                        </div>
+                                        <div class="flex justify-between pl-4 hover:bg-gray-50 py-1">
+                                            <span>Supplies Expense</span>
+                                            <span>400.00</span>
+                                        </div>
+                                        <div class="flex justify-between pl-4 hover:bg-gray-50 py-1">
+                                            <span>Utilities Expense</span>
+                                            <span class="border-b border-gray-800">300.00</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex justify-between pl-4 font-bold text-gray-700 py-2 mt-1">
+                                        <span>Total Operating Expenses</span>
+                                        <span class="text-red-600 border-b border-gray-800">(13,400.00)</span>
+                                    </div>
+                                </div>
+
+                                <!-- Operating Income -->
+                                <div class="flex justify-between font-bold text-gray-800 mb-4 py-2 border-b border-gray-300">
+                                    <span>Operating Income</span>
+                                    <span>$ 16,600.00</span>
+                                </div>
+
+                                <!-- Non-Operating Items -->
+                                <div class="mb-6 text-gray-600">
+                                    <div class="font-bold mb-1">Other Income and Expenses</div>
+                                    <div class="flex justify-between pl-4 hover:bg-gray-50 py-1">
+                                        <span>Interest Revenue</span>
+                                        <span>200.00</span>
+                                    </div>
+                                    <div class="flex justify-between pl-4 hover:bg-gray-50 py-1">
+                                        <span>Interest Expense</span>
+                                        <span class="border-b border-gray-400">(100.00)</span>
+                                    </div>
+                                    <div class="flex justify-between pl-4 font-bold py-1">
+                                        <span>Net Other Income</span>
+                                        <span class="border-b border-gray-800">100.00</span>
+                                    </div>
+                                </div>
+
+                                <!-- Bottom Line -->
+                                <div class="flex justify-between font-black text-emerald-800 bg-emerald-100 p-4 border-t-2 border-b-4 border-double border-emerald-800 text-lg shadow-inner">
+                                    <span>NET INCOME</span>
+                                    <span>$ 16,700.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================== -->
+                    <!-- SUB-SECTION 6.2: STATEMENT OF CHANGES IN EQUITY               -->
+                    <!-- ============================================================== -->
+                    <div class="mb-16 border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="bg-slate-50 p-6 border-b border-slate-200 flex justify-between items-center">
+                            <h4 class="text-2xl font-bold text-slate-700 flex items-center">
+                                <span class="bg-blue-600 text-white w-8 h-8 rounded flex items-center justify-center text-sm mr-3">2</span>
+                                Statement of Changes in Equity
+                            </h4>
+                            <span class="text-sm font-mono text-slate-500 bg-white px-3 py-1 rounded border">Type: Flow Report</span>
+                        </div>
+                        
+                        <div class="p-8 bg-white">
+                            <p class="text-gray-600 mb-8">
+                                This statement acts as the financial bridge. It connects the P&L (Net Income) to the Balance Sheet (Equity Section). It details exactly <em>why</em> the owner's claim on assets changed.
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+                                <!-- The Logic List -->
+                                <div class="relative pl-8 border-l-4 border-blue-200 space-y-8">
+                                    <div class="relative group">
+                                        <div class="absolute -left-11 bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shadow-lg group-hover:scale-110 transition-transform">1</div>
+                                        <h5 class="font-bold text-gray-800 text-lg">Beginning Capital</h5>
+                                        <p class="text-sm text-gray-500">The balance at the start of the period. For a new business, this is $0. For an existing one, it's the ending balance from last month.</p>
+                                    </div>
+                                    <div class="relative group">
+                                        <div class="absolute -left-11 bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shadow-lg group-hover:scale-110 transition-transform">2</div>
+                                        <h5 class="font-bold text-gray-800 text-lg">Add: Investments</h5>
+                                        <p class="text-sm text-gray-500">Cash or assets the owner put into the business from personal funds this period.</p>
+                                    </div>
+                                    <div class="relative group">
+                                        <div class="absolute -left-11 bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shadow-lg group-hover:scale-110 transition-transform">3</div>
+                                        <h5 class="font-bold text-gray-800 text-lg">Add: Net Income</h5>
+                                        <p class="text-sm text-gray-500">This number represents the wealth created by operations. It comes <strong>directly</strong> from Step 1.</p>
+                                    </div>
+                                    <div class="relative group">
+                                        <div class="absolute -left-11 bg-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold shadow-lg group-hover:scale-110 transition-transform">4</div>
+                                        <h5 class="font-bold text-gray-800 text-lg">Less: Withdrawals</h5>
+                                        <p class="text-sm text-gray-500">Money taken out by the owner. This is <strong>not</strong> an expense; it is a distribution of profit.</p>
+                                    </div>
+                                </div>
+
+                                <!-- The Visual Table -->
+                                <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                                    <h5 class="font-bold text-center mb-4 text-gray-700 uppercase tracking-widest">Example Calculation</h5>
+                                    <table class="w-full text-sm font-mono">
+                                        <tbody class="divide-y divide-gray-300">
+                                            <tr class="bg-white">
+                                                <td class="p-3">Smith, Capital (Jan 1)</td>
+                                                <td class="p-3 text-right text-gray-500">$ 10,000</td>
+                                            </tr>
+                                            <tr class="bg-green-50">
+                                                <td class="p-3 font-bold text-green-800">+ Net Income (from Step 1)</td>
+                                                <td class="p-3 text-right font-bold text-green-800">16,700</td>
+                                            </tr>
+                                            <tr class="bg-white">
+                                                <td class="p-3 text-gray-600">+ Addl. Investments</td>
+                                                <td class="p-3 text-right text-gray-600">0</td>
+                                            </tr>
+                                            <tr class="bg-red-50">
+                                                <td class="p-3 font-bold text-red-800">- Withdrawals</td>
+                                                <td class="p-3 text-right font-bold text-red-800 border-b border-gray-400">(2,000)</td>
+                                            </tr>
+                                            <tr class="bg-blue-600 text-white font-bold text-lg">
+                                                <td class="p-4">Smith, Capital (Jan 31)</td>
+                                                <td class="p-4 text-right border-t-4 border-double border-white">$ 24,700</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="mt-4 text-xs text-center text-gray-500">
+                                        This final number ($24,700) is the <strong>ONLY</strong> number that moves forward to the Balance Sheet.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ============================================================== -->
+                    <!-- SUB-SECTION 6.3: STATEMENT OF FINANCIAL POSITION              -->
+                    <!-- ============================================================== -->
+                    <div class="mb-6 border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="bg-slate-50 p-6 border-b border-slate-200 flex justify-between items-center">
+                            <h4 class="text-2xl font-bold text-slate-700 flex items-center">
+                                <span class="bg-blue-600 text-white w-8 h-8 rounded flex items-center justify-center text-sm mr-3">3</span>
+                                Statement of Financial Position (Balance Sheet)
+                            </h4>
+                            <span class="text-sm font-mono text-slate-500 bg-white px-3 py-1 rounded border">Type: Snapshot Report</span>
+                        </div>
+                        
+                        <div class="p-8 bg-white">
+                            <p class="text-gray-600 mb-8">
+                                This is the ultimate proof of the accounting equation. It shows what the company owns (Assets) and who has a claim to them (Creditors + Owners) on a specific date. Unlike the other two, this is a "Snapshot"—it freezes time.
+                            </p>
+
+                            <!-- The Classified Balance Sheet -->
+                            <div class="bg-white border-4 border-double border-gray-300 shadow-2xl mx-auto max-w-4xl font-mono text-sm p-10">
+                                <div class="text-center mb-10">
+                                    <h5 class="font-bold uppercase text-xl">Global Tech Services</h5>
+                                    <p class="font-bold text-lg">Statement of Financial Position</p>
+                                    <p class="italic text-gray-500">As of December 31, 2024</p>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                    <!-- LEFT COLUMN: ASSETS -->
+                                    <div>
+                                        <h6 class="font-bold text-gray-800 border-b-2 border-gray-800 mb-4 text-lg">ASSETS</h6>
+                                        
+                                        <!-- Current Assets -->
+                                        <div class="mb-6">
+                                            <p class="font-bold text-gray-600 mb-2 underline decoration-gray-300">Current Assets</p>
+                                            <p class="text-[10px] text-gray-400 italic mb-2 ml-2">(Liquidity Order: Cash is first)</p>
+                                            <div class="flex justify-between pl-2 mb-1"><span>Cash</span><span>$ 15,000</span></div>
+                                            <div class="flex justify-between pl-2 mb-1"><span>Accounts Receivable</span><span>8,200</span></div>
+                                            <div class="flex justify-between pl-2 mb-1"><span>Supplies</span><span>1,500</span></div>
+                                            <div class="flex justify-between pl-2 mb-1"><span>Prepaid Insurance</span><span class="border-b border-gray-400">1,100</span></div>
+                                            <div class="flex justify-between pl-2 font-bold text-blue-800 mt-2"><span>Total Current Assets</span><span>25,800</span></div>
+                                        </div>
+
+                                        <!-- Non-Current Assets -->
+                                        <div class="mb-6">
+                                            <p class="font-bold text-gray-600 mb-2 underline decoration-gray-300">Property, Plant & Equip</p>
+                                            <div class="flex justify-between pl-2 mb-1"><span>Office Equipment</span><span>10,000</span></div>
+                                            <div class="flex justify-between pl-2 text-red-500 mb-1"><span>Less: Accum. Depr.</span><span class="border-b border-gray-400">(500)</span></div>
+                                            <div class="flex justify-between pl-2 font-bold text-blue-800 mt-2"><span>Net Equipment</span><span class="border-b border-gray-800">9,500</span></div>
+                                        </div>
+
+                                        <!-- Total Assets -->
+                                        <div class="flex justify-between font-black text-white bg-slate-800 p-3 mt-12 rounded shadow-lg">
+                                            <span>TOTAL ASSETS</span>
+                                            <span>$ 35,300</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- RIGHT COLUMN: LIABILITIES & EQUITY -->
+                                    <div>
+                                        <h6 class="font-bold text-gray-800 border-b-2 border-gray-800 mb-4 text-lg">LIABILITIES & EQUITY</h6>
+                                        
+                                        <!-- Current Liabilities -->
+                                        <div class="mb-6">
+                                            <p class="font-bold text-gray-600 mb-2 underline decoration-gray-300">Current Liabilities</p>
+                                            <div class="flex justify-between pl-2 mb-1"><span>Accounts Payable</span><span>$ 4,000</span></div>
+                                            <div class="flex justify-between pl-2 mb-1"><span>Salaries Payable</span><span>300</span></div>
+                                            <div class="flex justify-between pl-2 mb-1"><span>Unearned Revenue</span><span>6,200</span></div>
+                                            <div class="flex justify-between pl-2 mb-1"><span>Interest Payable</span><span class="border-b border-gray-400">100</span></div>
+                                            <div class="flex justify-between pl-2 font-bold text-red-800 mt-2"><span>Total Liabilities</span><span>10,600</span></div>
+                                        </div>
+
+                                        <!-- Owner's Equity -->
+                                        <div class="mb-6 mt-12">
+                                            <p class="font-bold text-gray-600 mb-2 underline decoration-gray-300">Owner's Equity</p>
+                                            <div class="flex justify-between pl-2 mb-1"><span>Smith, Capital</span><span class="border-b border-gray-800">24,700</span></div>
+                                            <div class="bg-yellow-50 text-[10px] p-2 mt-2 rounded border border-yellow-200 text-yellow-800">
+                                                <strong>CHECKPOINT:</strong> This $24,700 must match the Ending Capital from Step 2. Do NOT use the Capital from the Trial Balance!
+                                            </div>
+                                        </div>
+
+                                        <!-- Total L & E -->
+                                        <div class="flex justify-between font-black text-white bg-slate-800 p-3 mt-12 rounded shadow-lg">
+                                            <span>TOTAL LIAB. & EQUITY</span>
+                                            <span>$ 35,300</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================================== -->
+            <!-- STEP 7: ADJUSTING ENTRIES (JOURNALIZE & POST)                                      -->
+            <!-- ================================================================================== -->
+            <section class="group relative">
+                <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                <div class="relative bg-white p-10 rounded-3xl border border-gray-200 shadow-2xl">
+                    
+                    <!-- Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between border-b-2 border-gray-100 pb-8 mb-10">
+                        <div class="flex items-center">
+                            <span class="text-8xl font-black text-slate-100 mr-6 -ml-4 select-none tracking-tighter">07</span>
+                            <div>
+                                <h3 class="text-4xl font-extrabold text-slate-800 tracking-tight">Adjusting Entries</h3>
+                                <p class="text-xl text-purple-600 font-medium mt-1">Formalizing the Updates</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 md:mt-0 flex flex-wrap gap-2">
+                            <span class="px-4 py-2 bg-purple-50 text-purple-700 text-xs font-bold uppercase rounded-full tracking-wider border border-purple-100">Accruals</span>
+                            <span class="px-4 py-2 bg-purple-50 text-purple-700 text-xs font-bold uppercase rounded-full tracking-wider border border-purple-100">Deferrals</span>
+                            <span class="px-4 py-2 bg-purple-50 text-purple-700 text-xs font-bold uppercase rounded-full tracking-wider border border-purple-100">Estimates</span>
+                        </div>
+                    </div>
+
+                    <!-- Intro -->
+                    <div class="prose max-w-none text-gray-600 mb-12">
+                        <p class="text-lg font-medium text-purple-900 bg-purple-50 p-4 rounded-lg border-l-4 border-purple-500">
+                            <strong>Crucial Concept:</strong> The Worksheet we completed previously is just a "scratchpad." It has no legal standing.
+                        </p>
+                        <p class="leading-loose">
+                            Up to this point, the calculations for Depreciation, accrued interest, and used supplies exist only on the Worksheet. The <strong>General Ledger</strong>—the official record of the company—still shows the old, unadjusted balances. Step 7 involves formally writing these adjustments into the General Journal and posting them to the Ledger. If we skip this, our Financial Statements (Step 6) are lies.
+                        </p>
+                    </div>
+
+                    <!-- Deep Dive: The Four Types of Adjustments -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                        
+                        <!-- Type 1: Deferred Expenses (Prepaids) -->
+                        <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:border-purple-300 transition-colors">
+                            <div class="flex items-center mb-4">
+                                <span class="bg-purple-100 text-purple-700 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-4">1</span>
+                                <h4 class="font-bold text-gray-800 text-xl">Deferred Expenses (Prepaids)</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4 h-16">
+                                Cash was paid <em>before</em> the expense was incurred. We recorded an Asset initially. Now we must expense the part we used.
+                            </p>
+                            <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-xs mb-4">
+                                // Example: $100 Insurance used<br>
+                                Dr. Insurance Expense .... 100<br>
+                                &nbsp;&nbsp;&nbsp;Cr. Prepaid Insurance .... 100
+                            </div>
+                            <div class="flex justify-between items-center bg-gray-50 p-2 rounded text-xs text-gray-500">
+                                <span><strong>Effect if skipped:</strong></span>
+                                <span>Assets Overstated, Expenses Understated.</span>
+                            </div>
+                        </div>
+
+                        <!-- Type 2: Deferred Revenue (Unearned) -->
+                        <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:border-purple-300 transition-colors">
+                            <div class="flex items-center mb-4">
+                                <span class="bg-purple-100 text-purple-700 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-4">2</span>
+                                <h4 class="font-bold text-gray-800 text-xl">Deferred Revenue (Unearned)</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4 h-16">
+                                Cash was received <em>before</em> the service was performed. We recorded a Liability initially. Now we must recognize revenue for work done.
+                            </p>
+                            <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-xs mb-4">
+                                // Example: $500 Service performed<br>
+                                Dr. Unearned Revenue ..... 500<br>
+                                &nbsp;&nbsp;&nbsp;Cr. Service Revenue ...... 500
+                            </div>
+                            <div class="flex justify-between items-center bg-gray-50 p-2 rounded text-xs text-gray-500">
+                                <span><strong>Effect if skipped:</strong></span>
+                                <span>Liabilities Overstated, Revenue Understated.</span>
+                            </div>
+                        </div>
+
+                        <!-- Type 3: Accrued Expenses -->
+                        <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:border-purple-300 transition-colors">
+                            <div class="flex items-center mb-4">
+                                <span class="bg-pink-100 text-pink-700 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-4">3</span>
+                                <h4 class="font-bold text-gray-800 text-xl">Accrued Expenses</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4 h-16">
+                                Expense happened, but cash has <em>not</em> been paid yet. We must record the expense and the liability (payable).
+                            </p>
+                            <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-xs mb-4">
+                                // Example: $300 Salaries owed<br>
+                                Dr. Salaries Expense ..... 300<br>
+                                &nbsp;&nbsp;&nbsp;Cr. Salaries Payable ..... 300
+                            </div>
+                            <div class="flex justify-between items-center bg-gray-50 p-2 rounded text-xs text-gray-500">
+                                <span><strong>Effect if skipped:</strong></span>
+                                <span>Expenses Understated, Liabilities Understated.</span>
+                            </div>
+                        </div>
+
+                        <!-- Type 4: Accrued Revenue -->
+                        <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:border-purple-300 transition-colors">
+                            <div class="flex items-center mb-4">
+                                <span class="bg-pink-100 text-pink-700 w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg mr-4">4</span>
+                                <h4 class="font-bold text-gray-800 text-xl">Accrued Revenue</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4 h-16">
+                                Service performed, but cash has <em>not</em> been received. We must record the asset (receivable) and the revenue.
+                            </p>
+                            <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-xs mb-4">
+                                // Example: $200 Interest earned<br>
+                                Dr. Interest Receivable .. 200<br>
+                                &nbsp;&nbsp;&nbsp;Cr. Interest Revenue ..... 200
+                            </div>
+                            <div class="flex justify-between items-center bg-gray-50 p-2 rounded text-xs text-gray-500">
+                                <span><strong>Effect if skipped:</strong></span>
+                                <span>Assets Understated, Revenue Understated.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visualizing the Contra Asset -->
+                    <div class="bg-indigo-50 border-l-8 border-indigo-500 p-10 rounded-r-2xl shadow-inner">
+                        <div class="flex flex-col md:flex-row items-center justify-between mb-8">
+                            <div class="md:w-2/3">
+                                <h4 class="font-bold text-indigo-900 text-2xl mb-4">The Special Case: Depreciation</h4>
+                                <p class="text-indigo-800 text-lg leading-relaxed">
+                                    Why don't we just credit the Equipment account directly? Because of the <strong>Historical Cost Principle</strong>. We must keep the original purchase price visible on the books. We use a "Contra-Asset" account called <em>Accumulated Depreciation</em> to track the wear and tear separately.
+                                </p>
+                            </div>
+                            <div class="md:w-1/3 flex justify-center mt-6 md:mt-0">
+                                <div class="bg-white p-4 rounded-lg shadow-md border border-indigo-200 text-center">
+                                    <span class="block text-sm text-gray-400 uppercase tracking-widest font-bold mb-1">Formula</span>
+                                    <span class="block text-2xl font-bold text-indigo-700">Cost - Acc. Depr.</span>
+                                    <span class="block text-sm text-gray-500 mt-1">= Book Value</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col md:flex-row justify-center space-y-6 md:space-y-0 md:space-x-12 items-center">
+                            <!-- T Account: Equipment -->
+                            <div class="w-48 bg-white p-4 rounded shadow">
+                                <div class="text-center font-bold border-b-2 border-black mb-2 pb-1">Equipment</div>
+                                <div class="flex h-24">
+                                    <div class="w-1/2 border-r-2 border-black text-right pr-2 pt-1 relative">
+                                        <span class="block font-mono text-lg">10,000</span>
+                                        <span class="text-[10px] text-gray-400 absolute bottom-1 right-2">(Cost)</span>
+                                    </div>
+                                    <div class="w-1/2 h-full"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-6xl font-thin text-indigo-300">-</div>
+
+                            <!-- T Account: Acc. Depr -->
+                            <div class="w-48 bg-white p-4 rounded shadow">
+                                <div class="text-center font-bold border-b-2 border-black mb-2 pb-1">Accum. Depr.</div>
+                                <div class="flex h-24">
+                                    <div class="w-1/2 border-r-2 border-black h-full"></div>
+                                    <div class="w-1/2 h-full pl-2 pt-1 relative">
+                                        <span class="block font-mono text-lg text-red-600">2,000</span>
+                                        <span class="text-[10px] text-gray-400 absolute bottom-1 left-2">(Adjustments)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-6xl font-thin text-indigo-300">=</div>
+
+                            <div class="text-center">
+                                <span class="block text-4xl font-bold text-indigo-900">$8,000</span>
+                                <span class="block text-indigo-600 font-medium">Net Book Value</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================================== -->
+            <!-- STEP 8: CLOSING ENTRIES                                                            -->
+            <!-- ================================================================================== -->
+            <section class="group relative">
+                <div class="absolute -inset-1 bg-gradient-to-r from-pink-500 to-rose-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                <div class="relative bg-white p-10 rounded-3xl border border-gray-200 shadow-2xl">
+                    
+                    <!-- Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between border-b-2 border-gray-100 pb-8 mb-10">
+                        <div class="flex items-center">
+                            <span class="text-8xl font-black text-slate-100 mr-6 -ml-4 select-none tracking-tighter">08</span>
+                            <div>
+                                <h3 class="text-4xl font-extrabold text-slate-800 tracking-tight">Closing Entries</h3>
+                                <p class="text-xl text-pink-600 font-medium mt-1">Resetting the Scoreboard</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 md:mt-0 flex flex-wrap gap-2">
+                            <span class="px-4 py-2 bg-pink-50 text-pink-700 text-xs font-bold uppercase rounded-full tracking-wider border border-pink-100">Nominal Accounts</span>
+                            <span class="px-4 py-2 bg-pink-50 text-pink-700 text-xs font-bold uppercase rounded-full tracking-wider border border-pink-100">Real Accounts</span>
+                            <span class="px-4 py-2 bg-pink-50 text-pink-700 text-xs font-bold uppercase rounded-full tracking-wider border border-pink-100">REID Method</span>
+                        </div>
+                    </div>
+
+                    <!-- Intro -->
+                    <div class="prose max-w-none text-gray-600 mb-12 leading-loose">
+                        <p>
+                            Imagine a football stadium. At the end of the game, the scoreboard might read "Home: 24, Away: 17." Before the next game begins, they don't keep adding points to that score. They reset it to "0-0."
+                        </p>
+                        <p>
+                            In accounting, <strong>Revenues, Expenses, and Withdrawals</strong> are like the score of the game. They track performance for <em>one year</em>. We call these "Temporary" or "Nominal" accounts. At year-end, their balances are transferred to Owner's Capital, and they start the new year at zero. Assets, Liabilities, and Capital are "Permanent" or "Real" accounts—they are never closed because they represent ongoing existence.
+                        </p>
+                    </div>
+
+                    <!-- The REID Method - Detailed Walkthrough -->
+                    <div class="bg-gray-900 rounded-3xl p-10 text-gray-300 font-mono shadow-2xl border-4 border-gray-800">
+                        <div class="flex items-center justify-between mb-8 border-b border-gray-700 pb-4">
+                            <h4 class="text-white text-2xl font-bold">The Closing Sequence (REID Method)</h4>
+                            <div class="flex space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Entry 1: Revenue -->
+                        <div class="mb-10 pl-6 border-l-4 border-green-500 relative">
+                            <div class="absolute -left-3 top-0 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-xs">R</div>
+                            <div class="flex justify-between text-xs text-green-400 mb-2 uppercase tracking-widest font-bold">
+                                <span>Entry 1: Close Revenue</span>
+                                <span>Dec 31</span>
+                            </div>
+                            <div class="bg-gray-800 p-4 rounded-lg">
+                                <div class="grid grid-cols-12 gap-4 mb-2">
+                                    <div class="col-span-8 text-white">Service Revenue</div>
+                                    <div class="col-span-2 text-right">30,000</div>
+                                    <div class="col-span-2"></div>
+                                </div>
+                                <div class="grid grid-cols-12 gap-4">
+                                    <div class="col-span-8 pl-8">Income Summary</div>
+                                    <div class="col-span-2"></div>
+                                    <div class="col-span-2 text-right">30,000</div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2 italic pl-2">
+                                Logic: Revenue has a Credit balance. To kill it (make it zero), we Debit it. The Credit goes to the temporary holding bucket "Income Summary".
+                            </p>
+                        </div>
+
+                        <!-- Entry 2: Expenses -->
+                        <div class="mb-10 pl-6 border-l-4 border-red-500 relative">
+                            <div class="absolute -left-3 top-0 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-xs">E</div>
+                            <div class="flex justify-between text-xs text-red-400 mb-2 uppercase tracking-widest font-bold">
+                                <span>Entry 2: Close Expenses</span>
+                                <span>Dec 31</span>
+                            </div>
+                            <div class="bg-gray-800 p-4 rounded-lg">
+                                <div class="grid grid-cols-12 gap-4 mb-2">
+                                    <div class="col-span-8 text-white">Income Summary</div>
+                                    <div class="col-span-2 text-right">13,400</div>
+                                    <div class="col-span-2"></div>
+                                </div>
+                                <div class="grid grid-cols-12 gap-4 mb-1">
+                                    <div class="col-span-8 pl-8">Salaries Expense</div>
+                                    <div class="col-span-2"></div>
+                                    <div class="col-span-2 text-right">8,000</div>
+                                </div>
+                                <div class="grid grid-cols-12 gap-4 mb-1">
+                                    <div class="col-span-8 pl-8">Rent Expense</div>
+                                    <div class="col-span-2"></div>
+                                    <div class="col-span-2 text-right">3,000</div>
+                                </div>
+                                <div class="grid grid-cols-12 gap-4">
+                                    <div class="col-span-8 pl-8">... Other Expenses</div>
+                                    <div class="col-span-2"></div>
+                                    <div class="col-span-2 text-right">2,400</div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2 italic pl-2">
+                                Logic: Expenses have Debit balances. To kill them, we Credit them.
+                            </p>
+                        </div>
+
+                        <!-- Entry 3: Income Summary -->
+                        <div class="mb-10 pl-6 border-l-4 border-blue-500 relative">
+                            <div class="absolute -left-3 top-0 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-xs">I</div>
+                            <div class="flex justify-between text-xs text-blue-400 mb-2 uppercase tracking-widest font-bold">
+                                <span>Entry 3: Close Income Summary</span>
+                                <span>Dec 31</span>
+                            </div>
+                            <div class="bg-gray-800 p-4 rounded-lg border border-blue-900/50">
+                                <div class="mb-2 text-xs text-blue-300 text-center border-b border-gray-700 pb-2">
+                                    Current Status of Income Summary:<br>
+                                    Credit (30,000) - Debit (13,400) = Credit Bal (16,600)
+                                </div>
+                                <div class="grid grid-cols-12 gap-4 mb-2">
+                                    <div class="col-span-8 text-white">Income Summary</div>
+                                    <div class="col-span-2 text-right">16,600</div>
+                                    <div class="col-span-2"></div>
+                                </div>
+                                <div class="grid grid-cols-12 gap-4">
+                                    <div class="col-span-8 pl-8">Smith, Capital</div>
+                                    <div class="col-span-2"></div>
+                                    <div class="col-span-2 text-right">16,600</div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2 italic pl-2">
+                                Logic: The "Income Summary" bucket holds the Net Income. We now pour that profit into the owner's permanent Capital account.
+                            </p>
+                        </div>
+
+                        <!-- Entry 4: Drawings -->
+                        <div class="pl-6 border-l-4 border-yellow-500 relative">
+                            <div class="absolute -left-3 top-0 w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center text-gray-900 font-bold text-xs">D</div>
+                            <div class="flex justify-between text-xs text-yellow-400 mb-2 uppercase tracking-widest font-bold">
+                                <span>Entry 4: Close Drawings</span>
+                                <span>Dec 31</span>
+                            </div>
+                            <div class="bg-gray-800 p-4 rounded-lg">
+                                <div class="grid grid-cols-12 gap-4 mb-2">
+                                    <div class="col-span-8 text-white">Smith, Capital</div>
+                                    <div class="col-span-2 text-right">2,000</div>
+                                    <div class="col-span-2"></div>
+                                </div>
+                                <div class="grid grid-cols-12 gap-4">
+                                    <div class="col-span-8 pl-8">Smith, Drawings</div>
+                                    <div class="col-span-2"></div>
+                                    <div class="col-span-2 text-right">2,000</div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2 italic pl-2">
+                                Logic: Drawings skip the "Income Summary" because they are not expenses. They reduce Equity directly.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Flow Diagram -->
+                    <div class="mt-12 bg-gray-50 p-8 rounded-2xl border border-gray-200">
+                        <h4 class="font-bold text-gray-800 mb-6 text-center uppercase tracking-widest">The Great Filtering Process</h4>
+                        <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-sm">
+                            
+                            <!-- Bucket 1 -->
+                            <div class="bg-white p-6 rounded-lg shadow text-center w-full md:w-1/4 border-t-4 border-green-500">
+                                <span class="font-bold text-green-800 block text-lg mb-1">Revenues</span>
+                                <span class="text-xs text-gray-500">Starts Credit</span>
+                                <div class="mt-4 text-2xl">⬇️</div>
+                            </div>
+                            
+                            <div class="hidden md:block text-gray-300 text-4xl">→</div>
+
+                            <!-- Bucket 2 -->
+                            <div class="bg-white p-6 rounded-lg shadow text-center w-full md:w-1/4 border-t-4 border-red-500">
+                                <span class="font-bold text-red-800 block text-lg mb-1">Expenses</span>
+                                <span class="text-xs text-gray-500">Starts Debit</span>
+                                <div class="mt-4 text-2xl">⬇️</div>
+                            </div>
+
+                            <div class="hidden md:block text-gray-300 text-4xl">→</div>
+
+                            <!-- Mixing Pot -->
+                            <div class="bg-blue-100 p-6 rounded-lg shadow-lg text-center w-full md:w-1/4 border-2 border-blue-400 transform scale-105">
+                                <span class="font-bold text-blue-900 block text-lg mb-1">Income Summary</span>
+                                <span class="text-xs text-blue-700">The Temporary Mixing Pot</span>
+                                <div class="mt-4 font-bold text-blue-900">Net Income</div>
+                            </div>
+
+                            <div class="hidden md:block text-gray-300 text-4xl">→</div>
+
+                            <!-- Final Destination -->
+                            <div class="bg-slate-800 p-6 rounded-lg shadow-xl text-center w-full md:w-1/4">
+                                <span class="font-bold text-white block text-lg mb-1">Owner's Capital</span>
+                                <span class="text-xs text-gray-400">The Permanent Reservoir</span>
+                                <div class="mt-4 text-green-400 font-bold">+ Growth</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================================== -->
+            <!-- STEP 9: POST-CLOSING TRIAL BALANCE                                                 -->
+            <!-- ================================================================================== -->
+            <section class="group relative">
+                <div class="absolute -inset-1 bg-gradient-to-r from-amber-400 to-orange-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                <div class="relative bg-white p-10 rounded-3xl border border-gray-200 shadow-2xl">
+                    
+                    <!-- Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between border-b-2 border-gray-100 pb-8 mb-10">
+                        <div class="flex items-center">
+                            <span class="text-8xl font-black text-slate-100 mr-6 -ml-4 select-none tracking-tighter">09</span>
+                            <div>
+                                <h3 class="text-4xl font-extrabold text-slate-800 tracking-tight">Post-Closing Trial Balance</h3>
+                                <p class="text-xl text-amber-600 font-medium mt-1">The Final Checkpoint</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="prose max-w-none text-gray-600 mb-12">
+                        <p class="text-lg">
+                            We have reached the end of the year. The ledger has been adjusted, and all temporary accounts have been zeroed out. But did we make a mistake during the closing process? The <strong>Post-Closing Trial Balance</strong> is the final safeguard. It lists only the accounts that remain open—the "survivors."
+                        </p>
+                        <p>
+                            If you see a Revenue or Expense account on this list, <strong>STOP</strong>. You have made a critical error.
+                        </p>
+                    </div>
+
+                    <!-- The Graveyard Metaphor -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+                        <!-- Left: The Living -->
+                        <div class="bg-white p-8 rounded-2xl border-2 border-emerald-100 shadow-lg flex flex-col relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">PERMANENT</div>
+                            <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <svg class="w-10 h-10 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2 text-center text-xl">The Survivors (Real Accounts)</h4>
+                            <p class="text-sm text-gray-500 mb-6 text-center">These accounts continue into next year with their ending balances.</p>
+                            
+                            <div class="bg-emerald-50 p-6 rounded-xl font-mono text-sm space-y-3">
+                                <div class="flex justify-between border-b border-emerald-200 pb-2">
+                                    <span>Cash</span>
+                                    <span class="font-bold text-gray-800">15,000</span>
+                                </div>
+                                <div class="flex justify-between border-b border-emerald-200 pb-2">
+                                    <span>Accounts Receivable</span>
+                                    <span class="font-bold text-gray-800">8,200</span>
+                                </div>
+                                <div class="flex justify-between border-b border-emerald-200 pb-2">
+                                    <span>Accounts Payable</span>
+                                    <span class="font-bold text-gray-800">(4,000)</span>
+                                </div>
+                                <div class="flex justify-between border-b border-emerald-200 pb-2 bg-emerald-200/50 p-1 rounded">
+                                    <span>Smith, Capital</span>
+                                    <span class="font-bold text-emerald-900">24,700</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: The Dead -->
+                        <div class="bg-white p-8 rounded-2xl border-2 border-gray-100 shadow-sm flex flex-col relative opacity-75 hover:opacity-100 transition-opacity">
+                            <div class="absolute top-0 right-0 bg-gray-400 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">TEMPORARY</div>
+                            <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <svg class="w-10 h-10 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            </div>
+                            <h4 class="font-bold text-gray-800 mb-2 text-center text-xl">The Closed (Nominal Accounts)</h4>
+                            <p class="text-sm text-gray-500 mb-6 text-center">These accounts MUST be empty (zero). If they have a balance, you failed Step 8.</p>
+                            
+                            <div class="bg-gray-50 p-6 rounded-xl font-mono text-sm space-y-3 text-gray-400">
+                                <div class="flex justify-between border-b border-gray-200 pb-2">
+                                    <span>Service Revenue</span>
+                                    <span>0.00</span>
+                                </div>
+                                <div class="flex justify-between border-b border-gray-200 pb-2">
+                                    <span>Rent Expense</span>
+                                    <span>0.00</span>
+                                </div>
+                                <div class="flex justify-between border-b border-gray-200 pb-2">
+                                    <span>Salaries Expense</span>
+                                    <span>0.00</span>
+                                </div>
+                                <div class="flex justify-between border-b border-gray-200 pb-2">
+                                    <span>Withdrawals</span>
+                                    <span>0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detective Work: Troubleshooting -->
+                    <div class="bg-red-50 border-l-8 border-red-500 p-8 rounded-r-xl">
+                        <div class="flex items-start">
+                            <div class="mr-4 mt-1">
+                                <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-red-900 text-lg mb-2">Troubleshooting: What if the columns don't match?</h4>
+                                <p class="text-red-800 mb-4 text-sm">The Post-Closing Trial Balance is unforgiving. Here are the common suspects:</p>
+                                <ul class="list-disc list-inside text-sm text-red-700 space-y-2">
+                                    <li><strong>The Net Loss Trap:</strong> Did you accidentally credit Capital for a Net Loss? (Loss reduces equity, so Debit Capital).</li>
+                                    <li><strong>The Capital Error:</strong> Did you use the Capital balance from the <em>Adjusted Trial Balance</em>? You shouldn't! You must use the <em>new</em> Ending Capital from Step 2 (Changes in Equity).</li>
+                                    <li><strong>The Ghost of Drawings:</strong> Did you forget to close the Drawings account? It often gets missed because it's not an expense.</li>
+                                    <li><strong>The Zombie Account:</strong> Did you carry forward a balance for Depreciation Expense? (Only Accumulated Depreciation survives).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================================== -->
+            <!-- STEP 10: REVERSING ENTRIES                                                         -->
+            <!-- ================================================================================== -->
+            <section class="group relative">
+                <div class="absolute -inset-1 bg-gradient-to-r from-slate-400 to-gray-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                <div class="relative bg-white p-10 rounded-3xl border border-gray-200 shadow-2xl">
+                    
+                    <!-- Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between border-b-2 border-gray-100 pb-8 mb-10">
+                        <div class="flex items-center">
+                            <span class="text-8xl font-black text-slate-100 mr-6 -ml-4 select-none tracking-tighter">10</span>
+                            <div>
+                                <h3 class="text-4xl font-extrabold text-slate-800 tracking-tight">Reversing Entries</h3>
+                                <p class="text-xl text-gray-500 font-medium mt-1">Optional: Preparing for the New Year</p>
+                            </div>
+                        </div>
+                        <div class="mt-6 md:mt-0 flex flex-wrap gap-2">
+                            <span class="px-4 py-2 bg-gray-100 text-gray-700 text-xs font-bold uppercase rounded-full tracking-wider border border-gray-300">Jan 1st</span>
+                            <span class="px-4 py-2 bg-gray-100 text-gray-700 text-xs font-bold uppercase rounded-full tracking-wider border border-gray-300">Efficiency</span>
+                        </div>
+                    </div>
+
+                    <!-- Intro -->
+                    <div class="prose max-w-none text-gray-600 mb-12 leading-loose">
+                        <p>
+                            This step happens on <strong>Day 1 of the NEW accounting period</strong> (e.g., January 1st). It is the exact opposite of an adjusting entry made on December 31st. Why would we do work just to undo it?
+                        </p>
+                        <p>
+                            <strong>Efficiency.</strong> Reversing entries allow the bookkeeper to just "record cash payments as expenses" in the new year without worrying about what happened last year. It simplifies the routine recording of transactions.
+                        </p>
+                    </div>
+
+                    <!-- The Comparative Timeline Case Study -->
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200 mb-12">
+                        <h4 class="text-2xl font-bold text-slate-800 mb-6 text-center">Case Study: The Payroll Problem</h4>
+                        <p class="text-center text-gray-500 mb-8 italic max-w-2xl mx-auto">
+                            Scenario: On Dec 31, we owe $300 in salaries. We pay total payroll of $1,000 on Jan 10 (covering the $300 old debt + $700 new work).
+                        </p>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            
+                            <!-- Method A: The Hard Way -->
+                            <div class="bg-white p-6 rounded-xl border-t-8 border-red-400 shadow-lg">
+                                <h5 class="font-bold text-red-800 text-lg mb-4 text-center uppercase tracking-widest">Method A: No Reversing</h5>
+                                
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="text-xs font-bold text-gray-400 mb-1">Dec 31 (Adjustment)</div>
+                                        <div class="bg-red-50 p-2 rounded text-xs font-mono border border-red-100">
+                                            Dr. Salary Exp .... 300<br>
+                                            &nbsp;&nbsp;Cr. Salary Payable .. 300
+                                        </div>
+                                    </div>
+
+                                    <div class="flex justify-center text-2xl text-gray-300">⬇️</div>
+
+                                    <div>
+                                        <div class="text-xs font-bold text-gray-400 mb-1">Jan 10 (Payment) - COMPLEX!</div>
+                                        <p class="text-xs text-red-600 mb-2 italic">Bookkeeper must look up last year's records to split the transaction.</p>
+                                        <div class="bg-red-50 p-2 rounded text-xs font-mono border border-red-100 font-bold">
+                                            Dr. Salary Payable .. 300 <span class="text-gray-400">// Clearing debt</span><br>
+                                            Dr. Salary Exp ...... 700 <span class="text-gray-400">// New expense</span><br>
+                                            &nbsp;&nbsp;Cr. Cash ............ 1000
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Method B: The Smart Way -->
+                            <div class="bg-white p-6 rounded-xl border-t-8 border-green-400 shadow-lg">
+                                <h5 class="font-bold text-green-800 text-lg mb-4 text-center uppercase tracking-widest">Method B: Reversing Entry</h5>
+                                
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="text-xs font-bold text-gray-400 mb-1">Dec 31 (Adjustment)</div>
+                                        <div class="bg-green-50 p-2 rounded text-xs font-mono border border-green-100">
+                                            Dr. Salary Exp .... 300<br>
+                                            &nbsp;&nbsp;Cr. Salary Payable .. 300
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="text-xs font-bold text-gray-400 mb-1">Jan 1 (Reversal)</div>
+                                        <div class="bg-blue-50 p-2 rounded text-xs font-mono border border-blue-100">
+                                            Dr. Salary Payable .. 300<br>
+                                            &nbsp;&nbsp;Cr. Salary Exp ...... 300
+                                        </div>
+                                        <p class="text-[10px] text-gray-400 mt-1">*Salaries Exp now has a weird Credit balance.</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="text-xs font-bold text-gray-400 mb-1">Jan 10 (Payment) - SIMPLE!</div>
+                                        <p class="text-xs text-green-600 mb-2 italic">Bookkeeper just records payment as expense. No thinking required.</p>
+                                        <div class="bg-green-50 p-2 rounded text-xs font-mono border border-green-100 font-bold">
+                                            Dr. Salary Exp ...... 1000<br>
+                                            &nbsp;&nbsp;Cr. Cash ............ 1000
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 bg-blue-50 p-4 rounded text-center border border-blue-200">
+                            <p class="text-sm text-blue-800">
+                                <strong>The Magic Math:</strong> In Method B, Expense was credited 300 (Jan 1) and debited 1000 (Jan 10).<br>
+                                Net Balance = 1000 - 300 = <strong>$700</strong>. This matches the correct new expense amount perfectly!
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- The Golden Rules -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-300">
+                        <h5 class="font-bold text-gray-800 mb-4 flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            The Golden Rules of Reversing
+                        </h5>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div class="bg-green-50 p-4 rounded text-green-900 border border-green-200">
+                                <strong class="block mb-2 uppercase text-xs tracking-wider">ALWAYS Reverse:</strong>
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>Accrued Expenses (Salaries, Interest, Taxes).</li>
+                                    <li>Accrued Revenues (Interest Receivable, Unbilled Services).</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded text-red-900 border border-red-200">
+                                <strong class="block mb-2 uppercase text-xs tracking-wider">NEVER Reverse:</strong>
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>Depreciation (It accumulates forever).</li>
+                                    <li>Bad Debt Expense.</li>
+                                    <li>Prepayments recorded initially as Assets.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    `,
+    exercises: [
+        {
+            type: "mcq",
+            question: "Which of the following accounts appears on a Post-Closing Trial Balance?",
+            options: ["Service Revenue", "Rent Expense", "Accounts Receivable", "Owner's Withdrawals"],
+            correctIndex: 2,
+            explanation: "Only Permanent (Real) accounts appear post-closing. Revenue, Expenses, and Withdrawals are closed to zero."
         },
+        {
+            type: "mcq",
+            question: "What is the correct order for closing entries (REID)?",
+            options: ["Revenue, Expenses, Income Summary, Drawings", "Revenue, Equity, Income, Debt", "Rent, Expenses, Interest, Drawings", "Revenue, Expenses, Investments, Drawings"],
+            correctIndex: 0,
+            explanation: "Close Revenue, then Expenses, then Income Summary (Net Income/Loss), then Drawings."
+        },
+        {
+            type: "mcq",
+            question: "If a company has a Net Loss for the year, the closing entry for Income Summary will include:",
+            options: ["Debit to Capital", "Credit to Capital", "Debit to Revenue", "Credit to Drawings"],
+            correctIndex: 0,
+            explanation: "A Net Loss means Income Summary has a Debit balance. To close it, we Credit Income Summary and Debit Capital (reducing equity)."
+        },
+        {
+            type: "mcq",
+            question: "Why do we perform Reversing Entries?",
+            options: ["To correct errors in the previous year", "To ensure assets are depreciated", "To simplify recording of routine transactions in the new year", "To close the books"],
+            correctIndex: 2,
+            explanation: "Reversing entries are optional and used purely for convenience to avoid splitting transactions in the new period."
+        },
+        {
+            type: "mcq",
+            question: "Which account is NEVER closed?",
+            options: ["Accumulated Depreciation", "Depreciation Expense", "Income Summary", "Sales Revenue"],
+            correctIndex: 0,
+            explanation: "Accumulated Depreciation is a Contra-Asset (Real Account). It stays on the books. Depreciation Expense is a Nominal Account and is closed."
+        }
+    ]
+};
+
         {
             day: "Day 3",
             topic: "Practical: Journalizing to Trial Balance",
