@@ -2069,34 +2069,37 @@ export const unit1Data = {
                         <h2 class="text-3xl font-bold mb-2">Comprehensive Activity</h2>
                         <p class="text-blue-100">Please complete the accounting cycle for the assigned business scenario below.</p>
                     </div>
-                    <div id="student-activity-root" class="min-h-[600px] bg-gray-50 border rounded-xl shadow-inner">
-                        <div class="p-10 text-center text-gray-500">Loading Activity Module...</div>
+                    
+                    <div id="accounting-activity-root" class="min-h-[800px] bg-gray-50 border rounded-xl shadow-inner">
+                        <div class="flex items-center justify-center h-full pt-20 text-gray-400">
+                            <span class="animate-pulse">Loading Activity Module...</span>
+                        </div>
                     </div>
                 </div>
             `,
             exercises: [
                 {
-                    type: "custom-mount", // Your LMS needs to handle this type
                     title: "Accounting Cycle Simulation",
-                    // This function dynamically imports the app and mounts it to the div above
+                    type: "custom-mount", // Ensure your LMS supports executing 'mountLogic'
                     mountLogic: async () => {
                         try {
-                            // Dynamic import from the subfolder
+                            // 1. Dynamic Import of the Student App
+                            // Path is relative to this file (js/content/) -> js/content/accountingCycle/StudentApp.js
                             const module = await import('./accountingCycle/StudentApp.js');
                             
-                            // Check if the module exports a mount function (which we will create in Part 2)
+                            // 2. Mount the App
                             if (module.default && typeof module.default === 'function') {
-                                module.default('student-activity-root');
+                                // We pass the ID of the div defined in 'content' above
+                                module.default('accounting-activity-root');
                             } else {
-                                console.error("StudentApp.js does not export a default mount function.");
+                                console.error("StudentApp.js did not export a default mount function.");
                             }
-                        } catch (error) {
-                            console.error("Failed to load Student App:", error);
-                            document.getElementById('student-activity-root').innerHTML = `<div class="p-4 text-red-600">Error loading activity: ${error.message}</div>`;
+                        } catch (err) {
+                            console.error("Failed to load StudentApp:", err);
+                            const root = document.getElementById('accounting-activity-root');
+                            if (root) root.innerHTML = `<div class="p-8 text-red-600 font-bold">Error loading activity: ${err.message}</div>`;
                         }
                     }
                 }
-            ]
-        }
     ]
 };
