@@ -397,12 +397,27 @@ function renderDayContent(unit, week, dayIndex) {
     container.appendChild(navFooter);
     content.appendChild(container);
 
-    // Attach Exercise Logic
+    // Attach Logic AFTER rendering
     attachExerciseListeners();
+    executeExerciseMounts(day.exercises); // Execute custom logic (like Sim App)
+}
+
+function executeExerciseMounts(exercises) {
+    if (!exercises) return;
+    exercises.forEach(ex => {
+        if (ex.type === 'custom-mount' && typeof ex.mountLogic === 'function') {
+            // Execute the mount logic which typically imports and runs a module
+            setTimeout(() => {
+                ex.mountLogic();
+            }, 0);
+        }
+    });
 }
 
 function renderExercises(exercises, dayIndex) {
     return exercises.map((ex, i) => {
+        if (ex.type === 'custom-mount') return ''; // Don't render as a question
+
         const exId = `ex-${dayIndex}-${i}`;
         
         if (ex.type === 'mcq') {
@@ -428,6 +443,26 @@ function renderExercises(exercises, dayIndex) {
                     </div>
                 </div>
             `;
+        } else if (ex.type === 'problem') {
+            return `
+                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100">
+                    <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Problem ${i+1}</span>${ex.question}</p>
+                    
+                    <textarea id="input-${exId}" class="w-full p-3 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white" rows="4" placeholder="Type your solution here..." data-qid="${exId}"></textarea>
+                    
+                    <div class="mt-4">
+                        <button id="btn-${exId}" class="hidden px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-all shadow-sm" data-qid="${exId}">Show Answer Key</button>
+                    </div>
+
+                    <div id="ans-${exId}" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded text-sm text-green-800 font-mono whitespace-pre-wrap">
+<strong><i class="fas fa-key mr-1"></i> Answer Key:</strong>
+${ex.answer}
+
+<strong><i class="fas fa-info-circle mr-1"></i> Explanation:</strong>
+${ex.explanation}
+                    </div>
+                </div>
+            `;
         }
         return '';
     }).join('');
@@ -446,6 +481,20 @@ function attachExerciseListeners() {
         });
     });
 
+    // Listen for text input changes (for problems)
+    document.querySelectorAll('textarea[id^="input-"]').forEach(area => {
+        area.addEventListener('input', (e) => {
+            const qid = e.target.getAttribute('data-qid');
+            const btn = document.getElementById(`btn-${qid}`);
+            if(e.target.value.trim().length > 0) {
+                btn.classList.remove('hidden');
+                btn.classList.add('fade-in');
+            } else {
+                btn.classList.add('hidden');
+            }
+        });
+    });
+
     // Listen for check answer clicks
     document.querySelectorAll('button[id^="btn-ex-"]').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -455,9 +504,13 @@ function attachExerciseListeners() {
                 ansDiv.classList.remove('hidden');
                 ansDiv.classList.add('fade-in');
                 e.target.textContent = "Hide Answer";
+                e.target.classList.replace('bg-blue-600', 'bg-gray-500');
+                e.target.classList.replace('hover:bg-blue-700', 'hover:bg-gray-600');
             } else {
                 ansDiv.classList.add('hidden');
                 e.target.textContent = "Show Answer";
+                e.target.classList.replace('bg-gray-500', 'bg-blue-600');
+                e.target.classList.replace('hover:bg-gray-600', 'hover:bg-blue-700');
             }
         });
     });
