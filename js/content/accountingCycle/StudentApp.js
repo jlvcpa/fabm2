@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'https://esm.sh/react@18.2.0';
+import React, { useState, useCallback, useEffect, useRef } from 'https://esm.sh/react@18.2.0';
 import { createRoot } from 'https://esm.sh/react-dom@18.2.0/client';
 import htm from 'https://esm.sh/htm';
-import { Check, Printer, Trash2 } from 'https://esm.sh/lucide-react@0.263.1';
+import { Book, Check, RefreshCw, ArrowLeft, Save, Printer, FileText, Trash2, AlertCircle, Download } from 'https://esm.sh/lucide-react@0.263.1';
 // FIXED: Import from the local utils.js in the same folder
 import { APP_VERSION, STEPS, generateTransactions, generateBeginningBalances, sortAccounts, generateAdjustments, getAccountType } from './utils.js';
 import { TaskSection } from './steps.js';
