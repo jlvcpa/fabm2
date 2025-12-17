@@ -1,9 +1,9 @@
 import { createPlaceholderDays } from '../utils.js';
 import { unit2Data } from './unit2-merchandising.js'; 
-import { unit1Data } from './accountingCycle/unit1-accounting-cycle.js';
+//import { unit1Data } from './accountingCycle/unit1-accounting-cycle.js';
 
 // NEW: Import the Unit 1 data
-// import { unit1Data } from './unit1-accounting-cycle.js';
+import { unit1Data } from './unit1-accounting-cycle.js';
 
 export const courseData = {
     outline: {
