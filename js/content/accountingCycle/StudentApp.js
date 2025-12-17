@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'https://esm.sh/react@18.2.0';
 import { createRoot } from 'https://esm.sh/react-dom@18.2.0/client';
 import htm from 'https://esm.sh/htm';
-import { Book, Check, ArrowLeft, Save, Printer, AlertCircle, Trash2 } from 'https://esm.sh/lucide-react@0.263.1';
-import { APP_VERSION } from './utils.js';
+import { Check, Printer, Trash2 } from 'https://esm.sh/lucide-react@0.263.1';
+import { APP_VERSION } from '../../utils.js'; // Adjusted path if needed, or keep generic
 import { TaskSection } from './steps.js';
 
 // Import all modular steps from the local folder
@@ -20,12 +20,11 @@ import GenericStep from './steps/GenericStep.js';
 
 const html = htm.bind(React.createElement);
 
-// --- PRE-CALCULATED ACTIVITY DATA (INJECTED) ---
+// --- ACTIVITY DATA ---
 const ACTIVITY_DATA = {"config":{"businessType":"Service","ownership":"Sole Proprietorship","inventorySystem":"Periodic","numTransactions":10,"selectedSteps":[1,2,3,4,5,6,7,8,9,10],"numPartners":2,"isSubsequentYear":false,"deferredExpenseMethod":"Asset","deferredIncomeMethod":"Liability","fsFormat":"Single","includeCashFlows":false,"enableAutoSave":true,"options":{"includeTradeDiscounts":false,"includeCashDiscounts":false,"includeFreight":false}},"transactions":[{"type":"Investment","description":"Initial capital investment of P800,000","debits":[{"account":"Cash","amount":800000}],"credits":[{"account":"Owner, Capital","amount":800000}],"amount":800000,"analysis":{"assets":"Increase","liabilities":"No Effect","equity":"Increase","cause":"Increase in Capital"},"id":1,"date":"2023-01-02"},{"type":"Rent Advance","description":"Paid 3 months office rent in advance, P12,000","debits":[{"account":"Prepaid Rent","amount":12000}],"credits":[{"account":"Cash","amount":12000}],"amount":12000,"analysis":{"assets":"No Effect","liabilities":"No Effect","equity":"No Effect","cause":""},"id":2,"date":"2023-01-03"},{"type":"Supplies Credit","description":"Purchased office supplies on account for P4,800","debits":[{"account":"Supplies","amount":4800}],"credits":[{"account":"Accounts Payable","amount":4800}],"amount":4800,"analysis":{"assets":"Increase","liabilities":"Increase","equity":"No Effect","cause":""},"id":3,"date":"2023-01-05"},{"type":"Revenue Cash","description":"Provided services for cash, P26,200","debits":[{"account":"Cash","amount":26200}],"credits":[{"account":"Service Revenue","amount":26200}],"amount":26200,"analysis":{"assets":"Increase","liabilities":"No Effect","equity":"Increase","cause":"Increase in Income"},"id":4,"date":"2023-01-07"},{"type":"Revenue Credit","description":"Provided services on account, P16,200","debits":[{"account":"Accounts Receivable","amount":16200}],"credits":[{"account":"Service Revenue","amount":16200}],"amount":16200,"analysis":{"assets":"Increase","liabilities":"No Effect","equity":"Increase","cause":"Increase in Income"},"id":5,"date":"2023-01-14"},{"type":"Salary Expense","description":"Paid monthly salaries: P11,600","debits":[{"account":"Salaries Expense","amount":11600}],"credits":[{"account":"Cash","amount":11600}],"amount":11600,"analysis":{"assets":"Decrease","liabilities":"No Effect","equity":"Decrease","cause":"Increase in Expense"},"id":6,"date":"2023-01-15"},{"type":"Utility Expense","description":"Paid electricity and water bills: P2,500","debits":[{"account":"Utilities Expense","amount":2500}],"credits":[{"account":"Cash","amount":2500}],"amount":2500,"analysis":{"assets":"Decrease","liabilities":"No Effect","equity":"Decrease","cause":"Increase in Expense"},"id":7,"date":"2023-01-15"},{"type":"Drawings","description":"Owner withdrew cash for personal use: P5,400","debits":[{"account":"Owner, Drawings","amount":5400}],"credits":[{"account":"Cash","amount":5400}],"amount":5400,"analysis":{"assets":"Decrease","liabilities":"No Effect","equity":"Decrease","cause":"Increase in Drawings"},"id":8,"date":"2023-01-18"},{"type":"Equip Cash","description":"Purchased new equipment for cash: P45,700","debits":[{"account":"Equipment","amount":45700}],"credits":[{"account":"Cash","amount":45700}],"amount":45700,"analysis":{"assets":"No Effect","liabilities":"No Effect","equity":"No Effect","cause":""},"id":9,"date":"2023-01-23"},{"type":"Unearned Revenue","description":"Received cash in advance for services to be performed next month: P12,000","debits":[{"account":"Cash","amount":12000}],"credits":[{"account":"Unearned Revenue","amount":12000}],"amount":12000,"analysis":{"assets":"Increase","liabilities":"Increase","equity":"No Effect","cause":""},"id":10,"date":"2023-01-27"}],"ledger":{"Cash":{"debit":838200,"credit":77200},"Owner, Capital":{"debit":0,"credit":800000},"Prepaid Rent":{"debit":12000,"credit":0},"Supplies":{"debit":4800,"credit":0},"Accounts Payable":{"debit":0,"credit":4800},"Service Revenue":{"debit":0,"credit":42400},"Accounts Receivable":{"debit":16200,"credit":0},"Salaries Expense":{"debit":11600,"credit":0},"Utilities Expense":{"debit":2500,"credit":0},"Owner, Drawings":{"debit":5400,"credit":0},"Equipment":{"debit":45700,"credit":0},"Unearned Revenue":{"debit":0,"credit":12000}},"validAccounts":["Cash","Accounts Receivable","Supplies","Prepaid Rent","Equipment","Accounts Payable","Unearned Revenue","Owner, Capital","Owner, Drawings","Service Revenue","Salaries Expense","Utilities Expense"],"beginningBalances":null,"adjustments":[{"id":"adj1","desc":"Supplies on hand at end of period are P1,440.","drAcc":"Supplies Expense","crAcc":"Supplies","amount":3360},{"id":"adj2","desc":"One month of prepaid rent has expired: P4,000.","drAcc":"Rent Expense","crAcc":"Prepaid Rent","amount":4000},{"id":"adj3","desc":"Services performed related to advance payments: P2,500.","drAcc":"Unearned Revenue","crAcc":"Service Revenue","amount":2500},{"id":"adj4","desc":"Accrued salaries: P2,000.","drAcc":"Salaries Expense","crAcc":"Salaries Payable","amount":2000},{"id":"adj5","desc":"Depreciation: P1,500.","drAcc":"Depreciation Expense","crAcc":"Accumulated Depreciation - Equipment","amount":1500}],"steps":[{"id":1,"title":"Transaction Analysis","description":"Identify impact on Assets, Liabilities, and Equity"},{"id":2,"title":"Journalizing","description":"Record transactions in the General Journal"},{"id":3,"title":"Posting to Ledger","description":"Post journal entries to T-Accounts/Ledger"},{"id":4,"title":"Trial Balance","description":"Prepare Unadjusted Trial Balance"},{"id":5,"title":"10-Column Worksheet","description":"Prepare Worksheet with Adjustments"},{"id":6,"title":"Financial Statements","description":"Prepare Income Statement and Balance Sheet"},{"id":7,"title":"Adjusting Entries","description":"Journalize and Post Adjusting Entries"},{"id":8,"title":"Closing Entries","description":"Journalize and Post Closing Entries"},{"id":9,"title":"Post-Closing Trial Balance","description":"Prepare Post-Closing Trial Balance"},{"id":10,"title":"Reversing Entries","description":"Setup new period and Reversing Entries"}]};
 const INITIAL_STATUS = {"1":{"completed":false,"attempts":3,"correct":false},"2":{"completed":false,"attempts":3,"correct":false},"3":{"completed":false,"attempts":3,"correct":false},"4":{"completed":false,"attempts":3,"correct":false},"5":{"completed":false,"attempts":3,"correct":false},"6":{"completed":false,"attempts":3,"correct":false},"7":{"completed":false,"attempts":3,"correct":false},"8":{"completed":false,"attempts":3,"correct":false},"9":{"completed":false,"attempts":3,"correct":false},"10":{"completed":false,"attempts":3,"correct":false}};
-// -----------------------------------------------
 
-// --- REPORT VIEW (Copied logic) ---
+// --- REPORT VIEW ---
 const ReportView = ({ activityData, answers }) => {
     return html`
         <div id="full-report-container" className="hidden">
@@ -61,7 +60,14 @@ const ReportView = ({ activityData, answers }) => {
                     else if (stepId === 9) { const closingJournal = answers[8]?.journal; const step9Data = { ...stepAnswer, closingJournal }; content = html`<${Step09PostClosingTB} ...${props} data=${step9Data} />`; }
                     else if (stepId === 10) content = html`<${Step10ReversingEntries} ...${props} />`;
                     else content = html`<${GenericStep} stepId=${stepId} title=${step.title} ...${props} />`;
-                    return html`<div className="report-section mb-10 break-inside-avoid"><h3 className="text-lg font-bold text-gray-800 border-b border-gray-300 mb-4 pb-1 uppercase">Task ${stepId}: ${step.title}</h3>${content}</div>${(stepId===5||stepId===6||stepId===9)?html`<div className="page-break"></div>`:''}`;
+                    
+                    return html`
+                        <div className="report-section mb-10 break-inside-avoid">
+                            <h3 className="text-lg font-bold text-gray-800 border-b border-gray-300 mb-4 pb-1 uppercase">Task ${stepId}: ${step.title}</h3>
+                            ${content}
+                        </div>
+                        ${(stepId===5||stepId===6||stepId===9) ? html`<div className="page-break"></div>` : ''}
+                    `;
                 })}
             </div>
         </div>
@@ -81,7 +87,6 @@ const StudentApp = () => {
             if (saved) {
                 try {
                     const data = JSON.parse(saved);
-                    // Simple check if save is for this specific activity type/config could be added here
                     if(confirm("Found saved progress on this device. Resume?")) {
                         setStepStatus(data.stepStatus);
                         setAnswers(data.answers);
@@ -168,6 +173,7 @@ const StudentApp = () => {
 
     const isAllComplete = activityData.steps.every(s => stepStatus[s.id]?.completed);
 
+    // FIXED: Uses 'className=${...}' syntax for HTM, not 'className={...}'
     return html`
         <div className="min-h-screen flex flex-col bg-gray-50">
             <header className="bg-white border-b shadow-md p-4 flex justify-between items-center sticky top-0 z-50 no-print">
@@ -181,8 +187,37 @@ const StudentApp = () => {
                     ${activityData.config.enableAutoSave && html`<button onClick=${clearSave} className="ml-2 text-red-400 hover:text-red-600" title="Reset Data"><${Trash2} size=${16}/></button>`}
                 </div>
             </header>
-            <div className="bg-white border-b overflow-x-auto shadow-sm sticky top-[73px] z-40 no-print"><div className="flex min-w-max px-4">${activityData.steps.map((s, idx) => html`<div key=${s.id} className={`p-3 flex items-center gap-2 text-sm border-b-2 transition-colors ${idx === currentStepIndex ? 'border-blue-600 text-blue-700 font-bold' : 'border-transparent text-gray-500'} ${stepStatus[s.id].completed ? 'text-green-600' : ''} cursor-pointer hover:bg-gray-50`} onClick=${() => setCurrentStepIndex(idx)}><div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs border ${stepStatus[s.id].completed ? 'bg-green-100 border-green-300 text-green-700' : idx === currentStepIndex ? 'bg-blue-100 border-blue-300 text-blue-700' : 'bg-gray-50 border-gray-200'}`}>${stepStatus[s.id].completed ? html`<${Check} size=${14}/>` : s.id}</div><span>${s.title}</span></div>`)}</div></div>
-            <main className="flex-1 p-6"><div className="max-w-7xl mx-auto">${activityData.steps.map((step, idx) => html`<${TaskSection} key=${step.id} step=${step} activityData=${activityData} answers=${answers} stepStatus=${stepStatus} onValidate=${handleValidateStepById} updateAnswerFns=${{ updateNestedAnswer, updateTrialBalanceAnswer, updateAnswer }} isCurrentActiveTask=${idx === currentStepIndex} isPrevStepCompleted=${idx === 0 || stepStatus[activityData.steps[idx - 1].id]?.completed} />`)}</div></main>
+            <div className="bg-white border-b overflow-x-auto shadow-sm sticky top-[73px] z-40 no-print">
+                <div className="flex min-w-max px-4">
+                    ${activityData.steps.map((s, idx) => html`
+                        <div key=${s.id} 
+                             className=${`p-3 flex items-center gap-2 text-sm border-b-2 transition-colors ${idx === currentStepIndex ? 'border-blue-600 text-blue-700 font-bold' : 'border-transparent text-gray-500'} ${stepStatus[s.id].completed ? 'text-green-600' : ''} cursor-pointer hover:bg-gray-50`} 
+                             onClick=${() => setCurrentStepIndex(idx)}>
+                            <div className=${`w-6 h-6 rounded-full flex items-center justify-center text-xs border ${stepStatus[s.id].completed ? 'bg-green-100 border-green-300 text-green-700' : idx === currentStepIndex ? 'bg-blue-100 border-blue-300 text-blue-700' : 'bg-gray-50 border-gray-200'}`}>
+                                ${stepStatus[s.id].completed ? html`<${Check} size=${14}/>` : s.id}
+                            </div>
+                            <span>${s.title}</span>
+                        </div>
+                    `)}
+                </div>
+            </div>
+            <main className="flex-1 p-6">
+                <div className="max-w-7xl mx-auto">
+                    ${activityData.steps.map((step, idx) => html`
+                        <${TaskSection} 
+                            key=${step.id} 
+                            step=${step} 
+                            activityData=${activityData} 
+                            answers=${answers} 
+                            stepStatus=${stepStatus} 
+                            onValidate=${handleValidateStepById} 
+                            updateAnswerFns=${{ updateNestedAnswer, updateTrialBalanceAnswer, updateAnswer }} 
+                            isCurrentActiveTask=${idx === currentStepIndex} 
+                            isPrevStepCompleted=${idx === 0 || stepStatus[activityData.steps[idx - 1].id]?.completed} 
+                        />
+                    `)}
+                </div>
+            </main>
             <footer className="bg-gray-100 border-t p-2 text-center text-sm text-gray-500 no-print">${APP_VERSION}</footer>
             <${ReportView} activityData=${activityData} answers=${answers} />
         </div>
