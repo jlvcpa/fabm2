@@ -1,4 +1,4 @@
-        // Content for Unit 1: Review of Accounting Cycle
+// Content for Unit 1: Review of Accounting Cycle
 // Covers the 10 Steps for a Sole Proprietorship Service Business
 
 export const unit1Data = {
