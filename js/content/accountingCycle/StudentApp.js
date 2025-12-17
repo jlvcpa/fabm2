@@ -2,7 +2,8 @@ import React, { useState, useCallback, useEffect } from 'https://esm.sh/react@18
 import { createRoot } from 'https://esm.sh/react-dom@18.2.0/client';
 import htm from 'https://esm.sh/htm';
 import { Check, Printer, Trash2 } from 'https://esm.sh/lucide-react@0.263.1';
-import { APP_VERSION } from '../../utils.js'; // Adjusted path if needed, or keep generic
+// FIXED: Import from the local utils.js in the same folder
+import { APP_VERSION } from './utils.js'; 
 import { TaskSection } from './steps.js';
 
 // Import all modular steps from the local folder
@@ -173,7 +174,7 @@ const StudentApp = () => {
 
     const isAllComplete = activityData.steps.every(s => stepStatus[s.id]?.completed);
 
-    // FIXED: Uses 'className=${...}' syntax for HTM, not 'className={...}'
+    // FIXED: Uses 'className=${...}' syntax for HTM
     return html`
         <div className="min-h-screen flex flex-col bg-gray-50">
             <header className="bg-white border-b shadow-md p-4 flex justify-between items-center sticky top-0 z-50 no-print">
