@@ -7,7 +7,7 @@ export const unit2Data = {
             day: "Day 1",
             topic: "Foundations of Merchandising",
             content:
-                ` <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
                     <p class="font-bold text-blue-900">Learning Goal</p>
                     <p class="text-blue-800">Students understand why inventory systems are critical in merchandising operations.</p>
                 </div>
