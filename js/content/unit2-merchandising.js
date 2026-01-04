@@ -9,15 +9,47 @@ export const unit2Data = {
             content:
                 `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
                     <p class="font-bold text-blue-900">Learning Goal</p>
-                    <p class="text-blue-800">Students understand why inventory systems are critical in merchandising operations.</p>
+                    <p class="text-blue-800">Understand why inventory systems are critical in merchandising operations.</p>
                 </div>
                 <h3 class="text-xl font-bold mb-4">Topic Focus</h3>
                 <ul class="list-none space-y-8 mb-6">
     <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
         <h3 class="text-xl font-bold text-gray-800 mb-3">1. Definition: The Business of "Buying and Selling"</h3>
-        <p class="text-gray-700 mb-4">
-            <strong>Merchandising businesses buy and sell goods without changing their form.</strong> Unlike manufacturers who create products or service providers who offer skills, merchandisers operate on <em>arbitrage</em>—buying finished goods and reselling them at a higher price to add value through distribution and accessibility.
-        </p>
+        <div class="text-gray-700 mb-4">
+    <h3 class="font-bold text-lg mb-2">1. Definition: The Business of "Buying and Selling"</h3>
+    <p class="mb-3">
+        In the vast ecosystem of commerce, merchandising businesses serve as the essential bridge between manufacturers (who create products) and consumers (who use them). Unlike manufacturers who transform raw materials into finished goods, or service providers who offer intangible skills, a merchandising business operates on a simpler, yet high-stakes premise: <strong>Arbitrage of location and convenience</strong>.
+    </p>
+
+    <h4 class="font-bold mb-1">The Core Concept</h4>
+    <p class="mb-3">
+        A merchandising business generates revenue by purchasing finished goods and reselling them at a higher price. They do not change the form of the product. The value they add is not in creation, but in distribution and accessibility.
+    </p>
+
+    <ul class="list-disc pl-5 mb-4 space-y-2">
+        <li>
+            <strong>The "No Change" Rule:</strong> If a business buys wood and glue to sell tables, they are a manufacturer. If a business buys completed tables from a factory and sells them in a showroom, they are a merchandiser.
+        </li>
+        <li>
+            <strong>The Economic Utility:</strong> Why do customers pay more to a merchandiser than the factory price?
+            <ul class="list-circle pl-5 mt-1">
+                <li><em>Breaking Bulk:</em> Factories sell in thousands; merchandisers sell in single units.</li>
+                <li><em>Assortment:</em> Merchandisers curate products from multiple factories in one place.</li>
+                <li><em>Immediacy:</em> Merchandisers hold stock so the customer doesn't have to wait for production.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4 class="font-bold mb-1">Types of Merchandisers</h4>
+    <ul class="list-disc pl-5 space-y-1">
+        <li>
+            <strong>Wholesalers:</strong> These are the "middlemen" who buy large quantities directly from producers and sell smaller (but still significant) quantities to retailers. They rarely sell to the end-user.
+        </li>
+        <li>
+            <strong>Retailers:</strong> These businesses sell directly to the final consumer. This ranges from giant big-box stores (like Walmart) to e-commerce sites (like Amazon) to small local convenience stores.
+        </li>
+    </ul>
+</div>
         <div class="bg-blue-50 p-4 rounded-md text-sm text-blue-800">
             <strong>Key Concept:</strong> If a business buys wood and glue to make tables, they are a <em>manufacturer</em>. If they buy completed tables to sell in a showroom, they are a <em>merchandiser</em>.
         </div>
