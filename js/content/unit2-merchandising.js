@@ -100,9 +100,15 @@ export const unit2Data = {
             <strong>The lifeblood of merchandising; the primary asset for generating revenue.</strong> Inventory is essentially "frozen cash." It represents the products waiting to be sold.
         </p>
         <ul class="list-disc pl-5 space-y-2 text-gray-600">
-            <li><strong>Revenue Generation:</strong> You cannot sell what you do not have. Stockouts lead to lost customers.</li>
-            <li><strong>Carrying Costs:</strong> Inventory is expensive to hold due to storage rent, insurance, and the risk of obsolescence or theft (shrinkage).</li>
-            <li><strong>The Goal:</strong> Sell inventory as quickly as possible without running out.</li>
+            <li>
+    <strong>Revenue Generation:</strong> Inventory is the lifeblood of a merchandising business because it serves as the primary source of incoming revenue. If a customer enters a store looking for a specific item and it is unavailable, the immediate sale is effectively lost. Beyond the single transaction, frequent stockouts damage the company's reputation and reliability in the eyes of the consumer. Frustrated shoppers will often turn to competitors to fulfill their needs, potentially resulting in permanent customer churn. Therefore, maintaining adequate stock levels is not just about logistics, but is a critical component of sales strategy and customer retention.
+</li>
+<li>
+    <strong>Carrying Costs:</strong> While inventory is a valuable asset, holding too much of it creates a significant financial burden known as carrying costs. The business must pay for physical requirements, such as warehouse rent, electricity, and security systems to protect the goods. Additionally, capital tied up in unsold inventory cannot be used for other investment opportunities, and the business must often pay premiums for insurance coverage. There is also the inherent risk of shrinkage, where goods are lost due to theft, damage during handling, or administrative errors. Furthermore, products may become obsolete, out of fashion, or spoiled if they sit on the shelves too long, turning a potential profit into a complete write-off.
+</li>
+<li>
+    <strong>The Goal:</strong> The ultimate objective of effective inventory management is to achieve a delicate balance between having enough stock to meet demand and minimizing the amount held in storage. Managers aim for a high inventory turnover ratio, which indicates that goods are being sold and replaced rapidly rather than sitting idle. Moving inventory quickly frees up essential cash flow, allowing the business to reinvest in new, profitable products. However, this speed cannot come at the expense of availability, as running out of stock halts the revenue cycle immediately. Success lies in optimizing ordering cycles so that new shipments arrive exactly when the old stock is nearing depletion, minimizing both holding costs and missed sales.
+</li>
         </ul>
     </li>
 
