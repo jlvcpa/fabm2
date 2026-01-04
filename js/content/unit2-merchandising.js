@@ -6,18 +6,18 @@ export const unit2Data = {
         {
             day: "Day 1",
             topic: "Foundations of Merchandising",
-            content: `
+            content:
+                <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                    <p class="font-bold text-blue-900">Learning Goal</p>
+                    <p class="text-blue-800">Students understand why inventory systems are critical in merchandising operations.</p>
+                </div>
                 <h3 class="text-xl font-bold mb-4">Topic Focus</h3>
                 <ul class="list-disc pl-5 space-y-2 mb-6">
                     <li><strong>Definition:</strong> Merchandising businesses buy and sell goods without changing their form.</li>
                     <li><strong>Comparison:</strong> Service (sells time/skills) vs. Merchandising (sells tangible goods).</li>
                     <li><strong>Inventory:</strong> The lifeblood of merchandising; the primary asset for generating revenue.</li>
                     <li><strong>Flow:</strong> Purchase &rarr; Storage &rarr; Sale</li>
-                </ul>
-                <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-                    <p class="font-bold text-blue-900">Learning Goal</p>
-                    <p class="text-blue-800">Students understand why inventory systems are critical in merchandising operations.</p>
-                </div>
+                </ul>`
             `,
             exercises: [{ type: "mcq", question: "Primary source of revenue?", options: ["Service Fees", "Sales", "Interest", "Rent"], correctIndex: 1, explanation: "Merchandising = Sales of goods." }]
         },
