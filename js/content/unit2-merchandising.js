@@ -792,7 +792,273 @@ Computation: COGS = Available - Ending Inventory. If you subtract a smaller Endi
     </li>
 
 </ul>`,
-            exercises: [{ type: "mcq", question: "Records COGS at time of sale?", options: ["Periodic", "Perpetual", "Both", "Neither"], correctIndex: 1, explanation: "Perpetual tracks cost immediately." }]
+            exercises: [
+    // --- MULTIPLE CHOICE QUESTIONS (25) ---
+
+    { 
+        type: "mcq", 
+        question: "In a perpetual inventory system, which account is debited when merchandise is purchased for resale?", 
+        options: ["Purchases", "Inventory", "Cost of Goods Sold", "Supplies"], 
+        correctIndex: 1, 
+        explanation: "Under the perpetual system, purchases are recorded directly into the Inventory asset account, not a Purchases account." 
+    },
+    { 
+        type: "mcq", 
+        question: "Which of the following creates two journal entries at the time of transaction?", 
+        options: ["Purchase of inventory on credit", "Payment of freight costs", "Sale of merchandise", "Return of damaged goods to supplier"], 
+        correctIndex: 2, 
+        explanation: "A sale requires two entries: one to record the revenue (Sales) and one to update the inventory and record the expense (COGS)." 
+    },
+    { 
+        type: "mcq", 
+        question: "Under the perpetual system, the 'Cost of Goods Sold' account is classified as a(n):", 
+        options: ["Asset", "Liability", "Revenue", "Expense"], 
+        correctIndex: 3, 
+        explanation: "Cost of Goods Sold is an expense account that appears on the Income Statement." 
+    },
+    { 
+        type: "mcq", 
+        question: "If a company returns defective goods to a supplier, which account is Credited?", 
+        options: ["Purchase Returns and Allowances", "Accounts Payable", "Inventory", "Cost of Goods Sold"], 
+        correctIndex: 2, 
+        explanation: "Since the inventory balance is tracked continuously, a return reduces the asset directly; therefore, Inventory is credited." 
+    },
+    { 
+        type: "mcq", 
+        question: "What does the credit term '2/10, n/30' mean?", 
+        options: ["2% interest if paid in 30 days", "2% discount if paid within 10 days, net due in 30", "10% discount if paid within 2 days", "Net due in 10 days, 2% penalty after 30"], 
+        correctIndex: 1, 
+        explanation: "It stands for a 2% discount is available if paid within 10 days; otherwise, the net (full) amount is due in 30 days." 
+    },
+    { 
+        type: "mcq", 
+        question: "When the buyer pays the shipping charges (FOB Shipping Point), the cost is debited to:", 
+        options: ["Delivery Expense", "Freight Out", "Inventory", "Sales Expense"], 
+        correctIndex: 2, 
+        explanation: "Costs to get the inventory ready for sale (like incoming freight) are capitalized as part of the Inventory asset." 
+    },
+    { 
+        type: "mcq", 
+        question: "The difference between the physical count of inventory and the accounting records is known as:", 
+        options: ["Gross Profit", "Inventory Turnover", "Shrinkage", "Safety Stock"], 
+        correctIndex: 2, 
+        explanation: "Shrinkage represents the loss of inventory due to theft, damage, or error." 
+    },
+    { 
+        type: "mcq", 
+        question: "Which account is debited to record inventory shrinkage?", 
+        options: ["Inventory", "Loss on Theft", "Cost of Goods Sold", "Sales Returns"], 
+        correctIndex: 2, 
+        explanation: "Shrinkage is typically recorded as an increase to Cost of Goods Sold and a decrease to Inventory." 
+    },
+    { 
+        type: "mcq", 
+        question: "FOB Destination means ownership transfers when:", 
+        options: ["The goods leave the seller's warehouse", "The goods arrive at the buyer's place of business", "The invoice is paid", "The purchase order is signed"], 
+        correctIndex: 1, 
+        explanation: "FOB Destination means the seller retains ownership (and risk) until the goods reach the buyer." 
+    },
+    { 
+        type: "mcq", 
+        question: "Gross Profit is calculated as:", 
+        options: ["Net Income - Operating Expenses", "Sales - Operating Expenses", "Sales - Cost of Goods Sold", "Inventory - Accounts Payable"], 
+        correctIndex: 2, 
+        explanation: "Gross Profit is the direct profit from the goods themselves, calculated as Net Sales minus Cost of Goods Sold." 
+    },
+    { 
+        type: "mcq", 
+        question: "Which document authorizes the warehouse to release goods for shipment to a customer?", 
+        options: ["Purchase Order", "Receiving Report", "Debit Memo", "Shipping Order / Delivery Receipt"], 
+        correctIndex: 3, 
+        explanation: "A shipping order or delivery receipt serves as proof that goods have been released and shipped." 
+    },
+    { 
+        type: "mcq", 
+        question: "In a perpetual system, the 'Inventory' account generally has a:", 
+        options: ["Debit balance", "Credit balance", "Zero balance", "Negative balance"], 
+        correctIndex: 0, 
+        explanation: "Inventory is an Asset, and assets normally have a Debit balance." 
+    },
+    { 
+        type: "mcq", 
+        question: "When a customer returns goods for credit, the seller Debits which account (assuming the goods are returned to inventory)?", 
+        options: ["Sales", "Accounts Receivable", "Sales Returns and Allowances", "Cost of Goods Sold"], 
+        correctIndex: 2, 
+        explanation: "The seller debits Sales Returns and Allowances (a contra-revenue) to reduce net sales." 
+    },
+    { 
+        type: "mcq", 
+        question: "Continuing from the previous question, what is the SECOND entry the seller makes for a return?", 
+        options: ["Debit Inventory, Credit COGS", "Debit COGS, Credit Inventory", "Debit Cash, Credit Sales", "No second entry needed"], 
+        correctIndex: 0, 
+        explanation: "The seller must put the item back into the books: Debit Inventory (asset increases) and Credit COGS (expense decreases)." 
+    },
+    { 
+        type: "mcq", 
+        question: "Freight Out (shipping to customers) is classified as:", 
+        options: ["Part of Cost of Goods Sold", "A Selling/Operating Expense", "An addition to Inventory", "A deduction from Sales"], 
+        correctIndex: 1, 
+        explanation: "Freight Out is a delivery expense incurred to sell the product, making it an Operating Expense." 
+    },
+    { 
+        type: "mcq", 
+        question: "Purchasing inventory on account results in:", 
+        options: ["Increase in Assets, Increase in Equity", "Increase in Assets, Increase in Liabilities", "Decrease in Assets, Decrease in Liabilities", "No change in total assets"], 
+        correctIndex: 1, 
+        explanation: "Inventory (Asset) increases and Accounts Payable (Liability) increases." 
+    },
+    { 
+        type: "mcq", 
+        question: "Which of the following accounts is NOT closed at the end of the year?", 
+        options: ["Sales Revenue", "Cost of Goods Sold", "Inventory", "Sales Returns"], 
+        correctIndex: 2, 
+        explanation: "Inventory is a permanent (Balance Sheet) account and is not closed. The others are temporary accounts." 
+    },
+    { 
+        type: "mcq", 
+        question: "What is the effect of a Purchase Discount on the inventory cost?", 
+        options: ["It increases the cost", "It decreases the cost", "It has no effect", "It is recorded as revenue"], 
+        correctIndex: 1, 
+        explanation: "A discount reduces the actual cash paid for the item, so it reduces the recorded cost of the Inventory asset." 
+    },
+    { 
+        type: "mcq", 
+        question: "If a company has Net Sales of ₱100,000 and a Gross Profit rate of 40%, what is the Cost of Goods Sold?", 
+        options: ["₱40,000", "₱60,000", "₱100,000", "₱140,000"], 
+        correctIndex: 1, 
+        explanation: "If Gross Profit is 40%, COGS must be 60%. ₱100,000 x 60% = ₱60,000." 
+    },
+    { 
+        type: "mcq", 
+        question: "Which inventory system requires a physical count to determine Cost of Goods Sold?", 
+        options: ["Perpetual", "Periodic", "Just-In-Time", "Automated"], 
+        correctIndex: 1, 
+        explanation: "The Periodic system relies on a physical count at the end of the period to 'plug' the COGS figure." 
+    },
+    { 
+        type: "mcq", 
+        question: "A Debit Memorandum issued by a buyer to a seller indicates:", 
+        options: ["The buyer is returning goods or asking for an allowance", "The buyer is paying the invoice", "The seller is charging more", "Shipping is delayed"], 
+        correctIndex: 0, 
+        explanation: "It effectively 'Debits' (reduces) the Accounts Payable the buyer owes to the seller." 
+    },
+    { 
+        type: "mcq", 
+        question: "Merchandise Inventory appears on which financial statement?", 
+        options: ["Income Statement", "Statement of Cash Flows", "Balance Sheet", "Retained Earnings Statement"], 
+        correctIndex: 2, 
+        explanation: "Inventory is a Current Asset on the Balance Sheet." 
+    },
+    { 
+        type: "mcq", 
+        question: "If Inventory at the beginning of the year is ₱20,000, Purchases are ₱50,000, and Ending Inventory is ₱10,000, what is COGS? (Formula logic applies to both systems)", 
+        options: ["₱40,000", "₱60,000", "₱70,000", "₱80,000"], 
+        correctIndex: 1, 
+        explanation: "GAS (Goods Available for Sale) = 20k + 50k = 70k. COGS = GAS - Ending Inv (10k) = ₱60,000." 
+    },
+    { 
+        type: "mcq", 
+        question: "The operating cycle of a merchandising company is typically:", 
+        options: ["Shorter than a service company", "Longer than a service company", "The same as a service company", "Non-existent"], 
+        correctIndex: 1, 
+        explanation: "It is longer because cash must first be converted to inventory, then sold, then collected." 
+    },
+    { 
+        type: "mcq", 
+        question: "Which of the following is considered a 'Contra-Revenue' account?", 
+        options: ["Sales", "Inventory", "Sales Returns and Allowances", "Cost of Goods Sold"], 
+        correctIndex: 2, 
+        explanation: "It has a debit balance and offsets Sales Revenue on the Income Statement." 
+    },
+
+    // --- OPEN ENDED PROBLEMS (10) ---
+
+    {
+        type: "problem",
+        question: "Company A purchases 500 units of widgets for ₱10 each on credit. Calculate the total liability recorded and write the journal entry description.",
+        answer: `Total Liability: 500 units x ₱10 = ₱5,000.
+Journal Entry:
+Debit: Inventory ₱5,000
+Credit: Accounts Payable ₱5,000`,
+        explanation: "The asset (Inventory) and the liability (Accounts Payable) both increase by the total cost of the goods."
+    },
+    {
+        type: "problem",
+        question: "A seller sells goods for ₱2,000 cash. The goods originally cost the seller ₱1,200. Provide the two necessary journal entries.",
+        answer: `Entry 1 (Revenue):
+Debit: Cash ₱2,000
+Credit: Sales Revenue ₱2,000
+
+Entry 2 (Cost):
+Debit: Cost of Goods Sold ₱1,200
+Credit: Inventory ₱1,200`,
+        explanation: "The perpetual system requires recognizing revenue and updating inventory/expense immediately upon sale."
+    },
+    {
+        type: "problem",
+        question: "Explain the difference between FOB Shipping Point and FOB Destination regarding who pays for shipping.",
+        answer: `FOB Shipping Point: The BUYER pays the shipping costs. Ownership transfers when goods leave the seller.
+FOB Destination: The SELLER pays the shipping costs. Ownership transfers when goods arrive at the buyer.`,
+        explanation: "FOB determines who owns the goods in transit and who bears the cost of transport."
+    },
+    {
+        type: "problem",
+        question: "Company B purchased goods for ₱10,000 with terms 3/15, n/45. They returned ₱1,000 worth of defective goods before paying. If they pay the remaining balance within the discount period, how much is the cash payment? Show computation.",
+        answer: `Initial Purchase: ₱10,000
+Less Return: (₱1,000)
+Net Balance Due: ₱9,000
+Less Discount (3% of ₱9,000): (₱270)
+-------------------------
+Cash Paid: ₱8,730`,
+        explanation: "The discount is calculated on the Net Balance (after returns), not the original invoice amount."
+    },
+    {
+        type: "problem",
+        question: "At year-end, the accounting records show an Inventory balance of ₱105,000. A physical count reveals only ₱102,000 is actually on hand. Prepare the adjusting entry.",
+        answer: `Debit: Cost of Goods Sold ₱3,000
+Credit: Inventory ₱3,000
+
+(Calculation: ₱105,000 - ₱102,000 = ₱3,000 shortage)`,
+        explanation: "This entry records inventory shrinkage, bringing the book balance down to match the physical reality."
+    },
+    {
+        type: "problem",
+        question: "Why is 'Freight Out' considered an Operating Expense rather than part of Cost of Goods Sold?",
+        answer: `Freight Out is the cost of delivering goods to a customer. It is a selling service provided to the customer, not a cost of acquiring the inventory itself. Therefore, it is an operating expense (specifically a selling expense).`,
+        explanation: "Only costs incurred to bring the inventory to the business and get it ready for sale are capitalized as Inventory/COGS."
+    },
+    {
+        type: "problem",
+        question: "Calculate the Net Sales: Sales Revenue ₱500,000; Sales Returns ₱20,000; Sales Discounts ₱5,000; Cost of Goods Sold ₱300,000.",
+        answer: `Sales Revenue: ₱500,000
+Less: Sales Returns (₱20,000)
+Less: Sales Discounts (₱5,000)
+-----------------------------
+Net Sales: ₱475,000`,
+        explanation: "Net Sales = Gross Sales minus all contra-revenue accounts (Returns, Allowances, and Discounts). COGS is not part of the Net Sales calculation."
+    },
+    {
+        type: "problem",
+        question: "A company uses the Perpetual system. They pay ₱200 cash for freight costs on an incoming shipment (FOB Shipping Point). What is the journal entry?",
+        answer: `Debit: Inventory ₱200
+Credit: Cash ₱200`,
+        explanation: "In a perpetual system, freight-in is added directly to the cost of the Inventory asset."
+    },
+    {
+        type: "problem",
+        question: "Why is the Perpetual Inventory System considered to provide better internal control than the Periodic System?",
+        answer: `It provides a continuous record of what 'should' be on hand. This allows management to compare the book balance to the physical count to detect theft or errors (shrinkage). The Periodic system has no continuous record to compare against, so theft is buried inside the COGS calculation.`,
+        explanation: "The visibility of shrinkage is the key control advantage."
+    },
+    {
+        type: "problem",
+        question: "Calculate the Gross Profit Rate: Net Sales ₱200,000; Cost of Goods Sold ₱120,000.",
+        answer: `Gross Profit = ₱200,000 - ₱120,000 = ₱80,000.
+Gross Profit Rate = (Gross Profit / Net Sales) x 100
+Rate = (₱80,000 / ₱200,000) = 40%`,
+        explanation: "The rate represents the percentage of each sales dollar that exceeds the cost of the goods sold."
+    }
+]
         },
         {
             day: "Day 4",
