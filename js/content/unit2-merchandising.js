@@ -214,7 +214,8 @@ export const unit2Data = {
                 </li>
                 </ul>   
             `,
-            exercises: // ... inside your exercises array ...
+            exercises: [
+                // ... inside your exercises array ...
 
 // 1. Definition & Core Concepts
 {
@@ -400,6 +401,7 @@ export const unit2Data = {
     correctIndex: 1,
     explanation: "Seller owns goods until they arrive at destination, so the Seller pays freight."
 }
+]
         },
         {
             day: "Day 2",
