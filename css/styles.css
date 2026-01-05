@@ -1,6 +1,7 @@
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px; /* Reduced from 8px */
+    height: 6px; /* Added for horizontal scrolling if needed */
 }
 ::-webkit-scrollbar-track {
     background: #f1f1f1; 
@@ -107,6 +108,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* REVISION: Ensure text reading width isn't too strained on wide monitors */
+.prose {
+    max-width: 100% !important; /* Allow text to span the new wider container */
+}
+
+/* Optional: Improve readability on very wide screens for the concept text */
+#tab-content-concepts {
+    max-width: 90ch; /* Keep reading lines to a comfortable maximum length while container stays wide */
+    margin: 0 auto;  /* Center the text block */
 }
 
 /* Specific override for submenu buttons (Weeks) in collapsed state */
