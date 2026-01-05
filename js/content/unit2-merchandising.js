@@ -221,7 +221,8 @@ export const unit2Data = {
             topic: "The Periodic Inventory System",
             content: `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
     <p class="font-bold text-blue-900">Learning Goal</p>
-    <p class="text-blue-800">Master the mechanics of the Periodic Inventory System and the computation of Cost of Goods Sold (COGS).</p>
+    <p class="text-blue-800">Understand the mechanics of the Periodic Inventory System.</p>
+    <p class="Text-blue-800">Analyze how the inventory cost flows from Purchases to Cost of Goods Sold(COGS).</p>
 </div>
 
 <h3 class="text-xl font-bold mb-4 mt-6">Topic Focus</h3>
