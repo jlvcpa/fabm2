@@ -358,7 +358,162 @@ export const unit2Data = {
         {
             day: "Day 3",
             topic: "The Perpetual Inventory System",
-            content: `<h3 class="text-xl font-bold mb-4">Topic Focus</h3><p>Continuous updates and real-time tracking.</p>`,
+            content: `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+    <p class="font-bold text-blue-900">Learning Goal</p>
+    <p class="text-blue-800">Master the mechanics of the Perpetual Inventory System and understand how it tracks costs in real-time.</p>
+</div>
+
+<h3 class="text-xl font-bold mb-4 mt-6">Topic Focus</h3>
+<ul class="list-none space-y-8 mb-6">
+
+    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">1. Definition: Continuous Tracking</h3>
+        <div class="text-gray-700 mb-4">
+            <p class="mb-3">
+                The <strong>Perpetual Inventory System</strong> is a method of accounting that maintains a continuous, real-time record of inventory balances. The word "perpetual" means "never-ending" or "continuous." Under this system, the accounting records are updated <strong>immediately</strong> every time an item is bought, sold, or returned.
+            </p>
+
+            <h4 class="font-bold mb-1">The Modern Standard</h4>
+            <p class="mb-3">
+                Historically, this system was reserved for high-value items (like jewelry or cars) because the record-keeping was tedious. However, with the advent of barcode scanners and Point-of-Sale (POS) software, almost all modern businesses—from grocery stores to Amazon—use the Perpetual system.
+            </p>
+
+            <ul class="list-disc pl-5 mb-4 space-y-2">
+                <li>
+                    <strong>Detailed Records:</strong> The company knows exactly how many units of Product X are on the shelf at any specific moment without going to the warehouse to count them.
+                </li>
+                <li>
+                    <strong>Cost of Goods Sold (COGS):</strong> Unlike the Periodic system, which calculates COGS at the end of the month, the Perpetual system calculates COGS <em>at the moment of the sale</em>.
+                </li>
+            </ul>
+        </div>
+        <div class="bg-blue-50 p-4 rounded-md text-sm text-blue-800">
+            <strong>Analogy:</strong> Think of the grocery store scanner. When it "beeps," two things happen instantly: 1) The sale is recorded, and 2) The inventory count for that item is reduced by one.
+        </div>
+    </li>
+
+    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">2. The "Two-Entry" Rule</h3>
+        <p class="text-gray-700 mb-4">
+            The most distinct feature of the Perpetual System is what happens during a sale. Because we are tracking inventory in real-time, <strong>every sale requires two separate journal entries.</strong>
+        </p>
+
+        <div class="my-6 flex justify-center">
+            <svg width="100%" height="auto" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" class="max-w-2xl">
+                <rect x="0" y="0" width="600" height="300" fill="#f9f9f9" rx="10"/>
+                <text x="300" y="30" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">The Perpetual Sale Workflow</text>
+                
+                <g transform="translate(20, 100)">
+                    <rect x="0" y="0" width="120" height="80" fill="#37474f" rx="5"/>
+                    <text x="60" y="35" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Sale Occurs</text>
+                    <text x="60" y="55" font-family="Arial" font-size="12" text-anchor="middle" fill="#cfd8dc">(Scan Item)</text>
+                </g>
+
+                <defs>
+                    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#2196f3"/>
+                    </marker>
+                    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#f44336"/>
+                    </marker>
+                </defs>
+
+                <line x1="140" y1="140" x2="220" y2="100" stroke="#2196f3" stroke-width="3" marker-end="url(#arrowhead-blue)"/>
+                <line x1="140" y1="140" x2="220" y2="180" stroke="#f44336" stroke-width="3" marker-end="url(#arrowhead-red)"/>
+
+                <g transform="translate(240, 60)">
+                    <rect x="0" y="0" width="320" height="80" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="5"/>
+                    <text x="10" y="25" font-family="Arial" font-size="14" font-weight="bold" fill="#0d47a1">Entry 1: Record the Revenue</text>
+                    <text x="10" y="50" font-family="Arial" font-size="12" fill="#333">Debit: Cash / Accounts Receivable</text>
+                    <text x="10" y="65" font-family="Arial" font-size="12" fill="#333">Credit: Sales Revenue</text>
+                    <text x="250" y="55" font-family="Arial" font-size="16" font-weight="bold" fill="#0d47a1">Selling Price</text>
+                </g>
+
+                <g transform="translate(240, 150)">
+                    <rect x="0" y="0" width="320" height="80" fill="#ffebee" stroke="#f44336" stroke-width="2" rx="5"/>
+                    <text x="10" y="25" font-family="Arial" font-size="14" font-weight="bold" fill="#b71c1c">Entry 2: Update the Inventory</text>
+                    <text x="10" y="50" font-family="Arial" font-size="12" fill="#333">Debit: Cost of Goods Sold (Expense)</text>
+                    <text x="10" y="65" font-family="Arial" font-size="12" fill="#333">Credit: Inventory (Asset)</text>
+                    <text x="260" y="55" font-family="Arial" font-size="16" font-weight="bold" fill="#b71c1c">Cost Price</text>
+                </g>
+                
+                <text x="300" y="280" font-family="Arial" font-size="12" font-style="italic" text-anchor="middle" fill="#666">Note: The customer sees Entry 1. The company internally records Entry 2.</text>
+            </svg>
+        </div>
+    </li>
+
+    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">3. Transaction Flows</h3>
+        <p class="text-gray-700 mb-4">
+            In a Perpetual system, the "Inventory" account is very active. It increases when we buy goods and decreases when we sell them.
+        </p>
+
+        <div class="space-y-6">
+            
+            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-400">
+                <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+                    <i class="fas fa-truck-loading mr-2 text-orange-500"></i> Purchasing Merchandise
+                </h5>
+                <p class="text-sm text-slate-700 mb-2">When buying goods for resale, we debit the Inventory account directly. We do <strong>not</strong> use a "Purchases" account.</p>
+                <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono">
+                    <div class="flex justify-between"><span>Inventory</span> <span>Dr</span></div>
+                    <div class="flex justify-between pl-8"><span>Accounts Payable / Cash</span> <span>Cr</span></div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-purple-400">
+                <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+                    <i class="fas fa-shipping-fast mr-2 text-purple-500"></i> Freight In (Shipping Costs)
+                </h5>
+                <p class="text-sm text-slate-700 mb-2">If the buyer pays for shipping (FOB Shipping Point), this cost is considered part of the asset's value. It makes the inventory more expensive.</p>
+                <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono">
+                    <div class="flex justify-between"><span>Inventory</span> <span>Dr</span></div>
+                    <div class="flex justify-between pl-8"><span>Cash</span> <span>Cr</span></div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-red-400">
+                <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+                    <i class="fas fa-cash-register mr-2 text-red-500"></i> Selling Merchandise
+                </h5>
+                <p class="text-sm text-slate-700 mb-2">As detailed in the diagram above, two entries are required.</p>
+                <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono space-y-2">
+                    <div>
+                        <div class="flex justify-between"><span>Accounts Receivable</span> <span>Dr (Selling Price)</span></div>
+                        <div class="flex justify-between pl-8"><span>Sales Revenue</span> <span>Cr (Selling Price)</span></div>
+                    </div>
+                    <div class="border-t border-dashed border-gray-300 pt-2">
+                        <div class="flex justify-between"><span>Cost of Goods Sold</span> <span>Dr (Cost Price)</span></div>
+                        <div class="flex justify-between pl-8"><span>Inventory</span> <span>Cr (Cost Price)</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </li>
+
+    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">4. Limitations & Shrinkage</h3>
+        <p class="text-gray-700 mb-4">
+            If the system tracks everything perfectly, why do we still need to count the inventory physically?
+        </p>
+        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+            <li>
+                <strong>The Discrepancy:</strong> The computer record (Perpetual record) shows what <em>should</em> be on the shelf. The physical count shows what <em>is actually</em> on the shelf.
+            </li>
+            <li>
+                <strong>Shrinkage:</strong> The difference between the two is called shrinkage. It represents theft, spoilage, or administrative errors.
+            </li>
+            <li>
+                <strong>The Adjustment:</strong> At the end of the year, if the physical count is lower than the computer record, an adjusting entry is made to lower the Inventory balance and increase COGS.
+            </li>
+        </ul>
+        <div class="mt-4 bg-red-50 p-4 rounded-md text-sm text-red-800 border border-red-200">
+            <strong>Formula:</strong> Book Value (Computer) - Physical Count = Shrinkage Expense.
+        </div>
+    </li>
+
+</ul>`,
             exercises: [{ type: "mcq", question: "Records COGS at time of sale?", options: ["Periodic", "Perpetual", "Both", "Neither"], correctIndex: 1, explanation: "Perpetual tracks cost immediately." }]
         },
         {
