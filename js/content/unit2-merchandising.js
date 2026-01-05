@@ -1215,7 +1215,279 @@ Rate = (₱80,000 / ₱200,000) = 40%`,
         </div>
     </li>
 </ul>`,
-            exercises: []
+            exercises: [
+    // --- MULTIPLE CHOICE QUESTIONS (1-25) ---
+
+    {
+        type: "mcq",
+        question: "Which inventory system requires a physical count to determine the Cost of Goods Sold (COGS) at the end of the period?",
+        options: ["Perpetual System", "Periodic System", "Just-In-Time System", "Automated System"],
+        correctIndex: 1,
+        explanation: "The Periodic system relies on a physical count because it does not track COGS during sales transactions."
+    },
+    {
+        type: "mcq",
+        question: "In a Perpetual inventory system, which account is debited when inventory is purchased?",
+        options: ["Purchases", "Merchandise Inventory", "Cost of Goods Sold", "Accounts Payable"],
+        correctIndex: 1,
+        explanation: "The Perpetual system updates the asset account 'Merchandise Inventory' directly."
+    },
+    {
+        type: "mcq",
+        question: "Under the Periodic system, purchases of merchandise are recorded in which account?",
+        options: ["Merchandise Inventory", "Cost of Goods Sold", "Purchases", "Sales"],
+        correctIndex: 2,
+        explanation: "The Periodic system uses a temporary expense-like account called 'Purchases'."
+    },
+    {
+        type: "mcq",
+        question: "Which system provides better protection against shrinkage and theft?",
+        options: ["Periodic System", "Perpetual System", "Both are equal", "Neither"],
+        correctIndex: 1,
+        explanation: "Perpetual allows comparison between book records and physical counts, making missing items obvious."
+    },
+    {
+        type: "mcq",
+        question: "When selling goods under the Perpetual system, how many journal entries are typically made?",
+        options: ["One (for Revenue)", "One (for Cost)", "Two (one for Revenue, one for Cost)", "None"],
+        correctIndex: 2,
+        explanation: "One entry records the Sale/Receivable, and the second entry records the COGS/Inventory reduction."
+    },
+    {
+        type: "mcq",
+        question: "The formula 'Beginning Inventory + Net Purchases - Ending Inventory' is used to calculate:",
+        options: ["Gross Profit", "Cost of Goods Sold", "Net Income", "Total Liabilities"],
+        correctIndex: 1,
+        explanation: "This is the standard formula for deriving COGS in a Periodic system."
+    },
+    {
+        type: "mcq",
+        question: "Which account is generally NOT used in a Perpetual inventory system?",
+        options: ["Purchases", "Cost of Goods Sold", "Merchandise Inventory", "Sales"],
+        correctIndex: 0,
+        explanation: "The 'Purchases' account is specific to the Periodic system; Perpetual uses 'Merchandise Inventory' for buys."
+    },
+    {
+        type: "mcq",
+        question: "If a company uses the Periodic system, when is the Cost of Goods Sold account updated?",
+        options: ["At the time of each sale", "Daily", "At the end of the accounting period", "Never"],
+        correctIndex: 2,
+        explanation: "COGS is calculated as a lump sum at the end of the period after the physical count."
+    },
+    {
+        type: "mcq",
+        question: "Freight costs paid by the buyer (FOB Shipping Point) are treated as part of the inventory cost. In a Perpetual system, this is debited to:",
+        options: ["Freight-In Expense", "Merchandise Inventory", "Delivery Expense", "Cost of Goods Sold"],
+        correctIndex: 1,
+        explanation: "Product costs, including freight-in, are capitalized into the Inventory asset account in Perpetual systems."
+    },
+    {
+        type: "mcq",
+        question: "In a Periodic system, 'Freight-In' is recorded as:",
+        options: ["A decrease to Sales", "A separate expense account used in COGS calculation", "A debit to Merchandise Inventory", "A credit to Cash only"],
+        correctIndex: 1,
+        explanation: "In Periodic, Freight-In is a separate temporary account added to Net Purchases."
+    },
+    {
+        type: "mcq",
+        question: "A company returns defective goods to a supplier. In a Perpetual system, the credit goes to:",
+        options: ["Purchase Returns and Allowances", "Merchandise Inventory", "Accounts Payable", "Sales Returns"],
+        correctIndex: 1,
+        explanation: "Since the original purchase increased Inventory, the return must decrease (credit) Inventory directly."
+    },
+    {
+        type: "mcq",
+        question: "A company returns defective goods to a supplier. In a Periodic system, the credit goes to:",
+        options: ["Purchase Returns and Allowances", "Merchandise Inventory", "Cost of Goods Sold", "Cash"],
+        correctIndex: 0,
+        explanation: "Periodic systems use the contra-expense account 'Purchase Returns and Allowances'."
+    },
+    {
+        type: "mcq",
+        question: "Which company is most likely to use a Periodic inventory system?",
+        options: ["A car dealership", "A high-end jewelry store", "A local hardware store selling loose nails", "An Apple store"],
+        correctIndex: 2,
+        explanation: "Periodic is often used for low-value, high-volume items where tracking every unit is not cost-effective."
+    },
+    {
+        type: "mcq",
+        question: "The term '2/10, n/30' means:",
+        options: ["2% interest if paid in 30 days", "2% discount if paid within 10 days, net due in 30", "10% discount if paid within 2 days", "Net due in 10 days"],
+        correctIndex: 1,
+        explanation: "This is a standard credit term notation for early payment discounts."
+    },
+    {
+        type: "mcq",
+        question: "Gross Profit is calculated as:",
+        options: ["Sales - Operating Expenses", "Net Sales - Cost of Goods Sold", "Net Income + Expenses", "Assets - Liabilities"],
+        correctIndex: 1,
+        explanation: "Gross Profit is the direct profit from the merchandise itself before operating expenses."
+    },
+    {
+        type: "mcq",
+        question: "If physical count shows less inventory than the Perpetual records indicate, the difference is recorded as:",
+        options: ["Inventory Overturn", "Inventory Shortage/Shrinkage", "Sales Return", "Purchase Discount"],
+        correctIndex: 1,
+        explanation: "This difference usually represents theft, loss, or errors and is adjusted to COGS."
+    },
+    {
+        type: "mcq",
+        question: "Purchase Discounts in a Periodic system is considered a:",
+        options: ["Contra-revenue account", "Contra-purchase account", "Liability", "Asset"],
+        correctIndex: 1,
+        explanation: "It reduces the total cost of purchases."
+    },
+    {
+        type: "mcq",
+        question: "When a customer returns goods to the seller, the seller records:",
+        options: ["Purchase Return", "Sales Return", "Inventory Loss", "Bad Debt"],
+        correctIndex: 1,
+        explanation: "From the seller's perspective, this is a Sales Return."
+    },
+    {
+        type: "mcq",
+        question: "Which of the following creates a discrepancy between the book balance and physical balance in a Perpetual system?",
+        options: ["Sales returns", "Purchases", "Theft or spoilage", "Sales discounts"],
+        correctIndex: 2,
+        explanation: "Theft removes the item physically but leaves the record unchanged until corrected."
+    },
+    {
+        type: "mcq",
+        question: "In the closing process for a Periodic system, the Beginning Inventory is:",
+        options: ["Debited to Income Summary", "Credited to Income Summary", "Left alone", "Transferred to Assets"],
+        correctIndex: 0,
+        explanation: "Beginning Inventory is removed (credited from Inventory, debited to Income Summary) and replaced by Ending Inventory."
+    },
+    {
+        type: "mcq",
+        question: "FOB Destination means ownership transfers when:",
+        options: ["Goods leave the seller's warehouse", "Goods arrive at the buyer's location", "Payment is made", "Order is placed"],
+        correctIndex: 1,
+        explanation: "Free on Board (FOB) Destination means the seller owns the goods while they are in transit."
+    },
+    {
+        type: "mcq",
+        question: "Who pays for shipping costs in FOB Destination?",
+        options: ["The Buyer", "The Seller", "The Carrier", "Split 50/50"],
+        correctIndex: 1,
+        explanation: "The seller retains ownership during transit and pays the freight costs (Delivery Expense)."
+    },
+    {
+        type: "mcq",
+        question: "Net Sales is calculated as:",
+        options: ["Sales - COGS", "Sales - Sales Returns - Sales Discounts", "Sales + Interest Revenue", "Gross Profit - Expenses"],
+        correctIndex: 1,
+        explanation: "Net Sales is the actual revenue realized after deductions for returns and discounts."
+    },
+    {
+        type: "mcq",
+        question: "Which system requires more record-keeping effort but provides better management information?",
+        options: ["Periodic", "Perpetual", "Single-entry", "Cash basis"],
+        correctIndex: 1,
+        explanation: "Perpetual offers real-time data but requires recording every transaction's cost impact."
+    },
+    {
+        type: "mcq",
+        question: "If Ending Inventory is overstated, what is the effect on Cost of Goods Sold?",
+        options: ["Understated", "Overstated", "No effect", "Depends on Sales"],
+        correctIndex: 0,
+        explanation: "Since 'Goods Available - Ending Inv = COGS', a higher ending inventory number results in a lower (understated) COGS."
+    },
+
+    // --- OPEN-ENDED PROBLEMS (26-35) ---
+
+    {
+        type: "problem",
+        question: "Company A uses a Perpetual System. They sell goods costing ₱3,000 for ₱5,000 on account. Provide the necessary journal entries.",
+        answer: `Entry 1 (Revenue):
+Dr. Accounts Receivable   5,000
+   Cr. Sales                    5,000
+
+Entry 2 (Cost):
+Dr. Cost of Goods Sold    3,000
+   Cr. Merchandise Inventory    3,000`,
+        explanation: "Perpetual systems require two entries: one to recognize the revenue and one to recognize the expense (COGS) and reduce the asset."
+    },
+    {
+        type: "problem",
+        question: "Company B uses a Periodic System. Calculate the Cost of Goods Sold given the following data:\nBeginning Inventory: ₱10,000\nPurchases: ₱40,000\nPurchase Returns: ₱2,000\nFreight-In: ₱1,000\nEnding Inventory: ₱8,000",
+        answer: `Beginning Inventory:      ₱10,000
++ Purchases:              ₱40,000
+- Purchase Returns:      (₱2,000)
++ Freight-In:             ₱1,000
+-----------------------------------
+Goods Available for Sale: ₱49,000
+- Ending Inventory:      (₱8,000)
+-----------------------------------
+Cost of Goods Sold:       ₱41,000`,
+        explanation: "The formula is Beginning Inv + Net Purchases (Purchases - Returns + Freight) - Ending Inv."
+    },
+    {
+        type: "problem",
+        question: "Explain why a Periodic Inventory System might result in 'Inventory Shrinkage' being hidden inside Cost of Goods Sold.",
+        answer: `In a Periodic system, COGS is a "plug" figure derived by subtracting what is left (Ending Inv) from what was available. 
+If items are stolen, they are simply missing from the final count. The formula assumes anything not in the warehouse was sold. Therefore, the cost of stolen goods is automatically included in COGS, making it impossible to separate theft from legitimate sales costs without other data.`,
+        explanation: "Without a book record to compare against the physical count, all missing items are assumed sold."
+    },
+    {
+        type: "problem",
+        question: "A buyer purchases goods for ₱20,000 FOB Shipping Point. Shipping costs are ₱1,000. The buyer pays cash for shipping. Record the journal entry for the shipping payment under a Perpetual System.",
+        answer: `Dr. Merchandise Inventory   1,000
+   Cr. Cash                     1,000`,
+        explanation: "Under Perpetual, costs necessary to get the inventory ready for sale (like freight-in) are added to the Inventory asset account, not expensed immediately."
+    },
+    {
+        type: "problem",
+        question: "A seller offers terms 3/15, n/45 on a ₱10,000 sale. The customer pays on day 12. Calculate the Net Cash Received by the seller.",
+        answer: `Invoice Amount:     ₱10,000
+Discount (3%):       (₱300)  [10,000 x 0.03]
+----------------------------
+Net Cash Received:   ₱9,700`,
+        explanation: "The customer paid within the 15-day window, so they are entitled to the 3% discount."
+    },
+    {
+        type: "problem",
+        question: "Record the journal entry for a RETURN of goods purchased on credit under the PERIODIC system. Amount: ₱500.",
+        answer: `Dr. Accounts Payable        500
+   Cr. Purchase Returns & Allow.  500`,
+        explanation: "In Periodic, we credit the specific contra-account 'Purchase Returns and Allowances' rather than crediting Inventory directly."
+    },
+    {
+        type: "problem",
+        question: "Why do car dealerships almost exclusively use Perpetual systems, while small candy shops might use Periodic?",
+        answer: `Car dealerships have high unit costs and low sales volume. Losing one car is a financial disaster, so they need real-time tracking (Perpetual). 
+Candy shops have low unit costs and high volume. Tracking the cost of every lollipop sold in real-time is not worth the administrative effort; a simple count at the end of the month (Periodic) is sufficient.`,
+        explanation: "The choice of system often depends on the Cost-Benefit constraint regarding the value of the items vs. the cost of tracking them."
+    },
+    {
+        type: "problem",
+        question: "Calculate Gross Profit:\nSales Revenue: ₱100,000\nSales Returns: ₱5,000\nSales Discounts: ₱2,000\nCost of Goods Sold: ₱60,000",
+        answer: `Sales Revenue:       ₱100,000
+Less: Returns:        (₱5,000)
+Less: Discounts:      (₱2,000)
+-----------------------------
+Net Sales:            ₱93,000
+Less: COGS:          (₱60,000)
+-----------------------------
+Gross Profit:         ₱33,000`,
+        explanation: "Gross Profit = Net Sales - COGS."
+    },
+    {
+        type: "problem",
+        question: "In a Perpetual System, a physical count reveals ₱48,000 in inventory, but the books show ₱50,000. Record the adjusting entry.",
+        answer: `Dr. Cost of Goods Sold       2,000
+   Cr. Merchandise Inventory    2,000`,
+        explanation: "The inventory record must be lowered to match the physical reality. The loss is usually expensed to COGS (Inventory Shortage)."
+    },
+    {
+        type: "problem",
+        question: "A company purchased ₱2,000 of inventory on credit. A week later, they paid the balance in full within the discount period of 2%. Record the PAYMENT entry under the PERPETUAL system.",
+        answer: `Dr. Accounts Payable        2,000
+   Cr. Cash                     1,960
+   Cr. Merchandise Inventory       40`,
+        explanation: "In a Perpetual system, the discount reduces the cost of the asset. Therefore, we credit Inventory for the discount amount (₱40), rather than using a 'Purchase Discounts' revenue account."
+    }
+]
         },
         {
             day: "Day 5",
