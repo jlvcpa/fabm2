@@ -16,7 +16,6 @@ export const unit2Data = {
     <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
         <h3 class="text-xl font-bold text-gray-800 mb-3">1. Definition: The Business of "Buying and Selling"</h3>
         <div class="text-gray-700 mb-4">
-    <h3 class="font-bold text-lg mb-2">1. Definition: The Business of "Buying and Selling"</h3>
     <p class="mb-3">
         In the vast ecosystem of commerce, merchandising businesses serve as the essential bridge between manufacturers (who create products) and consumers (who use them). Unlike manufacturers who transform raw materials into finished goods, or service providers who offer intangible skills, a merchandising business operates on a simpler, yet high-stakes premise: <strong>Arbitrage of location and convenience</strong>.
     </p>
