@@ -519,7 +519,158 @@ export const unit2Data = {
         {
             day: "Day 4",
             topic: "Comparison & Applications",
-            content: `<h3 class="text-xl font-bold mb-4">Topic Focus</h3><p>Choosing the right system for business size/type.</p>`,
+            content: `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+    <p class="font-bold text-blue-900">Learning Goal</p>
+    <p class="text-blue-800">Distinguish between Periodic and Perpetual inventory systems and understand how costs are recognized under each method.</p>
+</div>
+
+<h3 class="text-xl font-bold mb-4 mt-6">Topic Focus</h3>
+<ul class="list-none space-y-8 mb-6">
+
+    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">1. The Core Difference: "When do we update?"</h3>
+        <div class="text-gray-700 mb-4">
+            <p class="mb-3">
+                The fundamental difference between these two systems isn't <em>what</em> they sell, but <strong>when</strong> they update their accounting records.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div class="bg-green-50 p-4 rounded border border-green-200">
+                    <h4 class="font-bold text-green-800">Perpetual (Continuous)</h4>
+                    <p class="text-sm mt-1">Updates records <strong>continuously</strong> after every transaction. Think of a supermarket scanner: as soon as the barcode is beeped, the system knows one unit is gone.</p>
+                </div>
+                <div class="bg-orange-50 p-4 rounded border border-orange-200">
+                    <h4 class="font-bold text-orange-800">Periodic (Batch)</h4>
+                    <p class="text-sm mt-1">Updates records <strong>occasionally</strong> (periodically). The business doesn't track unit-by-unit sales in real-time. They only know what they sold by counting what is left at the end of the month.</p>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">2. The Perpetual System: Real-Time Accuracy</h3>
+        <div class="text-gray-700 mb-4">
+            <p class="mb-3">
+                Under the Perpetual system, the <strong>Inventory</strong> account is "live." It increases immediately when goods are purchased and decreases immediately when goods are sold.
+            </p>
+            <ul class="list-disc pl-5 mb-4 space-y-2">
+                <li><strong>Detailed Control:</strong> The company knows exactly how much inventory is on hand at any specific moment.</li>
+                <li><strong>Cost of Goods Sold (COGS):</strong> Calculated and recorded instantly at the time of sale.</li>
+                <li><strong>Best For:</strong> High-value items (Cars, Jewelry, Appliances) or high-volume businesses with technology (Amazon, Walmart).</li>
+            </ul>
+            <div class="bg-gray-100 p-3 rounded text-sm italic">
+                <strong>Analogy:</strong> Your bank app. You check it, and it shows your balance <em>right now</em> because every debit card swipe is recorded instantly.
+            </div>
+        </div>
+    </li>
+
+    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">3. The Periodic System: The "Physical Count" Method</h3>
+        <div class="text-gray-700 mb-4">
+            <p class="mb-3">
+                Under the Periodic system, the business does not track the cost of items sold during the sale. Instead, they record all buys into a temporary account called <strong>Purchases</strong>.
+            </p>
+            <p class="mb-3">
+                To find out the Cost of Goods Sold (COGS), they must perform a physical count at the end of the period to see what is missing (sold).
+            </p>
+
+            
+
+            <div class="bg-slate-800 text-white p-4 rounded-lg my-4 font-mono text-center">
+                $$Beginning\ Inventory + Net\ Purchases = Goods\ Available$$
+                <br>
+                $$Goods\ Available - Ending\ Inventory = Cost\ of\ Goods\ Sold$$
+            </div>
+
+            <ul class="list-disc pl-5 mb-4 space-y-2">
+                <li><strong>Low Cost:</strong> Requires less technology and effort during the day.</li>
+                <li><strong>The Blind Spot:</strong> You don't know if items were stolen or sold until the end of the month count.</li>
+                <li><strong>Best For:</strong> Small businesses with low-value items (Sari-sari stores, hardware stores selling loose nails).</li>
+            </ul>
+        </div>
+    </li>
+
+    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">4. Side-by-Side Comparison</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-left text-sm whitespace-nowrap">
+                <thead class="uppercase tracking-wider border-b-2 border-gray-200 bg-gray-50 text-gray-600">
+                    <tr>
+                        <th scope="col" class="px-6 py-4">Feature</th>
+                        <th scope="col" class="px-6 py-4">Perpetual System</th>
+                        <th scope="col" class="px-6 py-4">Periodic System</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 text-gray-700">
+                    <tr>
+                        <td class="px-6 py-4 font-bold">Inventory Account</td>
+                        <td class="px-6 py-4">Updated continuously</td>
+                        <td class="px-6 py-4">Updated only at period end</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 font-bold">Purchases Recorded In</td>
+                        <td class="px-6 py-4">"Inventory" Account</td>
+                        <td class="px-6 py-4">"Purchases" Account</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 font-bold">COGS Recognition</td>
+                        <td class="px-6 py-4">Recorded at every sale</td>
+                        <td class="px-6 py-4">Calculated at end of month</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 font-bold">Shrinkage (Theft)</td>
+                        <td class="px-6 py-4">Easily detected (Record vs. Count)</td>
+                        <td class="px-6 py-4">Hard to detect (Buried in COGS)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </li>
+
+    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">5. Application: Journal Entries</h3>
+        <p class="text-gray-700 mb-4">
+            The accounting entries differ significantly between the two. Notice how the Perpetual system involves <strong>two entries</strong> during a sale.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-blue-50 p-4 rounded-lg">
+                <h4 class="font-bold text-blue-900 mb-2 border-b border-blue-200 pb-2">Scenario A: Buying Goods ($1,000)</h4>
+                
+                <p class="text-xs uppercase font-bold text-gray-500 mt-2">Perpetual Entry</p>
+                <div class="font-mono text-sm bg-white p-2 rounded border border-gray-200">
+                    Dr. Merchandise Inventory  1,000<br>
+                    &nbsp;&nbsp;&nbsp;Cr. Accounts Payable  1,000
+                </div>
+
+                <p class="text-xs uppercase font-bold text-gray-500 mt-2">Periodic Entry</p>
+                <div class="font-mono text-sm bg-white p-2 rounded border border-gray-200">
+                    Dr. Purchases  1,000<br>
+                    &nbsp;&nbsp;&nbsp;Cr. Accounts Payable  1,000
+                </div>
+            </div>
+
+            <div class="bg-green-50 p-4 rounded-lg">
+                <h4 class="font-bold text-green-900 mb-2 border-b border-green-200 pb-2">Scenario B: Selling Goods ($1,500 Sales Price, $1,000 Cost)</h4>
+                
+                <p class="text-xs uppercase font-bold text-gray-500 mt-2">Perpetual Entry (2 Steps)</p>
+                <div class="font-mono text-sm bg-white p-2 rounded border border-gray-200">
+                    1. Dr. Acc. Receivable  1,500<br>
+                    &nbsp;&nbsp;&nbsp;Cr. Sales  1,500<br>
+                    <span class="text-red-600">2. Dr. COGS  1,000<br>
+                    &nbsp;&nbsp;&nbsp;Cr. Merch. Inventory  1,000</span>
+                </div>
+
+                <p class="text-xs uppercase font-bold text-gray-500 mt-2">Periodic Entry (1 Step)</p>
+                <div class="font-mono text-sm bg-white p-2 rounded border border-gray-200">
+                    1. Dr. Acc. Receivable  1,500<br>
+                    &nbsp;&nbsp;&nbsp;Cr. Sales  1,500<br>
+                    <span class="text-gray-400 italic">(No COGS entry made yet)</span>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>`,
             exercises: []
         },
         {
