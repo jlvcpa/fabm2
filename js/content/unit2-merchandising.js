@@ -112,52 +112,107 @@ export const unit2Data = {
     </li>
 
     <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">4. The Operating Cycle</h3>
-        <p class="text-gray-700 mb-4">
-            <strong>Flow: Purchase &rarr; Storage &rarr; Sale.</strong> This cycle is longer for merchandisers than service providers because cash is tied up in inventory.
-        </p>
-        
-        <div class="my-6 flex justify-center">
-            <svg width="100%" height="auto" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" class="max-w-3xl">
-                <rect x="0" y="0" width="700" height="400" fill="#ffffff" stroke="#ddd" rx="10"/>
-                <text x="350" y="40" font-family="Arial" font-size="22" font-weight="bold" text-anchor="middle" fill="#333">The Merchandising Operating Cycle</text>
-                <defs>
-                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                        <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
-                    </marker>
-                </defs>
-                <g transform="translate(350, 100)">
-                    <circle cx="0" cy="0" r="50" fill="#8bc34a" stroke="#558b2f" stroke-width="3"/>
-                    <text x="0" y="5" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">CASH</text>
-                </g>
-                <g transform="translate(550, 200)">
-                    <circle cx="0" cy="0" r="50" fill="#ffb74d" stroke="#ef6c00" stroke-width="3"/>
-                    <text x="0" y="-10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Buy</text>
-                    <text x="0" y="10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Inventory</text>
-                </g>
-                <g transform="translate(350, 300)">
-                    <circle cx="0" cy="0" r="50" fill="#4fc3f7" stroke="#0277bd" stroke-width="3"/>
-                    <text x="0" y="-10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Hold</text>
-                    <text x="0" y="10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Inventory</text>
-                </g>
-                <g transform="translate(150, 200)">
-                    <circle cx="0" cy="0" r="50" fill="#e57373" stroke="#c62828" stroke-width="3"/>
-                    <text x="0" y="-10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Sell in</text>
-                    <text x="0" y="10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Cash/</text>
-                    <text x="0" y="10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">on Credit</text>
-                </g>
-                <line x1="390" y1="130" x2="510" y2="170" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
-                <line x1="510" y1="230" x2="390" y2="270" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
-                <line x1="310" y1="270" x2="190" y2="230" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
-                <line x1="190" y1="170" x2="310" y2="130" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
-                <text x="490" y="140" font-family="Arial" font-size="12" fill="#666">Accounts Payable</text>
-                <text x="200" y="140" font-family="Arial" font-size="12" fill="#666">Collections</text>
-            </svg>
+    <h3 class="text-xl font-bold text-gray-800 mb-3">4. The Operating Cycle & Internal Controls</h3>
+    <p class="text-gray-700 mb-4">
+        <strong>Flow: Purchase &rarr; Storage &rarr; Sale.</strong> This cycle is longer for merchandisers than service providers because cash is tied up in inventory. To protect this "frozen cash," strict internal controls are required at every step.
+    </p>
+    
+    <div class="my-6 flex justify-center">
+        <svg width="100%" height="auto" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" class="max-w-3xl">
+            <rect x="0" y="0" width="700" height="400" fill="#ffffff" stroke="#ddd" rx="10"/>
+            <text x="350" y="40" font-family="Arial" font-size="22" font-weight="bold" text-anchor="middle" fill="#333">The Merchandising Operating Cycle</text>
+            <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+                </marker>
+            </defs>
+            <g transform="translate(350, 100)">
+                <circle cx="0" cy="0" r="50" fill="#8bc34a" stroke="#558b2f" stroke-width="3"/>
+                <text x="0" y="5" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">CASH</text>
+            </g>
+            <g transform="translate(550, 200)">
+                <circle cx="0" cy="0" r="50" fill="#ffb74d" stroke="#ef6c00" stroke-width="3"/>
+                <text x="0" y="-10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Buy</text>
+                <text x="0" y="10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Inventory</text>
+            </g>
+            <g transform="translate(350, 300)">
+                <circle cx="0" cy="0" r="50" fill="#4fc3f7" stroke="#0277bd" stroke-width="3"/>
+                <text x="0" y="-10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Hold</text>
+                <text x="0" y="10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Inventory</text>
+            </g>
+            <g transform="translate(150, 200)">
+                <circle cx="0" cy="0" r="50" fill="#e57373" stroke="#c62828" stroke-width="3"/>
+                <text x="0" y="-10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Sell in</text>
+                <text x="0" y="10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Cash/</text>
+                <text x="0" y="10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">on Credit</text>
+            </g>
+            <line x1="390" y1="130" x2="510" y2="170" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+            <line x1="510" y1="230" x2="390" y2="270" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+            <line x1="310" y1="270" x2="190" y2="230" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+            <line x1="190" y1="170" x2="310" y2="130" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
+            <text x="490" y="140" font-family="Arial" font-size="12" fill="#666">Accounts Payable</text>
+            <text x="200" y="140" font-family="Arial" font-size="12" fill="#666">Collections</text>
+        </svg>
+    </div>
+    <p class="text-sm text-gray-500 mt-2 mb-6 italic text-center">
+        <strong>Figure 1:</strong> The cycle of converting cash into goods and back into cash.
+    </p>
+
+    <div class="space-y-6 border-t border-gray-200 pt-6">
+        <h4 class="font-bold text-gray-800 text-lg">Detailed Policies & Procedures</h4>
+
+        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-400">
+            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+                <i class="fas fa-shopping-cart mr-2 text-orange-500"></i> Phase 1: Purchasing (Buying)
+            </h5>
+            <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
+                <li><strong>Authorization (Purchase Order):</strong> Inventory should never be ordered verbally. A pre-numbered <em>Purchase Order (PO)</em> must be approved by a purchasing manager. This ensures the company only buys what it needs.</li>
+                <li><strong>Buying on Credit:</strong> When buying on account, the supplier must be on an "Approved Vendor List" to prevent fraud. The PO serves as evidence of the contract.</li>
+                <li><strong>Buying with Cash:</strong> For minor purchases, a "Petty Cash Voucher" system is used. For major cash purchases, a check or bank transfer is preferred over physical cash to create a paper trail.</li>
+            </ul>
         </div>
-        <p class="text-sm text-gray-500 mt-2 italic">
-            <strong>Step 1:</strong> Buy Inventory &rarr; <strong>Step 2:</strong> Hold/Display Inventory &rarr; <strong>Step 3:</strong> Sell for Cash or Credit.
-        </p>
-    </li>
+
+        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-blue-400">
+            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+                <i class="fas fa-box-open mr-2 text-blue-500"></i> Phase 2: Receiving & Storage
+            </h5>
+            <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
+                <li><strong>The Blind Count:</strong> The receiving clerk should count the goods arriving <em>without</em> looking at the quantity on the invoice. This forces an accurate physical count.</li>
+                <li><strong>Receiving Report:</strong> A document is generated listing the item, quantity, and condition. This is matched against the Purchase Order.</li>
+                <li><strong>Storage Security:</strong> Inventory must be stored in a secured area (warehouse) with restricted access. High-value items (like jewelry or electronics) require additional locks.</li>
+                <li><strong>Segregation of Duties:</strong> The person who has custody of the assets (warehouse manager) should not be the same person who maintains the accounting records.</li>
+            </ul>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-red-400">
+            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+                <i class="fas fa-cash-register mr-2 text-red-500"></i> Phase 3: Selling
+            </h5>
+            <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
+                <li><strong>Cash Sales:</strong> Use cash registers that provide a receipt to the customer and record the transaction internally. At the end of the day, the physical cash in the drawer is reconciled with the register tape.</li>
+                <li><strong>Sales on Account (Credit):</strong> Credit approval must be separated from the sales department. A credit manager must approve the customer's credit limit <em>before</em> the sale is finalized to minimize bad debts.</li>
+                <li><strong>Shipping Documents:</strong> For goods sold, a pre-numbered shipping document (Delivery Receipt) serves as proof that goods left the warehouse.</li>
+            </ul>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-purple-400">
+            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+                <i class="fas fa-book mr-2 text-purple-500"></i> Phase 4: Recording & Posting
+            </h5>
+            <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
+                <li><strong>The 3-Way Match:</strong> Before paying a supplier, the accountant matches three documents: 
+                    <ol class="list-decimal pl-4 mt-1 text-slate-500">
+                        <li>The Purchase Order (What we ordered)</li>
+                        <li>The Receiving Report (What we got)</li>
+                        <li>The Supplier's Invoice (What we are charged)</li>
+                    </ol>
+                </li>
+                <li><strong>General Journal:</strong> Transactions are recorded chronologically. Automated systems post these simultaneously to the General Ledger to keep account balances (like Accounts Payable) updated in real-time.</li>
+                <li><strong>Monthly Reconciliation:</strong> The General Ledger balance for "Inventory" is compared against a physical count of the stock at least once a year (Periodic) or continuously (Perpetual).</li>
+            </ul>
+        </div>
+    </div>
+</li>
 </ul>   
             `,
             exercises: [{ type: "mcq", question: "Primary source of revenue?", options: ["Service Fees", "Sales", "Interest", "Rent"], correctIndex: 1, explanation: "Merchandising = Sales of goods." }]
