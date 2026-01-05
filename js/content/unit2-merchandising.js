@@ -353,7 +353,285 @@ export const unit2Data = {
 
 </ul>
 `,
-            exercises: [{ type: "mcq", question: "COGS is determined when?", options: ["Daily", "End of Period", "Never", "Hourly"], correctIndex: 1, explanation: "Periodic system updates at period end." }]
+            exercises: [
+    // --- MULTIPLE CHOICE QUESTIONS (25) ---
+
+    // 1. Definition & Basics
+    { 
+        type: "mcq", 
+        question: "In a Periodic Inventory System, when are the 'Cost of Goods Sold' (COGS) recorded?", 
+        options: ["At the time of each sale", "At the end of the accounting period", "When merchandise is purchased", "Weekly"], 
+        correctIndex: 1, 
+        explanation: "In a periodic system, COGS is calculated as a lump sum at the end of the period, not at the point of sale." 
+    },
+    { 
+        type: "mcq", 
+        question: "Which account is debited when a company using the Periodic System buys goods for resale?", 
+        options: ["Inventory", "Cost of Goods Sold", "Purchases", "Accounts Receivable"], 
+        correctIndex: 2, 
+        explanation: "The 'Purchases' account is used to record acquisitions of merchandise in a periodic system." 
+    },
+    { 
+        type: "mcq", 
+        question: "Which of the following is REQUIRED to determine the Cost of Goods Sold in a Periodic System?", 
+        options: ["A barcode scanner", "A physical inventory count", "A perpetual ledger", "Daily sales reports"], 
+        correctIndex: 1, 
+        explanation: "Because the system doesn't track inventory levels, a physical count is necessary to determine what remains unsold." 
+    },
+    { 
+        type: "mcq", 
+        question: "The formula to calculate Cost of Goods Sold (COGS) is:", 
+        options: ["Sales - Expenses", "Beginning Inventory + Net Purchases - Ending Inventory", "Ending Inventory + Purchases - Beginning Inventory", "Gross Profit - Operating Expenses"], 
+        correctIndex: 1, 
+        explanation: "COGS = Goods Available for Sale (Beginning + Purchases) minus what is left (Ending)." 
+    },
+    { 
+        type: "mcq", 
+        question: "Under the Periodic System, 'Freight-In' is classified as:", 
+        options: ["An Operating Expense", "A Selling Expense", "An addition to Net Purchases", "A reduction of Sales"], 
+        correctIndex: 2, 
+        explanation: "Freight-In is part of the cost of acquiring inventory and is added to Net Purchases to determine Cost of Goods Purchased." 
+    },
+
+    // 2. Journal Entries
+    { 
+        type: "mcq", 
+        question: "A company returns defective goods to a supplier. In a Periodic System, the credit entry goes to:", 
+        options: ["Inventory", "Purchase Returns and Allowances", "Cost of Goods Sold", "Sales Returns"], 
+        correctIndex: 1, 
+        explanation: "The 'Purchase Returns and Allowances' contra-account is used instead of directly crediting Inventory." 
+    },
+    { 
+        type: "mcq", 
+        question: "When a sale is made in a Periodic System, how many journal entries are recorded?", 
+        options: ["Two (one for revenue, one for cost)", "One (for revenue only)", "Three", "None until the end of the month"], 
+        correctIndex: 1, 
+        explanation: "Only the revenue entry (Debit Cash/AR, Credit Sales) is made. The cost entry is omitted until period-end." 
+    },
+    { 
+        type: "mcq", 
+        question: "The 'Purchase Discounts' account has a normal balance of:", 
+        options: ["Debit", "Credit", "Zero", "It varies"], 
+        correctIndex: 1, 
+        explanation: "It is a contra-expense (contra-purchase) account, so it has a normal credit balance, reducing the total cost of purchases." 
+    },
+    { 
+        type: "mcq", 
+        question: "Closing entries in a Periodic System are unique because they must:", 
+        options: ["Update the Inventory account from Beginning to Ending balance", "Record depreciation", "Close dividends", "Zero out liabilities"], 
+        correctIndex: 0, 
+        explanation: "The closing process removes the Beginning Inventory and records the Ending Inventory found via physical count." 
+    },
+    { 
+        type: "mcq", 
+        question: "If 'Freight-Out' is incurred to deliver goods to a customer, it is recorded as:", 
+        options: ["Part of Cost of Goods Sold", "An Operating (Selling) Expense", "A deduction from Purchases", "An Asset"], 
+        correctIndex: 1, 
+        explanation: "Freight-Out is a delivery expense (operating expense), unlike Freight-In which is a product cost." 
+    },
+
+    // 3. Calculations & Errors
+    { 
+        type: "mcq", 
+        question: "Total Goods Available for Sale equals:", 
+        options: ["Beginning Inventory + Net Purchases", "Net Sales - COGS", "Ending Inventory + COGS", "Beginning Inventory - Ending Inventory"], 
+        correctIndex: 0, 
+        explanation: "This represents the maximum amount of inventory the company had the opportunity to sell during the period." 
+    },
+    { 
+        type: "mcq", 
+        question: "If Ending Inventory is overstated (counted too high), what is the effect on Net Income?", 
+        options: ["Net Income is understated", "Net Income is overstated", "No effect", "Cost of Goods Sold is overstated"], 
+        correctIndex: 1, 
+        explanation: "If Ending Inventory is high, COGS is calculated as too low (less expense), which makes Net Income too high." 
+    },
+    { 
+        type: "mcq", 
+        question: "Net Purchases is calculated as:", 
+        options: ["Purchases + Freight-In", "Purchases - Purchase Returns - Purchase Discounts", "Purchases + Sales Returns", "Sales - COGS"], 
+        correctIndex: 1, 
+        explanation: "Net Purchases represents the gross purchases minus any deductions for returns, allowances, or discounts." 
+    },
+    { 
+        type: "mcq", 
+        question: "Which inventory system is most prone to not detecting theft or 'shrinkage' easily?", 
+        options: ["Perpetual System", "Periodic System", "Just-In-Time System", "Automated System"], 
+        correctIndex: 1, 
+        explanation: "In Periodic, missing items are assumed sold because they aren't in the ending count, effectively burying theft costs in COGS." 
+    },
+    { 
+        type: "mcq", 
+        question: "Gross Profit is found by:", 
+        options: ["Net Income + Expenses", "Net Sales - Cost of Goods Sold", "Assets - Liabilities", "Sales - Operating Expenses"], 
+        correctIndex: 1, 
+        explanation: "Gross Profit is the direct profit from the merchandise itself before operating expenses are deducted." 
+    },
+
+    // 4. Comparison & Conceptual
+    { 
+        type: "mcq", 
+        question: "The Periodic System is often used by businesses that sell:", 
+        options: ["High-value, low-volume items (e.g., cars)", "Low-value, high-volume items (e.g., nails in a hardware store)", "Services only", "Software subscriptions"], 
+        correctIndex: 1, 
+        explanation: "It is historically used where the cost of tracking every individual item (like a single nut or bolt) outweighs the benefit." 
+    },
+    { 
+        type: "mcq", 
+        question: "Which account is NOT used in a Periodic Inventory System?", 
+        options: ["Purchases", "Freight-In", "Cost of Goods Sold (as a running balance)", "Purchase Returns"], 
+        correctIndex: 2, 
+        explanation: "COGS does not exist as a running account during the period; it is only a calculation at the end." 
+    },
+    { 
+        type: "mcq", 
+        question: "FOB Shipping Point means ownership transfers to the buyer:", 
+        options: ["When goods arrive at the buyer's warehouse", "When goods leave the seller's shipping dock", "When payment is made", "Halfway through transit"], 
+        correctIndex: 1, 
+        explanation: "Free On Board (FOB) Shipping Point means title passes when the carrier picks up the goods." 
+    },
+    { 
+        type: "mcq", 
+        question: "FOB Destination means freight costs are typically paid by the:", 
+        options: ["Buyer", "Seller", "Carrier", "Government"], 
+        correctIndex: 1, 
+        explanation: "The seller retains ownership until delivery, so the seller usually pays the shipping cost (Freight-Out)." 
+    },
+    { 
+        type: "mcq", 
+        question: "Under the Periodic system, if a buyer pays within the discount period (e.g. 2/10, n/30), the credit to Cash is accompanied by a credit to:", 
+        options: ["Inventory", "Purchase Discounts", "Sales Discounts", "Accounts Payable"], 
+        correctIndex: 1, 
+        explanation: "The savings are recorded in 'Purchase Discounts' rather than reducing the Inventory account directly." 
+    },
+
+    // 5. Advanced Scenarios
+    { 
+        type: "mcq", 
+        question: "Beginning Inventory: $10,000. Purchases: $50,000. Ending Inventory: $15,000. What is COGS?", 
+        options: ["$35,000", "$45,000", "$55,000", "$65,000"], 
+        correctIndex: 1, 
+        explanation: "$10,000 (Beg) + $50,000 (Purch) = $60,000 Available. $60,000 - $15,000 (End) = $45,000 COGS." 
+    },
+    { 
+        type: "mcq", 
+        question: "What happens to the 'Purchases' account at the end of the year?", 
+        options: ["It remains on the Balance Sheet", "It is closed to Income Summary", "It is converted to Cash", "It becomes a Liability"], 
+        correctIndex: 1, 
+        explanation: "Purchases is a temporary account and must be closed out to calculate Net Income." 
+    },
+    { 
+        type: "mcq", 
+        question: "A disadvantage of the Periodic System is:", 
+        options: ["High implementation cost", "Lack of real-time inventory data", "Complexity of daily recording", "Requirement for expensive software"], 
+        correctIndex: 1, 
+        explanation: "Managers do not know inventory levels mid-month, which can lead to stockouts or over-ordering." 
+    },
+    { 
+        type: "mcq", 
+        question: "Net Sales is calculated as:", 
+        options: ["Sales - Cost of Goods Sold", "Sales - Operating Expenses", "Gross Sales - Sales Returns & Allowances - Sales Discounts", "Sales + Other Revenue"], 
+        correctIndex: 2, 
+        explanation: "Net Sales is the actual revenue realized after deducting returns and discounts given to customers." 
+    },
+    { 
+        type: "mcq", 
+        question: "The 'Income Summary' account is used during closing to:", 
+        options: ["Record daily sales", "Calculate the Gross Profit", "Remove Beginning Inventory and enter Ending Inventory", "Pay taxes"], 
+        correctIndex: 2, 
+        explanation: "One method of closing involves debiting Income Summary for Beginning Inventory and crediting it for Ending Inventory." 
+    },
+
+    // --- OPEN-ENDED PROBLEMS (10) ---
+
+    {
+        type: "problem",
+        question: "Calculate Net Purchases given the following data: Purchases ₱150,000; Purchase Returns ₱5,000; Purchase Discounts ₱3,000; Freight-In ₱8,000.",
+        answer: `Purchases:                ₱150,000
+Less: Returns & Allow:    (₱5,000)
+Less: Discounts:          (₱3,000)
+Add: Freight-In:           ₱8,000
+------------------------------------
+Net Purchases:            ₱150,000`,
+        explanation: "Net Purchases = Gross Purchases - Returns - Discounts + Freight In."
+    },
+    {
+        type: "problem",
+        question: "Company A uses a Periodic System. Compute the Cost of Goods Sold (COGS) if: Beginning Inventory = ₱20,000; Net Purchases = ₱80,000; Ending Inventory = ₱25,000.",
+        answer: `Beginning Inventory:      ₱20,000
+Add: Net Purchases:        ₱80,000
+------------------------------------
+Goods Available for Sale: ₱100,000
+Less: Ending Inventory:   (₱25,000)
+------------------------------------
+Cost of Goods Sold:       ₱75,000`,
+        explanation: "COGS is derived by subtracting what is left (Ending Inventory) from the total goods available."
+    },
+    {
+        type: "problem",
+        question: "Provide the journal entry to record a purchase of merchandise on credit for ₱10,000 under the Periodic Inventory System.",
+        answer: `Debit:  Purchases            ₱10,000
+Credit: Accounts Payable     ₱10,000`,
+        explanation: "In a Periodic System, the 'Purchases' account is debited instead of 'Inventory'."
+    },
+    {
+        type: "problem",
+        question: "Provide the journal entry to record the SALE of merchandise on credit for ₱15,000 under the Periodic Inventory System. (Ignore COGS).",
+        answer: `Debit:  Accounts Receivable  ₱15,000
+Credit: Sales Revenue        ₱15,000`,
+        explanation: "Only the revenue side is recorded. No entry is made for COGS or Inventory reduction at this time."
+    },
+    {
+        type: "problem",
+        question: "A physical count reveals ₱5,000 worth of inventory is missing due to theft. In a Periodic System, how is this loss recorded/handled during the normal COGS calculation?",
+        answer: `It is automatically included in Cost of Goods Sold.
+Because Ending Inventory is lower (due to theft), the calculation (Goods Available - Ending Inventory) yields a higher COGS number.`,
+        explanation: "The Periodic System cannot distinguish between sold goods and stolen goods without additional data; both effectively disappear from the count."
+    },
+    {
+        type: "problem",
+        question: "Calculate Gross Profit: Sales ₱200,000; Sales Returns ₱10,000; Sales Discounts ₱2,000; Cost of Goods Sold ₱110,000.",
+        answer: `Gross Sales:              ₱200,000
+Less: Returns & Disc:     (₱12,000)
+------------------------------------
+Net Sales:                ₱188,000
+Less: COGS:              (₱110,000)
+------------------------------------
+Gross Profit:             ₱78,000`,
+        explanation: "Gross Profit = Net Sales - Cost of Goods Sold."
+    },
+    {
+        type: "problem",
+        question: "Explain the 'Terms 2/10, n/30'.",
+        answer: `2/10: The buyer can take a 2% discount if they pay within 10 days of the invoice date.
+n/30: If the discount is not taken, the net (full) amount is due within 30 days.`,
+        explanation: "These are credit terms defining the incentive for early payment and the final deadline."
+    },
+    {
+        type: "problem",
+        question: "Calculate the Cost of Goods Available for Sale: Beginning Inventory ₱15,000; Purchases ₱60,000; Freight-In ₱2,000; Purchase Returns ₱4,000.",
+        answer: `Beginning Inventory:      ₱15,000
+Purchases:                ₱60,000
+Add: Freight-In:          ₱2,000
+Less: Returns:            (₱4,000)
+------------------------------------
+Goods Available for Sale: ₱73,000`,
+        explanation: "Goods Available = Beginning Inventory + Net Cost of Purchases."
+    },
+    {
+        type: "problem",
+        question: "Write the Journal Entry to record the return of ₱1,000 worth of damaged goods to a supplier (originally purchased on credit) under the Periodic System.",
+        answer: `Debit:  Accounts Payable                 ₱1,000
+Credit: Purchase Returns and Allowances  ₱1,000`,
+        explanation: "This entry reduces the liability (AP) and increases the contra-expense account (Purchase Returns)."
+    },
+    {
+        type: "problem",
+        question: "If a company forgot to include a section of the warehouse in their physical count (understating Ending Inventory by ₱10,000), how does this affect the Cost of Goods Sold?",
+        answer: `Cost of Goods Sold will be OVERSTATED by ₱10,000.
+Computation: COGS = Available - Ending Inventory. If you subtract a smaller Ending Inventory number, the result (COGS) becomes larger.`,
+        explanation: "Understating the asset (Inventory) leads to overstating the expense (COGS), which subsequently understates Net Income."
+    }
+]
         },
         {
             day: "Day 3",
