@@ -214,7 +214,192 @@ export const unit2Data = {
                 </li>
                 </ul>   
             `,
-            exercises: [{ type: "mcq", question: "Primary source of revenue?", options: ["Service Fees", "Sales", "Interest", "Rent"], correctIndex: 1, explanation: "Merchandising = Sales of goods." }]
+            exercises: // ... inside your exercises array ...
+
+// 1. Definition & Core Concepts
+{
+    type: "mcq",
+    question: "Which of the following best describes a merchandising business?",
+    options: ["Converts raw materials into finished goods", "Provides intangible services to customers", "Buys finished goods and resells them", "Invests in stocks and bonds"],
+    correctIndex: 2,
+    explanation: "A merchandiser buys finished goods to resell without changing their form."
+},
+{
+    type: "mcq",
+    question: "If a business buys wood to build and sell chairs, it is a:",
+    options: ["Merchandiser", "Manufacturer", "Service Provider", "Wholesaler"],
+    correctIndex: 1,
+    explanation: "Buying raw materials to create a new product is manufacturing, not merchandising."
+},
+{
+    type: "mcq",
+    question: "What is the primary source of revenue for a merchandising business?",
+    options: ["Service Fees", "Sales Revenue", "Interest Income", "Rent Income"],
+    correctIndex: 1,
+    explanation: "Merchandisers earn revenue primarily through Sales (selling goods)."
+},
+{
+    type: "mcq",
+    question: "Which term refers to the goods a merchandiser holds for sale?",
+    options: ["Supplies", "Equipment", "Merchandise Inventory", "Raw Materials"],
+    correctIndex: 2,
+    explanation: "Merchandise Inventory represents goods held specifically for resale."
+},
+{
+    type: "mcq",
+    question: "Which of these is an example of a retailer?",
+    options: ["A factory producing cars", "A law firm", "A supermarket selling groceries", "A wholesale distributor selling only to stores"],
+    correctIndex: 2,
+    explanation: "Retailers sell directly to the final consumer."
+},
+
+// 2. The Operating Cycle
+{
+    type: "mcq",
+    question: "The operating cycle of a merchandiser is generally _______ than that of a service business.",
+    options: ["Shorter", "Longer", "The same length", "Unrelated"],
+    correctIndex: 1,
+    explanation: "It is longer because cash is tied up in inventory that must be sold before cash can be collected."
+},
+{
+    type: "mcq",
+    question: "Which step is NOT part of the merchandising operating cycle?",
+    options: ["Purchase of Inventory", "Manufacturing of Goods", "Sale of Inventory", "Collection of Cash"],
+    correctIndex: 1,
+    explanation: "Manufacturing is not part of a merchandising cycle; they buy finished goods."
+},
+{
+    type: "mcq",
+    question: "In the operating cycle, what happens after 'Sale of Inventory' on credit?",
+    options: ["Purchase of Inventory", "Collection of Cash", "Payment to Suppliers", "Storage of Goods"],
+    correctIndex: 1,
+    explanation: "After a sale on credit, the next step is collecting the cash from the Accounts Receivable."
+},
+{
+    type: "mcq",
+    question: "Inventory is often described as:",
+    options: ["Liquid Cash", "Frozen Cash", "Long-term Liability", "Intangible Asset"],
+    correctIndex: 1,
+    explanation: "Inventory ties up capital until it is sold, making it 'frozen cash'."
+},
+{
+    type: "mcq",
+    question: "What is the risk of holding too much inventory?",
+    options: ["Lost sales", "High carrying costs and storage fees", "Increased customer satisfaction", "Faster operating cycle"],
+    correctIndex: 1,
+    explanation: "Excess inventory incurs storage costs, insurance, and risk of obsolescence."
+},
+
+// 3. Income Statement & COGS
+{
+    type: "mcq",
+    question: "Which formula correctly calculates Gross Profit?",
+    options: ["Sales - Operating Expenses", "Sales - Cost of Goods Sold", "Net Income - Taxes", "Beginning Inventory + Purchases"],
+    correctIndex: 1,
+    explanation: "Gross Profit is Sales Revenue minus the Cost of Goods Sold (COGS)."
+},
+{
+    type: "mcq",
+    question: "Cost of Goods Sold (COGS) is classified as a(n):",
+    options: ["Asset", "Liability", "Expense", "Revenue"],
+    correctIndex: 2,
+    explanation: "COGS is an expense account that represents the cost of inventory sold."
+},
+{
+    type: "mcq",
+    question: "Which financial statement distinguishes a merchandiser from a service provider?",
+    options: ["Balance Sheet only", "Income Statement only", "Statement of Cash Flows", "Both Income Statement and Balance Sheet"],
+    correctIndex: 3,
+    explanation: "Merchandisers have 'Inventory' on the Balance Sheet and 'COGS' on the Income Statement."
+},
+{
+    type: "mcq",
+    question: "In a multi-step income statement, what comes immediately after Gross Profit?",
+    options: ["Net Income", "Cost of Goods Sold", "Operating Expenses", "Sales Revenue"],
+    correctIndex: 2,
+    explanation: "Operating Expenses are deducted from Gross Profit to arrive at Net Income."
+},
+{
+    type: "mcq",
+    question: "If Sales are $100 and COGS is $60, what is the Gross Profit?",
+    options: ["$160", "$40", "$100", "$60"],
+    correctIndex: 1,
+    explanation: "$100 (Sales) - $60 (COGS) = $40 Gross Profit."
+},
+
+// 4. Inventory Systems
+{
+    type: "mcq",
+    question: "Which inventory system updates records immediately after every purchase and sale?",
+    options: ["Periodic System", "Perpetual System", "Hybrid System", "Manual System"],
+    correctIndex: 1,
+    explanation: "The Perpetual system tracks inventory changes in real-time."
+},
+{
+    type: "mcq",
+    question: "Under the Periodic system, COGS is determined:",
+    options: ["After every sale", "At the end of the accounting period", "Daily", "When cash is collected"],
+    correctIndex: 1,
+    explanation: "In Periodic systems, a physical count at the end of the period is needed to calculate COGS."
+},
+{
+    type: "mcq",
+    question: "The account 'Purchases' is used only in which system?",
+    options: ["Perpetual System", "Periodic System", "Both", "Neither"],
+    correctIndex: 1,
+    explanation: "The Periodic system uses 'Purchases'. The Perpetual system records directly to 'Inventory'."
+},
+{
+    type: "mcq",
+    question: "Which system provides better control over inventory shrinkage and theft?",
+    options: ["Periodic System", "Perpetual System", "Single-entry System", "Cash Basis"],
+    correctIndex: 1,
+    explanation: "Perpetual records show what *should* be there, making it easier to spot missing items during a count."
+},
+{
+    type: "mcq",
+    question: "Scanning a barcode at a supermarket checkout is a feature of:",
+    options: ["Periodic Inventory", "Perpetual Inventory", "Manufacturing", "Service Revenue"],
+    correctIndex: 1,
+    explanation: "Point-of-sale scanning immediately updates inventory records (Perpetual)."
+},
+
+// 5. Purchasing & Terms
+{
+    type: "mcq",
+    question: "In the credit term '2/10, n/30', what does '2' represent?",
+    options: ["2 days to pay", "2% penalty", "2% discount", "2 months credit"],
+    correctIndex: 2,
+    explanation: "It stands for a 2% purchase discount if paid within the discount period."
+},
+{
+    type: "mcq",
+    question: "What does 'FOB Shipping Point' mean?",
+    options: ["Seller pays freight", "Buyer pays freight", "Freight is free", "Ownership transfers at destination"],
+    correctIndex: 1,
+    explanation: "Ownership transfers when goods leave the seller (shipping point), so the Buyer pays freight."
+},
+{
+    type: "mcq",
+    question: "If a buyer returns damaged goods, which account is credited in a perpetual system?",
+    options: ["Sales Returns", "Inventory", "Accounts Payable", "Cash"],
+    correctIndex: 1,
+    explanation: "In a perpetual system, returning goods reduces the 'Inventory' asset account directly."
+},
+{
+    type: "mcq",
+    question: "A 'Purchase Order' is used to:",
+    options: ["Bill the customer", "Authorize the purchase of goods", "Receive goods", "Record a sale"],
+    correctIndex: 1,
+    explanation: "A PO is an internal document authorizing the purchase of inventory."
+},
+{
+    type: "mcq",
+    question: "Who pays the freight costs under 'FOB Destination'?",
+    options: ["The Buyer", "The Seller", "The Carrier", "The Government"],
+    correctIndex: 1,
+    explanation: "Seller owns goods until they arrive at destination, so the Seller pays freight."
+}
         },
         {
             day: "Day 2",
