@@ -281,7 +281,7 @@ function renderDayContent(unit, week, dayIndex) {
     content.innerHTML = ''; 
 
     const container = document.createElement('div');
-    container.className = "max-w-4xl mx-auto pb-12 h-full flex flex-col";
+    container.className = "w-full max-w-[1600px] mx-auto pb-12 h-full flex flex-col";
 
     const scheduledDateStr = getDateForTopic(unit.id, week.id, dayIndex);
     
@@ -639,7 +639,7 @@ function renderCalendarPage() {
     content.innerHTML = '';
 
     const container = document.createElement('div');
-    container.className = "max-w-4xl mx-auto pb-12 fade-in relative";
+    container.className = "w-full max-w-7xl mx-auto pb-12 fade-in relative";
 
     const infoBox = document.createElement('div');
     infoBox.className = "mb-6 bg-purple-50 border border-purple-200 p-4 rounded-lg text-sm text-purple-800";
