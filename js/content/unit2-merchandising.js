@@ -400,6 +400,89 @@ export const unit2Data = {
     options: ["The Buyer", "The Seller", "The Carrier", "The Government"],
     correctIndex: 1,
     explanation: "Seller owns goods until they arrive at destination, so the Seller pays freight."
+},
+// ... continue inside your exercises array ...
+
+{
+    type: "problem",
+    question: "Calculate Gross Profit: A gadget store had Sales Revenue of ₱500,000 for the month. They incurred Operating Expenses of ₱100,000. Their Cost of Goods Sold (COGS) was ₱250,000. Calculate the Gross Profit.",
+    answer: `Sales Revenue:       ₱500,000
+Less: COGS:         (₱250,000)
+------------------------------
+Gross Profit:        ₱250,000`,
+    explanation: "Gross Profit is calculated as Sales minus COGS only. Operating Expenses are subtracted later to find Net Income."
+},
+{
+    type: "problem",
+    question: "Credit Terms Analysis: Company A buys ₱20,000 worth of inventory on credit with terms 3/10, n/30. If they pay on Day 9, how much cash do they need to pay?",
+    answer: `Invoice Amount:      ₱20,000
+Discount (3%):       (₱600)  [20,000 * 0.03]
+------------------------------
+Cash Payment:        ₱19,400`,
+    explanation: "Since payment is made on Day 9 (within the 10-day window), they take the 3% discount."
+},
+{
+    type: "problem",
+    question: "Credit Terms - Missed Discount: Using the same scenario (₱20,000, 3/10, n/30), if Company A pays on Day 20, how much must they pay?",
+    answer: `Cash Payment:        ₱20,000`,
+    explanation: "Payment on Day 20 is outside the discount period (10 days). Therefore, the full invoice amount is due."
+},
+{
+    type: "problem",
+    question: "Trade Discount vs. Cash Discount: A supplier offers a catalog price of ₱10,000 with a trade discount of 20%. The credit terms are 2/10, n/30. What is the initial amount recorded as Accounts Payable?",
+    answer: `List Price:          ₱10,000
+Less Trade Disc(20%): (₱2,000)
+------------------------------
+Invoice Price/A.P.:   ₱8,000`,
+    explanation: "Trade discounts are deducted *before* recording the transaction. The 2% cash discount is only calculated on the ₱8,000 if paid early."
+},
+{
+    type: "problem",
+    question: "Periodic Inventory COGS: Determine COGS given the following: Beginning Inventory = ₱5,000; Net Purchases = ₱20,000; Ending Inventory = ₱3,000.",
+    answer: `Beginning Inventory: ₱ 5,000
+Add: Net Purchases:   ₱20,000
+------------------------------
+Goods Avail for Sale: ₱25,000
+Less: Ending Inv:     (₱3,000)
+------------------------------
+Cost of Goods Sold:   ₱22,000`,
+    explanation: "COGS = Beginning Inventory + Purchases - Ending Inventory."
+},
+{
+    type: "problem",
+    question: "Net Sales Calculation: A store sold ₱100,000 of goods. Customers returned ₱5,000 worth of goods (Sales Returns) and the store granted ₱2,000 in Sales Discounts. Calculate Net Sales.",
+    answer: `Gross Sales:         ₱100,000
+Less: Sales Returns:   (₱5,000)
+Less: Sales Discounts: (₱2,000)
+------------------------------
+Net Sales:             ₱93,000`,
+    explanation: "Net Sales = Gross Sales - Sales Returns & Allowances - Sales Discounts."
+},
+{
+    type: "problem",
+    question: "FOB Destination Scenario: Buyer orders ₱50,000 of goods, FOB Destination. Freight cost is ₱1,500. Who pays the freight and does the Buyer record it as part of inventory cost?",
+    answer: `Payer: Seller
+Buyer Recording: None (Buyer does not record freight)`,
+    explanation: "Under FOB Destination, the seller pays freight. It is an operating expense for the seller, not an inventory cost for the buyer."
+},
+{
+    type: "problem",
+    question: "FOB Shipping Point Scenario: Buyer orders ₱50,000 of goods, FOB Shipping Point. Freight cost is ₱1,500. Who pays the freight and does the Buyer record it as part of inventory cost?",
+    answer: `Payer: Buyer
+Buyer Recording: Yes (Added to Inventory Cost)`,
+    explanation: "Under FOB Shipping Point, ownership transfers at departure. Buyer pays freight, and it is considered part of the cost of acquiring the inventory."
+},
+{
+    type: "problem",
+    question: "Operating Cycle Concept: Explain why a grocery store likely has a shorter operating cycle than a jewelry store.",
+    answer: `A grocery store sells perishable, low-cost items with high demand (high turnover). A jewelry store sells expensive luxury items that may sit on shelves for months (low turnover). Faster sales + faster cash collection = shorter cycle.`,
+    explanation: "The operating cycle duration depends heavily on inventory turnover speed."
+},
+{
+    type: "problem",
+    question: "Internal Control: Why should the person who approves purchase orders (ordering) be different from the person who receives the goods (receiving)?",
+    answer: `Segregation of duties prevents fraud. If one person did both, they could order personal items or non-existent goods and 'verify' their receipt themselves, stealing company funds.`,
+    explanation: "Separating authorization from custody of assets is a fundamental internal control principle."
 }
 ]
         },
