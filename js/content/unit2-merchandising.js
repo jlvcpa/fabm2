@@ -901,6 +901,42 @@ Buyer Recording: Yes (Added to Inventory Cost)`,
         correctIndex: 2, 
         explanation: "One method of closing involves debiting Income Summary for Beginning Inventory and crediting it for Ending Inventory." 
     },
+    // --- FIFO & WEIGHTED AVERAGE MCQ QUESTIONS (5) ---
+    { 
+        type: "mcq", 
+        question: "Under the FIFO method (Periodic), the Ending Inventory is assumed to consist of:", 
+        options: ["The oldest units purchased", "The most recently purchased units", "A mix of all units purchased", "The units with the lowest cost"], 
+        correctIndex: 1, 
+        explanation: "Since the 'First-In' (oldest) units are sold first, the units remaining on the shelf at the end of the period must be the 'Last-In' (newest) ones." 
+    },
+    { 
+        type: "mcq", 
+        question: "The formula to calculate the 'Weighted Average Unit Cost' in a Periodic System is:", 
+        options: ["(Beginning Inventory Cost + Ending Inventory Cost) / 2", "Total Cost of Goods Sold / Total Units Sold", "Cost of Goods Available for Sale / Total Units Available for Sale", "Net Purchases / Total Units Purchased"], 
+        correctIndex: 2, 
+        explanation: "The average is found by taking the total cost of all inventory available (Beginning + Purchases) and dividing it by the total count of those units." 
+    },
+    { 
+        type: "mcq", 
+        question: "In a period of rising prices (inflation), which method results in the highest Net Income?", 
+        options: ["Weighted Average", "FIFO", "Specific Identification", "They result in the same Net Income"], 
+        correctIndex: 1, 
+        explanation: "FIFO assigns the older (cheaper) costs to COGS. Lower expense means higher reported Net Income." 
+    },
+    { 
+        type: "mcq", 
+        question: "When using the Weighted Average method in a Periodic System, when is the average unit cost computed?", 
+        options: ["After every purchase", "At the time of each sale", "Only at the end of the accounting period", "At the beginning of the year"], 
+        correctIndex: 2, 
+        explanation: "Unlike the 'Moving Average' used in Perpetual systems, the Periodic Weighted Average is calculated just once at the very end of the period using total available goods." 
+    },
+    { 
+        type: "mcq", 
+        question: "Which cost flow assumption smooths out the effects of price fluctuations over the accounting period?", 
+        options: ["FIFO", "Weighted Average", "Specific Identification", "LIFO"], 
+        correctIndex: 1, 
+        explanation: "Weighted Average blends the costs of older and newer items, avoiding the extremes of using only the oldest or newest prices." 
+    }
 
     // --- OPEN-ENDED PROBLEMS (10) ---
 
