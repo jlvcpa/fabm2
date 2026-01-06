@@ -936,7 +936,7 @@ Buyer Recording: Yes (Added to Inventory Cost)`,
         options: ["FIFO", "Weighted Average", "Specific Identification", "LIFO"], 
         correctIndex: 1, 
         explanation: "Weighted Average blends the costs of older and newer items, avoiding the extremes of using only the oldest or newest prices." 
-    }
+    },
 
     // --- OPEN-ENDED PROBLEMS (10) ---
 
