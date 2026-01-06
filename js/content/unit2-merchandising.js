@@ -991,6 +991,80 @@ Credit: Purchase Returns and Allowances  ₱1,000`,
         answer: `Cost of Goods Sold will be OVERSTATED by ₱10,000.
 Computation: COGS = Available - Ending Inventory. If you subtract a smaller Ending Inventory number, the result (COGS) becomes larger.`,
         explanation: "Understating the asset (Inventory) leads to overstating the expense (COGS), which subsequently understates Net Income."
+    },
+    // --- FIFO QUESTIONS (2) ---
+    {
+        type: "problem",
+        question: "FIFO Method (Periodic): Calculate the Value of Ending Inventory.\n\nData:\n- Jan 1 Beginning Inventory: 10 units @ ₱10\n- Jan 10 Purchase: 20 units @ ₱12\n- Jan 20 Purchase: 20 units @ ₱15\n\nPhysical count on Jan 31 shows 15 units remaining.",
+        answer: `Ending Inventory Value: ₱225
+
+Computation:
+Under FIFO, the remaining inventory is assumed to be the NEWEST stock.
+Therefore, the 15 units come from the Jan 20 purchase (costing ₱15).
+15 units x ₱15 = ₱225`,
+        explanation: "In FIFO (First-In, First-Out), the oldest units are sold first. This means the units left on the shelf (Ending Inventory) are always the most recently purchased ones."
+    },
+    {
+        type: "problem",
+        question: "FIFO Method (Periodic): Calculate Cost of Goods Sold (COGS).\n\nData:\n- Goods Available for Sale (Total Cost): ₱5,000\n- Total Units Available: 500 units\n- Ending Inventory Count: 100 units\n- Most Recent Purchase Price: ₱12/unit\n- Oldest Purchase Price: ₱8/unit",
+        answer: `Cost of Goods Sold: ₱3,800
+
+Computation:
+1. Determine Ending Inventory Value (FIFO uses newest price):
+   100 units x ₱12 = ₱1,200
+2. Calculate COGS using the Periodic Formula:
+   Goods Available (₱5,000) - Ending Inventory (₱1,200) = ₱3,800`,
+        explanation: "Under the Periodic system, we first calculate the Ending Inventory value, then subtract it from the Total Goods Available to 'squeeze' out the COGS."
+    },
+
+    // --- WEIGHTED AVERAGE QUESTIONS (2) ---
+    {
+        type: "problem",
+        question: "Weighted Average Method: Calculate the Weighted Average Unit Cost.\n\nData:\n- Beginning Inventory: 100 units @ ₱50\n- Purchase 1: 300 units @ ₱60\n- Purchase 2: 100 units @ ₱65",
+        answer: `Weighted Average Unit Cost: ₱59
+
+Computation:
+1. Total Cost of Goods Available:
+   (100 x 50) + (300 x 60) + (100 x 65) 
+   = 5,000 + 18,000 + 6,500 = ₱29,500
+2. Total Units Available:
+   100 + 300 + 100 = 500 units
+3. Average:
+   ₱29,500 / 500 units = ₱59 per unit`,
+        explanation: "The Weighted Average cost is determined by dividing the Total Cost of Goods Available for Sale by the Total Units Available for Sale."
+    },
+    {
+        type: "problem",
+        question: "Weighted Average Method: Calculate Ending Inventory Value.\n\nData:\n- Total Goods Available for Sale: ₱100,000\n- Total Units Available: 2,000 units\n- Ending Inventory Count: 400 units",
+        answer: `Ending Inventory Value: ₱20,000
+
+Computation:
+1. Find Average Unit Cost:
+   ₱100,000 / 2,000 units = ₱50 per unit
+2. Apply to Ending Inventory:
+   400 units x ₱50 = ₱20,000`,
+        explanation: "Once the average cost per unit is established (₱50), it is applied to the physical count of units remaining to value the inventory."
+    },
+
+    // --- COMBINED COMPREHENSIVE QUESTION (1) ---
+    {
+        type: "problem",
+        question: "Comparative Analysis: Compute COGS under BOTH FIFO and Weighted Average.\n\nScenario:\n- Jan 1: Beg Inv 10 units @ ₱100\n- Jan 15: Purchase 10 units @ ₱200\n- Jan 31: Sold 15 units (Leaving 5 units in Ending Inventory)",
+        answer: `FIFO COGS: ₱2,000
+Weighted Average COGS: ₱2,250
+
+Computations:
+Total Available: (10@100) + (10@200) = ₱3,000 (20 units)
+
+1. FIFO Method:
+   Ending Inv (Newest 5 units @ ₱200) = ₱1,000
+   COGS = ₱3,000 - ₱1,000 = ₱2,000
+
+2. Weighted Average Method:
+   Avg Cost = ₱3,000 / 20 units = ₱150/unit
+   Ending Inv (5 units @ ₱150) = ₱750
+   COGS = ₱3,000 - ₱750 = ₱2,250`,
+        explanation: "FIFO results in a lower COGS here because it assumes the cheaper, older units (₱100) were sold first. Weighted Average smooths out the price jump, resulting in a higher COGS."
     }
 ]
         },
