@@ -1650,6 +1650,51 @@ Total Available: (10@100) + (10@200) = ₱3,000 (20 units)
         correctIndex: 2, 
         explanation: "It has a debit balance and offsets Sales Revenue on the Income Statement." 
     },
+                // Q1: FIFO (Simple - 1 Sale)
+    { 
+        type: "mcq", 
+        question: "Using the FIFO Perpetual method, calculate the Cost of Goods Sold (COGS) for the sale on Jan 15.\n\nTransactions:\nJan 1: Beginning Inv (100 units @ ₱10)\nJan 5: Purchase (200 units @ ₱12)\nJan 10: Purchase (100 units @ ₱15)\nJan 15: Sale of 320 units", 
+        options: ["₱3,700", "₱3,900", "₱3,840", "₱4,000"], 
+        correctIndex: 0, 
+        explanation: "FIFO takes the oldest costs first.\n1. 100 units @ ₱10 = ₱1,000 (All Beg Inv)\n2. 200 units @ ₱12 = ₱2,400 (All Jan 5)\n3. 20 units @ ₱15 = ₱300 (From Jan 10)\nTotal: ₱1,000 + ₱2,400 + ₱300 = ₱3,700." 
+    },
+
+    // Q2: FIFO (Complex - 3 Purchases, 3 Sales)
+    { 
+        type: "mcq", 
+        question: "Calculate the value of ENDING INVENTORY using FIFO Perpetual.\n\nJan 1: Beg Inv (50 units @ ₱20)\nJan 2: Sale (40 units)\nJan 5: Purchase (50 units @ ₱22)\nJan 8: Sale (20 units)\nJan 10: Purchase (50 units @ ₱24)\nJan 12: Sale (30 units)\nJan 15: Purchase (50 units @ ₱26)", 
+        options: ["₱2,660", "₱2,780", "₱2,400", "₱3,000"], 
+        correctIndex: 1, 
+        explanation: "Track the layers:\n1. After Jan 2 Sale: 10 units @ ₱20 remain.\n2. After Jan 8 Sale (20 total): 10 @ ₱20 sold + 10 @ ₱22 sold. Remaining: 40 units @ ₱22.\n3. After Jan 12 Sale (30 total): 30 @ ₱22 sold. Remaining: 10 units @ ₱22.\n\nEnding Inventory Layers:\n- 10 units @ ₱22 (Oldest remaining)\n- 50 units @ ₱24 (From Jan 10)\n- 50 units @ ₱26 (From Jan 15)\nTotal: ₱220 + ₱1,200 + ₱1,300 = ₱2,780." 
+    },
+
+    // Q3: Moving Average (Simple - 1 Sale)
+    { 
+        type: "mcq", 
+        question: "Using the Moving Average method, what is the Cost of Goods Sold for the sale on Jan 15?\n\nJan 1: Beg Inv (100 units @ ₱10)\nJan 5: Purchase (100 units @ ₱14)\nJan 10: Purchase (200 units @ ₱16)\nJan 15: Sale (300 units)", 
+        options: ["₱4,200", "₱4,350", "₱4,500", "₱3,900"], 
+        correctIndex: 0, 
+        explanation: "1. Average after Jan 5: (100@10 + 100@14) = ₱2,400 / 200 units = ₱12/unit.\n2. Average after Jan 10: (200@12 + 200@16) = ₱5,600 / 400 units = ₱14/unit.\n3. COGS: 300 units x ₱14 = ₱4,200." 
+    },
+
+    // Q4: Moving Average (Complex - 3 Purchases, 3 Sales)
+    { 
+        type: "mcq", 
+        question: "What is the Moving Average UNIT COST used for the final sale on Jan 14?\n\nJan 1: Beg Inv (100 @ ₱10)\nJan 2: Purchase (100 @ ₱12)\nJan 3: Sale (100 units)\nJan 5: Purchase (100 @ ₱15)\nJan 8: Sale (100 units)\nJan 10: Purchase (100 @ ₱16)\nJan 14: Sale (100 units)", 
+        options: ["₱13.00", "₱14.50", "₱16.00", "₱15.00"], 
+        correctIndex: 1, 
+        explanation: "1. Avg after Jan 2: (100@10 + 100@12)/200 = ₱11. \n2. After Jan 3 Sale: 100 rem @ ₱11.\n3. Avg after Jan 5: (100@11 + 100@15)/200 = 2600/200 = ₱13.\n4. After Jan 8 Sale: 100 rem @ ₱13.\n5. Avg after Jan 10: (100@13 + 100@16)/200 = 2900/200 = ₱14.50." 
+    },
+
+    // Q5: Comparison (FIFO vs Moving Average)
+    { 
+        type: "mcq", 
+        question: "Compare the Total Cost of Goods Sold (COGS) between Moving Average and FIFO. What is the difference?\n\nJan 1: Beg Inv (10 units @ ₱100)\nJan 2: Purchase (10 units @ ₱110)\nJan 3: Purchase (10 units @ ₱120)\nJan 4: Sale (15 units)\nJan 5: Purchase (10 units @ ₱130)\nJan 6: Sale (15 units)", 
+        options: ["Moving Avg is higher by ₱120", "FIFO is higher by ₱120", "Moving Avg is higher by ₱50", "They are equal"], 
+        correctIndex: 0, 
+        explanation: "FIFO COGS:\nSale 1 (15): 10@100 + 5@110 = 1,550\nSale 2 (15): 5@110 + 10@120 = 1,750\nTotal FIFO = 3,300.\n\nMoving Avg COGS:\nAvg after Jan 3: (1000+1100+1200)/30 = ₱110.\nSale 1: 15 @ 110 = 1,650. (Rem 15 @ 110).\nAvg after Jan 5: (1650 + 1300)/25 = ₱118.\nSale 2: 15 @ 118 = 1,770.\nTotal Avg = 3,420.\n\nDifference: 3,420 - 3,300 = ₱120 (Moving Avg is higher)." 
+    },
+    
 
     // --- OPEN ENDED PROBLEMS (10) ---
 
@@ -1737,6 +1782,164 @@ Credit: Cash ₱200`,
 Gross Profit Rate = (Gross Profit / Net Sales) x 100
 Rate = (₱80,000 / ₱200,000) = 40%`,
         explanation: "The rate represents the percentage of each sales dollar that exceeds the cost of the goods sold."
+    },
+                // --- FIFO: SIMPLE (Beg Inv + 2 Purchases + 1 Sale) ---
+
+    {
+        type: "problem",
+        question: "Using FIFO Perpetual, calculate the Cost of Goods Sold (COGS) for the sale on Jan 10.\n\nJan 1: Beg Inv (100 units @ ₱50)\nJan 5: Purchase (200 units @ ₱55)\nJan 8: Purchase (50 units @ ₱60)\nJan 10: Sale of 250 units",
+        answer: `Sold 250 units total.
+Layer 1 (Oldest): 100 units @ ₱50 = ₱5,000
+Layer 2 (Next):   150 units @ ₱55 = ₱8,250
+-----------------------------------------
+Total COGS:       ₱13,250`,
+        explanation: "Under FIFO, we sell the oldest units first. We cleared the entire Beginning Inventory (100) and took the remaining 150 needed from the Jan 5 purchase."
+    },
+    {
+        type: "problem",
+        question: "Using FIFO Perpetual, determine the value of Ending Inventory after the following transactions.\n\nFeb 1: Beg Inv (20 units @ ₱100)\nFeb 10: Purchase (30 units @ ₱120)\nFeb 15: Purchase (10 units @ ₱130)\nFeb 20: Sale of 40 units",
+        answer: `Total Units Available: 60. Units Sold: 40. Units Remaining: 20.
+Under FIFO, the remaining units are the NEWEST ones.
+
+From Feb 15 Purchase: 10 units @ ₱130 = ₱1,300
+From Feb 10 Purchase: 10 units @ ₱120 = ₱1,200
+-----------------------------------------
+Ending Inventory:     ₱2,500`,
+        explanation: "We sold the oldest 40 (all 20 from Beg Inv + 20 from Feb 10). What remains are the 10 from Feb 15 and the remaining 10 from Feb 10."
+    },
+
+    // --- FIFO: COMPLEX (Beg Inv + 3 Purchases + 3 Sales) ---
+
+    {
+        type: "problem",
+        question: "Track the inventory layers using FIFO to find the Cost of Goods Sold for the FINAL sale on March 25 only.\n\nMar 1: Beg Inv (100 @ ₱10)\nMar 5: Sold 50 units\nMar 8: Purchase (100 @ ₱12)\nMar 10: Sold 80 units\nMar 15: Purchase (100 @ ₱14)\nMar 20: Purchase (50 @ ₱15)\nMar 25: Sold 100 units",
+        answer: `Previous balances before Mar 25 sale:
+- Remaining from Mar 8: 20 units @ ₱12 (Since 80 were sold on Mar 10, using up the rest of Beg Inv and 30 of Mar 8).
+- Full Mar 15 Batch: 100 units @ ₱14.
+- Full Mar 20 Batch: 50 units @ ₱15.
+
+Mar 25 Sale (100 units):
+1. Take all remaining Mar 8: 20 units @ ₱12 = ₱240
+2. Take from Mar 15:         80 units @ ₱14 = ₱1,120
+--------------------------------------------------
+COGS for Mar 25 Sale:        ₱1,360`,
+        explanation: "You must track the 'balance' column carefully. Before the final sale, the oldest layer available was the remainder of the March 8 purchase."
+    },
+    {
+        type: "problem",
+        question: "Calculate the total Gross Profit for the month using FIFO.\n\nApr 1: Beg Inv (10 @ ₱200)\nApr 5: Purchase (10 @ ₱220)\nApr 8: Sale (15 units @ ₱400 selling price)\nApr 12: Purchase (10 @ ₱240)\nApr 15: Sale (10 units @ ₱450 selling price)\nApr 20: Purchase (10 @ ₱250)\nApr 25: Sale (5 units @ ₱500 selling price)",
+        answer: `Total Revenue:
+(15 * 400) + (10 * 450) + (5 * 500) = ₱13,000
+
+Total COGS (FIFO):
+Sale 1 (15): (10@200) + (5@220) = 3,100
+Sale 2 (10): (5@220 rem) + (5@240) = 2,300
+Sale 3 (5):  (5@240 rem) = 1,200
+Total COGS = ₱6,600
+
+Gross Profit: ₱13,000 - ₱6,600 = ₱6,400`,
+        explanation: "Gross Profit is Total Revenue minus Total COGS. FIFO requires peeling off the cost layers in chronological order for each specific sale."
+    },
+
+    // --- MOVING AVERAGE: SIMPLE (Beg Inv + 2 Purchases + 1 Sale) ---
+
+    {
+        type: "problem",
+        question: "Using the Moving Average method, calculate the new unit cost after the Jan 15 purchase. (Round to 2 decimals).\n\nJan 1: Beg Inv (100 units @ ₱20)\nJan 10: Purchase (100 units @ ₱24)\nJan 15: Purchase (200 units @ ₱28)\nJan 20: Sale (300 units)",
+        answer: `1. After Jan 10 Purchase:
+(100@20 + 100@24) = 4,400 / 200 units = ₱22.00/unit
+
+2. After Jan 15 Purchase:
+Old Balance: 200 units @ ₱22.00 = ₱4,400
+New Purchase: 200 units @ ₱28.00 = ₱5,600
+Total: 400 units costing ₱10,000
+
+New Average Cost: ₱10,000 / 400 units = ₱25.00`,
+        explanation: "In a perpetual moving average, you must re-calculate the average cost immediately after every purchase, before you calculate any sales."
+    },
+    {
+        type: "problem",
+        question: "Using Moving Average, calculate the Cost of Goods Sold for the sale on May 20.\n\nMay 1: Beg Inv (500 units @ ₱10)\nMay 5: Purchase (500 units @ ₱14)\nMay 10: Purchase (1,000 units @ ₱16)\nMay 20: Sale (1,500 units)",
+        answer: `1. Avg after May 5:
+(500@10 + 500@14) / 1000 = 12,000 / 1000 = ₱12.00
+
+2. Avg after May 10:
+(1000@12 + 1000@16) / 2000 = 28,000 / 2000 = ₱14.00
+
+3. COGS for Sale:
+1,500 units x ₱14.00 = ₱21,000`,
+        explanation: "The final average cost calculated before the sale (₱14.00) is applied to all units sold in that transaction."
+    },
+
+    // --- MOVING AVERAGE: COMPLEX (Beg Inv + 3 Purchases + 3 Sales) ---
+
+    {
+        type: "problem",
+        question: "Calculate the value of Ending Inventory using Moving Average. (Round intermediate unit costs to 2 decimals).\n\nJun 1: Beg Inv (100 @ ₱50)\nJun 5: Sold 50 units\nJun 10: Purchase (100 @ ₱60)\nJun 15: Sold 100 units\nJun 20: Purchase (200 @ ₱70)\nJun 25: Sold 50 units\nJun 30: Purchase (100 @ ₱80)",
+        answer: `1. Jun 1 Avg: ₱50.
+2. Jun 5 Sale: Rem 50 units @ ₱50.
+3. Jun 10 Purchase: (50@50 + 100@60) / 150 = 8,500/150 = ₱56.67
+4. Jun 15 Sale: Rem 50 units @ ₱56.67. (Value ₱2,833.50)
+5. Jun 20 Purchase: (2,833.50 + 200@70) / 250 = 16,833.50/250 = ₱67.33
+6. Jun 25 Sale: Rem 200 units @ ₱67.33. (Value ₱13,466)
+7. Jun 30 Purchase: (13,466 + 100@80) / 300 = 21,466/300 = ₱71.55
+
+Ending Inventory: 300 units @ ₱71.55 = ₱21,465 (approx)`,
+        explanation: "The moving average requires updating the cost per unit after every purchase. This new cost is carried forward to the next transaction."
+    },
+    {
+        type: "problem",
+        question: "Calculate the total Cost of Goods Sold for the period using Moving Average.\n\nJul 1: Beg Inv (10 @ ₱10)\nJul 2: Purch (10 @ ₱12)\nJul 3: Sale (10 units)\nJul 4: Purch (10 @ ₱14)\nJul 5: Sale (10 units)\nJul 6: Purch (10 @ ₱16)\nJul 7: Sale (10 units)",
+        answer: `1. Avg after Jul 2: (10@10 + 10@12)/20 = ₱11.
+COGS Sale 1: 10 x 11 = ₱110. (Rem 10 @ 11).
+
+2. Avg after Jul 4: (10@11 + 10@14)/20 = 250/20 = ₱12.50.
+COGS Sale 2: 10 x 12.50 = ₱125. (Rem 10 @ 12.50).
+
+3. Avg after Jul 6: (10@12.50 + 10@16)/20 = 285/20 = ₱14.25.
+COGS Sale 3: 10 x 14.25 = ₱142.50.
+
+Total COGS: 110 + 125 + 142.50 = ₱377.50`,
+        explanation: "We sum the COGS calculated at each individual sale point based on the weighted average cost active at that specific date."
+    },
+
+    // --- COMPARISON: FIFO vs MOVING AVG (Beg Inv + 3 Purchases + 3 Sales) ---
+
+    {
+        type: "problem",
+        question: "Compare the Ending Inventory value between FIFO and Moving Average. Which is higher and by how much?\n\nAug 1: Beg Inv (100 @ ₱10)\nAug 2: Purch (100 @ ₱20)\nAug 3: Sale (100 units)\nAug 4: Purch (100 @ ₱30)\nAug 5: Sale (100 units)\nAug 6: Purch (100 @ ₱40)\nAug 7: Sale (100 units)",
+        answer: `Ending Units: 100.
+
+FIFO (Ending is newest):
+100 units @ ₱40 = ₱4,000.
+
+Moving Average:
+1. Avg (100@10+100@20)/200 = ₱15. After Sale 1, Rem 100@15.
+2. Avg (100@15+100@30)/200 = ₱22.50. After Sale 2, Rem 100@22.50.
+3. Avg (100@22.50+100@40)/200 = ₱31.25. After Sale 3, Rem 100@31.25.
+MA Ending Inv = ₱3,125.
+
+Difference: ₱4,000 (FIFO) - ₱3,125 (MA) = ₱875.
+FIFO is higher by ₱875.`,
+        explanation: "In a period of rising prices (inflation), FIFO generally produces a higher ending inventory value because the cheaper, older goods are sold off, leaving expensive goods on the books."
+    },
+    {
+        type: "problem",
+        question: "Compare the Total COGS between FIFO and Moving Average. Which method reports higher Net Income?\n\nSept 1: Beg Inv (50 @ ₱100)\nSept 2: Purch (50 @ ₱110)\nSept 3: Sale (50 units)\nSept 4: Purch (50 @ ₱120)\nSept 5: Sale (50 units)\nSept 6: Purch (50 @ ₱130)\nSept 7: Sale (50 units)",
+        answer: `FIFO COGS:
+1. Sale 1: 50 @ 100 = 5,000
+2. Sale 2: 50 @ 110 = 5,500
+3. Sale 3: 50 @ 120 = 6,000
+Total FIFO COGS = ₱16,500
+
+Moving Avg COGS:
+1. Avg (100+110)/2 = 105. COGS = 5,250.
+2. Avg (105+120)/2 = 112.5. COGS = 5,625.
+3. Avg (112.5+130)/2 = 121.25. COGS = 6,062.5.
+Total MA COGS = ₱16,937.5
+
+Conclusion: FIFO has lower COGS (16,500 vs 16,937.5). Therefore, FIFO reports higher Net Income.`,
+        explanation: "Since FIFO charges the older (cheaper) costs to expense, the total expense is lower, resulting in higher profit (Net Income) compared to Moving Average."
     }
 ]
         },
