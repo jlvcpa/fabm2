@@ -1261,6 +1261,175 @@ Total Available: (10@100) + (10@200) = ₱3,000 (20 units)
             <strong>Formula:</strong> Book Value (Computer) - Physical Count = Shrinkage Expense.
         </div>
     </li>
+    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+    <h3 class="text-xl font-bold text-gray-800 mb-3">4. Practice: FIFO vs. Moving Average (Perpetual)</h3>
+
+    <div class="bg-gray-50 p-4 rounded-lg border border-gray-300 mb-6">
+        <h4 class="font-bold text-gray-900 mb-2">The Scenario</h4>
+        <p class="text-sm text-gray-700 mb-3">
+            A tech store tracks its stock of "Wireless Earbuds" (Item #501) during October.
+        </p>
+
+        <table class="w-full text-sm text-left text-gray-700 mb-4">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-200">
+                <tr>
+                    <th class="px-3 py-2">Date</th>
+                    <th class="px-3 py-2">Transaction Type</th>
+                    <th class="px-3 py-2">Units</th>
+                    <th class="px-3 py-2">Unit Cost</th>
+                    <th class="px-3 py-2">Total Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b">
+                    <td class="px-3 py-2">Oct 1</td>
+                    <td class="px-3 py-2 font-semibold">Beginning Inventory</td>
+                    <td class="px-3 py-2">100</td>
+                    <td class="px-3 py-2">₱500</td>
+                    <td class="px-3 py-2">₱50,000</td>
+                </tr>
+                <tr class="bg-blue-50 border-b">
+                    <td class="px-3 py-2">Oct 5</td>
+                    <td class="px-3 py-2 text-blue-700">Purchase #1</td>
+                    <td class="px-3 py-2">200</td>
+                    <td class="px-3 py-2">₱550</td>
+                    <td class="px-3 py-2">₱110,000</td>
+                </tr>
+                <tr class="bg-red-50 border-b">
+                    <td class="px-3 py-2">Oct 8</td>
+                    <td class="px-3 py-2 text-red-700">Sale #1</td>
+                    <td class="px-3 py-2">(150)</td>
+                    <td class="px-3 py-2 text-gray-400 italic">--</td>
+                    <td class="px-3 py-2 text-gray-400 italic">--</td>
+                </tr>
+                <tr class="bg-blue-50 border-b">
+                    <td class="px-3 py-2">Oct 12</td>
+                    <td class="px-3 py-2 text-blue-700">Purchase #2</td>
+                    <td class="px-3 py-2">300</td>
+                    <td class="px-3 py-2">₱600</td>
+                    <td class="px-3 py-2">₱180,000</td>
+                </tr>
+                <tr class="bg-red-50 border-b">
+                    <td class="px-3 py-2">Oct 20</td>
+                    <td class="px-3 py-2 text-red-700">Sale #2</td>
+                    <td class="px-3 py-2">(250)</td>
+                    <td class="px-3 py-2 text-gray-400 italic">--</td>
+                    <td class="px-3 py-2 text-gray-400 italic">--</td>
+                </tr>
+                 <tr class="bg-blue-50 border-b">
+                    <td class="px-3 py-2">Oct 25</td>
+                    <td class="px-3 py-2 text-blue-700">Purchase #3</td>
+                    <td class="px-3 py-2">100</td>
+                    <td class="px-3 py-2">₱620</td>
+                    <td class="px-3 py-2">₱62,000</td>
+                </tr>
+                 <tr class="bg-red-50 border-b">
+                    <td class="px-3 py-2">Oct 29</td>
+                    <td class="px-3 py-2 text-red-700">Sale #3</td>
+                    <td class="px-3 py-2">(100)</td>
+                    <td class="px-3 py-2 text-gray-400 italic">--</td>
+                    <td class="px-3 py-2 text-gray-400 italic">--</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="flex items-center justify-between bg-white p-3 rounded border border-gray-200">
+             <span class="text-sm font-bold text-gray-800">Ending Inventory Count:</span>
+             <span class="text-sm font-mono bg-gray-100 px-2 py-1 rounded">200 Units</span>
+        </div>
+        <p class="text-xs text-gray-500 mt-2">
+           (Math: 100 + 200 - 150 + 300 - 250 + 100 - 100 = 200 units remaining)
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <div class="bg-blue-50 p-4 rounded-lg border-t-4 border-blue-500">
+            <h5 class="font-bold text-blue-900 mb-2 flex items-center">
+                <span class="bg-blue-200 text-blue-800 text-xs px-2 py-1 rounded mr-2">Method A</span> FIFO
+            </h5>
+            <p class="text-xs text-blue-800 mb-4 italic">"First Costs In are the First Costs Out."</p>
+            
+            <div class="space-y-4 text-sm text-blue-900">
+                <div>
+                    <strong class="block mb-1 text-blue-700 border-b border-blue-200">Cost of Goods Sold (COGS) Breakdown:</strong>
+                    <ul class="list-disc pl-4 space-y-1 mt-1 text-xs">
+                        <li><strong>Sale Oct 8 (150 units):</strong>
+                            <br>100 @ ₱500 (Oldest) + 50 @ ₱550 
+                            <br>= ₱50,000 + ₱27,500 = <strong>₱77,500</strong>
+                        </li>
+                         <li><strong>Sale Oct 20 (250 units):</strong>
+                            <br>150 @ ₱550 (Leftover Oct 5) + 100 @ ₱600 (Oct 12)
+                            <br>= ₱82,500 + ₱60,000 = <strong>₱142,500</strong>
+                        </li>
+                        <li><strong>Sale Oct 29 (100 units):</strong>
+                            <br>100 @ ₱600 (From Oct 12)
+                            <br>= <strong>₱60,000</strong>
+                        </li>
+                    </ul>
+                    <div class="mt-2 font-bold text-right border-t border-blue-300 pt-1">Total COGS: ₱280,000</div>
+                </div>
+
+                <div>
+                    <strong class="block mb-1 text-blue-700 border-b border-blue-200">Ending Inventory (200 Units):</strong>
+                    <p class="text-xs mt-1">
+                        We have 200 units left. Under FIFO, these are the <strong>most recent</strong> purchases.
+                    </p>
+                    <ul class="list-none pl-0 mt-1 text-xs font-mono bg-white p-2 rounded border border-blue-100">
+                        <li>100 units @ ₱600 (From Oct 12) = ₱60,000</li>
+                        <li>100 units @ ₱620 (From Oct 25) = ₱62,000</li>
+                        <li class="border-t border-blue-200 mt-1 pt-1 font-bold">Total: ₱122,000</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-green-50 p-4 rounded-lg border-t-4 border-green-500">
+            <h5 class="font-bold text-green-900 mb-2 flex items-center">
+                <span class="bg-green-200 text-green-800 text-xs px-2 py-1 rounded mr-2">Method B</span> Moving Average
+            </h5>
+            <p class="text-xs text-green-800 mb-4 italic">"Recalculate average cost after EVERY purchase."</p>
+            
+            <div class="space-y-4 text-sm text-green-900">
+                <div>
+                    <strong class="block mb-1 text-green-700 border-b border-green-200">Unit Cost Calculations:</strong>
+                    <ul class="list-decimal pl-4 space-y-2 mt-1 text-xs">
+                        <li>
+                            <strong>Oct 5 (After Purchase #1):</strong>
+                            <br>(100 @ 500 + 200 @ 550) / 300 units = <strong>₱533.33</strong>
+                        </li>
+                        <li>
+                            <strong>Oct 12 (After Purchase #2):</strong>
+                            <br><em>(Rem. 150 @ 533.33 + 300 @ 600) / 450 units</em>
+                            <br>= (80,000 + 180,000) / 450 = <strong>₱577.78</strong>
+                        </li>
+                        <li>
+                            <strong>Oct 25 (After Purchase #3):</strong>
+                            <br><em>(Rem. 200 @ 577.78 + 100 @ 620) / 300 units</em>
+                            <br>= (115,556 + 62,000) / 300 = <strong>₱591.85</strong>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                     <strong class="block mb-1 text-green-700 border-b border-green-200">Final Results:</strong>
+                     
+                     <div class="flex justify-between items-center text-xs mt-2">
+                        <span>Total COGS:</span>
+                        <span class="font-mono font-bold">₱279,667</span>
+                     </div>
+                     <p class="text-[10px] text-green-700 italic mb-2">(Sum of: 150@533.33 + 250@577.78 + 100@591.85)</p>
+
+                     <div class="flex justify-between items-center text-xs border-t border-green-300 pt-2">
+                        <span>Ending Inventory (200 units):</span>
+                        <span class="font-mono font-bold">₱118,370</span>
+                     </div>
+                     <p class="text-[10px] text-green-700 italic">(200 units @ Final Avg ₱591.85)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
 
 </ul>`,
             exercises: [
