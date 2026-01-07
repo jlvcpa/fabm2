@@ -1242,25 +1242,65 @@ Total Available: (10@100) + (10@200) = ₱3,000 (20 units)
     </li>
 
     <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">4. Limitations & Shrinkage</h3>
-        <p class="text-gray-700 mb-4">
-            If the system tracks everything perfectly, why do we still need to count the inventory physically?
+    <h3 class="text-xl font-bold text-gray-800 mb-3">4. Limitations, Internal Control & Costing Methods</h3>
+    
+    <div class="mb-6">
+        <h4 class="font-bold text-gray-700 mb-2">Why Count if We Scan Everything?</h4>
+        <p class="text-gray-700 mb-3">
+            Even though the Perpetual System tracks every single transaction in real-time, a <strong>Physical Count (Stocktake)</strong> is still mandatory at least once a year. It serves as a critical Internal Control mechanism.
         </p>
         <ul class="list-disc pl-5 space-y-2 text-gray-600">
             <li>
-                <strong>The Discrepancy:</strong> The computer record (Perpetual record) shows what <em>should</em> be on the shelf. The physical count shows what <em>is actually</em> on the shelf.
+                <strong>Reality Check (The Discrepancy):</strong> The computer record shows what <em>should</em> be on the shelf (Book Value). The physical count reveals what <em>is actually</em> there.
             </li>
             <li>
-                <strong>Shrinkage:</strong> The difference between the two is called shrinkage. It represents theft, spoilage, or administrative errors.
+                <strong>Detecting Shrinkage:</strong> The difference between the computer record and the physical count is called <strong>Shrinkage</strong>. This represents theft (shoplifting or employee theft), spoilage, or administrative errors that the computer missed.
             </li>
             <li>
-                <strong>The Adjustment:</strong> At the end of the year, if the physical count is lower than the computer record, an adjusting entry is made to lower the Inventory balance and increase COGS.
+                <strong>Valuation Accuracy:</strong> Inventory must be reported on the Balance Sheet at the lower of its cost or market value. You cannot accurately value what you do not physically verify exists.
             </li>
         </ul>
-        <div class="mt-4 bg-red-50 p-4 rounded-md text-sm text-red-800 border border-red-200">
-            <strong>Formula:</strong> Book Value (Computer) - Physical Count = Shrinkage Expense.
+        
+        <div class="mt-4 bg-red-50 p-4 rounded-md text-sm text-red-800 border border-red-200 flex items-start">
+            <i class="fas fa-exclamation-triangle mt-1 mr-2"></i>
+            <div>
+                <strong>The Adjustment Formula:</strong><br>
+                <span class="font-mono">Book Value (Computer) - Physical Count (Actual) = Shrinkage Expense</span>
+                <br><span class="text-xs italic mt-1 text-red-600">Note: This amount is recorded as an adjustment, increasing Cost of Goods Sold and decreasing Inventory.</span>
+            </div>
         </div>
-    </li>
+    </div>
+
+    <div class="border-t border-gray-200 pt-6">
+        <h4 class="font-bold text-gray-700 mb-2">Costing in a Perpetual System</h4>
+        <p class="text-gray-700 mb-3">
+            In a Perpetual system, we don't just count costs at the end of the month. We must assign a cost to <em>every specific unit</em> the moment it is sold. Since identical items are bought at different prices throughout the year, we use specific assumptions to determine which "cost" is moved to Expense (COGS).
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                <h5 class="font-bold text-blue-900 text-sm">1. FIFO (First-In, First-Out)</h5>
+                <p class="text-xs text-blue-800 mt-1">
+                    <strong>The Assumption:</strong> The oldest costs on the books are the first ones removed when a sale happens.
+                </p>
+                <p class="text-xs text-blue-800 mt-2">
+                    <strong>Perpetual Impact:</strong> Simple to track. The "balance" always consists of the most recently purchased units.
+                </p>
+            </div>
+
+            <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+                <h5 class="font-bold text-green-900 text-sm">2. Moving Average</h5>
+                <p class="text-xs text-green-800 mt-1">
+                    <strong>The Assumption:</strong> We calculate a new average unit cost <em>immediately after every purchase</em>.
+                </p>
+                <p class="text-xs text-green-800 mt-2">
+                    <strong>Perpetual Impact:</strong> Dynamic. Unlike the "Weighted Average" in a periodic system (calculated once at month-end), this average fluctuates daily as you buy new stock.
+                </p>
+            </div>
+        </div>
+    </div>
+</li>
+
     <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
     <h3 class="text-xl font-bold text-gray-800 mb-3">4. Practice: FIFO vs. Moving Average (Perpetual)</h3>
 
