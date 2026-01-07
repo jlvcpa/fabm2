@@ -525,6 +525,75 @@ Buyer Recording: Yes (Added to Inventory Cost)`,
     </li>
 
     <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+    <h3 class="text-xl font-bold text-gray-800 mb-3">3. Transaction Flows (Periodic System)</h3>
+    <p class="text-gray-700 mb-4">
+        
+        In a Periodic system, the "Inventory" account is <strong>static</strong>. It stays frozen at the beginning balance throughout the period. Instead of touching the asset account, we use temporary accounts to track activity.
+    </p>
+
+    <div class="space-y-6">
+        
+        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-400">
+            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+                <i class="fas fa-truck-loading mr-2 text-orange-500"></i> Purchasing Merchandise
+            </h5>
+            <p class="text-sm text-slate-700 mb-2">
+                We do <strong>not</strong> debit the Inventory account. Instead, we debit a temporary expense-like account called "Purchases".
+            </p>
+            <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono">
+                <div class="flex justify-between"><span>Purchases</span> <span>Dr</span></div>
+                <div class="flex justify-between pl-8"><span>Accounts Payable / Cash</span> <span>Cr</span></div>
+            </div>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-purple-400">
+            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+                <i class="fas fa-shipping-fast mr-2 text-purple-500"></i> Freight In (Shipping Costs)
+            </h5>
+            <p class="text-sm text-slate-700 mb-2">
+                Shipping costs are tracked separately. We do not add them directly to Inventory; we use a specific "Freight-In" account.
+            </p>
+            <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono">
+                <div class="flex justify-between"><span>Freight-In</span> <span>Dr</span></div>
+                <div class="flex justify-between pl-8"><span>Cash</span> <span>Cr</span></div>
+            </div>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-red-400">
+            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+                <i class="fas fa-cash-register mr-2 text-red-500"></i> Selling Merchandise
+            </h5>
+            <p class="text-sm text-slate-700 mb-2">
+                <strong>The major difference:</strong> We record the Revenue (Sale Price), but we <strong>ignore</strong> the Cost of Goods Sold for now. No inventory reduction is recorded at this moment.
+            </p>
+            <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono space-y-2">
+                <div>
+                    <div class="flex justify-between"><span>Accounts Receivable</span> <span>Dr (Selling Price)</span></div>
+                    <div class="flex justify-between pl-8"><span>Sales Revenue</span> <span>Cr (Selling Price)</span></div>
+                </div>
+                <div class="border-t border-dashed border-gray-300 pt-2 text-gray-400 italic text-center text-xs">
+                    (No Entry for Cost of Goods Sold is made at this time)
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-blue-400">
+             <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+                <i class="fas fa-undo-alt mr-2 text-blue-500"></i> Purchase Returns
+            </h5>
+            <p class="text-sm text-slate-700 mb-2">
+                If we return goods to a supplier, we credit a contra-account, not Inventory.
+            </p>
+            <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono">
+                <div class="flex justify-between"><span>Accounts Payable</span> <span>Dr</span></div>
+                <div class="flex justify-between pl-8"><span>Purchase Returns & Allowances</span> <span>Cr</span></div>
+            </div>
+        </div>
+
+    </div>
+</li>
+
+    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
         <h3 class="text-xl font-bold text-gray-800 mb-3">2. Calculating Cost of Goods Sold (COGS)</h3>
         <p class="text-gray-700 mb-4">
             Since we don't track costs as we sell, we must calculate COGS at the end of the period using a specific logic: <em>"If I had it, and I don't have it now, I must have sold it."</em>
