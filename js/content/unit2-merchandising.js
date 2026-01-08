@@ -1170,6 +1170,107 @@ Total Available: (10@100) + (10@200) = ₱3,000 (20 units)
    Ending Inv (5 units @ ₱150) = ₱750
    COGS = ₱3,000 - ₱750 = ₱2,250`,
         explanation: "FIFO results in a lower COGS here because it assumes the cheaper, older units (₱100) were sold first. Weighted Average smooths out the price jump, resulting in a higher COGS."
+    },
+                // --- ADVANCED SCENARIO A: FIFO FOCUS (Questions 1-2) ---
+    {
+        type: "problem",
+        question: "FIFO Costing (Periodic): Calculate the Total Value of Ending Inventory.\n\nTransactions for Product X:\n- Jan 01: Beginning Inventory (200 units @ ₱50)\n- Jan 05: Sale of 100 units\n- Jan 10: Purchase (300 units @ ₱55)\n- Jan 15: Sale of 150 units\n- Jan 20: Purchase (400 units @ ₱60)\n- Jan 25: Sale of 200 units\n- Jan 30: Purchase (100 units @ ₱65)",
+        answer: `Ending Inventory Value: ₱33,250
+
+Computation:
+1. Determine Units Remaining:
+   Total Available: 200 (Beg) + 300 (P1) + 400 (P2) + 100 (P3) = 1,000 units
+   Total Sold: 100 + 150 + 200 = 450 units
+   Ending Inventory: 1,000 - 450 = 550 units
+
+2. Apply FIFO (Newest units remain):
+   - 100 units @ ₱65 (Jan 30) = ₱6,500
+   - 400 units @ ₱60 (Jan 20) = ₱24,000
+   - 50 units @ ₱55 (Jan 10) = ₱2,750
+   -----------------------------------
+   Total Value: ₱33,250`,
+        explanation: "In Periodic FIFO, we ignore when the sales happened. We simply take the final count (550 units) and value them using the most recent purchase costs working backwards."
+    },
+    {
+        type: "problem",
+        question: "FIFO Costing (Periodic): Prepare the Cost of Goods Sold (COGS) Schedule based on the data in the previous question (Scenario A).",
+        answer: `Cost of Goods Sold: ₱24,250
+
+Schedule:
+Beginning Inventory (200 @ ₱50):      ₱10,000
+Add: Net Purchases:
+   Jan 10 (300 @ ₱55): ₱16,500
+   Jan 20 (400 @ ₱60): ₱24,000
+   Jan 30 (100 @ ₱65): ₱6,500         ₱47,000
+---------------------------------------------
+Total Goods Available for Sale:       ₱57,000
+Less: Ending Inventory (FIFO):       (₱33,250)
+---------------------------------------------
+Cost of Goods Sold:                   ₱23,750`,
+        explanation: "COGS is derived by subtracting the calculated Ending Inventory (from Question 1) from the Total Goods Available for Sale."
+    },
+
+    // --- ADVANCED SCENARIO B: WEIGHTED AVERAGE FOCUS (Questions 3-4) ---
+    {
+        type: "problem",
+        question: "Weighted Average (Periodic): Calculate the Ending Inventory Value.\n\nTransactions for Product Y:\n- Mar 01: Beginning Inventory (1,000 units @ ₱10)\n- Mar 08: Purchase (2,000 units @ ₱12)\n- Mar 12: Sale of 1,500 units\n- Mar 18: Purchase (1,000 units @ ₱14)\n- Mar 22: Sale of 1,000 units\n- Mar 28: Purchase (1,000 units @ ₱15)\n- Mar 30: Sale of 500 units",
+        answer: `Ending Inventory Value: ₱26,600
+
+Computation:
+1. Total Goods Available:
+   (1,000 @ 10) + (2,000 @ 12) + (1,000 @ 14) + (1,000 @ 15)
+   = 10,000 + 24,000 + 14,000 + 15,000 = ₱63,000
+
+2. Total Units Available: 
+   1,000 + 2,000 + 1,000 + 1,000 = 5,000 units
+
+3. Average Unit Cost:
+   ₱63,000 / 5,000 units = ₱12.60 per unit
+
+4. Units Remaining:
+   Total Sold (1,500 + 1,000 + 500) = 3,000 sold
+   Remaining (5,000 - 3,000) = 2,000 units
+
+5. Ending Inventory:
+   2,000 units x ₱12.60 = ₱25,200`,
+        explanation: "Weighted Average blends all costs together. We divide the Total Cost of Goods Available (₱63,000) by Total Units (5,000) to find the average rate."
+    },
+    {
+        type: "problem",
+        question: "Weighted Average (Periodic): Calculate the Cost of Goods Sold (COGS) based on the data in the previous question (Scenario B).",
+        answer: `Cost of Goods Sold: ₱37,800
+
+Computation:
+Total Goods Available for Sale:    ₱63,000
+Less: Ending Inventory (Avco):    (₱25,200)
+-------------------------------------------
+Cost of Goods Sold:                ₱37,800
+
+Alternative Check:
+Units Sold (3,000) x Average Cost (₱12.60) = ₱37,800`,
+        explanation: "COGS can be found either by subtracting Ending Inventory from Total Available OR by multiplying the total units sold by the average unit cost."
+    },
+
+    // --- SCENARIO C: COMPARATIVE ANALYSIS (Question 5) ---
+    {
+        type: "problem",
+        question: "Comparative: Calculate Cost of Goods Sold using Weighted Average.\n\nTransactions:\n- Beg Inv: 10 units @ ₱100\n- Purchase 1: 10 units @ ₱110\n- Sale 1: 5 units sold\n- Purchase 2: 10 units @ ₱120\n- Sale 2: 10 units sold\n- Purchase 3: 10 units @ ₱130\n- Sale 3: 5 units sold",
+        answer: `Cost of Goods Sold: ₱2,300
+
+Computation:
+1. Total Available:
+   (10@100) + (10@110) + (10@120) + (10@130) = ₱4,600
+   Total Units = 40
+
+2. Average Cost:
+   ₱4,600 / 40 units = ₱115 per unit
+
+3. Units Sold:
+   5 + 10 + 5 = 20 units sold
+
+4. COGS Calculation:
+   20 units sold x ₱115 = ₱2,300`,
+        explanation: "Even though sales happened at different times, in the Periodic Weighted Average method, we wait until the end of the month to calculate the single average cost for all units."
     }
 ]
         },
