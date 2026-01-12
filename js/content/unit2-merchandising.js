@@ -2539,7 +2539,79 @@ Gross Profit:         ₱33,000`,
    Cr. Cash                     1,960
    Cr. Merchandise Inventory       40`,
         explanation: "In a Perpetual system, the discount reduces the cost of the asset. Therefore, we credit Inventory for the discount amount (₱40), rather than using a 'Purchase Discounts' revenue account."
-    }
+    },
+                {
+    type: "problem",
+    question: "Calculate Cost of Goods Sold: A shoe store began the year with an inventory worth ₱50,000. Throughout the year, they made Purchases totaling ₱300,000. At the end of the year, a physical count showed an Ending Inventory of ₱40,000. Calculate the COGS.",
+    answer: `Beginning Inventory:   ₱50,000
+Add: Purchases:        ₱300,000
+------------------------------
+Goods Available:       ₱350,000
+Less: Ending Inv:     (₱40,000)
+------------------------------
+Cost of Goods Sold:    ₱310,000`,
+    explanation: "The basic formula for COGS is Beginning Inventory + Purchases - Ending Inventory."
+},
+                {
+    type: "problem",
+    question: "Calculate Cost of Goods Sold: A hardware shop reports the following figures: Beginning Inventory ₱120,000; Purchases ₱500,000; Freight-In (Transportation In) ₱25,000; and Ending Inventory ₱150,000. Calculate the COGS.",
+    answer: `Beginning Inventory:   ₱120,000
+Add: Purchases:        ₱500,000
+Add: Freight-In:        ₱25,000
+------------------------------
+Goods Available:       ₱645,000
+Less: Ending Inv:     (₱150,000)
+------------------------------
+Cost of Goods Sold:    ₱495,000`,
+    explanation: "Freight-In is added to the cost of purchases because it is a necessary cost to bring the goods to the seller's location."
+},
+                {
+    type: "problem",
+    question: "Calculate Cost of Goods Sold: Based on the following ledger balances, compute the COGS: Beginning Inventory ₱200,000; Gross Purchases ₱850,000; Purchase Returns & Allowances ₱35,000; Purchase Discounts ₱15,000; Freight-In ₱40,000; Ending Inventory ₱180,000.",
+    answer: `Beginning Inventory:       ₱200,000
+Add: Purchases:            ₱850,000
+Less: Purch Returns:      (₱35,000)
+Less: Purch Discounts:    (₱15,000)
+Add: Freight-In:            ₱40,000
+-----------------------------------
+Net Cost of Purchases:     ₱840,000
+-----------------------------------
+Goods Available for Sale: ₱1,040,000
+Less: Ending Inv:         (₱180,000)
+-----------------------------------
+Cost of Goods Sold:        ₱860,000`,
+    explanation: "You must first determine Net Purchases by subtracting Returns and Discounts from Gross Purchases, then add Freight-In to find the total cost of goods available."
+},
+                {
+    type: "problem",
+    question: "Calculate Cost of Goods Sold: The accountant provided the following mixed data for the year: Sales Revenue ₱1,500,000; Beginning Inventory ₱300,000; Purchases ₱900,000; Sales Returns ₱50,000; Freight-Out ₱20,000; Freight-In ₱30,000; Purchase Returns ₱40,000; Ending Inventory ₱250,000. Calculate the COGS.",
+    answer: `Beginning Inventory:     ₱300,000
+Add: Purchases:          ₱900,000
+Less: Purch Returns:    (₱40,000)
+Add: Freight-In:          ₱30,000
+--------------------------------
+Goods Available:       ₱1,190,000
+Less: Ending Inv:       (₱250,000)
+--------------------------------
+Cost of Goods Sold:      ₱940,000`,
+    explanation: "This problem contains 'distractors'. Sales Revenue and Sales Returns are income items, not costs. Freight-Out is an operating expense (selling expense), not part of COGS. Only Freight-In and Purchase-related costs are included."
+},
+                {
+    type: "problem",
+    question: "Calculate Cost of Goods Sold: A company's records show that the Cost of Goods Available for Sale (COGAS) was ₱1,200,000. The Beginning Inventory was ₱200,000. The Ending Inventory is calculated to be 25% of the Net Cost of Purchases. Calculate the Cost of Goods Sold.",
+    answer: `1. Find Net Cost of Purchases:
+   COGAS (₱1,200,000) - Beg Inv (₱200,000) = Net Cost of Purchases (₱1,000,000)
+
+2. Calculate Ending Inventory:
+   25% of ₱1,000,000 = ₱250,000
+
+3. Calculate COGS:
+   COGAS:               ₱1,200,000
+   Less: Ending Inv:     (₱250,000)
+   -------------------------------
+   Cost of Goods Sold:    ₱950,000`,
+    explanation: "This requires working backward and understanding relationships. First, isolate the Net Cost of Purchases from the Available for Sale figure, then use that derived number to calculate the Ending Inventory."
+}
 ]
         },
         {
