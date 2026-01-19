@@ -1,9 +1,8 @@
 import { createPlaceholderDays } from '../utils.js';
-import { unit2Data } from './unit2-merchandising.js'; 
-//import { unit1Data } from './accountingCycle/unit1-accounting-cycle.js';
-
-// NEW: Import the Unit 1 data
 import { unit1Data } from './unit1-accounting-cycle.js';
+import { unit2Data } from './unit2-merchandising.js'; 
+import { unit2Week2Data } from './unit2week2-merchandising.js';
+
 
 export const courseData = {
     outline: {
@@ -149,8 +148,8 @@ export const courseData = {
                         {
                             id: "u2w2",
                             title: "Week 2: Merchandising Transactions",
-                            days: createPlaceholderDays([
-                                "Recording Purchases and Sales", "Trade, Purchase and Sales Discounts, Returns and Allowances", "Net Purchases and Sales Calculation", "Freight-in and Freight Out (FOB Destination/Shipping)"])
+                            days: unit2Week2Data.week2
+                              //  "Recording Purchases and Sales", "Trade, Purchase and Sales Discounts, Returns and Allowances", "Net Purchases and Sales Calculation", "Freight-in and Freight Out (FOB Destination/Shipping)"])
                         },
                         { 
                             id: "u2w3", title: "Week 3: Financial Statement", 
