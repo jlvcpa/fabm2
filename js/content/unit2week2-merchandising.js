@@ -194,7 +194,7 @@ export const unit2Week2Data = {
         // --- 5 PROBLEM SOLVING QUESTIONS (Journal Entries with Trade Discounts) ---
         {
             type: "problem",
-            question: "<strong>Scenario (Perpetual - Purchase):</strong> <br>Purchased goods with a List Price of ₱50,000 less a 20% trade discount. The purchase was made on credit.",
+            question: "<strong>Journalizing (Perpetual - Purchase):</strong> <br>Purchased goods with a List Price of ₱50,000 less a 20% trade discount. The purchase was made on credit.",
             answer: `Calculation:
 List Price:    50,000
 Less 20%:     (10,000)
@@ -207,7 +207,7 @@ Dr. Merchandise Inventory   40,000
         },
         {
             type: "problem",
-            question: "<strong>Scenario (Periodic - Purchase):</strong> <br>Purchased goods with a List Price of ₱20,000 less a 10% trade discount. The terms were COD (Cash on Delivery).",
+            question: "<strong>Journalizing (Periodic - Purchase):</strong> <br>Purchased goods with a List Price of ₱20,000 less a 10% trade discount. The terms were COD (Cash on Delivery).",
             answer: `Calculation:
 List Price:    20,000
 Less 10%:      (2,000)
@@ -220,7 +220,7 @@ Dr. Purchases               18,000
         },
         {
             type: "problem",
-            question: "<strong>Scenario (Perpetual - Sale):</strong> <br>Sold inventory with a List Price of ₱100,000 less a 25% trade discount on account. The cost of the goods sold was ₱40,000.",
+            question: "<strong>Journalizing (Perpetual - Sale):</strong> <br>Sold inventory with a List Price of ₱100,000 less a 25% trade discount on account. The cost of the goods sold was ₱40,000.",
             answer: `Calculation:
 List Price:    100,000
 Less 25%:      (25,000)
@@ -237,7 +237,7 @@ Dr. Cost of Goods Sold      40,000
         },
         {
             type: "problem",
-            question: "<strong>Scenario (Periodic - Sale):</strong> <br>Sold inventory with a List Price of ₱30,000 less a 5% trade discount for Cash. The cost of the goods sold was ₱15,000.",
+            question: "<strong>Journalizing (Periodic - Sale):</strong> <br>Sold inventory with a List Price of ₱30,000 less a 5% trade discount for Cash. The cost of the goods sold was ₱15,000.",
             answer: `Calculation:
 List Price:    30,000
 Less 5%:       (1,500)
@@ -252,7 +252,7 @@ Dr. Cash                    28,500
         },
         {
             type: "problem",
-            question: "<strong>Scenario (Chain Discount):</strong> <br>Purchased inventory (Periodic System) with a List Price of ₱10,000. The supplier offered trade discounts of 20% and 10%. Determine the Invoice Price and the Journal Entry (Credit).",
+            question: "<strong>Journalizing (Chain Discount):</strong> <br>Purchased inventory (Periodic System) with a List Price of ₱10,000. The supplier offered trade discounts of 20% and 10%. Determine the Invoice Price and the Journal Entry (Credit).",
             answer: `Step 1: 10,000 - 20% = 8,000
 Step 2:  8,000 - 10% = 7,200
 Invoice Price: ₱7,200
