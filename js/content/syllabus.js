@@ -79,7 +79,7 @@ export const courseData = {
     <ul class="list-disc pl-5 text-gray-600 space-y-2">
         <li><strong>Week 1:</strong> Introduction to Merchandising & Inventory Systems – Service vs. Merchandising models, Merchandise Inventory, Perpetual vs. Periodic Systems.</li>
         <li><strong>Week 2:</strong> Merchandising Transactions – Recording discounts, returns, freight - on purchases and sales transactions .</li>
-        <li><strong>Week 3:</strong> Financial Statement – Formula, adjustments, Gross Profit.</li>
+        <li><strong>Week 3:</strong> Financial Statement – Net Sales, Cost of Goods sold, Gross Profit, Operating Expenses, Net Income or Loss.</li>
         <li><strong>Week 4:</strong> Unit Performance Task – Merchandising Cycle Simulation (Transactions → Financial Statements).</li>
     </ul>
 
@@ -148,33 +148,17 @@ export const courseData = {
                         },
                         {
                             id: "u2w2",
-                            title: "Week 2: Purchases & Accounts",
+                            title: "Week 2: Merchandising Transactions",
                             days: createPlaceholderDays([
-                                "Recording Purchases",
-                                "Purchase Discounts (2/10, n/30)",
-                                "Purchase Returns and Allowances",
-                                "Freight-In (FOB Destination/Shipping)"
-                            ])
+                                "Recording Purchases and Sales", "Trade, Purchase and Sales Discounts, Returns and Allowances", "Net Purchases and Sales Calculation", "Freight-in and Freight Out (FOB Destination/Shipping)"])
                         },
                         { 
-                            id: "u2w3", title: "Week 3: Sales Transactions", 
-                            days: createPlaceholderDays(["Recording Sales", "Sales Discounts", "Sales Returns & Allowances", "Net Sales Calculation"]) 
+                            id: "u2w3", title: "Week 3: Financial Statement", 
+                            days: createPlaceholderDays(["Net Sales, COGS, and Pross Profit", "Opertaing Expenses", "Single and Multi-Step Income Statement", "Balance Sheet"]) 
                         },
                         { 
-                            id: "u2w4", title: "Week 4: COGS & Gross Profit", 
-                            days: createPlaceholderDays(["COGS Formula", "Beginning/Ending Inventory", "Gross Profit Calculation", "Shrinkage Adjustments"]) 
-                        },
-                        { 
-                            id: "u2w5", title: "Week 5: Operating Expenses", 
-                            days: createPlaceholderDays(["Selling Expenses", "Administrative Expenses", "Freight-Out", "Opex vs COGS"]) 
-                        },
-                        { 
-                            id: "u2w6", title: "Week 6: Income Statement", 
-                            days: createPlaceholderDays(["Single-step Format", "Multi-step Format Structure", "Analyzing Margins", "Statement Preparation"]) 
-                        },
-                        { 
-                            id: "u2w7", title: "Week 7: Performance Task", 
-                            days: createPlaceholderDays(["Case Study Intro", "Transaction Recording", "Financial Statement Gen", "Final Review"]) 
+                            id: "u2w4", title: "Week 4: Performance Task - Merchandising Cycle Simulation", 
+                            days: createPlaceholderDays(["Introduction and 1st Day", "Continuation - 2nd Day", "Continuation - 3rd Day", "Continuation 4th Day"]) 
                         }
                     ]
                 }
@@ -188,8 +172,8 @@ export const courseData = {
                     title: "Unit 3: Corporation Accounting",
                     weeks: [
                         {
-                            id: "u3w8",
-                            title: "Week 8: Intro to Corps & Equity",
+                            id: "u3w5",
+                            title: "Week 5: Intro to Corps & Equity",
                             days: createPlaceholderDays([
                                 "Nature of Corporations",
                                 "Classes of Shares (Common/Preferred)",
@@ -198,17 +182,21 @@ export const courseData = {
                             ])
                         },
                         { 
-                            id: "u3w9", title: "Week 9: Dividends & RE", 
+                            id: "u3w6", title: "Week 6: Dividends & RE", 
                             days: createPlaceholderDays(["Dividend Dates", "Cash Dividends", "Stock Dividends", "Retained Earnings"]) 
                         },
                         { 
-                            id: "u3w10", title: "Week 10: Formation & Legal", 
+                            id: "u3w7", title: "Week 7: Formation & Legal", 
                             days: createPlaceholderDays(["Incorporation Process", "Articles of Incorporation", "By-Laws", "SEC Requirements"]) 
                         },
                         { 
-                            id: "u3w11", title: "Week 11: Early Operations", 
+                            id: "u3w8", title: "Week 8: Early Operations", 
                             days: createPlaceholderDays(["Initial Contributions", "Corporate Books", "Equity Section Presentation", "Statement of Changes in Equity"]) 
-                        }
+                        },
+                        { 
+                            id: "u3w9", title: "Week 9: Early Operations", 
+                            days: createPlaceholderDays(["Initial Contributions", "Corporate Books", "Equity Section Presentation", "Statement of Changes in Equity"]) 
+                        },
                     ]
                 },
                 {
@@ -216,12 +204,12 @@ export const courseData = {
                     title: "Unit 4: Income Taxation",
                     weeks: [
                         { 
-                            id: "u4w12", title: "Week 12: Foundations of Tax", 
+                            id: "u4w10", title: "Week 10: Foundations of Tax", 
                             days: createPlaceholderDays(["Purpose of Taxation", "Principles of Sound Tax System", "Direct vs Indirect Taxes", "Taxpayer Classification"]) 
                         },
                         {
-                            id: "u4w13",
-                            title: "Week 13: Computation & Compliance",
+                            id: "u4w11",
+                            title: "Week 11: Computation & Compliance",
                             days: createPlaceholderDays([
                                 "Gross Income & Exclusions",
                                 "Allowable Deductions",
@@ -230,7 +218,7 @@ export const courseData = {
                             ])
                         },
                         { 
-                            id: "u4w14", title: "Week 14: Tax Returns (Forms)", 
+                            id: "u4w12", title: "Week 12: Tax Returns (Forms)", 
                             days: createPlaceholderDays(["BIR Forms Overview", "Form 1701 Walkthrough", "Form 1702 Walkthrough", "Filing & Payment Deadlines"]) 
                         }
                     ]
