@@ -344,844 +344,275 @@ Dr. Purchases               7,200
   ]
 },
         {
-            day: "Day 3",
-            topic: "The Perpetual Inventory System",
-            content: `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-    <p class="font-bold text-blue-900">Learning Goal</p>
-    <p class="text-blue-800">Master the mechanics of the Perpetual Inventory System and understand how it tracks costs in real-time.</p>
+    day: "Day 3",
+    topic: "Freight-in and Freight Out (FOB Destination/Shipping)",
+    content: `<div class="bg-indigo-50 p-4 rounded-lg border-l-4 border-indigo-500">
+    <p class="font-bold text-indigo-900">Learning Goal</p>
+    <p class="text-indigo-800">Master the accounting for transportation costs (Freight) and understand the legal implications of FOB Shipping Point vs. FOB Destination under both Periodic and Perpetual systems.</p>
 </div>
 
 <h3 class="text-xl font-bold mb-4 mt-6">Topic Focus</h3>
 <ul class="list-none space-y-8 mb-6">
 
     <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">1. Definition: Continuous Tracking</h3>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">1. The Golden Rule: Ownership Determines Responsibility</h3>
         <div class="text-gray-700 mb-4">
             <p class="mb-3">
-                The <strong>Perpetual Inventory System</strong> is a method of accounting that maintains a continuous, real-time record of inventory balances. The word "perpetual" means "never-ending" or "continuous." Under this system, the accounting records are updated <strong>immediately</strong> every time an item is bought, sold, or returned.
+                In accounting, the party who owns the goods while they are in transit is the party responsible for paying the freight (shipping) costs. This ownership is determined by the <strong>F.O.B. (Free On Board)</strong> terms.
             </p>
 
-            <h4 class="font-bold mb-1">The Modern Standard</h4>
-            <p class="mb-3">
-                Historically, this system was reserved for high-value items (like jewelry or cars) because the record-keeping was tedious. However, with the advent of barcode scanners and Point-of-Sale (POS) software, almost all modern businesses—from grocery stores to Amazon—use the Perpetual system.
-            </p>
-
-            <ul class="list-disc pl-5 mb-4 space-y-2">
-                <li>
-                    <strong>Detailed Records:</strong> The company knows exactly how many units of Product X are on the shelf at any specific moment without going to the warehouse to count them.
-                </li>
-                <li>
-                    <strong>Cost of Goods Sold (COGS):</strong> Unlike the Periodic system, which calculates COGS at the end of the month, the Perpetual system calculates COGS <em>at the moment of the sale</em>.
-                </li>
-            </ul>
-        </div>
-        <div class="bg-blue-50 p-4 rounded-md text-sm text-blue-800">
-            <strong>Analogy:</strong> Think of the grocery store scanner. When it "beeps," two things happen instantly: 1) The sale is recorded, and 2) The inventory count for that item is reduced by one.
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div class="bg-blue-50 p-4 rounded border border-blue-200">
+                    <h4 class="font-bold text-blue-900 mb-2">FOB Shipping Point</h4>
+                    <ul class="text-sm text-blue-800 space-y-2 list-disc pl-4">
+                        <li><strong>Ownership Transfers:</strong> At the seller's shipping dock (Shipping Point).</li>
+                        <li><strong>Owner in Transit:</strong> The <span class="font-bold underline">BUYER</span>.</li>
+                        <li><strong>Who Pays Freight:</strong> The Buyer.</li>
+                        <li><strong>Account Used:</strong> <span class="font-mono">Freight-In</span> (Cost of purchasing).</li>
+                    </ul>
+                </div>
+                <div class="bg-green-50 p-4 rounded border border-green-200">
+                    <h4 class="font-bold text-green-900 mb-2">FOB Destination</h4>
+                    <ul class="text-sm text-green-800 space-y-2 list-disc pl-4">
+                        <li><strong>Ownership Transfers:</strong> At the buyer's receiving dock (Destination).</li>
+                        <li><strong>Owner in Transit:</strong> The <span class="font-bold underline">SELLER</span>.</li>
+                        <li><strong>Who Pays Freight:</strong> The Seller.</li>
+                        <li><strong>Account Used:</strong> <span class="font-mono">Freight-Out</span> (Operating Expense).</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </li>
 
     <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">2. The "Two-Entry" Rule</h3>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">2. Accounting for Freight Costs</h3>
         <p class="text-gray-700 mb-4">
-            The most distinct feature of the Perpetual System is what happens during a sale. Because we are tracking inventory in real-time, <strong>every sale requires two separate journal entries.</strong>
+            How we record these costs depends on whether we use the Periodic or Perpetual system.
         </p>
 
-        <div class="my-6 flex justify-center">
-            <svg width="100%" height="auto" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" class="max-w-2xl">
-                <rect x="0" y="0" width="600" height="300" fill="#f9f9f9" rx="10"/>
-                <text x="300" y="30" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">The Perpetual Sale Workflow</text>
-                
-                <g transform="translate(20, 100)">
-                    <rect x="0" y="0" width="120" height="80" fill="#37474f" rx="5"/>
-                    <text x="60" y="35" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Sale Occurs</text>
-                    <text x="60" y="55" font-family="Arial" font-size="12" text-anchor="middle" fill="#cfd8dc">(Scan Item)</text>
-                </g>
-
-                <defs>
-                    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                        <polygon points="0 0, 10 3.5, 0 7" fill="#2196f3"/>
-                    </marker>
-                    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                        <polygon points="0 0, 10 3.5, 0 7" fill="#f44336"/>
-                    </marker>
-                </defs>
-
-                <line x1="140" y1="140" x2="220" y2="100" stroke="#2196f3" stroke-width="3" marker-end="url(#arrowhead-blue)"/>
-                <line x1="140" y1="140" x2="220" y2="180" stroke="#f44336" stroke-width="3" marker-end="url(#arrowhead-red)"/>
-
-                <g transform="translate(240, 60)">
-                    <rect x="0" y="0" width="320" height="80" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="5"/>
-                    <text x="10" y="25" font-family="Arial" font-size="14" font-weight="bold" fill="#0d47a1">Entry 1: Record the Revenue</text>
-                    <text x="10" y="50" font-family="Arial" font-size="12" fill="#333">Debit: Cash / Accounts Receivable</text>
-                    <text x="10" y="65" font-family="Arial" font-size="12" fill="#333">Credit: Sales Revenue</text>
-                    <text x="250" y="55" font-family="Arial" font-size="16" font-weight="bold" fill="#0d47a1">Selling Price</text>
-                </g>
-
-                <g transform="translate(240, 150)">
-                    <rect x="0" y="0" width="320" height="80" fill="#ffebee" stroke="#f44336" stroke-width="2" rx="5"/>
-                    <text x="10" y="25" font-family="Arial" font-size="14" font-weight="bold" fill="#b71c1c">Entry 2: Update the Inventory</text>
-                    <text x="10" y="50" font-family="Arial" font-size="12" fill="#333">Debit: Cost of Goods Sold (Expense)</text>
-                    <text x="10" y="65" font-family="Arial" font-size="12" fill="#333">Credit: Inventory (Asset)</text>
-                    <text x="260" y="55" font-family="Arial" font-size="16" font-weight="bold" fill="#b71c1c">Cost Price</text>
-                </g>
-                
-                <text x="300" y="280" font-family="Arial" font-size="12" font-style="italic" text-anchor="middle" fill="#666">Note: The customer sees Entry 1. The company internally records Entry 2.</text>
-            </svg>
-        </div>
-    </li>
-
-    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">3. Transaction Flows</h3>
-        <p class="text-gray-700 mb-4">
-            In a Perpetual system, the "Inventory" account is very active. It increases when we buy goods and decreases when we sell them.
-        </p>
-
-        <div class="space-y-6">
-            
-            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-400">
-                <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                    <i class="fas fa-truck-loading mr-2 text-orange-500"></i> Purchasing Merchandise
-                </h5>
-                <p class="text-sm text-slate-700 mb-2">When buying goods for resale, we debit the Inventory account directly. We do <strong>not</strong> use a "Purchases" account.</p>
-                <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono">
-                    <div class="flex justify-between"><span>Inventory</span> <span>Dr</span></div>
-                    <div class="flex justify-between pl-8"><span>Accounts Payable / Cash</span> <span>Cr</span></div>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-purple-400">
-                <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                    <i class="fas fa-shipping-fast mr-2 text-purple-500"></i> Freight In (Shipping Costs)
-                </h5>
-                <p class="text-sm text-slate-700 mb-2">If the buyer pays for shipping (FOB Shipping Point), this cost is considered part of the asset's value. It makes the inventory more expensive.</p>
-                <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono">
-                    <div class="flex justify-between"><span>Inventory</span> <span>Dr</span></div>
-                    <div class="flex justify-between pl-8"><span>Cash</span> <span>Cr</span></div>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-red-400">
-                <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                    <i class="fas fa-cash-register mr-2 text-red-500"></i> Selling Merchandise
-                </h5>
-                <p class="text-sm text-slate-700 mb-2">As detailed in the diagram above, two entries are required.</p>
-                <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono space-y-2">
-                    <div>
-                        <div class="flex justify-between"><span>Accounts Receivable</span> <span>Dr (Selling Price)</span></div>
-                        <div class="flex justify-between pl-8"><span>Sales Revenue</span> <span>Cr (Selling Price)</span></div>
-                    </div>
-                    <div class="border-t border-dashed border-gray-300 pt-2">
-                        <div class="flex justify-between"><span>Cost of Goods Sold</span> <span>Dr (Cost Price)</span></div>
-                        <div class="flex justify-between pl-8"><span>Inventory</span> <span>Cr (Cost Price)</span></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </li>
-
-    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-    <h3 class="text-xl font-bold text-gray-800 mb-3">4. Limitations, Internal Control & Costing Methods</h3>
-    
-    <div class="mb-6">
-        <h4 class="font-bold text-gray-700 mb-2">Why Count if We Scan Everything?</h4>
-        <p class="text-gray-700 mb-3">
-            Even though the Perpetual System tracks every single transaction in real-time, a <strong>Physical Count (Stocktake)</strong> is still mandatory at least once a year. It serves as a critical Internal Control mechanism.
-        </p>
-        <ul class="list-disc pl-5 space-y-2 text-gray-600">
-            <li>
-                <strong>Reality Check (The Discrepancy):</strong> The computer record shows what <em>should</em> be on the shelf (Book Value). The physical count reveals what <em>is actually</em> there.
-            </li>
-            <li>
-                <strong>Detecting Shrinkage:</strong> The difference between the computer record and the physical count is called <strong>Shrinkage</strong>. This represents theft (shoplifting or employee theft), spoilage, or administrative errors that the computer missed.
-            </li>
-            <li>
-                <strong>Valuation Accuracy:</strong> Inventory must be reported on the Balance Sheet at the lower of its cost or market value. You cannot accurately value what you do not physically verify exists.
-            </li>
-        </ul>
-        
-        <div class="mt-4 bg-red-50 p-4 rounded-md text-sm text-red-800 border border-red-200 flex items-start">
-            <i class="fas fa-exclamation-triangle mt-1 mr-2"></i>
-            <div>
-                <strong>The Adjustment Formula:</strong><br>
-                <span class="font-mono">Book Value (Computer) - Physical Count (Actual) = Shrinkage Expense</span>
-                <br><span class="text-xs italic mt-1 text-red-600">Note: This amount is recorded as an adjustment, increasing Cost of Goods Sold and decreasing Inventory.</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="border-t border-gray-200 pt-6">
-        <h4 class="font-bold text-gray-700 mb-2">Costing in a Perpetual System</h4>
-        <p class="text-gray-700 mb-3">
-            In a Perpetual system, we don't just count costs at the end of the month. We must assign a cost to <em>every specific unit</em> the moment it is sold. Since identical items are bought at different prices throughout the year, we use specific assumptions to determine which "cost" is moved to Expense (COGS).
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-                <h5 class="font-bold text-blue-900 text-sm">1. FIFO (First-In, First-Out)</h5>
-                <p class="text-xs text-blue-800 mt-1">
-                    <strong>The Assumption:</strong> The oldest costs on the books are the first ones removed when a sale happens.
-                </p>
-                <p class="text-xs text-blue-800 mt-2">
-                    <strong>Perpetual Impact:</strong> Simple to track. The "balance" always consists of the most recently purchased units.
-                </p>
-            </div>
-
-            <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
-                <h5 class="font-bold text-green-900 text-sm">2. Moving Average</h5>
-                <p class="text-xs text-green-800 mt-1">
-                    <strong>The Assumption:</strong> We calculate a new average unit cost <em>immediately after every purchase</em>.
-                </p>
-                <p class="text-xs text-green-800 mt-2">
-                    <strong>Perpetual Impact:</strong> Dynamic. Unlike the "Weighted Average" in a periodic system (calculated once at month-end), this average fluctuates daily as you buy new stock.
-                </p>
-            </div>
-        </div>
-    </div>
-</li>
-
-    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-    <h3 class="text-xl font-bold text-gray-800 mb-3">4. Practice: FIFO vs. Moving Average (Perpetual)</h3>
-
-    <div class="bg-gray-50 p-4 rounded-lg border border-gray-300 mb-6">
-        <h4 class="font-bold text-gray-900 mb-2">The Scenario</h4>
-        <p class="text-sm text-gray-700 mb-3">
-            A tech store tracks its stock of "Wireless Earbuds" (Item #501) during October.
-        </p>
-
-        <table class="w-full text-sm text-left text-gray-700 mb-4">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-200">
+        <h4 class="font-bold text-gray-800 mt-4 mb-2">A. Freight-In (Buyer Pays)</h4>
+        <p class="text-sm text-gray-600 mb-2">This is a cost of acquiring inventory.</p>
+        <table class="w-full text-sm text-left text-gray-700 mb-6 border border-gray-300">
+            <thead class="bg-gray-100 uppercase">
                 <tr>
-                    <th class="px-3 py-2">Date</th>
-                    <th class="px-3 py-2">Transaction Type</th>
-                    <th class="px-3 py-2">Units</th>
-                    <th class="px-3 py-2">Unit Cost</th>
-                    <th class="px-3 py-2">Total Cost</th>
+                    <th class="px-4 py-2 border-r">System</th>
+                    <th class="px-4 py-2">Treatment</th>
+                    <th class="px-4 py-2">Journal Entry</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white border-b">
-                    <td class="px-3 py-2">Oct 1</td>
-                    <td class="px-3 py-2 font-semibold">Beginning Inventory</td>
-                    <td class="px-3 py-2">100</td>
-                    <td class="px-3 py-2">₱500</td>
-                    <td class="px-3 py-2">₱50,000</td>
+                <tr class="border-b">
+                    <td class="px-4 py-2 border-r font-bold">Perpetual</td>
+                    <td class="px-4 py-2">Added directly to Inventory asset.</td>
+                    <td class="px-4 py-2 font-mono">Dr. Inventory<br>Cr. Cash</td>
                 </tr>
-                <tr class="bg-blue-50 border-b">
-                    <td class="px-3 py-2">Oct 5</td>
-                    <td class="px-3 py-2 text-blue-700">Purchase #1</td>
-                    <td class="px-3 py-2">200</td>
-                    <td class="px-3 py-2">₱550</td>
-                    <td class="px-3 py-2">₱110,000</td>
-                </tr>
-                <tr class="bg-red-50 border-b">
-                    <td class="px-3 py-2">Oct 8</td>
-                    <td class="px-3 py-2 text-red-700">Sale #1</td>
-                    <td class="px-3 py-2">(150)</td>
-                    <td class="px-3 py-2 text-gray-400 italic">--</td>
-                    <td class="px-3 py-2 text-gray-400 italic">--</td>
-                </tr>
-                <tr class="bg-blue-50 border-b">
-                    <td class="px-3 py-2">Oct 12</td>
-                    <td class="px-3 py-2 text-blue-700">Purchase #2</td>
-                    <td class="px-3 py-2">300</td>
-                    <td class="px-3 py-2">₱600</td>
-                    <td class="px-3 py-2">₱180,000</td>
-                </tr>
-                <tr class="bg-red-50 border-b">
-                    <td class="px-3 py-2">Oct 20</td>
-                    <td class="px-3 py-2 text-red-700">Sale #2</td>
-                    <td class="px-3 py-2">(250)</td>
-                    <td class="px-3 py-2 text-gray-400 italic">--</td>
-                    <td class="px-3 py-2 text-gray-400 italic">--</td>
-                </tr>
-                 <tr class="bg-blue-50 border-b">
-                    <td class="px-3 py-2">Oct 25</td>
-                    <td class="px-3 py-2 text-blue-700">Purchase #3</td>
-                    <td class="px-3 py-2">100</td>
-                    <td class="px-3 py-2">₱620</td>
-                    <td class="px-3 py-2">₱62,000</td>
-                </tr>
-                 <tr class="bg-red-50 border-b">
-                    <td class="px-3 py-2">Oct 29</td>
-                    <td class="px-3 py-2 text-red-700">Sale #3</td>
-                    <td class="px-3 py-2">(100)</td>
-                    <td class="px-3 py-2 text-gray-400 italic">--</td>
-                    <td class="px-3 py-2 text-gray-400 italic">--</td>
+                <tr>
+                    <td class="px-4 py-2 border-r font-bold">Periodic</td>
+                    <td class="px-4 py-2">Recorded in a separate "Freight-in" account.</td>
+                    <td class="px-4 py-2 font-mono">Dr. Freight-in<br>Cr. Cash</td>
                 </tr>
             </tbody>
         </table>
-        
-        <div class="flex items-center justify-between bg-white p-3 rounded border border-gray-200">
-             <span class="text-sm font-bold text-gray-800">Ending Inventory Count:</span>
-             <span class="text-sm font-mono bg-gray-100 px-2 py-1 rounded">200 Units</span>
+
+        <h4 class="font-bold text-gray-800 mt-4 mb-2">B. Freight-Out (Seller Pays)</h4>
+        <p class="text-sm text-gray-600 mb-2">This is a selling expense (Operating Expense). It is NEVER part of COGS or Inventory cost.</p>
+        <table class="w-full text-sm text-left text-gray-700 mb-4 border border-gray-300">
+            <thead class="bg-gray-100 uppercase">
+                <tr>
+                    <th class="px-4 py-2 border-r">System</th>
+                    <th class="px-4 py-2">Treatment</th>
+                    <th class="px-4 py-2">Journal Entry</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b">
+                    <td class="px-4 py-2 border-r font-bold">Perpetual</td>
+                    <td class="px-4 py-2">Expense Account (Delivery Expense).</td>
+                    <td class="px-4 py-2 font-mono">Dr. Freight-Out / Delivery Expense<br>Cr. Cash</td>
+                </tr>
+                <tr>
+                    <td class="px-4 py-2 border-r font-bold">Periodic</td>
+                    <td class="px-4 py-2">Expense Account (Delivery Expense).</td>
+                    <td class="px-4 py-2 font-mono">Dr. Freight-Out / Delivery Expense<br>Cr. Cash</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="bg-yellow-50 p-3 rounded text-sm text-yellow-800 border border-yellow-200">
+            <strong>Note:</strong> Freight-Out is treated exactly the same in both systems. It is always an expense.
         </div>
-        <p class="text-xs text-gray-500 mt-2">
-           (Math: 100 + 200 - 150 + 300 - 250 + 100 - 100 = 200 units remaining)
-        </p>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-        <div class="bg-blue-50 p-4 rounded-lg border-t-4 border-blue-500">
-            <h5 class="font-bold text-blue-900 mb-2 flex items-center">
-                <span class="bg-blue-200 text-blue-800 text-xs px-2 py-1 rounded mr-2">Method A</span> FIFO
-            </h5>
-            <p class="text-xs text-blue-800 mb-4 italic">"First Costs In are the First Costs Out."</p>
-            
-            <div class="space-y-4 text-sm text-blue-900">
-                <div>
-                    <strong class="block mb-1 text-blue-700 border-b border-blue-200">Cost of Goods Sold (COGS) Breakdown:</strong>
-                    <ul class="list-disc pl-4 space-y-1 mt-1 text-xs">
-                        <li><strong>Sale Oct 8 (150 units):</strong>
-                            <br>100 @ ₱500 (Oldest) + 50 @ ₱550 
-                            <br>= ₱50,000 + ₱27,500 = <strong>₱77,500</strong>
-                        </li>
-                         <li><strong>Sale Oct 20 (250 units):</strong>
-                            <br>150 @ ₱550 (Leftover Oct 5) + 100 @ ₱600 (Oct 12)
-                            <br>= ₱82,500 + ₱60,000 = <strong>₱142,500</strong>
-                        </li>
-                        <li><strong>Sale Oct 29 (100 units):</strong>
-                            <br>100 @ ₱600 (From Oct 12)
-                            <br>= <strong>₱60,000</strong>
-                        </li>
-                    </ul>
-                    <div class="mt-2 font-bold text-right border-t border-blue-300 pt-1">Total COGS: ₱280,000</div>
-                </div>
-
-                <div>
-                    <strong class="block mb-1 text-blue-700 border-b border-blue-200">Ending Inventory (200 Units):</strong>
-                    <p class="text-xs mt-1">
-                        We have 200 units left. Under FIFO, these are the <strong>most recent</strong> purchases.
-                    </p>
-                    <ul class="list-none pl-0 mt-1 text-xs font-mono bg-white p-2 rounded border border-blue-100">
-                        <li>100 units @ ₱600 (From Oct 12) = ₱60,000</li>
-                        <li>100 units @ ₱620 (From Oct 25) = ₱62,000</li>
-                        <li class="border-t border-blue-200 mt-1 pt-1 font-bold">Total: ₱122,000</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-green-50 p-4 rounded-lg border-t-4 border-green-500">
-            <h5 class="font-bold text-green-900 mb-2 flex items-center">
-                <span class="bg-green-200 text-green-800 text-xs px-2 py-1 rounded mr-2">Method B</span> Moving Average
-            </h5>
-            <p class="text-xs text-green-800 mb-4 italic">"Recalculate average cost after EVERY purchase."</p>
-            
-            <div class="space-y-4 text-sm text-green-900">
-                <div>
-                    <strong class="block mb-1 text-green-700 border-b border-green-200">Unit Cost Calculations:</strong>
-                    <ul class="list-decimal pl-4 space-y-2 mt-1 text-xs">
-                        <li>
-                            <strong>Oct 5 (After Purchase #1):</strong>
-                            <br>(100 @ 500 + 200 @ 550) / 300 units = <strong>₱533.33</strong>
-                        </li>
-                        <li>
-                            <strong>Oct 12 (After Purchase #2):</strong>
-                            <br><em>(Rem. 150 @ 533.33 + 300 @ 600) / 450 units</em>
-                            <br>= (80,000 + 180,000) / 450 = <strong>₱577.78</strong>
-                        </li>
-                        <li>
-                            <strong>Oct 25 (After Purchase #3):</strong>
-                            <br><em>(Rem. 200 @ 577.78 + 100 @ 620) / 300 units</em>
-                            <br>= (115,556 + 62,000) / 300 = <strong>₱591.85</strong>
-                        </li>
-                    </ul>
-                </div>
-
-                <div>
-                     <strong class="block mb-1 text-green-700 border-b border-green-200">Final Results:</strong>
-                     
-                     <div class="flex justify-between items-center text-xs mt-2">
-                        <span>Total COGS:</span>
-                        <span class="font-mono font-bold">₱279,667</span>
-                     </div>
-                     <p class="text-[10px] text-green-700 italic mb-2">(Sum of: 150@533.33 + 250@577.78 + 100@591.85)</p>
-
-                     <div class="flex justify-between items-center text-xs border-t border-green-300 pt-2">
-                        <span>Ending Inventory (200 units):</span>
-                        <span class="font-mono font-bold">₱118,370</span>
-                     </div>
-                     <p class="text-[10px] text-green-700 italic">(200 units @ Final Avg ₱591.85)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</li>
-
+    </li>
 </ul>`,
-            exercises: [
-    // --- MULTIPLE CHOICE QUESTIONS (25) ---
-
-    { 
-        type: "mcq", 
-        question: "In a perpetual inventory system, which account is debited when merchandise is purchased for resale?", 
-        options: ["Purchases", "Inventory", "Cost of Goods Sold", "Supplies"], 
-        correctIndex: 1, 
-        explanation: "Under the perpetual system, purchases are recorded directly into the Inventory asset account, not a Purchases account." 
-    },
-    { 
-        type: "mcq", 
-        question: "Which of the following creates two journal entries at the time of transaction?", 
-        options: ["Purchase of inventory on credit", "Payment of freight costs", "Sale of merchandise", "Return of damaged goods to supplier"], 
-        correctIndex: 2, 
-        explanation: "A sale requires two entries: one to record the revenue (Sales) and one to update the inventory and record the expense (COGS)." 
-    },
-    { 
-        type: "mcq", 
-        question: "Under the perpetual system, the 'Cost of Goods Sold' account is classified as a(n):", 
-        options: ["Asset", "Liability", "Revenue", "Expense"], 
-        correctIndex: 3, 
-        explanation: "Cost of Goods Sold is an expense account that appears on the Income Statement." 
-    },
-    { 
-        type: "mcq", 
-        question: "If a company returns defective goods to a supplier, which account is Credited?", 
-        options: ["Purchase Returns and Allowances", "Accounts Payable", "Inventory", "Cost of Goods Sold"], 
-        correctIndex: 2, 
-        explanation: "Since the inventory balance is tracked continuously, a return reduces the asset directly; therefore, Inventory is credited." 
-    },
-    { 
-        type: "mcq", 
-        question: "What does the credit term '2/10, n/30' mean?", 
-        options: ["2% interest if paid in 30 days", "2% discount if paid within 10 days, net due in 30", "10% discount if paid within 2 days", "Net due in 10 days, 2% penalty after 30"], 
-        correctIndex: 1, 
-        explanation: "It stands for a 2% discount is available if paid within 10 days; otherwise, the net (full) amount is due in 30 days." 
-    },
-    { 
-        type: "mcq", 
-        question: "When the buyer pays the shipping charges (FOB Shipping Point), the cost is debited to:", 
-        options: ["Delivery Expense", "Freight Out", "Inventory", "Sales Expense"], 
-        correctIndex: 2, 
-        explanation: "Costs to get the inventory ready for sale (like incoming freight) are capitalized as part of the Inventory asset." 
-    },
-    { 
-        type: "mcq", 
-        question: "The difference between the physical count of inventory and the accounting records is known as:", 
-        options: ["Gross Profit", "Inventory Turnover", "Shrinkage", "Safety Stock"], 
-        correctIndex: 2, 
-        explanation: "Shrinkage represents the loss of inventory due to theft, damage, or error." 
-    },
-    { 
-        type: "mcq", 
-        question: "Which account is debited to record inventory shrinkage?", 
-        options: ["Inventory", "Loss on Theft", "Cost of Goods Sold", "Sales Returns"], 
-        correctIndex: 2, 
-        explanation: "Shrinkage is typically recorded as an increase to Cost of Goods Sold and a decrease to Inventory." 
-    },
-    { 
-        type: "mcq", 
-        question: "FOB Destination means ownership transfers when:", 
-        options: ["The goods leave the seller's warehouse", "The goods arrive at the buyer's place of business", "The invoice is paid", "The purchase order is signed"], 
-        correctIndex: 1, 
-        explanation: "FOB Destination means the seller retains ownership (and risk) until the goods reach the buyer." 
-    },
-    { 
-        type: "mcq", 
-        question: "Gross Profit is calculated as:", 
-        options: ["Net Income - Operating Expenses", "Sales - Operating Expenses", "Sales - Cost of Goods Sold", "Inventory - Accounts Payable"], 
-        correctIndex: 2, 
-        explanation: "Gross Profit is the direct profit from the goods themselves, calculated as Net Sales minus Cost of Goods Sold." 
-    },
-    { 
-        type: "mcq", 
-        question: "Which document authorizes the warehouse to release goods for shipment to a customer?", 
-        options: ["Purchase Order", "Receiving Report", "Debit Memo", "Shipping Order / Delivery Receipt"], 
-        correctIndex: 3, 
-        explanation: "A shipping order or delivery receipt serves as proof that goods have been released and shipped." 
-    },
-    { 
-        type: "mcq", 
-        question: "In a perpetual system, the 'Inventory' account generally has a:", 
-        options: ["Debit balance", "Credit balance", "Zero balance", "Negative balance"], 
-        correctIndex: 0, 
-        explanation: "Inventory is an Asset, and assets normally have a Debit balance." 
-    },
-    { 
-        type: "mcq", 
-        question: "When a customer returns goods for credit, the seller Debits which account (assuming the goods are returned to inventory)?", 
-        options: ["Sales", "Accounts Receivable", "Sales Returns and Allowances", "Cost of Goods Sold"], 
-        correctIndex: 2, 
-        explanation: "The seller debits Sales Returns and Allowances (a contra-revenue) to reduce net sales." 
-    },
-    { 
-        type: "mcq", 
-        question: "Continuing from the previous question, what is the SECOND entry the seller makes for a return?", 
-        options: ["Debit Inventory, Credit COGS", "Debit COGS, Credit Inventory", "Debit Cash, Credit Sales", "No second entry needed"], 
-        correctIndex: 0, 
-        explanation: "The seller must put the item back into the books: Debit Inventory (asset increases) and Credit COGS (expense decreases)." 
-    },
-    { 
-        type: "mcq", 
-        question: "Freight Out (shipping to customers) is classified as:", 
-        options: ["Part of Cost of Goods Sold", "A Selling/Operating Expense", "An addition to Inventory", "A deduction from Sales"], 
-        correctIndex: 1, 
-        explanation: "Freight Out is a delivery expense incurred to sell the product, making it an Operating Expense." 
-    },
-    { 
-        type: "mcq", 
-        question: "Purchasing inventory on account results in:", 
-        options: ["Increase in Assets, Increase in Equity", "Increase in Assets, Increase in Liabilities", "Decrease in Assets, Decrease in Liabilities", "No change in total assets"], 
-        correctIndex: 1, 
-        explanation: "Inventory (Asset) increases and Accounts Payable (Liability) increases." 
-    },
-    { 
-        type: "mcq", 
-        question: "Which of the following accounts is NOT closed at the end of the year?", 
-        options: ["Sales Revenue", "Cost of Goods Sold", "Inventory", "Sales Returns"], 
-        correctIndex: 2, 
-        explanation: "Inventory is a permanent (Balance Sheet) account and is not closed. The others are temporary accounts." 
-    },
-    { 
-        type: "mcq", 
-        question: "What is the effect of a Purchase Discount on the inventory cost?", 
-        options: ["It increases the cost", "It decreases the cost", "It has no effect", "It is recorded as revenue"], 
-        correctIndex: 1, 
-        explanation: "A discount reduces the actual cash paid for the item, so it reduces the recorded cost of the Inventory asset." 
-    },
-    { 
-        type: "mcq", 
-        question: "If a company has Net Sales of ₱100,000 and a Gross Profit rate of 40%, what is the Cost of Goods Sold?", 
-        options: ["₱40,000", "₱60,000", "₱100,000", "₱140,000"], 
-        correctIndex: 1, 
-        explanation: "If Gross Profit is 40%, COGS must be 60%. ₱100,000 x 60% = ₱60,000." 
-    },
-    { 
-        type: "mcq", 
-        question: "Which inventory system requires a physical count to determine Cost of Goods Sold?", 
-        options: ["Perpetual", "Periodic", "Just-In-Time", "Automated"], 
-        correctIndex: 1, 
-        explanation: "The Periodic system relies on a physical count at the end of the period to 'plug' the COGS figure." 
-    },
-    { 
-        type: "mcq", 
-        question: "A Debit Memorandum issued by a buyer to a seller indicates:", 
-        options: ["The buyer is returning goods or asking for an allowance", "The buyer is paying the invoice", "The seller is charging more", "Shipping is delayed"], 
-        correctIndex: 0, 
-        explanation: "It effectively 'Debits' (reduces) the Accounts Payable the buyer owes to the seller." 
-    },
-    { 
-        type: "mcq", 
-        question: "Merchandise Inventory appears on which financial statement?", 
-        options: ["Income Statement", "Statement of Cash Flows", "Balance Sheet", "Retained Earnings Statement"], 
-        correctIndex: 2, 
-        explanation: "Inventory is a Current Asset on the Balance Sheet." 
-    },
-    { 
-        type: "mcq", 
-        question: "If Inventory at the beginning of the year is ₱20,000, Purchases are ₱50,000, and Ending Inventory is ₱10,000, what is COGS? (Formula logic applies to both systems)", 
-        options: ["₱40,000", "₱60,000", "₱70,000", "₱80,000"], 
-        correctIndex: 1, 
-        explanation: "GAS (Goods Available for Sale) = 20k + 50k = 70k. COGS = GAS - Ending Inv (10k) = ₱60,000." 
-    },
-    { 
-        type: "mcq", 
-        question: "The operating cycle of a merchandising company is typically:", 
-        options: ["Shorter than a service company", "Longer than a service company", "The same as a service company", "Non-existent"], 
-        correctIndex: 1, 
-        explanation: "It is longer because cash must first be converted to inventory, then sold, then collected." 
-    },
-    { 
-        type: "mcq", 
-        question: "Which of the following is considered a 'Contra-Revenue' account?", 
-        options: ["Sales", "Inventory", "Sales Returns and Allowances", "Cost of Goods Sold"], 
-        correctIndex: 2, 
-        explanation: "It has a debit balance and offsets Sales Revenue on the Income Statement." 
-    },
-                // Q1: FIFO (Simple - 1 Sale)
-    { 
-        type: "mcq", 
-        question: "Using the FIFO Perpetual method, calculate the Cost of Goods Sold (COGS) for the sale on Jan 15.\n\nTransactions:\nJan 1: Beginning Inv (100 units @ ₱10)\nJan 5: Purchase (200 units @ ₱12)\nJan 10: Purchase (100 units @ ₱15)\nJan 15: Sale of 320 units", 
-        options: ["₱3,700", "₱3,900", "₱3,840", "₱4,000"], 
-        correctIndex: 0, 
-        explanation: "FIFO takes the oldest costs first.\n1. 100 units @ ₱10 = ₱1,000 (All Beg Inv)\n2. 200 units @ ₱12 = ₱2,400 (All Jan 5)\n3. 20 units @ ₱15 = ₱300 (From Jan 10)\nTotal: ₱1,000 + ₱2,400 + ₱300 = ₱3,700." 
-    },
-
-    // Q2: FIFO (Complex - 3 Purchases, 3 Sales)
-    { 
-        type: "mcq", 
-        question: "Calculate the value of ENDING INVENTORY using FIFO Perpetual.\n\nJan 1: Beg Inv (50 units @ ₱20)\nJan 2: Sale (40 units)\nJan 5: Purchase (50 units @ ₱22)\nJan 8: Sale (20 units)\nJan 10: Purchase (50 units @ ₱24)\nJan 12: Sale (30 units)\nJan 15: Purchase (50 units @ ₱26)", 
-        options: ["₱2,660", "₱2,780", "₱2,400", "₱3,000"], 
-        correctIndex: 1, 
-        explanation: "Track the layers:\n1. After Jan 2 Sale: 10 units @ ₱20 remain.\n2. After Jan 8 Sale (20 total): 10 @ ₱20 sold + 10 @ ₱22 sold. Remaining: 40 units @ ₱22.\n3. After Jan 12 Sale (30 total): 30 @ ₱22 sold. Remaining: 10 units @ ₱22.\n\nEnding Inventory Layers:\n- 10 units @ ₱22 (Oldest remaining)\n- 50 units @ ₱24 (From Jan 10)\n- 50 units @ ₱26 (From Jan 15)\nTotal: ₱220 + ₱1,200 + ₱1,300 = ₱2,780." 
-    },
-
-    // Q3: Moving Average (Simple - 1 Sale)
-    { 
-        type: "mcq", 
-        question: "Using the Moving Average method, what is the Cost of Goods Sold for the sale on Jan 15?\n\nJan 1: Beg Inv (100 units @ ₱10)\nJan 5: Purchase (100 units @ ₱14)\nJan 10: Purchase (200 units @ ₱16)\nJan 15: Sale (300 units)", 
-        options: ["₱4,200", "₱4,350", "₱4,500", "₱3,900"], 
-        correctIndex: 0, 
-        explanation: "1. Average after Jan 5: (100@10 + 100@14) = ₱2,400 / 200 units = ₱12/unit.\n2. Average after Jan 10: (200@12 + 200@16) = ₱5,600 / 400 units = ₱14/unit.\n3. COGS: 300 units x ₱14 = ₱4,200." 
-    },
-
-    // Q4: Moving Average (Complex - 3 Purchases, 3 Sales)
-    { 
-        type: "mcq", 
-        question: "What is the Moving Average UNIT COST used for the final sale on Jan 14?\n\nJan 1: Beg Inv (100 @ ₱10)\nJan 2: Purchase (100 @ ₱12)\nJan 3: Sale (100 units)\nJan 5: Purchase (100 @ ₱15)\nJan 8: Sale (100 units)\nJan 10: Purchase (100 @ ₱16)\nJan 14: Sale (100 units)", 
-        options: ["₱13.00", "₱14.50", "₱16.00", "₱15.00"], 
-        correctIndex: 1, 
-        explanation: "1. Avg after Jan 2: (100@10 + 100@12)/200 = ₱11. \n2. After Jan 3 Sale: 100 rem @ ₱11.\n3. Avg after Jan 5: (100@11 + 100@15)/200 = 2600/200 = ₱13.\n4. After Jan 8 Sale: 100 rem @ ₱13.\n5. Avg after Jan 10: (100@13 + 100@16)/200 = 2900/200 = ₱14.50." 
-    },
-
-    // Q5: Comparison (FIFO vs Moving Average)
-    { 
-        type: "mcq", 
-        question: "Compare the Total Cost of Goods Sold (COGS) between Moving Average and FIFO. What is the difference?\n\nJan 1: Beg Inv (10 units @ ₱100)\nJan 2: Purchase (10 units @ ₱110)\nJan 3: Purchase (10 units @ ₱120)\nJan 4: Sale (15 units)\nJan 5: Purchase (10 units @ ₱130)\nJan 6: Sale (15 units)", 
-        options: ["Moving Avg is higher by ₱120", "FIFO is higher by ₱120", "Moving Avg is higher by ₱50", "They are equal"], 
-        correctIndex: 0, 
-        explanation: "FIFO COGS:\nSale 1 (15): 10@100 + 5@110 = 1,550\nSale 2 (15): 5@110 + 10@120 = 1,750\nTotal FIFO = 3,300.\n\nMoving Avg COGS:\nAvg after Jan 3: (1000+1100+1200)/30 = ₱110.\nSale 1: 15 @ 110 = 1,650. (Rem 15 @ 110).\nAvg after Jan 5: (1650 + 1300)/25 = ₱118.\nSale 2: 15 @ 118 = 1,770.\nTotal Avg = 3,420.\n\nDifference: 3,420 - 3,300 = ₱120 (Moving Avg is higher)." 
-    },
-    
-
-    // --- OPEN ENDED PROBLEMS (10) ---
-
-    {
-        type: "problem",
-        question: "Company A purchases 500 units of widgets for ₱10 each on credit. Calculate the total liability recorded and write the journal entry description.",
-        answer: `Total Liability: 500 units x ₱10 = ₱5,000.
-Journal Entry:
-Debit: Inventory ₱5,000
-Credit: Accounts Payable ₱5,000`,
-        explanation: "The asset (Inventory) and the liability (Accounts Payable) both increase by the total cost of the goods."
-    },
-    {
-        type: "problem",
-        question: "A seller sells goods for ₱2,000 cash. The goods originally cost the seller ₱1,200. Provide the two necessary journal entries.",
-        answer: `Entry 1 (Revenue):
-Debit: Cash ₱2,000
-Credit: Sales Revenue ₱2,000
-
-Entry 2 (Cost):
-Debit: Cost of Goods Sold ₱1,200
-Credit: Inventory ₱1,200`,
-        explanation: "The perpetual system requires recognizing revenue and updating inventory/expense immediately upon sale."
-    },
-    {
-        type: "problem",
-        question: "Explain the difference between FOB Shipping Point and FOB Destination regarding who pays for shipping.",
-        answer: `FOB Shipping Point: The BUYER pays the shipping costs. Ownership transfers when goods leave the seller.
-FOB Destination: The SELLER pays the shipping costs. Ownership transfers when goods arrive at the buyer.`,
-        explanation: "FOB determines who owns the goods in transit and who bears the cost of transport."
-    },
-    {
-        type: "problem",
-        question: "Company B purchased goods for ₱10,000 with terms 3/15, n/45. They returned ₱1,000 worth of defective goods before paying. If they pay the remaining balance within the discount period, how much is the cash payment? Show computation.",
-        answer: `Initial Purchase: ₱10,000
-Less Return: (₱1,000)
-Net Balance Due: ₱9,000
-Less Discount (3% of ₱9,000): (₱270)
--------------------------
-Cash Paid: ₱8,730`,
-        explanation: "The discount is calculated on the Net Balance (after returns), not the original invoice amount."
-    },
-    {
-        type: "problem",
-        question: "At year-end, the accounting records show an Inventory balance of ₱105,000. A physical count reveals only ₱102,000 is actually on hand. Prepare the adjusting entry.",
-        answer: `Debit: Cost of Goods Sold ₱3,000
-Credit: Inventory ₱3,000
-
-(Calculation: ₱105,000 - ₱102,000 = ₱3,000 shortage)`,
-        explanation: "This entry records inventory shrinkage, bringing the book balance down to match the physical reality."
-    },
-    {
-        type: "problem",
-        question: "Why is 'Freight Out' considered an Operating Expense rather than part of Cost of Goods Sold?",
-        answer: `Freight Out is the cost of delivering goods to a customer. It is a selling service provided to the customer, not a cost of acquiring the inventory itself. Therefore, it is an operating expense (specifically a selling expense).`,
-        explanation: "Only costs incurred to bring the inventory to the business and get it ready for sale are capitalized as Inventory/COGS."
-    },
-    {
-        type: "problem",
-        question: "Calculate the Net Sales: Sales Revenue ₱500,000; Sales Returns ₱20,000; Sales Discounts ₱5,000; Cost of Goods Sold ₱300,000.",
-        answer: `Sales Revenue: ₱500,000
-Less: Sales Returns (₱20,000)
-Less: Sales Discounts (₱5,000)
------------------------------
-Net Sales: ₱475,000`,
-        explanation: "Net Sales = Gross Sales minus all contra-revenue accounts (Returns, Allowances, and Discounts). COGS is not part of the Net Sales calculation."
-    },
-    {
-        type: "problem",
-        question: "A company uses the Perpetual system. They pay ₱200 cash for freight costs on an incoming shipment (FOB Shipping Point). What is the journal entry?",
-        answer: `Debit: Inventory ₱200
-Credit: Cash ₱200`,
-        explanation: "In a perpetual system, freight-in is added directly to the cost of the Inventory asset."
-    },
-    {
-        type: "problem",
-        question: "Why is the Perpetual Inventory System considered to provide better internal control than the Periodic System?",
-        answer: `It provides a continuous record of what 'should' be on hand. This allows management to compare the book balance to the physical count to detect theft or errors (shrinkage). The Periodic system has no continuous record to compare against, so theft is buried inside the COGS calculation.`,
-        explanation: "The visibility of shrinkage is the key control advantage."
-    },
-    {
-        type: "problem",
-        question: "Calculate the Gross Profit Rate: Net Sales ₱200,000; Cost of Goods Sold ₱120,000.",
-        answer: `Gross Profit = ₱200,000 - ₱120,000 = ₱80,000.
-Gross Profit Rate = (Gross Profit / Net Sales) x 100
-Rate = (₱80,000 / ₱200,000) = 40%`,
-        explanation: "The rate represents the percentage of each sales dollar that exceeds the cost of the goods sold."
-    },
-                // --- FIFO: SIMPLE (Beg Inv + 2 Purchases + 1 Sale) ---
-
-    {
-        type: "problem",
-        question: "Using FIFO Perpetual, calculate the Cost of Goods Sold (COGS) for the sale on Jan 10.\n\nJan 1: Beg Inv (100 units @ ₱50)\nJan 5: Purchase (200 units @ ₱55)\nJan 8: Purchase (50 units @ ₱60)\nJan 10: Sale of 250 units",
-        answer: `Sold 250 units total.
-Layer 1 (Oldest): 100 units @ ₱50 = ₱5,000
-Layer 2 (Next):   150 units @ ₱55 = ₱8,250
------------------------------------------
-Total COGS:       ₱13,250`,
-        explanation: "Under FIFO, we sell the oldest units first. We cleared the entire Beginning Inventory (100) and took the remaining 150 needed from the Jan 5 purchase."
-    },
-    {
-        type: "problem",
-        question: "Using FIFO Perpetual, determine the value of Ending Inventory after the following transactions.\n\nFeb 1: Beg Inv (20 units @ ₱100)\nFeb 10: Purchase (30 units @ ₱120)\nFeb 15: Purchase (10 units @ ₱130)\nFeb 20: Sale of 40 units",
-        answer: `Total Units Available: 60. Units Sold: 40. Units Remaining: 20.
-Under FIFO, the remaining units are the NEWEST ones.
-
-From Feb 15 Purchase: 10 units @ ₱130 = ₱1,300
-From Feb 10 Purchase: 10 units @ ₱120 = ₱1,200
------------------------------------------
-Ending Inventory:     ₱2,500`,
-        explanation: "We sold the oldest 40 (all 20 from Beg Inv + 20 from Feb 10). What remains are the 10 from Feb 15 and the remaining 10 from Feb 10."
-    },
-
-    // --- FIFO: COMPLEX (Beg Inv + 3 Purchases + 3 Sales) ---
-
-    {
-        type: "problem",
-        question: "Track the inventory layers using FIFO to find the Cost of Goods Sold for the FINAL sale on March 25 only.\n\nMar 1: Beg Inv (100 @ ₱10)\nMar 5: Sold 50 units\nMar 8: Purchase (100 @ ₱12)\nMar 10: Sold 80 units\nMar 15: Purchase (100 @ ₱14)\nMar 20: Purchase (50 @ ₱15)\nMar 25: Sold 100 units",
-        answer: `Previous balances before Mar 25 sale:
-- Remaining from Mar 8: 20 units @ ₱12 (Since 80 were sold on Mar 10, using up the rest of Beg Inv and 30 of Mar 8).
-- Full Mar 15 Batch: 100 units @ ₱14.
-- Full Mar 20 Batch: 50 units @ ₱15.
-
-Mar 25 Sale (100 units):
-1. Take all remaining Mar 8: 20 units @ ₱12 = ₱240
-2. Take from Mar 15:         80 units @ ₱14 = ₱1,120
---------------------------------------------------
-COGS for Mar 25 Sale:        ₱1,360`,
-        explanation: "You must track the 'balance' column carefully. Before the final sale, the oldest layer available was the remainder of the March 8 purchase."
-    },
-    {
-        type: "problem",
-        question: "Calculate the total Gross Profit for the month using FIFO.\n\nApr 1: Beg Inv (10 @ ₱200)\nApr 5: Purchase (10 @ ₱220)\nApr 8: Sale (15 units @ ₱400 selling price)\nApr 12: Purchase (10 @ ₱240)\nApr 15: Sale (10 units @ ₱450 selling price)\nApr 20: Purchase (10 @ ₱250)\nApr 25: Sale (5 units @ ₱500 selling price)",
-        answer: `Total Revenue:
-(15 * 400) + (10 * 450) + (5 * 500) = ₱13,000
-
-Total COGS (FIFO):
-Sale 1 (15): (10@200) + (5@220) = 3,100
-Sale 2 (10): (5@220 rem) + (5@240) = 2,300
-Sale 3 (5):  (5@240 rem) = 1,200
-Total COGS = ₱6,600
-
-Gross Profit: ₱13,000 - ₱6,600 = ₱6,400`,
-        explanation: "Gross Profit is Total Revenue minus Total COGS. FIFO requires peeling off the cost layers in chronological order for each specific sale."
-    },
-
-    // --- MOVING AVERAGE: SIMPLE (Beg Inv + 2 Purchases + 1 Sale) ---
-
-    {
-        type: "problem",
-        question: "Using the Moving Average method, calculate the new unit cost after the Jan 15 purchase. (Round to 2 decimals).\n\nJan 1: Beg Inv (100 units @ ₱20)\nJan 10: Purchase (100 units @ ₱24)\nJan 15: Purchase (200 units @ ₱28)\nJan 20: Sale (300 units)",
-        answer: `1. After Jan 10 Purchase:
-(100@20 + 100@24) = 4,400 / 200 units = ₱22.00/unit
-
-2. After Jan 15 Purchase:
-Old Balance: 200 units @ ₱22.00 = ₱4,400
-New Purchase: 200 units @ ₱28.00 = ₱5,600
-Total: 400 units costing ₱10,000
-
-New Average Cost: ₱10,000 / 400 units = ₱25.00`,
-        explanation: "In a perpetual moving average, you must re-calculate the average cost immediately after every purchase, before you calculate any sales."
-    },
-    {
-        type: "problem",
-        question: "Using Moving Average, calculate the Cost of Goods Sold for the sale on May 20.\n\nMay 1: Beg Inv (500 units @ ₱10)\nMay 5: Purchase (500 units @ ₱14)\nMay 10: Purchase (1,000 units @ ₱16)\nMay 20: Sale (1,500 units)",
-        answer: `1. Avg after May 5:
-(500@10 + 500@14) / 1000 = 12,000 / 1000 = ₱12.00
-
-2. Avg after May 10:
-(1000@12 + 1000@16) / 2000 = 28,000 / 2000 = ₱14.00
-
-3. COGS for Sale:
-1,500 units x ₱14.00 = ₱21,000`,
-        explanation: "The final average cost calculated before the sale (₱14.00) is applied to all units sold in that transaction."
-    },
-
-    // --- MOVING AVERAGE: COMPLEX (Beg Inv + 3 Purchases + 3 Sales) ---
-
-    {
-        type: "problem",
-        question: "Calculate the value of Ending Inventory using Moving Average. (Round intermediate unit costs to 2 decimals).\n\nJun 1: Beg Inv (100 @ ₱50)\nJun 5: Sold 50 units\nJun 10: Purchase (100 @ ₱60)\nJun 15: Sold 100 units\nJun 20: Purchase (200 @ ₱70)\nJun 25: Sold 50 units\nJun 30: Purchase (100 @ ₱80)",
-        answer: `1. Jun 1 Avg: ₱50.
-2. Jun 5 Sale: Rem 50 units @ ₱50.
-3. Jun 10 Purchase: (50@50 + 100@60) / 150 = 8,500/150 = ₱56.67
-4. Jun 15 Sale: Rem 50 units @ ₱56.67. (Value ₱2,833.50)
-5. Jun 20 Purchase: (2,833.50 + 200@70) / 250 = 16,833.50/250 = ₱67.33
-6. Jun 25 Sale: Rem 200 units @ ₱67.33. (Value ₱13,466)
-7. Jun 30 Purchase: (13,466 + 100@80) / 300 = 21,466/300 = ₱71.55
-
-Ending Inventory: 300 units @ ₱71.55 = ₱21,465 (approx)`,
-        explanation: "The moving average requires updating the cost per unit after every purchase. This new cost is carried forward to the next transaction."
-    },
-    {
-        type: "problem",
-        question: "Calculate the total Cost of Goods Sold for the period using Moving Average.\n\nJul 1: Beg Inv (10 @ ₱10)\nJul 2: Purch (10 @ ₱12)\nJul 3: Sale (10 units)\nJul 4: Purch (10 @ ₱14)\nJul 5: Sale (10 units)\nJul 6: Purch (10 @ ₱16)\nJul 7: Sale (10 units)",
-        answer: `1. Avg after Jul 2: (10@10 + 10@12)/20 = ₱11.
-COGS Sale 1: 10 x 11 = ₱110. (Rem 10 @ 11).
-
-2. Avg after Jul 4: (10@11 + 10@14)/20 = 250/20 = ₱12.50.
-COGS Sale 2: 10 x 12.50 = ₱125. (Rem 10 @ 12.50).
-
-3. Avg after Jul 6: (10@12.50 + 10@16)/20 = 285/20 = ₱14.25.
-COGS Sale 3: 10 x 14.25 = ₱142.50.
-
-Total COGS: 110 + 125 + 142.50 = ₱377.50`,
-        explanation: "We sum the COGS calculated at each individual sale point based on the weighted average cost active at that specific date."
-    },
-
-    // --- COMPARISON: FIFO vs MOVING AVG (Beg Inv + 3 Purchases + 3 Sales) ---
-
-    {
-        type: "problem",
-        question: "Compare the Ending Inventory value between FIFO and Moving Average. Which is higher and by how much?\n\nAug 1: Beg Inv (100 @ ₱10)\nAug 2: Purch (100 @ ₱20)\nAug 3: Sale (100 units)\nAug 4: Purch (100 @ ₱30)\nAug 5: Sale (100 units)\nAug 6: Purch (100 @ ₱40)\nAug 7: Sale (100 units)",
-        answer: `Ending Units: 100.
-
-FIFO (Ending is newest):
-100 units @ ₱40 = ₱4,000.
-
-Moving Average:
-1. Avg (100@10+100@20)/200 = ₱15. After Sale 1, Rem 100@15.
-2. Avg (100@15+100@30)/200 = ₱22.50. After Sale 2, Rem 100@22.50.
-3. Avg (100@22.50+100@40)/200 = ₱31.25. After Sale 3, Rem 100@31.25.
-MA Ending Inv = ₱3,125.
-
-Difference: ₱4,000 (FIFO) - ₱3,125 (MA) = ₱875.
-FIFO is higher by ₱875.`,
-        explanation: "In a period of rising prices (inflation), FIFO generally produces a higher ending inventory value because the cheaper, older goods are sold off, leaving expensive goods on the books."
-    },
-    {
-        type: "problem",
-        question: "Compare the Total COGS between FIFO and Moving Average. Which method reports higher Net Income?\n\nSept 1: Beg Inv (50 @ ₱100)\nSept 2: Purch (50 @ ₱110)\nSept 3: Sale (50 units)\nSept 4: Purch (50 @ ₱120)\nSept 5: Sale (50 units)\nSept 6: Purch (50 @ ₱130)\nSept 7: Sale (50 units)",
-        answer: `FIFO COGS:
-1. Sale 1: 50 @ 100 = 5,000
-2. Sale 2: 50 @ 110 = 5,500
-3. Sale 3: 50 @ 120 = 6,000
-Total FIFO COGS = ₱16,500
-
-Moving Avg COGS:
-1. Avg (100+110)/2 = 105. COGS = 5,250.
-2. Avg (105+120)/2 = 112.5. COGS = 5,625.
-3. Avg (112.5+130)/2 = 121.25. COGS = 6,062.5.
-Total MA COGS = ₱16,937.5
-
-Conclusion: FIFO has lower COGS (16,500 vs 16,937.5). Therefore, FIFO reports higher Net Income.`,
-        explanation: "Since FIFO charges the older (cheaper) costs to expense, the total expense is lower, resulting in higher profit (Net Income) compared to Moving Average."
-    }
-]
+    exercises: [
+        // --- THEORY QUESTIONS (5) ---
+        {
+            type: "mcq",
+            question: "Under FOB Shipping Point, at what moment does the title (ownership) of the goods pass to the buyer?",
+            options: ["When the goods arrive at the buyer's warehouse", "When the goods are delivered to the carrier/shipper", "When the invoice is paid", "When the goods are ordered"],
+            correctIndex: 1,
+            explanation: "FOB Shipping Point means title transfers as soon as the seller puts the goods on the truck/ship."
         },
+        {
+            type: "mcq",
+            question: "Which of the following statements about 'Freight-Out' is TRUE?",
+            options: ["It is part of the Cost of Goods Sold.", "It is an administrative expense.", "It is a selling expense.", "It increases the value of merchandise inventory."],
+            correctIndex: 2,
+            explanation: "Freight-out is the cost of delivering goods to customers, making it a selling expense."
+        },
+        {
+            type: "mcq",
+            question: "In a Perpetual Inventory System, how is 'Freight-In' recorded by the buyer?",
+            options: ["Debit Freight-In", "Debit Delivery Expense", "Debit Inventory", "Debit Cost of Goods Sold"],
+            correctIndex: 2,
+            explanation: "In Perpetual, costs to acquire inventory (like freight-in) are capitalized directly into the 'Inventory' asset account."
+        },
+        {
+            type: "mcq",
+            question: "In a Periodic Inventory System, how is 'Freight-In' recorded by the buyer?",
+            options: ["Debit Inventory", "Debit Freight-In", "Debit Purchases", "Debit Delivery Expense"],
+            correctIndex: 1,
+            explanation: "The Periodic system uses a specific temporary account called 'Freight-In' to track these costs separately from purchases."
+        },
+        {
+            type: "mcq",
+            question: "If goods are sold FOB Destination, who bears the shipping cost?",
+            options: ["The Buyer", "The Seller", "The Carrier", "The Broker"],
+            correctIndex: 1,
+            explanation: "FOB Destination means the Seller owns the goods until delivery, so the Seller pays the freight."
+        },
+
+        // --- PROBLEM SOLVING QUESTIONS (5) ---
+        {
+            type: "problem",
+            question: "PROBLEM 1: PERPETUAL SYSTEM (FOB Shipping Point)\nRecord the following transactions for 'TechRetail' using the Perpetual Inventory System.\n\n1. Jan 5: Purchased 100 laptops from Dell for $500 each on account, terms 2/10, n/30, FOB Shipping Point.\n2. Jan 6: Paid Fedex $200 cash for shipping the laptops.\n3. Jan 8: Returned 5 defective laptops to Dell.\n4. Jan 15: Paid Dell the full amount due within the discount period.\n5. Jan 20: Sold 50 laptops for $800 each on account. (Cost to TechRetail was $502/unit including freight).",
+            answer: `1. Jan 5 (Purchase):
+   Dr. Inventory           50,000
+       Cr. Accounts Payable    50,000
+
+2. Jan 6 (Freight-In):
+   Dr. Inventory              200  (Added to asset in Perpetual)
+       Cr. Cash                   200
+
+3. Jan 8 (Return):
+   Dr. Accounts Payable     2,500  (5 units * $500)
+       Cr. Inventory            2,500
+
+4. Jan 15 (Payment):
+   Dr. Accounts Payable    47,500  (50,000 - 2,500)
+       Cr. Inventory              950  (2% of 47,500 - Discount reduces asset cost)
+       Cr. Cash                46,550
+
+5. Jan 20 (Sale):
+   Dr. Accounts Receivable 40,000
+       Cr. Sales Revenue       40,000
+   (AND)
+   Dr. Cost of Goods Sold  25,100  (50 units * $502)
+       Cr. Inventory           25,100`,
+            explanation: "Note how Freight and Discounts affect the 'Inventory' account directly in Perpetual."
+        },
+        {
+            type: "problem",
+            question: "PROBLEM 2: PERIODIC SYSTEM (FOB Shipping Point)\nRecord the exact same transactions as Problem 1, but for a company using the PERIODIC Inventory System.\n\n1. Jan 5: Purchased 100 laptops @ $500, terms 2/10, n/30, FOB Shipping Point.\n2. Jan 6: Paid Fedex $200 cash for shipping.\n3. Jan 8: Returned 5 defective laptops.\n4. Jan 15: Paid Dell in full (with discount).\n5. Jan 20: Sold 50 laptops for $800 each.",
+            answer: `1. Jan 5 (Purchase):
+   Dr. Purchases           50,000
+       Cr. Accounts Payable    50,000
+
+2. Jan 6 (Freight-In):
+   Dr. Freight-In             200  (Separate expense account)
+       Cr. Cash                   200
+
+3. Jan 8 (Return):
+   Dr. Accounts Payable     2,500
+       Cr. Purchase Returns & Allowances  2,500
+
+4. Jan 15 (Payment):
+   Dr. Accounts Payable    47,500
+       Cr. Purchase Discounts     950  (Contra-expense account)
+       Cr. Cash                46,550
+
+5. Jan 20 (Sale):
+   Dr. Accounts Receivable 40,000
+       Cr. Sales Revenue       40,000
+   (No entry for COGS/Inventory in Periodic system at time of sale)`,
+            explanation: "In Periodic, we use temporary accounts (Purchases, Freight-In, Purchase Returns) and do not update Inventory/COGS until the end of the period."
+        },
+        {
+            type: "problem",
+            question: "PROBLEM 3: PERPETUAL SYSTEM (FOB Destination)\nRecord these transactions for 'FurnitureCo' (Seller) using Perpetual System.\n\n1. Mar 1: Sold Office Desks to a client on account for $10,000. The Cost of Goods Sold was $6,000. Terms FOB Destination.\n2. Mar 2: Paid shipping company $300 cash for delivery to client.\n3. Mar 5: Client returned damaged desks worth $1,000 (Cost was $600). The desks were scrapped (Inventory value $0).\n4. Mar 10: Received payment from client for the balance (no discount).",
+            answer: `1. Mar 1 (Sale):
+   Dr. Accounts Receivable 10,000
+       Cr. Sales Revenue       10,000
+   (AND)
+   Dr. Cost of Goods Sold   6,000
+       Cr. Inventory            6,000
+
+2. Mar 2 (Freight-Out):
+   Dr. Delivery Expense       300  (Or Freight-Out)
+       Cr. Cash                   300
+
+3. Mar 5 (Return - Scrapped):
+   Dr. Sales Returns & Allowances 1,000
+       Cr. Accounts Receivable        1,000
+   (No entry to restore Inventory because goods were scrapped/worthless)
+
+4. Mar 10 (Receipt):
+   Dr. Cash                 9,000
+       Cr. Accounts Receivable      9,000`,
+            explanation: "Since terms were FOB Destination, the Seller (FurnitureCo) pays the $300 freight, recording it as an operating expense."
+        },
+        {
+            type: "problem",
+            question: "PROBLEM 4: PERIODIC SYSTEM (Buyer & Seller Mix)\nJournalize the following for Company A (The Buyer) using PERIODIC system.\n\n1. Apr 1: Purchased goods from Company B for $5,000, FOB Destination.\n2. Apr 2: Paid $150 freight charges upon arrival (Wait! Terms were FOB Destination, but Buyer paid cash on arrival as a courtesy to Seller).\n3. Apr 5: Returned $500 of goods.\n4. Apr 10: Paid the balance due to Company B, deducting the freight paid on their behalf.",
+            answer: `1. Apr 1 (Purchase):
+   Dr. Purchases            5,000
+       Cr. Accounts Payable     5,000
+
+2. Apr 2 (Freight Payment):
+   Dr. Accounts Payable       150  (Reduces amount owed to Seller)
+       Cr. Cash                   150
+   *Note: Since terms were FOB Destination, this is the Seller's cost. The Buyer paying it reduces the liability to the Seller.*
+
+3. Apr 5 (Return):
+   Dr. Accounts Payable       500
+       Cr. Purchase Returns & Allw.   500
+
+4. Apr 10 (Payment):
+   Dr. Accounts Payable     4,350  (5,000 - 150 prepaid - 500 return)
+       Cr. Cash                 4,350`,
+            explanation: "Crucial concept: If the Buyer pays freight on FOB Destination goods, they are essentially 'loaning' that cash to the Seller. It reduces Accounts Payable, it is NOT Freight-In."
+        },
+        {
+            type: "problem",
+            question: "PROBLEM 5: COMPREHENSIVE (Perpetual)\nRecord for 'Global Traders'.\n\n1. May 1: Purchased inventory $20,000, FOB Shipping Point.\n2. May 2: Paid freight $500.\n3. May 5: Sold 40% of the inventory for $15,000 on account, FOB Shipping Point.\n4. May 6: Paid $200 freight on the sales shipment (Wait! Terms were FOB Shipping Point, but we prepaid it for the customer).\n5. May 10: Customer returned $1,000 of goods (Cost $600) to inventory.",
+            answer: `1. May 1:
+   Dr. Inventory            20,000
+       Cr. Accounts Payable     20,000
+
+2. May 2:
+   Dr. Inventory               500
+       Cr. Cash                    500
+   *Total Cost of Inv = 20,500*
+
+3. May 5:
+   Dr. Accounts Receivable  15,000
+       Cr. Sales Revenue        15,000
+   (AND)
+   Dr. Cost of Goods Sold    8,200  (40% of 20,500)
+       Cr. Inventory             8,200
+
+4. May 6:
+   Dr. Accounts Receivable     200  (We bill the customer for this)
+       Cr. Cash                    200
+
+5. May 10:
+   Dr. Sales Returns & Allw  1,000
+       Cr. Accounts Receivable   1,000
+   (AND)
+   Dr. Inventory               600
+       Cr. Cost of Goods Sold      600`,
+            explanation: "Transaction 4 is tricky. FOB Shipping Point means the CUSTOMER should pay. If we (Seller) pay it, we increase the amount the customer owes us (Accounts Receivable), rather than recording an expense."
+        }
+    ]
+},
         {
             day: "Day 4",
             topic: "Comparison & Applications",
