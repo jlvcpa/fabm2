@@ -5,11 +5,11 @@ export const unit2Week2Data = {
     week2: [
         {
     day: "Day 1",
-    topic: "Recording Purchases and Sales",
+    topic: "Recording Purchases and Sales & Trade Discounts",
     content: `
         <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
             <p class="font-bold text-blue-900">Learning Goal</p>
-            <p class="text-blue-800">Master the basic journal entries for buying and selling inventory under Perpetual and Periodic systems.</p>
+            <p class="text-blue-800">Master the recording of purchases and sales under Perpetual and Periodic systems, including the handling of Trade Discounts.</p>
         </div>
 
         <h3 class="text-xl font-bold mb-4 mt-6">Topic Focus</h3>
@@ -18,7 +18,7 @@ export const unit2Week2Data = {
             <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                 <h3 class="text-xl font-bold text-gray-800 mb-3">1. Perpetual vs. Periodic Inventory Systems</h3>
                 <p class="text-gray-700 mb-4">
-                    Accounting for merchandising businesses relies on how they track inventory. There are two distinct methods:
+                    Accounting for merchandising businesses relies on how they track inventory.
                 </p>
                 <div class="grid md:grid-cols-2 gap-4">
                     <div class="bg-green-50 p-4 rounded-lg border border-green-200">
@@ -26,54 +26,73 @@ export const unit2Week2Data = {
                         <ul class="list-disc pl-5 text-sm text-green-900 space-y-1">
                             <li><strong>Real-time updates:</strong> Records are updated immediately after every transaction.</li>
                             <li><strong>Account used:</strong> "Merchandise Inventory" (Asset).</li>
-                            <li><strong>Control:</strong> Provides better control and information; you always know what <em>should</em> be in stock.</li>
-                            <li><strong>Common in:</strong> Modern businesses with barcode scanners (e.g., Supermarkets, Amazon).</li>
+                            <li><strong>Control:</strong> High control; updates COGS instantly.</li>
                         </ul>
                     </div>
                     <div class="bg-orange-50 p-4 rounded-lg border border-orange-200">
                         <h4 class="font-bold text-orange-800 mb-2">Periodic System</h4>
                         <ul class="list-disc pl-5 text-sm text-orange-900 space-y-1">
-                            <li><strong>Occasional updates:</strong> Inventory is only updated at the end of the accounting period based on a physical count.</li>
+                            <li><strong>Occasional updates:</strong> Inventory updated only at period-end via physical count.</li>
                             <li><strong>Account used:</strong> "Purchases" (Expense-like account).</li>
-                            <li><strong>Control:</strong> Less control; Cost of Goods Sold is calculated as a "plug" figure at the end of the month/year.</li>
-                            <li><strong>Common in:</strong> Small businesses with low transaction volume or without computerized systems.</li>
+                            <li><strong>Control:</strong> Lower control; COGS is calculated at month-end.</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                <h3 class="text-xl font-bold text-gray-800 mb-3">2. Recording Purchases (Buying)</h3>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">2. Trade Discounts: The "Hidden" Deduction</h3>
+                
                 <p class="text-gray-700 mb-4">
-                    When a company buys goods to resell, the journal entry differs based on the system used.
+                    Suppliers often offer a <strong>Trade Discount</strong> to wholesalers or bulk buyers. This is a reduction from the <em>List Price</em> (Catalog Price) to determine the actual price charged.
+                </p>
+                
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+                    <p class="font-bold text-red-800">The Golden Rule of Trade Discounts:</p>
+                    <p class="text-red-700 text-sm">
+                        Trade discounts are <strong>NEVER recorded</strong> in the journal. We calculate the <strong>Invoice Price</strong> (Net Price) first, and that is the only number we use in our accounting records.
+                    </p>
+                </div>
+
+                <div class="bg-gray-100 p-4 rounded-md font-mono text-sm text-gray-700">
+                    <p><strong>Example:</strong> Item List Price is ₱100,000 with a 20% Trade Discount.</p>
+                    <p class="mt-2">List Price: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ₱100,000</p>
+                    <p>Less: Discount: &nbsp; (20,000) <span class="text-gray-400 italic"><-- Do not journalize this!</span></p>
+                    <p class="border-t border-gray-400 mt-1 pt-1 font-bold">Invoice Price: &nbsp; ₱ 80,000 <span class="text-green-600"><-- Record this amount!</span></p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h3 class="text-xl font-bold text-gray-800 mb-3">3. Recording Purchases (Buying)</h3>
+                <p class="text-gray-700 mb-4 text-sm">
+                    <strong>Scenario:</strong> Purchased goods with a List Price of ₱10,000, Trade Discount of 10%, on account. <br>
+                    <strong>Invoice Price to Record:</strong> ₱9,000.
                 </p>
                 
                 <table class="w-full text-sm text-left text-gray-600 border border-gray-300">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                         <tr>
-                            <th class="px-4 py-3 border-r">Transaction</th>
-                            <th class="px-4 py-3 border-r">Perpetual System</th>
-                            <th class="px-4 py-3">Periodic System</th>
+                            <th class="px-4 py-3 border-r">System</th>
+                            <th class="px-4 py-3">Journal Entry (Amount is ₱9,000)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="bg-white border-b">
-                            <td class="px-4 py-3 font-medium text-gray-900 border-r">
-                                Purchase Inventory on Credit (Account)
-                            </td>
-                            <td class="px-4 py-3 border-r">
-                                <div class="font-mono text-xs">
-                                    <div class="text-blue-600">Dr. Merchandise Inventory</div>
-                                    <div class="pl-4 text-red-600">Cr. Accounts Payable</div>
-                                </div>
-                                <p class="mt-1 text-xs italic">We debit the Asset directly.</p>
-                            </td>
+                            <td class="px-4 py-3 font-medium text-gray-900 border-r">Perpetual</td>
                             <td class="px-4 py-3">
                                 <div class="font-mono text-xs">
-                                    <div class="text-blue-600">Dr. Purchases</div>
-                                    <div class="pl-4 text-red-600">Cr. Accounts Payable</div>
+                                    <div class="text-blue-600">Dr. Merchandise Inventory <span class="text-black">9,000</span></div>
+                                    <div class="pl-4 text-red-600">Cr. Accounts Payable <span class="text-black">9,000</span></div>
                                 </div>
-                                <p class="mt-1 text-xs italic">We debit a temporary "Purchases" account.</p>
+                            </td>
+                        </tr>
+                        <tr class="bg-white">
+                            <td class="px-4 py-3 font-medium text-gray-900 border-r">Periodic</td>
+                            <td class="px-4 py-3">
+                                <div class="font-mono text-xs">
+                                    <div class="text-blue-600">Dr. Purchases <span class="text-black">9,000</span></div>
+                                    <div class="pl-4 text-red-600">Cr. Accounts Payable <span class="text-black">9,000</span></div>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -81,52 +100,46 @@ export const unit2Week2Data = {
             </div>
 
             <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                <h3 class="text-xl font-bold text-gray-800 mb-3">3. Recording Sales (Selling)</h3>
-                <p class="text-gray-700 mb-4">
-                    This is the most critical difference. Perpetual systems recognize the <strong>Cost</strong> immediately. Periodic systems do not.
+                <h3 class="text-xl font-bold text-gray-800 mb-3">4. Recording Sales (Selling)</h3>
+                <p class="text-gray-700 mb-4 text-sm">
+                    <strong>Scenario:</strong> Sold goods with a List Price of ₱20,000, Trade Discount 5%. <br>
+                    <strong>Invoice Price (Revenue):</strong> ₱19,000. <br>
+                    <strong>Cost of Goods Sold (Cost):</strong> ₱10,000 (Given).
                 </p>
 
                 <table class="w-full text-sm text-left text-gray-600 border border-gray-300">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                         <tr>
-                            <th class="px-4 py-3 border-r">Transaction</th>
-                            <th class="px-4 py-3 border-r">Perpetual System (2 Entries)</th>
-                            <th class="px-4 py-3">Periodic System (1 Entry)</th>
+                            <th class="px-4 py-3 border-r">System</th>
+                            <th class="px-4 py-3">Journal Entry</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="bg-white border-b">
-                            <td class="px-4 py-3 font-medium text-gray-900 border-r">
-                                Selling Goods on Credit
-                            </td>
-                            <td class="px-4 py-3 border-r align-top">
-                                <p class="text-xs font-bold mb-1">Entry 1: Record Revenue</p>
+                            <td class="px-4 py-3 font-medium text-gray-900 border-r">Perpetual</td>
+                            <td class="px-4 py-3">
                                 <div class="font-mono text-xs mb-2">
-                                    <div class="text-blue-600">Dr. Accounts Receivable</div>
-                                    <div class="pl-4 text-red-600">Cr. Sales</div>
+                                    <div class="text-blue-600">Dr. Accounts Receivable <span class="text-black">19,000</span></div>
+                                    <div class="pl-4 text-red-600">Cr. Sales <span class="text-black">19,000</span></div>
                                 </div>
-                                <p class="text-xs font-bold mb-1">Entry 2: Update Inventory</p>
-                                <div class="font-mono text-xs">
-                                    <div class="text-blue-600">Dr. Cost of Goods Sold</div>
-                                    <div class="pl-4 text-red-600">Cr. Mdse. Inventory</div>
+                                <div class="font-mono text-xs border-t border-dashed pt-2">
+                                    <div class="text-blue-600">Dr. Cost of Goods Sold <span class="text-black">10,000</span></div>
+                                    <div class="pl-4 text-red-600">Cr. Mdse. Inventory <span class="text-black">10,000</span></div>
                                 </div>
                             </td>
+                        </tr>
+                        <tr class="bg-white">
+                            <td class="px-4 py-3 font-medium text-gray-900 border-r">Periodic</td>
                             <td class="px-4 py-3 align-top">
-                                <p class="text-xs font-bold mb-1">Entry 1: Record Revenue</p>
                                 <div class="font-mono text-xs">
-                                    <div class="text-blue-600">Dr. Accounts Receivable</div>
-                                    <div class="pl-4 text-red-600">Cr. Sales</div>
+                                    <div class="text-blue-600">Dr. Accounts Receivable <span class="text-black">19,000</span></div>
+                                    <div class="pl-4 text-red-600">Cr. Sales <span class="text-black">19,000</span></div>
                                 </div>
-                                <div class="mt-4 p-2 bg-gray-50 rounded text-xs italic text-gray-500">
-                                    *No entry is made for the Cost of Goods Sold at this time.
-                                </div>
+                                <p class="text-xs text-gray-400 mt-2 italic">(No COGS entry is made)</p>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="mt-4 bg-yellow-50 p-3 rounded-md border-l-4 border-yellow-400 text-sm text-yellow-800">
-                    <strong>Key Takeaway:</strong> In the Perpetual system, we reduce the inventory account <em>the moment</em> the sale happens. In the Periodic system, we don't touch the inventory account during the sale.
-                </div>
             </div>
         </div>
     `,
@@ -134,99 +147,120 @@ export const unit2Week2Data = {
         // --- 5 THEORY QUESTIONS ---
         {
             type: "mcq",
-            question: "Which account is debited when purchasing goods under the Periodic Inventory System?",
-            options: ["Merchandise Inventory", "Cost of Goods Sold", "Purchases", "Supplies"],
-            correctIndex: 2,
-            explanation: "In the Periodic system, purchases are recorded in a temporary account called 'Purchases', not directly in the Inventory asset account."
-        },
-        {
-            type: "mcq",
-            question: "Under the Perpetual Inventory System, how many journal entries are required to record a sale?",
-            options: ["One", "Two", "Three", "None"],
-            correctIndex: 1,
-            explanation: "Two entries are needed: one to record the Sales Revenue (and Cash/AR), and a second to record the Cost of Goods Sold (and reduce Inventory)."
-        },
-        {
-            type: "mcq",
-            question: "Which of the following is true regarding the 'Cost of Goods Sold' (COGS) account?",
+            question: "Which of the following best describes how a Trade Discount is recorded in the General Journal?",
             options: [
-                "It is only used in the Periodic system.",
-                "In a Perpetual system, it is updated every time a sale is made.",
-                "It is an Asset account.",
-                "It is recorded when we purchase goods."
+                "Debit Sales Discount, Credit Accounts Receivable",
+                "Debit Trade Discount Expense",
+                "It is not recorded; transactions are recorded at the Net (Invoice) Price",
+                "It is recorded as a liability"
+            ],
+            correctIndex: 2,
+            explanation: "Trade discounts are deducted mentally or on scratch paper. The journal entry only uses the final Invoice Price."
+        },
+        {
+            type: "mcq",
+            question: "In a Periodic System, which account is debited when inventory is purchased?",
+            options: ["Merchandise Inventory", "Purchases", "Cost of Goods Sold", "Accounts Payable"],
+            correctIndex: 1,
+            explanation: "The Periodic system uses the temporary 'Purchases' account for buying goods."
+        },
+        {
+            type: "mcq",
+            question: "Why do Perpetual systems require two entries for every sale?",
+            options: [
+                "To double the revenue recorded.",
+                "One entry records the Revenue (Sales), the other records the Expense (COGS) and inventory reduction.",
+                "To account for trade discounts separately.",
+                "One is for the buyer, one is for the seller."
             ],
             correctIndex: 1,
-            explanation: "Perpetual systems update COGS immediately with every sale entry."
+            explanation: "Perpetual systems match the revenue earned with the cost incurred immediately at the point of sale."
         },
         {
             type: "mcq",
-            question: "When purchasing inventory on credit under the Perpetual System, which account is credited?",
-            options: ["Cash", "Merchandise Inventory", "Accounts Receivable", "Accounts Payable"],
+            question: "If a product has a List Price of ₱1,000 and a 10% Trade Discount, what amount appears on the invoice?",
+            options: ["₱1,100", "₱1,000", "₱900", "₱100"],
+            correctIndex: 2,
+            explanation: "List Price (1,000) minus 10% (100) equals the Invoice Price (900)."
+        },
+        {
+            type: "mcq",
+            question: "Which account is credited when a company buys inventory on account (credit) in a Perpetual system?",
+            options: ["Cash", "Sales", "Accounts Receivable", "Accounts Payable"],
             correctIndex: 3,
-            explanation: "Buying on credit creates a liability, so we credit Accounts Payable."
-        },
-        {
-            type: "mcq",
-            question: "Why does the Periodic system not record a reduction in inventory at the time of sale?",
-            options: [
-                "Because it tracks inventory continuously.",
-                "Because it assumes no goods were sold.",
-                "Because it determines the cost of inventory sold only at the end of the period via physical count.",
-                "Because it is illegal to do so."
-            ],
-            correctIndex: 2,
-            explanation: "The Periodic system relies on a physical count at the end of the period to calculate how much inventory was sold."
+            explanation: "Purchasing on account creates a liability, which is recorded by crediting Accounts Payable."
         },
 
-        // --- 5 PROBLEM SOLVING QUESTIONS (Journal Entries) ---
+        // --- 5 PROBLEM SOLVING QUESTIONS (Journal Entries with Trade Discounts) ---
         {
             type: "problem",
-            question: "<strong>Scenario (Perpetual System):</strong> Your company purchases 500 units of inventory for ₱10,000 cash. Provide the journal entry.",
-            answer: `Dr. Merchandise Inventory  10,000
-    Cr. Cash                  10,000`,
-            explanation: "Under Perpetual, we debit the asset 'Merchandise Inventory' directly. Since we paid cash, we credit Cash."
+            question: "<strong>Scenario (Perpetual - Purchase):</strong> <br>Purchased goods with a List Price of ₱50,000 less a 20% trade discount. The purchase was made on credit.",
+            answer: `Calculation:
+List Price:    50,000
+Less 20%:     (10,000)
+Invoice Price: 40,000
+
+Journal Entry:
+Dr. Merchandise Inventory   40,000
+    Cr. Accounts Payable       40,000`,
+            explanation: "We only record the Invoice Price of ₱40,000. The ₱10,000 discount is ignored in the journal."
         },
         {
             type: "problem",
-            question: "<strong>Scenario (Periodic System):</strong> Your company purchases the same 500 units of inventory for ₱10,000 on account (credit). Provide the journal entry.",
-            answer: `Dr. Purchases              10,000
-    Cr. Accounts Payable      10,000`,
-            explanation: "Under Periodic, we debit the 'Purchases' account. Since it is on account, we credit Accounts Payable."
+            question: "<strong>Scenario (Periodic - Purchase):</strong> <br>Purchased goods with a List Price of ₱20,000 less a 10% trade discount. The terms were COD (Cash on Delivery).",
+            answer: `Calculation:
+List Price:    20,000
+Less 10%:      (2,000)
+Invoice Price: 18,000
+
+Journal Entry:
+Dr. Purchases               18,000
+    Cr. Cash                   18,000`,
+            explanation: "Under Periodic, we debit 'Purchases'. Since it's COD, we credit Cash. We use the net amount of ₱18,000."
         },
         {
             type: "problem",
-            question: "<strong>Scenario (Perpetual System):</strong> Sold goods to a customer for ₱5,000 on credit (Terms: n/30). The cost of the goods sold was ₱3,000. Provide the required journal entries.",
-            answer: `Entry 1 (Revenue):
-Dr. Accounts Receivable    5,000
-    Cr. Sales                 5,000
+            question: "<strong>Scenario (Perpetual - Sale):</strong> <br>Sold inventory with a List Price of ₱100,000 less a 25% trade discount on account. The cost of the goods sold was ₱40,000.",
+            answer: `Calculation:
+List Price:    100,000
+Less 25%:      (25,000)
+Invoice Price:  75,000
+
+Entry 1 (Revenue):
+Dr. Accounts Receivable     75,000
+    Cr. Sales                  75,000
 
 Entry 2 (Cost):
-Dr. Cost of Goods Sold     3,000
-    Cr. Mdse. Inventory       3,000`,
-            explanation: "Perpetual requires two entries: one to record the revenue (Sales) and one to record the expense (COGS) and reduction of asset (Inventory)."
+Dr. Cost of Goods Sold      40,000
+    Cr. Mdse. Inventory        40,000`,
+            explanation: "Revenue is recorded at the Invoice Price (₱75k). The Cost entry uses the cost given (₱40k)."
         },
         {
             type: "problem",
-            question: "<strong>Scenario (Periodic System):</strong> Sold goods to a customer for ₱5,000 on credit. The cost of the goods sold was ₱3,000. Provide the required journal entry.",
-            answer: `Dr. Accounts Receivable    5,000
-    Cr. Sales                 5,000
-    
-(No entry for Cost of Goods Sold)`,
-            explanation: "Periodic only records the revenue portion at the time of sale. The cost is calculated later at period-end."
-        },
-        {
-            type: "problem",
-            question: "<strong>Scenario (Perpetual System - Mixed):</strong><br>1. Purchased inventory for ₱20,000 on account.<br>2. Sold half of that inventory for ₱15,000 cash.<br>Provide the entries for both transactions.",
-            answer: `Transaction 1 (Purchase):
-Dr. Merchandise Inventory  20,000
-    Cr. Accounts Payable      20,000
+            question: "<strong>Scenario (Periodic - Sale):</strong> <br>Sold inventory with a List Price of ₱30,000 less a 5% trade discount for Cash. The cost of the goods sold was ₱15,000.",
+            answer: `Calculation:
+List Price:    30,000
+Less 5%:       (1,500)
+Invoice Price: 28,500
 
-Transaction 2 (Sale):
-Dr. Cash                   15,000
-    Cr. Sales                 15,000
-Dr. Cost of Goods Sold     10,000
-    Cr. Mdse. Inventory       10,000`,
-            explanation: "1. Purchase increases Inventory asset. 2. Sale records cash revenue AND removes half the inventory cost (₱20,000 / 2 = ₱10,000) from the books."
+Journal Entry:
+Dr. Cash                    28,500
+    Cr. Sales                  28,500
+
+(No entry for COGS in Periodic)`,
+            explanation: "In Periodic, we only record the Sales Revenue at the Invoice Price. The cost is ignored until the end-of-period count."
+        },
+        {
+            type: "problem",
+            question: "<strong>Scenario (Chain Discount):</strong> <br>Purchased inventory (Periodic System) with a List Price of ₱10,000. The supplier offered trade discounts of 20% and 10%. Determine the Invoice Price and the Journal Entry (Credit).",
+            answer: `Step 1: 10,000 - 20% = 8,000
+Step 2:  8,000 - 10% = 7,200
+Invoice Price: ₱7,200
+
+Journal Entry:
+Dr. Purchases               7,200
+    Cr. Accounts Payable       7,200`,
+            explanation: "Apply the discounts sequentially (Chain Discount). 10k minus 2k is 8k. Then 8k minus 800 is 7,200."
         }
     ]
 },
