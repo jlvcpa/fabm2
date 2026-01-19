@@ -4,488 +4,232 @@
 export const unit2Week2Data = {
     week2: [
         {
-            day: "Day 1",
-            topic: "Foundations of Merchandising",
-            content:
-                `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-                    <p class="font-bold text-blue-900">Learning Goal</p>
-                    <p class="text-blue-800">Understand why inventory systems are critical in merchandising operations.</p>
-                </div>
-                <h3 class="text-xl font-bold mb-4">Topic Focus</h3>
-                <ul class="list-none space-y-8 mb-6">
-                    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">1. Definition: The Business of "Buying and Selling"</h3>
-                        <div class="text-gray-700 mb-4">
-                    <p class="mb-3">
-                        In the vast ecosystem of commerce, merchandising businesses serve as the essential bridge between manufacturers (who create products) and consumers (who use them). Unlike manufacturers who transform raw materials into finished goods, or service providers who offer intangible skills, a merchandising business operates on a simpler, yet high-stakes premise: <strong>Arbitrage of location and convenience</strong>.
-                    </p>
+    day: "Day 1",
+    topic: "Recording Purchases and Sales",
+    content: `
+        <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+            <p class="font-bold text-blue-900">Learning Goal</p>
+            <p class="text-blue-800">Master the basic journal entries for buying and selling inventory under Perpetual and Periodic systems.</p>
+        </div>
 
-                    <h4 class="font-bold mb-1">The Core Concept</h4>
-                    <p class="mb-3">
-                        A merchandising business generates revenue by purchasing finished goods and reselling them at a higher price. They do not change the form of the product. The value they add is not in creation, but in distribution and accessibility.
-                    </p>
-
-                    <ul class="list-disc pl-5 mb-4 space-y-2">
-                        <li>
-                            <strong>The "No Change" Rule:</strong> If a business buys wood and glue to sell tables, they are a manufacturer. If a business buys completed tables from a factory and sells them in a showroom, they are a merchandiser.
-                        </li>
-                        <li>
-                            <strong>The Economic Utility:</strong> Why do customers pay more to a merchandiser than the factory price?
-                            <ul class="list-circle pl-5 mt-1">
-                                <li><em>Breaking Bulk:</em> Factories sell in thousands; merchandisers sell in single units.</li>
-                                <li><em>Assortment:</em> Merchandisers curate products from multiple factories in one place.</li>
-                                <li><em>Immediacy:</em> Merchandisers hold stock so the customer doesn't have to wait for production.</li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <h4 class="font-bold mb-1">Types of Merchandisers</h4>
-                    <ul class="list-disc pl-5 space-y-1">
-                        <li>
-                            <strong>Wholesalers:</strong> These are the "middlemen" who buy large quantities directly from producers and sell smaller (but still significant) quantities to retailers. They rarely sell to the end-user.
-                        </li>
-                        <li>
-                            <strong>Retailers:</strong> These businesses sell directly to the final consumer. This ranges from giant big-box stores (like Walmart) to e-commerce sites (like Amazon) to small local convenience stores.
-                        </li>
-                    </ul>
-                    </div>
-                        <div class="bg-blue-50 p-4 rounded-md text-sm text-blue-800">
-                            <strong>Key Concept:</strong> If a business buys wood and glue to make tables, they are a <em>manufacturer</em>. If they buy completed tables to sell in a showroom, they are a <em>merchandiser</em>.
-                        </div>
-                    </li>
-
-                    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">2. Comparison: Service vs. Merchandising</h3>
-                        <p class="text-gray-700 mb-4">
-                            <strong>Service (sells time/skills) vs. Merchandising (sells tangible goods).</strong> This distinction fundamentally alters the Income Statement. A service business uses a "single-step" flow (Revenue - Expenses), while a merchandising business requires a "multi-step" calculation involving Cost of Goods Sold (COGS).
-                        </p>
+        <h3 class="text-xl font-bold mb-4 mt-6">Topic Focus</h3>
         
-                        <div class="my-6 flex justify-center">
-                            <svg width="100%" height="auto" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg" class="max-w-2xl">
-                                <rect x="0" y="0" width="600" height="350" fill="#f9f9f9" rx="10"/>
-                                <text x="300" y="30" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">Service vs. Merchandising Income Structure</text>
-                                <g transform="translate(50, 60)">
-                                    <rect x="0" y="0" width="220" height="260" fill="#e3f2fd" stroke="#2196f3" rx="5"/>
-                                    <text x="110" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#0d47a1">Service Business</text>
-                                    <rect x="20" y="60" width="180" height="40" fill="#4caf50" rx="3"/>
-                                    <text x="110" y="85" font-family="Arial" font-size="14" text-anchor="middle" fill="white">Service Revenue</text>
-                                    <text x="110" y="125" font-family="Arial" font-size="20" text-anchor="middle" fill="#333">-</text>
-                                    <rect x="20" y="140" width="180" height="40" fill="#f44336" rx="3"/>
-                                    <text x="110" y="165" font-family="Arial" font-size="14" text-anchor="middle" fill="white">Operating Expenses</text>
-                                    <line x1="20" y1="200" x2="200" y2="200" stroke="#333" stroke-width="2"/>
-                                    <rect x="20" y="210" width="180" height="40" fill="#2196f3" rx="3"/>
-                                    <text x="110" y="235" font-family="Arial" font-size="14" text-anchor="middle" fill="white">Net Income</text>
-                                </g>
-                                <g transform="translate(330, 60)">
-                                    <rect x="0" y="0" width="220" height="260" fill="#fff3e0" stroke="#ff9800" rx="5"/>
-                                    <text x="110" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#e65100">Merchandising Business</text>
-                                    <rect x="20" y="50" width="180" height="30" fill="#4caf50" rx="3"/>
-                                    <text x="110" y="70" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Sales Revenue</text>
-                                    <text x="110" y="95" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">- Cost of Goods Sold</text>
-                                    <rect x="20" y="105" width="180" height="30" fill="#ff9800" rx="3"/>
-                                    <text x="110" y="125" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Gross Profit</text>
-                                    <text x="110" y="150" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">- Operating Expenses</text>
-                                    <line x1="20" y1="160" x2="200" y2="160" stroke="#333" stroke-width="1" stroke-dasharray="4"/>
-                                    <rect x="20" y="210" width="180" height="40" fill="#2196f3" rx="3"/>
-                                    <text x="110" y="235" font-family="Arial" font-size="14" text-anchor="middle" fill="white">Net Income</text>
-                                </g>
-                            </svg>
-                        </div>
-                    </li>
-
-                        <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">3. Inventory: The Lifeblood</h3>
-                        <p class="text-gray-700 mb-4">
-                            <strong>The lifeblood of merchandising; the primary asset for generating revenue.</strong> Inventory is essentially "frozen cash." It represents the products waiting to be sold.
-                        </p>
-                        <ul class="list-disc pl-5 space-y-2 text-gray-600">
-                    <li>
-                        <strong>Revenue Generation:</strong> Inventory is the lifeblood of a merchandising business because it serves as the primary source of incoming revenue. If a customer enters a store looking for a specific item and it is unavailable, the immediate sale is effectively lost. Beyond the single transaction, frequent stockouts damage the company's reputation and reliability in the eyes of the consumer. Frustrated shoppers will often turn to competitors to fulfill their needs, potentially resulting in permanent customer churn. Therefore, maintaining adequate stock levels is not just about logistics, but is a critical component of sales strategy and customer retention.
-                    </li>
-                    <li>
-                            <strong>Carrying Costs:</strong> While inventory is a valuable asset, holding too much of it creates a significant financial burden known as carrying costs. The business must pay for physical requirements, such as warehouse rent, electricity, and security systems to protect the goods. Additionally, capital tied up in unsold inventory cannot be used for other investment opportunities, and the business must often pay premiums for insurance coverage. There is also the inherent risk of shrinkage, where goods are lost due to theft, damage during handling, or administrative errors. Furthermore, products may become obsolete, out of fashion, or spoiled if they sit on the shelves too long, turning a potential profit into a complete write-off.
-                    </li>
-                    <li>
-                        <strong>The Goal:</strong> The ultimate objective of effective inventory management is to achieve a delicate balance between having enough stock to meet demand and minimizing the amount held in storage. Managers aim for a high inventory turnover ratio, which indicates that goods are being sold and replaced rapidly rather than sitting idle. Moving inventory quickly frees up essential cash flow, allowing the business to reinvest in new, profitable products. However, this speed cannot come at the expense of availability, as running out of stock halts the revenue cycle immediately. Success lies in optimizing ordering cycles so that new shipments arrive exactly when the old stock is nearing depletion, minimizing both holding costs and missed sales.
-                    </li>
-                </ul>
-            </li>
-
-                    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">4. The Operating Cycle & Internal Controls</h3>
-                        <p class="text-gray-700 mb-4">
-                            <strong>Flow: Purchase &rarr; Storage &rarr; Sale.</strong> This cycle is longer for merchandisers than service providers because cash is tied up in inventory. To protect this "frozen cash," strict internal controls are required at every step.
-                        </p>
-    
-                        <div class="my-6 flex justify-center">
-                            <svg width="100%" height="auto" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" class="max-w-3xl">
-                                <rect x="0" y="0" width="700" height="400" fill="#ffffff" stroke="#ddd" rx="10"/>
-                                <text x="350" y="40" font-family="Arial" font-size="22" font-weight="bold" text-anchor="middle" fill="#333">The Merchandising Operating Cycle</text>
-                                <defs>
-                                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                                        <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
-                                    </marker>
-                                </defs>
-                                <g transform="translate(350, 100)">
-                                    <circle cx="0" cy="0" r="50" fill="#8bc34a" stroke="#558b2f" stroke-width="3"/>
-                                    <text x="0" y="5" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">CASH</text>
-                                </g>
-                                <g transform="translate(550, 200)">
-                                    <circle cx="0" cy="0" r="50" fill="#ffb74d" stroke="#ef6c00" stroke-width="3"/>
-                                    <text x="0" y="-10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Buy</text>
-                                    <text x="0" y="10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Inventory</text>
-                                </g>
-                                <g transform="translate(350, 300)">
-                                    <circle cx="0" cy="0" r="50" fill="#4fc3f7" stroke="#0277bd" stroke-width="3"/>
-                                    <text x="0" y="-10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Hold</text>
-                                    <text x="0" y="10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Inventory</text>
-                                </g>
-                                <g transform="translate(150, 200)">
-                                    <circle cx="0" cy="0" r="50" fill="#e57373" stroke="#c62828" stroke-width="3"/>
-                                    <text x="0" y="-10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Sell in Cash </text>
-                                    <text x="0" y="10" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">/ on Credit</text>
-                                </g>
-                                <line x1="390" y1="130" x2="510" y2="170" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
-                                <line x1="510" y1="230" x2="390" y2="270" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
-                                <line x1="310" y1="270" x2="190" y2="230" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
-                                <line x1="190" y1="170" x2="310" y2="130" stroke="#555" stroke-width="2" marker-end="url(#arrowhead)"/>
-                                <text x="490" y="140" font-family="Arial" font-size="12" fill="#666">Accounts Payable</text>
-                                <text x="200" y="140" font-family="Arial" font-size="12" fill="#666">Collections</text>
-                            </svg>
-                        </div>
-                            <p class="text-sm text-gray-500 mt-2 mb-6 italic text-center">
-                            <strong>Figure 1:</strong> The cycle of converting cash into goods and back into cash.
-                        </p>
-
-                        <div class="space-y-6 border-t border-gray-200 pt-6">
-                            <h4 class="font-bold text-gray-800 text-lg">Detailed Policies & Procedures</h4>
-
-                            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-400">
-                                <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                                    <i class="fas fa-shopping-cart mr-2 text-orange-500"></i> Phase 1: Purchasing (Buying)
-                                </h5>
-                                <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
-                                <li><strong>Authorization (Purchase Order):</strong> Inventory should never be ordered verbally. A pre-numbered <em>Purchase Order (PO)</em> must be approved by a purchasing manager. This ensures the company only buys what it needs.</li>
-                                <li><strong>Buying on Credit:</strong> When buying on account, the supplier must be on an "Approved Vendor List" to prevent fraud. The PO serves as evidence of the contract.</li>
-                                <li><strong>Buying with Cash:</strong> For minor purchases, a "Petty Cash Voucher" system is used. For major cash purchases, a check or bank transfer is preferred over physical cash to create a paper trail.</li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-blue-400">
-                            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                                <i class="fas fa-box-open mr-2 text-blue-500"></i> Phase 2: Receiving & Storage
-                            </h5>
-                            <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
-                                <li><strong>The Blind Count:</strong> The receiving clerk should count the goods arriving <em>without</em> looking at the quantity on the invoice. This forces an accurate physical count.</li>
-                                <li><strong>Receiving Report:</strong> A document is generated listing the item, quantity, and condition. This is matched against the Purchase Order.</li>
-                                <li><strong>Storage Security:</strong> Inventory must be stored in a secured area (warehouse) with restricted access. High-value items (like jewelry or electronics) require additional locks.</li>
-                                <li><strong>Segregation of Duties:</strong> The person who has custody of the assets (warehouse manager) should not be the same person who maintains the accounting records.</li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-red-400">
-                            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                                <i class="fas fa-cash-register mr-2 text-red-500"></i> Phase 3: Selling
-                            </h5>
-                            <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
-                                <li><strong>Cash Sales:</strong> Use cash registers that provide a receipt to the customer and record the transaction internally. At the end of the day, the physical cash in the drawer is reconciled with the register tape.</li>
-                                <li><strong>Sales on Account (Credit):</strong> Credit approval must be separated from the sales department. A credit manager must approve the customer's credit limit <em>before</em> the sale is finalized to minimize bad debts.</li>
-                                <li><strong>Shipping Documents:</strong> For goods sold, a pre-numbered shipping document (Delivery Receipt) serves as proof that goods left the warehouse.</li>
-                            </ul>
-                        </div>
-
-                        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-purple-400">
-                            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                                <i class="fas fa-book mr-2 text-purple-500"></i> Phase 4: Recording & Posting
-                            </h5>
-                            <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
-                                <li><strong>The 3-Way Match:</strong> Before paying a supplier, the accountant matches three documents: 
-                                    <ol class="list-decimal pl-4 mt-1 text-slate-500">
-                                        <li>The Purchase Order (What we ordered)</li>
-                                        <li>The Receiving Report (What we got)</li>
-                                        <li>The Supplier's Invoice (What we are charged)</li>
-                                    </ol>
-                                </li>
-                                <li><strong>General Journal:</strong> Transactions are recorded chronologically. Automated systems post these simultaneously to the General Ledger to keep account balances (like Accounts Payable) updated in real-time.</li>
-                                <li><strong>Monthly Reconciliation:</strong> The General Ledger balance for "Inventory" is compared against a physical count of the stock at least once a year (Periodic) or continuously (Perpetual).</li>
-                            </ul>
-                        </div>
+        <div class="space-y-8 mb-6">
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h3 class="text-xl font-bold text-gray-800 mb-3">1. Perpetual vs. Periodic Inventory Systems</h3>
+                <p class="text-gray-700 mb-4">
+                    Accounting for merchandising businesses relies on how they track inventory. There are two distinct methods:
+                </p>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                        <h4 class="font-bold text-green-800 mb-2">Perpetual System</h4>
+                        <ul class="list-disc pl-5 text-sm text-green-900 space-y-1">
+                            <li><strong>Real-time updates:</strong> Records are updated immediately after every transaction.</li>
+                            <li><strong>Account used:</strong> "Merchandise Inventory" (Asset).</li>
+                            <li><strong>Control:</strong> Provides better control and information; you always know what <em>should</em> be in stock.</li>
+                            <li><strong>Common in:</strong> Modern businesses with barcode scanners (e.g., Supermarkets, Amazon).</li>
+                        </ul>
                     </div>
-                </li>
-                </ul>   
-            `,
-            exercises: [
-                // ... inside your exercises array ...
+                    <div class="bg-orange-50 p-4 rounded-lg border border-orange-200">
+                        <h4 class="font-bold text-orange-800 mb-2">Periodic System</h4>
+                        <ul class="list-disc pl-5 text-sm text-orange-900 space-y-1">
+                            <li><strong>Occasional updates:</strong> Inventory is only updated at the end of the accounting period based on a physical count.</li>
+                            <li><strong>Account used:</strong> "Purchases" (Expense-like account).</li>
+                            <li><strong>Control:</strong> Less control; Cost of Goods Sold is calculated as a "plug" figure at the end of the month/year.</li>
+                            <li><strong>Common in:</strong> Small businesses with low transaction volume or without computerized systems.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-// 1. Definition & Core Concepts
-{
-    type: "mcq",
-    question: "Which of the following best describes a merchandising business?",
-    options: ["Converts raw materials into finished goods", "Provides intangible services to customers", "Buys finished goods and resells them", "Invests in stocks and bonds"],
-    correctIndex: 2,
-    explanation: "A merchandiser buys finished goods to resell without changing their form."
-},
-{
-    type: "mcq",
-    question: "If a business buys wood to build and sell chairs, it is a:",
-    options: ["Merchandiser", "Manufacturer", "Service Provider", "Wholesaler"],
-    correctIndex: 1,
-    explanation: "Buying raw materials to create a new product is manufacturing, not merchandising."
-},
-{
-    type: "mcq",
-    question: "What is the primary source of revenue for a merchandising business?",
-    options: ["Service Fees", "Sales Revenue", "Interest Income", "Rent Income"],
-    correctIndex: 1,
-    explanation: "Merchandisers earn revenue primarily through Sales (selling goods)."
-},
-{
-    type: "mcq",
-    question: "Which term refers to the goods a merchandiser holds for sale?",
-    options: ["Supplies", "Equipment", "Merchandise Inventory", "Raw Materials"],
-    correctIndex: 2,
-    explanation: "Merchandise Inventory represents goods held specifically for resale."
-},
-{
-    type: "mcq",
-    question: "Which of these is an example of a retailer?",
-    options: ["A factory producing cars", "A law firm", "A supermarket selling groceries", "A wholesale distributor selling only to stores"],
-    correctIndex: 2,
-    explanation: "Retailers sell directly to the final consumer."
-},
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h3 class="text-xl font-bold text-gray-800 mb-3">2. Recording Purchases (Buying)</h3>
+                <p class="text-gray-700 mb-4">
+                    When a company buys goods to resell, the journal entry differs based on the system used.
+                </p>
+                
+                <table class="w-full text-sm text-left text-gray-600 border border-gray-300">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-3 border-r">Transaction</th>
+                            <th class="px-4 py-3 border-r">Perpetual System</th>
+                            <th class="px-4 py-3">Periodic System</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b">
+                            <td class="px-4 py-3 font-medium text-gray-900 border-r">
+                                Purchase Inventory on Credit (Account)
+                            </td>
+                            <td class="px-4 py-3 border-r">
+                                <div class="font-mono text-xs">
+                                    <div class="text-blue-600">Dr. Merchandise Inventory</div>
+                                    <div class="pl-4 text-red-600">Cr. Accounts Payable</div>
+                                </div>
+                                <p class="mt-1 text-xs italic">We debit the Asset directly.</p>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="font-mono text-xs">
+                                    <div class="text-blue-600">Dr. Purchases</div>
+                                    <div class="pl-4 text-red-600">Cr. Accounts Payable</div>
+                                </div>
+                                <p class="mt-1 text-xs italic">We debit a temporary "Purchases" account.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-// 2. The Operating Cycle
-{
-    type: "mcq",
-    question: "The operating cycle of a merchandiser is generally _______ than that of a service business.",
-    options: ["Shorter", "Longer", "The same length", "Unrelated"],
-    correctIndex: 1,
-    explanation: "It is longer because cash is tied up in inventory that must be sold before cash can be collected."
-},
-{
-    type: "mcq",
-    question: "Which step is NOT part of the merchandising operating cycle?",
-    options: ["Purchase of Inventory", "Manufacturing of Goods", "Sale of Inventory", "Collection of Cash"],
-    correctIndex: 1,
-    explanation: "Manufacturing is not part of a merchandising cycle; they buy finished goods."
-},
-{
-    type: "mcq",
-    question: "In the operating cycle, what happens after 'Sale of Inventory' on credit?",
-    options: ["Purchase of Inventory", "Collection of Cash", "Payment to Suppliers", "Storage of Goods"],
-    correctIndex: 1,
-    explanation: "After a sale on credit, the next step is collecting the cash from the Accounts Receivable."
-},
-{
-    type: "mcq",
-    question: "Inventory is often described as:",
-    options: ["Liquid Cash", "Frozen Cash", "Long-term Liability", "Intangible Asset"],
-    correctIndex: 1,
-    explanation: "Inventory ties up capital until it is sold, making it 'frozen cash'."
-},
-{
-    type: "mcq",
-    question: "What is the risk of holding too much inventory?",
-    options: ["Lost sales", "High carrying costs and storage fees", "Increased customer satisfaction", "Faster operating cycle"],
-    correctIndex: 1,
-    explanation: "Excess inventory incurs storage costs, insurance, and risk of obsolescence."
-},
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                <h3 class="text-xl font-bold text-gray-800 mb-3">3. Recording Sales (Selling)</h3>
+                <p class="text-gray-700 mb-4">
+                    This is the most critical difference. Perpetual systems recognize the <strong>Cost</strong> immediately. Periodic systems do not.
+                </p>
 
-// 3. Income Statement & COGS
-{
-    type: "mcq",
-    question: "Which formula correctly calculates Gross Profit?",
-    options: ["Sales - Operating Expenses", "Sales - Cost of Goods Sold", "Net Income - Taxes", "Beginning Inventory + Purchases"],
-    correctIndex: 1,
-    explanation: "Gross Profit is Sales Revenue minus the Cost of Goods Sold (COGS)."
-},
-{
-    type: "mcq",
-    question: "Cost of Goods Sold (COGS) is classified as a(n):",
-    options: ["Asset", "Liability", "Expense", "Revenue"],
-    correctIndex: 2,
-    explanation: "COGS is an expense account that represents the cost of inventory sold."
-},
-{
-    type: "mcq",
-    question: "Which financial statement distinguishes a merchandiser from a service provider?",
-    options: ["Balance Sheet only", "Income Statement only", "Statement of Cash Flows", "Both Income Statement and Balance Sheet"],
-    correctIndex: 3,
-    explanation: "Merchandisers have 'Inventory' on the Balance Sheet and 'COGS' on the Income Statement."
-},
-{
-    type: "mcq",
-    question: "In a multi-step income statement, what comes immediately after Gross Profit?",
-    options: ["Net Income", "Cost of Goods Sold", "Operating Expenses", "Sales Revenue"],
-    correctIndex: 2,
-    explanation: "Operating Expenses are deducted from Gross Profit to arrive at Net Income."
-},
-{
-    type: "mcq",
-    question: "If Sales are $100 and COGS is $60, what is the Gross Profit?",
-    options: ["$160", "$40", "$100", "$60"],
-    correctIndex: 1,
-    explanation: "$100 (Sales) - $60 (COGS) = $40 Gross Profit."
-},
-
-// 4. Inventory Systems
-{
-    type: "mcq",
-    question: "Which inventory system updates records immediately after every purchase and sale?",
-    options: ["Periodic System", "Perpetual System", "Hybrid System", "Manual System"],
-    correctIndex: 1,
-    explanation: "The Perpetual system tracks inventory changes in real-time."
-},
-{
-    type: "mcq",
-    question: "Under the Periodic system, COGS is determined:",
-    options: ["After every sale", "At the end of the accounting period", "Daily", "When cash is collected"],
-    correctIndex: 1,
-    explanation: "In Periodic systems, a physical count at the end of the period is needed to calculate COGS."
-},
-{
-    type: "mcq",
-    question: "The account 'Purchases' is used only in which system?",
-    options: ["Perpetual System", "Periodic System", "Both", "Neither"],
-    correctIndex: 1,
-    explanation: "The Periodic system uses 'Purchases'. The Perpetual system records directly to 'Inventory'."
-},
-{
-    type: "mcq",
-    question: "Which system provides better control over inventory shrinkage and theft?",
-    options: ["Periodic System", "Perpetual System", "Single-entry System", "Cash Basis"],
-    correctIndex: 1,
-    explanation: "Perpetual records show what *should* be there, making it easier to spot missing items during a count."
-},
-{
-    type: "mcq",
-    question: "Scanning a barcode at a supermarket checkout is a feature of:",
-    options: ["Periodic Inventory", "Perpetual Inventory", "Manufacturing", "Service Revenue"],
-    correctIndex: 1,
-    explanation: "Point-of-sale scanning immediately updates inventory records (Perpetual)."
-},
-
-// 5. Purchasing & Terms
-{
-    type: "mcq",
-    question: "In the credit term '2/10, n/30', what does '2' represent?",
-    options: ["2 days to pay", "2% penalty", "2% discount", "2 months credit"],
-    correctIndex: 2,
-    explanation: "It stands for a 2% purchase discount if paid within the discount period."
-},
-{
-    type: "mcq",
-    question: "What does 'FOB Shipping Point' mean?",
-    options: ["Seller pays freight", "Buyer pays freight", "Freight is free", "Ownership transfers at destination"],
-    correctIndex: 1,
-    explanation: "Ownership transfers when goods leave the seller (shipping point), so the Buyer pays freight."
-},
-{
-    type: "mcq",
-    question: "If a buyer returns damaged goods, which account is credited in a perpetual system?",
-    options: ["Sales Returns", "Inventory", "Accounts Payable", "Cash"],
-    correctIndex: 1,
-    explanation: "In a perpetual system, returning goods reduces the 'Inventory' asset account directly."
-},
-{
-    type: "mcq",
-    question: "A 'Purchase Order' is used to:",
-    options: ["Bill the customer", "Authorize the purchase of goods", "Receive goods", "Record a sale"],
-    correctIndex: 1,
-    explanation: "A PO is an internal document authorizing the purchase of inventory."
-},
-{
-    type: "mcq",
-    question: "Who pays the freight costs under 'FOB Destination'?",
-    options: ["The Buyer", "The Seller", "The Carrier", "The Government"],
-    correctIndex: 1,
-    explanation: "Seller owns goods until they arrive at destination, so the Seller pays freight."
-},
-// ... continue inside your exercises array ...
-
-{
-    type: "problem",
-    question: "Calculate Gross Profit: A gadget store had Sales Revenue of ₱500,000 for the month. They incurred Operating Expenses of ₱100,000. Their Cost of Goods Sold (COGS) was ₱250,000. Calculate the Gross Profit.",
-    answer: `Sales Revenue:       ₱500,000
-Less: COGS:         (₱250,000)
-------------------------------
-Gross Profit:        ₱250,000`,
-    explanation: "Gross Profit is calculated as Sales minus COGS only. Operating Expenses are subtracted later to find Net Income."
-},
-{
-    type: "problem",
-    question: "Credit Terms Analysis: Company A buys ₱20,000 worth of inventory on credit with terms 3/10, n/30. If they pay on Day 9, how much cash do they need to pay?",
-    answer: `Invoice Amount:      ₱20,000
-Discount (3%):       (₱600)  [20,000 * 0.03]
-------------------------------
-Cash Payment:        ₱19,400`,
-    explanation: "Since payment is made on Day 9 (within the 10-day window), they take the 3% discount."
-},
-{
-    type: "problem",
-    question: "Credit Terms - Missed Discount: Using the same scenario (₱20,000, 3/10, n/30), if Company A pays on Day 20, how much must they pay?",
-    answer: `Cash Payment:        ₱20,000`,
-    explanation: "Payment on Day 20 is outside the discount period (10 days). Therefore, the full invoice amount is due."
-},
-{
-    type: "problem",
-    question: "Trade Discount vs. Cash Discount: A supplier offers a catalog price of ₱10,000 with a trade discount of 20%. The credit terms are 2/10, n/30. What is the initial amount recorded as Accounts Payable?",
-    answer: `List Price:          ₱10,000
-Less Trade Disc(20%): (₱2,000)
-------------------------------
-Invoice Price/A.P.:   ₱8,000`,
-    explanation: "Trade discounts are deducted *before* recording the transaction. The 2% cash discount is only calculated on the ₱8,000 if paid early."
-},
-{
-    type: "problem",
-    question: "Periodic Inventory COGS: Determine COGS given the following: Beginning Inventory = ₱5,000; Net Purchases = ₱20,000; Ending Inventory = ₱3,000.",
-    answer: `Beginning Inventory: ₱ 5,000
-Add: Net Purchases:   ₱20,000
-------------------------------
-Goods Avail for Sale: ₱25,000
-Less: Ending Inv:     (₱3,000)
-------------------------------
-Cost of Goods Sold:   ₱22,000`,
-    explanation: "COGS = Beginning Inventory + Purchases - Ending Inventory."
-},
-{
-    type: "problem",
-    question: "Net Sales Calculation: A store sold ₱100,000 of goods. Customers returned ₱5,000 worth of goods (Sales Returns) and the store granted ₱2,000 in Sales Discounts. Calculate Net Sales.",
-    answer: `Gross Sales:         ₱100,000
-Less: Sales Returns:   (₱5,000)
-Less: Sales Discounts: (₱2,000)
-------------------------------
-Net Sales:             ₱93,000`,
-    explanation: "Net Sales = Gross Sales - Sales Returns & Allowances - Sales Discounts."
-},
-{
-    type: "problem",
-    question: "FOB Destination Scenario: Buyer orders ₱50,000 of goods, FOB Destination. Freight cost is ₱1,500. Who pays the freight and does the Buyer record it as part of inventory cost?",
-    answer: `Payer: Seller
-Buyer Recording: None (Buyer does not record freight)`,
-    explanation: "Under FOB Destination, the seller pays freight. It is an operating expense for the seller, not an inventory cost for the buyer."
-},
-{
-    type: "problem",
-    question: "FOB Shipping Point Scenario: Buyer orders ₱50,000 of goods, FOB Shipping Point. Freight cost is ₱1,500. Who pays the freight and does the Buyer record it as part of inventory cost?",
-    answer: `Payer: Buyer
-Buyer Recording: Yes (Added to Inventory Cost)`,
-    explanation: "Under FOB Shipping Point, ownership transfers at departure. Buyer pays freight, and it is considered part of the cost of acquiring the inventory."
-},
-{
-    type: "problem",
-    question: "Operating Cycle Concept: Explain why a grocery store likely has a shorter operating cycle than a jewelry store.",
-    answer: `A grocery store sells perishable, low-cost items with high demand (high turnover). A jewelry store sells expensive luxury items that may sit on shelves for months (low turnover). Faster sales + faster cash collection = shorter cycle.`,
-    explanation: "The operating cycle duration depends heavily on inventory turnover speed."
-},
-{
-    type: "problem",
-    question: "Internal Control: Why should the person who approves purchase orders (ordering) be different from the person who receives the goods (receiving)?",
-    answer: `Segregation of duties prevents fraud. If one person did both, they could order personal items or non-existent goods and 'verify' their receipt themselves, stealing company funds.`,
-    explanation: "Separating authorization from custody of assets is a fundamental internal control principle."
-}
-]
+                <table class="w-full text-sm text-left text-gray-600 border border-gray-300">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-3 border-r">Transaction</th>
+                            <th class="px-4 py-3 border-r">Perpetual System (2 Entries)</th>
+                            <th class="px-4 py-3">Periodic System (1 Entry)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b">
+                            <td class="px-4 py-3 font-medium text-gray-900 border-r">
+                                Selling Goods on Credit
+                            </td>
+                            <td class="px-4 py-3 border-r align-top">
+                                <p class="text-xs font-bold mb-1">Entry 1: Record Revenue</p>
+                                <div class="font-mono text-xs mb-2">
+                                    <div class="text-blue-600">Dr. Accounts Receivable</div>
+                                    <div class="pl-4 text-red-600">Cr. Sales</div>
+                                </div>
+                                <p class="text-xs font-bold mb-1">Entry 2: Update Inventory</p>
+                                <div class="font-mono text-xs">
+                                    <div class="text-blue-600">Dr. Cost of Goods Sold</div>
+                                    <div class="pl-4 text-red-600">Cr. Mdse. Inventory</div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 align-top">
+                                <p class="text-xs font-bold mb-1">Entry 1: Record Revenue</p>
+                                <div class="font-mono text-xs">
+                                    <div class="text-blue-600">Dr. Accounts Receivable</div>
+                                    <div class="pl-4 text-red-600">Cr. Sales</div>
+                                </div>
+                                <div class="mt-4 p-2 bg-gray-50 rounded text-xs italic text-gray-500">
+                                    *No entry is made for the Cost of Goods Sold at this time.
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mt-4 bg-yellow-50 p-3 rounded-md border-l-4 border-yellow-400 text-sm text-yellow-800">
+                    <strong>Key Takeaway:</strong> In the Perpetual system, we reduce the inventory account <em>the moment</em> the sale happens. In the Periodic system, we don't touch the inventory account during the sale.
+                </div>
+            </div>
+        </div>
+    `,
+    exercises: [
+        // --- 5 THEORY QUESTIONS ---
+        {
+            type: "mcq",
+            question: "Which account is debited when purchasing goods under the Periodic Inventory System?",
+            options: ["Merchandise Inventory", "Cost of Goods Sold", "Purchases", "Supplies"],
+            correctIndex: 2,
+            explanation: "In the Periodic system, purchases are recorded in a temporary account called 'Purchases', not directly in the Inventory asset account."
         },
+        {
+            type: "mcq",
+            question: "Under the Perpetual Inventory System, how many journal entries are required to record a sale?",
+            options: ["One", "Two", "Three", "None"],
+            correctIndex: 1,
+            explanation: "Two entries are needed: one to record the Sales Revenue (and Cash/AR), and a second to record the Cost of Goods Sold (and reduce Inventory)."
+        },
+        {
+            type: "mcq",
+            question: "Which of the following is true regarding the 'Cost of Goods Sold' (COGS) account?",
+            options: [
+                "It is only used in the Periodic system.",
+                "In a Perpetual system, it is updated every time a sale is made.",
+                "It is an Asset account.",
+                "It is recorded when we purchase goods."
+            ],
+            correctIndex: 1,
+            explanation: "Perpetual systems update COGS immediately with every sale entry."
+        },
+        {
+            type: "mcq",
+            question: "When purchasing inventory on credit under the Perpetual System, which account is credited?",
+            options: ["Cash", "Merchandise Inventory", "Accounts Receivable", "Accounts Payable"],
+            correctIndex: 3,
+            explanation: "Buying on credit creates a liability, so we credit Accounts Payable."
+        },
+        {
+            type: "mcq",
+            question: "Why does the Periodic system not record a reduction in inventory at the time of sale?",
+            options: [
+                "Because it tracks inventory continuously.",
+                "Because it assumes no goods were sold.",
+                "Because it determines the cost of inventory sold only at the end of the period via physical count.",
+                "Because it is illegal to do so."
+            ],
+            correctIndex: 2,
+            explanation: "The Periodic system relies on a physical count at the end of the period to calculate how much inventory was sold."
+        },
+
+        // --- 5 PROBLEM SOLVING QUESTIONS (Journal Entries) ---
+        {
+            type: "problem",
+            question: "<strong>Scenario (Perpetual System):</strong> Your company purchases 500 units of inventory for ₱10,000 cash. Provide the journal entry.",
+            answer: `Dr. Merchandise Inventory  10,000
+    Cr. Cash                  10,000`,
+            explanation: "Under Perpetual, we debit the asset 'Merchandise Inventory' directly. Since we paid cash, we credit Cash."
+        },
+        {
+            type: "problem",
+            question: "<strong>Scenario (Periodic System):</strong> Your company purchases the same 500 units of inventory for ₱10,000 on account (credit). Provide the journal entry.",
+            answer: `Dr. Purchases              10,000
+    Cr. Accounts Payable      10,000`,
+            explanation: "Under Periodic, we debit the 'Purchases' account. Since it is on account, we credit Accounts Payable."
+        },
+        {
+            type: "problem",
+            question: "<strong>Scenario (Perpetual System):</strong> Sold goods to a customer for ₱5,000 on credit (Terms: n/30). The cost of the goods sold was ₱3,000. Provide the required journal entries.",
+            answer: `Entry 1 (Revenue):
+Dr. Accounts Receivable    5,000
+    Cr. Sales                 5,000
+
+Entry 2 (Cost):
+Dr. Cost of Goods Sold     3,000
+    Cr. Mdse. Inventory       3,000`,
+            explanation: "Perpetual requires two entries: one to record the revenue (Sales) and one to record the expense (COGS) and reduction of asset (Inventory)."
+        },
+        {
+            type: "problem",
+            question: "<strong>Scenario (Periodic System):</strong> Sold goods to a customer for ₱5,000 on credit. The cost of the goods sold was ₱3,000. Provide the required journal entry.",
+            answer: `Dr. Accounts Receivable    5,000
+    Cr. Sales                 5,000
+    
+(No entry for Cost of Goods Sold)`,
+            explanation: "Periodic only records the revenue portion at the time of sale. The cost is calculated later at period-end."
+        },
+        {
+            type: "problem",
+            question: "<strong>Scenario (Perpetual System - Mixed):</strong><br>1. Purchased inventory for ₱20,000 on account.<br>2. Sold half of that inventory for ₱15,000 cash.<br>Provide the entries for both transactions.",
+            answer: `Transaction 1 (Purchase):
+Dr. Merchandise Inventory  20,000
+    Cr. Accounts Payable      20,000
+
+Transaction 2 (Sale):
+Dr. Cash                   15,000
+    Cr. Sales                 15,000
+Dr. Cost of Goods Sold     10,000
+    Cr. Mdse. Inventory       10,000`,
+            explanation: "1. Purchase increases Inventory asset. 2. Sale records cash revenue AND removes half the inventory cost (₱20,000 / 2 = ₱10,000) from the books."
+        }
+    ]
+},
         {
             day: "Day 2",
             topic: "The Periodic Inventory System",
