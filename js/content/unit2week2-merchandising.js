@@ -265,338 +265,83 @@ Dr. Purchases               7,200
     ]
 },
         {
-    day: "Day 2",
-    topic: "Discounts, Returns, and Net Calculations",
-    content: `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-    <p class="font-bold text-blue-900">Learning Goal</p>
-    <p class="text-blue-800">Master the recording of Trade Discounts vs. Cash Discounts.</p>
-    <p class="text-blue-800">Analyze and record Purchase/Sales Returns and Allowances.</p>
-    <p class="text-blue-800">Calculate Net Purchases and Net Sales correctly.</p>
-</div>
-
-<h3 class="text-xl font-bold mb-4 mt-6">Topic Focus</h3>
-<ul class="list-none space-y-8 mb-6">
-
-    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">1. The Two Types of Discounts</h3>
-        <div class="text-gray-700 mb-4">
-            <p class="mb-3">
-                In merchandising, not all "discounts" are created equal. It is critical to distinguish between a price reduction given <em>before</em> the sale and a reduction given <em>after</em> to encourage payment.
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                <div class="bg-gray-50 p-4 rounded-lg border-t-4 border-gray-500">
-                    <h5 class="font-bold text-gray-900 mb-2">A. Trade Discounts</h5>
-                    <p class="text-sm text-gray-700 mb-2">
-                        Used by wholesalers to determine the actual selling price from a catalog list price (e.g., "List Price $1,000 less 20%").
-                    </p>
-                    <ul class="list-disc pl-5 text-sm text-gray-700">
-                        <li><strong>Record:</strong> You record the transaction at the <em>Net Price</em> immediately.</li>
-                        <li><strong>Journal Entry:</strong> There is NO separate account for "Trade Discounts." They do not appear in the books.</li>
-                    </ul>
-                </div>
-
-                <div class="bg-green-50 p-4 rounded-lg border-t-4 border-green-500">
-                    <h5 class="font-bold text-green-900 mb-2">B. Cash Discounts (Sales/Purchase Discounts)</h5>
-                    <p class="text-sm text-green-700 mb-2">
-                        Offered to encourage early payment on credit sales (e.g., "2/10, n/30").
-                    </p>
-                    <ul class="list-disc pl-5 text-sm text-green-700">
-                        <li><strong>Record:</strong> Recorded separately when payment is made/received.</li>
-                        <li><strong>Journal Entry:</strong> Uses specific accounts: "Sales Discounts" or "Purchase Discounts."</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </li>
-
-    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">2. Returns and Allowances</h3>
-        <p class="text-gray-700 mb-4">
-            When goods are damaged or unacceptable, they may be returned, or the seller may grant a price reduction (allowance) so the buyer keeps them. These are tracked in <strong>Contra-Accounts</strong>.
-        </p>
-
-        <div class="space-y-4">
-            <div class="flex items-center bg-red-50 p-3 rounded-lg border border-red-200">
-                <div class="mr-4 text-2xl text-red-500"><i class="fas fa-undo"></i></div>
-                <div>
-                    <h5 class="font-bold text-red-900">Sales Returns & Allowances</h5>
-                    <p class="text-sm text-red-800">Contra-Revenue account. Normal Balance: <strong>Debit</strong>. It reduces total sales.</p>
-                </div>
-            </div>
-
-            <div class="flex items-center bg-blue-50 p-3 rounded-lg border border-blue-200">
-                <div class="mr-4 text-2xl text-blue-500"><i class="fas fa-box-open"></i></div>
-                <div>
-                    <h5 class="font-bold text-blue-900">Purchase Returns & Allowances</h5>
-                    <p class="text-sm text-blue-800">Contra-Cost account (Contra-Purchases). Normal Balance: <strong>Credit</strong>. It reduces total purchases.</p>
-                </div>
-            </div>
-        </div>
-    </li>
-
-    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">3. Calculating the "Nets"</h3>
-        <p class="text-gray-700 mb-4">
-            Financial statements do not show just the raw totals; they show the "Net" amounts.
-        </p>
-
-        <div class="my-6 flex flex-col space-y-6">
-            
-            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-indigo-500">
-                <h4 class="font-bold text-indigo-900 mb-3">Formula: Net Sales</h4>
-                <div class="font-mono bg-white p-3 rounded border border-gray-300 text-sm">
-                      Gross Sales <br>
-                    - Sales Returns & Allowances <br>
-                    - Sales Discounts <br>
-                    ---------------------------- <br>
-                    = <strong>Net Sales</strong>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-500">
-                <h4 class="font-bold text-orange-900 mb-3">Formula: Net Purchases</h4>
-                <div class="font-mono bg-white p-3 rounded border border-gray-300 text-sm">
-                      Purchases (Gross) <br>
-                    - Purchase Returns & Allowances <br>
-                    - Purchase Discounts <br>
-                    ---------------------------- <br>
-                    = <strong>Net Purchases</strong>
-                </div>
-                <p class="text-xs text-orange-800 mt-2 italic">*Note: Freight-In is added LATER to get "Total Cost of Goods Purchased." It is not part of the Net Purchases calculation in many strict definitions, though formats vary.</p>
-            </div>
-
-        </div>
-    </li>
-</ul>`,
-    exercises: [
-        // --- MULTIPLE CHOICE QUESTIONS (THEORY) ---
-
-        {
-            type: "mcq",
-            question: "A 'Trade Discount' is best described as:",
-            options: [
-                "A discount given for early payment of an invoice",
-                "A reduction from the catalog list price to determine the actual invoice price",
-                "A refund given for damaged goods",
-                "A discount given only to employees"
-            ],
-            correctIndex: 1,
-            explanation: "Trade discounts are used to set the actual selling price before the transaction is even recorded. They are not recorded in the accounts."
-        },
-        {
-            type: "mcq",
-            question: "Terms '2/10, n/30' mean:",
-            options: [
-                "2% discount if paid within 30 days, net due in 10 days",
-                "10% discount if paid within 2 days, net due in 30 days",
-                "2% discount if paid within 10 days, otherwise the full amount is due in 30 days",
-                "2 equal payments over 10 months"
-            ],
-            correctIndex: 2,
-            explanation: "This is the standard format for cash discounts: [Percent]/[Days], Net/[Total Days]."
-        },
-        {
-            type: "mcq",
-            question: "Which of the following accounts normally has a DEBIT balance?",
-            options: [
-                "Sales",
-                "Purchase Returns and Allowances",
-                "Sales Returns and Allowances",
-                "Purchase Discounts"
-            ],
-            correctIndex: 2,
-            explanation: "Sales Returns & Allowances is a Contra-Revenue account. Since Revenue has a Credit balance, its Contra account has a Debit balance."
-        },
-        {
-            type: "mcq",
-            question: "When a buyer returns defective goods, which account does the buyer CREDIT?",
-            options: [
-                "Accounts Payable",
-                "Purchases",
-                "Purchase Returns and Allowances",
-                "Cash"
-            ],
-            correctIndex: 2,
-            explanation: "The buyer credits 'Purchase Returns and Allowances' to reduce the net cost of purchases without directly crediting the Purchases account."
-        },
-        {
-            type: "mcq",
-            question: "To calculate Net Sales, you deduct which of the following from Gross Sales?",
-            options: [
-                "Cost of Goods Sold",
-                "Sales Returns, Allowances, and Sales Discounts",
-                "Operating Expenses",
-                "Purchase Discounts"
-            ],
-            correctIndex: 1,
-            explanation: "Net Sales represents the actual revenue realized from customers, so we subtract returns and discounts given to them."
-        },
-        {
-            type: "mcq",
-            question: "If a company purchases goods with a list price of $1,000 and a 20% trade discount, at what amount is the purchase recorded?",
-            options: [
-                "$1,000",
-                "$200",
-                "$800",
-                "$1,200"
-            ],
-            correctIndex: 2,
-            explanation: "$1,000 - (20% of $1,000) = $800. The transaction is recorded at the net amount; the trade discount is ignored in the journal."
-        },
-        {
-            type: "mcq",
-            question: "Purchase Discounts is classified as a(n):",
-            options: [
-                "Asset account",
-                "Liability account",
-                "Contra-Expense (or Contra-Purchase) account",
-                "Revenue account"
-            ],
-            correctIndex: 2,
-            explanation: "It reduces the cost of Purchases. Since Purchases is treated like an expense (Debit), Purchase Discounts is a Contra (Credit)."
-        },
-        {
-            type: "mcq",
-            question: "Which of the following is NOT part of the Net Purchases calculation?",
-            options: [
-                "Purchase Returns",
-                "Gross Purchases",
-                "Purchase Discounts",
-                "Sales Discounts"
-            ],
-            correctIndex: 3,
-            explanation: "Sales Discounts relate to selling to customers, not buying inventory."
-        },
-
-        // --- PROBLEM SOLVING (JOURNALIZING TRANSACTIONS) ---
-
-        {
-            type: "problem",
-            question: "<strong>Scenario A: The Purchase Cycle</strong><br>Journalize the following transactions for Company A (Buyer) using a Periodic Inventory System.<br><br>1. <strong>March 1:</strong> Purchased merchandise from Supplier X for ₱50,000, terms 2/10, n/30.<br>2. <strong>March 3:</strong> Returned defective goods to Supplier X costing ₱5,000.<br>3. <strong>March 9:</strong> Paid Supplier X the full amount due, less the return and the discount.<br>4. <strong>March 15:</strong> Purchased merchandise from Supplier Y for ₱20,000 cash.",
-            answer: `<strong>March 1 (Purchase on Credit)</strong>
-Dr. Purchases ........................ 50,000
-    Cr. Accounts Payable ..................... 50,000
-
-<strong>March 3 (Return of Goods)</strong>
-Dr. Accounts Payable ................. 5,000
-    Cr. Purchase Returns & Allowances ........ 5,000
-
-<strong>March 9 (Payment with Discount)</strong>
-<em>Calculation:
-Gross Pay: 50,000 - 5,000 (return) = 45,000
-Discount: 45,000 x 2% = 900
-Cash Paid: 45,000 - 900 = 44,100</em>
-
-Dr. Accounts Payable ................. 45,000
-    Cr. Purchase Discounts ................... 900
-    Cr. Cash ................................. 44,100
-
-<strong>March 15 (Cash Purchase)</strong>
-Dr. Purchases ........................ 20,000
-    Cr. Cash ................................. 20,000`,
-            explanation: "Note how the Discount is calculated on the Balance Due (Gross - Returns), not the original full amount."
-        },
-
-        {
-            type: "problem",
-            question: "<strong>Scenario B: The Sales Cycle</strong><br>Journalize the following transactions for Company B (Seller).<br><br>1. <strong>June 1:</strong> Sold merchandise on account to Customer Z for ₱100,000, terms 3/10, n/30.<br>2. <strong>June 4:</strong> Customer Z returned damaged goods with a sales price of ₱10,000.<br>3. <strong>June 10:</strong> Received full payment from Customer Z within the discount period.<br>4. <strong>June 12:</strong> Sold merchandise for ₱5,000 cash.",
-            answer: `<strong>June 1 (Sale on Credit)</strong>
-Dr. Accounts Receivable .............. 100,000
-    Cr. Sales ................................ 100,000
-
-<strong>June 4 (Sales Return)</strong>
-Dr. Sales Returns & Allowances ....... 10,000
-    Cr. Accounts Receivable .................. 10,000
-
-<strong>June 10 (Collection with Discount)</strong>
-<em>Calculation:
-Gross AR: 100,000 - 10,000 (return) = 90,000
-Discount: 90,000 x 3% = 2,700
-Cash Rec: 90,000 - 2,700 = 87,300</em>
-
-Dr. Cash ............................. 87,300
-Dr. Sales Discounts .................. 2,700
-    Cr. Accounts Receivable .................. 90,000
-
-<strong>June 12 (Cash Sale)</strong>
-Dr. Cash ............................. 5,000
-    Cr. Sales ................................ 5,000`,
-            explanation: "Sales Discounts and Sales Returns are both debited because they reduce the total Equity/Revenue."
-        },
-
-        {
-            type: "problem",
-            question: "<strong>Scenario C: Trade Discounts & Late Payments</strong><br>Journalize the following transactions.<br><br>1. <strong>Aug 1:</strong> Purchased goods with a List Price of ₱200,000 less a 20% Trade Discount. Terms 2/10, n/30.<br>2. <strong>Aug 5:</strong> Returned goods with a LIST price of ₱20,000 (which also had the 20% trade discount applied).<br>3. <strong>Aug 30:</strong> Paid the account in full (Note the date; the discount period has expired).",
-            answer: `<strong>Aug 1 (Purchase with Trade Discount)</strong>
-<em>Calculation: 200,000 - 20% = 160,000 Invoice Price</em>
-Dr. Purchases ........................ 160,000
-    Cr. Accounts Payable ..................... 160,000
-
-<strong>Aug 5 (Return of Goods)</strong>
-<em>Calculation: 20,000 List - 20% = 16,000 Net Return Value</em>
-Dr. Accounts Payable ................. 16,000
-    Cr. Purchase Returns & Allowances ........ 16,000
-
-<strong>Aug 30 (Payment - No Discount)</strong>
-<em>Calculation: 160,000 - 16,000 = 144,000 Due.
-Date is Aug 30 (30 days later), so 2% discount is forfeited.</em>
-
-Dr. Accounts Payable ................. 144,000
-    Cr. Cash ................................. 144,000`,
-            explanation: "Always record at the Net of Trade Discount. If payment is late, simply pay the full AP balance without recording any Purchase Discount."
-        },
-
-        {
-            type: "problem",
-            question: "<strong>Scenario D: Calculating Net Values</strong><br>Based on the ledger balances below, calculate (a) Net Sales and (b) Net Purchases.<br><br>Sales: ₱500,000<br>Purchases: ₱300,000<br>Sales Returns: ₱15,000<br>Purchase Returns: ₱20,000<br>Sales Discounts: ₱5,000<br>Purchase Discounts: ₱8,000<br>Freight-In: ₱10,000 (For context only)",
-            answer: `<strong>a) Net Sales Calculation</strong>
-   Gross Sales ................. ₱500,000
- - Sales Returns ............... (15,000)
- - Sales Discounts .............  (5,000)
- ----------------------------------------
- = Net Sales ................... ₱480,000
-
-<strong>b) Net Purchases Calculation</strong>
-   Gross Purchases ............. ₱300,000
- - Purchase Returns ............ (20,000)
- - Purchase Discounts ..........  (8,000)
- ----------------------------------------
- = Net Purchases ............... ₱272,000`,
-            explanation: "Freight-In is excluded from the 'Net Purchases' sub-calculation. It is added later to find Cost of Goods Purchased."
-        },
-        
-        {
-            type: "problem",
-            question: "<strong>Scenario E: Combined Transactions</strong><br>Journalize for Company C.<br><br>1. <strong>Oct 1:</strong> Sold goods ₱80,000, 2/10, n/30.<br>2. <strong>Oct 2:</strong> Purchased goods ₱40,000, 2/10, n/30.<br>3. <strong>Oct 5:</strong> Granted an allowance of ₱2,000 to the customer from Oct 1 (Customer kept the goods).<br>4. <strong>Oct 10:</strong> Received payment in full from the Oct 1 sale.<br>5. <strong>Oct 11:</strong> Paid the Oct 2 purchase in full.",
-            answer: `<strong>Oct 1 (Sale)</strong>
-Dr. AR ............................... 80,000
-    Cr. Sales ................................ 80,000
-
-<strong>Oct 2 (Purchase)</strong>
-Dr. Purchases ........................ 40,000
-    Cr. AP ................................... 40,000
-
-<strong>Oct 5 (Sales Allowance)</strong>
-Dr. Sales Returns & Allowances ....... 2,000
-    Cr. AR ................................... 2,000
-
-<strong>Oct 10 (Collection - Within 10 days)</strong>
-<em>AR Balance: 80,000 - 2,000 = 78,000
-Discount: 78,000 * 0.02 = 1,560</em>
-Dr. Cash ............................. 76,440
-Dr. Sales Discounts .................. 1,560
-    Cr. AR ................................... 78,000
-
-<strong>Oct 11 (Payment - Within 10 days)</strong>
-<em>AP Balance: 40,000
-Discount: 40,000 * 0.02 = 800</em>
-Dr. AP ............................... 40,000
-    Cr. Purchase Discounts ................... 800
-    Cr. Cash ................................. 39,200`,
-            explanation: "Ensure the collection applies to the Net AR (after allowance) and the payment applies to the Gross AP (no returns)."
-        }
-    ]
+  "day": "Day 2",
+  "topic": "Discounts, Returns, and Net Calculations (Periodic vs. Perpetual)",
+  "content": "<div class=\"bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500\">\n    <p class=\"font-bold text-blue-900\">Learning Goal</p>\n    <p class=\"text-blue-800\">Master the recording of Trade Discounts, Purchase/Sales Discounts, and Returns.</p>\n    <p class=\"text-blue-800\">Differentiate between Periodic and Perpetual entries for these transactions.</p>\n</div>\n\n<h3 class=\"text-xl font-bold mb-4 mt-6\">Topic Focus</h3>\n<ul class=\"list-none space-y-8 mb-6\">\n\n    \n    <li class=\"bg-white p-6 rounded-lg shadow-sm border border-gray-200\">\n        <h3 class=\"text-xl font-bold text-gray-800 mb-3\">1. Types of Discounts</h3>\n        <div class=\"grid grid-cols-1 md:grid-cols-2 gap-4\">\n            <div class=\"bg-gray-50 p-4 rounded\">\n                <h4 class=\"font-bold text-purple-700\">Trade Discounts</h4>\n                <p class=\"text-sm text-gray-700 mt-2\">Reductions from the list price given to customers (e.g., wholesalers) before the transaction is recorded.</p>\n                <p class=\"text-sm text-gray-900 font-bold mt-2\">Treatment: Not recorded in the books. Record the transaction at the net price (List - Trade Discount).</p>\n            </div>\n            <div class=\"bg-gray-50 p-4 rounded\">\n                <h4 class=\"font-bold text-green-700\">Cash Discounts (Sales/Purchase Discounts)</h4>\n                <p class=\"text-sm text-gray-700 mt-2\">Incentives for early payment (e.g., 2/10, n/30).</p>\n                <p class=\"text-sm text-gray-900 font-bold mt-2\">Treatment: Recorded in the books when payment is made/received within the discount period.</p>\n            </div>\n        </div>\n    </li>\n\n    \n    <li class=\"bg-white p-6 rounded-lg shadow-sm border border-gray-200\">\n        <h3 class=\"text-xl font-bold text-gray-800 mb-3\">2. Recording Returns & Discounts: System Comparison</h3>\n        <p class=\"text-gray-700 mb-4\">The key difference lies in the <strong>Purchase</strong> side. The <strong>Sales</strong> side is recorded similarly for Revenue, but Cost of Goods Sold (COGS) entries differ.</p>\n\n        <div class=\"overflow-x-auto\">\n            <table class=\"w-full text-sm text-left text-gray-700\">\n                <thead class=\"text-xs text-gray-700 uppercase bg-gray-200\">\n                    <tr>\n                        <th class=\"px-4 py-2\">Transaction</th>\n                        <th class=\"px-4 py-2\">Periodic System (Uses Temporary Accounts)</th>\n                        <th class=\"px-4 py-2\">Perpetual System (Updates Inventory Directly)</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr class=\"bg-white border-b\">\n                        <td class=\"px-4 py-2 font-bold\">Purchase Goods</td>\n                        <td class=\"px-4 py-2\">Dr. <span class=\"text-red-600\">Purchases</span></td>\n                        <td class=\"px-4 py-2\">Dr. <span class=\"text-blue-600\">Inventory</span></td>\n                    </tr>\n                    <tr class=\"bg-gray-50 border-b\">\n                        <td class=\"px-4 py-2 font-bold\">Purchase Return</td>\n                        <td class=\"px-4 py-2\">Cr. <span class=\"text-red-600\">Purchase Returns & Allowances</span></td>\n                        <td class=\"px-4 py-2\">Cr. <span class=\"text-blue-600\">Inventory</span></td>\n                    </tr>\n                    <tr class=\"bg-white border-b\">\n                        <td class=\"px-4 py-2 font-bold\">Purchase Discount Taken</td>\n                        <td class=\"px-4 py-2\">Cr. <span class=\"text-red-600\">Purchase Discounts</span></td>\n                        <td class=\"px-4 py-2\">Cr. <span class=\"text-blue-600\">Inventory</span></td>\n                    </tr>\n                    <tr class=\"bg-gray-50 border-b\">\n                        <td class=\"px-4 py-2 font-bold\">Sales Return</td>\n                        <td class=\"px-4 py-2\">Dr. Sales Returns & Allowances<br>(No COGS entry)</td>\n                        <td class=\"px-4 py-2\">Dr. Sales Returns & Allowances<br><em>AND</em><br>Dr. Inventory / Cr. COGS</td>\n                    </tr>\n                </tbody>\n            </table>\n        </div>\n    </li>\n\n    \n    <li class=\"bg-white p-6 rounded-lg shadow-sm border border-gray-200\">\n        <h3 class=\"text-xl font-bold text-gray-800 mb-3\">3. Net Calculation Formulas</h3>\n        <div class=\"space-y-4\">\n            <div class=\"bg-indigo-50 p-4 rounded border-l-4 border-indigo-400\">\n                <h5 class=\"font-bold text-indigo-900\">Net Purchases</h5>\n                <p class=\"font-mono text-sm mt-1\">Purchases - Purchase Returns & Allowances - Purchase Discounts = <span class=\"font-bold\">Net Purchases</span></p>\n                <p class=\"text-xs text-indigo-700 mt-1\">(Note: Freight-In is added later to get Cost of Goods Purchased)</p>\n            </div>\n            <div class=\"bg-orange-50 p-4 rounded border-l-4 border-orange-400\">\n                <h5 class=\"font-bold text-orange-900\">Net Sales</h5>\n                <p class=\"font-mono text-sm mt-1\">Sales - Sales Returns & Allowances - Sales Discounts = <span class=\"font-bold\">Net Sales</span></p>\n            </div>\n        </div>\n    </li>\n</ul>",
+  "exercises": [
+    {
+      "type": "mcq",
+      "question": "Which of the following best describes a 'Trade Discount'?",
+      "options": [
+        "A reduction given for early payment within a specific period.",
+        "A reduction from list price generally defined by trade/quantity, not recorded in accounts.",
+        "A refund given to a customer for defective goods.",
+        "A discount recorded in the 'Purchase Discounts' account."
+      ],
+      "correctIndex": 1,
+      "explanation": "Trade discounts are deducted from the list price to determine the actual selling price before any entry is made. They are not recorded in the accounting books."
+    },
+    {
+      "type": "mcq",
+      "question": "In a PERPETUAL inventory system, when a company returns defective merchandise to a supplier, which account is Credited?",
+      "options": [
+        "Purchase Returns and Allowances",
+        "Cost of Goods Sold",
+        "Inventory",
+        "Accounts Payable"
+      ],
+      "correctIndex": 2,
+      "explanation": "Under the Perpetual system, the 'Inventory' account is directly reduced (credited) for returns, purchase discounts, and cost of sales."
+    },
+    {
+      "type": "mcq",
+      "question": "Identify the formula for Net Sales:",
+      "options": [
+        "Sales + Sales Returns + Sales Discounts",
+        "Sales - Cost of Goods Sold",
+        "Sales - Sales Returns and Allowances - Sales Discounts",
+        "Gross Profit - Operating Expenses"
+      ],
+      "correctIndex": 2,
+      "explanation": "Net Sales represents the actual revenue generated after deducting any returns, allowances, or discounts granted to customers."
+    },
+    {
+      "type": "mcq",
+      "question": "A company uses the PERIODIC system. When they pay for goods within the discount period, the credit to 'Cash' is balanced by a debit to 'Accounts Payable' and a credit to:",
+      "options": [
+        "Inventory",
+        "Purchase Discounts",
+        "Sales Discounts",
+        "Cost of Goods Sold"
+      ],
+      "correctIndex": 1,
+      "explanation": "In the Periodic system, the savings from early payment are recorded in the specific contra-expense account 'Purchase Discounts'."
+    },
+    {
+      "type": "problem",
+      "question": "PERIODIC SYSTEM - PURCHASES SCENARIO\n\nJournalize the following transactions for Company A (Buyer) using the Periodic Inventory System:\n1.  **March 1:** Purchased merchandise with a list price of $5,000, less a 20% trade discount. Terms: 2/10, n/30.\n2.  **March 3:** Returned defective merchandise with a list price of $500 (Gross) to the supplier.\n3.  **March 10:** Paid the full amount due within the discount period.",
+      "answer": "March 1 (Purchase):\nDr. Purchases ...................... 4,000\n    Cr. Accounts Payable ................... 4,000\n*(Calculation: $5,000 list - 20% trade discount = $4,000)*\n\nMarch 3 (Return):\nDr. Accounts Payable ............... 400\n    Cr. Purchase Returns & Allowances ...... 400\n*(Calculation: $500 list - 20% trade discount = $400)*\n\nMarch 10 (Payment):\nDr. Accounts Payable ............... 3,600\n    Cr. Purchase Discounts ................. 72\n    Cr. Cash ............................... 3,528\n*(Calculation: AP Balance $4,000 - $400 = $3,600. Discount 2% of $3,600 = $72)*",
+      "explanation": "Note that Trade Discounts are deducted immediately. The Purchase Discount (2%) is calculated on the *outstanding Accounts Payable balance* ($3,600) after the return."
+    },
+    {
+      "type": "problem",
+      "question": "PERPETUAL SYSTEM - PURCHASES SCENARIO\n\nJournalize the following transactions for Company B (Buyer) using the Perpetual Inventory System:\n1.  **June 1:** Purchased inventory on account for $10,000. Terms 3/10, n/30.\n2.  **June 5:** Received an allowance of $1,000 for slightly damaged goods (kept the goods).\n3.  **June 11:** Paid the balance due within the discount period.",
+      "answer": "June 1 (Purchase):\nDr. Inventory ...................... 10,000\n    Cr. Accounts Payable ................... 10,000\n\nJune 5 (Allowance):\nDr. Accounts Payable ............... 1,000\n    Cr. Inventory .......................... 1,000\n\nJune 11 (Payment):\nDr. Accounts Payable ............... 9,000\n    Cr. Inventory .......................... 270\n    Cr. Cash ............................... 8,730\n*(Calculation: AP Balance $9,000 x 3% = $270. In Perpetual, discounts reduce the Inventory asset account)*",
+      "explanation": "In a Perpetual system, 'Purchases', 'Returns', and 'Discounts' accounts are replaced by the 'Inventory' account."
+    },
+    {
+      "type": "problem",
+      "question": "PERIODIC SYSTEM - SALES SCENARIO\n\nJournalize the following transactions for Company C (Seller) using the Periodic Inventory System:\n1.  **July 1:** Sold merchandise on account for $8,000. Terms 1/15, n/30.\n2.  **July 4:** Customer returned goods with a sales price of $500.\n3.  **July 15:** Received payment in full from the customer.",
+      "answer": "July 1 (Sale):\nDr. Accounts Receivable ............ 8,000\n    Cr. Sales Revenue ...................... 8,000\n*(No entry for COGS in Periodic)*\n\nJuly 4 (Return):\nDr. Sales Returns & Allowances ..... 500\n    Cr. Accounts Receivable ................ 500\n*(No entry for Inventory restoration in Periodic)*\n\nJuly 15 (Collection):\nDr. Cash ........................... 7,425\nDr. Sales Discounts ................ 75\n    Cr. Accounts Receivable ................ 7,500\n*(Calculation: AR Balance $8,000 - $500 = $7,500. Discount 1% of $7,500 = $75)*",
+      "explanation": "Under Periodic, we record revenue and AR, but we do NOT touch Inventory or COGS at the time of sale or return."
+    },
+    {
+      "type": "problem",
+      "question": "PERPETUAL SYSTEM - SALES SCENARIO\n\nJournalize the following transactions for Company D (Seller) using the Perpetual Inventory System. (Cost of goods is 60% of selling price).\n1.  **Aug 1:** Sold goods on credit for $20,000. Terms 2/10, n/30.\n2.  **Aug 5:** Granted a credit allowance of $2,000 to the customer for defects (customer kept goods).\n3.  **Aug 10:** Received payment in full.",
+      "answer": "Aug 1 (Sale):\nDr. Accounts Receivable ............ 20,000\n    Cr. Sales Revenue ...................... 20,000\nDr. Cost of Goods Sold ............. 12,000\n    Cr. Inventory .......................... 12,000\n*(Cost = $20,000 * 60%)*\n\nAug 5 (Allowance):\nDr. Sales Returns & Allowances ..... 2,000\n    Cr. Accounts Receivable ................ 2,000\n*(No inventory entry for Allowance as goods were not returned)*\n\nAug 10 (Collection):\nDr. Cash ........................... 17,640\nDr. Sales Discounts ................ 360\n    Cr. Accounts Receivable ................ 18,000\n*(Calculation: AR Balance $18,000. Discount 2% = $360)*",
+      "explanation": "Perpetual sales require two entries: one for Revenue (at selling price) and one for COGS (at cost). Allowances reduce AR but do not affect Inventory cost unless goods physically return."
+    }
+  ]
 },
         {
             day: "Day 3",
