@@ -265,793 +265,339 @@ Dr. Purchases               7,200
     ]
 },
         {
-            day: "Day 2",
-            topic: "The Periodic Inventory System",
-            content: `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+    day: "Day 2",
+    topic: "Discounts, Returns, and Net Calculations",
+    content: `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
     <p class="font-bold text-blue-900">Learning Goal</p>
-    <p class="text-blue-800">Understand the mechanics of the Periodic Inventory System.</p>
-    <p class="Text-blue-800">Analyze how the inventory cost flows from Purchases to Cost of Goods Sold(COGS).</p>
+    <p class="text-blue-800">Master the recording of Trade Discounts vs. Cash Discounts.</p>
+    <p class="text-blue-800">Analyze and record Purchase/Sales Returns and Allowances.</p>
+    <p class="text-blue-800">Calculate Net Purchases and Net Sales correctly.</p>
 </div>
 
 <h3 class="text-xl font-bold mb-4 mt-6">Topic Focus</h3>
 <ul class="list-none space-y-8 mb-6">
 
     <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">1. The "Periodic" Approach: The Black Box</h3>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">1. The Two Types of Discounts</h3>
         <div class="text-gray-700 mb-4">
             <p class="mb-3">
-                Unlike modern scanning systems that track every item the moment it is sold, the <strong>Periodic Inventory System</strong> takes a simpler, low-tech approach. The business does <em>not</em> keep a running record of the goods on hand or the Cost of Goods Sold (COGS) during the accounting period.
+                In merchandising, not all "discounts" are created equal. It is critical to distinguish between a price reduction given <em>before</em> the sale and a reduction given <em>after</em> to encourage payment.
             </p>
 
-            <h4 class="font-bold mb-1">How it Works</h4>
-            <p class="mb-3">
-                Imagine a "Black Box." during the month, we know what we put into the store (Purchases), but we don't track exactly what leaves (Sales) in terms of cost. We only find out what is left by opening the box and counting everything at the end of the month.
-            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                <div class="bg-gray-50 p-4 rounded-lg border-t-4 border-gray-500">
+                    <h5 class="font-bold text-gray-900 mb-2">A. Trade Discounts</h5>
+                    <p class="text-sm text-gray-700 mb-2">
+                        Used by wholesalers to determine the actual selling price from a catalog list price (e.g., "List Price $1,000 less 20%").
+                    </p>
+                    <ul class="list-disc pl-5 text-sm text-gray-700">
+                        <li><strong>Record:</strong> You record the transaction at the <em>Net Price</em> immediately.</li>
+                        <li><strong>Journal Entry:</strong> There is NO separate account for "Trade Discounts." They do not appear in the books.</li>
+                    </ul>
+                </div>
 
-            <ul class="list-disc pl-5 mb-4 space-y-2">
-                <li>
-                    <strong>No "Inventory" Updates:</strong> When goods are bought, they are debited to a temporary account called <em>Purchases</em>, not the Inventory asset account.
-                </li>
-                <li>
-                    <strong>No "COGS" Entry at Sale:</strong> When a sale occurs, the accountant records the Revenue (Sale Price), but <em>does not</em> record the Cost of Goods Sold at that moment.
-                </li>
-            </ul>
-        </div>
-        <div class="bg-blue-50 p-4 rounded-md text-sm text-blue-800">
-            <strong>Key Difference:</strong> In a Periodic system, the "Inventory" account balance remains unchanged (showing the beginning balance) throughout the entire year until the final closing entries are made.
+                <div class="bg-green-50 p-4 rounded-lg border-t-4 border-green-500">
+                    <h5 class="font-bold text-green-900 mb-2">B. Cash Discounts (Sales/Purchase Discounts)</h5>
+                    <p class="text-sm text-green-700 mb-2">
+                        Offered to encourage early payment on credit sales (e.g., "2/10, n/30").
+                    </p>
+                    <ul class="list-disc pl-5 text-sm text-green-700">
+                        <li><strong>Record:</strong> Recorded separately when payment is made/received.</li>
+                        <li><strong>Journal Entry:</strong> Uses specific accounts: "Sales Discounts" or "Purchase Discounts."</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </li>
 
     <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-    <h3 class="text-xl font-bold text-gray-800 mb-3">3. Transaction Flows (Periodic System)</h3>
-    <p class="text-gray-700 mb-4">
-        
-        In a Periodic system, the "Inventory" account is <strong>static</strong>. It stays frozen at the beginning balance throughout the period. Instead of touching the asset account, we use temporary accounts to track activity.
-    </p>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">2. Returns and Allowances</h3>
+        <p class="text-gray-700 mb-4">
+            When goods are damaged or unacceptable, they may be returned, or the seller may grant a price reduction (allowance) so the buyer keeps them. These are tracked in <strong>Contra-Accounts</strong>.
+        </p>
 
-    <div class="space-y-6">
-        
-        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-400">
-            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                <i class="fas fa-truck-loading mr-2 text-orange-500"></i> Purchasing Merchandise
-            </h5>
-            <p class="text-sm text-slate-700 mb-2">
-                We do <strong>not</strong> debit the Inventory account. Instead, we debit a temporary expense-like account called "Purchases".
-            </p>
-            <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono">
-                <div class="flex justify-between"><span>Purchases</span> <span>Dr</span></div>
-                <div class="flex justify-between pl-8"><span>Accounts Payable / Cash</span> <span>Cr</span></div>
-            </div>
-        </div>
-
-        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-purple-400">
-            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                <i class="fas fa-shipping-fast mr-2 text-purple-500"></i> Freight In (Shipping Costs)
-            </h5>
-            <p class="text-sm text-slate-700 mb-2">
-                Shipping costs are tracked separately. We do not add them directly to Inventory; we use a specific "Freight-In" account.
-            </p>
-            <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono">
-                <div class="flex justify-between"><span>Freight-In</span> <span>Dr</span></div>
-                <div class="flex justify-between pl-8"><span>Cash</span> <span>Cr</span></div>
-            </div>
-        </div>
-
-        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-red-400">
-            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                <i class="fas fa-cash-register mr-2 text-red-500"></i> Selling Merchandise
-            </h5>
-            <p class="text-sm text-slate-700 mb-2">
-                <strong>The major difference:</strong> We record the Revenue (Sale Price), but we <strong>ignore</strong> the Cost of Goods Sold for now. No inventory reduction is recorded at this moment.
-            </p>
-            <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono space-y-2">
+        <div class="space-y-4">
+            <div class="flex items-center bg-red-50 p-3 rounded-lg border border-red-200">
+                <div class="mr-4 text-2xl text-red-500"><i class="fas fa-undo"></i></div>
                 <div>
-                    <div class="flex justify-between"><span>Accounts Receivable</span> <span>Dr (Selling Price)</span></div>
-                    <div class="flex justify-between pl-8"><span>Sales Revenue</span> <span>Cr (Selling Price)</span></div>
+                    <h5 class="font-bold text-red-900">Sales Returns & Allowances</h5>
+                    <p class="text-sm text-red-800">Contra-Revenue account. Normal Balance: <strong>Debit</strong>. It reduces total sales.</p>
                 </div>
-                <div class="border-t border-dashed border-gray-300 pt-2 text-gray-400 italic text-center text-xs">
-                    (No Entry for Cost of Goods Sold is made at this time)
+            </div>
+
+            <div class="flex items-center bg-blue-50 p-3 rounded-lg border border-blue-200">
+                <div class="mr-4 text-2xl text-blue-500"><i class="fas fa-box-open"></i></div>
+                <div>
+                    <h5 class="font-bold text-blue-900">Purchase Returns & Allowances</h5>
+                    <p class="text-sm text-blue-800">Contra-Cost account (Contra-Purchases). Normal Balance: <strong>Credit</strong>. It reduces total purchases.</p>
                 </div>
             </div>
         </div>
-
-        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-blue-400">
-             <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                <i class="fas fa-undo-alt mr-2 text-blue-500"></i> Purchase Returns
-            </h5>
-            <p class="text-sm text-slate-700 mb-2">
-                If we return goods to a supplier, we credit a contra-account, not Inventory.
-            </p>
-            <div class="bg-white p-3 border border-gray-300 rounded text-sm font-mono">
-                <div class="flex justify-between"><span>Accounts Payable</span> <span>Dr</span></div>
-                <div class="flex justify-between pl-8"><span>Purchase Returns & Allowances</span> <span>Cr</span></div>
-            </div>
-        </div>
-
-    </div>
-</li>
+    </li>
 
     <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">2. Calculating Cost of Goods Sold (COGS)</h3>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">3. Calculating the "Nets"</h3>
         <p class="text-gray-700 mb-4">
-            Since we don't track costs as we sell, we must calculate COGS at the end of the period using a specific logic: <em>"If I had it, and I don't have it now, I must have sold it."</em>
+            Financial statements do not show just the raw totals; they show the "Net" amounts.
         </p>
 
-        <div class="my-6 flex justify-center">
-            <svg width="100%" height="auto" viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" class="max-w-3xl">
-                <rect x="0" y="0" width="700" height="300" fill="#ffffff" stroke="#e5e7eb" rx="10"/>
-                
-                <text x="350" y="30" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#374151">The Flow of Costs (Periodic Formula)</text>
-
-                <g transform="translate(50, 60)">
-                    <rect x="0" y="0" width="180" height="60" fill="#e3f2fd" stroke="#2196f3" rx="5"/>
-                    <text x="90" y="25" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#0d47a1">Beginning Inventory</text>
-                    <text x="90" y="45" font-family="Arial" font-size="12" text-anchor="middle" fill="#555">(What we started with)</text>
-                </g>
-
-                <text x="250" y="95" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">+</text>
-
-                <g transform="translate(270, 60)">
-                    <rect x="0" y="0" width="180" height="60" fill="#e3f2fd" stroke="#2196f3" rx="5"/>
-                    <text x="90" y="25" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#0d47a1">Net Purchases</text>
-                    <text x="90" y="45" font-family="Arial" font-size="12" text-anchor="middle" fill="#555">(What we bought)</text>
-                </g>
-
-                <text x="470" y="95" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">=</text>
-
-                <g transform="translate(490, 60)">
-                    <rect x="0" y="0" width="180" height="60" fill="#fff3e0" stroke="#ff9800" rx="5"/>
-                    <text x="90" y="25" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#e65100">Total Goods</text>
-                    <text x="90" y="45" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="#e65100">Available for Sale</text>
-                </g>
-
-                <path d="M 580 130 L 580 160" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
-                
-                <defs>
-                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                        <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
-                    </marker>
-                </defs>
-
-                <g transform="translate(490, 170)">
-                    <rect x="0" y="0" width="180" height="60" fill="#ffebee" stroke="#f44336" rx="5"/>
-                    <text x="90" y="25" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#b71c1c">- Ending Inventory</text>
-                    <text x="90" y="45" font-family="Arial" font-size="12" text-anchor="middle" fill="#555">(Counted physically)</text>
-                </g>
-
-                 <text x="580" y="255" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">=</text>
-
-                 <g transform="translate(250, 220)">
-                    <rect x="0" y="0" width="220" height="60" fill="#4caf50" rx="5"/>
-                    <text x="110" y="35" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="white">Cost of Goods Sold</text>
-                </g>
-                
-                <path d="M 480 250 L 500 200" stroke="#333" stroke-width="0" /> <line x1="490" y1="200" x2="470" y2="250" stroke="none"/>
-            </svg>
-        </div>
-        
-        <div class="bg-orange-50 p-4 rounded-md border-l-4 border-orange-400 text-sm text-orange-900">
-            <strong>The "Squeeze" Effect:</strong> In this system, any goods missing due to theft or breakage are automatically (and incorrectly) counted as "Sold" because they are not in the Ending Inventory. This is a major disadvantage of the Periodic System.
-        </div>
-    </li>
-
-    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">3. Operational Requirements</h3>
-        <p class="text-gray-700 mb-4">
-            Because the accounting records are not updated in real-time, strict physical procedures are required to maintain accuracy.
-        </p>
-
-        <div class="space-y-6">
-            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-purple-400">
-                <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                    <i class="fas fa-clipboard-list mr-2 text-purple-500"></i> Requirement A: The Physical Count
-                </h5>
-                <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
-                    <li><strong>Mandatory Shutdown:</strong> Operations often must cease (or occur after hours) while counting happens to ensure no goods are moving in or out.</li>
-                    <li><strong>Tagging System:</strong> Items are tagged as they are counted to prevent double-counting or missed items.</li>
-                    <li><strong>Use of Teams:</strong> Usually done in two-person teams: one counts, the other records, to minimize error and fraud.</li>
-                </ul>
-            </div>
-
-            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-teal-400">
-                <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                    <i class="fas fa-file-invoice-dollar mr-2 text-teal-500"></i> Requirement B: Cost Flow Assumptions
-                </h5>
-                <p class="text-sm text-slate-700 mb-2">
-                    Once the physical count reveals <em>how many</em> units are left, the accountant must assign a dollar value to them.
-                </p>
-                <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
-                    <li><strong>FIFO (First-In, First-Out):</strong> Assumes the ending inventory consists of the most recently purchased units.</li>
-                    <li><strong>Weighted Average:</strong> Calculates an average cost per unit based on Total Cost / Total Units Available.</li>
-                </ul>
-            </div>
-        </div>
-    </li>
-
-    <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">4. Practice: FIFO vs. Weighted Average</h3>
-        
-        <div class="bg-gray-50 p-4 rounded-lg border border-gray-300 mb-6">
-            <h4 class="font-bold text-gray-900 mb-2">The Scenario</h4>
-            <p class="text-sm text-gray-700 mb-3">
-                A store has the following transactions for "Item X":
-            </p>
-            <table class="w-full text-sm text-left text-gray-700 mb-4">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-200">
-                    <tr>
-                        <th class="px-4 py-2">Date</th>
-                        <th class="px-4 py-2">Action</th>
-                        <th class="px-4 py-2">Quantity</th>
-                        <th class="px-4 py-2">Unit Cost</th>
-                        <th class="px-4 py-2">Total Cost</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="bg-white border-b">
-                        <td class="px-4 py-2">Jan 1</td>
-                        <td class="px-4 py-2">Beginning Inventory</td>
-                        <td class="px-4 py-2">100</td>
-                        <td class="px-4 py-2">₱10</td>
-                        <td class="px-4 py-2">₱1,000</td>
-                    </tr>
-                    <tr class="bg-white border-b">
-                        <td class="px-4 py-2">Jan 15</td>
-                        <td class="px-4 py-2">Purchase</td>
-                        <td class="px-4 py-2">200</td>
-                        <td class="px-4 py-2">₱15</td>
-                        <td class="px-4 py-2">₱3,000</td>
-                    </tr>
-                    <tr class="bg-gray-100 font-bold">
-                        <td class="px-4 py-2" colspan="2">Total Available</td>
-                        <td class="px-4 py-2">300</td>
-                        <td class="px-4 py-2">-</td>
-                        <td class="px-4 py-2">₱4,000</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="text-sm text-gray-800 font-bold">
-                <i class="fas fa-search mr-1"></i> Physical Count on Jan 31: 120 Units remaining.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-blue-50 p-4 rounded-lg border-t-4 border-blue-500">
-                <h5 class="font-bold text-blue-900 mb-2 text-center">Method 1: FIFO</h5>
-                <p class="text-xs text-blue-800 mb-3 text-center italic">"Oldest sold first. Ending Inventory is Newest."</p>
-                
-                <div class="text-sm text-blue-900 space-y-2">
-                    <div class="border-b border-blue-200 pb-2">
-                        <strong>1. Compute Ending Inventory:</strong><br>
-                        Since 120 units are left, under FIFO, these must be the <em>newest</em> ones (from Jan 15).<br>
-                        <span class="font-mono">120 units x ₱15 = <strong>₱1,800</strong></span>
-                    </div>
-                    <div>
-                        <strong>2. Compute COGS:</strong><br>
-                        <span class="font-mono">
-                            Total Available (₱4,000)<br>
-                            - Ending Inv (₱1,800)<br>
-                            ----------------------<br>
-                            = <strong>₱2,200</strong>
-                        </span>
-                    </div>
+        <div class="my-6 flex flex-col space-y-6">
+            
+            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-indigo-500">
+                <h4 class="font-bold text-indigo-900 mb-3">Formula: Net Sales</h4>
+                <div class="font-mono bg-white p-3 rounded border border-gray-300 text-sm">
+                      Gross Sales <br>
+                    - Sales Returns & Allowances <br>
+                    - Sales Discounts <br>
+                    ---------------------------- <br>
+                    = <strong>Net Sales</strong>
                 </div>
             </div>
 
-            <div class="bg-green-50 p-4 rounded-lg border-t-4 border-green-500">
-                <h5 class="font-bold text-green-900 mb-2 text-center">Method 2: Weighted Average</h5>
-                <p class="text-xs text-green-800 mb-3 text-center italic">"Mix everything together to find an average."</p>
-                
-                <div class="text-sm text-green-900 space-y-2">
-                    <div class="border-b border-green-200 pb-2">
-                        <strong>1. Compute Average Cost:</strong><br>
-                        Total Cost / Total Units<br>
-                        <span class="font-mono">₱4,000 / 300 units = <strong>₱13.33/unit</strong></span>
-                    </div>
-                    <div>
-                        <strong>2. Compute Results:</strong><br>
-                        <span class="font-mono">
-                            Ending Inv: 120 x ₱13.33 = <strong>₱1,600</strong><br><br>
-                            COGS: ₱4,000 - ₱1,600 = <strong>₱2,400</strong>
-                        </span>
-                    </div>
+            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-500">
+                <h4 class="font-bold text-orange-900 mb-3">Formula: Net Purchases</h4>
+                <div class="font-mono bg-white p-3 rounded border border-gray-300 text-sm">
+                      Purchases (Gross) <br>
+                    - Purchase Returns & Allowances <br>
+                    - Purchase Discounts <br>
+                    ---------------------------- <br>
+                    = <strong>Net Purchases</strong>
                 </div>
+                <p class="text-xs text-orange-800 mt-2 italic">*Note: Freight-In is added LATER to get "Total Cost of Goods Purchased." It is not part of the Net Purchases calculation in many strict definitions, though formats vary.</p>
             </div>
+
         </div>
     </li>
+</ul>`,
+    exercises: [
+        // --- MULTIPLE CHOICE QUESTIONS (THEORY) ---
 
-</ul>
-`,
-            exercises: [
-    // --- MULTIPLE CHOICE QUESTIONS (25) ---
-
-    // 1. Definition & Basics
-    { 
-        type: "mcq", 
-        question: "In a Periodic Inventory System, when are the 'Cost of Goods Sold' (COGS) recorded?", 
-        options: ["At the time of each sale", "At the end of the accounting period", "When merchandise is purchased", "Weekly"], 
-        correctIndex: 1, 
-        explanation: "In a periodic system, COGS is calculated as a lump sum at the end of the period, not at the point of sale." 
-    },
-    { 
-        type: "mcq", 
-        question: "Which account is debited when a company using the Periodic System buys goods for resale?", 
-        options: ["Inventory", "Cost of Goods Sold", "Purchases", "Accounts Receivable"], 
-        correctIndex: 2, 
-        explanation: "The 'Purchases' account is used to record acquisitions of merchandise in a periodic system." 
-    },
-    { 
-        type: "mcq", 
-        question: "Which of the following is REQUIRED to determine the Cost of Goods Sold in a Periodic System?", 
-        options: ["A barcode scanner", "A physical inventory count", "A perpetual ledger", "Daily sales reports"], 
-        correctIndex: 1, 
-        explanation: "Because the system doesn't track inventory levels, a physical count is necessary to determine what remains unsold." 
-    },
-    { 
-        type: "mcq", 
-        question: "The formula to calculate Cost of Goods Sold (COGS) is:", 
-        options: ["Sales - Expenses", "Beginning Inventory + Net Purchases - Ending Inventory", "Ending Inventory + Purchases - Beginning Inventory", "Gross Profit - Operating Expenses"], 
-        correctIndex: 1, 
-        explanation: "COGS = Goods Available for Sale (Beginning + Purchases) minus what is left (Ending)." 
-    },
-    { 
-        type: "mcq", 
-        question: "Under the Periodic System, 'Freight-In' is classified as:", 
-        options: ["An Operating Expense", "A Selling Expense", "An addition to Net Purchases", "A reduction of Sales"], 
-        correctIndex: 2, 
-        explanation: "Freight-In is part of the cost of acquiring inventory and is added to Net Purchases to determine Cost of Goods Purchased." 
-    },
-
-    // 2. Journal Entries
-    { 
-        type: "mcq", 
-        question: "A company returns defective goods to a supplier. In a Periodic System, the credit entry goes to:", 
-        options: ["Inventory", "Purchase Returns and Allowances", "Cost of Goods Sold", "Sales Returns"], 
-        correctIndex: 1, 
-        explanation: "The 'Purchase Returns and Allowances' contra-account is used instead of directly crediting Inventory." 
-    },
-    { 
-        type: "mcq", 
-        question: "When a sale is made in a Periodic System, how many journal entries are recorded?", 
-        options: ["Two (one for revenue, one for cost)", "One (for revenue only)", "Three", "None until the end of the month"], 
-        correctIndex: 1, 
-        explanation: "Only the revenue entry (Debit Cash/AR, Credit Sales) is made. The cost entry is omitted until period-end." 
-    },
-    { 
-        type: "mcq", 
-        question: "The 'Purchase Discounts' account has a normal balance of:", 
-        options: ["Debit", "Credit", "Zero", "It varies"], 
-        correctIndex: 1, 
-        explanation: "It is a contra-expense (contra-purchase) account, so it has a normal credit balance, reducing the total cost of purchases." 
-    },
-    { 
-        type: "mcq", 
-        question: "Closing entries in a Periodic System are unique because they must:", 
-        options: ["Update the Inventory account from Beginning to Ending balance", "Record depreciation", "Close dividends", "Zero out liabilities"], 
-        correctIndex: 0, 
-        explanation: "The closing process removes the Beginning Inventory and records the Ending Inventory found via physical count." 
-    },
-    { 
-        type: "mcq", 
-        question: "If 'Freight-Out' is incurred to deliver goods to a customer, it is recorded as:", 
-        options: ["Part of Cost of Goods Sold", "An Operating (Selling) Expense", "A deduction from Purchases", "An Asset"], 
-        correctIndex: 1, 
-        explanation: "Freight-Out is a delivery expense (operating expense), unlike Freight-In which is a product cost." 
-    },
-
-    // 3. Calculations & Errors
-    { 
-        type: "mcq", 
-        question: "Total Goods Available for Sale equals:", 
-        options: ["Beginning Inventory + Net Purchases", "Net Sales - COGS", "Ending Inventory + COGS", "Beginning Inventory - Ending Inventory"], 
-        correctIndex: 0, 
-        explanation: "This represents the maximum amount of inventory the company had the opportunity to sell during the period." 
-    },
-    { 
-        type: "mcq", 
-        question: "If Ending Inventory is overstated (counted too high), what is the effect on Net Income?", 
-        options: ["Net Income is understated", "Net Income is overstated", "No effect", "Cost of Goods Sold is overstated"], 
-        correctIndex: 1, 
-        explanation: "If Ending Inventory is high, COGS is calculated as too low (less expense), which makes Net Income too high." 
-    },
-    { 
-        type: "mcq", 
-        question: "Net Purchases is calculated as:", 
-        options: ["Purchases + Freight-In", "Purchases - Purchase Returns - Purchase Discounts", "Purchases + Sales Returns", "Sales - COGS"], 
-        correctIndex: 1, 
-        explanation: "Net Purchases represents the gross purchases minus any deductions for returns, allowances, or discounts." 
-    },
-    { 
-        type: "mcq", 
-        question: "Which inventory system is most prone to not detecting theft or 'shrinkage' easily?", 
-        options: ["Perpetual System", "Periodic System", "Just-In-Time System", "Automated System"], 
-        correctIndex: 1, 
-        explanation: "In Periodic, missing items are assumed sold because they aren't in the ending count, effectively burying theft costs in COGS." 
-    },
-    { 
-        type: "mcq", 
-        question: "Gross Profit is found by:", 
-        options: ["Net Income + Expenses", "Net Sales - Cost of Goods Sold", "Assets - Liabilities", "Sales - Operating Expenses"], 
-        correctIndex: 1, 
-        explanation: "Gross Profit is the direct profit from the merchandise itself before operating expenses are deducted." 
-    },
-
-    // 4. Comparison & Conceptual
-    { 
-        type: "mcq", 
-        question: "The Periodic System is often used by businesses that sell:", 
-        options: ["High-value, low-volume items (e.g., cars)", "Low-value, high-volume items (e.g., nails in a hardware store)", "Services only", "Software subscriptions"], 
-        correctIndex: 1, 
-        explanation: "It is historically used where the cost of tracking every individual item (like a single nut or bolt) outweighs the benefit." 
-    },
-    { 
-        type: "mcq", 
-        question: "Which account is NOT used in a Periodic Inventory System?", 
-        options: ["Purchases", "Freight-In", "Cost of Goods Sold (as a running balance)", "Purchase Returns"], 
-        correctIndex: 2, 
-        explanation: "COGS does not exist as a running account during the period; it is only a calculation at the end." 
-    },
-    { 
-        type: "mcq", 
-        question: "FOB Shipping Point means ownership transfers to the buyer:", 
-        options: ["When goods arrive at the buyer's warehouse", "When goods leave the seller's shipping dock", "When payment is made", "Halfway through transit"], 
-        correctIndex: 1, 
-        explanation: "Free On Board (FOB) Shipping Point means title passes when the carrier picks up the goods." 
-    },
-    { 
-        type: "mcq", 
-        question: "FOB Destination means freight costs are typically paid by the:", 
-        options: ["Buyer", "Seller", "Carrier", "Government"], 
-        correctIndex: 1, 
-        explanation: "The seller retains ownership until delivery, so the seller usually pays the shipping cost (Freight-Out)." 
-    },
-    { 
-        type: "mcq", 
-        question: "Under the Periodic system, if a buyer pays within the discount period (e.g. 2/10, n/30), the credit to Cash is accompanied by a credit to:", 
-        options: ["Inventory", "Purchase Discounts", "Sales Discounts", "Accounts Payable"], 
-        correctIndex: 1, 
-        explanation: "The savings are recorded in 'Purchase Discounts' rather than reducing the Inventory account directly." 
-    },
-
-    // 5. Advanced Scenarios
-    { 
-        type: "mcq", 
-        question: "Beginning Inventory: $10,000. Purchases: $50,000. Ending Inventory: $15,000. What is COGS?", 
-        options: ["$35,000", "$45,000", "$55,000", "$65,000"], 
-        correctIndex: 1, 
-        explanation: "$10,000 (Beg) + $50,000 (Purch) = $60,000 Available. $60,000 - $15,000 (End) = $45,000 COGS." 
-    },
-    { 
-        type: "mcq", 
-        question: "What happens to the 'Purchases' account at the end of the year?", 
-        options: ["It remains on the Balance Sheet", "It is closed to Income Summary", "It is converted to Cash", "It becomes a Liability"], 
-        correctIndex: 1, 
-        explanation: "Purchases is a temporary account and must be closed out to calculate Net Income." 
-    },
-    { 
-        type: "mcq", 
-        question: "A disadvantage of the Periodic System is:", 
-        options: ["High implementation cost", "Lack of real-time inventory data", "Complexity of daily recording", "Requirement for expensive software"], 
-        correctIndex: 1, 
-        explanation: "Managers do not know inventory levels mid-month, which can lead to stockouts or over-ordering." 
-    },
-    { 
-        type: "mcq", 
-        question: "Net Sales is calculated as:", 
-        options: ["Sales - Cost of Goods Sold", "Sales - Operating Expenses", "Gross Sales - Sales Returns & Allowances - Sales Discounts", "Sales + Other Revenue"], 
-        correctIndex: 2, 
-        explanation: "Net Sales is the actual revenue realized after deducting returns and discounts given to customers." 
-    },
-    { 
-        type: "mcq", 
-        question: "The 'Income Summary' account is used during closing to:", 
-        options: ["Record daily sales", "Calculate the Gross Profit", "Remove Beginning Inventory and enter Ending Inventory", "Pay taxes"], 
-        correctIndex: 2, 
-        explanation: "One method of closing involves debiting Income Summary for Beginning Inventory and crediting it for Ending Inventory." 
-    },
-    // --- FIFO & WEIGHTED AVERAGE MCQ QUESTIONS (5) ---
-    { 
-        type: "mcq", 
-        question: "Under the FIFO method (Periodic), the Ending Inventory is assumed to consist of:", 
-        options: ["The oldest units purchased", "The most recently purchased units", "A mix of all units purchased", "The units with the lowest cost"], 
-        correctIndex: 1, 
-        explanation: "Since the 'First-In' (oldest) units are sold first, the units remaining on the shelf at the end of the period must be the 'Last-In' (newest) ones." 
-    },
-    { 
-        type: "mcq", 
-        question: "The formula to calculate the 'Weighted Average Unit Cost' in a Periodic System is:", 
-        options: ["(Beginning Inventory Cost + Ending Inventory Cost) / 2", "Total Cost of Goods Sold / Total Units Sold", "Cost of Goods Available for Sale / Total Units Available for Sale", "Net Purchases / Total Units Purchased"], 
-        correctIndex: 2, 
-        explanation: "The average is found by taking the total cost of all inventory available (Beginning + Purchases) and dividing it by the total count of those units." 
-    },
-    { 
-        type: "mcq", 
-        question: "In a period of rising prices (inflation), which method results in the highest Net Income?", 
-        options: ["Weighted Average", "FIFO", "Specific Identification", "They result in the same Net Income"], 
-        correctIndex: 1, 
-        explanation: "FIFO assigns the older (cheaper) costs to COGS. Lower expense means higher reported Net Income." 
-    },
-    { 
-        type: "mcq", 
-        question: "When using the Weighted Average method in a Periodic System, when is the average unit cost computed?", 
-        options: ["After every purchase", "At the time of each sale", "Only at the end of the accounting period", "At the beginning of the year"], 
-        correctIndex: 2, 
-        explanation: "Unlike the 'Moving Average' used in Perpetual systems, the Periodic Weighted Average is calculated just once at the very end of the period using total available goods." 
-    },
-    { 
-        type: "mcq", 
-        question: "Which cost flow assumption smooths out the effects of price fluctuations over the accounting period?", 
-        options: ["FIFO", "Weighted Average", "Specific Identification", "LIFO"], 
-        correctIndex: 1, 
-        explanation: "Weighted Average blends the costs of older and newer items, avoiding the extremes of using only the oldest or newest prices." 
-    },
-
-    // --- OPEN-ENDED PROBLEMS (10) ---
-
-    {
-        type: "problem",
-        question: "Calculate Net Purchases given the following data: Purchases ₱150,000; Purchase Returns ₱5,000; Purchase Discounts ₱3,000; Freight-In ₱8,000.",
-        answer: `Purchases:                ₱150,000
-Less: Returns & Allow:    (₱5,000)
-Less: Discounts:          (₱3,000)
-Add: Freight-In:           ₱8,000
-------------------------------------
-Net Purchases:            ₱150,000`,
-        explanation: "Net Purchases = Gross Purchases - Returns - Discounts + Freight In."
-    },
-    {
-        type: "problem",
-        question: "Company A uses a Periodic System. Compute the Cost of Goods Sold (COGS) if: Beginning Inventory = ₱20,000; Net Purchases = ₱80,000; Ending Inventory = ₱25,000.",
-        answer: `Beginning Inventory:      ₱20,000
-Add: Net Purchases:        ₱80,000
-------------------------------------
-Goods Available for Sale: ₱100,000
-Less: Ending Inventory:   (₱25,000)
-------------------------------------
-Cost of Goods Sold:       ₱75,000`,
-        explanation: "COGS is derived by subtracting what is left (Ending Inventory) from the total goods available."
-    },
-    {
-        type: "problem",
-        question: "Provide the journal entry to record a purchase of merchandise on credit for ₱10,000 under the Periodic Inventory System.",
-        answer: `Debit:  Purchases            ₱10,000
-Credit: Accounts Payable     ₱10,000`,
-        explanation: "In a Periodic System, the 'Purchases' account is debited instead of 'Inventory'."
-    },
-    {
-        type: "problem",
-        question: "Provide the journal entry to record the SALE of merchandise on credit for ₱15,000 under the Periodic Inventory System. (Ignore COGS).",
-        answer: `Debit:  Accounts Receivable  ₱15,000
-Credit: Sales Revenue        ₱15,000`,
-        explanation: "Only the revenue side is recorded. No entry is made for COGS or Inventory reduction at this time."
-    },
-    {
-        type: "problem",
-        question: "A physical count reveals ₱5,000 worth of inventory is missing due to theft. In a Periodic System, how is this loss recorded/handled during the normal COGS calculation?",
-        answer: `It is automatically included in Cost of Goods Sold.
-Because Ending Inventory is lower (due to theft), the calculation (Goods Available - Ending Inventory) yields a higher COGS number.`,
-        explanation: "The Periodic System cannot distinguish between sold goods and stolen goods without additional data; both effectively disappear from the count."
-    },
-    {
-        type: "problem",
-        question: "Calculate Gross Profit: Sales ₱200,000; Sales Returns ₱10,000; Sales Discounts ₱2,000; Cost of Goods Sold ₱110,000.",
-        answer: `Gross Sales:              ₱200,000
-Less: Returns & Disc:     (₱12,000)
-------------------------------------
-Net Sales:                ₱188,000
-Less: COGS:              (₱110,000)
-------------------------------------
-Gross Profit:             ₱78,000`,
-        explanation: "Gross Profit = Net Sales - Cost of Goods Sold."
-    },
-    {
-        type: "problem",
-        question: "Explain the 'Terms 2/10, n/30'.",
-        answer: `2/10: The buyer can take a 2% discount if they pay within 10 days of the invoice date.
-n/30: If the discount is not taken, the net (full) amount is due within 30 days.`,
-        explanation: "These are credit terms defining the incentive for early payment and the final deadline."
-    },
-    {
-        type: "problem",
-        question: "Calculate the Cost of Goods Available for Sale: Beginning Inventory ₱15,000; Purchases ₱60,000; Freight-In ₱2,000; Purchase Returns ₱4,000.",
-        answer: `Beginning Inventory:      ₱15,000
-Purchases:                ₱60,000
-Add: Freight-In:          ₱2,000
-Less: Returns:            (₱4,000)
-------------------------------------
-Goods Available for Sale: ₱73,000`,
-        explanation: "Goods Available = Beginning Inventory + Net Cost of Purchases."
-    },
-    {
-        type: "problem",
-        question: "Write the Journal Entry to record the return of ₱1,000 worth of damaged goods to a supplier (originally purchased on credit) under the Periodic System.",
-        answer: `Debit:  Accounts Payable                 ₱1,000
-Credit: Purchase Returns and Allowances  ₱1,000`,
-        explanation: "This entry reduces the liability (AP) and increases the contra-expense account (Purchase Returns)."
-    },
-    {
-        type: "problem",
-        question: "If a company forgot to include a section of the warehouse in their physical count (understating Ending Inventory by ₱10,000), how does this affect the Cost of Goods Sold?",
-        answer: `Cost of Goods Sold will be OVERSTATED by ₱10,000.
-Computation: COGS = Available - Ending Inventory. If you subtract a smaller Ending Inventory number, the result (COGS) becomes larger.`,
-        explanation: "Understating the asset (Inventory) leads to overstating the expense (COGS), which subsequently understates Net Income."
-    },
-    // --- FIFO QUESTIONS (2) ---
-    {
-        type: "problem",
-        question: "FIFO Method (Periodic): Calculate the Value of Ending Inventory.\n\nData:\n- Jan 1 Beginning Inventory: 10 units @ ₱10\n- Jan 10 Purchase: 20 units @ ₱12\n- Jan 20 Purchase: 20 units @ ₱15\n\nPhysical count on Jan 31 shows 15 units remaining.",
-        answer: `Ending Inventory Value: ₱225
-
-Computation:
-Under FIFO, the remaining inventory is assumed to be the NEWEST stock.
-Therefore, the 15 units come from the Jan 20 purchase (costing ₱15).
-15 units x ₱15 = ₱225`,
-        explanation: "In FIFO (First-In, First-Out), the oldest units are sold first. This means the units left on the shelf (Ending Inventory) are always the most recently purchased ones."
-    },
-    {
-        type: "problem",
-        question: "FIFO Method (Periodic): Calculate Cost of Goods Sold (COGS).\n\nData:\n- Goods Available for Sale (Total Cost): ₱5,000\n- Total Units Available: 500 units\n- Ending Inventory Count: 100 units\n- Most Recent Purchase Price: ₱12/unit\n- Oldest Purchase Price: ₱8/unit",
-        answer: `Cost of Goods Sold: ₱3,800
-
-Computation:
-1. Determine Ending Inventory Value (FIFO uses newest price):
-   100 units x ₱12 = ₱1,200
-2. Calculate COGS using the Periodic Formula:
-   Goods Available (₱5,000) - Ending Inventory (₱1,200) = ₱3,800`,
-        explanation: "Under the Periodic system, we first calculate the Ending Inventory value, then subtract it from the Total Goods Available to 'squeeze' out the COGS."
-    },
-
-    // --- WEIGHTED AVERAGE QUESTIONS (2) ---
-    {
-        type: "problem",
-        question: "Weighted Average Method: Calculate the Weighted Average Unit Cost.\n\nData:\n- Beginning Inventory: 100 units @ ₱50\n- Purchase 1: 300 units @ ₱60\n- Purchase 2: 100 units @ ₱65",
-        answer: `Weighted Average Unit Cost: ₱59
-
-Computation:
-1. Total Cost of Goods Available:
-   (100 x 50) + (300 x 60) + (100 x 65) 
-   = 5,000 + 18,000 + 6,500 = ₱29,500
-2. Total Units Available:
-   100 + 300 + 100 = 500 units
-3. Average:
-   ₱29,500 / 500 units = ₱59 per unit`,
-        explanation: "The Weighted Average cost is determined by dividing the Total Cost of Goods Available for Sale by the Total Units Available for Sale."
-    },
-    {
-        type: "problem",
-        question: "Weighted Average Method: Calculate Ending Inventory Value.\n\nData:\n- Total Goods Available for Sale: ₱100,000\n- Total Units Available: 2,000 units\n- Ending Inventory Count: 400 units",
-        answer: `Ending Inventory Value: ₱20,000
-
-Computation:
-1. Find Average Unit Cost:
-   ₱100,000 / 2,000 units = ₱50 per unit
-2. Apply to Ending Inventory:
-   400 units x ₱50 = ₱20,000`,
-        explanation: "Once the average cost per unit is established (₱50), it is applied to the physical count of units remaining to value the inventory."
-    },
-
-    // --- COMBINED COMPREHENSIVE QUESTION (1) ---
-    {
-        type: "problem",
-        question: "Comparative Analysis: Compute COGS under BOTH FIFO and Weighted Average.\n\nScenario:\n- Jan 1: Beg Inv 10 units @ ₱100\n- Jan 15: Purchase 10 units @ ₱200\n- Jan 31: Sold 15 units (Leaving 5 units in Ending Inventory)",
-        answer: `FIFO COGS: ₱2,000
-Weighted Average COGS: ₱2,250
-
-Computations:
-Total Available: (10@100) + (10@200) = ₱3,000 (20 units)
-
-1. FIFO Method:
-   Ending Inv (Newest 5 units @ ₱200) = ₱1,000
-   COGS = ₱3,000 - ₱1,000 = ₱2,000
-
-2. Weighted Average Method:
-   Avg Cost = ₱3,000 / 20 units = ₱150/unit
-   Ending Inv (5 units @ ₱150) = ₱750
-   COGS = ₱3,000 - ₱750 = ₱2,250`,
-        explanation: "FIFO results in a lower COGS here because it assumes the cheaper, older units (₱100) were sold first. Weighted Average smooths out the price jump, resulting in a higher COGS."
-    },
-                // --- ADVANCED SCENARIO A: FIFO FOCUS (Questions 1-2) ---
-    {
-        type: "problem",
-        question: "FIFO Costing (Periodic): Calculate the Total Value of Ending Inventory.\n\nTransactions for Product X:\n- Jan 01: Beginning Inventory (200 units @ ₱50)\n- Jan 05: Sale of 100 units\n- Jan 10: Purchase (300 units @ ₱55)\n- Jan 15: Sale of 150 units\n- Jan 20: Purchase (400 units @ ₱60)\n- Jan 25: Sale of 200 units\n- Jan 30: Purchase (100 units @ ₱65)",
-        answer: `Ending Inventory Value: ₱33,250
-
-Computation:
-1. Determine Units Remaining: 
-   Total Available: 200 (Beg) + 300 (P1) + 400 (P2) + 100 (P3) = 1,000 units
-   Total Sold: 100 + 150 + 200 = 450 units
-   Ending Inventory: 1,000 - 450 = 550 units
-
-2. Apply FIFO (Newest units remain):
-   - 100 units @ ₱65 (Jan 30) = ₱6,500
-   - 400 units @ ₱60 (Jan 20) = ₱24,000
-   - 50 units @ ₱55 (Jan 10) = ₱2,750
-   -----------------------------------
-   Total Value: ₱33,250`,
-        explanation: "In Periodic FIFO, we ignore when the sales happened. We simply take the final count (550 units) and value them using the most recent purchase costs working backwards."
-    },
-    {
-        type: "problem",
-        question: "FIFO Costing (Periodic): Prepare the Cost of Goods Sold (COGS) Schedule based on the data in the previous question (Scenario A).",
-        answer: `Cost of Goods Sold: ₱24,250
-
-Schedule:
-Beginning Inventory (200 @ ₱50):      ₱10,000
-Add: Net Purchases:
-   Jan 10 (300 @ ₱55): ₱16,500
-   Jan 20 (400 @ ₱60): ₱24,000
-   Jan 30 (100 @ ₱65): ₱6,500         ₱47,000
----------------------------------------------
-Total Goods Available for Sale:       ₱57,000
-Less: Ending Inventory (FIFO):       (₱33,250)
----------------------------------------------
-Cost of Goods Sold:                   ₱23,750`,
-        explanation: "COGS is derived by subtracting the calculated Ending Inventory (from Question 1) from the Total Goods Available for Sale."
-    },
-
-    // --- ADVANCED SCENARIO B: WEIGHTED AVERAGE FOCUS (Questions 3-4) ---
-    {
-        type: "problem",
-        question: "Weighted Average (Periodic): Calculate the Ending Inventory Value.\n\nTransactions for Product Y:\n- Mar 01: Beginning Inventory (1,000 units @ ₱10)\n- Mar 08: Purchase (2,000 units @ ₱12)\n- Mar 12: Sale of 1,500 units\n- Mar 18: Purchase (1,000 units @ ₱14)\n- Mar 22: Sale of 1,000 units\n- Mar 28: Purchase (1,000 units @ ₱15)\n- Mar 30: Sale of 500 units",
-        answer: `Ending Inventory Value: ₱26,600
-
-Computation:
-1. Total Goods Available:
-   (1,000 @ 10) + (2,000 @ 12) + (1,000 @ 14) + (1,000 @ 15)
-   = 10,000 + 24,000 + 14,000 + 15,000 = ₱63,000
-
-2. Total Units Available: 
-   1,000 + 2,000 + 1,000 + 1,000 = 5,000 units
-
-3. Average Unit Cost:
-   ₱63,000 / 5,000 units = ₱12.60 per unit
-
-4. Units Remaining:
-   Total Sold (1,500 + 1,000 + 500) = 3,000 sold
-   Remaining (5,000 - 3,000) = 2,000 units
-
-5. Ending Inventory:
-   2,000 units x ₱12.60 = ₱25,200`,
-        explanation: "Weighted Average blends all costs together. We divide the Total Cost of Goods Available (₱63,000) by Total Units (5,000) to find the average rate."
-    },
-    {
-        type: "problem",
-        question: "Weighted Average (Periodic): Calculate the Cost of Goods Sold (COGS) based on the data in the previous question (Scenario B).",
-        answer: `Cost of Goods Sold: ₱37,800
-
-Computation:
-Total Goods Available for Sale:    ₱63,000
-Less: Ending Inventory (Avco):    (₱25,200)
--------------------------------------------
-Cost of Goods Sold:                ₱37,800
-
-Alternative Check:
-Units Sold (3,000) x Average Cost (₱12.60) = ₱37,800`,
-        explanation: "COGS can be found either by subtracting Ending Inventory from Total Available OR by multiplying the total units sold by the average unit cost."
-    },
-
-    // --- SCENARIO C: COMPARATIVE ANALYSIS (Question 5) ---
-    {
-        type: "problem",
-        question: "Comparative: Calculate Cost of Goods Sold using Weighted Average.\n\nTransactions:\n- Beg Inv: 10 units @ ₱100\n- Purchase 1: 10 units @ ₱110\n- Sale 1: 5 units sold\n- Purchase 2: 10 units @ ₱120\n- Sale 2: 10 units sold\n- Purchase 3: 10 units @ ₱130\n- Sale 3: 5 units sold",
-        answer: `Cost of Goods Sold: ₱2,300
-
-Computation:
-1. Total Available:
-   (10@100) + (10@110) + (10@120) + (10@130) = ₱4,600
-   Total Units = 40
-
-2. Average Cost:
-   ₱4,600 / 40 units = ₱115 per unit
-
-3. Units Sold:
-   5 + 10 + 5 = 20 units sold
-
-4. COGS Calculation:
-   20 units sold x ₱115 = ₱2,300`,
-        explanation: "Even though sales happened at different times, in the Periodic Weighted Average method, we wait until the end of the month to calculate the single average cost for all units."
-    }
-]
+        {
+            type: "mcq",
+            question: "A 'Trade Discount' is best described as:",
+            options: [
+                "A discount given for early payment of an invoice",
+                "A reduction from the catalog list price to determine the actual invoice price",
+                "A refund given for damaged goods",
+                "A discount given only to employees"
+            ],
+            correctIndex: 1,
+            explanation: "Trade discounts are used to set the actual selling price before the transaction is even recorded. They are not recorded in the accounts."
         },
+        {
+            type: "mcq",
+            question: "Terms '2/10, n/30' mean:",
+            options: [
+                "2% discount if paid within 30 days, net due in 10 days",
+                "10% discount if paid within 2 days, net due in 30 days",
+                "2% discount if paid within 10 days, otherwise the full amount is due in 30 days",
+                "2 equal payments over 10 months"
+            ],
+            correctIndex: 2,
+            explanation: "This is the standard format for cash discounts: [Percent]/[Days], Net/[Total Days]."
+        },
+        {
+            type: "mcq",
+            question: "Which of the following accounts normally has a DEBIT balance?",
+            options: [
+                "Sales",
+                "Purchase Returns and Allowances",
+                "Sales Returns and Allowances",
+                "Purchase Discounts"
+            ],
+            correctIndex: 2,
+            explanation: "Sales Returns & Allowances is a Contra-Revenue account. Since Revenue has a Credit balance, its Contra account has a Debit balance."
+        },
+        {
+            type: "mcq",
+            question: "When a buyer returns defective goods, which account does the buyer CREDIT?",
+            options: [
+                "Accounts Payable",
+                "Purchases",
+                "Purchase Returns and Allowances",
+                "Cash"
+            ],
+            correctIndex: 2,
+            explanation: "The buyer credits 'Purchase Returns and Allowances' to reduce the net cost of purchases without directly crediting the Purchases account."
+        },
+        {
+            type: "mcq",
+            question: "To calculate Net Sales, you deduct which of the following from Gross Sales?",
+            options: [
+                "Cost of Goods Sold",
+                "Sales Returns, Allowances, and Sales Discounts",
+                "Operating Expenses",
+                "Purchase Discounts"
+            ],
+            correctIndex: 1,
+            explanation: "Net Sales represents the actual revenue realized from customers, so we subtract returns and discounts given to them."
+        },
+        {
+            type: "mcq",
+            question: "If a company purchases goods with a list price of $1,000 and a 20% trade discount, at what amount is the purchase recorded?",
+            options: [
+                "$1,000",
+                "$200",
+                "$800",
+                "$1,200"
+            ],
+            correctIndex: 2,
+            explanation: "$1,000 - (20% of $1,000) = $800. The transaction is recorded at the net amount; the trade discount is ignored in the journal."
+        },
+        {
+            type: "mcq",
+            question: "Purchase Discounts is classified as a(n):",
+            options: [
+                "Asset account",
+                "Liability account",
+                "Contra-Expense (or Contra-Purchase) account",
+                "Revenue account"
+            ],
+            correctIndex: 2,
+            explanation: "It reduces the cost of Purchases. Since Purchases is treated like an expense (Debit), Purchase Discounts is a Contra (Credit)."
+        },
+        {
+            type: "mcq",
+            question: "Which of the following is NOT part of the Net Purchases calculation?",
+            options: [
+                "Purchase Returns",
+                "Gross Purchases",
+                "Purchase Discounts",
+                "Sales Discounts"
+            ],
+            correctIndex: 3,
+            explanation: "Sales Discounts relate to selling to customers, not buying inventory."
+        },
+
+        // --- PROBLEM SOLVING (JOURNALIZING TRANSACTIONS) ---
+
+        {
+            type: "problem",
+            question: "<strong>Scenario A: The Purchase Cycle</strong><br>Journalize the following transactions for Company A (Buyer) using a Periodic Inventory System.<br><br>1. <strong>March 1:</strong> Purchased merchandise from Supplier X for ₱50,000, terms 2/10, n/30.<br>2. <strong>March 3:</strong> Returned defective goods to Supplier X costing ₱5,000.<br>3. <strong>March 9:</strong> Paid Supplier X the full amount due, less the return and the discount.<br>4. <strong>March 15:</strong> Purchased merchandise from Supplier Y for ₱20,000 cash.",
+            answer: `<strong>March 1 (Purchase on Credit)</strong>
+Dr. Purchases ........................ 50,000
+    Cr. Accounts Payable ..................... 50,000
+
+<strong>March 3 (Return of Goods)</strong>
+Dr. Accounts Payable ................. 5,000
+    Cr. Purchase Returns & Allowances ........ 5,000
+
+<strong>March 9 (Payment with Discount)</strong>
+<em>Calculation:
+Gross Pay: 50,000 - 5,000 (return) = 45,000
+Discount: 45,000 x 2% = 900
+Cash Paid: 45,000 - 900 = 44,100</em>
+
+Dr. Accounts Payable ................. 45,000
+    Cr. Purchase Discounts ................... 900
+    Cr. Cash ................................. 44,100
+
+<strong>March 15 (Cash Purchase)</strong>
+Dr. Purchases ........................ 20,000
+    Cr. Cash ................................. 20,000`,
+            explanation: "Note how the Discount is calculated on the Balance Due (Gross - Returns), not the original full amount."
+        },
+
+        {
+            type: "problem",
+            question: "<strong>Scenario B: The Sales Cycle</strong><br>Journalize the following transactions for Company B (Seller).<br><br>1. <strong>June 1:</strong> Sold merchandise on account to Customer Z for ₱100,000, terms 3/10, n/30.<br>2. <strong>June 4:</strong> Customer Z returned damaged goods with a sales price of ₱10,000.<br>3. <strong>June 10:</strong> Received full payment from Customer Z within the discount period.<br>4. <strong>June 12:</strong> Sold merchandise for ₱5,000 cash.",
+            answer: `<strong>June 1 (Sale on Credit)</strong>
+Dr. Accounts Receivable .............. 100,000
+    Cr. Sales ................................ 100,000
+
+<strong>June 4 (Sales Return)</strong>
+Dr. Sales Returns & Allowances ....... 10,000
+    Cr. Accounts Receivable .................. 10,000
+
+<strong>June 10 (Collection with Discount)</strong>
+<em>Calculation:
+Gross AR: 100,000 - 10,000 (return) = 90,000
+Discount: 90,000 x 3% = 2,700
+Cash Rec: 90,000 - 2,700 = 87,300</em>
+
+Dr. Cash ............................. 87,300
+Dr. Sales Discounts .................. 2,700
+    Cr. Accounts Receivable .................. 90,000
+
+<strong>June 12 (Cash Sale)</strong>
+Dr. Cash ............................. 5,000
+    Cr. Sales ................................ 5,000`,
+            explanation: "Sales Discounts and Sales Returns are both debited because they reduce the total Equity/Revenue."
+        },
+
+        {
+            type: "problem",
+            question: "<strong>Scenario C: Trade Discounts & Late Payments</strong><br>Journalize the following transactions.<br><br>1. <strong>Aug 1:</strong> Purchased goods with a List Price of ₱200,000 less a 20% Trade Discount. Terms 2/10, n/30.<br>2. <strong>Aug 5:</strong> Returned goods with a LIST price of ₱20,000 (which also had the 20% trade discount applied).<br>3. <strong>Aug 30:</strong> Paid the account in full (Note the date; the discount period has expired).",
+            answer: `<strong>Aug 1 (Purchase with Trade Discount)</strong>
+<em>Calculation: 200,000 - 20% = 160,000 Invoice Price</em>
+Dr. Purchases ........................ 160,000
+    Cr. Accounts Payable ..................... 160,000
+
+<strong>Aug 5 (Return of Goods)</strong>
+<em>Calculation: 20,000 List - 20% = 16,000 Net Return Value</em>
+Dr. Accounts Payable ................. 16,000
+    Cr. Purchase Returns & Allowances ........ 16,000
+
+<strong>Aug 30 (Payment - No Discount)</strong>
+<em>Calculation: 160,000 - 16,000 = 144,000 Due.
+Date is Aug 30 (30 days later), so 2% discount is forfeited.</em>
+
+Dr. Accounts Payable ................. 144,000
+    Cr. Cash ................................. 144,000`,
+            explanation: "Always record at the Net of Trade Discount. If payment is late, simply pay the full AP balance without recording any Purchase Discount."
+        },
+
+        {
+            type: "problem",
+            question: "<strong>Scenario D: Calculating Net Values</strong><br>Based on the ledger balances below, calculate (a) Net Sales and (b) Net Purchases.<br><br>Sales: ₱500,000<br>Purchases: ₱300,000<br>Sales Returns: ₱15,000<br>Purchase Returns: ₱20,000<br>Sales Discounts: ₱5,000<br>Purchase Discounts: ₱8,000<br>Freight-In: ₱10,000 (For context only)",
+            answer: `<strong>a) Net Sales Calculation</strong>
+   Gross Sales ................. ₱500,000
+ - Sales Returns ............... (15,000)
+ - Sales Discounts .............  (5,000)
+ ----------------------------------------
+ = Net Sales ................... ₱480,000
+
+<strong>b) Net Purchases Calculation</strong>
+   Gross Purchases ............. ₱300,000
+ - Purchase Returns ............ (20,000)
+ - Purchase Discounts ..........  (8,000)
+ ----------------------------------------
+ = Net Purchases ............... ₱272,000`,
+            explanation: "Freight-In is excluded from the 'Net Purchases' sub-calculation. It is added later to find Cost of Goods Purchased."
+        },
+        
+        {
+            type: "problem",
+            question: "<strong>Scenario E: Combined Transactions</strong><br>Journalize for Company C.<br><br>1. <strong>Oct 1:</strong> Sold goods ₱80,000, 2/10, n/30.<br>2. <strong>Oct 2:</strong> Purchased goods ₱40,000, 2/10, n/30.<br>3. <strong>Oct 5:</strong> Granted an allowance of ₱2,000 to the customer from Oct 1 (Customer kept the goods).<br>4. <strong>Oct 10:</strong> Received payment in full from the Oct 1 sale.<br>5. <strong>Oct 11:</strong> Paid the Oct 2 purchase in full.",
+            answer: `<strong>Oct 1 (Sale)</strong>
+Dr. AR ............................... 80,000
+    Cr. Sales ................................ 80,000
+
+<strong>Oct 2 (Purchase)</strong>
+Dr. Purchases ........................ 40,000
+    Cr. AP ................................... 40,000
+
+<strong>Oct 5 (Sales Allowance)</strong>
+Dr. Sales Returns & Allowances ....... 2,000
+    Cr. AR ................................... 2,000
+
+<strong>Oct 10 (Collection - Within 10 days)</strong>
+<em>AR Balance: 80,000 - 2,000 = 78,000
+Discount: 78,000 * 0.02 = 1,560</em>
+Dr. Cash ............................. 76,440
+Dr. Sales Discounts .................. 1,560
+    Cr. AR ................................... 78,000
+
+<strong>Oct 11 (Payment - Within 10 days)</strong>
+<em>AP Balance: 40,000
+Discount: 40,000 * 0.02 = 800</em>
+Dr. AP ............................... 40,000
+    Cr. Purchase Discounts ................... 800
+    Cr. Cash ................................. 39,200`,
+            explanation: "Ensure the collection applies to the Net AR (after allowance) and the payment applies to the Gross AP (no returns)."
+        }
+    ]
+},
         {
             day: "Day 3",
             topic: "The Perpetual Inventory System",
