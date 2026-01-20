@@ -43,7 +43,8 @@ export const unit2Week2Data = {
             <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                 <h3 class="text-xl font-bold text-gray-800 mb-3">2. Trade Discounts: The "Hidden" Deduction</h3>
                 
-                <p class="text-gray-700 mb-4">
+                
+                <p class="text-gray-700 mb-4 mt-4">
                     Suppliers often offer a <strong>Trade Discount</strong> to wholesalers or bulk buyers. This is a reduction from the <em>List Price</em> (Catalog Price) to determine the actual price charged.
                 </p>
                 
@@ -56,9 +57,12 @@ export const unit2Week2Data = {
 
                 <div class="bg-gray-100 p-4 rounded-md font-mono text-sm text-gray-700">
                     <p><strong>Example:</strong> Item List Price is ₱100,000 with a 20% Trade Discount.</p>
-                    <p class="mt-2">List Price: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ₱100,000</p>
-                    <p>Less: Discount: &nbsp; (20,000) <span class="text-gray-400 italic"><-- Do not journalize this!</span></p>
-                    <p class="border-t border-gray-400 mt-1 pt-1 font-bold">Invoice Price: &nbsp; ₱ 80,000 <span class="text-green-600"><-- Record this amount!</span></p>
+                    <p class="mt-2 flex justify-between w-64"><span>List Price:</span> <span>₱100,000</span></p>
+                    <p class="flex justify-between w-64"><span>Less: Discount:</span> <span class="text-red-500">(20,000)</span></p>
+                    <div class="border-t border-gray-400 mt-1 pt-1 font-bold flex justify-between w-64">
+                        <span>Invoice Price:</span> <span class="text-green-600">₱ 80,000</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2 italic">*Only the ₱80,000 is recorded.</p>
                 </div>
             </div>
 
@@ -72,27 +76,53 @@ export const unit2Week2Data = {
                 <table class="w-full text-sm text-left text-gray-600 border border-gray-300">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                         <tr>
-                            <th class="px-4 py-3 border-r">System</th>
-                            <th class="px-4 py-3">Journal Entry (Amount is ₱9,000)</th>
+                            <th class="px-4 py-3 border-r w-1/4">System</th>
+                            <th class="px-4 py-3 w-3/4">Journal Entry</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="bg-white border-b">
-                            <td class="px-4 py-3 font-medium text-gray-900 border-r">Perpetual</td>
+                            <td class="px-4 py-3 font-medium text-gray-900 border-r align-top pt-4">Perpetual System</td>
                             <td class="px-4 py-3">
-                                <div class="font-mono text-xs">
-                                    <div class="text-blue-600">Dr. Merchandise Inventory <span class="text-black">9,000</span></div>
-                                    <div class="pl-4 text-red-600">Cr. Accounts Payable <span class="text-black">9,000</span></div>
-                                </div>
+                                <table class="w-full font-mono text-xs">
+                                    <tr class="text-gray-400 border-b border-gray-100">
+                                        <th class="text-left pb-1">Account Title</th>
+                                        <th class="text-right pb-1 w-20">Debit</th>
+                                        <th class="text-right pb-1 w-20">Credit</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-2 text-blue-600">Merchandise Inventory</td>
+                                        <td class="pt-2 text-right">9,000</td>
+                                        <td class="pt-2 text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pl-4 text-red-600">Accounts Payable</td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right">9,000</td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                         <tr class="bg-white">
-                            <td class="px-4 py-3 font-medium text-gray-900 border-r">Periodic</td>
+                            <td class="px-4 py-3 font-medium text-gray-900 border-r align-top pt-4">Periodic System</td>
                             <td class="px-4 py-3">
-                                <div class="font-mono text-xs">
-                                    <div class="text-blue-600">Dr. Purchases <span class="text-black">9,000</span></div>
-                                    <div class="pl-4 text-red-600">Cr. Accounts Payable <span class="text-black">9,000</span></div>
-                                </div>
+                                <table class="w-full font-mono text-xs">
+                                    <tr class="text-gray-400 border-b border-gray-100">
+                                        <th class="text-left pb-1">Account Title</th>
+                                        <th class="text-right pb-1 w-20">Debit</th>
+                                        <th class="text-right pb-1 w-20">Credit</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-2 text-blue-600">Purchases</td>
+                                        <td class="pt-2 text-right">9,000</td>
+                                        <td class="pt-2 text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pl-4 text-red-600">Accounts Payable</td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right">9,000</td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                     </tbody>
@@ -110,32 +140,75 @@ export const unit2Week2Data = {
                 <table class="w-full text-sm text-left text-gray-600 border border-gray-300">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                         <tr>
-                            <th class="px-4 py-3 border-r">System</th>
-                            <th class="px-4 py-3">Journal Entry</th>
+                            <th class="px-4 py-3 border-r w-1/4">System</th>
+                            <th class="px-4 py-3 w-3/4">Journal Entry</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="bg-white border-b">
-                            <td class="px-4 py-3 font-medium text-gray-900 border-r">Perpetual</td>
+                            <td class="px-4 py-3 font-medium text-gray-900 border-r align-top pt-4">Perpetual System</td>
                             <td class="px-4 py-3">
-                                <div class="font-mono text-xs mb-2">
-                                    <div class="text-blue-600">Dr. Accounts Receivable <span class="text-black">19,000</span></div>
-                                    <div class="pl-4 text-red-600">Cr. Sales <span class="text-black">19,000</span></div>
-                                </div>
-                                <div class="font-mono text-xs border-t border-dashed pt-2">
-                                    <div class="text-blue-600">Dr. Cost of Goods Sold <span class="text-black">10,000</span></div>
-                                    <div class="pl-4 text-red-600">Cr. Mdse. Inventory <span class="text-black">10,000</span></div>
-                                </div>
+                                <p class="text-xs font-bold text-gray-500 mb-1">To record Sales Revenue:</p>
+                                <table class="w-full font-mono text-xs mb-4">
+                                    <tr class="text-gray-400 border-b border-gray-100">
+                                        <th class="text-left pb-1">Account Title</th>
+                                        <th class="text-right pb-1 w-20">Debit</th>
+                                        <th class="text-right pb-1 w-20">Credit</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-2 text-blue-600">Accounts Receivable</td>
+                                        <td class="pt-2 text-right">19,000</td>
+                                        <td class="pt-2 text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pl-4 text-red-600">Sales</td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right">19,000</td>
+                                    </tr>
+                                </table>
+                                
+                                <p class="text-xs font-bold text-gray-500 mb-1">To record Cost of Goods Sold:</p>
+                                <table class="w-full font-mono text-xs">
+                                    <tr class="text-gray-400 border-b border-gray-100">
+                                        <th class="text-left pb-1">Account Title</th>
+                                        <th class="text-right pb-1 w-20">Debit</th>
+                                        <th class="text-right pb-1 w-20">Credit</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-2 text-blue-600">Cost of Goods Sold</td>
+                                        <td class="pt-2 text-right">10,000</td>
+                                        <td class="pt-2 text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pl-4 text-red-600">Merchandise Inventory</td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right">10,000</td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                         <tr class="bg-white">
-                            <td class="px-4 py-3 font-medium text-gray-900 border-r">Periodic</td>
-                            <td class="px-4 py-3 align-top">
-                                <div class="font-mono text-xs">
-                                    <div class="text-blue-600">Dr. Accounts Receivable <span class="text-black">19,000</span></div>
-                                    <div class="pl-4 text-red-600">Cr. Sales <span class="text-black">19,000</span></div>
-                                </div>
-                                <p class="text-xs text-gray-400 mt-2 italic">(No COGS entry is made)</p>
+                            <td class="px-4 py-3 font-medium text-gray-900 border-r align-top pt-4">Periodic System</td>
+                            <td class="px-4 py-3">
+                                <p class="text-xs font-bold text-gray-500 mb-1">To record Sales Revenue:</p>
+                                <table class="w-full font-mono text-xs">
+                                    <tr class="text-gray-400 border-b border-gray-100">
+                                        <th class="text-left pb-1">Account Title</th>
+                                        <th class="text-right pb-1 w-20">Debit</th>
+                                        <th class="text-right pb-1 w-20">Credit</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-2 text-blue-600">Accounts Receivable</td>
+                                        <td class="pt-2 text-right">19,000</td>
+                                        <td class="pt-2 text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pl-4 text-red-600">Sales</td>
+                                        <td class="text-right"></td>
+                                        <td class="text-right">19,000</td>
+                                    </tr>
+                                </table>
+                                <p class="text-xs text-gray-400 mt-3 italic text-center border-t border-dashed pt-2">(No entry for Cost of Goods Sold)</p>
                             </td>
                         </tr>
                     </tbody>
