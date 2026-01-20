@@ -408,7 +408,7 @@ Dr. Purchases               7,200
                         </td>
                     </tr>` +
 
-                    // --- TABLE ROW: SALES RETURN ---
+                    // --- TABLE ROW: SALES RETURN (PHYSICAL RETURN) ---
                     `<tr class="bg-gray-50 hover:bg-gray-100">
                         <td class="px-4 py-3 align-top">
                             <span class="font-bold text-gray-900 block">Sales Return</span>
@@ -433,6 +433,32 @@ Dr. Purchases               7,200
                                 <tr><td class="text-blue-700 pt-1">Inventory</td><td class="text-right pt-1">300</td><td></td></tr>
                                 <tr><td class="text-gray-600 pl-4">COGS</td><td></td><td class="text-right">300</td></tr>
                             </table>
+                        </td>
+                    </tr>` +
+
+                    // --- TABLE ROW: SALES ALLOWANCE (GOODS KEPT) ---
+                    `<tr class="bg-purple-50 hover:bg-purple-100 border-l-4 border-purple-300">
+                        <td class="px-4 py-3 align-top">
+                            <span class="font-bold text-gray-900 block">Sales Allowance</span>
+                            <span class="text-xs text-gray-600 block mb-1 font-semibold">(Variant: Customer keeps goods)</span>
+                            <span class="text-xs text-gray-500 italic">Ex: Granted $50 credit for scratch; customer kept item.</span>
+                        </td>
+                        <td class="px-4 py-3">
+                            <table class="w-full text-xs">
+                                <tr class="text-gray-400 border-b border-purple-200"><th class="font-normal text-left pb-1">Account</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-purple-700 pt-1">Sales Ret. & Allow</td><td class="text-right pt-1">50</td><td></td></tr>
+                                <tr><td class="text-gray-600 pl-4">Accounts Receivable</td><td></td><td class="text-right">50</td></tr>
+                            </table>
+                        </td>
+                        <td class="px-4 py-3">
+                            <table class="w-full text-xs">
+                                <tr class="text-gray-400 border-b border-purple-200"><th class="font-normal text-left pb-1">Entry 1: Revenue Only</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-purple-700 pt-1">Sales Ret. & Allow</td><td class="text-right pt-1">50</td><td></td></tr>
+                                <tr><td class="text-gray-600 pl-4">Accounts Receivable</td><td></td><td class="text-right">50</td></tr>
+                            </table>
+                            <div class="mt-2 text-[10px] text-gray-600 bg-white p-2 rounded border border-purple-200">
+                                <strong>Crucial Difference:</strong> No 2nd entry for Inventory/COGS because the goods were not returned.
+                            </div>
                         </td>
                     </tr>` +
 
