@@ -296,8 +296,10 @@ Dr. Purchases               7,200
     </li>` +
 
     // --- SECTION 2: SYSTEM COMPARISON (INTRO & TABLE HEADER) ---
-    `<li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+// Added a visual aid tag for the system comparison concept
+`   <li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
         <h3 class="text-xl font-bold text-gray-800 mb-3">2. Recording Returns & Discounts: System Comparison</h3>
+        
         <p class="text-gray-700 mb-4">
             The key difference lies in the <strong>Purchase</strong> side (Inventory vs. Purchases). On the <strong>Sales</strong> side, Revenue entries are identical, but Perpetual systems require a second entry to update Cost of Goods Sold (COGS).
         </p>
@@ -315,91 +317,122 @@ Dr. Purchases               7,200
 
                     // --- TABLE ROW: PURCHASE GOODS ---
                     `<tr class="bg-white hover:bg-gray-50">
-                        <td class="px-4 py-3">
+                        <td class="px-4 py-3 align-top">
                             <span class="font-bold text-gray-900 block">Purchase Goods</span>
                             <span class="text-xs text-gray-500 italic">Ex: Bought $1,000 goods on credit.</span>
                         </td>
-                        <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-red-700">Purchases <span class="text-gray-600 float-right">1,000</span></div>
-                            <div class="text-gray-600 pl-8">Accounts Payable <span class="float-right">1,000</span></div>
+                        <td class="px-4 py-3">
+                            <table class="w-full text-xs">
+                                <tr class="text-gray-400 border-b border-gray-100"><th class="font-normal text-left pb-1">Account</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-red-700 pt-1">Purchases</td><td class="text-right pt-1">1,000</td><td></td></tr>
+                                <tr><td class="text-gray-600 pl-4">Accounts Payable</td><td></td><td class="text-right">1,000</td></tr>
+                            </table>
                         </td>
-                        <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-blue-700">Inventory <span class="text-gray-600 float-right">1,000</span></div>
-                            <div class="text-gray-600 pl-8">Accounts Payable <span class="float-right">1,000</span></div>
+                        <td class="px-4 py-3">
+                            <table class="w-full text-xs">
+                                <tr class="text-gray-400 border-b border-gray-100"><th class="font-normal text-left pb-1">Account</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-blue-700 pt-1">Inventory</td><td class="text-right pt-1">1,000</td><td></td></tr>
+                                <tr><td class="text-gray-600 pl-4">Accounts Payable</td><td></td><td class="text-right">1,000</td></tr>
+                            </table>
                         </td>
                     </tr>` +
 
                     // --- TABLE ROW: PURCHASE RETURNS ---
                     `<tr class="bg-gray-50 hover:bg-gray-100">
-                        <td class="px-4 py-3">
+                        <td class="px-4 py-3 align-top">
                             <span class="font-bold text-gray-900 block">Purchase Return</span>
                             <span class="text-xs text-gray-500 italic">Ex: Returned $100 defective goods.</span>
                         </td>
-                        <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-gray-600">Accounts Payable <span class="float-right">100</span></div>
-                            <div class="text-red-700 pl-8">Purch. Returns & Allow <span class="text-gray-600 float-right">100</span></div>
+                        <td class="px-4 py-3">
+                            <table class="w-full text-xs">
+                                <tr class="text-gray-400 border-b border-gray-200"><th class="font-normal text-left pb-1">Account</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-gray-600 pt-1">Accounts Payable</td><td class="text-right pt-1">100</td><td></td></tr>
+                                <tr><td class="text-red-700 pl-4">Purch. Returns & Allow</td><td></td><td class="text-right">100</td></tr>
+                            </table>
                         </td>
-                        <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-gray-600">Accounts Payable <span class="float-right">100</span></div>
-                            <div class="text-blue-700 pl-8">Inventory <span class="text-gray-600 float-right">100</span></div>
+                        <td class="px-4 py-3">
+                            <table class="w-full text-xs">
+                                <tr class="text-gray-400 border-b border-gray-200"><th class="font-normal text-left pb-1">Account</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-gray-600 pt-1">Accounts Payable</td><td class="text-right pt-1">100</td><td></td></tr>
+                                <tr><td class="text-blue-700 pl-4">Inventory</td><td></td><td class="text-right">100</td></tr>
+                            </table>
                         </td>
                     </tr>` +
 
                     // --- TABLE ROW: PURCHASE DISCOUNT ---
                     `<tr class="bg-white hover:bg-gray-50">
-                        <td class="px-4 py-3">
+                        <td class="px-4 py-3 align-top">
                             <span class="font-bold text-gray-900 block">Purchase Discount</span>
                             <span class="text-xs text-gray-500 italic">Ex: Paid $900 invoice; 2% discount taken ($18).</span>
                         </td>
-                        <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-gray-600">Accounts Payable <span class="float-right">900</span></div>
-                            <div class="text-gray-600 pl-8">Cash <span class="float-right">882</span></div>
-                            <div class="text-red-700 pl-8">Purchase Discounts <span class="text-gray-600 float-right">18</span></div>
+                        <td class="px-4 py-3">
+                            <table class="w-full text-xs">
+                                <tr class="text-gray-400 border-b border-gray-100"><th class="font-normal text-left pb-1">Account</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-gray-600 pt-1">Accounts Payable</td><td class="text-right pt-1">900</td><td></td></tr>
+                                <tr><td class="text-gray-600 pl-4">Cash</td><td></td><td class="text-right">882</td></tr>
+                                <tr><td class="text-red-700 pl-4">Purchase Discounts</td><td></td><td class="text-right">18</td></tr>
+                            </table>
                         </td>
-                        <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-gray-600">Accounts Payable <span class="float-right">900</span></div>
-                            <div class="text-gray-600 pl-8">Cash <span class="float-right">882</span></div>
-                            <div class="text-blue-700 pl-8">Inventory <span class="text-gray-600 float-right">18</span></div>
+                        <td class="px-4 py-3">
+                            <table class="w-full text-xs">
+                                <tr class="text-gray-400 border-b border-gray-100"><th class="font-normal text-left pb-1">Account</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-gray-600 pt-1">Accounts Payable</td><td class="text-right pt-1">900</td><td></td></tr>
+                                <tr><td class="text-gray-600 pl-4">Cash</td><td></td><td class="text-right">882</td></tr>
+                                <tr><td class="text-blue-700 pl-4">Inventory</td><td></td><td class="text-right">18</td></tr>
+                            </table>
                         </td>
                     </tr>` +
 
                     // --- TABLE ROW: SALES DISCOUNT ---
                     `<tr class="bg-yellow-50 hover:bg-yellow-100 border-l-4 border-yellow-400">
-                        <td class="px-4 py-3">
+                        <td class="px-4 py-3 align-top">
                             <span class="font-bold text-gray-900 block">Sales Discount</span>
                             <span class="text-xs text-gray-500 italic">Ex: Collected $1,000 owing; 2% discount given ($20).</span>
                         </td>
-                        <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-gray-600">Cash <span class="float-right">980</span></div>
-                            <div class="text-purple-700">Sales Discounts <span class="text-gray-600 float-right">20</span></div>
-                            <div class="text-gray-600 pl-8">Accounts Receivable <span class="float-right">1,000</span></div>
+                        <td class="px-4 py-3">
+                            <table class="w-full text-xs">
+                                <tr class="text-gray-400 border-b border-yellow-200"><th class="font-normal text-left pb-1">Account</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-gray-600 pt-1">Cash</td><td class="text-right pt-1">980</td><td></td></tr>
+                                <tr><td class="text-purple-700 pt-1">Sales Discounts</td><td class="text-right pt-1">20</td><td></td></tr>
+                                <tr><td class="text-gray-600 pl-4">Accounts Receivable</td><td></td><td class="text-right">1,000</td></tr>
+                            </table>
                         </td>
-                        <td class="px-4 py-3 font-mono text-xs">
-                            <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Same as Periodic</span>
-                            <div class="text-gray-600 mt-1">Cash <span class="float-right">980</span></div>
-                            <div class="text-purple-700">Sales Discounts <span class="text-gray-600 float-right">20</span></div>
-                            <div class="text-gray-600 pl-8">Accounts Receivable <span class="float-right">1,000</span></div>
+                        <td class="px-4 py-3">
+                            <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider block mb-1">Same as Periodic</span>
+                            <table class="w-full text-xs">
+                                <tr class="text-gray-400 border-b border-yellow-200"><th class="font-normal text-left pb-1">Account</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-gray-600 pt-1">Cash</td><td class="text-right pt-1">980</td><td></td></tr>
+                                <tr><td class="text-purple-700 pt-1">Sales Discounts</td><td class="text-right pt-1">20</td><td></td></tr>
+                                <tr><td class="text-gray-600 pl-4">Accounts Receivable</td><td></td><td class="text-right">1,000</td></tr>
+                            </table>
                         </td>
                     </tr>` +
 
                     // --- TABLE ROW: SALES RETURN ---
                     `<tr class="bg-gray-50 hover:bg-gray-100">
-                        <td class="px-4 py-3">
+                        <td class="px-4 py-3 align-top">
                             <span class="font-bold text-gray-900 block">Sales Return</span>
                             <span class="text-xs text-gray-500 italic">Ex: Customer returned item sold for $500 (Cost $300).</span>
                         </td>
-                        <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-purple-700">Sales Ret. & Allow <span class="text-gray-600 float-right">500</span></div>
-                            <div class="text-gray-600 pl-8">Accounts Receivable <span class="float-right">500</span></div>
-                            <div class="text-gray-400 italic mt-2 text-[10px]">(No COGS entry made)</div>
+                        <td class="px-4 py-3">
+                            <table class="w-full text-xs">
+                                <tr class="text-gray-400 border-b border-gray-200"><th class="font-normal text-left pb-1">Account</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-purple-700 pt-1">Sales Ret. & Allow</td><td class="text-right pt-1">500</td><td></td></tr>
+                                <tr><td class="text-gray-600 pl-4">Accounts Receivable</td><td></td><td class="text-right">500</td></tr>
+                                <tr><td colspan="3" class="text-gray-400 italic pt-2 text-[10px] text-center">(No COGS entry made)</td></tr>
+                            </table>
                         </td>
-                        <td class="px-4 py-3 font-mono text-xs">
-                            <div class="border-b border-gray-300 pb-1 mb-1">
-                                <div class="text-purple-700">Sales Ret. & Allow <span class="text-gray-600 float-right">500</span></div>
-                                <div class="text-gray-600 pl-8">Accounts Rec. <span class="float-right">500</span></div>
-                            </div>
-                            <div class="text-blue-700">Inventory <span class="text-gray-600 float-right">300</span></div>
-                            <div class="text-gray-600 pl-8">COGS <span class="float-right">300</span></div>
+                        <td class="px-4 py-3">
+                            <table class="w-full text-xs mb-3 border-b border-gray-200 pb-2">
+                                <tr class="text-gray-400"><th class="font-normal text-left pb-1">Entry 1: Revenue</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-purple-700 pt-1">Sales Ret. & Allow</td><td class="text-right pt-1">500</td><td></td></tr>
+                                <tr><td class="text-gray-600 pl-4">Accounts Rec.</td><td></td><td class="text-right">500</td></tr>
+                            </table>
+                            <table class="w-full text-xs">
+                                <tr class="text-gray-400"><th class="font-normal text-left pb-1">Entry 2: Cost</th><th class="font-normal text-right w-14 pb-1">Dr</th><th class="font-normal text-right w-14 pb-1">Cr</th></tr>
+                                <tr><td class="text-blue-700 pt-1">Inventory</td><td class="text-right pt-1">300</td><td></td></tr>
+                                <tr><td class="text-gray-600 pl-4">COGS</td><td></td><td class="text-right">300</td></tr>
+                            </table>
                         </td>
                     </tr>` +
 
@@ -411,30 +444,67 @@ Dr. Purchases               7,200
     // --- SECTION 3: NET CALCULATIONS & FOOTER ---
     `<h3 class="text-xl font-bold text-gray-800 mb-3">3. Net Calculation Formulas</h3>
         <div class="space-y-4">
+            
             <div class="bg-indigo-50 p-4 rounded border-l-4 border-indigo-400">
                 <h5 class="font-bold text-indigo-900">Net Purchases</h5>
-                <p class="font-mono text-sm mt-1">Purchases - Purchase Returns & Allowances - Purchase Discounts = <span class="font-bold">Net Purchases</span></p>
-                <div class="mt-2 text-xs bg-white p-2 rounded border border-indigo-200 font-mono text-gray-600">
-                    <span class="block">Purchases: $10,000</span>
-                    <span class="block">- Returns: ($500)</span>
-                    <span class="block">- Discounts: ($200)</span>
-                    <span class="block border-t border-gray-300 mt-1 pt-1 font-bold text-indigo-700">= Net Purchases: $9,300</span>
+                <p class="font-mono text-sm mt-1 mb-3">Purchases - Returns & Allowances - Discounts = <span class="font-bold">Net Purchases</span></p>
+                
+                <div class="bg-white p-3 rounded border border-indigo-200">
+                    <table class="w-full text-xs font-mono text-gray-600">
+                        <tbody>
+                            <tr>
+                                <td class="pb-1">Purchases</td>
+                                <td class="text-right pb-1">$10,000</td>
+                            </tr>
+                            <tr>
+                                <td class="pb-1">Less: Purchase Returns and Allowances</td>
+                                <td class="text-right pb-1">($500)</td>
+                            </tr>
+                            <tr>
+                                <td class="pb-1">Less: Purchase Discounts</td>
+                                <td class="text-right pb-1">($200)</td>
+                            </tr>
+                            <tr class="font-bold text-indigo-700">
+                                <td class="pt-2 border-t border-gray-300">Net Purchases</td>
+                                <td class="text-right pt-2 border-t border-gray-300">$9,300</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <p class="text-xs text-indigo-700 mt-2 italic">(Note: Freight-In is added later to get Cost of Goods Purchased)</p>
             </div>
+
             <div class="bg-orange-50 p-4 rounded border-l-4 border-orange-400">
                 <h5 class="font-bold text-orange-900">Net Sales</h5>
-                <p class="font-mono text-sm mt-1">Sales - Sales Returns & Allowances - Sales Discounts = <span class="font-bold">Net Sales</span></p>
-                <div class="mt-2 text-xs bg-white p-2 rounded border border-orange-200 font-mono text-gray-600">
-                    <span class="block">Gross Sales: $20,000</span>
-                    <span class="block">- Returns: ($1,000)</span>
-                    <span class="block">- Discounts: ($400)</span>
-                    <span class="block border-t border-gray-300 mt-1 pt-1 font-bold text-orange-700">= Net Sales: $18,600</span>
+                <p class="font-mono text-sm mt-1 mb-3">Sales - Sales Returns & Allowances - Sales Discounts = <span class="font-bold">Net Sales</span></p>
+                
+                <div class="bg-white p-3 rounded border border-orange-200">
+                    <table class="w-full text-xs font-mono text-gray-600">
+                        <tbody>
+                            <tr>
+                                <td class="pb-1">Gross Sales</td>
+                                <td class="text-right pb-1">$20,000</td>
+                            </tr>
+                            <tr>
+                                <td class="pb-1">Less: Sales Returns and Allowances</td>
+                                <td class="text-right pb-1">($1,000)</td>
+                            </tr>
+                            <tr>
+                                <td class="pb-1">Less: Sales Discounts</td>
+                                <td class="text-right pb-1">($400)</td>
+                            </tr>
+                            <tr class="font-bold text-orange-700">
+                                <td class="pt-2 border-t border-gray-300">Net Sales</td>
+                                <td class="text-right pt-2 border-t border-gray-300">$18,600</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </li>
-</ul>`, 
+</ul>`
+    , 
   exercises: [
     {
       "type": "mcq",
