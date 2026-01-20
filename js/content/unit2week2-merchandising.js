@@ -1836,4 +1836,5 @@ export const unit2Week2Data = {
             exercises: []
         }
     ]
-};
+}
+        
