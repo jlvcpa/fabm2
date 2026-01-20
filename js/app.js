@@ -582,7 +582,7 @@ ${ex.explanation}
                     <tr class="border-b border-gray-200 hover:bg-gray-50 bg-white">
                         <td class="border-r border-gray-300 p-0 w-16 align-top">
                             <input type="text" 
-                                class="w-full h-full p-2 bg-transparent outline-none text-xs text-center font-mono text-gray-600" 
+                                class="w-full h-full p-2 bg-transparent outline-none text-xs text-left font-mono text-gray-600" 
                                 value="${rowData.date || ''}" 
                                 ${isReadOnly ? 'readonly disabled' : ''}
                                 // placeholder="Date
