@@ -269,40 +269,6 @@ Dr. Purchases               7,200
   topic: "Discounts, Returns, and Net Calculations (Periodic vs. Perpetual)",
   content: 
     // --- SECTION: HEADER & LEARNING GOALS ---
-    // ERROR FIX: Changed starting/ending quotes from " to ` (backticks)
-    `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-        <p class="font-bold text-blue-900">Learning Goal</p>
-        <p class="text-blue-800">Master the recording of Trade Discounts, Purchase/Sales Discounts, and Returns.</p>
-        <p class="text-blue-800">Differentiate between Periodic and Perpetual entries for these transactions.</p>
-    </div>
-
-    <h3 class="text-xl font-bold mb-4 mt-6">Topic Focus</h3>
-    <ul class="list-none space-y-8 mb-6">` +
-
-    // --- SECTION 1: TYPES OF DISCOUNTS ---
-    `<li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h3 class="text-xl font-bold text-gray-800 mb-3">1. Types of Discounts</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-gray-50 p-4 rounded">
-                <h4 class="font-bold text-purple-700">Trade Discounts</h4>
-                <p class="text-sm text-gray-700 mt-2">Reductions from the list price given to customers (e.g., wholesalers) before the transaction is recorded.</p>
-                <p class="text-sm text-gray-900 font-bold mt-2">Treatment: Not recorded in the books. Record the transaction at the net price (List - Trade Discount).</p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded">
-                <h4 class="font-bold text-green-700">Cash Discounts (Sales/Purchase Discounts)</h4>
-                <p class="text-sm text-gray-700 mt-2">Incentives for early payment (e.g., 2/10, n/30).</p>
-                <p class="text-sm text-gray-900 font-bold mt-2">Treatment: Recorded in the books when payment is made/received within the discount period.</p>
-            </div>
-        </div>
-    </li>` +
-
-    // --- SECTION 2: SYSTEM COMPARISON (INTRO & TABLE HEADER) ---
-    `<li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        {
-  day: "Day 2",
-  topic: "Discounts, Returns, and Net Calculations (Periodic vs. Perpetual)",
-  content: 
-    // --- SECTION: HEADER & LEARNING GOALS ---
     `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
         <p class="font-bold text-blue-900">Learning Goal</p>
         <p class="text-blue-800">Master the recording of Trade Discounts, Purchase/Sales Discounts, and Returns.</p>
