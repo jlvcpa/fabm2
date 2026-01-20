@@ -628,7 +628,7 @@ ${ex.explanation}
                 const inputTable = `
                     <div class="mb-6 border border-gray-300 shadow-sm rounded-lg overflow-hidden">
                         <div class="bg-gray-100 px-4 py-2 border-b border-gray-300 flex justify-between items-center">
-                            <span class="font-bold text-gray-700 text-sm">Transaction: ${tx.date} ${tx.description}</span>
+                            <span class="font-bold text-gray-700 text-sm">${tx.date} ${tx.description}</span>
                         </div>
                         <table class="w-full border-collapse">
                             <thead>
