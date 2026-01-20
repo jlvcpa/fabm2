@@ -1003,30 +1003,689 @@ export const unit2Week2Data = {
       "explanation": "In the Periodic system, the savings from early payment are recorded in the specific contra-expense account 'Purchase Discounts'."
     },
     {
-      "type": "problem",
-      "question": "PERIODIC SYSTEM - PURCHASES SCENARIO\n\nJournalize the following transactions for Company A (Buyer) using the Periodic Inventory System:\n1.  **March 1:** Purchased merchandise with a list price of $5,000, less a 20% trade discount. Terms: 2/10, n/30.\n2.  **March 3:** Returned defective merchandise with a list price of $500 (Gross) to the supplier.\n3.  **March 10:** Paid the full amount due within the discount period.",
-      "answer": "March 1 (Purchase):\nPurchases .......................... 4,000\n    Accounts Payable ....................... 4,000\n*(Calculation: $5,000 list - 20% trade discount = $4,000)*\n\nMarch 3 (Return):\nAccounts Payable ................... 400\n    Purchase Returns & Allowances .......... 400\n*(Calculation: $500 list - 20% trade discount = $400)*\n\nMarch 10 (Payment):\nAccounts Payable ................... 3,600\n    Purchase Discounts ..................... 72\n    Cash ................................... 3,528\n*(Calculation: AP Balance $4,000 - $400 = $3,600. Discount 2% of $3,600 = $72)*",
-      "explanation": "Note that Trade Discounts are deducted immediately. The Purchase Discount (2%) is calculated on the *outstanding Accounts Payable balance* ($3,600) after the return."
-    },
-    {
-      "type": "problem",
-      "question": "PERPETUAL SYSTEM - PURCHASES SCENARIO\n\nJournalize the following transactions for Company B (Buyer) using the Perpetual Inventory System:\n1.  **June 1:** Purchased inventory on account for $10,000. Terms 3/10, n/30.\n2.  **June 5:** Received an allowance of $1,000 for slightly damaged goods (kept the goods).\n3.  **June 11:** Paid the balance due within the discount period.",
-      "answer": "June 1 (Purchase):\nInventory .......................... 10,000\n    Accounts Payable ....................... 10,000\n\nJune 5 (Allowance):\nAccounts Payable ................... 1,000\n    Inventory .............................. 1,000\n\nJune 11 (Payment):\nAccounts Payable ................... 9,000\n    Inventory .............................. 270\n    Cash ................................... 8,730\n*(Calculation: AP Balance $9,000 x 3% = $270. In Perpetual, discounts reduce the Inventory asset account)*",
-      "explanation": "In a Perpetual system, 'Purchases', 'Returns', and 'Discounts' accounts are replaced by the 'Inventory' account."
-    },
-    {
-      "type": "problem",
-      "question": "PERIODIC SYSTEM - SALES SCENARIO\n\nJournalize the following transactions for Company C (Seller) using the Periodic Inventory System:\n1.  **July 1:** Sold merchandise on account for $8,000. Terms 1/15, n/30.\n2.  **July 4:** Customer returned goods with a sales price of $500.\n3.  **July 15:** Received payment in full from the customer.",
-      "answer": "July 1 (Sale):\nAccounts Receivable ................ 8,000\n    Sales Revenue .......................... 8,000\n*(No entry for COGS in Periodic)*\n\nJuly 4 (Return):\nSales Returns & Allowances ......... 500\n    Accounts Receivable .................... 500\n*(No entry for Inventory restoration in Periodic)*\n\nJuly 15 (Collection):\nCash ............................... 7,425\nSales Discounts .................... 75\n    Accounts Receivable .................... 7,500\n*(Calculation: AR Balance $8,000 - $500 = $7,500. Discount 1% of $7,500 = $75)*",
-      "explanation": "Under Periodic, we record revenue and AR, but we do NOT touch Inventory or COGS at the time of sale or return."
-    },
-    {
-      "type": "problem",
-      "question": "PERPETUAL SYSTEM - SALES SCENARIO\n\nJournalize the following transactions for Company D (Seller) using the Perpetual Inventory System. (Cost of goods is 60% of selling price).\n1.  **Aug 1:** Sold goods on credit for $20,000. Terms 2/10, n/30.\n2.  **Aug 5:** Granted a credit allowance of $2,000 to the customer for defects (customer kept goods).\n3.  **Aug 10:** Received payment in full.",
-      "answer": "Aug 1 (Sale):\nAccounts Receivable ................ 20,000\n    Sales Revenue .......................... 20,000\nCost of Goods Sold ................. 12,000\n    Inventory .............................. 12,000\n*(Cost = $20,000 * 60%)*\n\nAug 5 (Allowance):\nSales Returns & Allowances ......... 2,000\n    Accounts Receivable .................... 2,000\n*(No inventory entry for Allowance as goods were not returned)*\n\nAug 10 (Collection):\nCash ............................... 17,640\nSales Discounts .................... 360\n    Accounts Receivable .................... 18,000\n*(Calculation: AR Balance $18,000. Discount 2% = $360)*",
-      "explanation": "Perpetual sales require two entries: one for Revenue (at selling price) and one for COGS (at cost). Allowances reduce AR but do not affect Inventory cost unless goods physically return."
-    }
-  ]
+    "type": "journalizing",
+    "id": "day2_prob1",
+    "title": "PROBLEM 1: PERIODIC SYSTEM (Basic Flow & Trade Discounts)",
+    "instructions": "Journalize the transactions for 'Alpha Trading' using the **PERIODIC INVENTORY SYSTEM**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales Revenue, Sales Returns and Allowances, Sales Discounts, Purchases, Purchase Returns and Allowances, Purchase Discounts.",
+    "transactions": [
+      {
+        "date": "Jan 2",
+        "description": "Purchased merchandise from Supplier A with a list price of $10,000, less a 20% trade discount. Terms 2/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "Jan 2", "account": "Purchases", "debit": 8000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 8000.00 },
+          { "date": "", "account": "Purchased goods, 20% trade discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "5",
+        "description": "Sold merchandise to Customer X on account, list price $5,000. Terms n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Accounts Receivable", "debit": 5000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 5000.00 },
+          { "date": "", "account": "Sold merchandise on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "7",
+        "description": "Returned defective merchandise to Supplier A, originally billed at $500 (net of trade discount).",
+        "rows": 3,
+        "solution": [
+          { "date": "7", "account": "Accounts Payable", "debit": 500.00, "credit": "" },
+          { "date": "", "account": "Purchase Returns and Allowances", "debit": "", "credit": 500.00 },
+          { "date": "", "account": "Returned defective goods", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "9",
+        "description": "Purchased merchandise from Supplier B for $3,000 cash.",
+        "rows": 3,
+        "solution": [
+          { "date": "9", "account": "Purchases", "debit": 3000.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 3000.00 },
+          { "date": "", "account": "Cash purchase of goods", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "12",
+        "description": "Paid Supplier A the amount due within the discount period.",
+        "rows": 4,
+        "solution": [
+          { "date": "12", "account": "Accounts Payable", "debit": 7500.00, "credit": "" },
+          { "date": "", "account": "Purchase Discounts", "debit": "", "credit": 150.00 },
+          { "date": "", "account": "Cash", "debit": "", "credit": 7350.00 },
+          { "date": "", "account": "Paid account in full with discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "15",
+        "description": "Sold merchandise to Customer Y for $2,000 cash.",
+        "rows": 3,
+        "solution": [
+          { "date": "15", "account": "Cash", "debit": 2000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 2000.00 },
+          { "date": "", "account": "Cash sale of merchandise", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "18",
+        "description": "Customer X returned $200 of merchandise purchased on Jan 5.",
+        "rows": 3,
+        "solution": [
+          { "date": "18", "account": "Sales Returns and Allowances", "debit": 200.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 200.00 },
+          { "date": "", "account": "Return of goods from customer", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "20",
+        "description": "Purchased merchandise from Supplier C for $4,000 on account. Terms n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "20", "account": "Purchases", "debit": 4000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 4000.00 },
+          { "date": "", "account": "Purchased goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "25",
+        "description": "Collected full payment from Customer X.",
+        "rows": 3,
+        "solution": [
+          { "date": "25", "account": "Cash", "debit": 4800.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 4800.00 },
+          { "date": "", "account": "Received payment on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "28",
+        "description": "Sold merchandise to Customer Z on account, list price $8,000, 10% trade discount. Terms 1/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "28", "account": "Accounts Receivable", "debit": 7200.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 7200.00 },
+          { "date": "", "account": "Sale with trade discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "day2_prob2",
+    "title": "PROBLEM 2: PERPETUAL SYSTEM (Cost & Inventory Updates)",
+    "instructions": "Journalize the transactions for 'Beta Systems' using the **PERPETUAL INVENTORY SYSTEM**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales Revenue, Sales Returns and Allowances, Sales Discounts, Merchandise Inventory, Cost of Goods Sold.",
+    "transactions": [
+      {
+        "date": "Feb 1",
+        "description": "Purchased inventory from Vendor A for $12,000 on account. Terms 2/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "Feb 1", "account": "Merchandise Inventory", "debit": 12000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 12000.00 },
+          { "date": "", "account": "Purchased inventory on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "3",
+        "description": "Sold inventory to Client B for $8,000 on account (Cost of goods sold: $5,000).",
+        "rows": 5,
+        "solution": [
+          { "date": "3", "account": "Accounts Receivable", "debit": 8000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 8000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 5000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 5000.00 },
+          { "date": "", "account": "Sold goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "5",
+        "description": "Returned $1,000 of defective inventory to Vendor A.",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Accounts Payable", "debit": 1000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 1000.00 },
+          { "date": "", "account": "Returned inventory to vendor", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "8",
+        "description": "Client B returned goods sold for $800. The goods were not damaged and returned to inventory (Original Cost: $500).",
+        "rows": 5,
+        "solution": [
+          { "date": "8", "account": "Sales Returns and Allowances", "debit": 800.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 800.00 },
+          { "date": "", "account": "Merchandise Inventory", "debit": 500.00, "credit": "" },
+          { "date": "", "account": "Cost of Goods Sold", "debit": "", "credit": 500.00 },
+          { "date": "", "account": "Customer return recorded", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "10",
+        "description": "Paid Vendor A the balance due within the discount period.",
+        "rows": 4,
+        "solution": [
+          { "date": "10", "account": "Accounts Payable", "debit": 11000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 220.00 },
+          { "date": "", "account": "Cash", "debit": "", "credit": 10780.00 },
+          { "date": "", "account": "Paid account with discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "14",
+        "description": "Purchased inventory for $5,000 cash.",
+        "rows": 3,
+        "solution": [
+          { "date": "14", "account": "Merchandise Inventory", "debit": 5000.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 5000.00 },
+          { "date": "", "account": "Cash purchase of inventory", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "18",
+        "description": "Sold inventory for $3,000 cash (Cost: $1,800).",
+        "rows": 5,
+        "solution": [
+          { "date": "18", "account": "Cash", "debit": 3000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 3000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 1800.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 1800.00 },
+          { "date": "", "account": "Cash sale recorded", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "22",
+        "description": "Purchased inventory from Vendor C for $6,000. Terms n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "22", "account": "Merchandise Inventory", "debit": 6000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 6000.00 },
+          { "date": "", "account": "Purchased inventory on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "25",
+        "description": "Sold inventory to Client D for $4,000 on account (Cost: $2,500). Terms 2/10, n/30.",
+        "rows": 5,
+        "solution": [
+          { "date": "25", "account": "Accounts Receivable", "debit": 4000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 4000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 2500.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 2500.00 },
+          { "date": "", "account": "Sold goods on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "28",
+        "description": "Received payment from Client B for the balance due (after returns) within the discount period (Terms 2/10, n/30 were applicable).",
+        "rows": 4,
+        "solution": [
+          { "date": "28", "account": "Cash", "debit": 7056.00, "credit": "" },
+          { "date": "", "account": "Sales Discounts", "debit": 144.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 7200.00 },
+          { "date": "", "account": "Received payment less discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "day2_prob3",
+    "title": "PROBLEM 3: PERIODIC SYSTEM (Advanced Discounts)",
+    "instructions": "Journalize the transactions for 'Gamma Inc.' using the **PERIODIC INVENTORY SYSTEM**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales Revenue, Sales Returns and Allowances, Sales Discounts, Purchases, Purchase Returns and Allowances, Purchase Discounts.",
+    "transactions": [
+      {
+        "date": "Mar 1",
+        "description": "Purchased goods from Supplier Main: List price $20,000, 10% trade discount. Terms 3/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "Mar 1", "account": "Purchases", "debit": 18000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 18000.00 },
+          { "date": "", "account": "Purchase with trade discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "3",
+        "description": "Sold goods to Customer West: List price $10,000, 5% trade discount. Terms 2/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "3", "account": "Accounts Receivable", "debit": 9500.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 9500.00 },
+          { "date": "", "account": "Sale with trade discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "5",
+        "description": "Returned goods to Supplier Main with a list price of $1,000 (net cost was $900).",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Accounts Payable", "debit": 900.00, "credit": "" },
+          { "date": "", "account": "Purchase Returns and Allowances", "debit": "", "credit": 900.00 },
+          { "date": "", "account": "Return to supplier", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "8",
+        "description": "Customer West returned goods with a list price of $500 (net price $475).",
+        "rows": 3,
+        "solution": [
+          { "date": "8", "account": "Sales Returns and Allowances", "debit": 475.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 475.00 },
+          { "date": "", "account": "Customer return", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "10",
+        "description": "Paid Supplier Main in full, within the discount period.",
+        "rows": 4,
+        "solution": [
+          { "date": "10", "account": "Accounts Payable", "debit": 17100.00, "credit": "" },
+          { "date": "", "account": "Purchase Discounts", "debit": "", "credit": 513.00 },
+          { "date": "", "account": "Cash", "debit": "", "credit": 16587.00 },
+          { "date": "", "account": "Payment with 3% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "13",
+        "description": "Received payment from Customer West in full, within the discount period.",
+        "rows": 4,
+        "solution": [
+          { "date": "13", "account": "Cash", "debit": 8844.50, "credit": "" },
+          { "date": "", "account": "Sales Discounts", "debit": 180.50, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 9025.00 },
+          { "date": "", "account": "Collection with 2% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "16",
+        "description": "Purchased goods from Supplier Fast for $2,500 cash.",
+        "rows": 3,
+        "solution": [
+          { "date": "16", "account": "Purchases", "debit": 2500.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 2500.00 },
+          { "date": "", "account": "Cash purchase", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "20",
+        "description": "Sold goods to Customer East for $4,000 on account. Terms n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "20", "account": "Accounts Receivable", "debit": 4000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 4000.00 },
+          { "date": "", "account": "Sale on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "25",
+        "description": "Purchased goods from Supplier Slow for $5,000 on account. Terms n/45.",
+        "rows": 3,
+        "solution": [
+          { "date": "25", "account": "Purchases", "debit": 5000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 5000.00 },
+          { "date": "", "account": "Purchase on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "30",
+        "description": "Received partial payment of $2,000 from Customer East (No discount applies).",
+        "rows": 3,
+        "solution": [
+          { "date": "30", "account": "Cash", "debit": 2000.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 2000.00 },
+          { "date": "", "account": "Partial collection", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "day2_prob4",
+    "title": "PROBLEM 4: PERPETUAL SYSTEM (Returns Focus)",
+    "instructions": "Journalize the transactions for 'Delta Corp' using the **PERPETUAL INVENTORY SYSTEM**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales Revenue, Sales Returns and Allowances, Sales Discounts, Merchandise Inventory, Cost of Goods Sold.",
+    "transactions": [
+      {
+        "date": "Apr 1",
+        "description": "Purchased inventory from Vendor X for $15,000 on account. Terms 2/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "Apr 1", "account": "Merchandise Inventory", "debit": 15000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 15000.00 },
+          { "date": "", "account": "Purchased inventory", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "4",
+        "description": "Sold inventory to Client Y for $10,000 on account (Cost: $6,000). Terms 2/10, n/30.",
+        "rows": 5,
+        "solution": [
+          { "date": "4", "account": "Accounts Receivable", "debit": 10000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 10000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 6000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 6000.00 },
+          { "date": "", "account": "Sold inventory on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "6",
+        "description": "Returned defective inventory to Vendor X amounting to $2,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "6", "account": "Accounts Payable", "debit": 2000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 2000.00 },
+          { "date": "", "account": "Return of defective inventory", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "9",
+        "description": "Client Y returned goods sold for $1,000 (Cost was $600). The goods were returned to stock.",
+        "rows": 5,
+        "solution": [
+          { "date": "9", "account": "Sales Returns and Allowances", "debit": 1000.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 1000.00 },
+          { "date": "", "account": "Merchandise Inventory", "debit": 600.00, "credit": "" },
+          { "date": "", "account": "Cost of Goods Sold", "debit": "", "credit": 600.00 },
+          { "date": "", "account": "Customer return recorded", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "11",
+        "description": "Paid Vendor X in full, within the discount period.",
+        "rows": 4,
+        "solution": [
+          { "date": "11", "account": "Accounts Payable", "debit": 13000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 260.00 },
+          { "date": "", "account": "Cash", "debit": "", "credit": 12740.00 },
+          { "date": "", "account": "Payment with 2% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "14",
+        "description": "Received payment from Client Y in full, within the discount period.",
+        "rows": 4,
+        "solution": [
+          { "date": "14", "account": "Cash", "debit": 8820.00, "credit": "" },
+          { "date": "", "account": "Sales Discounts", "debit": 180.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 9000.00 },
+          { "date": "", "account": "Collection with 2% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "18",
+        "description": "Purchased inventory for $4,000 cash.",
+        "rows": 3,
+        "solution": [
+          { "date": "18", "account": "Merchandise Inventory", "debit": 4000.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 4000.00 },
+          { "date": "", "account": "Cash purchase", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "22",
+        "description": "Sold inventory for $2,500 cash (Cost: $1,500).",
+        "rows": 5,
+        "solution": [
+          { "date": "22", "account": "Cash", "debit": 2500.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 2500.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 1500.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 1500.00 },
+          { "date": "", "account": "Cash sale recorded", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "25",
+        "description": "Purchased inventory from Vendor Z for $8,000 on account.",
+        "rows": 3,
+        "solution": [
+          { "date": "25", "account": "Merchandise Inventory", "debit": 8000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 8000.00 },
+          { "date": "", "account": "Purchase on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "30",
+        "description": "Sold inventory to Client W for $5,000 on account (Cost: $3,000).",
+        "rows": 5,
+        "solution": [
+          { "date": "30", "account": "Accounts Receivable", "debit": 5000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 5000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 3000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 3000.00 },
+          { "date": "", "account": "Credit sale recorded", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "day2_prob5",
+    "title": "PROBLEM 5: PERIODIC SYSTEM (Missed Discounts)",
+    "instructions": "Journalize the transactions for 'Epsilon Ltd' using the **PERIODIC INVENTORY SYSTEM**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales Revenue, Sales Returns and Allowances, Sales Discounts, Purchases, Purchase Returns and Allowances, Purchase Discounts.",
+    "transactions": [
+      {
+        "date": "May 1",
+        "description": "Purchased goods from Supplier One for $6,000. Terms 2/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "May 1", "account": "Purchases", "debit": 6000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 6000.00 },
+          { "date": "", "account": "Purchase on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "3",
+        "description": "Sold goods to Customer A for $3,000 on account. Terms 2/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "3", "account": "Accounts Receivable", "debit": 3000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 3000.00 },
+          { "date": "", "account": "Sale on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "5",
+        "description": "Returned defective goods to Supplier One worth $500.",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Accounts Payable", "debit": 500.00, "credit": "" },
+          { "date": "", "account": "Purchase Returns and Allowances", "debit": "", "credit": 500.00 },
+          { "date": "", "account": "Returned goods to supplier", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "15",
+        "description": "Paid Supplier One the balance due (Discount period has expired).",
+        "rows": 3,
+        "solution": [
+          { "date": "15", "account": "Accounts Payable", "debit": 5500.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 5500.00 },
+          { "date": "", "account": "Paid account after discount period", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "18",
+        "description": "Customer A paid the full amount due (Discount period has expired).",
+        "rows": 3,
+        "solution": [
+          { "date": "18", "account": "Cash", "debit": 3000.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 3000.00 },
+          { "date": "", "account": "Collected full payment", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "20",
+        "description": "Purchased goods from Supplier Two for $4,000. Terms 2/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "20", "account": "Purchases", "debit": 4000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 4000.00 },
+          { "date": "", "account": "Purchase on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "22",
+        "description": "Sold goods to Customer B for $5,000 on account. Terms 2/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "22", "account": "Accounts Receivable", "debit": 5000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 5000.00 },
+          { "date": "", "account": "Sale on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "25",
+        "description": "Customer B returned goods worth $400.",
+        "rows": 3,
+        "solution": [
+          { "date": "25", "account": "Sales Returns and Allowances", "debit": 400.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 400.00 },
+          { "date": "", "account": "Customer return", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "28",
+        "description": "Paid Supplier Two in full within the discount period.",
+        "rows": 4,
+        "solution": [
+          { "date": "28", "account": "Accounts Payable", "debit": 4000.00, "credit": "" },
+          { "date": "", "account": "Purchase Discounts", "debit": "", "credit": 80.00 },
+          { "date": "", "account": "Cash", "debit": "", "credit": 3920.00 },
+          { "date": "", "account": "Paid with discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "30",
+        "description": "Received payment from Customer B in full within the discount period.",
+        "rows": 4,
+        "solution": [
+          { "date": "30", "account": "Cash", "debit": 4508.00, "credit": "" },
+          { "date": "", "account": "Sales Discounts", "debit": 92.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 4600.00 },
+          { "date": "", "account": "Received payment with discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "day2_prob6",
+    "title": "PROBLEM 6: PERPETUAL SYSTEM (High Volume)",
+    "instructions": "Journalize the transactions for 'Zeta Mart' using the **PERPETUAL INVENTORY SYSTEM**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales Revenue, Sales Returns and Allowances, Sales Discounts, Merchandise Inventory, Cost of Goods Sold.",
+    "transactions": [
+      {
+        "date": "Jun 1",
+        "description": "Purchased inventory for $20,000 on account. Terms 1/15, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "Jun 1", "account": "Merchandise Inventory", "debit": 20000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 20000.00 },
+          { "date": "", "account": "Purchase inventory", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "3",
+        "description": "Sold inventory for $12,000 on account (Cost: $7,000). Terms 1/15, n/30.",
+        "rows": 5,
+        "solution": [
+          { "date": "3", "account": "Accounts Receivable", "debit": 12000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 12000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 7000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 7000.00 },
+          { "date": "", "account": "Sold inventory", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "5",
+        "description": "Returned $2,000 of inventory to the supplier.",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Accounts Payable", "debit": 2000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 2000.00 },
+          { "date": "", "account": "Returned inventory", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "7",
+        "description": "Customer returned goods sold for $500 (Cost $300). Goods returned to stock.",
+        "rows": 5,
+        "solution": [
+          { "date": "7", "account": "Sales Returns and Allowances", "debit": 500.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 500.00 },
+          { "date": "", "account": "Merchandise Inventory", "debit": 300.00, "credit": "" },
+          { "date": "", "account": "Cost of Goods Sold", "debit": "", "credit": 300.00 },
+          { "date": "", "account": "Customer return", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "12",
+        "description": "Paid the supplier in full within the discount period.",
+        "rows": 4,
+        "solution": [
+          { "date": "12", "account": "Accounts Payable", "debit": 18000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 180.00 },
+          { "date": "", "account": "Cash", "debit": "", "credit": 17820.00 },
+          { "date": "", "account": "Paid with 1% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "15",
+        "description": "Received full payment from the customer within the discount period.",
+        "rows": 4,
+        "solution": [
+          { "date": "15", "account": "Cash", "debit": 11385.00, "credit": "" },
+          { "date": "", "account": "Sales Discounts", "debit": 115.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 11500.00 },
+          { "date": "", "account": "Received payment with 1% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "20",
+        "description": "Purchased inventory for $3,000 cash.",
+        "rows": 3,
+        "solution": [
+          { "date": "20", "account": "Merchandise Inventory", "debit": 3000.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 3000.00 },
+          { "date": "", "account": "Cash purchase", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "22",
+        "description": "Sold inventory for $2,000 cash (Cost: $1,200).",
+        "rows": 5,
+        "solution": [
+          { "date": "22", "account": "Cash", "debit": 2000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 2000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 1200.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 1200.00 },
+          { "date": "", "account": "Cash sale", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "25",
+        "description": "Purchased inventory for $5,000 on account.",
+        "rows": 3,
+        "solution": [
+          { "date": "25", "account": "Merchandise Inventory", "debit": 5000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 5000.00 },
+          { "date": "", "account": "Purchase on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "28",
+        "description": "Sold inventory for $4,000 on account (Cost: $2,400).",
+        "rows": 5,
+        "solution": [
+          { "date": "28", "account": "Accounts Receivable", "debit": 4000.00, "credit": "" },
+          { "date": "", "account": "Sales Revenue", "debit": "", "credit": 4000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 2400.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 2400.00 },
+          { "date": "", "account": "Credit sale", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  }
+]
 },
         {
     day: "Day 3",
