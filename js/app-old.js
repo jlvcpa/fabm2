@@ -7,7 +7,6 @@ let currentUser = null;
 let calendarAssignments = JSON.parse(localStorage.getItem('fabm2_calendar')) || {};
 let flatTopics = []; 
 let currentCalendarYear, currentCalendarMonth;
-let hoverTimeout;
 
 // --- DOM ELEMENTS ---
 const elements = {
@@ -24,7 +23,7 @@ const elements = {
     pageTitle: () => document.getElementById('page-title'),
     sidebar: () => document.getElementById('sidebar'),
     sidebarOverlay: () => document.getElementById('sidebar-overlay'),
-    hoverMenu: () => document.getElementById('hover-menu'),
+    // hoverMenu: () => document.getElementById('hover-menu'), // No longer needed
     mobileMenuBtn: () => document.getElementById('mobile-menu-btn'),
     desktopSidebarToggle: () => document.getElementById('desktop-sidebar-toggle'),
     btnLogout: () => document.getElementById('btn-logout')
@@ -49,6 +48,9 @@ function setupEventListeners() {
     // Sidebar
     elements.desktopSidebarToggle().addEventListener('click', () => {
         elements.sidebar().classList.toggle('collapsed');
+        
+        // If collapsing, we might want to close all submenus, 
+        // but keeping them open state is usually better UX until clicked.
     });
     
     elements.mobileMenuBtn().addEventListener('click', () => {
@@ -58,10 +60,7 @@ function setupEventListeners() {
 
     elements.sidebarOverlay().addEventListener('click', closeMobileSidebar);
 
-    // Hover Menu
-    const menu = elements.hoverMenu();
-    menu.addEventListener('mouseenter', () => clearTimeout(hoverTimeout));
-    menu.addEventListener('mouseleave', hideHoverMenu);
+    // Hover Menu listeners removed as we are now using click-accordion
 }
 
 // --- AUTH LOGIC ---
@@ -168,6 +167,7 @@ function renderSidebar(role) {
             const unitPrefix = unitParts[0];
             const unitSuffix = unitParts.slice(1).join(':');
 
+            // --- UNIT BUTTON ---
             const unitBtn = document.createElement('button');
             unitBtn.className = "w-full text-left px-6 py-3 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors flex justify-between items-center group whitespace-nowrap overflow-hidden";
             unitBtn.innerHTML = `
@@ -178,47 +178,107 @@ function renderSidebar(role) {
                 <i class="fas fa-chevron-down text-xs transform transition-transform duration-300 group-hover:text-blue-400"></i>
             `;
             
-            const submenu = document.createElement('div');
-            submenu.className = "submenu bg-slate-950";
+            const unitSubmenu = document.createElement('div');
+            unitSubmenu.className = "unit-submenu bg-slate-950 hidden"; // Hidden by default
             
             unitBtn.onclick = () => {
                 const icon = unitBtn.querySelector('.fa-chevron-down');
-                if (submenu.classList.contains('open')) {
-                    submenu.classList.remove('open');
-                    icon.classList.remove('rotate-180');
-                } else {
-                    document.querySelectorAll('.submenu').forEach(el => {
-                        el.classList.remove('open');
-                        el.previousElementSibling.querySelector('.fa-chevron-down')?.classList.remove('rotate-180');
-                    });
-                    submenu.classList.add('open');
+                
+                // Toggle this unit
+                if (unitSubmenu.classList.contains('hidden')) {
+                    // Open
+                    unitSubmenu.classList.remove('hidden');
                     icon.classList.add('rotate-180');
+                } else {
+                    // Close
+                    unitSubmenu.classList.add('hidden');
+                    icon.classList.remove('rotate-180');
                 }
             };
 
+            // --- WEEK RENDERER ---
             unit.weeks.forEach(week => {
                 const weekParts = week.title.split(':');
                 const weekPrefix = weekParts[0];
                 const weekSuffix = weekParts.slice(1).join(':');
 
-                const weekLink = document.createElement('button');
-                weekLink.className = "w-full text-left pl-10 pr-6 py-2 text-sm text-slate-400 hover:text-blue-300 hover:bg-slate-900 transition-colors border-l-2 border-transparent hover:border-blue-500 relative whitespace-nowrap overflow-hidden";
-                weekLink.innerHTML = `<span>${weekPrefix}</span><span class="sidebar-text-detail">:${weekSuffix}</span>`;
+                // 1. Week Button (Parent)
+                const weekBtn = document.createElement('button');
+                // Added flex and group for chevron positioning
+                weekBtn.className = "w-full text-left pl-10 pr-6 py-2 text-sm text-slate-400 hover:text-blue-300 hover:bg-slate-900 transition-colors border-l-2 border-transparent hover:border-blue-500 relative whitespace-nowrap overflow-hidden flex justify-between items-center group";
                 
-                weekLink.onclick = () => {
-                    renderDayContent(unit, week, 0); 
-                    closeMobileSidebar();
-                    highlightActiveLink(weekLink);
-                };
+                // Added chevron icon for the week
+                weekBtn.innerHTML = `
+                    <div class="truncate">
+                        <span>${weekPrefix}</span><span class="sidebar-text-detail">:${weekSuffix}</span>
+                    </div>
+                    ${(week.days && week.days.length > 0) ? '<i class="fas fa-chevron-down text-[10px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>' : ''}
+                `;
+                
+                // 2. Day Submenu (Child Container)
+                const daySubmenu = document.createElement('div');
+                daySubmenu.className = "day-submenu hidden bg-slate-950 border-l border-slate-800 ml-10"; // Indented submenu
 
-                weekLink.addEventListener('mouseenter', (e) => showHoverMenu(e, unit, week));
-                weekLink.addEventListener('mouseleave', hideHoverMenu);
+                // 3. Populate Days
+                if (week.days && week.days.length > 0) {
+                    week.days.forEach((day, index) => {
+                        const dayBtn = document.createElement('button');
+                        dayBtn.className = "w-full text-left pl-6 pr-4 py-2 text-xs text-slate-500 hover:text-blue-400 hover:bg-slate-900 transition-colors flex items-center gap-2";
+                        dayBtn.innerHTML = `<i class="fas fa-circle text-[6px]"></i> <span>${day.day}: ${day.topic}</span>`;
+                        
+                        dayBtn.onclick = () => {
+                            renderDayContent(unit, week, index);
+                            closeMobileSidebar();
+                            highlightActiveDay(dayBtn);
+                        };
+                        daySubmenu.appendChild(dayBtn);
+                    });
 
-                submenu.appendChild(weekLink);
+                    // 4. Logic to Toggle Week and Show Days
+                    weekBtn.onclick = () => {
+                        const icon = weekBtn.querySelector('.fa-chevron-down');
+                        const isClosed = daySubmenu.classList.contains('hidden');
+
+                        // A. Close ALL other open Day Submenus in the entire sidebar
+                        document.querySelectorAll('.day-submenu').forEach(el => el.classList.add('hidden'));
+                        document.querySelectorAll('.day-submenu').forEach(el => {
+                            // Reset chevrons of other weeks
+                            const prevBtn = el.previousElementSibling; 
+                            if(prevBtn) {
+                                const prevIcon = prevBtn.querySelector('.fa-chevron-down');
+                                if(prevIcon) {
+                                    prevIcon.classList.remove('rotate-180', 'opacity-100', 'text-blue-400');
+                                    prevIcon.classList.add('opacity-0');
+                                }
+                            }
+                        });
+
+                        // B. If it was closed, open THIS one
+                        if (isClosed) {
+                            daySubmenu.classList.remove('hidden');
+                            if(icon) {
+                                icon.classList.add('rotate-180', 'opacity-100', 'text-blue-400');
+                                icon.classList.remove('opacity-0');
+                            }
+                            
+                            // *** IMPORTANT: FORCE SIDEBAR EXPANSION ***
+                            // If sidebar is collapsed (icons only), we must expand it so the user can see the "Day 1" text
+                            if (elements.sidebar().classList.contains('collapsed')) {
+                                elements.sidebar().classList.remove('collapsed');
+                            }
+                        }
+                    };
+                } else {
+                    // If no days, just do nothing or show toast
+                    weekBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+
+                unitSubmenu.appendChild(weekBtn);
+                unitSubmenu.appendChild(daySubmenu);
             });
 
             container.appendChild(unitBtn);
-            container.appendChild(submenu);
+            container.appendChild(unitSubmenu);
         });
     });
 }
@@ -274,8 +334,6 @@ function renderLandingPage() {
 }
 
 // --- DAY RENDERER (The Core Content Logic) ---
-
-// --- DAY RENDERER REVISION ---
 
 function renderDayContent(unit, week, dayIndex) {
     // Update document title for browser history/tab
@@ -363,7 +421,12 @@ function renderDayContent(unit, week, dayIndex) {
         // Reduced height by ~20% (py-1.5 vs py-2), text-xs
         prevBtn.className = "px-3 py-1.5 text-xs font-medium text-slate-600 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 hover:text-blue-600 transition-colors flex items-center";
         prevBtn.innerHTML = `<i class="fas fa-chevron-left mr-1"></i> Prev`;
-        prevBtn.onclick = () => renderDayContent(unit, week, dayIndex - 1);
+        prevBtn.onclick = () => {
+            renderDayContent(unit, week, dayIndex - 1);
+            // Auto open the submenu if needed (UX enhancement)
+            const activeWeekBtn = document.querySelector('.day-submenu:not(.hidden)')?.previousElementSibling;
+            if (activeWeekBtn) activeWeekBtn.click();
+        };
         navButtonsGroup.appendChild(prevBtn);
     }
 
@@ -448,8 +511,9 @@ function renderExercises(exercises, dayIndex) {
 
         const exId = `ex-${dayIndex}-${i}`;
         
+        // --- MCQ HANDLER ---
         if (ex.type === 'mcq') {
-            const optionsHtml = ex.options.map((opt, optIndex) => `
+             const optionsHtml = ex.options.map((opt, optIndex) => `
                 <label class="flex items-start p-3 rounded border border-gray-200 hover:bg-blue-50 cursor-pointer transition-colors bg-white">
                     <input type="radio" name="${exId}" value="${optIndex}" class="mt-1 mr-3 text-blue-600 focus:ring-blue-500" data-qid="${exId}">
                     <span class="text-sm text-gray-700">${opt}</span>
@@ -457,7 +521,7 @@ function renderExercises(exercises, dayIndex) {
             `).join('');
 
             return `
-                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100">
+                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-8">
                     <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Question ${i+1}</span>${ex.question}</p>
                     <div class="space-y-3 mb-4">${optionsHtml}</div>
                     
@@ -471,17 +535,16 @@ function renderExercises(exercises, dayIndex) {
                     </div>
                 </div>
             `;
-        } else if (ex.type === 'problem') {
-            return `
-                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100">
+        } 
+        // --- EXISTING PROBLEM HANDLER ---
+        else if (ex.type === 'problem') {
+             return `
+                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-8">
                     <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Problem ${i+1}</span>${ex.question}</p>
-                    
                     <textarea id="input-${exId}" class="w-full p-3 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white" rows="4" placeholder="Type your solution here..." data-qid="${exId}"></textarea>
-                    
                     <div class="mt-4">
                         <button id="btn-${exId}" class="hidden px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-all shadow-sm" data-qid="${exId}">Show Answer Key</button>
                     </div>
-
                     <div id="ans-${exId}" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded text-sm text-green-800 font-mono whitespace-pre-wrap">
 <strong><i class="fas fa-key mr-1"></i> Answer Key:</strong>
 ${ex.answer}
@@ -492,9 +555,172 @@ ${ex.explanation}
                 </div>
             `;
         }
+        // --- NEW JOURNALIZING HANDLER ---
+        else if (ex.type === 'journalizing') {
+            
+            // Helper to generate rows for specific transaction
+            // isReadOnly = true generates the Answer Key view
+            const generateRows = (txId, rowCount, isReadOnly = false, solutionData = []) => {
+                let rowsHtml = '';
+                for (let r = 0; r < rowCount; r++) {
+                    // If read-only, pull data from solutionData, else empty
+                    const rowData = isReadOnly && solutionData[r] ? solutionData[r] : { date: '', account: '', debit: '', credit: '' };
+                    
+                    // Indentation logic for Read-Only mode
+                    let indentStyle = "padding-left: 0.5rem;"; 
+                    let acctClass = "";
+                    if (isReadOnly) {
+                        if (rowData.isExplanation) {
+                            indentStyle = "padding-left: 2rem;"; // 8 spaces approx
+                            acctClass = "italic text-gray-500";
+                        } else if (rowData.credit) {
+                            indentStyle = "padding-left: 1.25rem;"; // 5 spaces approx
+                        }
+                    }
+
+                    rowsHtml += `
+                    <tr class="border-b border-gray-200 hover:bg-gray-50 bg-white">
+                        <td class="border-r border-gray-300 p-0 w-16 align-top">
+                            <input type="text" 
+                                class="w-full h-full p-2 bg-transparent outline-none text-xs text-center font-mono text-gray-600" 
+                                value="${rowData.date || ''}" 
+                                ${isReadOnly ? 'readonly disabled' : ''}
+                                placeholder="Date">
+                        </td>
+                        <td class="border-r border-gray-300 p-0 relative align-top">
+                            <input type="text" 
+                                id="acct-${txId}-${r}"
+                                class="w-full h-full p-2 bg-transparent outline-none text-sm font-mono transition-all duration-200 ${acctClass}"
+                                style="${indentStyle}"
+                                value="${rowData.account || ''}"
+                                ${isReadOnly ? 'readonly disabled' : ''}
+                                placeholder="Account Titles and Explanation">
+                        </td>
+                        <td class="border-r border-gray-300 p-0 w-28 align-top">
+                            <input type="number" 
+                                id="dr-${txId}-${r}"
+                                class="w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
+                                step="0.01"
+                                placeholder=""
+                                value="${rowData.debit !== '' && rowData.debit !== undefined ? Number(rowData.debit).toFixed(2) : ''}"
+                                ${isReadOnly ? 'readonly disabled' : 'oninput="handleJournalIndent(\'' + txId + '\', ' + r + ')"'}>
+                        </td>
+                        <td class="p-0 w-28 align-top">
+                            <input type="number" 
+                                id="cr-${txId}-${r}"
+                                class="w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
+                                step="0.01"
+                                placeholder=""
+                                value="${rowData.credit !== '' && rowData.credit !== undefined ? Number(rowData.credit).toFixed(2) : ''}"
+                                ${isReadOnly ? 'readonly disabled' : 'oninput="handleJournalIndent(\'' + txId + '\', ' + r + ')"'}>
+                        </td>
+                    </tr>`;
+                }
+                return rowsHtml;
+            };
+
+            const transactionsHtml = ex.transactions.map((tx, txIndex) => {
+                const txId = `${exId}-tx-${txIndex}`;
+                
+                // 1. The Student Input Table
+                const inputTable = `
+                    <div class="mb-6 border border-gray-300 shadow-sm rounded-lg overflow-hidden">
+                        <div class="bg-gray-100 px-4 py-2 border-b border-gray-300 flex justify-between items-center">
+                            <span class="font-bold text-gray-700 text-sm">Transaction: ${tx.date}</span>
+                        </div>
+                        <div class="p-3 bg-blue-50 text-sm text-gray-800 border-b border-gray-300 italic">
+                            ${tx.description}
+                        </div>
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr class="bg-gray-200 text-xs text-gray-600 font-bold uppercase border-b border-gray-300">
+                                    <th class="py-2 border-r border-gray-300">Date</th>
+                                    <th class="py-2 border-r border-gray-300 text-left pl-2">Account Titles and Explanation</th>
+                                    <th class="py-2 border-r border-gray-300">Debit</th>
+                                    <th class="py-2">Credit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${generateRows(txId, tx.rows)}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+                // 2. The Hidden Answer Key Table
+                const answerTable = `
+                    <div id="ans-table-${txId}" class="hidden mb-8 border-2 border-green-400 shadow-md rounded-lg overflow-hidden ring-4 ring-green-50">
+                        <div class="bg-green-100 px-4 py-2 border-b border-green-300 text-green-800 font-bold text-sm flex items-center">
+                            <i class="fas fa-check-circle mr-2"></i> Correct Entry: ${tx.date}
+                        </div>
+                        <table class="w-full border-collapse bg-green-50">
+                             <thead>
+                                <tr class="bg-green-200 text-xs text-green-800 font-bold uppercase border-b border-green-300">
+                                    <th class="py-2 border-r border-green-300 w-16">Date</th>
+                                    <th class="py-2 border-r border-green-300 text-left pl-2">Account Titles and Explanation</th>
+                                    <th class="py-2 border-r border-green-300 w-28">Debit</th>
+                                    <th class="py-2 w-28">Credit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${generateRows(txId, tx.rows, true, tx.solution)}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+                return inputTable + answerTable;
+            }).join('');
+
+            return `
+                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-10">
+                    <h3 class="font-bold text-xl text-gray-900 mb-2 border-b pb-2">${ex.title}</h3>
+                    <p class="text-gray-600 mb-6 text-sm">${ex.instructions}</p>
+                    
+                    ${transactionsHtml}
+
+                    <div class="mt-6">
+                         <button onclick="document.querySelectorAll('[id^=ans-table-${exId}]').forEach(el => el.classList.remove('hidden')); this.classList.add('hidden');" 
+                            class="px-6 py-2 bg-green-600 text-white text-sm font-bold rounded hover:bg-green-700 shadow-md transition-colors w-full sm:w-auto">
+                            <i class="fas fa-eye mr-2"></i> Reveal Solution
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
         return '';
     }).join('');
 }
+
+// --- REQUIRED HELPER FUNCTION ---
+// Add this to your script, outside the renderExercises function so it is globally accessible.
+window.handleJournalIndent = function(txId, row) {
+    const acctInput = document.getElementById(`acct-${txId}-${row}`);
+    const drInput = document.getElementById(`dr-${txId}-${row}`);
+    const crInput = document.getElementById(`cr-${txId}-${row}`);
+
+    if (!acctInput) return;
+
+    const drVal = drInput ? drInput.value.trim() : '';
+    const crVal = crInput ? crInput.value.trim() : '';
+
+    // Logic:
+    // 1. If Credit has value -> Indent 5 spaces (~1.25rem)
+    // 2. If Both Empty -> Assume Explanation -> Indent 8 spaces (~2rem)
+    // 3. Else (Debit has value or typing) -> No Indent (0.5rem default padding)
+
+    if (crVal !== '') {
+        acctInput.style.paddingLeft = '1.25rem'; // ~5 spaces
+        acctInput.classList.remove('italic', 'text-gray-500');
+    } else if (drVal === '' && crVal === '') {
+        acctInput.style.paddingLeft = '2rem'; // ~8 spaces
+        acctInput.classList.add('italic', 'text-gray-500'); // Optional: make explanation italic
+    } else {
+        acctInput.style.paddingLeft = '0.5rem'; // Default
+        acctInput.classList.remove('italic', 'text-gray-500');
+    }
+};
 
 function attachExerciseListeners() {
     // Listen for radio changes
@@ -551,46 +777,20 @@ function closeMobileSidebar() {
     elements.sidebarOverlay().classList.add('hidden');
 }
 
-function highlightActiveLink(activeLink) {
-    document.querySelectorAll('.submenu button').forEach(b => b.classList.remove('text-blue-300', 'bg-slate-900', 'border-blue-500'));
-    activeLink.classList.add('text-blue-300', 'bg-slate-900', 'border-blue-500');
-}
-
-function showHoverMenu(e, unit, week) {
-    clearTimeout(hoverTimeout);
-    const menu = elements.hoverMenu();
-    if(!week.days || week.days.length === 0) {
-        menu.classList.add('hidden');
-        return;
-    }
-    menu.innerHTML = '';
-    const header = document.createElement('div');
-    header.className = "px-4 py-2 bg-gray-50 border-b text-xs font-bold text-gray-500 uppercase";
-    header.innerText = "Jump to Day";
-    menu.appendChild(header);
-
-    week.days.forEach((day, index) => {
-        const dayBtn = document.createElement('button');
-        dayBtn.className = "w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors";
-        dayBtn.innerHTML = `<span class="font-bold text-xs mr-1">${day.day}:</span> ${day.topic}`;
-        dayBtn.onclick = () => {
-            renderDayContent(unit, week, index);
-            menu.classList.add('hidden');
-            closeMobileSidebar();
-        };
-        menu.appendChild(dayBtn);
+function highlightActiveDay(activeLink) {
+    // Clear all highlights
+    document.querySelectorAll('.day-submenu button').forEach(b => {
+        b.classList.remove('text-blue-300', 'font-bold');
+        b.querySelector('.fa-circle').classList.remove('text-blue-500');
+        b.querySelector('.fa-circle').classList.add('text-[6px]'); // Reset size
     });
-
-    const rect = e.target.getBoundingClientRect();
-    menu.style.top = `${rect.top}px`;
-    menu.style.left = `${rect.right}px`;
-    menu.classList.remove('hidden');
-}
-
-function hideHoverMenu() {
-    hoverTimeout = setTimeout(() => {
-        elements.hoverMenu().classList.add('hidden');
-    }, 200);
+    
+    // Add highlight
+    activeLink.classList.add('text-blue-300', 'font-bold');
+    const dot = activeLink.querySelector('.fa-circle');
+    dot.classList.add('text-blue-500');
+    dot.classList.remove('text-[6px]');
+    dot.classList.add('text-[8px]');
 }
 
 // --- CALENDAR LOGIC (Full Implementation) ---
