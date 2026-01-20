@@ -694,6 +694,8 @@ export const unit2Week2Data = {
                 ]
             }
         ]
+            }
+        ]
     },
         {
       day: "Day 2",
@@ -1836,5 +1838,4 @@ export const unit2Week2Data = {
             exercises: []
         }
     ]
-}
-;      
+};      
