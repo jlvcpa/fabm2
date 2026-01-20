@@ -298,6 +298,39 @@ Dr. Purchases               7,200
 
     // --- SECTION 2: SYSTEM COMPARISON (INTRO & TABLE HEADER) ---
     `<li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        {
+  day: "Day 2",
+  topic: "Discounts, Returns, and Net Calculations (Periodic vs. Perpetual)",
+  content: 
+    // --- SECTION: HEADER & LEARNING GOALS ---
+    `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+        <p class="font-bold text-blue-900">Learning Goal</p>
+        <p class="text-blue-800">Master the recording of Trade Discounts, Purchase/Sales Discounts, and Returns.</p>
+        <p class="text-blue-800">Differentiate between Periodic and Perpetual entries for these transactions.</p>
+    </div>
+
+    <h3 class="text-xl font-bold mb-4 mt-6">Topic Focus</h3>
+    <ul class="list-none space-y-8 mb-6">` +
+
+    // --- SECTION 1: TYPES OF DISCOUNTS ---
+    `<li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">1. Types of Discounts</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-gray-50 p-4 rounded">
+                <h4 class="font-bold text-purple-700">Trade Discounts</h4>
+                <p class="text-sm text-gray-700 mt-2">Reductions from the list price given to customers (e.g., wholesalers) before the transaction is recorded.</p>
+                <p class="text-sm text-gray-900 font-bold mt-2">Treatment: Not recorded in the books. Record the transaction at the net price (List - Trade Discount).</p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded">
+                <h4 class="font-bold text-green-700">Cash Discounts (Sales/Purchase Discounts)</h4>
+                <p class="text-sm text-gray-700 mt-2">Incentives for early payment (e.g., 2/10, n/30).</p>
+                <p class="text-sm text-gray-900 font-bold mt-2">Treatment: Recorded in the books when payment is made/received within the discount period.</p>
+            </div>
+        </div>
+    </li>` +
+
+    // --- SECTION 2: SYSTEM COMPARISON (INTRO & TABLE HEADER) ---
+    `<li class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
         <h3 class="text-xl font-bold text-gray-800 mb-3">2. Recording Returns & Discounts: System Comparison</h3>
         <p class="text-gray-700 mb-4">
             The key difference lies in the <strong>Purchase</strong> side (Inventory vs. Purchases). On the <strong>Sales</strong> side, Revenue entries are identical, but Perpetual systems require a second entry to update Cost of Goods Sold (COGS).
@@ -321,12 +354,12 @@ Dr. Purchases               7,200
                             <span class="text-xs text-gray-500 italic">Ex: Bought $1,000 goods on credit.</span>
                         </td>
                         <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-red-700">Dr. Purchases <span class="text-gray-600 float-right">1,000</span></div>
-                            <div class="text-gray-600 pl-4">Cr. Accounts Payable <span class="float-right">1,000</span></div>
+                            <div class="text-red-700">Purchases <span class="text-gray-600 float-right">1,000</span></div>
+                            <div class="text-gray-600 pl-8">Accounts Payable <span class="float-right">1,000</span></div>
                         </td>
                         <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-blue-700">Dr. Inventory <span class="text-gray-600 float-right">1,000</span></div>
-                            <div class="text-gray-600 pl-4">Cr. Accounts Payable <span class="float-right">1,000</span></div>
+                            <div class="text-blue-700">Inventory <span class="text-gray-600 float-right">1,000</span></div>
+                            <div class="text-gray-600 pl-8">Accounts Payable <span class="float-right">1,000</span></div>
                         </td>
                     </tr>` +
 
@@ -337,12 +370,12 @@ Dr. Purchases               7,200
                             <span class="text-xs text-gray-500 italic">Ex: Returned $100 defective goods.</span>
                         </td>
                         <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-gray-600">Dr. Accounts Payable <span class="float-right">100</span></div>
-                            <div class="text-red-700 pl-4">Cr. Purch. Returns & Allow <span class="text-gray-600 float-right">100</span></div>
+                            <div class="text-gray-600">Accounts Payable <span class="float-right">100</span></div>
+                            <div class="text-red-700 pl-8">Purch. Returns & Allow <span class="text-gray-600 float-right">100</span></div>
                         </td>
                         <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-gray-600">Dr. Accounts Payable <span class="float-right">100</span></div>
-                            <div class="text-blue-700 pl-4">Cr. Inventory <span class="text-gray-600 float-right">100</span></div>
+                            <div class="text-gray-600">Accounts Payable <span class="float-right">100</span></div>
+                            <div class="text-blue-700 pl-8">Inventory <span class="text-gray-600 float-right">100</span></div>
                         </td>
                     </tr>` +
 
@@ -353,14 +386,14 @@ Dr. Purchases               7,200
                             <span class="text-xs text-gray-500 italic">Ex: Paid $900 invoice; 2% discount taken ($18).</span>
                         </td>
                         <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-gray-600">Dr. Accounts Payable <span class="float-right">900</span></div>
-                            <div class="text-gray-600 pl-4">Cr. Cash <span class="float-right">882</span></div>
-                            <div class="text-red-700 pl-4">Cr. Purchase Discounts <span class="text-gray-600 float-right">18</span></div>
+                            <div class="text-gray-600">Accounts Payable <span class="float-right">900</span></div>
+                            <div class="text-gray-600 pl-8">Cash <span class="float-right">882</span></div>
+                            <div class="text-red-700 pl-8">Purchase Discounts <span class="text-gray-600 float-right">18</span></div>
                         </td>
                         <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-gray-600">Dr. Accounts Payable <span class="float-right">900</span></div>
-                            <div class="text-gray-600 pl-4">Cr. Cash <span class="float-right">882</span></div>
-                            <div class="text-blue-700 pl-4">Cr. Inventory <span class="text-gray-600 float-right">18</span></div>
+                            <div class="text-gray-600">Accounts Payable <span class="float-right">900</span></div>
+                            <div class="text-gray-600 pl-8">Cash <span class="float-right">882</span></div>
+                            <div class="text-blue-700 pl-8">Inventory <span class="text-gray-600 float-right">18</span></div>
                         </td>
                     </tr>` +
 
@@ -371,15 +404,15 @@ Dr. Purchases               7,200
                             <span class="text-xs text-gray-500 italic">Ex: Collected $1,000 owing; 2% discount given ($20).</span>
                         </td>
                         <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-gray-600">Dr. Cash <span class="float-right">980</span></div>
-                            <div class="text-purple-700">Dr. Sales Discounts <span class="text-gray-600 float-right">20</span></div>
-                            <div class="text-gray-600 pl-4">Cr. Accounts Receivable <span class="float-right">1,000</span></div>
+                            <div class="text-gray-600">Cash <span class="float-right">980</span></div>
+                            <div class="text-purple-700">Sales Discounts <span class="text-gray-600 float-right">20</span></div>
+                            <div class="text-gray-600 pl-8">Accounts Receivable <span class="float-right">1,000</span></div>
                         </td>
                         <td class="px-4 py-3 font-mono text-xs">
                             <span class="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Same as Periodic</span>
-                            <div class="text-gray-600 mt-1">Dr. Cash <span class="float-right">980</span></div>
-                            <div class="text-purple-700">Dr. Sales Discounts <span class="text-gray-600 float-right">20</span></div>
-                            <div class="text-gray-600 pl-4">Cr. Accounts Receivable <span class="float-right">1,000</span></div>
+                            <div class="text-gray-600 mt-1">Cash <span class="float-right">980</span></div>
+                            <div class="text-purple-700">Sales Discounts <span class="text-gray-600 float-right">20</span></div>
+                            <div class="text-gray-600 pl-8">Accounts Receivable <span class="float-right">1,000</span></div>
                         </td>
                     </tr>` +
 
@@ -390,17 +423,17 @@ Dr. Purchases               7,200
                             <span class="text-xs text-gray-500 italic">Ex: Customer returned item sold for $500 (Cost $300).</span>
                         </td>
                         <td class="px-4 py-3 font-mono text-xs">
-                            <div class="text-purple-700">Dr. Sales Ret. & Allow <span class="text-gray-600 float-right">500</span></div>
-                            <div class="text-gray-600 pl-4">Cr. Accounts Receivable <span class="float-right">500</span></div>
+                            <div class="text-purple-700">Sales Ret. & Allow <span class="text-gray-600 float-right">500</span></div>
+                            <div class="text-gray-600 pl-8">Accounts Receivable <span class="float-right">500</span></div>
                             <div class="text-gray-400 italic mt-2 text-[10px]">(No COGS entry made)</div>
                         </td>
                         <td class="px-4 py-3 font-mono text-xs">
                             <div class="border-b border-gray-300 pb-1 mb-1">
-                                <div class="text-purple-700">Dr. Sales Ret. & Allow <span class="text-gray-600 float-right">500</span></div>
-                                <div class="text-gray-600 pl-4">Cr. Accounts Rec. <span class="float-right">500</span></div>
+                                <div class="text-purple-700">Sales Ret. & Allow <span class="text-gray-600 float-right">500</span></div>
+                                <div class="text-gray-600 pl-8">Accounts Rec. <span class="float-right">500</span></div>
                             </div>
-                            <div class="text-blue-700">Dr. Inventory <span class="text-gray-600 float-right">300</span></div>
-                            <div class="text-gray-600 pl-4">Cr. COGS <span class="float-right">300</span></div>
+                            <div class="text-blue-700">Inventory <span class="text-gray-600 float-right">300</span></div>
+                            <div class="text-gray-600 pl-8">COGS <span class="float-right">300</span></div>
                         </td>
                     </tr>` +
 
@@ -415,15 +448,27 @@ Dr. Purchases               7,200
             <div class="bg-indigo-50 p-4 rounded border-l-4 border-indigo-400">
                 <h5 class="font-bold text-indigo-900">Net Purchases</h5>
                 <p class="font-mono text-sm mt-1">Purchases - Purchase Returns & Allowances - Purchase Discounts = <span class="font-bold">Net Purchases</span></p>
-                <p class="text-xs text-indigo-700 mt-1">(Note: Freight-In is added later to get Cost of Goods Purchased)</p>
+                <div class="mt-2 text-xs bg-white p-2 rounded border border-indigo-200 font-mono text-gray-600">
+                    <span class="block">Purchases: $10,000</span>
+                    <span class="block">- Returns: ($500)</span>
+                    <span class="block">- Discounts: ($200)</span>
+                    <span class="block border-t border-gray-300 mt-1 pt-1 font-bold text-indigo-700">= Net Purchases: $9,300</span>
+                </div>
+                <p class="text-xs text-indigo-700 mt-2 italic">(Note: Freight-In is added later to get Cost of Goods Purchased)</p>
             </div>
             <div class="bg-orange-50 p-4 rounded border-l-4 border-orange-400">
                 <h5 class="font-bold text-orange-900">Net Sales</h5>
                 <p class="font-mono text-sm mt-1">Sales - Sales Returns & Allowances - Sales Discounts = <span class="font-bold">Net Sales</span></p>
+                <div class="mt-2 text-xs bg-white p-2 rounded border border-orange-200 font-mono text-gray-600">
+                    <span class="block">Gross Sales: $20,000</span>
+                    <span class="block">- Returns: ($1,000)</span>
+                    <span class="block">- Discounts: ($400)</span>
+                    <span class="block border-t border-gray-300 mt-1 pt-1 font-bold text-orange-700">= Net Sales: $18,600</span>
+                </div>
             </div>
         </div>
     </li>
-</ul>`, // ERROR FIX: Added missing comma here
+</ul>`, 
   exercises: [
     {
       "type": "mcq",
@@ -476,25 +521,25 @@ Dr. Purchases               7,200
     {
       "type": "problem",
       "question": "PERIODIC SYSTEM - PURCHASES SCENARIO\n\nJournalize the following transactions for Company A (Buyer) using the Periodic Inventory System:\n1.  **March 1:** Purchased merchandise with a list price of $5,000, less a 20% trade discount. Terms: 2/10, n/30.\n2.  **March 3:** Returned defective merchandise with a list price of $500 (Gross) to the supplier.\n3.  **March 10:** Paid the full amount due within the discount period.",
-      "answer": "March 1 (Purchase):\nDr. Purchases ...................... 4,000\n    Cr. Accounts Payable ................... 4,000\n*(Calculation: $5,000 list - 20% trade discount = $4,000)*\n\nMarch 3 (Return):\nDr. Accounts Payable ............... 400\n    Cr. Purchase Returns & Allowances ...... 400\n*(Calculation: $500 list - 20% trade discount = $400)*\n\nMarch 10 (Payment):\nDr. Accounts Payable ............... 3,600\n    Cr. Purchase Discounts ................. 72\n    Cr. Cash ............................... 3,528\n*(Calculation: AP Balance $4,000 - $400 = $3,600. Discount 2% of $3,600 = $72)*",
+      "answer": "March 1 (Purchase):\nPurchases .......................... 4,000\n    Accounts Payable ....................... 4,000\n*(Calculation: $5,000 list - 20% trade discount = $4,000)*\n\nMarch 3 (Return):\nAccounts Payable ................... 400\n    Purchase Returns & Allowances .......... 400\n*(Calculation: $500 list - 20% trade discount = $400)*\n\nMarch 10 (Payment):\nAccounts Payable ................... 3,600\n    Purchase Discounts ..................... 72\n    Cash ................................... 3,528\n*(Calculation: AP Balance $4,000 - $400 = $3,600. Discount 2% of $3,600 = $72)*",
       "explanation": "Note that Trade Discounts are deducted immediately. The Purchase Discount (2%) is calculated on the *outstanding Accounts Payable balance* ($3,600) after the return."
     },
     {
       "type": "problem",
       "question": "PERPETUAL SYSTEM - PURCHASES SCENARIO\n\nJournalize the following transactions for Company B (Buyer) using the Perpetual Inventory System:\n1.  **June 1:** Purchased inventory on account for $10,000. Terms 3/10, n/30.\n2.  **June 5:** Received an allowance of $1,000 for slightly damaged goods (kept the goods).\n3.  **June 11:** Paid the balance due within the discount period.",
-      "answer": "June 1 (Purchase):\nDr. Inventory ...................... 10,000\n    Cr. Accounts Payable ................... 10,000\n\nJune 5 (Allowance):\nDr. Accounts Payable ............... 1,000\n    Cr. Inventory .......................... 1,000\n\nJune 11 (Payment):\nDr. Accounts Payable ............... 9,000\n    Cr. Inventory .......................... 270\n    Cr. Cash ............................... 8,730\n*(Calculation: AP Balance $9,000 x 3% = $270. In Perpetual, discounts reduce the Inventory asset account)*",
+      "answer": "June 1 (Purchase):\nInventory .......................... 10,000\n    Accounts Payable ....................... 10,000\n\nJune 5 (Allowance):\nAccounts Payable ................... 1,000\n    Inventory .............................. 1,000\n\nJune 11 (Payment):\nAccounts Payable ................... 9,000\n    Inventory .............................. 270\n    Cash ................................... 8,730\n*(Calculation: AP Balance $9,000 x 3% = $270. In Perpetual, discounts reduce the Inventory asset account)*",
       "explanation": "In a Perpetual system, 'Purchases', 'Returns', and 'Discounts' accounts are replaced by the 'Inventory' account."
     },
     {
       "type": "problem",
       "question": "PERIODIC SYSTEM - SALES SCENARIO\n\nJournalize the following transactions for Company C (Seller) using the Periodic Inventory System:\n1.  **July 1:** Sold merchandise on account for $8,000. Terms 1/15, n/30.\n2.  **July 4:** Customer returned goods with a sales price of $500.\n3.  **July 15:** Received payment in full from the customer.",
-      "answer": "July 1 (Sale):\nDr. Accounts Receivable ............ 8,000\n    Cr. Sales Revenue ...................... 8,000\n*(No entry for COGS in Periodic)*\n\nJuly 4 (Return):\nDr. Sales Returns & Allowances ..... 500\n    Cr. Accounts Receivable ................ 500\n*(No entry for Inventory restoration in Periodic)*\n\nJuly 15 (Collection):\nDr. Cash ........................... 7,425\nDr. Sales Discounts ................ 75\n    Cr. Accounts Receivable ................ 7,500\n*(Calculation: AR Balance $8,000 - $500 = $7,500. Discount 1% of $7,500 = $75)*",
+      "answer": "July 1 (Sale):\nAccounts Receivable ................ 8,000\n    Sales Revenue .......................... 8,000\n*(No entry for COGS in Periodic)*\n\nJuly 4 (Return):\nSales Returns & Allowances ......... 500\n    Accounts Receivable .................... 500\n*(No entry for Inventory restoration in Periodic)*\n\nJuly 15 (Collection):\nCash ............................... 7,425\nSales Discounts .................... 75\n    Accounts Receivable .................... 7,500\n*(Calculation: AR Balance $8,000 - $500 = $7,500. Discount 1% of $7,500 = $75)*",
       "explanation": "Under Periodic, we record revenue and AR, but we do NOT touch Inventory or COGS at the time of sale or return."
     },
     {
       "type": "problem",
       "question": "PERPETUAL SYSTEM - SALES SCENARIO\n\nJournalize the following transactions for Company D (Seller) using the Perpetual Inventory System. (Cost of goods is 60% of selling price).\n1.  **Aug 1:** Sold goods on credit for $20,000. Terms 2/10, n/30.\n2.  **Aug 5:** Granted a credit allowance of $2,000 to the customer for defects (customer kept goods).\n3.  **Aug 10:** Received payment in full.",
-      "answer": "Aug 1 (Sale):\nDr. Accounts Receivable ............ 20,000\n    Cr. Sales Revenue ...................... 20,000\nDr. Cost of Goods Sold ............. 12,000\n    Cr. Inventory .......................... 12,000\n*(Cost = $20,000 * 60%)*\n\nAug 5 (Allowance):\nDr. Sales Returns & Allowances ..... 2,000\n    Cr. Accounts Receivable ................ 2,000\n*(No inventory entry for Allowance as goods were not returned)*\n\nAug 10 (Collection):\nDr. Cash ........................... 17,640\nDr. Sales Discounts ................ 360\n    Cr. Accounts Receivable ................ 18,000\n*(Calculation: AR Balance $18,000. Discount 2% = $360)*",
+      "answer": "Aug 1 (Sale):\nAccounts Receivable ................ 20,000\n    Sales Revenue .......................... 20,000\nCost of Goods Sold ................. 12,000\n    Inventory .............................. 12,000\n*(Cost = $20,000 * 60%)*\n\nAug 5 (Allowance):\nSales Returns & Allowances ......... 2,000\n    Accounts Receivable .................... 2,000\n*(No inventory entry for Allowance as goods were not returned)*\n\nAug 10 (Collection):\nCash ............................... 17,640\nSales Discounts .................... 360\n    Accounts Receivable .................... 18,000\n*(Calculation: AR Balance $18,000. Discount 2% = $360)*",
       "explanation": "Perpetual sales require two entries: one for Revenue (at selling price) and one for COGS (at cost). Allowances reduce AR but do not affect Inventory cost unless goods physically return."
     }
   ]
