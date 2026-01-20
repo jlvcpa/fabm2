@@ -273,7 +273,7 @@ export const unit2Week2Data = {
         transactions: [
             {
                 date: "Jan 2",
-                description: "1. (Periodic) Purchased goods from Supplier A on account for $5,000.",
+                description: "(Periodic) Purchased goods from Supplier A on account for $5,000.",
                 rows: 3,
                 solution: [
                     { date: "Jan 2", account: "Purchases", debit: 5000, credit: "" },
@@ -283,7 +283,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Jan 4",
-                description: "2. (Perpetual) Sold merchandise on account to Customer X for $8,000. The cost of goods sold was $4,500.",
+                description: "(Perpetual) Sold merchandise on account to Customer X for $8,000. The cost of goods sold was $4,500.",
                 rows: 5,
                 solution: [
                     { date: "4", account: "Accounts Receivable", debit: 8000, credit: "" },
@@ -295,7 +295,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Jan 7",
-                description: "3. (Periodic) Sold goods for cash, $3,000.",
+                description: "(Periodic) Sold goods for cash, $3,000.",
                 rows: 3,
                 solution: [
                     { date: "7", account: "Cash", debit: 3000, credit: "" },
@@ -305,7 +305,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Jan 10",
-                description: "4. (Perpetual) Purchased inventory on account from Supplier B, list price $10,000, trade discount 10%.",
+                description: "(Perpetual) Purchased inventory on account from Supplier B, list price $10,000, trade discount 10%.",
                 rows: 3,
                 solution: [
                     { date: "10", account: "Merchandise Inventory", debit: 9000, credit: "" },
@@ -315,7 +315,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Jan 15",
-                description: "5. (Periodic) Purchased goods for cash, list price $4,000, trade discount 20%.",
+                description: "(Periodic) Purchased goods for cash, list price $4,000, trade discount 20%.",
                 rows: 3,
                 solution: [
                     { date: "15", account: "Purchases", debit: 3200, credit: "" },
@@ -325,7 +325,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Jan 20",
-                description: "6. (Perpetual) Sold merchandise to Customer Y on account for $12,000. Cost of goods sold was $7,000.",
+                description: "(Perpetual) Sold merchandise to Customer Y on account for $12,000. Cost of goods sold was $7,000.",
                 rows: 5,
                 solution: [
                     { date: "20", account: "Accounts Receivable", debit: 12000, credit: "" },
@@ -345,7 +345,7 @@ export const unit2Week2Data = {
         transactions: [
             {
                 date: "Feb 1",
-                description: "1. (Periodic) Sold goods on account to Client A, $6,500.",
+                description: "(Periodic) Sold goods on account to Client A, $6,500.",
                 rows: 3,
                 solution: [
                     { date: "Feb 1", account: "Accounts Receivable", debit: 6500, credit: "" },
@@ -355,7 +355,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Feb 5",
-                description: "2. (Perpetual) Purchased merchandise for cash, $2,500.",
+                description: "(Perpetual) Purchased merchandise for cash, $2,500.",
                 rows: 3,
                 solution: [
                     { date: "5", account: "Merchandise Inventory", debit: 2500, credit: "" },
@@ -365,7 +365,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Feb 10",
-                description: "3. (Periodic) Purchased goods on account from Vendor Z, $8,000.",
+                description: "(Periodic) Purchased goods on account from Vendor Z, $8,000.",
                 rows: 3,
                 solution: [
                     { date: "10", account: "Purchases", debit: 8000, credit: "" },
@@ -375,7 +375,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Feb 14",
-                description: "4. (Perpetual) Sold merchandise for cash, list price $5,000, trade discount 5%. Cost of goods sold was $3,000.",
+                description: "(Perpetual) Sold merchandise for cash, list price $5,000, trade discount 5%. Cost of goods sold was $3,000.",
                 rows: 5,
                 solution: [
                     { date: "14", account: "Cash", debit: 4750, credit: "" },
@@ -387,7 +387,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Feb 20",
-                description: "5. (Periodic) Purchased goods on account, list price $15,000, trade discount 20%.",
+                description: "(Periodic) Purchased goods on account, list price $15,000, trade discount 20%.",
                 rows: 3,
                 solution: [
                     { date: "20", account: "Purchases", debit: 12000, credit: "" },
@@ -397,7 +397,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Feb 25",
-                description: "6. (Perpetual) Sold merchandise on account to Client B, $9,000. Cost of goods sold was $5,500.",
+                description: "(Perpetual) Sold merchandise on account to Client B, $9,000. Cost of goods sold was $5,500.",
                 rows: 5,
                 solution: [
                     { date: "25", account: "Accounts Receivable", debit: 9000, credit: "" },
@@ -417,7 +417,7 @@ export const unit2Week2Data = {
         transactions: [
             {
                 date: "Mar 3",
-                description: "1. (Periodic) Purchased inventory on credit, $11,000.",
+                description: "(Periodic) Purchased inventory on credit, $11,000.",
                 rows: 3,
                 solution: [
                     { date: "Mar 3", account: "Purchases", debit: 11000, credit: "" },
@@ -427,7 +427,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Mar 8",
-                description: "2. (Perpetual) Sold goods on credit, list price $20,000, trade discount 10%. Cost of goods sold was $10,000.",
+                description: "(Perpetual) Sold goods on credit, list price $20,000, trade discount 10%. Cost of goods sold was $10,000.",
                 rows: 5,
                 solution: [
                     { date: "8", account: "Accounts Receivable", debit: 18000, credit: "" },
@@ -439,7 +439,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Mar 12",
-                description: "3. (Periodic) Sold goods for cash, $4,200.",
+                description: "(Periodic) Sold goods for cash, $4,200.",
                 rows: 3,
                 solution: [
                     { date: "12", account: "Cash", debit: 4200, credit: "" },
@@ -449,7 +449,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Mar 18",
-                description: "4. (Perpetual) Purchased merchandise on account, list price $8,000, trade discount 15%.",
+                description: "(Perpetual) Purchased merchandise on account, list price $8,000, trade discount 15%.",
                 rows: 3,
                 solution: [
                     { date: "18", account: "Merchandise Inventory", debit: 6800, credit: "" },
@@ -459,7 +459,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Mar 22",
-                description: "5. (Periodic) Purchased goods for cash, $2,000.",
+                description: "(Periodic) Purchased goods for cash, $2,000.",
                 rows: 3,
                 solution: [
                     { date: "22", account: "Purchases", debit: 2000, credit: "" },
@@ -469,7 +469,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Mar 30",
-                description: "6. (Perpetual) Sold goods on credit, $14,000. Cost of goods sold was $8,200.",
+                description: "(Perpetual) Sold goods on credit, $14,000. Cost of goods sold was $8,200.",
                 rows: 5,
                 solution: [
                     { date: "30", account: "Accounts Receivable", debit: 14000, credit: "" },
@@ -489,7 +489,7 @@ export const unit2Week2Data = {
         transactions: [
             {
                 date: "Apr 2",
-                description: "1. (Periodic) Sold merchandise on account, list price $10,000, trade discount 5%.",
+                description: "(Periodic) Sold merchandise on account, list price $10,000, trade discount 5%.",
                 rows: 3,
                 solution: [
                     { date: "Apr 2", account: "Accounts Receivable", debit: 9500, credit: "" },
@@ -499,7 +499,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Apr 6",
-                description: "2. (Perpetual) Purchased inventory for cash, $6,000.",
+                description: "(Perpetual) Purchased inventory for cash, $6,000.",
                 rows: 3,
                 solution: [
                     { date: "6", account: "Merchandise Inventory", debit: 6000, credit: "" },
@@ -509,7 +509,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Apr 11",
-                description: "3. (Periodic) Purchased goods on credit from Supplier M, $7,500.",
+                description: "(Periodic) Purchased goods on credit from Supplier M, $7,500.",
                 rows: 3,
                 solution: [
                     { date: "11", account: "Purchases", debit: 7500, credit: "" },
@@ -519,7 +519,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Apr 16",
-                description: "4. (Perpetual) Sold goods for cash, $3,500. Cost of goods sold was $1,900.",
+                description: "(Perpetual) Sold goods for cash, $3,500. Cost of goods sold was $1,900.",
                 rows: 5,
                 solution: [
                     { date: "16", account: "Cash", debit: 3500, credit: "" },
@@ -531,7 +531,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Apr 22",
-                description: "5. (Periodic) Sold goods on credit, $11,500.",
+                description: "(Periodic) Sold goods on credit, $11,500.",
                 rows: 3,
                 solution: [
                     { date: "22", account: "Accounts Receivable", debit: 11500, credit: "" },
@@ -541,7 +541,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Apr 28",
-                description: "6. (Perpetual) Purchased merchandise on account, list price $5,000, trade discount 25%.",
+                description: "(Perpetual) Purchased merchandise on account, list price $5,000, trade discount 25%.",
                 rows: 3,
                 solution: [
                     { date: "28", account: "Merchandise Inventory", debit: 3750, credit: "" },
@@ -559,7 +559,7 @@ export const unit2Week2Data = {
         transactions: [
             {
                 date: "May 1",
-                description: "1. (Periodic) Purchased goods on account, list price $12,000, trade discount 10%.",
+                description: "(Periodic) Purchased goods on account, list price $12,000, trade discount 10%.",
                 rows: 3,
                 solution: [
                     { date: "May 1", account: "Purchases", debit: 10800, credit: "" },
@@ -569,7 +569,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "May 5",
-                description: "2. (Perpetual) Sold merchandise on account, $15,000. Cost of goods sold was $9,000.",
+                description: "(Perpetual) Sold merchandise on account, $15,000. Cost of goods sold was $9,000.",
                 rows: 5,
                 solution: [
                     { date: "5", account: "Accounts Receivable", debit: 15000, credit: "" },
@@ -581,7 +581,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "May 12",
-                description: "3. (Periodic) Purchased goods for cash, $4,400.",
+                description: "(Periodic) Purchased goods for cash, $4,400.",
                 rows: 3,
                 solution: [
                     { date: "12", account: "Purchases", debit: 4400, credit: "" },
@@ -591,7 +591,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "May 18",
-                description: "4. (Perpetual) Sold goods on credit, list price $8,000, trade discount 5%. Cost of goods sold was $4,000.",
+                description: "(Perpetual) Sold goods on credit, list price $8,000, trade discount 5%. Cost of goods sold was $4,000.",
                 rows: 5,
                 solution: [
                     { date: "18", account: "Accounts Receivable", debit: 7600, credit: "" },
@@ -603,7 +603,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "May 25",
-                description: "5. (Periodic) Sold goods for cash, list price $3,000, trade discount 10%.",
+                description: "(Periodic) Sold goods for cash, list price $3,000, trade discount 10%.",
                 rows: 3,
                 solution: [
                     { date: "25", account: "Cash", debit: 2700, credit: "" },
@@ -613,7 +613,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "May 30",
-                description: "6. (Perpetual) Purchased inventory on account, $13,500.",
+                description: "(Perpetual) Purchased inventory on account, $13,500.",
                 rows: 3,
                 solution: [
                     { date: "30", account: "Merchandise Inventory", debit: 13500, credit: "" },
@@ -631,7 +631,7 @@ export const unit2Week2Data = {
         transactions: [
             {
                 date: "Jun 2",
-                description: "1. (Periodic) Purchased goods on account from Supplier K, $9,200.",
+                description: "(Periodic) Purchased goods on account from Supplier K, $9,200.",
                 rows: 3,
                 solution: [
                     { date: "Jun 2", account: "Purchases", debit: 9200, credit: "" },
@@ -641,7 +641,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Jun 6",
-                description: "2. (Perpetual) Purchased merchandise for cash, list price $5,000, trade discount 20%.",
+                description: "(Perpetual) Purchased merchandise for cash, list price $5,000, trade discount 20%.",
                 rows: 3,
                 solution: [
                     { date: "6", account: "Merchandise Inventory", debit: 4000, credit: "" },
@@ -651,7 +651,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Jun 11",
-                description: "3. (Periodic) Sold goods on account, list price $7,000, trade discount 10%.",
+                description: "(Periodic) Sold goods on account, list price $7,000, trade discount 10%.",
                 rows: 3,
                 solution: [
                     { date: "11", account: "Accounts Receivable", debit: 6300, credit: "" },
@@ -661,7 +661,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Jun 17",
-                description: "4. (Perpetual) Sold goods for cash, $2,800. Cost of goods sold was $1,500.",
+                description: "(Perpetual) Sold goods for cash, $2,800. Cost of goods sold was $1,500.",
                 rows: 5,
                 solution: [
                     { date: "17", account: "Cash", debit: 2800, credit: "" },
@@ -673,7 +673,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Jun 23",
-                description: "5. (Periodic) Purchased goods on credit, list price $10,000, trade discounts 20% and 10% (Chain Discount).",
+                description: "(Periodic) Purchased goods on credit, list price $10,000, trade discounts 20% and 10% (Chain Discount).",
                 rows: 3,
                 solution: [
                     { date: "23", account: "Purchases", debit: 7200, credit: "" },
@@ -683,7 +683,7 @@ export const unit2Week2Data = {
             },
             {
                 date: "Jun 29",
-                description: "6. (Perpetual) Sold merchandise on account, $16,000. Cost of goods sold was $9,500.",
+                description: "(Perpetual) Sold merchandise on account, $16,000. Cost of goods sold was $9,500.",
                 rows: 5,
                 solution: [
                     { date: "29", account: "Accounts Receivable", debit: 16000, credit: "" },
