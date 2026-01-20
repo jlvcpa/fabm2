@@ -585,7 +585,7 @@ ${ex.explanation}
                                 class="w-full h-full p-2 bg-transparent outline-none text-xs text-left font-mono text-gray-600" 
                                 value="${rowData.date || ''}" 
                                 ${isReadOnly ? 'readonly disabled' : ''}
-                                // placeholder="Date"
+                                // placeholder=" "
                             >
                         </td>
                         <td class="border-r border-gray-300 p-0 relative align-top">
@@ -595,7 +595,7 @@ ${ex.explanation}
                                 style="${indentStyle}"
                                 value="${rowData.account || ''}"
                                 ${isReadOnly ? 'readonly disabled' : ''}
-                                //placeholder="Account Titles and Explanation"
+                                //placeholder=" "
                             >
                         </td>
                         <td class="border-r border-gray-300 p-0 w-28 align-top">
