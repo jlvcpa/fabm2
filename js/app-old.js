@@ -505,76 +505,136 @@ function executeExerciseMounts(exercises) {
     });
 }
 
+// --- REVISED EXERCISE RENDERER ---
+
 function renderExercises(exercises, dayIndex) {
-    return exercises.map((ex, i) => {
-        if (ex.type === 'custom-mount') return ''; // Don't render as a question
+    let finalHtml = '';
 
-        const exId = `ex-${dayIndex}-${i}`;
-        
-        // --- MCQ HANDLER ---
-        if (ex.type === 'mcq') {
-             const optionsHtml = ex.options.map((opt, optIndex) => `
-                <label class="flex items-start p-3 rounded border border-gray-200 hover:bg-blue-50 cursor-pointer transition-colors bg-white">
-                    <input type="radio" name="${exId}" value="${optIndex}" class="mt-1 mr-3 text-blue-600 focus:ring-blue-500" data-qid="${exId}">
-                    <span class="text-sm text-gray-700">${opt}</span>
-                </label>
-            `).join('');
+    // 1. Filter Exercises
+    const mcqs = exercises.filter(ex => ex.type === 'mcq');
+    const problems = exercises.filter(ex => ex.type === 'problem');
+    const journals = exercises.filter(ex => ex.type === 'journalizing');
+    const custom = exercises.filter(ex => ex.type === 'custom-mount');
 
-            return `
-                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-8">
-                    <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Question ${i+1}</span>${ex.question}</p>
-                    <div class="space-y-3 mb-4">${optionsHtml}</div>
-                    
-                    <div class="flex items-center gap-3">
-                        <button id="btn-${exId}" class="hidden px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-all shadow-sm" data-qid="${exId}">Check Answer</button>
+    // 2. Helper to chunk arrays
+    const chunkArray = (arr, size) => {
+        const chunks = [];
+        for (let i = 0; i < arr.length; i += size) {
+            chunks.push(arr.slice(i, i + size));
+        }
+        return chunks;
+    };
+
+    // 3. Render MCQ Sets
+    if (mcqs.length > 0) {
+        const mcqSets = chunkArray(mcqs, 20);
+        mcqSets.forEach((set, setIndex) => {
+            const setId = `mcq-set-${dayIndex}-${setIndex}`;
+            
+            let questionsHtml = set.map((ex, i) => {
+                const exId = `ex-mcq-${dayIndex}-${setIndex}-${i}`;
+                const globalIndex = (setIndex * 20) + i + 1;
+                
+                const optionsHtml = ex.options.map((opt, optIndex) => `
+                    <label class="flex items-start p-3 rounded border border-gray-200 hover:bg-blue-50 cursor-pointer transition-colors bg-white">
+                        <input type="radio" name="${exId}" value="${optIndex}" class="mt-1 mr-3 text-blue-600 focus:ring-blue-500" data-qid="${exId}">
+                        <span class="text-sm text-gray-700">${opt}</span>
+                    </label>
+                `).join('');
+
+                return `
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-8 exercise-item" data-id="${exId}">
+                        <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Question ${globalIndex}</span>${ex.question}</p>
+                        <div class="space-y-3 mb-4">${optionsHtml}</div>
+                        
+                        <div id="ans-${exId}" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded text-sm text-green-800">
+                            <p class="font-bold mb-1"><i class="fas fa-check-circle mr-1"></i> Correct Answer: ${ex.options[ex.correctIndex]}</p>
+                            <p>${ex.explanation}</p>
+                        </div>
+                        <div id="msg-${exId}" class="hidden mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-sm text-yellow-800 italic">
+                             <i class="fas fa-exclamation-circle mr-1"></i> Please answer this question to see the answer key.
+                        </div>
                     </div>
+                `;
+            }).join('');
 
-                    <div id="ans-${exId}" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded text-sm text-green-800">
-                        <p class="font-bold mb-1"><i class="fas fa-check-circle mr-1"></i> Correct Answer: ${ex.options[ex.correctIndex]}</p>
-                        <p>${ex.explanation}</p>
+            finalHtml += `
+                <div id="${setId}" class="mb-12 border-t-4 border-blue-500 pt-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6">MC Questions Set ${setIndex + 1}</h3>
+                    ${questionsHtml}
+                    <div class="mt-6 flex justify-start">
+                        <button class="btn-reveal-set px-6 py-2 bg-blue-600 text-white text-sm font-bold rounded hover:bg-blue-700 shadow-md transition-colors"
+                            data-set-id="${setId}" data-type="mcq">
+                            <i class="fas fa-eye mr-2"></i> Reveal Answer Key
+                        </button>
                     </div>
                 </div>
             `;
-        } 
-        // --- EXISTING PROBLEM HANDLER ---
-        else if (ex.type === 'problem') {
-             return `
-                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-8">
-                    <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Problem ${i+1}</span>${ex.question}</p>
-                    <textarea id="input-${exId}" class="w-full p-3 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white" rows="4" placeholder="Type your solution here..." data-qid="${exId}"></textarea>
-                    <div class="mt-4">
-                        <button id="btn-${exId}" class="hidden px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-all shadow-sm" data-qid="${exId}">Show Answer Key</button>
-                    </div>
-                    <div id="ans-${exId}" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded text-sm text-green-800 font-mono whitespace-pre-wrap">
+        });
+    }
+
+    // 4. Render Problem Sets
+    if (problems.length > 0) {
+        const problemSets = chunkArray(problems, 20);
+        problemSets.forEach((set, setIndex) => {
+            const setId = `prob-set-${dayIndex}-${setIndex}`;
+            
+            let questionsHtml = set.map((ex, i) => {
+                const exId = `ex-prob-${dayIndex}-${setIndex}-${i}`;
+                const globalIndex = (setIndex * 20) + i + 1;
+
+                return `
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-8 exercise-item" data-id="${exId}">
+                        <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Problem ${globalIndex}</span>${ex.question}</p>
+                        <textarea id="input-${exId}" class="w-full p-3 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white" rows="4" placeholder="Type your solution here..." data-qid="${exId}"></textarea>
+                        
+                        <div id="ans-${exId}" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded text-sm text-green-800 font-mono whitespace-pre-wrap">
 <strong><i class="fas fa-key mr-1"></i> Answer Key:</strong>
 ${ex.answer}
 
 <strong><i class="fas fa-info-circle mr-1"></i> Explanation:</strong>
 ${ex.explanation}
+                        </div>
+                        <div id="msg-${exId}" class="hidden mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-sm text-yellow-800 italic">
+                             <i class="fas fa-exclamation-circle mr-1"></i> Please answer this question to see the answer key.
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            finalHtml += `
+                <div id="${setId}" class="mb-12 border-t-4 border-blue-500 pt-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6">Problem Questions Set ${setIndex + 1}</h3>
+                    ${questionsHtml}
+                    <div class="mt-6 flex justify-start">
+                        <button class="btn-reveal-set px-6 py-2 bg-blue-600 text-white text-sm font-bold rounded hover:bg-blue-700 shadow-md transition-colors"
+                            data-set-id="${setId}" data-type="problem">
+                            <i class="fas fa-eye mr-2"></i> Reveal Solution
+                        </button>
                     </div>
                 </div>
             `;
-        }
-        // --- NEW JOURNALIZING HANDLER ---
-        else if (ex.type === 'journalizing') {
+        });
+    }
+
+    // 5. Render Journalizing (Individual Sets)
+    if (journals.length > 0) {
+        journals.forEach((ex, jIndex) => {
+            const setId = `journ-set-${dayIndex}-${jIndex}`;
             
-            // Helper to generate rows for specific transaction
-            // isReadOnly = true generates the Answer Key view
+            // Helper for journal rows (Same as before)
             const generateRows = (txId, rowCount, isReadOnly = false, solutionData = []) => {
                 let rowsHtml = '';
                 for (let r = 0; r < rowCount; r++) {
-                    // If read-only, pull data from solutionData, else empty
                     const rowData = isReadOnly && solutionData[r] ? solutionData[r] : { date: '', account: '', debit: '', credit: '' };
-                    
-                    // Indentation logic for Read-Only mode
                     let indentStyle = "padding-left: 0.5rem;"; 
                     let acctClass = "";
                     if (isReadOnly) {
                         if (rowData.isExplanation) {
-                            indentStyle = "padding-left: 2rem;"; // 8 spaces approx
+                            indentStyle = "padding-left: 2rem;"; 
                             acctClass = "italic text-gray-500";
                         } else if (rowData.credit) {
-                            indentStyle = "padding-left: 1.25rem;"; // 5 spaces approx
+                            indentStyle = "padding-left: 1.25rem;";
                         }
                     }
 
@@ -585,7 +645,6 @@ ${ex.explanation}
                                 class="w-full h-full p-2 bg-transparent outline-none text-xs text-right font-mono text-gray-600" 
                                 value="${rowData.date || ''}" 
                                 ${isReadOnly ? 'readonly disabled' : ''}
-                                placeholder=""
                             >
                         </td>
                         <td class="border-r border-gray-300 p-0 relative align-top">
@@ -595,7 +654,6 @@ ${ex.explanation}
                                 style="${indentStyle}"
                                 value="${rowData.account || ''}"
                                 ${isReadOnly ? 'readonly disabled' : ''}
-                                placeholder=""
                             >
                         </td>
                         <td class="border-r border-gray-300 p-0 w-28 align-top">
@@ -603,7 +661,6 @@ ${ex.explanation}
                                 id="dr-${txId}-${r}"
                                 class="w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
                                 step="0.01"
-                                placeholder=""
                                 value="${rowData.debit !== '' && rowData.debit !== undefined ? Number(rowData.debit).toFixed(2) : ''}"
                                 ${isReadOnly ? 'readonly disabled' : 'oninput="handleJournalIndent(\'' + txId + '\', ' + r + ')"'}>
                         </td>
@@ -612,7 +669,6 @@ ${ex.explanation}
                                 id="cr-${txId}-${r}"
                                 class="w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
                                 step="0.01"
-                                placeholder=""
                                 value="${rowData.credit !== '' && rowData.credit !== undefined ? Number(rowData.credit).toFixed(2) : ''}"
                                 ${isReadOnly ? 'readonly disabled' : 'oninput="handleJournalIndent(\'' + txId + '\', ' + r + ')"'}>
                         </td>
@@ -622,15 +678,15 @@ ${ex.explanation}
             };
 
             const transactionsHtml = ex.transactions.map((tx, txIndex) => {
-                const txId = `${exId}-tx-${txIndex}`;
+                const txId = `ex-journ-${dayIndex}-${jIndex}-tx-${txIndex}`;
                 
-                // 1. The Student Input Table
+                // Input Table
                 const inputTable = `
-                    <div class="mb-6 border border-gray-300 shadow-sm rounded-lg overflow-hidden">
+                    <div class="mb-6 border border-gray-300 shadow-sm rounded-lg overflow-hidden exercise-item" data-id="${txId}">
                         <div class="bg-gray-100 px-4 py-2 border-b border-gray-300 flex justify-between items-center">
                             <span class="font-bold text-gray-700 text-sm">${tx.date} - ${tx.description}</span>
                         </div>
-                        <table class="w-full border-collapse">
+                        <table class="w-full border-collapse" id="table-${txId}">
                             <thead>
                                 <tr class="bg-gray-200 text-xs text-gray-600 font-bold uppercase border-b border-gray-300">
                                     <th class="py-2 border-r border-gray-300">Date</th>
@@ -643,53 +699,42 @@ ${ex.explanation}
                                 ${generateRows(txId, tx.rows)}
                             </tbody>
                         </table>
-                    </div>
-                `;
-
-                // 2. The Hidden Answer Key Table
-                const answerTable = `
-                    <div id="ans-table-${txId}" class="hidden mb-8 border-2 border-green-400 shadow-md rounded-lg overflow-hidden ring-4 ring-green-50">
-                        <div class="bg-green-100 px-4 py-2 border-b border-green-300 text-green-800 font-bold text-sm flex items-center">
-                            <i class="fas fa-check-circle mr-2"></i> Correct Entry: ${tx.date}
+                        
+                        <div id="ans-${txId}" class="hidden mt-0 border-t-2 border-green-400">
+                             <div class="bg-green-100 px-4 py-2 border-b border-green-300 text-green-800 font-bold text-sm flex items-center">
+                                <i class="fas fa-check-circle mr-2"></i> Correct Entry
+                            </div>
+                            <table class="w-full border-collapse bg-green-50">
+                                 <tbody>
+                                    ${generateRows(txId, tx.rows, true, tx.solution)}
+                                </tbody>
+                            </table>
                         </div>
-                        <table class="w-full border-collapse bg-green-50">
-                             <thead>
-                                <tr class="bg-green-200 text-xs text-green-800 font-bold uppercase border-b border-green-300">
-                                    <th class="py-2 border-r border-green-300 w-16">Date</th>
-                                    <th class="py-2 border-r border-green-300 text-left pl-2">Account Titles and Explanation</th>
-                                    <th class="py-2 border-r border-green-300 w-28">Debit</th>
-                                    <th class="py-2 w-28">Credit</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${generateRows(txId, tx.rows, true, tx.solution)}
-                            </tbody>
-                        </table>
+                        <div id="msg-${txId}" class="hidden p-3 bg-yellow-50 border-t border-yellow-200 text-sm text-yellow-800 italic">
+                             <i class="fas fa-exclamation-circle mr-1"></i> Please answer this question to see the answer key.
+                        </div>
                     </div>
                 `;
-
-                return inputTable + answerTable;
+                return inputTable;
             }).join('');
 
-            return `
-                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-10">
+            finalHtml += `
+                <div id="${setId}" class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-10">
                     <h3 class="font-bold text-xl text-gray-900 mb-2 border-b pb-2">${ex.title}</h3>
                     <p class="text-gray-600 mb-6 text-sm">${ex.instructions}</p>
-                    
                     ${transactionsHtml}
-
-                    <div class="mt-6">
-                         <button onclick="document.querySelectorAll('[id^=ans-table-${exId}]').forEach(el => el.classList.remove('hidden')); this.classList.add('hidden');" 
-                            class="px-6 py-2 bg-green-600 text-white text-sm font-bold rounded hover:bg-green-700 shadow-md transition-colors w-full sm:w-auto">
-                            <i class="fas fa-eye mr-2"></i> Reveal Solution
+                    <div class="mt-6 flex justify-start">
+                        <button class="btn-reveal-set px-6 py-2 bg-green-600 text-white text-sm font-bold rounded hover:bg-green-700 shadow-md transition-colors"
+                            data-set-id="${setId}" data-type="journal">
+                            <i class="fas fa-eye mr-2"></i> Reveal Journal Entries
                         </button>
                     </div>
                 </div>
             `;
-        }
+        });
+    }
 
-        return '';
-    }).join('');
+    return finalHtml;
 }
 
 // --- REQUIRED HELPER FUNCTION ---
@@ -704,11 +749,6 @@ window.handleJournalIndent = function(txId, row) {
     const drVal = drInput ? drInput.value.trim() : '';
     const crVal = crInput ? crInput.value.trim() : '';
 
-    // Logic:
-    // 1. If Credit has value -> Indent 5 spaces (~1.25rem)
-    // 2. If Both Empty -> Assume Explanation -> Indent 8 spaces (~2rem)
-    // 3. Else (Debit has value or typing) -> No Indent (0.5rem default padding)
-
     if (crVal !== '') {
         acctInput.style.paddingLeft = '1.25rem'; // ~5 spaces
         acctInput.classList.remove('italic', 'text-gray-500');
@@ -722,49 +762,96 @@ window.handleJournalIndent = function(txId, row) {
 };
 
 function attachExerciseListeners() {
-    // Listen for radio changes
-    document.querySelectorAll('input[type="radio"]').forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            const qid = e.target.getAttribute('data-qid');
-            const btn = document.getElementById(`btn-${qid}`);
-            if(btn) {
-                btn.classList.remove('hidden');
-                btn.classList.add('fade-in');
-            }
-        });
-    });
-
-    // Listen for text input changes (for problems)
-    document.querySelectorAll('textarea[id^="input-"]').forEach(area => {
-        area.addEventListener('input', (e) => {
-            const qid = e.target.getAttribute('data-qid');
-            const btn = document.getElementById(`btn-${qid}`);
-            if(e.target.value.trim().length > 0) {
-                btn.classList.remove('hidden');
-                btn.classList.add('fade-in');
-            } else {
-                btn.classList.add('hidden');
-            }
-        });
-    });
-
-    // Listen for check answer clicks
-    document.querySelectorAll('button[id^="btn-ex-"]').forEach(btn => {
+    // New Logic: Set-based Reveal Handlers
+    document.querySelectorAll('.btn-reveal-set').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            const qid = e.target.getAttribute('data-qid');
-            const ansDiv = document.getElementById(`ans-${qid}`);
-            if(ansDiv.classList.contains('hidden')) {
-                ansDiv.classList.remove('hidden');
-                ansDiv.classList.add('fade-in');
-                e.target.textContent = "Hide Answer";
-                e.target.classList.replace('bg-blue-600', 'bg-gray-500');
-                e.target.classList.replace('hover:bg-blue-700', 'hover:bg-gray-600');
+            const setId = e.target.getAttribute('data-set-id');
+            const type = e.target.getAttribute('data-type');
+            const container = document.getElementById(setId);
+            
+            // Toggle Logic
+            const isRevealing = !e.target.classList.contains('revealed');
+            
+            // 1. Update Button State
+            if (isRevealing) {
+                e.target.classList.add('revealed');
+                e.target.innerHTML = `<i class="fas fa-eye-slash mr-2"></i> Hide Answer Key`;
+                e.target.classList.replace('bg-blue-600', 'bg-slate-600');
+                e.target.classList.replace('hover:bg-blue-700', 'hover:bg-slate-700');
+                if(type === 'journal') {
+                    e.target.classList.replace('bg-green-600', 'bg-slate-600');
+                    e.target.classList.replace('hover:bg-green-700', 'hover:bg-slate-700');
+                }
             } else {
-                ansDiv.classList.add('hidden');
-                e.target.textContent = "Show Answer";
-                e.target.classList.replace('bg-gray-500', 'bg-blue-600');
-                e.target.classList.replace('hover:bg-gray-600', 'hover:bg-blue-700');
+                e.target.classList.remove('revealed');
+                const label = type === 'journal' ? 'Reveal Journal Entries' : (type === 'problem' ? 'Reveal Solution' : 'Reveal Answer Key');
+                e.target.innerHTML = `<i class="fas fa-eye mr-2"></i> ${label}`;
+                e.target.classList.replace('bg-slate-600', 'bg-blue-600');
+                e.target.classList.replace('hover:bg-slate-700', 'hover:bg-blue-700');
+                if(type === 'journal') {
+                    e.target.classList.replace('bg-slate-600', 'bg-green-600');
+                    e.target.classList.replace('hover:bg-slate-700', 'hover:bg-green-700');
+                }
             }
+
+            // 2. Iterate items in set
+            const items = container.querySelectorAll('.exercise-item');
+            items.forEach(item => {
+                const exId = item.getAttribute('data-id');
+                const ansDiv = document.getElementById(`ans-${exId}`);
+                const msgDiv = document.getElementById(`msg-${exId}`);
+                
+                // Get all inputs within this item to toggle read-only
+                const inputs = item.querySelectorAll('input, textarea');
+                
+                let isAnswered = false;
+
+                if (type === 'mcq') {
+                    const checked = item.querySelector(`input[name="${exId}"]:checked`);
+                    isAnswered = !!checked;
+                } else if (type === 'problem') {
+                    const val = document.getElementById(`input-${exId}`).value.trim();
+                    isAnswered = val.length > 0;
+                } else if (type === 'journal') {
+                    // Check if any input in the student table has value
+                    const tableInputs = document.getElementById(`table-${exId}`).querySelectorAll('input');
+                    for (let input of tableInputs) {
+                        if (input.value.trim() !== '') {
+                            isAnswered = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (isRevealing) {
+                    // Disable inputs
+                    inputs.forEach(inp => {
+                        inp.disabled = true;
+                        inp.classList.add('bg-gray-50');
+                    });
+
+                    // Show Answer OR Message
+                    if (isAnswered) {
+                        ansDiv.classList.remove('hidden');
+                        ansDiv.classList.add('fade-in');
+                        msgDiv.classList.add('hidden');
+                    } else {
+                        msgDiv.classList.remove('hidden');
+                        msgDiv.classList.add('fade-in');
+                        ansDiv.classList.add('hidden');
+                    }
+                } else {
+                    // Enable inputs
+                    inputs.forEach(inp => {
+                        inp.disabled = false;
+                        inp.classList.remove('bg-gray-50');
+                    });
+                    
+                    // Hide both
+                    ansDiv.classList.add('hidden');
+                    msgDiv.classList.add('hidden');
+                }
+            });
         });
     });
 }
