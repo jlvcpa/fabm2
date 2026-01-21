@@ -506,21 +506,9 @@ function executeExerciseMounts(exercises) {
 }
 
 function renderExercises(exercises, dayIndex) {
-    // 1. Bucket the exercises
-    const sets = { mcq: [], problem: [], journalizing: [], other: [] };
-    
-    // We map to preserve the original index for ID generation
-    exercises.forEach((ex, i) => {
-        const item = { ...ex, _origIndex: i };
-        if (ex.type === 'mcq') sets.mcq.push(item);
-        else if (ex.type === 'problem') sets.problem.push(item);
-        else if (ex.type === 'journalizing') sets.journalizing.push(item);
-        else sets.other.push(item);
-    });
+    const CHUNK_SIZE = 20;
 
-    let html = '';
-
-    // 2. Helper to Chunk Arrays
+    // Helper to chunk arrays
     const chunkArray = (arr, size) => {
         const result = [];
         for (let i = 0; i < arr.length; i += size) {
@@ -529,248 +517,361 @@ function renderExercises(exercises, dayIndex) {
         return result;
     };
 
-    // 3. Render MCQ Sets (Groups of 20)
-    const mcqChunks = chunkArray(sets.mcq, 20);
-    mcqChunks.forEach((chunk, chunkIndex) => {
-        const questionIds = [];
-        html += `<div class="mb-12 border-t-4 border-blue-200 pt-6">
-                    <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center">
-                        <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">${chunkIndex + 1}</span>
-                        MC Questions Set ${chunkIndex + 1}
-                    </h3>`;
+    // Filter exercises by type
+    const mcqs = exercises.filter(ex => ex.type === 'mcq');
+    const problems = exercises.filter(ex => ex.type === 'problem');
+    const journals = exercises.filter(ex => ex.type === 'journalizing');
+    const customs = exercises.filter(ex => ex.type === 'custom-mount');
+
+    let html = '';
+
+    // --- RENDER MCQS ---
+    if (mcqs.length > 0) {
+        const mcqSets = chunkArray(mcqs, CHUNK_SIZE);
         
-        chunk.forEach((ex, i) => {
-            const exId = `ex-${dayIndex}-${ex._origIndex}`;
-            questionIds.push({ id: exId, type: 'mcq' });
-
-            const optionsHtml = ex.options.map((opt, optIndex) => `
-                <label class="flex items-start p-3 rounded border border-gray-200 hover:bg-blue-50 cursor-pointer transition-colors bg-white">
-                    <input type="radio" name="${exId}" value="${optIndex}" class="mt-1 mr-3 text-blue-600 focus:ring-blue-500" data-qid="${exId}">
-                    <span class="text-sm text-gray-700">${opt}</span>
-                </label>
-            `).join('');
-
-            html += `
-                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-6">
-                    <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Question ${(chunkIndex * 20) + (i + 1)}</span>${ex.question}</p>
-                    <div class="space-y-3 mb-4">${optionsHtml}</div>
-                    
-                    <div class="flex items-center gap-3">
-                        <button id="btn-${exId}" class="hidden px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-all shadow-sm opacity-50 cursor-not-allowed" disabled>Individual Check Disabled</button>
-                    </div>
-
-                    <div id="ans-${exId}" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded text-sm text-green-800">
-                        <p class="font-bold mb-1"><i class="fas fa-check-circle mr-1"></i> Correct Answer: ${ex.options[ex.correctIndex]}</p>
-                        <p>${ex.explanation}</p>
-                    </div>
-                    
-                    <div id="no-ans-${exId}" class="hidden mt-4 p-4 bg-red-50 border border-red-200 rounded text-sm text-red-800 italic">
-                        <i class="fas fa-exclamation-circle mr-1"></i> Student did not answer this question.
-                    </div>
-                </div>
-            `;
-        });
-
-        // Set Reveal Button
-        const qIdsStr = encodeURIComponent(JSON.stringify(questionIds));
-        html += `<div class="mt-4 mb-8">
-                    <button onclick="handleSetReveal(this, '${qIdsStr}')" class="px-6 py-3 bg-blue-700 text-white font-bold rounded shadow hover:bg-blue-800 transition-all w-full md:w-auto">
-                        Reveal Answer Key (MC Set ${chunkIndex + 1})
-                    </button>
-                 </div>
-                 </div>`;
-    });
-
-    // 4. Render Problem Sets (Groups of 20)
-    const problemChunks = chunkArray(sets.problem, 20);
-    problemChunks.forEach((chunk, chunkIndex) => {
-        const questionIds = [];
-        html += `<div class="mb-12 border-t-4 border-purple-200 pt-6">
-                    <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center">
-                         <span class="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">${chunkIndex + 1}</span>
-                        Problem Questions Set ${chunkIndex + 1}
-                    </h3>`;
-
-        chunk.forEach((ex, i) => {
-            const exId = `ex-${dayIndex}-${ex._origIndex}`;
-            questionIds.push({ id: exId, type: 'problem' });
-
-            html += `
-                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-6">
-                    <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs mr-2">Problem ${(chunkIndex * 20) + (i + 1)}</span>${ex.question}</p>
-                    <textarea id="input-${exId}" class="w-full p-3 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white" rows="4" placeholder="Type your solution here..." data-qid="${exId}"></textarea>
-                    
-                    <div class="mt-4">
-                        <button id="btn-${exId}" class="hidden px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-all shadow-sm opacity-50 cursor-not-allowed" disabled>Individual Check Disabled</button>
-                    </div>
-
-                    <div id="ans-${exId}" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded text-sm text-green-800 font-mono whitespace-pre-wrap">
-<strong><i class="fas fa-key mr-1"></i> Answer Key:</strong>
-${ex.answer}
-
-<strong><i class="fas fa-info-circle mr-1"></i> Explanation:</strong>
-${ex.explanation}
-                    </div>
-
-                    <div id="no-ans-${exId}" class="hidden mt-4 p-4 bg-red-50 border border-red-200 rounded text-sm text-red-800 italic">
-                        <i class="fas fa-exclamation-circle mr-1"></i> Student did not answer this question.
-                    </div>
-                </div>
-            `;
-        });
-
-        // Set Reveal Button
-        const qIdsStr = encodeURIComponent(JSON.stringify(questionIds));
-        html += `<div class="mt-4 mb-8">
-                    <button onclick="handleSetReveal(this, '${qIdsStr}')" class="px-6 py-3 bg-purple-700 text-white font-bold rounded shadow hover:bg-purple-800 transition-all w-full md:w-auto">
-                        Reveal Answer Key (Problem Set ${chunkIndex + 1})
-                    </button>
-                 </div>
-                 </div>`;
-    });
-
-    // 5. Render Journalizing (Individually, but updated reveal logic)
-    sets.journalizing.forEach((ex, i) => {
-        const exId = `ex-${dayIndex}-${ex._origIndex}`;
-        
-        // Helper to generate rows for specific transaction
-        const generateRows = (txId, rowCount, isReadOnly = false, solutionData = []) => {
-            let rowsHtml = '';
-            for (let r = 0; r < rowCount; r++) {
-                const rowData = isReadOnly && solutionData[r] ? solutionData[r] : { date: '', account: '', debit: '', credit: '' };
-                let indentStyle = "padding-left: 0.5rem;"; 
-                let acctClass = "";
-                if (isReadOnly) {
-                    if (rowData.isExplanation) {
-                        indentStyle = "padding-left: 2rem;"; 
-                        acctClass = "italic text-gray-500";
-                    } else if (rowData.credit) {
-                        indentStyle = "padding-left: 1.25rem;"; 
-                    }
-                }
-
-                rowsHtml += `
-                <tr class="border-b border-gray-200 hover:bg-gray-50 bg-white">
-                    <td class="border-r border-gray-300 p-0 w-16 align-top">
-                        <input type="text" 
-                            class="w-full h-full p-2 bg-transparent outline-none text-xs text-right font-mono text-gray-600" 
-                            value="${rowData.date || ''}" 
-                            ${isReadOnly ? 'readonly disabled' : ''}
-                            placeholder=""
-                        >
-                    </td>
-                    <td class="border-r border-gray-300 p-0 relative align-top">
-                        <input type="text" 
-                            id="acct-${txId}-${r}"
-                            class="w-full h-full p-2 bg-transparent outline-none text-sm font-mono transition-all duration-200 ${acctClass}"
-                            style="${indentStyle}"
-                            value="${rowData.account || ''}"
-                            ${isReadOnly ? 'readonly disabled' : ''}
-                            placeholder=""
-                        >
-                    </td>
-                    <td class="border-r border-gray-300 p-0 w-28 align-top">
-                        <input type="number" 
-                            id="dr-${txId}-${r}"
-                            class="w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
-                            step="0.01"
-                            placeholder=""
-                            value="${rowData.debit !== '' && rowData.debit !== undefined ? Number(rowData.debit).toFixed(2) : ''}"
-                            ${isReadOnly ? 'readonly disabled' : 'oninput="handleJournalIndent(\'' + txId + '\', ' + r + ')"'}>
-                    </td>
-                    <td class="p-0 w-28 align-top">
-                        <input type="number" 
-                            id="cr-${txId}-${r}"
-                            class="w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
-                            step="0.01"
-                            placeholder=""
-                            value="${rowData.credit !== '' && rowData.credit !== undefined ? Number(rowData.credit).toFixed(2) : ''}"
-                            ${isReadOnly ? 'readonly disabled' : 'oninput="handleJournalIndent(\'' + txId + '\', ' + r + ')"'}>
-                    </td>
-                </tr>`;
-            }
-            return rowsHtml;
-        };
-
-        const transactionsHtml = ex.transactions.map((tx, txIndex) => {
-            const txId = `${exId}-tx-${txIndex}`;
+        mcqSets.forEach((set, setIndex) => {
+            const setContainerId = `mcq-set-${dayIndex}-${setIndex}`;
             
-            // Input Table
-            const inputTable = `
-                <div id="input-container-${txId}" class="mb-6 border border-gray-300 shadow-sm rounded-lg overflow-hidden">
-                    <div class="bg-gray-100 px-4 py-2 border-b border-gray-300 flex justify-between items-center">
-                        <span class="font-bold text-gray-700 text-sm">${tx.date} - ${tx.description}</span>
+            html += `
+                <div class="mb-10 bg-white rounded-lg border border-gray-200 shadow-sm p-1" id="${setContainerId}">
+                    <div class="bg-blue-50 px-6 py-4 border-b border-blue-100 rounded-t-lg">
+                        <h3 class="text-lg font-bold text-blue-800">MC Questions Set ${setIndex + 1}</h3>
                     </div>
-                    <table class="w-full border-collapse">
-                        <thead>
-                            <tr class="bg-gray-200 text-xs text-gray-600 font-bold uppercase border-b border-gray-300">
-                                <th class="py-2 border-r border-gray-300">Date</th>
-                                <th class="py-2 border-r border-gray-300 text-left pl-2">Account Titles and Explanation</th>
-                                <th class="py-2 border-r border-gray-300">Debit</th>
-                                <th class="py-2">Credit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${generateRows(txId, tx.rows)}
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="p-6 space-y-8">
             `;
 
-            // Answer Table
-            const answerTable = `
-                <div id="ans-table-${txId}" class="hidden mb-8 border-2 border-green-400 shadow-md rounded-lg overflow-hidden ring-4 ring-green-50">
-                    <div class="bg-green-100 px-4 py-2 border-b border-green-300 text-green-800 font-bold text-sm flex items-center">
-                        <i class="fas fa-check-circle mr-2"></i> Correct Entry: ${tx.date}
+            // Render Questions in Set
+            set.forEach((ex, i) => {
+                // Determine the original index relative to the type array for labels like "Question 1"
+                const globalIndex = (setIndex * CHUNK_SIZE) + i + 1;
+                // Unique ID based on original data structure index finding would be complex, 
+                // so we rely on a unique ID generation strategy: type-day-set-index
+                const exId = `mcq-${dayIndex}-${setIndex}-${i}`;
+
+                const optionsHtml = ex.options.map((opt, optIndex) => `
+                    <label class="flex items-start p-3 rounded border border-gray-200 hover:bg-blue-50 cursor-pointer transition-colors bg-white">
+                        <input type="radio" name="${exId}" value="${optIndex}" class="mt-1 mr-3 text-blue-600 focus:ring-blue-500" data-qid="${exId}">
+                        <span class="text-sm text-gray-700">${opt}</span>
+                    </label>
+                `).join('');
+
+                html += `
+                    <div class="question-block" data-qid="${exId}" data-type="mcq">
+                        <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Question ${globalIndex}</span>${ex.question}</p>
+                        <div class="space-y-3 mb-4">${optionsHtml}</div>
+                        
+                        <div class="validation-msg hidden mt-2 text-sm text-amber-600 font-medium italic"><i class="fas fa-exclamation-triangle mr-1"></i> Please answer this question to see the answer key.</div>
+
+                        <div id="ans-${exId}" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded text-sm text-green-800">
+                            <p class="font-bold mb-1"><i class="fas fa-check-circle mr-1"></i> Correct Answer: ${ex.options[ex.correctIndex]}</p>
+                            <p>${ex.explanation}</p>
+                        </div>
                     </div>
-                    <table class="w-full border-collapse bg-green-50">
-                        <thead>
-                            <tr class="bg-green-200 text-xs text-green-800 font-bold uppercase border-b border-green-300">
-                                <th class="py-2 border-r border-green-300 w-16">Date</th>
-                                <th class="py-2 border-r border-green-300 text-left pl-2">Account Titles and Explanation</th>
-                                <th class="py-2 border-r border-green-300 w-28">Debit</th>
-                                <th class="py-2 w-28">Credit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${generateRows(txId, tx.rows, true, tx.solution)}
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div id="no-ans-${txId}" class="hidden mb-8 p-4 bg-red-50 border border-red-200 rounded text-sm text-red-800 italic">
-                    <i class="fas fa-exclamation-circle mr-1"></i> Student did not answer this question.
+                `;
+            });
+
+            // Set Footer with Toggle Button
+            html += `
+                    </div>
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 rounded-b-lg flex justify-end">
+                        <button onclick="toggleExerciseSet('${setContainerId}', 'mcq', this)" 
+                            class="px-6 py-2 bg-blue-600 text-white text-sm font-bold rounded hover:bg-blue-700 shadow-md transition-colors w-full sm:w-auto">
+                            Reveal Answer Key
+                        </button>
+                    </div>
                 </div>
             `;
+        });
+    }
 
-            return inputTable + answerTable;
-        }).join('');
+    // --- RENDER PROBLEMS ---
+    if (problems.length > 0) {
+        const problemSets = chunkArray(problems, CHUNK_SIZE);
 
-        // Prepare ID list for journalizing (transaction IDs)
-        const journalIds = ex.transactions.map((tx, txIndex) => ({ id: `${exId}-tx-${txIndex}`, type: 'journalizing' }));
-        const journalIdsStr = encodeURIComponent(JSON.stringify(journalIds));
+        problemSets.forEach((set, setIndex) => {
+            const setContainerId = `prob-set-${dayIndex}-${setIndex}`;
+            
+            html += `
+                <div class="mb-10 bg-white rounded-lg border border-gray-200 shadow-sm p-1" id="${setContainerId}">
+                    <div class="bg-purple-50 px-6 py-4 border-b border-purple-100 rounded-t-lg">
+                        <h3 class="text-lg font-bold text-purple-800">Problem Questions Set ${setIndex + 1}</h3>
+                    </div>
+                    <div class="p-6 space-y-8">
+            `;
 
-        html += `
-            <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-10">
-                <h3 class="font-bold text-xl text-gray-900 mb-2 border-b pb-2">${ex.title}</h3>
-                <p class="text-gray-600 mb-6 text-sm">${ex.instructions}</p>
-                
-                ${transactionsHtml}
+            set.forEach((ex, i) => {
+                const globalIndex = (setIndex * CHUNK_SIZE) + i + 1;
+                const exId = `prob-${dayIndex}-${setIndex}-${i}`;
 
-                <div class="mt-6">
-                     <button onclick="handleSetReveal(this, '${journalIdsStr}')" 
-                        class="px-6 py-2 bg-green-600 text-white text-sm font-bold rounded hover:bg-green-700 shadow-md transition-colors w-full sm:w-auto">
-                        <i class="fas fa-eye mr-2"></i> Reveal Solution
-                    </button>
+                html += `
+                    <div class="question-block" data-qid="${exId}" data-type="problem">
+                        <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Problem ${globalIndex}</span>${ex.question}</p>
+                        
+                        <textarea id="input-${exId}" class="w-full p-3 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white" rows="4" placeholder="Type your solution here..." data-qid="${exId}"></textarea>
+                        
+                        <div class="validation-msg hidden mt-2 text-sm text-amber-600 font-medium italic"><i class="fas fa-exclamation-triangle mr-1"></i> Please answer this question to see the answer key.</div>
+
+                        <div id="ans-${exId}" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded text-sm text-green-800 font-mono whitespace-pre-wrap">
+                            <strong><i class="fas fa-key mr-1"></i> Answer Key:</strong>
+                            <div class="mt-1">${ex.answer}</div>
+                            <div class="mt-3"><strong><i class="fas fa-info-circle mr-1"></i> Explanation:</strong></div>
+                            <div class="mt-1">${ex.explanation}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+             html += `
+                    </div>
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 rounded-b-lg flex justify-end">
+                        <button onclick="toggleExerciseSet('${setContainerId}', 'problem', this)" 
+                            class="px-6 py-2 bg-blue-600 text-white text-sm font-bold rounded hover:bg-blue-700 shadow-md transition-colors w-full sm:w-auto">
+                            Reveal Answer Key
+                        </button>
+                    </div>
                 </div>
-            </div>
-        `;
-    });
+            `;
+        });
+    }
+
+    // --- RENDER JOURNALIZING (Per Question Logic) ---
+    if (journals.length > 0) {
+        journals.forEach((ex, i) => {
+            const exId = `journal-${dayIndex}-${i}`;
+            
+            // Helper to generate rows
+            const generateRows = (txId, rowCount, isReadOnly = false, solutionData = []) => {
+                let rowsHtml = '';
+                for (let r = 0; r < rowCount; r++) {
+                    const rowData = isReadOnly && solutionData[r] ? solutionData[r] : { date: '', account: '', debit: '', credit: '' };
+                    let indentStyle = "padding-left: 0.5rem;"; 
+                    let acctClass = "";
+                    if (isReadOnly) {
+                        if (rowData.isExplanation) {
+                            indentStyle = "padding-left: 2rem;"; 
+                            acctClass = "italic text-gray-500";
+                        } else if (rowData.credit) {
+                            indentStyle = "padding-left: 1.25rem;"; 
+                        }
+                    }
+
+                    rowsHtml += `
+                    <tr class="border-b border-gray-200 hover:bg-gray-50 bg-white">
+                        <td class="border-r border-gray-300 p-0 w-16 align-top">
+                            <input type="text" class="journal-input w-full h-full p-2 bg-transparent outline-none text-xs text-right font-mono text-gray-600" 
+                                value="${rowData.date || ''}" ${isReadOnly ? 'readonly disabled' : ''}>
+                        </td>
+                        <td class="border-r border-gray-300 p-0 relative align-top">
+                            <input type="text" id="acct-${txId}-${r}" class="journal-input w-full h-full p-2 bg-transparent outline-none text-sm font-mono transition-all duration-200 ${acctClass}"
+                                style="${indentStyle}" value="${rowData.account || ''}" ${isReadOnly ? 'readonly disabled' : ''}>
+                        </td>
+                        <td class="border-r border-gray-300 p-0 w-28 align-top">
+                            <input type="number" id="dr-${txId}-${r}" class="journal-input w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
+                                step="0.01" value="${rowData.debit !== '' && rowData.debit !== undefined ? Number(rowData.debit).toFixed(2) : ''}"
+                                ${isReadOnly ? 'readonly disabled' : 'oninput="handleJournalIndent(\'' + txId + '\', ' + r + ')"'}>
+                        </td>
+                        <td class="p-0 w-28 align-top">
+                            <input type="number" id="cr-${txId}-${r}" class="journal-input w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
+                                step="0.01" value="${rowData.credit !== '' && rowData.credit !== undefined ? Number(rowData.credit).toFixed(2) : ''}"
+                                ${isReadOnly ? 'readonly disabled' : 'oninput="handleJournalIndent(\'' + txId + '\', ' + r + ')"'}>
+                        </td>
+                    </tr>`;
+                }
+                return rowsHtml;
+            };
+
+            const transactionsHtml = ex.transactions.map((tx, txIndex) => {
+                const txId = `${exId}-tx-${txIndex}`;
+                
+                return `
+                    <div class="mb-6 question-block" data-qid="${txId}" data-type="journal-tx">
+                        <div class="border border-gray-300 shadow-sm rounded-lg overflow-hidden">
+                            <div class="bg-gray-100 px-4 py-2 border-b border-gray-300 flex justify-between items-center">
+                                <span class="font-bold text-gray-700 text-sm">${tx.date} - ${tx.description}</span>
+                            </div>
+                            <table class="w-full border-collapse">
+                                <thead>
+                                    <tr class="bg-gray-200 text-xs text-gray-600 font-bold uppercase border-b border-gray-300">
+                                        <th class="py-2 border-r border-gray-300">Date</th>
+                                        <th class="py-2 border-r border-gray-300 text-left pl-2">Account Titles</th>
+                                        <th class="py-2 border-r border-gray-300">Debit</th>
+                                        <th class="py-2">Credit</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="input-rows-container">
+                                    ${generateRows(txId, tx.rows)}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="validation-msg hidden mt-2 mb-4 text-sm text-amber-600 font-medium italic"><i class="fas fa-exclamation-triangle mr-1"></i> Please enter data for this transaction to see the answer key.</div>
+
+                        <div id="ans-table-${txId}" class="hidden mt-4 mb-4 border-2 border-green-400 shadow-md rounded-lg overflow-hidden ring-4 ring-green-50">
+                            <div class="bg-green-100 px-4 py-2 border-b border-green-300 text-green-800 font-bold text-sm">
+                                <i class="fas fa-check-circle mr-2"></i> Correct Entry: ${tx.date}
+                            </div>
+                            <table class="w-full border-collapse bg-green-50">
+                                <thead>
+                                    <tr class="bg-green-200 text-xs text-green-800 font-bold uppercase border-b border-green-300">
+                                        <th class="py-2 border-r border-green-300 w-16">Date</th>
+                                        <th class="py-2 border-r border-green-300 text-left pl-2">Account Titles</th>
+                                        <th class="py-2 border-r border-green-300 w-28">Debit</th>
+                                        <th class="py-2 w-28">Credit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${generateRows(txId, tx.rows, true, tx.solution)}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            html += `
+                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-10" id="${exId}-container">
+                    <h3 class="font-bold text-xl text-gray-900 mb-2 border-b pb-2">${ex.title}</h3>
+                    <p class="text-gray-600 mb-6 text-sm">${ex.instructions}</p>
+                    
+                    ${transactionsHtml}
+
+                    <div class="mt-6">
+                         <button onclick="toggleJournalKey('${exId}-container', this)" 
+                            class="px-6 py-2 bg-green-600 text-white text-sm font-bold rounded hover:bg-green-700 shadow-md transition-colors w-full sm:w-auto">
+                            Reveal Solution
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+    }
 
     return html;
 }
 
-// --- REQUIRED HELPER FUNCTION ---
+// --- REQUIRED HELPER FUNCTIONs ---
+
+// 1. Toggle Handler for Sets (MCQ & Problem)
+window.toggleExerciseSet = function(containerId, type, btn) {
+    const container = document.getElementById(containerId);
+    const questions = container.querySelectorAll('.question-block');
+    const isRevealing = btn.textContent.trim().includes('Reveal');
+
+    if (isRevealing) {
+        // --- REVEAL MODE ---
+        questions.forEach(q => {
+            const qid = q.getAttribute('data-qid');
+            const inputs = q.querySelectorAll('input, textarea');
+            let isAnswered = false;
+
+            // Check if answered
+            if (type === 'mcq') {
+                const checked = q.querySelector('input:checked');
+                if (checked) isAnswered = true;
+            } else if (type === 'problem') {
+                const val = q.querySelector('textarea').value.trim();
+                if (val.length > 0) isAnswered = true;
+            }
+
+            // Lock inputs
+            inputs.forEach(input => input.disabled = true);
+
+            // Show Result or Warning
+            const ansDiv = document.getElementById(`ans-${qid}`);
+            const msgDiv = q.querySelector('.validation-msg');
+
+            if (isAnswered) {
+                ansDiv.classList.remove('hidden');
+                ansDiv.classList.add('fade-in');
+                msgDiv.classList.add('hidden');
+            } else {
+                ansDiv.classList.add('hidden');
+                msgDiv.classList.remove('hidden');
+            }
+        });
+
+        // Update Button
+        btn.textContent = "Hide Answer Key";
+        btn.classList.replace('bg-blue-600', 'bg-gray-600');
+        btn.classList.replace('hover:bg-blue-700', 'hover:bg-gray-700');
+
+    } else {
+        // --- HIDE MODE ---
+        questions.forEach(q => {
+            const qid = q.getAttribute('data-qid');
+            const inputs = q.querySelectorAll('input, textarea');
+
+            // Unlock inputs
+            inputs.forEach(input => input.disabled = false);
+
+            // Hide Result and Warning
+            const ansDiv = document.getElementById(`ans-${qid}`);
+            const msgDiv = q.querySelector('.validation-msg');
+            
+            ansDiv.classList.add('hidden');
+            msgDiv.classList.add('hidden');
+        });
+
+        // Update Button
+        btn.textContent = "Reveal Answer Key";
+        btn.classList.replace('bg-gray-600', 'bg-blue-600');
+        btn.classList.replace('hover:bg-gray-700', 'hover:bg-blue-700');
+    }
+};
+
+// 2. Toggle Handler for Journalizing
+window.toggleJournalKey = function(containerId, btn) {
+    const container = document.getElementById(containerId);
+    const txBlocks = container.querySelectorAll('.question-block');
+    const isRevealing = btn.textContent.trim().includes('Reveal');
+
+    if (isRevealing) {
+        // Reveal
+        txBlocks.forEach(block => {
+            const qid = block.getAttribute('data-qid');
+            const inputs = block.querySelectorAll('input.journal-input');
+            const ansDiv = document.getElementById(`ans-table-${qid}`);
+            const msgDiv = block.querySelector('.validation-msg');
+
+            // Check if user entered ANY data in this transaction block
+            let hasData = false;
+            inputs.forEach(inp => {
+                if(inp.value.trim() !== "") hasData = true;
+                inp.disabled = true; // Lock
+            });
+
+            if (hasData) {
+                ansDiv.classList.remove('hidden');
+                ansDiv.classList.add('fade-in');
+                msgDiv.classList.add('hidden');
+            } else {
+                ansDiv.classList.add('hidden');
+                msgDiv.classList.remove('hidden');
+            }
+        });
+
+        btn.textContent = "Hide Solution";
+        btn.classList.replace('bg-green-600', 'bg-gray-600');
+        btn.classList.replace('hover:bg-green-700', 'hover:bg-gray-700');
+    } else {
+        // Hide
+        txBlocks.forEach(block => {
+            const qid = block.getAttribute('data-qid');
+            const inputs = block.querySelectorAll('input.journal-input');
+            const ansDiv = document.getElementById(`ans-table-${qid}`);
+            const msgDiv = block.querySelector('.validation-msg');
+
+            inputs.forEach(inp => inp.disabled = false); // Unlock
+            ansDiv.classList.add('hidden');
+            msgDiv.classList.add('hidden');
+        });
+
+        btn.textContent = "Reveal Solution";
+        btn.classList.replace('bg-gray-600', 'bg-green-600');
+        btn.classList.replace('hover:bg-gray-700', 'hover:bg-green-700');
+    }
+};
+
 window.handleJournalIndent = function(txId, row) {
     const acctInput = document.getElementById(`acct-${txId}-${row}`);
     const drInput = document.getElementById(`dr-${txId}-${row}`);
@@ -780,6 +881,11 @@ window.handleJournalIndent = function(txId, row) {
 
     const drVal = drInput ? drInput.value.trim() : '';
     const crVal = crInput ? crInput.value.trim() : '';
+
+    // Logic:
+    // 1. If Credit has value -> Indent 5 spaces (~1.25rem)
+    // 2. If Both Empty -> Assume Explanation -> Indent 8 spaces (~2rem)
+    // 3. Else (Debit has value or typing) -> No Indent (0.5rem default padding)
 
     if (crVal !== '') {
         acctInput.style.paddingLeft = '1.25rem'; // ~5 spaces
@@ -793,102 +899,14 @@ window.handleJournalIndent = function(txId, row) {
     }
 };
 
-// --- NEW HELPER FOR SET REVEAL ---
-window.handleSetReveal = function(btn, encodedIds) {
-    const ids = JSON.parse(decodeURIComponent(encodedIds));
-    
-    ids.forEach(item => {
-        const id = item.id;
-        let isAnswered = false;
-
-        if (item.type === 'mcq') {
-            const checked = document.querySelector(`input[name="${id}"]:checked`);
-            if (checked) isAnswered = true;
-        } else if (item.type === 'problem') {
-            const input = document.getElementById(`input-${id}`);
-            if (input && input.value.trim() !== "") isAnswered = true;
-        } else if (item.type === 'journalizing') {
-            // Check if any input in the container has value
-            const container = document.getElementById(`input-container-${id}`);
-            if (container) {
-                const inputs = container.querySelectorAll('input');
-                for (let inp of inputs) {
-                    if (inp.value.trim() !== "") {
-                        isAnswered = true;
-                        break;
-                    }
-                }
-            }
-        }
-
-        const ansDiv = item.type === 'journalizing' ? document.getElementById(`ans-table-${id}`) : document.getElementById(`ans-${id}`);
-        const noAnsDiv = document.getElementById(`no-ans-${id}`);
-
-        if (isAnswered) {
-            if (ansDiv) {
-                ansDiv.classList.remove('hidden');
-                ansDiv.classList.add('fade-in');
-            }
-            if (noAnsDiv) noAnsDiv.classList.add('hidden');
-        } else {
-            if (ansDiv) ansDiv.classList.add('hidden');
-            if (noAnsDiv) {
-                noAnsDiv.classList.remove('hidden');
-                noAnsDiv.classList.add('fade-in');
-            }
-        }
-    });
-
-    // Optionally hide the button after reveal, or keep it to toggle (currently keeps it)
-    btn.classList.add('opacity-50', 'cursor-not-allowed');
-    btn.disabled = true;
-    btn.textContent = "Answer Key Revealed";
-};
-
 function attachExerciseListeners() {
-    // Listen for radio changes
+    // Basic listeners can stay for UX (like highlighting radio selection), 
+    // but the Reveal logic is now handled by the Set/Parent buttons.
+    
+    // Listen for radio changes (Optional visual feedback)
     document.querySelectorAll('input[type="radio"]').forEach(radio => {
         radio.addEventListener('change', (e) => {
-            const qid = e.target.getAttribute('data-qid');
-            const btn = document.getElementById(`btn-${qid}`);
-            if(btn) {
-                btn.classList.remove('hidden');
-                btn.classList.add('fade-in');
-            }
-        });
-    });
-
-    // Listen for text input changes (for problems)
-    document.querySelectorAll('textarea[id^="input-"]').forEach(area => {
-        area.addEventListener('input', (e) => {
-            const qid = e.target.getAttribute('data-qid');
-            const btn = document.getElementById(`btn-${qid}`);
-            if(e.target.value.trim().length > 0) {
-                btn.classList.remove('hidden');
-                btn.classList.add('fade-in');
-            } else {
-                btn.classList.add('hidden');
-            }
-        });
-    });
-
-    // Listen for check answer clicks
-    document.querySelectorAll('button[id^="btn-ex-"]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const qid = e.target.getAttribute('data-qid');
-            const ansDiv = document.getElementById(`ans-${qid}`);
-            if(ansDiv.classList.contains('hidden')) {
-                ansDiv.classList.remove('hidden');
-                ansDiv.classList.add('fade-in');
-                e.target.textContent = "Hide Answer";
-                e.target.classList.replace('bg-blue-600', 'bg-gray-500');
-                e.target.classList.replace('hover:bg-blue-700', 'hover:bg-gray-600');
-            } else {
-                ansDiv.classList.add('hidden');
-                e.target.textContent = "Show Answer";
-                e.target.classList.replace('bg-gray-500', 'bg-blue-600');
-                e.target.classList.replace('hover:bg-gray-600', 'hover:bg-blue-700');
-            }
+            // No specific action needed immediately, handled by Reveal button
         });
     });
 }
