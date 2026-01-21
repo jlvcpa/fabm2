@@ -1824,136 +1824,118 @@ export const unit2Week2Data = {
             explanation: "FOB Destination means the Seller owns the goods until delivery, so the Seller pays the freight."
         },
 
-        // --- PROBLEM SOLVING QUESTIONS (5) ---
+        // --- JOURNALIZING QUESTIONS (6) ---
         {
-            type: "problem",
-            question: "PROBLEM 1: PERPETUAL SYSTEM (FOB Shipping Point)\nRecord the following transactions for 'TechRetail' using the Perpetual Inventory System.\n\n1. Jan 5: Purchased 100 laptops from Dell for $500 each on account, terms 2/10, n/30, FOB Shipping Point.\n2. Jan 6: Paid Fedex $200 cash for shipping the laptops.\n3. Jan 8: Returned 5 defective laptops to Dell.\n4. Jan 15: Paid Dell the full amount due within the discount period.\n5. Jan 20: Sold 50 laptops for $800 each on account. (Cost to TechRetail was $502/unit including freight).",
-            answer: `1. Jan 5 (Purchase):
-   Dr. Inventory           50,000
-       Cr. Accounts Payable    50,000
-
-2. Jan 6 (Freight-In):
-   Dr. Inventory              200  (Added to asset in Perpetual)
-       Cr. Cash                   200
-
-3. Jan 8 (Return):
-   Dr. Accounts Payable     2,500  (5 units * $500)
-       Cr. Inventory            2,500
-
-4. Jan 15 (Payment):
-   Dr. Accounts Payable    47,500  (50,000 - 2,500)
-       Cr. Inventory              950  (2% of 47,500 - Discount reduces asset cost)
-       Cr. Cash                46,550
-
-5. Jan 20 (Sale):
-   Dr. Accounts Receivable 40,000
-       Cr. Sales Revenue       40,000
-   (AND)
-   Dr. Cost of Goods Sold  25,100  (50 units * $502)
-       Cr. Inventory           25,100`,
-            explanation: "Note how Freight and Discounts affect the 'Inventory' account directly in Perpetual."
+    type: "journalizing",
+    id: "set1_periodic",
+    title: "PROBLEM 1: PERIODIC INVENTORY SYSTEM",
+    instructions: "Record the transactions for 'Luzon Traders' using the Periodic Inventory System. \n\nACCOUNTS TO USE: Cash, Accounts Receivable, Accounts Payable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight-In, Sales, Sales Returns and Allowances, Sales Discounts, Freight-Out.",
+    transactions: [
+        // --- PURCHASE TRANSACTIONS (5) ---
+        {
+            date: "Mar 1",
+            description: "Purchased merchandise from Visayas Supply for ₱50,000, terms 2/10, n/30, FOB Shipping Point.",
+            rows: 3,
+            solution: [
+                { date: "Mar 1", account: "Purchases", debit: 50000.00, credit: "" },
+                { date: "", account: "Accounts Payable", debit: "", credit: 50000.00 },
+                { date: "", account: "Purchase on account", debit: "", credit: "", isExplanation: true }
+            ]
         },
         {
-            type: "problem",
-            question: "PROBLEM 2: PERIODIC SYSTEM (FOB Shipping Point)\nRecord the exact same transactions as Problem 1, but for a company using the PERIODIC Inventory System.\n\n1. Jan 5: Purchased 100 laptops @ $500, terms 2/10, n/30, FOB Shipping Point.\n2. Jan 6: Paid Fedex $200 cash for shipping.\n3. Jan 8: Returned 5 defective laptops.\n4. Jan 15: Paid Dell in full (with discount).\n5. Jan 20: Sold 50 laptops for $800 each.",
-            answer: `1. Jan 5 (Purchase):
-   Dr. Purchases           50,000
-       Cr. Accounts Payable    50,000
-
-2. Jan 6 (Freight-In):
-   Dr. Freight-In             200  (Separate expense account)
-       Cr. Cash                   200
-
-3. Jan 8 (Return):
-   Dr. Accounts Payable     2,500
-       Cr. Purchase Returns & Allowances  2,500
-
-4. Jan 15 (Payment):
-   Dr. Accounts Payable    47,500
-       Cr. Purchase Discounts     950  (Contra-expense account)
-       Cr. Cash                46,550
-
-5. Jan 20 (Sale):
-   Dr. Accounts Receivable 40,000
-       Cr. Sales Revenue       40,000
-   (No entry for COGS/Inventory in Periodic system at time of sale)`,
-            explanation: "In Periodic, we use temporary accounts (Purchases, Freight-In, Purchase Returns) and do not update Inventory/COGS until the end of the period."
+            date: "Mar 2",
+            description: "Paid LBC Express ₱1,500 for shipping charges on the March 1 purchase.",
+            rows: 3,
+            solution: [
+                { date: "2", account: "Freight-In", debit: 1500.00, credit: "" },
+                { date: "", account: "Cash", debit: "", credit: 1500.00 },
+                { date: "", account: "Paid freight on purchases", debit: "", credit: "", isExplanation: true }
+            ]
         },
         {
-            type: "problem",
-            question: "PROBLEM 3: PERPETUAL SYSTEM (FOB Destination)\nRecord these transactions for 'FurnitureCo' (Seller) using Perpetual System.\n\n1. Mar 1: Sold Office Desks to a client on account for $10,000. The Cost of Goods Sold was $6,000. Terms FOB Destination.\n2. Mar 2: Paid shipping company $300 cash for delivery to client.\n3. Mar 5: Client returned damaged desks worth $1,000 (Cost was $600). The desks were scrapped (Inventory value $0).\n4. Mar 10: Received payment from client for the balance (no discount).",
-            answer: `1. Mar 1 (Sale):
-   Dr. Accounts Receivable 10,000
-       Cr. Sales Revenue       10,000
-   (AND)
-   Dr. Cost of Goods Sold   6,000
-       Cr. Inventory            6,000
-
-2. Mar 2 (Freight-Out):
-   Dr. Delivery Expense       300  (Or Freight-Out)
-       Cr. Cash                   300
-
-3. Mar 5 (Return - Scrapped):
-   Dr. Sales Returns & Allowances 1,000
-       Cr. Accounts Receivable        1,000
-   (No entry to restore Inventory because goods were scrapped/worthless)
-
-4. Mar 10 (Receipt):
-   Dr. Cash                 9,000
-       Cr. Accounts Receivable      9,000`,
-            explanation: "Since terms were FOB Destination, the Seller (FurnitureCo) pays the $300 freight, recording it as an operating expense."
+            date: "Mar 4",
+            description: "Returned defective merchandise to Visayas Supply amounting to ₱5,000.",
+            rows: 3,
+            solution: [
+                { date: "4", account: "Accounts Payable", debit: 5000.00, credit: "" },
+                { date: "", account: "Purchase Returns and Allowances", debit: "", credit: 5000.00 },
+                { date: "", account: "Returned defective goods", debit: "", credit: "", isExplanation: true }
+            ]
         },
         {
-            type: "problem",
-            question: "PROBLEM 4: PERIODIC SYSTEM (Buyer & Seller Mix)\nJournalize the following for Company A (The Buyer) using PERIODIC system.\n\n1. Apr 1: Purchased goods from Company B for $5,000, FOB Destination.\n2. Apr 2: Paid $150 freight charges upon arrival (Wait! Terms were FOB Destination, but Buyer paid cash on arrival as a courtesy to Seller).\n3. Apr 5: Returned $500 of goods.\n4. Apr 10: Paid the balance due to Company B, deducting the freight paid on their behalf.",
-            answer: `1. Apr 1 (Purchase):
-   Dr. Purchases            5,000
-       Cr. Accounts Payable     5,000
-
-2. Apr 2 (Freight Payment):
-   Dr. Accounts Payable       150  (Reduces amount owed to Seller)
-       Cr. Cash                   150
-   *Note: Since terms were FOB Destination, this is the Seller's cost. The Buyer paying it reduces the liability to the Seller.*
-
-3. Apr 5 (Return):
-   Dr. Accounts Payable       500
-       Cr. Purchase Returns & Allw.   500
-
-4. Apr 10 (Payment):
-   Dr. Accounts Payable     4,350  (5,000 - 150 prepaid - 500 return)
-       Cr. Cash                 4,350`,
-            explanation: "Crucial concept: If the Buyer pays freight on FOB Destination goods, they are essentially 'loaning' that cash to the Seller. It reduces Accounts Payable, it is NOT Freight-In."
+            date: "Mar 9",
+            description: "Paid Visayas Supply in full, less returns and discount.",
+            rows: 4,
+            solution: [
+                { date: "9", account: "Accounts Payable", debit: 45000.00, credit: "" },
+                { date: "", account: "Cash", debit: "", credit: 44100.00 },
+                { date: "", account: "Purchase Discounts", debit: "", credit: 900.00 },
+                { date: "", account: "Paid account in full", debit: "", credit: "", isExplanation: true }
+            ]
         },
         {
-            type: "problem",
-            question: "PROBLEM 5: COMPREHENSIVE (Perpetual)\nRecord for 'Global Traders'.\n\n1. May 1: Purchased inventory $20,000, FOB Shipping Point.\n2. May 2: Paid freight $500.\n3. May 5: Sold 40% of the inventory for $15,000 on account, FOB Shipping Point.\n4. May 6: Paid $200 freight on the sales shipment (Wait! Terms were FOB Shipping Point, but we prepaid it for the customer).\n5. May 10: Customer returned $1,000 of goods (Cost $600) to inventory.",
-            answer: `1. May 1:
-   Dr. Inventory            20,000
-       Cr. Accounts Payable     20,000
-
-2. May 2:
-   Dr. Inventory               500
-       Cr. Cash                    500
-   *Total Cost of Inv = 20,500*
-
-3. May 5:
-   Dr. Accounts Receivable  15,000
-       Cr. Sales Revenue        15,000
-   (AND)
-   Dr. Cost of Goods Sold    8,200  (40% of 20,500)
-       Cr. Inventory             8,200
-
-4. May 6:
-   Dr. Accounts Receivable     200  (We bill the customer for this)
-       Cr. Cash                    200
-
-5. May 10:
-   Dr. Sales Returns & Allw  1,000
-       Cr. Accounts Receivable   1,000
-   (AND)
-   Dr. Inventory               600
-       Cr. Cost of Goods Sold      600`,
-            explanation: "Transaction 4 is tricky. FOB Shipping Point means the CUSTOMER should pay. If we (Seller) pay it, we increase the amount the customer owes us (Accounts Receivable), rather than recording an expense."
+            date: "Mar 12",
+            description: "Purchased merchandise from Mindanao Co. for ₱20,000 with a 10% trade discount. Terms n/30.",
+            rows: 3,
+            solution: [
+                { date: "12", account: "Purchases", debit: 18000.00, credit: "" },
+                { date: "", account: "Accounts Payable", debit: "", credit: 18000.00 },
+                { date: "", account: "Purchase with trade discount", debit: "", credit: "", isExplanation: true }
+            ]
+        },
+        // --- SALES TRANSACTIONS (5) ---
+        {
+            date: "Mar 15",
+            description: "Sold merchandise to Customer A for ₱80,000, terms 3/10, n/30, FOB Destination.",
+            rows: 3,
+            solution: [
+                { date: "15", account: "Accounts Receivable", debit: 80000.00, credit: "" },
+                { date: "", account: "Sales", debit: "", credit: 80000.00 },
+                { date: "", account: "Sold merchandise on account", debit: "", credit: "", isExplanation: true }
+            ]
+        },
+        {
+            date: "Mar 16",
+            description: "Paid ₱2,000 delivery fee for the goods sold on March 15.",
+            rows: 3,
+            solution: [
+                { date: "16", account: "Freight-Out", debit: 2000.00, credit: "" },
+                { date: "", account: "Cash", debit: "", credit: 2000.00 },
+                { date: "", account: "Paid delivery expense", debit: "", credit: "", isExplanation: true }
+            ]
+        },
+        {
+            date: "Mar 18",
+            description: "Customer A returned damaged goods with a sales price of ₱4,000.",
+            rows: 3,
+            solution: [
+                { date: "18", account: "Sales Returns and Allowances", debit: 4000.00, credit: "" },
+                { date: "", account: "Accounts Receivable", debit: "", credit: 4000.00 },
+                { date: "", account: "Customer return", debit: "", credit: "", isExplanation: true }
+            ]
+        },
+        {
+            date: "Mar 24",
+            description: "Collected full payment from Customer A.",
+            rows: 4,
+            solution: [
+                { date: "24", account: "Cash", debit: 73720.00, credit: "" },
+                { date: "", account: "Sales Discounts", debit: 2280.00, credit: "" },
+                { date: "", account: "Accounts Receivable", debit: "", credit: 76000.00 },
+                { date: "", account: "Collected accounts receivable", debit: "", credit: "", isExplanation: true }
+            ]
+        },
+        {
+            date: "Mar 30",
+            description: "Cash sales of ₱10,000.",
+            rows: 3,
+            solution: [
+                { date: "30", account: "Cash", debit: 10000.00, credit: "" },
+                { date: "", account: "Sales", debit: "", credit: 10000.00 },
+                { date: "", account: "Recorded cash sales", debit: "", credit: "", isExplanation: true }
+            ]
+        }
+    ]
         }
     ]
 },
