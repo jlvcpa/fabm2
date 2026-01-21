@@ -506,45 +506,104 @@ function executeExerciseMounts(exercises) {
 }
 
 function renderExercises(exercises, dayIndex) {
-    return exercises.map((ex, i) => {
-        if (ex.type === 'custom-mount') return ''; // Don't render as a question
+    // 1. Bucket the exercises
+    const sets = { mcq: [], problem: [], journalizing: [], other: [] };
+    
+    // We map to preserve the original index for ID generation
+    exercises.forEach((ex, i) => {
+        const item = { ...ex, _origIndex: i };
+        if (ex.type === 'mcq') sets.mcq.push(item);
+        else if (ex.type === 'problem') sets.problem.push(item);
+        else if (ex.type === 'journalizing') sets.journalizing.push(item);
+        else sets.other.push(item);
+    });
 
-        const exId = `ex-${dayIndex}-${i}`;
+    let html = '';
+
+    // 2. Helper to Chunk Arrays
+    const chunkArray = (arr, size) => {
+        const result = [];
+        for (let i = 0; i < arr.length; i += size) {
+            result.push(arr.slice(i, i + size));
+        }
+        return result;
+    };
+
+    // 3. Render MCQ Sets (Groups of 20)
+    const mcqChunks = chunkArray(sets.mcq, 20);
+    mcqChunks.forEach((chunk, chunkIndex) => {
+        const questionIds = [];
+        html += `<div class="mb-12 border-t-4 border-blue-200 pt-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center">
+                        <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">${chunkIndex + 1}</span>
+                        MC Questions Set ${chunkIndex + 1}
+                    </h3>`;
         
-        // --- MCQ HANDLER ---
-        if (ex.type === 'mcq') {
-             const optionsHtml = ex.options.map((opt, optIndex) => `
+        chunk.forEach((ex, i) => {
+            const exId = `ex-${dayIndex}-${ex._origIndex}`;
+            questionIds.push({ id: exId, type: 'mcq' });
+
+            const optionsHtml = ex.options.map((opt, optIndex) => `
                 <label class="flex items-start p-3 rounded border border-gray-200 hover:bg-blue-50 cursor-pointer transition-colors bg-white">
                     <input type="radio" name="${exId}" value="${optIndex}" class="mt-1 mr-3 text-blue-600 focus:ring-blue-500" data-qid="${exId}">
                     <span class="text-sm text-gray-700">${opt}</span>
                 </label>
             `).join('');
 
-            return `
-                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-8">
-                    <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Question ${i+1}</span>${ex.question}</p>
+            html += `
+                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-6">
+                    <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Question ${(chunkIndex * 20) + (i + 1)}</span>${ex.question}</p>
                     <div class="space-y-3 mb-4">${optionsHtml}</div>
                     
                     <div class="flex items-center gap-3">
-                        <button id="btn-${exId}" class="hidden px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-all shadow-sm" data-qid="${exId}">Check Answer</button>
+                        <button id="btn-${exId}" class="hidden px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-all shadow-sm opacity-50 cursor-not-allowed" disabled>Individual Check Disabled</button>
                     </div>
 
                     <div id="ans-${exId}" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded text-sm text-green-800">
                         <p class="font-bold mb-1"><i class="fas fa-check-circle mr-1"></i> Correct Answer: ${ex.options[ex.correctIndex]}</p>
                         <p>${ex.explanation}</p>
                     </div>
+                    
+                    <div id="no-ans-${exId}" class="hidden mt-4 p-4 bg-red-50 border border-red-200 rounded text-sm text-red-800 italic">
+                        <i class="fas fa-exclamation-circle mr-1"></i> Student did not answer this question.
+                    </div>
                 </div>
             `;
-        } 
-        // --- EXISTING PROBLEM HANDLER ---
-        else if (ex.type === 'problem') {
-             return `
-                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-8">
-                    <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs mr-2">Problem ${i+1}</span>${ex.question}</p>
+        });
+
+        // Set Reveal Button
+        const qIdsStr = encodeURIComponent(JSON.stringify(questionIds));
+        html += `<div class="mt-4 mb-8">
+                    <button onclick="handleSetReveal(this, '${qIdsStr}')" class="px-6 py-3 bg-blue-700 text-white font-bold rounded shadow hover:bg-blue-800 transition-all w-full md:w-auto">
+                        Reveal Answer Key (MC Set ${chunkIndex + 1})
+                    </button>
+                 </div>
+                 </div>`;
+    });
+
+    // 4. Render Problem Sets (Groups of 20)
+    const problemChunks = chunkArray(sets.problem, 20);
+    problemChunks.forEach((chunk, chunkIndex) => {
+        const questionIds = [];
+        html += `<div class="mb-12 border-t-4 border-purple-200 pt-6">
+                    <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center">
+                         <span class="bg-purple-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">${chunkIndex + 1}</span>
+                        Problem Questions Set ${chunkIndex + 1}
+                    </h3>`;
+
+        chunk.forEach((ex, i) => {
+            const exId = `ex-${dayIndex}-${ex._origIndex}`;
+            questionIds.push({ id: exId, type: 'problem' });
+
+            html += `
+                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-6">
+                    <p class="font-semibold text-gray-800 mb-4 text-base"><span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs mr-2">Problem ${(chunkIndex * 20) + (i + 1)}</span>${ex.question}</p>
                     <textarea id="input-${exId}" class="w-full p-3 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white" rows="4" placeholder="Type your solution here..." data-qid="${exId}"></textarea>
+                    
                     <div class="mt-4">
-                        <button id="btn-${exId}" class="hidden px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-all shadow-sm" data-qid="${exId}">Show Answer Key</button>
+                        <button id="btn-${exId}" class="hidden px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-all shadow-sm opacity-50 cursor-not-allowed" disabled>Individual Check Disabled</button>
                     </div>
+
                     <div id="ans-${exId}" class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded text-sm text-green-800 font-mono whitespace-pre-wrap">
 <strong><i class="fas fa-key mr-1"></i> Answer Key:</strong>
 ${ex.answer}
@@ -552,148 +611,166 @@ ${ex.answer}
 <strong><i class="fas fa-info-circle mr-1"></i> Explanation:</strong>
 ${ex.explanation}
                     </div>
+
+                    <div id="no-ans-${exId}" class="hidden mt-4 p-4 bg-red-50 border border-red-200 rounded text-sm text-red-800 italic">
+                        <i class="fas fa-exclamation-circle mr-1"></i> Student did not answer this question.
+                    </div>
                 </div>
             `;
-        }
-        // --- NEW JOURNALIZING HANDLER ---
-        else if (ex.type === 'journalizing') {
-            
-            // Helper to generate rows for specific transaction
-            // isReadOnly = true generates the Answer Key view
-            const generateRows = (txId, rowCount, isReadOnly = false, solutionData = []) => {
-                let rowsHtml = '';
-                for (let r = 0; r < rowCount; r++) {
-                    // If read-only, pull data from solutionData, else empty
-                    const rowData = isReadOnly && solutionData[r] ? solutionData[r] : { date: '', account: '', debit: '', credit: '' };
-                    
-                    // Indentation logic for Read-Only mode
-                    let indentStyle = "padding-left: 0.5rem;"; 
-                    let acctClass = "";
-                    if (isReadOnly) {
-                        if (rowData.isExplanation) {
-                            indentStyle = "padding-left: 2rem;"; // 8 spaces approx
-                            acctClass = "italic text-gray-500";
-                        } else if (rowData.credit) {
-                            indentStyle = "padding-left: 1.25rem;"; // 5 spaces approx
-                        }
+        });
+
+        // Set Reveal Button
+        const qIdsStr = encodeURIComponent(JSON.stringify(questionIds));
+        html += `<div class="mt-4 mb-8">
+                    <button onclick="handleSetReveal(this, '${qIdsStr}')" class="px-6 py-3 bg-purple-700 text-white font-bold rounded shadow hover:bg-purple-800 transition-all w-full md:w-auto">
+                        Reveal Answer Key (Problem Set ${chunkIndex + 1})
+                    </button>
+                 </div>
+                 </div>`;
+    });
+
+    // 5. Render Journalizing (Individually, but updated reveal logic)
+    sets.journalizing.forEach((ex, i) => {
+        const exId = `ex-${dayIndex}-${ex._origIndex}`;
+        
+        // Helper to generate rows for specific transaction
+        const generateRows = (txId, rowCount, isReadOnly = false, solutionData = []) => {
+            let rowsHtml = '';
+            for (let r = 0; r < rowCount; r++) {
+                const rowData = isReadOnly && solutionData[r] ? solutionData[r] : { date: '', account: '', debit: '', credit: '' };
+                let indentStyle = "padding-left: 0.5rem;"; 
+                let acctClass = "";
+                if (isReadOnly) {
+                    if (rowData.isExplanation) {
+                        indentStyle = "padding-left: 2rem;"; 
+                        acctClass = "italic text-gray-500";
+                    } else if (rowData.credit) {
+                        indentStyle = "padding-left: 1.25rem;"; 
                     }
-
-                    rowsHtml += `
-                    <tr class="border-b border-gray-200 hover:bg-gray-50 bg-white">
-                        <td class="border-r border-gray-300 p-0 w-16 align-top">
-                            <input type="text" 
-                                class="w-full h-full p-2 bg-transparent outline-none text-xs text-right font-mono text-gray-600" 
-                                value="${rowData.date || ''}" 
-                                ${isReadOnly ? 'readonly disabled' : ''}
-                                placeholder=""
-                            >
-                        </td>
-                        <td class="border-r border-gray-300 p-0 relative align-top">
-                            <input type="text" 
-                                id="acct-${txId}-${r}"
-                                class="w-full h-full p-2 bg-transparent outline-none text-sm font-mono transition-all duration-200 ${acctClass}"
-                                style="${indentStyle}"
-                                value="${rowData.account || ''}"
-                                ${isReadOnly ? 'readonly disabled' : ''}
-                                placeholder=""
-                            >
-                        </td>
-                        <td class="border-r border-gray-300 p-0 w-28 align-top">
-                            <input type="number" 
-                                id="dr-${txId}-${r}"
-                                class="w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
-                                step="0.01"
-                                placeholder=""
-                                value="${rowData.debit !== '' && rowData.debit !== undefined ? Number(rowData.debit).toFixed(2) : ''}"
-                                ${isReadOnly ? 'readonly disabled' : 'oninput="handleJournalIndent(\'' + txId + '\', ' + r + ')"'}>
-                        </td>
-                        <td class="p-0 w-28 align-top">
-                            <input type="number" 
-                                id="cr-${txId}-${r}"
-                                class="w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
-                                step="0.01"
-                                placeholder=""
-                                value="${rowData.credit !== '' && rowData.credit !== undefined ? Number(rowData.credit).toFixed(2) : ''}"
-                                ${isReadOnly ? 'readonly disabled' : 'oninput="handleJournalIndent(\'' + txId + '\', ' + r + ')"'}>
-                        </td>
-                    </tr>`;
                 }
-                return rowsHtml;
-            };
 
-            const transactionsHtml = ex.transactions.map((tx, txIndex) => {
-                const txId = `${exId}-tx-${txIndex}`;
-                
-                // 1. The Student Input Table
-                const inputTable = `
-                    <div class="mb-6 border border-gray-300 shadow-sm rounded-lg overflow-hidden">
-                        <div class="bg-gray-100 px-4 py-2 border-b border-gray-300 flex justify-between items-center">
-                            <span class="font-bold text-gray-700 text-sm">${tx.date} - ${tx.description}</span>
-                        </div>
-                        <table class="w-full border-collapse">
-                            <thead>
-                                <tr class="bg-gray-200 text-xs text-gray-600 font-bold uppercase border-b border-gray-300">
-                                    <th class="py-2 border-r border-gray-300">Date</th>
-                                    <th class="py-2 border-r border-gray-300 text-left pl-2">Account Titles and Explanation</th>
-                                    <th class="py-2 border-r border-gray-300">Debit</th>
-                                    <th class="py-2">Credit</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${generateRows(txId, tx.rows)}
-                            </tbody>
-                        </table>
+                rowsHtml += `
+                <tr class="border-b border-gray-200 hover:bg-gray-50 bg-white">
+                    <td class="border-r border-gray-300 p-0 w-16 align-top">
+                        <input type="text" 
+                            class="w-full h-full p-2 bg-transparent outline-none text-xs text-right font-mono text-gray-600" 
+                            value="${rowData.date || ''}" 
+                            ${isReadOnly ? 'readonly disabled' : ''}
+                            placeholder=""
+                        >
+                    </td>
+                    <td class="border-r border-gray-300 p-0 relative align-top">
+                        <input type="text" 
+                            id="acct-${txId}-${r}"
+                            class="w-full h-full p-2 bg-transparent outline-none text-sm font-mono transition-all duration-200 ${acctClass}"
+                            style="${indentStyle}"
+                            value="${rowData.account || ''}"
+                            ${isReadOnly ? 'readonly disabled' : ''}
+                            placeholder=""
+                        >
+                    </td>
+                    <td class="border-r border-gray-300 p-0 w-28 align-top">
+                        <input type="number" 
+                            id="dr-${txId}-${r}"
+                            class="w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
+                            step="0.01"
+                            placeholder=""
+                            value="${rowData.debit !== '' && rowData.debit !== undefined ? Number(rowData.debit).toFixed(2) : ''}"
+                            ${isReadOnly ? 'readonly disabled' : 'oninput="handleJournalIndent(\'' + txId + '\', ' + r + ')"'}>
+                    </td>
+                    <td class="p-0 w-28 align-top">
+                        <input type="number" 
+                            id="cr-${txId}-${r}"
+                            class="w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
+                            step="0.01"
+                            placeholder=""
+                            value="${rowData.credit !== '' && rowData.credit !== undefined ? Number(rowData.credit).toFixed(2) : ''}"
+                            ${isReadOnly ? 'readonly disabled' : 'oninput="handleJournalIndent(\'' + txId + '\', ' + r + ')"'}>
+                    </td>
+                </tr>`;
+            }
+            return rowsHtml;
+        };
+
+        const transactionsHtml = ex.transactions.map((tx, txIndex) => {
+            const txId = `${exId}-tx-${txIndex}`;
+            
+            // Input Table
+            const inputTable = `
+                <div id="input-container-${txId}" class="mb-6 border border-gray-300 shadow-sm rounded-lg overflow-hidden">
+                    <div class="bg-gray-100 px-4 py-2 border-b border-gray-300 flex justify-between items-center">
+                        <span class="font-bold text-gray-700 text-sm">${tx.date} - ${tx.description}</span>
                     </div>
-                `;
-
-                // 2. The Hidden Answer Key Table
-                const answerTable = `
-                    <div id="ans-table-${txId}" class="hidden mb-8 border-2 border-green-400 shadow-md rounded-lg overflow-hidden ring-4 ring-green-50">
-                        <div class="bg-green-100 px-4 py-2 border-b border-green-300 text-green-800 font-bold text-sm flex items-center">
-                            <i class="fas fa-check-circle mr-2"></i> Correct Entry: ${tx.date}
-                        </div>
-                        <table class="w-full border-collapse bg-green-50">
-                             <thead>
-                                <tr class="bg-green-200 text-xs text-green-800 font-bold uppercase border-b border-green-300">
-                                    <th class="py-2 border-r border-green-300 w-16">Date</th>
-                                    <th class="py-2 border-r border-green-300 text-left pl-2">Account Titles and Explanation</th>
-                                    <th class="py-2 border-r border-green-300 w-28">Debit</th>
-                                    <th class="py-2 w-28">Credit</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${generateRows(txId, tx.rows, true, tx.solution)}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-
-                return inputTable + answerTable;
-            }).join('');
-
-            return `
-                <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-10">
-                    <h3 class="font-bold text-xl text-gray-900 mb-2 border-b pb-2">${ex.title}</h3>
-                    <p class="text-gray-600 mb-6 text-sm">${ex.instructions}</p>
-                    
-                    ${transactionsHtml}
-
-                    <div class="mt-6">
-                         <button onclick="document.querySelectorAll('[id^=ans-table-${exId}]').forEach(el => el.classList.remove('hidden')); this.classList.add('hidden');" 
-                            class="px-6 py-2 bg-green-600 text-white text-sm font-bold rounded hover:bg-green-700 shadow-md transition-colors w-full sm:w-auto">
-                            <i class="fas fa-eye mr-2"></i> Reveal Solution
-                        </button>
-                    </div>
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="bg-gray-200 text-xs text-gray-600 font-bold uppercase border-b border-gray-300">
+                                <th class="py-2 border-r border-gray-300">Date</th>
+                                <th class="py-2 border-r border-gray-300 text-left pl-2">Account Titles and Explanation</th>
+                                <th class="py-2 border-r border-gray-300">Debit</th>
+                                <th class="py-2">Credit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${generateRows(txId, tx.rows)}
+                        </tbody>
+                    </table>
                 </div>
             `;
-        }
 
-        return '';
-    }).join('');
+            // Answer Table
+            const answerTable = `
+                <div id="ans-table-${txId}" class="hidden mb-8 border-2 border-green-400 shadow-md rounded-lg overflow-hidden ring-4 ring-green-50">
+                    <div class="bg-green-100 px-4 py-2 border-b border-green-300 text-green-800 font-bold text-sm flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i> Correct Entry: ${tx.date}
+                    </div>
+                    <table class="w-full border-collapse bg-green-50">
+                        <thead>
+                            <tr class="bg-green-200 text-xs text-green-800 font-bold uppercase border-b border-green-300">
+                                <th class="py-2 border-r border-green-300 w-16">Date</th>
+                                <th class="py-2 border-r border-green-300 text-left pl-2">Account Titles and Explanation</th>
+                                <th class="py-2 border-r border-green-300 w-28">Debit</th>
+                                <th class="py-2 w-28">Credit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${generateRows(txId, tx.rows, true, tx.solution)}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="no-ans-${txId}" class="hidden mb-8 p-4 bg-red-50 border border-red-200 rounded text-sm text-red-800 italic">
+                    <i class="fas fa-exclamation-circle mr-1"></i> Student did not answer this question.
+                </div>
+            `;
+
+            return inputTable + answerTable;
+        }).join('');
+
+        // Prepare ID list for journalizing (transaction IDs)
+        const journalIds = ex.transactions.map((tx, txIndex) => ({ id: `${exId}-tx-${txIndex}`, type: 'journalizing' }));
+        const journalIdsStr = encodeURIComponent(JSON.stringify(journalIds));
+
+        html += `
+            <div class="bg-slate-50 p-6 rounded-lg border border-slate-100 mb-10">
+                <h3 class="font-bold text-xl text-gray-900 mb-2 border-b pb-2">${ex.title}</h3>
+                <p class="text-gray-600 mb-6 text-sm">${ex.instructions}</p>
+                
+                ${transactionsHtml}
+
+                <div class="mt-6">
+                     <button onclick="handleSetReveal(this, '${journalIdsStr}')" 
+                        class="px-6 py-2 bg-green-600 text-white text-sm font-bold rounded hover:bg-green-700 shadow-md transition-colors w-full sm:w-auto">
+                        <i class="fas fa-eye mr-2"></i> Reveal Solution
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+
+    return html;
 }
 
 // --- REQUIRED HELPER FUNCTION ---
-// Add this to your script, outside the renderExercises function so it is globally accessible.
 window.handleJournalIndent = function(txId, row) {
     const acctInput = document.getElementById(`acct-${txId}-${row}`);
     const drInput = document.getElementById(`dr-${txId}-${row}`);
@@ -703,11 +780,6 @@ window.handleJournalIndent = function(txId, row) {
 
     const drVal = drInput ? drInput.value.trim() : '';
     const crVal = crInput ? crInput.value.trim() : '';
-
-    // Logic:
-    // 1. If Credit has value -> Indent 5 spaces (~1.25rem)
-    // 2. If Both Empty -> Assume Explanation -> Indent 8 spaces (~2rem)
-    // 3. Else (Debit has value or typing) -> No Indent (0.5rem default padding)
 
     if (crVal !== '') {
         acctInput.style.paddingLeft = '1.25rem'; // ~5 spaces
@@ -719,6 +791,58 @@ window.handleJournalIndent = function(txId, row) {
         acctInput.style.paddingLeft = '0.5rem'; // Default
         acctInput.classList.remove('italic', 'text-gray-500');
     }
+};
+
+// --- NEW HELPER FOR SET REVEAL ---
+window.handleSetReveal = function(btn, encodedIds) {
+    const ids = JSON.parse(decodeURIComponent(encodedIds));
+    
+    ids.forEach(item => {
+        const id = item.id;
+        let isAnswered = false;
+
+        if (item.type === 'mcq') {
+            const checked = document.querySelector(`input[name="${id}"]:checked`);
+            if (checked) isAnswered = true;
+        } else if (item.type === 'problem') {
+            const input = document.getElementById(`input-${id}`);
+            if (input && input.value.trim() !== "") isAnswered = true;
+        } else if (item.type === 'journalizing') {
+            // Check if any input in the container has value
+            const container = document.getElementById(`input-container-${id}`);
+            if (container) {
+                const inputs = container.querySelectorAll('input');
+                for (let inp of inputs) {
+                    if (inp.value.trim() !== "") {
+                        isAnswered = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        const ansDiv = item.type === 'journalizing' ? document.getElementById(`ans-table-${id}`) : document.getElementById(`ans-${id}`);
+        const noAnsDiv = document.getElementById(`no-ans-${id}`);
+
+        if (isAnswered) {
+            if (ansDiv) {
+                ansDiv.classList.remove('hidden');
+                ansDiv.classList.add('fade-in');
+            }
+            if (noAnsDiv) noAnsDiv.classList.add('hidden');
+        } else {
+            if (ansDiv) ansDiv.classList.add('hidden');
+            if (noAnsDiv) {
+                noAnsDiv.classList.remove('hidden');
+                noAnsDiv.classList.add('fade-in');
+            }
+        }
+    });
+
+    // Optionally hide the button after reveal, or keep it to toggle (currently keeps it)
+    btn.classList.add('opacity-50', 'cursor-not-allowed');
+    btn.disabled = true;
+    btn.textContent = "Answer Key Revealed";
 };
 
 function attachExerciseListeners() {
