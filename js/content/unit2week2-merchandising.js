@@ -266,435 +266,677 @@ export const unit2Week2Data = {
 
         // --- 5 JOURNALIZING (Journal Entries with Trade Discounts) ---
         {
-        type: "journalizing",
-        id: "prob1",
-        title: "PROBLEM 1: JANUARY TRANSACTIONS",
-        instructions: "Journalize the transactions for 'Alpha Trading'. Use the following accounts: Cash, Accounts Receivable, Accounts Payable, Sales, Purchases, Merchandise Inventory, Cost of Goods Sold. \n\nIMPORTANT: Use the Periodic System for transactions 1, 3, and 5. Use the Perpetual System for transactions 2, 4, and 6.",
-        transactions: [
-            {
-                date: "Jan 2",
-                description: "(Periodic) Purchased goods from Supplier A on account for $5,000.",
-                rows: 3,
-                solution: [
-                    { date: "Jan 2", account: "Purchases", debit: 5000, credit: "" },
-                    { date: "", account: "Accounts Payable", debit: "", credit: 5000 },
-                    { date: "", account: "Purchased goods on account", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Jan 4",
-                description: "(Perpetual) Sold merchandise on account to Customer X for $8,000. The cost of goods sold was $4,500.",
-                rows: 5,
-                solution: [
-                    { date: "4", account: "Accounts Receivable", debit: 8000, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 8000 },
-                    { date: "", account: "Cost of Goods Sold", debit: 4500, credit: "" },
-                    { date: "", account: "Merchandise Inventory", debit: "", credit: 4500 },
-                    { date: "", account: "Sold goods on account", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Jan 7",
-                description: "(Periodic) Sold goods for cash, $3,000.",
-                rows: 3,
-                solution: [
-                    { date: "7", account: "Cash", debit: 3000, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 3000 },
-                    { date: "", account: "Cash sales", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Jan 10",
-                description: "(Perpetual) Purchased inventory on account from Supplier B, list price $10,000, trade discount 10%.",
-                rows: 3,
-                solution: [
-                    { date: "10", account: "Merchandise Inventory", debit: 9000, credit: "" },
-                    { date: "", account: "Accounts Payable", debit: "", credit: 9000 },
-                    { date: "", account: "Purchased inventory (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Jan 15",
-                description: "(Periodic) Purchased goods for cash, list price $4,000, trade discount 20%.",
-                rows: 3,
-                solution: [
-                    { date: "15", account: "Purchases", debit: 3200, credit: "" },
-                    { date: "", account: "Cash", debit: "", credit: 3200 },
-                    { date: "", account: "Cash purchase (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Jan 20",
-                description: "(Perpetual) Sold merchandise to Customer Y on account for $12,000. Cost of goods sold was $7,000.",
-                rows: 5,
-                solution: [
-                    { date: "20", account: "Accounts Receivable", debit: 12000, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 12000 },
-                    { date: "", account: "Cost of Goods Sold", debit: 7000, credit: "" },
-                    { date: "", account: "Merchandise Inventory", debit: "", credit: 7000 },
-                    { date: "", account: "Sold goods on account", debit: "", credit: "", isExplanation: true }
-                ]
-            }
+    "type": "journalizing",
+    "id": "set1_periodic",
+    "title": "SET 1: PERIODIC SYSTEM (January Transactions)",
+    "instructions": "Journalize the following transactions for 'Alpha Merchandising' using the **Periodic Inventory System**. \n\n**Accounts to use:** Cash, Accounts Receivable, Accounts Payable, Purchases, Sales.\n\nNote: Do not include discounts or returns. Record trade discounts at net price immediately.",
+    "transactions": [
+      {
+        "date": "Jan 2",
+        "description": "Purchased merchandise from Supplier A on account, ₱10,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "Jan 2", "account": "Purchases", "debit": 10000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 10000 },
+          { "date": "", "account": "Purchased goods on account", "debit": "", "credit": "", "isExplanation": true }
         ]
-    },
-    {
-        type: "journalizing",
-        id: "prob2",
-        title: "PROBLEM 2: FEBRUARY TRANSACTIONS",
-        instructions: "Journalize the transactions for 'Beta Mart'. Use the following accounts: Cash, Accounts Receivable, Accounts Payable, Sales, Purchases, Merchandise Inventory, Cost of Goods Sold. \n\nIMPORTANT: Use the Periodic System for transactions 1, 3, and 5. Use the Perpetual System for transactions 2, 4, and 6.",
-        transactions: [
-            {
-                date: "Feb 1",
-                description: "(Periodic) Sold goods on account to Client A, $6,500.",
-                rows: 3,
-                solution: [
-                    { date: "Feb 1", account: "Accounts Receivable", debit: 6500, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 6500 },
-                    { date: "", account: "Sold goods on account", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Feb 5",
-                description: "(Perpetual) Purchased merchandise for cash, $2,500.",
-                rows: 3,
-                solution: [
-                    { date: "5", account: "Merchandise Inventory", debit: 2500, credit: "" },
-                    { date: "", account: "Cash", debit: "", credit: 2500 },
-                    { date: "", account: "Purchased inventory for cash", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Feb 10",
-                description: "(Periodic) Purchased goods on account from Vendor Z, $8,000.",
-                rows: 3,
-                solution: [
-                    { date: "10", account: "Purchases", debit: 8000, credit: "" },
-                    { date: "", account: "Accounts Payable", debit: "", credit: 8000 },
-                    { date: "", account: "Purchased goods on credit", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Feb 14",
-                description: "(Perpetual) Sold merchandise for cash, list price $5,000, trade discount 5%. Cost of goods sold was $3,000.",
-                rows: 5,
-                solution: [
-                    { date: "14", account: "Cash", debit: 4750, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 4750 },
-                    { date: "", account: "Cost of Goods Sold", debit: 3000, credit: "" },
-                    { date: "", account: "Merchandise Inventory", debit: "", credit: 3000 },
-                    { date: "", account: "Cash sale (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Feb 20",
-                description: "(Periodic) Purchased goods on account, list price $15,000, trade discount 20%.",
-                rows: 3,
-                solution: [
-                    { date: "20", account: "Purchases", debit: 12000, credit: "" },
-                    { date: "", account: "Accounts Payable", debit: "", credit: 12000 },
-                    { date: "", account: "Purchased goods (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Feb 25",
-                description: "(Perpetual) Sold merchandise on account to Client B, $9,000. Cost of goods sold was $5,500.",
-                rows: 5,
-                solution: [
-                    { date: "25", account: "Accounts Receivable", debit: 9000, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 9000 },
-                    { date: "", account: "Cost of Goods Sold", debit: 5500, credit: "" },
-                    { date: "", account: "Merchandise Inventory", debit: "", credit: 5500 },
-                    { date: "", account: "Sold goods on account", debit: "", credit: "", isExplanation: true }
-                ]
-            }
+      },
+      {
+        "date": "Jan 4",
+        "description": "Sold merchandise to Customer X on account, ₱15,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "4", "account": "Accounts Receivable", "debit": 15000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 15000 },
+          { "date": "", "account": "Sold goods on account", "debit": "", "credit": "", "isExplanation": true }
         ]
-    },
-    {
-        type: "journalizing",
-        id: "prob3",
-        title: "PROBLEM 3: MARCH TRANSACTIONS",
-        instructions: "Journalize the transactions for 'Gamma Gear'. Use the following accounts: Cash, Accounts Receivable, Accounts Payable, Sales, Purchases, Merchandise Inventory, Cost of Goods Sold. \n\nIMPORTANT: Use the Periodic System for transactions 1, 3, and 5. Use the Perpetual System for transactions 2, 4, and 6.",
-        transactions: [
-            {
-                date: "Mar 3",
-                description: "(Periodic) Purchased inventory on credit, $11,000.",
-                rows: 3,
-                solution: [
-                    { date: "Mar 3", account: "Purchases", debit: 11000, credit: "" },
-                    { date: "", account: "Accounts Payable", debit: "", credit: 11000 },
-                    { date: "", account: "Purchased inventory", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Mar 8",
-                description: "(Perpetual) Sold goods on credit, list price $20,000, trade discount 10%. Cost of goods sold was $10,000.",
-                rows: 5,
-                solution: [
-                    { date: "8", account: "Accounts Receivable", debit: 18000, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 18000 },
-                    { date: "", account: "Cost of Goods Sold", debit: 10000, credit: "" },
-                    { date: "", account: "Merchandise Inventory", debit: "", credit: 10000 },
-                    { date: "", account: "Sold goods (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Mar 12",
-                description: "(Periodic) Sold goods for cash, $4,200.",
-                rows: 3,
-                solution: [
-                    { date: "12", account: "Cash", debit: 4200, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 4200 },
-                    { date: "", account: "Cash sales", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Mar 18",
-                description: "(Perpetual) Purchased merchandise on account, list price $8,000, trade discount 15%.",
-                rows: 3,
-                solution: [
-                    { date: "18", account: "Merchandise Inventory", debit: 6800, credit: "" },
-                    { date: "", account: "Accounts Payable", debit: "", credit: 6800 },
-                    { date: "", account: "Purchased inventory (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Mar 22",
-                description: "(Periodic) Purchased goods for cash, $2,000.",
-                rows: 3,
-                solution: [
-                    { date: "22", account: "Purchases", debit: 2000, credit: "" },
-                    { date: "", account: "Cash", debit: "", credit: 2000 },
-                    { date: "", account: "Purchased goods for cash", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Mar 30",
-                description: "(Perpetual) Sold goods on credit, $14,000. Cost of goods sold was $8,200.",
-                rows: 5,
-                solution: [
-                    { date: "30", account: "Accounts Receivable", debit: 14000, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 14000 },
-                    { date: "", account: "Cost of Goods Sold", debit: 8200, credit: "" },
-                    { date: "", account: "Merchandise Inventory", debit: "", credit: 8200 },
-                    { date: "", account: "Sold goods on account", debit: "", credit: "", isExplanation: true }
-                ]
-            }
+      },
+      {
+        "date": "Jan 6",
+        "description": "Purchased merchandise from Supplier B for cash, list price ₱5,000 with a 20% trade discount.",
+        "rows": 3,
+        "solution": [
+          { "date": "6", "account": "Purchases", "debit": 4000, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 4000 },
+          { "date": "", "account": "Cash purchase net of trade discount", "debit": "", "credit": "", "isExplanation": true }
         ]
-    },
-    {
-        type: "journalizing",
-        id: "prob4",
-        title: "PROBLEM 4: APRIL TRANSACTIONS",
-        instructions: "Journalize the transactions for 'Delta Depot'. Use the following accounts: Cash, Accounts Receivable, Accounts Payable, Sales, Purchases, Merchandise Inventory, Cost of Goods Sold. \n\nIMPORTANT: Use the Periodic System for transactions 1, 3, and 5. Use the Perpetual System for transactions 2, 4, and 6.",
-        transactions: [
-            {
-                date: "Apr 2",
-                description: "(Periodic) Sold merchandise on account, list price $10,000, trade discount 5%.",
-                rows: 3,
-                solution: [
-                    { date: "Apr 2", account: "Accounts Receivable", debit: 9500, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 9500 },
-                    { date: "", account: "Sold merchandise (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Apr 6",
-                description: "(Perpetual) Purchased inventory for cash, $6,000.",
-                rows: 3,
-                solution: [
-                    { date: "6", account: "Merchandise Inventory", debit: 6000, credit: "" },
-                    { date: "", account: "Cash", debit: "", credit: 6000 },
-                    { date: "", account: "Purchased inventory", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Apr 11",
-                description: "(Periodic) Purchased goods on credit from Supplier M, $7,500.",
-                rows: 3,
-                solution: [
-                    { date: "11", account: "Purchases", debit: 7500, credit: "" },
-                    { date: "", account: "Accounts Payable", debit: "", credit: 7500 },
-                    { date: "", account: "Purchased goods on credit", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Apr 16",
-                description: "(Perpetual) Sold goods for cash, $3,500. Cost of goods sold was $1,900.",
-                rows: 5,
-                solution: [
-                    { date: "16", account: "Cash", debit: 3500, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 3500 },
-                    { date: "", account: "Cost of Goods Sold", debit: 1900, credit: "" },
-                    { date: "", account: "Merchandise Inventory", debit: "", credit: 1900 },
-                    { date: "", account: "Cash sale", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Apr 22",
-                description: "(Periodic) Sold goods on credit, $11,500.",
-                rows: 3,
-                solution: [
-                    { date: "22", account: "Accounts Receivable", debit: 11500, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 11500 },
-                    { date: "", account: "Sold goods on credit", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Apr 28",
-                description: "(Perpetual) Purchased merchandise on account, list price $5,000, trade discount 25%.",
-                rows: 3,
-                solution: [
-                    { date: "28", account: "Merchandise Inventory", debit: 3750, credit: "" },
-                    { date: "", account: "Accounts Payable", debit: "", credit: 3750 },
-                    { date: "", account: "Purchased inventory (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            }
+      },
+      {
+        "date": "Jan 8",
+        "description": "Sold merchandise for cash, ₱3,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "8", "account": "Cash", "debit": 3000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 3000 },
+          { "date": "", "account": "Cash sales", "debit": "", "credit": "", "isExplanation": true }
         ]
-    },
-    {
-        type: "journalizing",
-        id: "prob5",
-        title: "PROBLEM 5: MAY TRANSACTIONS",
-        instructions: "Journalize the transactions for 'Echo Supplies'. Use the following accounts: Cash, Accounts Receivable, Accounts Payable, Sales, Purchases, Merchandise Inventory, Cost of Goods Sold. \n\nIMPORTANT: Use the Periodic System for transactions 1, 3, and 5. Use the Perpetual System for transactions 2, 4, and 6.",
-        transactions: [
-            {
-                date: "May 1",
-                description: "(Periodic) Purchased goods on account, list price $12,000, trade discount 10%.",
-                rows: 3,
-                solution: [
-                    { date: "May 1", account: "Purchases", debit: 10800, credit: "" },
-                    { date: "", account: "Accounts Payable", debit: "", credit: 10800 },
-                    { date: "", account: "Purchased goods (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "May 5",
-                description: "(Perpetual) Sold merchandise on account, $15,000. Cost of goods sold was $9,000.",
-                rows: 5,
-                solution: [
-                    { date: "5", account: "Accounts Receivable", debit: 15000, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 15000 },
-                    { date: "", account: "Cost of Goods Sold", debit: 9000, credit: "" },
-                    { date: "", account: "Merchandise Inventory", debit: "", credit: 9000 },
-                    { date: "", account: "Sold goods on account", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "May 12",
-                description: "(Periodic) Purchased goods for cash, $4,400.",
-                rows: 3,
-                solution: [
-                    { date: "12", account: "Purchases", debit: 4400, credit: "" },
-                    { date: "", account: "Cash", debit: "", credit: 4400 },
-                    { date: "", account: "Purchased goods", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "May 18",
-                description: "(Perpetual) Sold goods on credit, list price $8,000, trade discount 5%. Cost of goods sold was $4,000.",
-                rows: 5,
-                solution: [
-                    { date: "18", account: "Accounts Receivable", debit: 7600, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 7600 },
-                    { date: "", account: "Cost of Goods Sold", debit: 4000, credit: "" },
-                    { date: "", account: "Merchandise Inventory", debit: "", credit: 4000 },
-                    { date: "", account: "Sold goods (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "May 25",
-                description: "(Periodic) Sold goods for cash, list price $3,000, trade discount 10%.",
-                rows: 3,
-                solution: [
-                    { date: "25", account: "Cash", debit: 2700, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 2700 },
-                    { date: "", account: "Cash sale (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "May 30",
-                description: "(Perpetual) Purchased inventory on account, $13,500.",
-                rows: 3,
-                solution: [
-                    { date: "30", account: "Merchandise Inventory", debit: 13500, credit: "" },
-                    { date: "", account: "Accounts Payable", debit: "", credit: 13500 },
-                    { date: "", account: "Purchased inventory", debit: "", credit: "", isExplanation: true }
-                ]
-            }
+      },
+      {
+        "date": "Jan 10",
+        "description": "Purchased merchandise from Supplier C on account, ₱12,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "10", "account": "Purchases", "debit": 12000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 12000 },
+          { "date": "", "account": "Purchased goods on account", "debit": "", "credit": "", "isExplanation": true }
         ]
-    },
-    {
-        type: "journalizing",
-        id: "prob6",
-        title: "PROBLEM 6: JUNE TRANSACTIONS",
-        instructions: "Journalize the transactions for 'Foxtrot Traders'. Use the following accounts: Cash, Accounts Receivable, Accounts Payable, Sales, Purchases, Merchandise Inventory, Cost of Goods Sold. \n\nIMPORTANT: Use the Periodic System for transactions 1, 3, and 5. Use the Perpetual System for transactions 2, 4, and 6.",
-        transactions: [
-            {
-                date: "Jun 2",
-                description: "(Periodic) Purchased goods on account from Supplier K, $9,200.",
-                rows: 3,
-                solution: [
-                    { date: "Jun 2", account: "Purchases", debit: 9200, credit: "" },
-                    { date: "", account: "Accounts Payable", debit: "", credit: 9200 },
-                    { date: "", account: "Purchased goods on credit", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Jun 6",
-                description: "(Perpetual) Purchased merchandise for cash, list price $5,000, trade discount 20%.",
-                rows: 3,
-                solution: [
-                    { date: "6", account: "Merchandise Inventory", debit: 4000, credit: "" },
-                    { date: "", account: "Cash", debit: "", credit: 4000 },
-                    { date: "", account: "Purchased inventory (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Jun 11",
-                description: "(Periodic) Sold goods on account, list price $7,000, trade discount 10%.",
-                rows: 3,
-                solution: [
-                    { date: "11", account: "Accounts Receivable", debit: 6300, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 6300 },
-                    { date: "", account: "Sold goods (net of discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Jun 17",
-                description: "(Perpetual) Sold goods for cash, $2,800. Cost of goods sold was $1,500.",
-                rows: 5,
-                solution: [
-                    { date: "17", account: "Cash", debit: 2800, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 2800 },
-                    { date: "", account: "Cost of Goods Sold", debit: 1500, credit: "" },
-                    { date: "", account: "Merchandise Inventory", debit: "", credit: 1500 },
-                    { date: "", account: "Cash sale", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Jun 23",
-                description: "(Periodic) Purchased goods on credit, list price $10,000, trade discounts 20% and 10% (Chain Discount).",
-                rows: 3,
-                solution: [
-                    { date: "23", account: "Purchases", debit: 7200, credit: "" },
-                    { date: "", account: "Accounts Payable", debit: "", credit: 7200 },
-                    { date: "", account: "Purchased goods (chain discount)", debit: "", credit: "", isExplanation: true }
-                ]
-            },
-            {
-                date: "Jun 29",
-                description: "(Perpetual) Sold merchandise on account, $16,000. Cost of goods sold was $9,500.",
-                rows: 5,
-                solution: [
-                    { date: "29", account: "Accounts Receivable", debit: 16000, credit: "" },
-                    { date: "", account: "Sales", debit: "", credit: 16000 },
-                    { date: "", account: "Cost of Goods Sold", debit: 9500, credit: "" },
-                    { date: "", account: "Merchandise Inventory", debit: "", credit: 9500 },
-                    { date: "", account: "Sold goods on account", debit: "", credit: "", isExplanation: true }
-                ]
-            }
+      },
+      {
+        "date": "Jan 12",
+        "description": "Sold merchandise to Customer Y on account, list price ₱20,000 with a 10% trade discount.",
+        "rows": 3,
+        "solution": [
+          { "date": "12", "account": "Accounts Receivable", "debit": 18000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 18000 },
+          { "date": "", "account": "Sold goods on account net of trade discount", "debit": "", "credit": "", "isExplanation": true }
         ]
-            }
+      },
+      {
+        "date": "Jan 15",
+        "description": "Paid Supplier A the full amount owed from the Jan 2 transaction.",
+        "rows": 3,
+        "solution": [
+          { "date": "15", "account": "Accounts Payable", "debit": 10000, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 10000 },
+          { "date": "", "account": "Payment of account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jan 18",
+        "description": "Collected full payment from Customer X for the Jan 4 transaction.",
+        "rows": 3,
+        "solution": [
+          { "date": "18", "account": "Cash", "debit": 15000, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 15000 },
+          { "date": "", "account": "Collection of account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jan 20",
+        "description": "Purchased merchandise from Supplier A on account, ₱8,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "20", "account": "Purchases", "debit": 8000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 8000 },
+          { "date": "", "account": "Purchased goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jan 25",
+        "description": "Sold merchandise to Customer Z on account, ₱9,500.",
+        "rows": 3,
+        "solution": [
+          { "date": "25", "account": "Accounts Receivable", "debit": 9500, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 9500 },
+          { "date": "", "account": "Sold goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "set2_perpetual",
+    "title": "SET 2: PERPETUAL SYSTEM (February Transactions)",
+    "instructions": "Journalize the following transactions for 'Beta Traders' using the **Perpetual Inventory System**. \n\n**Accounts to use:** Cash, Accounts Receivable, Accounts Payable, Merchandise Inventory, Sales, Cost of Goods Sold.\n\nNote: For sales transactions, record both the revenue and the cost.",
+    "transactions": [
+      {
+        "date": "Feb 1",
+        "description": "Purchased inventory on account from Vendor A, ₱50,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "Feb 1", "account": "Merchandise Inventory", "debit": 50000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 50000 },
+          { "date": "", "account": "Purchased inventory on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Feb 3",
+        "description": "Sold goods to Client A on account for ₱80,000. The cost of goods sold was ₱45,000.",
+        "rows": 5,
+        "solution": [
+          { "date": "3", "account": "Accounts Receivable", "debit": 80000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 80000 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 45000, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 45000 },
+          { "date": "", "account": "Sold goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Feb 5",
+        "description": "Purchased inventory for cash, ₱15,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Merchandise Inventory", "debit": 15000, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 15000 },
+          { "date": "", "account": "Purchased inventory for cash", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Feb 7",
+        "description": "Sold goods for cash, ₱20,000. The cost of goods sold was ₱12,000.",
+        "rows": 5,
+        "solution": [
+          { "date": "7", "account": "Cash", "debit": 20000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 20000 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 12000, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 12000 },
+          { "date": "", "account": "Cash sales", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Feb 10",
+        "description": "Paid Vendor A ₱25,000 as partial payment for the Feb 1 purchase.",
+        "rows": 3,
+        "solution": [
+          { "date": "10", "account": "Accounts Payable", "debit": 25000, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 25000 },
+          { "date": "", "account": "Partial payment of account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Feb 12",
+        "description": "Collected ₱40,000 from Client A as partial payment for the Feb 3 sale.",
+        "rows": 3,
+        "solution": [
+          { "date": "12", "account": "Cash", "debit": 40000, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 40000 },
+          { "date": "", "account": "Partial collection of account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Feb 15",
+        "description": "Purchased inventory on account from Vendor B, list price ₱30,000 with a 10% trade discount.",
+        "rows": 3,
+        "solution": [
+          { "date": "15", "account": "Merchandise Inventory", "debit": 27000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 27000 },
+          { "date": "", "account": "Purchased inventory net of trade discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Feb 18",
+        "description": "Sold goods to Client B on account, list price ₱50,000 with a 5% trade discount. Cost of goods sold was ₱28,000.",
+        "rows": 5,
+        "solution": [
+          { "date": "18", "account": "Accounts Receivable", "debit": 47500, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 47500 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 28000, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 28000 },
+          { "date": "", "account": "Sold goods on account net of trade discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Feb 22",
+        "description": "Purchased inventory for cash, ₱5,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "22", "account": "Merchandise Inventory", "debit": 5000, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 5000 },
+          { "date": "", "account": "Purchased inventory for cash", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Feb 25",
+        "description": "Sold goods for cash, ₱8,000. The cost of goods sold was ₱4,500.",
+        "rows": 5,
+        "solution": [
+          { "date": "25", "account": "Cash", "debit": 8000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 8000 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 4500, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 4500 },
+          { "date": "", "account": "Cash sales", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "set3_periodic",
+    "title": "SET 3: PERIODIC SYSTEM (March Transactions)",
+    "instructions": "Journalize the following transactions for 'Gamma Goods' using the **Periodic Inventory System**. \n\n**Accounts to use:** Cash, Accounts Receivable, Accounts Payable, Purchases, Sales.",
+    "transactions": [
+      {
+        "date": "Mar 1",
+        "description": "Purchased merchandise from Supplier X on credit, ₱25,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "Mar 1", "account": "Purchases", "debit": 25000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 25000 },
+          { "date": "", "account": "Purchased goods on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 3",
+        "description": "Sold merchandise to Customer 1 on credit, ₱35,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "3", "account": "Accounts Receivable", "debit": 35000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 35000 },
+          { "date": "", "account": "Sold goods on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 5",
+        "description": "Purchased merchandise for cash, list price ₱10,000, trade discount 5%.",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Purchases", "debit": 9500, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 9500 },
+          { "date": "", "account": "Cash purchase net of discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 8",
+        "description": "Sold merchandise for cash, ₱6,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "8", "account": "Cash", "debit": 6000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 6000 },
+          { "date": "", "account": "Cash sales", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 10",
+        "description": "Purchased merchandise from Supplier Y on credit, ₱15,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "10", "account": "Purchases", "debit": 15000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 15000 },
+          { "date": "", "account": "Purchased goods on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 12",
+        "description": "Sold merchandise to Customer 2 on credit, ₱22,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "12", "account": "Accounts Receivable", "debit": 22000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 22000 },
+          { "date": "", "account": "Sold goods on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 15",
+        "description": "Paid Supplier X ₱25,000 for the Mar 1 purchase.",
+        "rows": 3,
+        "solution": [
+          { "date": "15", "account": "Accounts Payable", "debit": 25000, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 25000 },
+          { "date": "", "account": "Payment of account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 18",
+        "description": "Collected ₱35,000 from Customer 1 for the Mar 3 sale.",
+        "rows": 3,
+        "solution": [
+          { "date": "18", "account": "Cash", "debit": 35000, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 35000 },
+          { "date": "", "account": "Collection of account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 20",
+        "description": "Purchased merchandise from Supplier X on credit, ₱8,500.",
+        "rows": 3,
+        "solution": [
+          { "date": "20", "account": "Purchases", "debit": 8500, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 8500 },
+          { "date": "", "account": "Purchased goods on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 25",
+        "description": "Sold merchandise to Customer 3 on credit, ₱12,500.",
+        "rows": 3,
+        "solution": [
+          { "date": "25", "account": "Accounts Receivable", "debit": 12500, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 12500 },
+          { "date": "", "account": "Sold goods on credit", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "set4_perpetual",
+    "title": "SET 4: PERPETUAL SYSTEM (April Transactions)",
+    "instructions": "Journalize the following transactions for 'Delta Depot' using the **Perpetual Inventory System**. \n\n**Accounts to use:** Cash, Accounts Receivable, Accounts Payable, Merchandise Inventory, Sales, Cost of Goods Sold.",
+    "transactions": [
+      {
+        "date": "Apr 1",
+        "description": "Purchased inventory on account from Supplier M, ₱60,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "Apr 1", "account": "Merchandise Inventory", "debit": 60000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 60000 },
+          { "date": "", "account": "Purchased inventory on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 4",
+        "description": "Sold goods to Client M on account, ₱90,000. Cost of goods sold was ₱50,000.",
+        "rows": 5,
+        "solution": [
+          { "date": "4", "account": "Accounts Receivable", "debit": 90000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 90000 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 50000, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 50000 },
+          { "date": "", "account": "Sold goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 6",
+        "description": "Purchased inventory for cash, ₱20,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "6", "account": "Merchandise Inventory", "debit": 20000, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 20000 },
+          { "date": "", "account": "Purchased inventory for cash", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 8",
+        "description": "Sold goods for cash, ₱15,000. Cost of goods sold was ₱8,000.",
+        "rows": 5,
+        "solution": [
+          { "date": "8", "account": "Cash", "debit": 15000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 15000 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 8000, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 8000 },
+          { "date": "", "account": "Cash sales", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 10",
+        "description": "Paid Supplier M ₱30,000 partial payment for the Apr 1 purchase.",
+        "rows": 3,
+        "solution": [
+          { "date": "10", "account": "Accounts Payable", "debit": 30000, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 30000 },
+          { "date": "", "account": "Partial payment of account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 12",
+        "description": "Collected ₱50,000 from Client M as partial payment for the Apr 4 sale.",
+        "rows": 3,
+        "solution": [
+          { "date": "12", "account": "Cash", "debit": 50000, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 50000 },
+          { "date": "", "account": "Partial collection of account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 15",
+        "description": "Purchased inventory on account from Supplier N, list price ₱40,000, trade discount 20%.",
+        "rows": 3,
+        "solution": [
+          { "date": "15", "account": "Merchandise Inventory", "debit": 32000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 32000 },
+          { "date": "", "account": "Purchased inventory net of discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 18",
+        "description": "Sold goods to Client N on account, list price ₱30,000, trade discount 10%. Cost of goods sold was ₱15,000.",
+        "rows": 5,
+        "solution": [
+          { "date": "18", "account": "Accounts Receivable", "debit": 27000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 27000 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 15000, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 15000 },
+          { "date": "", "account": "Sold goods on account net of discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 22",
+        "description": "Purchased inventory on account from Supplier M, ₱10,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "22", "account": "Merchandise Inventory", "debit": 10000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 10000 },
+          { "date": "", "account": "Purchased inventory on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 25",
+        "description": "Sold goods to Client O on account, ₱12,000. Cost of goods sold was ₱6,500.",
+        "rows": 5,
+        "solution": [
+          { "date": "25", "account": "Accounts Receivable", "debit": 12000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 12000 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 6500, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 6500 },
+          { "date": "", "account": "Sold goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "set5_periodic",
+    "title": "SET 5: PERIODIC SYSTEM (May Transactions)",
+    "instructions": "Journalize the following transactions for 'Echo Enterprise' using the **Periodic Inventory System**. \n\n**Accounts to use:** Cash, Accounts Receivable, Accounts Payable, Purchases, Sales.",
+    "transactions": [
+      {
+        "date": "May 2",
+        "description": "Purchased merchandise on account from Vendor J, ₱18,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "May 2", "account": "Purchases", "debit": 18000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 18000 },
+          { "date": "", "account": "Purchased goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 4",
+        "description": "Sold merchandise on account to Customer A, ₱24,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "4", "account": "Accounts Receivable", "debit": 24000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 24000 },
+          { "date": "", "account": "Sold goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 6",
+        "description": "Purchased merchandise for cash, ₱7,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "6", "account": "Purchases", "debit": 7000, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 7000 },
+          { "date": "", "account": "Cash purchase", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 8",
+        "description": "Sold merchandise for cash, ₱4,500.",
+        "rows": 3,
+        "solution": [
+          { "date": "8", "account": "Cash", "debit": 4500, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 4500 },
+          { "date": "", "account": "Cash sales", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 10",
+        "description": "Purchased merchandise from Vendor K on account, list price ₱14,000, trade discount 10%.",
+        "rows": 3,
+        "solution": [
+          { "date": "10", "account": "Purchases", "debit": 12600, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 12600 },
+          { "date": "", "account": "Purchased goods net of discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 12",
+        "description": "Sold merchandise to Customer B on account, list price ₱30,000, trade discount 20%.",
+        "rows": 3,
+        "solution": [
+          { "date": "12", "account": "Accounts Receivable", "debit": 24000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 24000 },
+          { "date": "", "account": "Sold goods net of discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 15",
+        "description": "Paid Vendor J in full for the May 2 purchase.",
+        "rows": 3,
+        "solution": [
+          { "date": "15", "account": "Accounts Payable", "debit": 18000, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 18000 },
+          { "date": "", "account": "Payment of account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 18",
+        "description": "Collected full payment from Customer A for the May 4 sale.",
+        "rows": 3,
+        "solution": [
+          { "date": "18", "account": "Cash", "debit": 24000, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 24000 },
+          { "date": "", "account": "Collection of account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 20",
+        "description": "Purchased merchandise from Vendor J on account, ₱5,500.",
+        "rows": 3,
+        "solution": [
+          { "date": "20", "account": "Purchases", "debit": 5500, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 5500 },
+          { "date": "", "account": "Purchased goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 25",
+        "description": "Sold merchandise to Customer C on account, ₱8,200.",
+        "rows": 3,
+        "solution": [
+          { "date": "25", "account": "Accounts Receivable", "debit": 8200, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 8200 },
+          { "date": "", "account": "Sold goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "set6_perpetual",
+    "title": "SET 6: PERPETUAL SYSTEM (June Transactions)",
+    "instructions": "Journalize the following transactions for 'Foxtrot Fashion' using the **Perpetual Inventory System**. \n\n**Accounts to use:** Cash, Accounts Receivable, Accounts Payable, Merchandise Inventory, Sales, Cost of Goods Sold.",
+    "transactions": [
+      {
+        "date": "Jun 1",
+        "description": "Purchased inventory on account from Supplier P, ₱35,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "Jun 1", "account": "Merchandise Inventory", "debit": 35000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 35000 },
+          { "date": "", "account": "Purchased inventory on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 3",
+        "description": "Sold goods to Client P on account, ₱55,000. Cost of goods sold was ₱30,000.",
+        "rows": 5,
+        "solution": [
+          { "date": "3", "account": "Accounts Receivable", "debit": 55000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 55000 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 30000, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 30000 },
+          { "date": "", "account": "Sold goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 5",
+        "description": "Purchased inventory for cash, ₱12,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Merchandise Inventory", "debit": 12000, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 12000 },
+          { "date": "", "account": "Purchased inventory for cash", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 7",
+        "description": "Sold goods for cash, ₱9,000. Cost of goods sold was ₱5,000.",
+        "rows": 5,
+        "solution": [
+          { "date": "7", "account": "Cash", "debit": 9000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 9000 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 5000, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 5000 },
+          { "date": "", "account": "Cash sales", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 10",
+        "description": "Paid Supplier P the full amount for the Jun 1 purchase.",
+        "rows": 3,
+        "solution": [
+          { "date": "10", "account": "Accounts Payable", "debit": 35000, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 35000 },
+          { "date": "", "account": "Payment of account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 12",
+        "description": "Collected full payment from Client P for the Jun 3 sale.",
+        "rows": 3,
+        "solution": [
+          { "date": "12", "account": "Cash", "debit": 55000, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 55000 },
+          { "date": "", "account": "Collection of account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 15",
+        "description": "Purchased inventory on account from Supplier Q, list price ₱25,000, trade discount 20%.",
+        "rows": 3,
+        "solution": [
+          { "date": "15", "account": "Merchandise Inventory", "debit": 20000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 20000 },
+          { "date": "", "account": "Purchased inventory net of discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 18",
+        "description": "Sold goods to Client Q on account, list price ₱40,000, trade discount 10%. Cost of goods sold was ₱20,000.",
+        "rows": 5,
+        "solution": [
+          { "date": "18", "account": "Accounts Receivable", "debit": 36000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 36000 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 20000, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 20000 },
+          { "date": "", "account": "Sold goods on account net of discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 22",
+        "description": "Purchased inventory on account from Supplier P, ₱8,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "22", "account": "Merchandise Inventory", "debit": 8000, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 8000 },
+          { "date": "", "account": "Purchased inventory on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 25",
+        "description": "Sold goods to Client R on account, ₱14,000. Cost of goods sold was ₱7,500.",
+        "rows": 5,
+        "solution": [
+          { "date": "25", "account": "Accounts Receivable", "debit": 14000, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 14000 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 7500, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 7500 },
+          { "date": "", "account": "Sold goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  }
         ]
     },
         {
