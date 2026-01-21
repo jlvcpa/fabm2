@@ -582,7 +582,7 @@ ${ex.explanation}
                     <tr class="border-b border-gray-200 hover:bg-gray-50 bg-white">
                         <td class="border-r border-gray-300 p-0 w-16 align-top">
                             <input type="text" 
-                                class="w-full h-full p-2 bg-transparent outline-none text-xs text-left font-mono text-gray-600" 
+                                class="w-full h-full p-2 bg-transparent outline-none text-xs text-right font-mono text-gray-600" 
                                 value="${rowData.date || ''}" 
                                 ${isReadOnly ? 'readonly disabled' : ''}
                                 placeholder=""
@@ -601,7 +601,7 @@ ${ex.explanation}
                         <td class="border-r border-gray-300 p-0 w-28 align-top">
                             <input type="number" 
                                 id="dr-${txId}-${r}"
-                                class="w-full h-full p-2 bg-transparent outline-none text-sm text-left font-mono"
+                                class="w-full h-full p-2 bg-transparent outline-none text-sm text-right font-mono"
                                 step="0.01"
                                 placeholder=""
                                 value="${rowData.debit !== '' && rowData.debit !== undefined ? Number(rowData.debit).toFixed(2) : ''}"
