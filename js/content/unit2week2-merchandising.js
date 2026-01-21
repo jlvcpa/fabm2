@@ -268,7 +268,7 @@ export const unit2Week2Data = {
         {
     "type": "journalizing",
     "id": "set1_periodic",
-    "title": "SET 1: PERIODIC SYSTEM (January Transactions)",
+    "title": "JOURNALIZING SET 1: PERIODIC SYSTEM (January Transactions)",
     "instructions": "Journalize the following transactions for 'Alpha Merchandising' using the **Periodic Inventory System**. \n\n**Accounts to use:** Cash, Accounts Receivable, Accounts Payable, Purchases, Sales.\n\nNote: Do not include discounts or returns. Record trade discounts at net price immediately.",
     "transactions": [
       {
@@ -376,7 +376,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "set2_perpetual",
-    "title": "SET 2: PERPETUAL SYSTEM (February Transactions)",
+    "title": "JOURNALIZING SET 2: PERPETUAL SYSTEM (February Transactions)",
     "instructions": "Journalize the following transactions for 'Beta Traders' using the **Perpetual Inventory System**. \n\n**Accounts to use:** Cash, Accounts Receivable, Accounts Payable, Merchandise Inventory, Sales, Cost of Goods Sold.\n\nNote: For sales transactions, record both the revenue and the cost.",
     "transactions": [
       {
@@ -492,7 +492,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "set3_periodic",
-    "title": "SET 3: PERIODIC SYSTEM (March Transactions)",
+    "title": "JOURNALIZING SET 3: PERIODIC SYSTEM (March Transactions)",
     "instructions": "Journalize the following transactions for 'Gamma Goods' using the **Periodic Inventory System**. \n\n**Accounts to use:** Cash, Accounts Receivable, Accounts Payable, Purchases, Sales.",
     "transactions": [
       {
@@ -600,7 +600,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "set4_perpetual",
-    "title": "SET 4: PERPETUAL SYSTEM (April Transactions)",
+    "title": "JOURNALIZING SET 4: PERPETUAL SYSTEM (April Transactions)",
     "instructions": "Journalize the following transactions for 'Delta Depot' using the **Perpetual Inventory System**. \n\n**Accounts to use:** Cash, Accounts Receivable, Accounts Payable, Merchandise Inventory, Sales, Cost of Goods Sold.",
     "transactions": [
       {
@@ -716,7 +716,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "set5_periodic",
-    "title": "SET 5: PERIODIC SYSTEM (May Transactions)",
+    "title": "JOURNALIZING SET 5: PERIODIC SYSTEM (May Transactions)",
     "instructions": "Journalize the following transactions for 'Echo Enterprise' using the **Periodic Inventory System**. \n\n**Accounts to use:** Cash, Accounts Receivable, Accounts Payable, Purchases, Sales.",
     "transactions": [
       {
@@ -824,7 +824,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "set6_perpetual",
-    "title": "SET 6: PERPETUAL SYSTEM (June Transactions)",
+    "title": "JOURNALIZING  SET 6: PERPETUAL SYSTEM (June Transactions)",
     "instructions": "Journalize the following transactions for 'Foxtrot Fashion' using the **Perpetual Inventory System**. \n\n**Accounts to use:** Cash, Accounts Receivable, Accounts Payable, Merchandise Inventory, Sales, Cost of Goods Sold.",
     "transactions": [
       {
@@ -1247,7 +1247,7 @@ export const unit2Week2Data = {
     {
     "type": "journalizing",
     "id": "day2_prob1",
-    "title": "PROBLEM 1: PERIODIC SYSTEM (Basic Flow & Trade Discounts)",
+    "title": "JOURNALIZING SET 1: PERIODIC SYSTEM (Basic Flow & Trade Discounts)",
     "instructions": "Journalize the transactions for 'Alpha Trading' using the **PERIODIC INVENTORY SYSTEM**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales Revenue, Sales Returns and Allowances, Sales Discounts, Purchases, Purchase Returns and Allowances, Purchase Discounts.",
     "transactions": [
       {
@@ -1356,7 +1356,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "day2_prob2",
-    "title": "PROBLEM 2: PERPETUAL SYSTEM (Cost & Inventory Updates)",
+    "title": "JOURNALIZING SET 2: PERPETUAL SYSTEM (Cost & Inventory Updates)",
     "instructions": "Journalize the transactions for 'Beta Systems' using the **PERPETUAL INVENTORY SYSTEM**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales Revenue, Sales Returns and Allowances, Sales Discounts, Merchandise Inventory, Cost of Goods Sold.",
     "transactions": [
       {
@@ -1474,7 +1474,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "day2_prob3",
-    "title": "PROBLEM 3: PERIODIC SYSTEM (Advanced Discounts)",
+    "title": "JOURNALIZING SET 3: PERIODIC SYSTEM (Advanced Discounts)",
     "instructions": "Journalize the transactions for 'Gamma Inc.' using the **PERIODIC INVENTORY SYSTEM**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales Revenue, Sales Returns and Allowances, Sales Discounts, Purchases, Purchase Returns and Allowances, Purchase Discounts.",
     "transactions": [
       {
@@ -1584,7 +1584,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "day2_prob4",
-    "title": "PROBLEM 4: PERPETUAL SYSTEM (Returns Focus)",
+    "title": "JOURNALIZING SET 4: PERPETUAL SYSTEM (Returns Focus)",
     "instructions": "Journalize the transactions for 'Delta Corp' using the **PERPETUAL INVENTORY SYSTEM**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales Revenue, Sales Returns and Allowances, Sales Discounts, Merchandise Inventory, Cost of Goods Sold.",
     "transactions": [
       {
@@ -1702,7 +1702,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "day2_prob5",
-    "title": "PROBLEM 5: PERIODIC SYSTEM (Missed Discounts)",
+    "title": "JOURNALIZING SET 5: PERIODIC SYSTEM (Missed Discounts)",
     "instructions": "Journalize the transactions for 'Epsilon Ltd' using the **PERIODIC INVENTORY SYSTEM**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales Revenue, Sales Returns and Allowances, Sales Discounts, Purchases, Purchase Returns and Allowances, Purchase Discounts.",
     "transactions": [
       {
@@ -1812,7 +1812,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "day2_prob6",
-    "title": "PROBLEM 6: PERPETUAL SYSTEM (High Volume)",
+    "title": "JOURNALIZING SET 6: PERPETUAL SYSTEM (High Volume)",
     "instructions": "Journalize the transactions for 'Zeta Mart' using the **PERPETUAL INVENTORY SYSTEM**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales Revenue, Sales Returns and Allowances, Sales Discounts, Merchandise Inventory, Cost of Goods Sold.",
     "transactions": [
       {
@@ -2070,7 +2070,7 @@ export const unit2Week2Data = {
         {
     "type": "journalizing",
     "id": "prob_set_1",
-    "title": "PROBLEM SET 1: PERIODIC SYSTEM (Manila Merchandising)",
+    "title": "JOURNALIZING SET 1: PERIODIC SYSTEM (Manila Merchandising)",
     "instructions": "Journalize the transactions for March using the **Periodic Inventory System**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales, Sales Returns and Allowances, Sales Discounts, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out. \n\n*Note: 'Purchases' is used for merchandise costs. Freight In is a separate account.*",
     "transactions": [
       {
@@ -2182,7 +2182,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "prob_set_2",
-    "title": "PROBLEM SET 2: PERPETUAL SYSTEM (Cebu Tech)",
+    "title": "JOURNALIZING SET 2: PERPETUAL SYSTEM (Cebu Tech)",
     "instructions": "Journalize the transactions for April using the **Perpetual Inventory System**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Cost of Goods Sold, Freight Out. \n\n*Note: For Perpetual, freight-in and purchase discounts/returns affect 'Merchandise Inventory'. Every sale requires two entries.*",
     "transactions": [
       {
@@ -2302,7 +2302,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "prob_set_3",
-    "title": "PROBLEM SET 3: PERIODIC SYSTEM (Davao Distributors)",
+    "title": "JOURNALIZING SET 3: PERIODIC SYSTEM (Davao Distributors)",
     "instructions": "Journalize the transactions for May using the **Periodic Inventory System**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales, Sales Returns and Allowances, Sales Discounts, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out.",
     "transactions": [
       {
@@ -2414,7 +2414,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "prob_set_4",
-    "title": "PROBLEM SET 4: PERPETUAL SYSTEM (Iloilo Gadgets)",
+    "title": "JOURNALIZING SET 4: PERPETUAL SYSTEM (Iloilo Gadgets)",
     "instructions": "Journalize the transactions for June using the **Perpetual Inventory System**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Cost of Goods Sold, Freight Out.",
     "transactions": [
       {
@@ -2532,7 +2532,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "prob_set_5",
-    "title": "PROBLEM SET 5: PERIODIC SYSTEM (Bicol Builders)",
+    "title": "JOURNALIZING SET 5: PERIODIC SYSTEM (Bicol Builders)",
     "instructions": "Journalize the transactions for July using the **Periodic Inventory System**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales, Sales Returns and Allowances, Sales Discounts, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out.",
     "transactions": [
       {
@@ -2644,7 +2644,7 @@ export const unit2Week2Data = {
   {
     "type": "journalizing",
     "id": "prob_set_6",
-    "title": "PROBLEM SET 6: PERPETUAL SYSTEM (Laguna Logistics)",
+    "title": "JOURNALIZING SET 6: PERPETUAL SYSTEM (Laguna Logistics)",
     "instructions": "Journalize the transactions for August using the **Perpetual Inventory System**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Cost of Goods Sold, Freight Out.",
     "transactions": [
       {
