@@ -1826,117 +1826,701 @@ export const unit2Week2Data = {
 
         // --- JOURNALIZING QUESTIONS (6) ---
         {
-    type: "journalizing",
-    id: "set1_periodic",
-    title: "PROBLEM 1: PERIODIC INVENTORY SYSTEM",
-    instructions: "Record the transactions for 'Luzon Traders' using the Periodic Inventory System. \n\nACCOUNTS TO USE: Cash, Accounts Receivable, Accounts Payable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight-In, Sales, Sales Returns and Allowances, Sales Discounts, Freight-Out.",
-    transactions: [
-        // --- PURCHASE TRANSACTIONS (5) ---
-        {
-            date: "Mar 1",
-            description: "Purchased merchandise from Visayas Supply for ₱50,000, terms 2/10, n/30, FOB Shipping Point.",
-            rows: 3,
-            solution: [
-                { date: "Mar 1", account: "Purchases", debit: 50000.00, credit: "" },
-                { date: "", account: "Accounts Payable", debit: "", credit: 50000.00 },
-                { date: "", account: "Purchase on account", debit: "", credit: "", isExplanation: true }
-            ]
-        },
-        {
-            date: "Mar 2",
-            description: "Paid LBC Express ₱1,500 for shipping charges on the March 1 purchase.",
-            rows: 3,
-            solution: [
-                { date: "2", account: "Freight-In", debit: 1500.00, credit: "" },
-                { date: "", account: "Cash", debit: "", credit: 1500.00 },
-                { date: "", account: "Paid freight on purchases", debit: "", credit: "", isExplanation: true }
-            ]
-        },
-        {
-            date: "Mar 4",
-            description: "Returned defective merchandise to Visayas Supply amounting to ₱5,000.",
-            rows: 3,
-            solution: [
-                { date: "4", account: "Accounts Payable", debit: 5000.00, credit: "" },
-                { date: "", account: "Purchase Returns and Allowances", debit: "", credit: 5000.00 },
-                { date: "", account: "Returned defective goods", debit: "", credit: "", isExplanation: true }
-            ]
-        },
-        {
-            date: "Mar 9",
-            description: "Paid Visayas Supply in full, less returns and discount.",
-            rows: 4,
-            solution: [
-                { date: "9", account: "Accounts Payable", debit: 45000.00, credit: "" },
-                { date: "", account: "Cash", debit: "", credit: 44100.00 },
-                { date: "", account: "Purchase Discounts", debit: "", credit: 900.00 },
-                { date: "", account: "Paid account in full", debit: "", credit: "", isExplanation: true }
-            ]
-        },
-        {
-            date: "Mar 12",
-            description: "Purchased merchandise from Mindanao Co. for ₱20,000 with a 10% trade discount. Terms n/30.",
-            rows: 3,
-            solution: [
-                { date: "12", account: "Purchases", debit: 18000.00, credit: "" },
-                { date: "", account: "Accounts Payable", debit: "", credit: 18000.00 },
-                { date: "", account: "Purchase with trade discount", debit: "", credit: "", isExplanation: true }
-            ]
-        },
-        // --- SALES TRANSACTIONS (5) ---
-        {
-            date: "Mar 15",
-            description: "Sold merchandise to Customer A for ₱80,000, terms 3/10, n/30, FOB Destination.",
-            rows: 3,
-            solution: [
-                { date: "15", account: "Accounts Receivable", debit: 80000.00, credit: "" },
-                { date: "", account: "Sales", debit: "", credit: 80000.00 },
-                { date: "", account: "Sold merchandise on account", debit: "", credit: "", isExplanation: true }
-            ]
-        },
-        {
-            date: "Mar 16",
-            description: "Paid ₱2,000 delivery fee for the goods sold on March 15.",
-            rows: 3,
-            solution: [
-                { date: "16", account: "Freight-Out", debit: 2000.00, credit: "" },
-                { date: "", account: "Cash", debit: "", credit: 2000.00 },
-                { date: "", account: "Paid delivery expense", debit: "", credit: "", isExplanation: true }
-            ]
-        },
-        {
-            date: "Mar 18",
-            description: "Customer A returned damaged goods with a sales price of ₱4,000.",
-            rows: 3,
-            solution: [
-                { date: "18", account: "Sales Returns and Allowances", debit: 4000.00, credit: "" },
-                { date: "", account: "Accounts Receivable", debit: "", credit: 4000.00 },
-                { date: "", account: "Customer return", debit: "", credit: "", isExplanation: true }
-            ]
-        },
-        {
-            date: "Mar 24",
-            description: "Collected full payment from Customer A.",
-            rows: 4,
-            solution: [
-                { date: "24", account: "Cash", debit: 73720.00, credit: "" },
-                { date: "", account: "Sales Discounts", debit: 2280.00, credit: "" },
-                { date: "", account: "Accounts Receivable", debit: "", credit: 76000.00 },
-                { date: "", account: "Collected accounts receivable", debit: "", credit: "", isExplanation: true }
-            ]
-        },
-        {
-            date: "Mar 30",
-            description: "Cash sales of ₱10,000.",
-            rows: 3,
-            solution: [
-                { date: "30", account: "Cash", debit: 10000.00, credit: "" },
-                { date: "", account: "Sales", debit: "", credit: 10000.00 },
-                { date: "", account: "Recorded cash sales", debit: "", credit: "", isExplanation: true }
-            ]
-        }
+    "type": "journalizing",
+    "id": "prob_set_1",
+    "title": "PROBLEM SET 1: PERIODIC SYSTEM (Manila Merchandising)",
+    "instructions": "Journalize the transactions for March using the **Periodic Inventory System**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales, Sales Returns and Allowances, Sales Discounts, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out. \n\n*Note: 'Purchases' is used for merchandise costs. Freight In is a separate account.*",
+    "transactions": [
+      {
+        "date": "Mar 1",
+        "description": "Purchased merchandise from Supplier A on account: List price ₱50,000, trade discount 20%, terms 2/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "Mar 1", "account": "Purchases", "debit": 40000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 40000.00 },
+          { "date": "", "account": "Purchase on account (50k less 20%)", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 2",
+        "description": "Sold merchandise to Customer X on account, ₱60,000, terms 2/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "2", "account": "Accounts Receivable", "debit": 60000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 60000.00 },
+          { "date": "", "account": "Sold goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 3",
+        "description": "Paid freight of ₱1,500 on the purchase from Supplier A (FOB Shipping Point).",
+        "rows": 3,
+        "solution": [
+          { "date": "3", "account": "Freight In", "debit": 1500.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 1500.00 },
+          { "date": "", "account": "Paid freight on purchase", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 4",
+        "description": "Customer X returned defective goods worth ₱5,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "4", "account": "Sales Returns and Allowances", "debit": 5000.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 5000.00 },
+          { "date": "", "account": "Return of goods by customer", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 5",
+        "description": "Returned damaged merchandise to Supplier A worth ₱4,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Accounts Payable", "debit": 4000.00, "credit": "" },
+          { "date": "", "account": "Purchase Returns and Allowances", "debit": "", "credit": 4000.00 },
+          { "date": "", "account": "Return of goods to supplier", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 6",
+        "description": "Sold merchandise to Customer Y for ₱20,000 cash, FOB Destination. Paid freight of ₱500.",
+        "rows": 5,
+        "solution": [
+          { "date": "6", "account": "Cash", "debit": 20000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 20000.00 },
+          { "date": "", "account": "Freight Out", "debit": 500.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 500.00 },
+          { "date": "", "account": "Cash sale and freight payment", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 7",
+        "description": "Purchased merchandise from Supplier B: ₱30,000, FOB Destination, terms n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "7", "account": "Purchases", "debit": 30000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 30000.00 },
+          { "date": "", "account": "Purchased goods FOB Destination", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 8",
+        "description": "Received check from Customer X for full payment of March 2 transaction less return and discount.",
+        "rows": 4,
+        "solution": [
+          { "date": "8", "account": "Cash", "debit": 53900.00, "credit": "" },
+          { "date": "", "account": "Sales Discounts", "debit": 1100.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 55000.00 },
+          { "date": "", "account": "Collection net of return and 2% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 9",
+        "description": "Paid Supplier A the amount due for the March 1 transaction less return and discount.",
+        "rows": 4,
+        "solution": [
+          { "date": "9", "account": "Accounts Payable", "debit": 36000.00, "credit": "" },
+          { "date": "", "account": "Purchase Discounts", "debit": 720.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 35280.00 },
+          { "date": "", "account": "Payment net of return and 2% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Mar 10",
+        "description": "Sold merchandise to Customer Z on account, ₱15,000, terms n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "10", "account": "Accounts Receivable", "debit": 15000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 15000.00 },
+          { "date": "", "account": "Sold goods on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
     ]
-        }
+  },
+  {
+    "type": "journalizing",
+    "id": "prob_set_2",
+    "title": "PROBLEM SET 2: PERPETUAL SYSTEM (Cebu Tech)",
+    "instructions": "Journalize the transactions for April using the **Perpetual Inventory System**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Cost of Goods Sold, Freight Out. \n\n*Note: For Perpetual, freight-in and purchase discounts/returns affect 'Merchandise Inventory'. Every sale requires two entries.*",
+    "transactions": [
+      {
+        "date": "Apr 1",
+        "description": "Purchased laptops from Vendor A: ₱100,000, terms 2/10, n/30, FOB Shipping Point.",
+        "rows": 3,
+        "solution": [
+          { "date": "Apr 1", "account": "Merchandise Inventory", "debit": 100000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 100000.00 },
+          { "date": "", "account": "Purchased inventory on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 2",
+        "description": "Sold laptops to Client B on account for ₱80,000. The cost of the laptops was ₱50,000.",
+        "rows": 5,
+        "solution": [
+          { "date": "2", "account": "Accounts Receivable", "debit": 80000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 80000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 50000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 50000.00 },
+          { "date": "", "account": "Recorded sale and cost of merchandise", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 3",
+        "description": "Paid LBC Express ₱2,000 for freight charges on the April 1 purchase.",
+        "rows": 3,
+        "solution": [
+          { "date": "3", "account": "Merchandise Inventory", "debit": 2000.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 2000.00 },
+          { "date": "", "account": "Paid freight-in (capitalized)", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 4",
+        "description": "Client B returned defective laptops sold for ₱8,000 (Cost ₱5,000). The goods were returned to inventory.",
+        "rows": 5,
+        "solution": [
+          { "date": "4", "account": "Sales Returns and Allowances", "debit": 8000.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 8000.00 },
+          { "date": "", "account": "Merchandise Inventory", "debit": 5000.00, "credit": "" },
+          { "date": "", "account": "Cost of Goods Sold", "debit": "", "credit": 5000.00 },
+          { "date": "", "account": "Customer return and inventory restoration", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 5",
+        "description": "Returned defective units to Vendor A worth ₱10,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Accounts Payable", "debit": 10000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 10000.00 },
+          { "date": "", "account": "Return of inventory to vendor", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 6",
+        "description": "Sold accessories for cash ₱5,000 (Cost ₱2,500). Terms FOB Destination. Paid ₱200 delivery fee.",
+        "rows": 7,
+        "solution": [
+          { "date": "6", "account": "Cash", "debit": 5000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 5000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 2500.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 2500.00 },
+          { "date": "", "account": "Freight Out", "debit": 200.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 200.00 },
+          { "date": "", "account": "Cash sale and freight payment", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 7",
+        "description": "Purchased inventory from Vendor C: ₱25,000, FOB Destination, terms n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "7", "account": "Merchandise Inventory", "debit": 25000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 25000.00 },
+          { "date": "", "account": "Purchased inventory", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 8",
+        "description": "Received full payment from Client B for the April 2 sale (less return, terms 2/10 apply).",
+        "rows": 4,
+        "solution": [
+          { "date": "8", "account": "Cash", "debit": 70560.00, "credit": "" },
+          { "date": "", "account": "Sales Discounts", "debit": 1440.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 72000.00 },
+          { "date": "", "account": "Collection net of return and 2% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 9",
+        "description": "Paid Vendor A the full amount due for the April 1 purchase (less return, within discount period).",
+        "rows": 4,
+        "solution": [
+          { "date": "9", "account": "Accounts Payable", "debit": 90000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 1800.00 },
+          { "date": "", "account": "Cash", "debit": "", "credit": 88200.00 },
+          { "date": "", "account": "Payment net of return and 2% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Apr 10",
+        "description": "Sold remaining stock to Client D on account ₱10,000 (Cost ₱6,000).",
+        "rows": 5,
+        "solution": [
+          { "date": "10", "account": "Accounts Receivable", "debit": 10000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 10000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 6000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 6000.00 },
+          { "date": "", "account": "Recorded sale and cost", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "prob_set_3",
+    "title": "PROBLEM SET 3: PERIODIC SYSTEM (Davao Distributors)",
+    "instructions": "Journalize the transactions for May using the **Periodic Inventory System**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales, Sales Returns and Allowances, Sales Discounts, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out.",
+    "transactions": [
+      {
+        "date": "May 1",
+        "description": "Purchased goods from Supplier Omega: ₱80,000, trade discount 10%, terms 1/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "May 1", "account": "Purchases", "debit": 72000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 72000.00 },
+          { "date": "", "account": "Purchase (80k less 10% trade discount)", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 2",
+        "description": "Sold goods to Retailer X: ₱40,000, trade discount 5%, terms 2/10, n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "2", "account": "Accounts Receivable", "debit": 38000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 38000.00 },
+          { "date": "", "account": "Sale (40k less 5% trade discount)", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 3",
+        "description": "Paid ₱1,200 shipping fee on the May 1 purchase (FOB Shipping Point).",
+        "rows": 3,
+        "solution": [
+          { "date": "3", "account": "Freight In", "debit": 1200.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 1200.00 },
+          { "date": "", "account": "Paid freight in", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 4",
+        "description": "Retailer X returned defective items with a list price of ₱2,000 (Trade discount applies to return value).",
+        "rows": 3,
+        "solution": [
+          { "date": "4", "account": "Sales Returns and Allowances", "debit": 1900.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 1900.00 },
+          { "date": "", "account": "Return (2k less 5%)", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 5",
+        "description": "Returned goods to Supplier Omega: List price ₱5,000 (Trade discount applies to return value).",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Accounts Payable", "debit": 4500.00, "credit": "" },
+          { "date": "", "account": "Purchase Returns and Allowances", "debit": "", "credit": 4500.00 },
+          { "date": "", "account": "Return (5k less 10%)", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 6",
+        "description": "Sold goods to Retailer Y for ₱15,000 cash. Terms FOB Shipping Point. We prepaid the freight of ₱400 for them.",
+        "rows": 4,
+        "solution": [
+          { "date": "6", "account": "Cash", "debit": 15000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 15000.00 },
+          { "date": "", "account": "Accounts Receivable", "debit": 400.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 400.00 },
+          { "date": "", "account": "Sale and prepaid freight for customer", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 7",
+        "description": "Purchased goods from Supplier Beta: ₱20,000, FOB Destination.",
+        "rows": 3,
+        "solution": [
+          { "date": "7", "account": "Purchases", "debit": 20000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 20000.00 },
+          { "date": "", "account": "Purchased goods", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 8",
+        "description": "Retailer Y paid us the freight we prepaid on May 6.",
+        "rows": 3,
+        "solution": [
+          { "date": "8", "account": "Cash", "debit": 400.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 400.00 },
+          { "date": "", "account": "Collection of prepaid freight", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 9",
+        "description": "Paid Supplier Omega for May 1 purchase in full.",
+        "rows": 4,
+        "solution": [
+          { "date": "9", "account": "Accounts Payable", "debit": 67500.00, "credit": "" },
+          { "date": "", "account": "Purchase Discounts", "debit": 675.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 66825.00 },
+          { "date": "", "account": "Payment net of return and 1% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "May 10",
+        "description": "Received payment from Retailer X for May 2 sale in full.",
+        "rows": 4,
+        "solution": [
+          { "date": "10", "account": "Cash", "debit": 35378.00, "credit": "" },
+          { "date": "", "account": "Sales Discounts", "debit": 722.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 36100.00 },
+          { "date": "", "account": "Collection net of return and 2% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "prob_set_4",
+    "title": "PROBLEM SET 4: PERPETUAL SYSTEM (Iloilo Gadgets)",
+    "instructions": "Journalize the transactions for June using the **Perpetual Inventory System**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Cost of Goods Sold, Freight Out.",
+    "transactions": [
+      {
+        "date": "Jun 1",
+        "description": "Purchased tablets: ₱60,000, 2/10, n/30, FOB Destination.",
+        "rows": 3,
+        "solution": [
+          { "date": "Jun 1", "account": "Merchandise Inventory", "debit": 60000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 60000.00 },
+          { "date": "", "account": "Purchase inventory FOB Dest", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 2",
+        "description": "Sold tablets on account ₱45,000 (Cost ₱25,000). Terms 2/10, n/30.",
+        "rows": 5,
+        "solution": [
+          { "date": "2", "account": "Accounts Receivable", "debit": 45000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 45000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 25000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 25000.00 },
+          { "date": "", "account": "Sale and Cost recorded", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 3",
+        "description": "Paid ₱0 freight on the June 1 purchase (Seller paid it).",
+        "rows": 1,
+        "solution": [
+          { "date": "3", "account": "No Entry", "debit": 0.00, "credit": 0.00 },
+          { "date": "", "account": "", "debit": "", "credit": "" },
+          { "date": "", "account": "No entry for buyer on FOB Destination", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 4",
+        "description": "Customer returned a tablet sold for ₱4,500 (Cost ₱2,500).",
+        "rows": 5,
+        "solution": [
+          { "date": "4", "account": "Sales Returns and Allowances", "debit": 4500.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 4500.00 },
+          { "date": "", "account": "Merchandise Inventory", "debit": 2500.00, "credit": "" },
+          { "date": "", "account": "Cost of Goods Sold", "debit": "", "credit": 2500.00 },
+          { "date": "", "account": "Customer return", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 5",
+        "description": "Returned defective tablets to vendor, credit received ₱6,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Accounts Payable", "debit": 6000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 6000.00 },
+          { "date": "", "account": "Purchase return", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 6",
+        "description": "Sold tablets for cash ₱10,000 (Cost ₱6,000). FOB Destination, Paid freight ₱500.",
+        "rows": 7,
+        "solution": [
+          { "date": "6", "account": "Cash", "debit": 10000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 10000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 6000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 6000.00 },
+          { "date": "", "account": "Freight Out", "debit": 500.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 500.00 },
+          { "date": "", "account": "Sale and delivery expense", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 7",
+        "description": "Purchased phones: ₱30,000, FOB Shipping Point. Terms n/30.",
+        "rows": 3,
+        "solution": [
+          { "date": "7", "account": "Merchandise Inventory", "debit": 30000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 30000.00 },
+          { "date": "", "account": "Purchase inventory", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 8",
+        "description": "Paid shipping on June 7 purchase ₱1,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "8", "account": "Merchandise Inventory", "debit": 1000.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 1000.00 },
+          { "date": "", "account": "Freight In capitalized", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 9",
+        "description": "Paid balance for June 1 purchase (less return and discount).",
+        "rows": 4,
+        "solution": [
+          { "date": "9", "account": "Accounts Payable", "debit": 54000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 1080.00 },
+          { "date": "", "account": "Cash", "debit": "", "credit": 52920.00 },
+          { "date": "", "account": "Payment with discount credited to inventory", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jun 10",
+        "description": "Received collection for June 2 sale (less return and discount).",
+        "rows": 4,
+        "solution": [
+          { "date": "10", "account": "Cash", "debit": 39690.00, "credit": "" },
+          { "date": "", "account": "Sales Discounts", "debit": 810.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 40500.00 },
+          { "date": "", "account": "Collection net of return and discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "prob_set_5",
+    "title": "PROBLEM SET 5: PERIODIC SYSTEM (Bicol Builders)",
+    "instructions": "Journalize the transactions for July using the **Periodic Inventory System**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Sales, Sales Returns and Allowances, Sales Discounts, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out.",
+    "transactions": [
+      {
+        "date": "Jul 1",
+        "description": "Purchased hardware supplies: ₱150,000, 3/10, n/30, FOB Shipping Point.",
+        "rows": 3,
+        "solution": [
+          { "date": "Jul 1", "account": "Purchases", "debit": 150000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 150000.00 },
+          { "date": "", "account": "Purchase on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jul 2",
+        "description": "Sold supplies to Contractor A: ₱200,000, 2/10, n/30, FOB Shipping Point.",
+        "rows": 3,
+        "solution": [
+          { "date": "2", "account": "Accounts Receivable", "debit": 200000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 200000.00 },
+          { "date": "", "account": "Sale on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jul 3",
+        "description": "Paid trucking fee for July 1 purchase: ₱3,500.",
+        "rows": 3,
+        "solution": [
+          { "date": "3", "account": "Freight In", "debit": 3500.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 3500.00 },
+          { "date": "", "account": "Paid freight in", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jul 4",
+        "description": "Contractor A returned excess supplies: ₱20,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "4", "account": "Sales Returns and Allowances", "debit": 20000.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 20000.00 },
+          { "date": "", "account": "Customer return", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jul 5",
+        "description": "We returned damaged goods to vendor: ₱15,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Accounts Payable", "debit": 15000.00, "credit": "" },
+          { "date": "", "account": "Purchase Returns and Allowances", "debit": "", "credit": 15000.00 },
+          { "date": "", "account": "Purchase return", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jul 6",
+        "description": "Sold supplies cash ₱10,000. Paid courier ₱300 (FOB Destination).",
+        "rows": 5,
+        "solution": [
+          { "date": "6", "account": "Cash", "debit": 10000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 10000.00 },
+          { "date": "", "account": "Freight Out", "debit": 300.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 300.00 },
+          { "date": "", "account": "Cash sale and freight out", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jul 7",
+        "description": "Purchased from Vendor Z: ₱50,000, FOB Destination.",
+        "rows": 3,
+        "solution": [
+          { "date": "7", "account": "Purchases", "debit": 50000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 50000.00 },
+          { "date": "", "account": "Purchase on account", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jul 8",
+        "description": "Paid delivery fee for July 6 transaction (Already recorded in compound entry above, but if separate step requested, assume another sale). *Correction: This step is usually payment. Let's say: Paid freight for a new cash sale of ₱5000 FOB Dest.*",
+        "rows": 3,
+        "solution": [
+          { "date": "8", "account": "Freight Out", "debit": 150.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 150.00 },
+          { "date": "", "account": "Paid freight on sale", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jul 9",
+        "description": "Paid balance of July 1 purchase (less return and discount).",
+        "rows": 4,
+        "solution": [
+          { "date": "9", "account": "Accounts Payable", "debit": 135000.00, "credit": "" },
+          { "date": "", "account": "Purchase Discounts", "debit": 4050.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 130950.00 },
+          { "date": "", "account": "Payment less 3% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Jul 10",
+        "description": "Collected balance from Contractor A (less return and discount).",
+        "rows": 4,
+        "solution": [
+          { "date": "10", "account": "Cash", "debit": 176400.00, "credit": "" },
+          { "date": "", "account": "Sales Discounts", "debit": 3600.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 180000.00 },
+          { "date": "", "account": "Collection less 2% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "journalizing",
+    "id": "prob_set_6",
+    "title": "PROBLEM SET 6: PERPETUAL SYSTEM (Laguna Logistics)",
+    "instructions": "Journalize the transactions for August using the **Perpetual Inventory System**. \n\n**Chart of Accounts:** Cash, Accounts Receivable, Accounts Payable, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Cost of Goods Sold, Freight Out.",
+    "transactions": [
+      {
+        "date": "Aug 1",
+        "description": "Purchased auto parts: ₱80,000, terms 1/10, n/30, FOB Shipping Point.",
+        "rows": 3,
+        "solution": [
+          { "date": "Aug 1", "account": "Merchandise Inventory", "debit": 80000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 80000.00 },
+          { "date": "", "account": "Purchase inventory", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Aug 2",
+        "description": "Sold parts to Shop B: ₱50,000 (Cost ₱30,000). Terms 2/10, n/30.",
+        "rows": 5,
+        "solution": [
+          { "date": "2", "account": "Accounts Receivable", "debit": 50000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 50000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 30000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 30000.00 },
+          { "date": "", "account": "Sale and Cost", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Aug 3",
+        "description": "Paid shipping for Aug 1 purchase: ₱2,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "3", "account": "Merchandise Inventory", "debit": 2000.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 2000.00 },
+          { "date": "", "account": "Freight in capitalized", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Aug 4",
+        "description": "Shop B returned parts: Sales Price ₱5,000 (Cost ₱3,000).",
+        "rows": 5,
+        "solution": [
+          { "date": "4", "account": "Sales Returns and Allowances", "debit": 5000.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 5000.00 },
+          { "date": "", "account": "Merchandise Inventory", "debit": 3000.00, "credit": "" },
+          { "date": "", "account": "Cost of Goods Sold", "debit": "", "credit": 3000.00 },
+          { "date": "", "account": "Return from customer", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Aug 5",
+        "description": "Returned defective parts to vendor: ₱8,000.",
+        "rows": 3,
+        "solution": [
+          { "date": "5", "account": "Accounts Payable", "debit": 8000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 8000.00 },
+          { "date": "", "account": "Return to vendor", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Aug 6",
+        "description": "Sold parts cash ₱20,000 (Cost ₱12,000). Paid delivery ₱800 (FOB Dest).",
+        "rows": 7,
+        "solution": [
+          { "date": "6", "account": "Cash", "debit": 20000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 20000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 12000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 12000.00 },
+          { "date": "", "account": "Freight Out", "debit": 800.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 800.00 },
+          { "date": "", "account": "Cash sale and freight", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Aug 7",
+        "description": "Purchased parts: ₱40,000, FOB Destination.",
+        "rows": 3,
+        "solution": [
+          { "date": "7", "account": "Merchandise Inventory", "debit": 40000.00, "credit": "" },
+          { "date": "", "account": "Accounts Payable", "debit": "", "credit": 40000.00 },
+          { "date": "", "account": "Purchase inventory", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Aug 8",
+        "description": "Paid delivery on a separate small cash sale (Sales Price ₱1000, Cost ₱500) of ₱100.",
+        "rows": 7,
+        "solution": [
+          { "date": "8", "account": "Cash", "debit": 1000.00, "credit": "" },
+          { "date": "", "account": "Sales", "debit": "", "credit": 1000.00 },
+          { "date": "", "account": "Cost of Goods Sold", "debit": 500.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 500.00 },
+          { "date": "", "account": "Freight Out", "debit": 100.00, "credit": "" },
+          { "date": "", "account": "Cash", "debit": "", "credit": 100.00 },
+          { "date": "", "account": "Small cash sale with freight", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Aug 9",
+        "description": "Paid Aug 1 purchase (less return and discount).",
+        "rows": 4,
+        "solution": [
+          { "date": "9", "account": "Accounts Payable", "debit": 72000.00, "credit": "" },
+          { "date": "", "account": "Merchandise Inventory", "debit": "", "credit": 720.00 },
+          { "date": "", "account": "Cash", "debit": "", "credit": 71280.00 },
+          { "date": "", "account": "Payment with 1% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      },
+      {
+        "date": "Aug 10",
+        "description": "Collected Aug 2 sale (less return and discount).",
+        "rows": 4,
+        "solution": [
+          { "date": "10", "account": "Cash", "debit": 44100.00, "credit": "" },
+          { "date": "", "account": "Sales Discounts", "debit": 900.00, "credit": "" },
+          { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 45000.00 },
+          { "date": "", "account": "Collection with 2% discount", "debit": "", "credit": "", "isExplanation": true }
+        ]
+      }
+    ]
+  }
     ]
 },
         {
