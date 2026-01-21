@@ -37,8 +37,6 @@ function init() {
     
     // Expose updateSchedule to window for HTML onchange attributes
     window.updateSchedule = updateSchedule;
-    // Expose toggle logic for the new sidebar
-    window.toggleSectionNav = toggleSectionNav;
 }
 
 function setupEventListeners() {
@@ -364,6 +362,7 @@ function renderDayContent(unit, week, dayIndex) {
     navBar.className = "flex flex-wrap items-center justify-between border-b border-gray-200 bg-white min-h-[50px]";
 
     const tabsContainer = document.createElement('div');
+    // Added overflow-x-auto and whitespace-nowrap for horizontal scrolling on mobile
     tabsContainer.className = "flex overflow-x-auto whitespace-nowrap no-scrollbar";
     
     const createTabBtn = (id, icon, label, isActive) => {
@@ -400,7 +399,7 @@ function renderDayContent(unit, week, dayIndex) {
 
     navBar.appendChild(tabsContainer);
 
-    // Prev/Next Buttons
+    // Prev/Next Buttons (Hidden on small screens since we have swipe/scroll)
     const navButtonsGroup = document.createElement('div');
     navButtonsGroup.className = "hidden md:flex items-center gap-2 py-2 px-4 ml-auto"; 
 
@@ -428,13 +427,14 @@ function renderDayContent(unit, week, dayIndex) {
     card.appendChild(navBar);
 
     // --- CONTENT AREA ---
+    // Modified to be a flex container to hold the split panes (content + right sidebar)
     const tabContentWrapper = document.createElement('div');
-    tabContentWrapper.className = "p-8 flex-1 overflow-y-auto bg-white";
+    tabContentWrapper.className = "flex-1 relative overflow-hidden bg-white flex flex-col";
 
-    // 1. Concepts Content
+    // 1. Concepts Content (Standard View)
     const conceptsDiv = document.createElement('div');
     conceptsDiv.id = "tab-content-concepts";
-    conceptsDiv.className = "prose prose-blue max-w-none text-gray-600";
+    conceptsDiv.className = "p-8 overflow-y-auto h-full prose prose-blue max-w-none text-gray-600";
     conceptsDiv.innerHTML = day.content;
     tabContentWrapper.appendChild(conceptsDiv);
 
@@ -443,7 +443,7 @@ function renderDayContent(unit, week, dayIndex) {
     if (hasMcq) {
         mcqDiv = document.createElement('div');
         mcqDiv.id = "tab-content-mcq";
-        mcqDiv.className = "hidden h-full"; // h-full required for the internal flex layout
+        mcqDiv.className = "hidden h-full"; // Full height for internal scrolling
         mcqDiv.innerHTML = renderCategoryContent(exercises, dayIndex, 'mcq');
         tabContentWrapper.appendChild(mcqDiv);
     }
@@ -528,7 +528,7 @@ function executeExerciseMounts(exercises) {
     });
 }
 
-// --- REVISED CATEGORY CONTENT RENDERER WITH COLLAPSIBLE SIDEBAR ---
+// --- NEW CATEGORY CONTENT RENDERER ---
 function renderCategoryContent(exercises, dayIndex, type) {
     const filtered = exercises.filter(ex => ex.type === type);
     if (filtered.length === 0) return '';
@@ -545,24 +545,29 @@ function renderCategoryContent(exercises, dayIndex, type) {
         return chunks;
     };
 
-    // 1. Build Navigation Links
-    if (type === 'mcq' || type === 'problem') {
-        const sets = chunkArray(filtered, 20);
-        sets.forEach((set, setIndex) => {
-            const setId = `${type === 'mcq' ? 'mcq' : 'prob'}-set-${dayIndex}-${setIndex}`;
-            const label = `${type === 'mcq' ? 'MCQ' : 'Problem'} Set ${setIndex + 1}`;
-            navLinksHtml += `<button onclick="document.getElementById('${setId}').scrollIntoView({behavior: 'smooth'})" class="text-left w-full px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded transition-colors">${label}</button>`;
+    // --- Build Navigation Links ---
+    const buildNav = (sets, isJournal = false) => {
+        let html = '';
+        sets.forEach((item, index) => {
+            const label = isJournal ? `Journal #${index + 1}` : `${type === 'mcq' ? 'MCQ' : 'Problem'} Set ${index + 1}`;
+            const targetId = isJournal ? `journ-set-${dayIndex}-${index}` : `${type === 'mcq' ? 'mcq' : 'prob'}-set-${dayIndex}-${index}`;
+            // Added scroll to internal container logic
+            html += `
+                <button onclick="document.getElementById('${targetId}').scrollIntoView({behavior: 'smooth', block: 'start'})" 
+                class="w-full text-left px-4 py-3 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-blue-700 transition-colors border-b border-gray-100 flex items-center group">
+                    <i class="fas fa-chevron-right text-xs text-gray-400 mr-2 group-hover:text-blue-500"></i>
+                    ${label}
+                </button>
+            `;
         });
-    } else if (type === 'journalizing') {
-        filtered.forEach((ex, jIndex) => {
-            const setId = `journ-set-${dayIndex}-${jIndex}`;
-            navLinksHtml += `<button onclick="document.getElementById('${setId}').scrollIntoView({behavior: 'smooth'})" class="text-left w-full px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded transition-colors">Journal #${jIndex + 1}</button>`;
-        });
-    }
+        return html;
+    };
 
-    // 2. Build Content
+    // --- Build Content & Nav Logic ---
     if (type === 'mcq' || type === 'problem') {
         const sets = chunkArray(filtered, 20);
+        navLinksHtml = buildNav(sets);
+
         sets.forEach((set, setIndex) => {
             const setId = `${type === 'mcq' ? 'mcq' : 'prob'}-set-${dayIndex}-${setIndex}`;
             
@@ -624,7 +629,10 @@ ${ex.explanation}
                 </div>
             `;
         });
-    } else if (type === 'journalizing') {
+    } 
+    else if (type === 'journalizing') {
+        navLinksHtml = buildNav(filtered, true);
+
         filtered.forEach((ex, jIndex) => {
             const setId = `journ-set-${dayIndex}-${jIndex}`;
             
@@ -705,53 +713,52 @@ ${ex.explanation}
         });
     }
 
-    const navId = `nav-${type}-${dayIndex}`;
-    const openBtnId = `btn-open-${navId}`;
+    // --- Construct Layout with Collapsible Sidebar ---
+    const sidebarId = `sidebar-${type}`;
+    const contentId = `content-${type}`;
 
     return `
-    <div class="flex flex-col lg:flex-row gap-4 relative min-h-full">
-        <div class="flex-1 min-w-0 space-y-8">
-            <div id="${openBtnId}" class="hidden absolute right-0 top-0 z-10">
-                <button onclick="toggleSectionNav('${navId}', '${openBtnId}')" class="p-2 bg-white border border-gray-200 shadow-sm rounded-l-md text-blue-600 hover:bg-blue-50" title="Open Navigation">
-                    <i class="fas fa-list-ul"></i>
-                </button>
-            </div>
-
+    <div class="flex h-full relative">
+        <div id="${contentId}" class="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth h-full">
             ${contentHtml}
         </div>
 
-        <div id="${navId}" class="w-full lg:w-64 shrink-0 transition-all duration-300 ease-in-out">
-            <div class="sticky top-0">
-                <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
-                    <div class="bg-gray-50 px-4 py-3 border-b border-gray-200 flex justify-between items-center">
-                        <span class="font-bold text-xs text-gray-500 uppercase tracking-wider">Jump To</span>
-                        <button onclick="toggleSectionNav('${navId}', '${openBtnId}')" class="text-gray-400 hover:text-red-500 transition-colors">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="p-2 max-h-[70vh] overflow-y-auto custom-scrollbar flex flex-col gap-1">
-                        ${navLinksHtml}
-                    </div>
-                </div>
+        <div id="${sidebarId}" class="w-0 md:w-64 transition-all duration-300 border-l border-gray-200 bg-gray-50 flex flex-col h-full absolute md:relative right-0 z-20 shadow-xl md:shadow-none overflow-hidden group">
+            
+            <div class="flex items-center justify-between p-4 border-b border-gray-200 bg-white min-w-[250px]">
+                <span class="font-bold text-gray-700 text-sm"><i class="fas fa-location-arrow mr-2"></i> Quick Nav</span>
+                <button onclick="toggleRightSidebar('${sidebarId}')" class="text-gray-400 hover:text-red-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto min-w-[250px] p-2">
+                ${navLinksHtml}
             </div>
         </div>
+
+        <button onclick="toggleRightSidebar('${sidebarId}')" class="md:hidden absolute top-4 right-4 z-30 bg-white text-blue-600 p-2 rounded-full shadow-lg border border-gray-200 hover:bg-gray-50">
+            <i class="fas fa-list-ul"></i>
+        </button>
     </div>
     `;
 }
 
-// --- HELPER FOR NAV TOGGLING ---
-window.toggleSectionNav = function(navId, btnId) {
-    const nav = document.getElementById(navId);
-    const btn = document.getElementById(btnId);
+// --- GLOBAL TOGGLE HELPER ---
+window.toggleRightSidebar = function(sidebarId) {
+    const sidebar = document.getElementById(sidebarId);
+    if (!sidebar) return;
     
-    if (nav.classList.contains('hidden')) {
-        nav.classList.remove('hidden'); 
-        btn.classList.add('hidden');    
+    if (sidebar.classList.contains('w-0')) {
+        // Expand
+        sidebar.classList.remove('w-0');
+        sidebar.classList.add('w-64');
     } else {
-        nav.classList.add('hidden');    
-        btn.classList.remove('hidden'); 
+        // Collapse
+        sidebar.classList.remove('w-64');
+        sidebar.classList.add('w-0');
     }
-}
+};
 
 // --- REQUIRED HELPER FUNCTION ---
 window.handleJournalIndent = function(txId, row) {
