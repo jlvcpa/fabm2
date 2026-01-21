@@ -582,10 +582,11 @@ ${ex.explanation}
                     <tr class="border-b border-gray-200 hover:bg-gray-50 bg-white">
                         <td class="border-r border-gray-300 p-0 w-16 align-top">
                             <input type="text" 
-                                class="w-full h-full p-2 bg-transparent outline-none text-xs text-center font-mono text-gray-600" 
+                                class="w-full h-full p-2 bg-transparent outline-none text-xs text-right font-mono text-gray-600" 
                                 value="${rowData.date || ''}" 
                                 ${isReadOnly ? 'readonly disabled' : ''}
-                                placeholder="Date">
+                                placeholder=""
+                            >
                         </td>
                         <td class="border-r border-gray-300 p-0 relative align-top">
                             <input type="text" 
@@ -594,7 +595,8 @@ ${ex.explanation}
                                 style="${indentStyle}"
                                 value="${rowData.account || ''}"
                                 ${isReadOnly ? 'readonly disabled' : ''}
-                                placeholder="Account Titles and Explanation">
+                                placeholder=""
+                            >
                         </td>
                         <td class="border-r border-gray-300 p-0 w-28 align-top">
                             <input type="number" 
@@ -626,10 +628,7 @@ ${ex.explanation}
                 const inputTable = `
                     <div class="mb-6 border border-gray-300 shadow-sm rounded-lg overflow-hidden">
                         <div class="bg-gray-100 px-4 py-2 border-b border-gray-300 flex justify-between items-center">
-                            <span class="font-bold text-gray-700 text-sm">Transaction: ${tx.date}</span>
-                        </div>
-                        <div class="p-3 bg-blue-50 text-sm text-gray-800 border-b border-gray-300 italic">
-                            ${tx.description}
+                            <span class="font-bold text-gray-700 text-sm">${tx.date} - ${tx.description}</span>
                         </div>
                         <table class="w-full border-collapse">
                             <thead>
