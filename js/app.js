@@ -37,6 +37,8 @@ function init() {
     
     // Expose updateSchedule to window for HTML onchange attributes
     window.updateSchedule = updateSchedule;
+    // Expose toggle logic for the new sidebar
+    window.toggleSectionNav = toggleSectionNav;
 }
 
 function setupEventListeners() {
@@ -362,13 +364,11 @@ function renderDayContent(unit, week, dayIndex) {
     navBar.className = "flex flex-wrap items-center justify-between border-b border-gray-200 bg-white min-h-[50px]";
 
     const tabsContainer = document.createElement('div');
-    // Added overflow-x-auto and whitespace-nowrap for horizontal scrolling on mobile
     tabsContainer.className = "flex overflow-x-auto whitespace-nowrap no-scrollbar";
     
     const createTabBtn = (id, icon, label, isActive) => {
         const btn = document.createElement('button');
         btn.id = id;
-        // Added flex-shrink-0 to ensure tabs don't squish
         btn.className = `flex-shrink-0 px-6 py-3 text-sm font-semibold transition-colors border-b-2 flex items-center ${
             isActive 
             ? 'border-blue-600 text-blue-900 bg-blue-50' 
@@ -402,7 +402,7 @@ function renderDayContent(unit, week, dayIndex) {
 
     // Prev/Next Buttons
     const navButtonsGroup = document.createElement('div');
-    navButtonsGroup.className = "hidden md:flex items-center gap-2 py-2 px-4 ml-auto"; // Hide on mobile small, show on md
+    navButtonsGroup.className = "hidden md:flex items-center gap-2 py-2 px-4 ml-auto"; 
 
     if (dayIndex > 0) {
         const prevBtn = document.createElement('button');
@@ -443,7 +443,7 @@ function renderDayContent(unit, week, dayIndex) {
     if (hasMcq) {
         mcqDiv = document.createElement('div');
         mcqDiv.id = "tab-content-mcq";
-        mcqDiv.className = "hidden space-y-6";
+        mcqDiv.className = "hidden h-full"; // h-full required for the internal flex layout
         mcqDiv.innerHTML = renderCategoryContent(exercises, dayIndex, 'mcq');
         tabContentWrapper.appendChild(mcqDiv);
     }
@@ -453,7 +453,7 @@ function renderDayContent(unit, week, dayIndex) {
     if (hasProb) {
         probDiv = document.createElement('div');
         probDiv.id = "tab-content-prob";
-        probDiv.className = "hidden space-y-6";
+        probDiv.className = "hidden h-full";
         probDiv.innerHTML = renderCategoryContent(exercises, dayIndex, 'problem');
         tabContentWrapper.appendChild(probDiv);
     }
@@ -463,7 +463,7 @@ function renderDayContent(unit, week, dayIndex) {
     if (hasJourn) {
         journDiv = document.createElement('div');
         journDiv.id = "tab-content-journ";
-        journDiv.className = "hidden space-y-6";
+        journDiv.className = "hidden h-full";
         journDiv.innerHTML = renderCategoryContent(exercises, dayIndex, 'journalizing');
         tabContentWrapper.appendChild(journDiv);
     }
@@ -528,7 +528,7 @@ function executeExerciseMounts(exercises) {
     });
 }
 
-// --- NEW CATEGORY CONTENT RENDERER ---
+// --- REVISED CATEGORY CONTENT RENDERER WITH COLLAPSIBLE SIDEBAR ---
 function renderCategoryContent(exercises, dayIndex, type) {
     const filtered = exercises.filter(ex => ex.type === type);
     if (filtered.length === 0) return '';
@@ -545,21 +545,24 @@ function renderCategoryContent(exercises, dayIndex, type) {
         return chunks;
     };
 
+    // 1. Build Navigation Links
     if (type === 'mcq' || type === 'problem') {
         const sets = chunkArray(filtered, 20);
-        
-        // Build Navigation Links (Chips)
-        navLinksHtml = `<div class="mb-6 flex flex-wrap gap-2 pb-4 border-b border-gray-100">
-            <span class="text-xs font-bold text-gray-400 uppercase tracking-wide w-full mb-1">Quick Navigation:</span>`;
-        
         sets.forEach((set, setIndex) => {
             const setId = `${type === 'mcq' ? 'mcq' : 'prob'}-set-${dayIndex}-${setIndex}`;
             const label = `${type === 'mcq' ? 'MCQ' : 'Problem'} Set ${setIndex + 1}`;
-            navLinksHtml += `<button onclick="document.getElementById('${setId}').scrollIntoView({behavior: 'smooth'})" class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full hover:bg-blue-100 hover:text-blue-700 transition-colors border border-slate-200">${label}</button>`;
+            navLinksHtml += `<button onclick="document.getElementById('${setId}').scrollIntoView({behavior: 'smooth'})" class="text-left w-full px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded transition-colors">${label}</button>`;
         });
-        navLinksHtml += `</div>`;
+    } else if (type === 'journalizing') {
+        filtered.forEach((ex, jIndex) => {
+            const setId = `journ-set-${dayIndex}-${jIndex}`;
+            navLinksHtml += `<button onclick="document.getElementById('${setId}').scrollIntoView({behavior: 'smooth'})" class="text-left w-full px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded transition-colors">Journal #${jIndex + 1}</button>`;
+        });
+    }
 
-        // Build Content
+    // 2. Build Content
+    if (type === 'mcq' || type === 'problem') {
+        const sets = chunkArray(filtered, 20);
         sets.forEach((set, setIndex) => {
             const setId = `${type === 'mcq' ? 'mcq' : 'prob'}-set-${dayIndex}-${setIndex}`;
             
@@ -621,18 +624,7 @@ ${ex.explanation}
                 </div>
             `;
         });
-    } 
-    else if (type === 'journalizing') {
-        // Build Navigation Links for Journals
-        navLinksHtml = `<div class="mb-6 flex flex-wrap gap-2 pb-4 border-b border-gray-100">
-            <span class="text-xs font-bold text-gray-400 uppercase tracking-wide w-full mb-1">Quick Navigation:</span>`;
-        
-        filtered.forEach((ex, jIndex) => {
-            const setId = `journ-set-${dayIndex}-${jIndex}`;
-            navLinksHtml += `<button onclick="document.getElementById('${setId}').scrollIntoView({behavior: 'smooth'})" class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full hover:bg-blue-100 hover:text-blue-700 transition-colors border border-slate-200">Journal #${jIndex + 1}</button>`;
-        });
-        navLinksHtml += `</div>`;
-
+    } else if (type === 'journalizing') {
         filtered.forEach((ex, jIndex) => {
             const setId = `journ-set-${dayIndex}-${jIndex}`;
             
@@ -713,7 +705,52 @@ ${ex.explanation}
         });
     }
 
-    return navLinksHtml + contentHtml;
+    const navId = `nav-${type}-${dayIndex}`;
+    const openBtnId = `btn-open-${navId}`;
+
+    return `
+    <div class="flex flex-col lg:flex-row gap-4 relative min-h-full">
+        <div class="flex-1 min-w-0 space-y-8">
+            <div id="${openBtnId}" class="hidden absolute right-0 top-0 z-10">
+                <button onclick="toggleSectionNav('${navId}', '${openBtnId}')" class="p-2 bg-white border border-gray-200 shadow-sm rounded-l-md text-blue-600 hover:bg-blue-50" title="Open Navigation">
+                    <i class="fas fa-list-ul"></i>
+                </button>
+            </div>
+
+            ${contentHtml}
+        </div>
+
+        <div id="${navId}" class="w-full lg:w-64 shrink-0 transition-all duration-300 ease-in-out">
+            <div class="sticky top-0">
+                <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+                    <div class="bg-gray-50 px-4 py-3 border-b border-gray-200 flex justify-between items-center">
+                        <span class="font-bold text-xs text-gray-500 uppercase tracking-wider">Jump To</span>
+                        <button onclick="toggleSectionNav('${navId}', '${openBtnId}')" class="text-gray-400 hover:text-red-500 transition-colors">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="p-2 max-h-[70vh] overflow-y-auto custom-scrollbar flex flex-col gap-1">
+                        ${navLinksHtml}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    `;
+}
+
+// --- HELPER FOR NAV TOGGLING ---
+window.toggleSectionNav = function(navId, btnId) {
+    const nav = document.getElementById(navId);
+    const btn = document.getElementById(btnId);
+    
+    if (nav.classList.contains('hidden')) {
+        nav.classList.remove('hidden'); 
+        btn.classList.add('hidden');    
+    } else {
+        nav.classList.add('hidden');    
+        btn.classList.remove('hidden'); 
+    }
 }
 
 // --- REQUIRED HELPER FUNCTION ---
