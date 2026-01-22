@@ -2,6 +2,7 @@ import { loginUser } from './auth.js';
 import { courseData } from './content/syllabus.js';
 import { formatRanges } from './utils.js';
 // import { renderQuizActivityCreator } from './quizAndActivityCreator.js'; // UNCOMMENT THIS WHEN FILE EXISTS
+// import { renderQuizzesAndActivities } from './quizzesAndActivities.js'; // UNCOMMENT THIS WHEN FILE EXISTS
 
 // --- STATE MANAGEMENT ---
 let currentUser = null; 
@@ -260,6 +261,22 @@ function renderSidebar(role) {
         });
     });
 
+    // --- QUIZZES AND ACTIVITIES (Visible to All) ---
+    // Added below the Terms/Units but before Teacher Tools
+    const qaHeader = document.createElement('div');
+    qaHeader.className = "px-6 py-2 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden";
+    qaHeader.textContent = "Assessments";
+    container.appendChild(qaHeader);
+
+    const qaBtn = document.createElement('button');
+    qaBtn.className = "w-full text-left px-6 py-3 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-yellow-500 focus:outline-none whitespace-nowrap overflow-hidden";
+    qaBtn.innerHTML = '<i class="fas fa-clipboard-list w-6"></i> <span class="sidebar-text-detail">Quizzes & Activities</span>';
+    qaBtn.onclick = () => {
+        renderQuizzesActivitiesPage(); 
+        closeMobileSidebar();
+    };
+    container.appendChild(qaBtn);
+
     // --- QUIZ & ACTIVITY CREATOR (Teachers Only) ---
     if (role === 'teacher') {
         const creatorHeader = document.createElement('div');
@@ -271,11 +288,41 @@ function renderSidebar(role) {
         creatorBtn.className = "w-full text-left px-6 py-3 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-green-500 focus:outline-none whitespace-nowrap overflow-hidden";
         creatorBtn.innerHTML = '<i class="fas fa-magic w-6"></i> <span class="sidebar-text-detail">Quiz & Activity Creator</span>';
         creatorBtn.onclick = () => {
-            renderCreatorPage(); // Call the placeholder or imported function
+            renderCreatorPage(); 
             closeMobileSidebar();
         };
         container.appendChild(creatorBtn);
     }
+}
+
+// --- QUIZZES & ACTIVITIES PAGE RENDERER ---
+function renderQuizzesActivitiesPage() {
+    elements.pageTitle().innerText = "Quizzes & Activities";
+    const content = elements.contentArea();
+    content.innerHTML = '';
+
+    // UNCOMMENT AND USE THIS BLOCK WHEN quizzesAndActivities.js IS READY
+    /*
+    if (typeof renderQuizzesAndActivities === 'function') {
+        renderQuizzesAndActivities(content, currentUser);
+    } else {
+        content.innerHTML = `<div class="p-8 text-center text-gray-500">Module not loaded properly.</div>`;
+    }
+    */
+
+    // Placeholder content until file is linked
+    content.innerHTML = `
+        <div class="w-full max-w-4xl mx-auto p-8">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+                <div class="mb-4 text-yellow-500">
+                    <i class="fas fa-clipboard-list text-5xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Quizzes & Activities</h2>
+                <p class="text-gray-600">The content for this module is being imported from <code>quizzesAndActivities.js</code>.</p>
+                <p class="text-sm text-gray-400 mt-4">Please ensure the file is created and the import is uncommented in app.js</p>
+            </div>
+        </div>
+    `;
 }
 
 // --- CREATOR PAGE RENDERER ---
