@@ -129,27 +129,15 @@ function renderSidebar(role) {
     const container = elements.navContainer();
     container.innerHTML = ''; 
 
-    // Course Outline Button
+    // Course Outline Button (Reduced padding to py-2)
     const outlineBtn = document.createElement('button');
-    outlineBtn.className = "w-full text-left px-6 py-3 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-blue-500 focus:outline-none whitespace-nowrap overflow-hidden";
+    outlineBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-blue-500 focus:outline-none whitespace-nowrap overflow-hidden";
     outlineBtn.innerHTML = '<i class="fas fa-home w-6"></i> <span class="sidebar-text-detail">Course Outline</span>';
     outlineBtn.onclick = () => {
         renderLandingPage();
         closeMobileSidebar();
     };
     container.appendChild(outlineBtn);
-
-    // Calendar Button (Teachers Only)
-    if (role === 'teacher') {
-        const calendarBtn = document.createElement('button');
-        calendarBtn.className = "w-full text-left px-6 py-3 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-purple-500 focus:outline-none whitespace-nowrap overflow-hidden";
-        calendarBtn.innerHTML = '<i class="fas fa-calendar-alt w-6"></i> <span class="sidebar-text-detail">Course Schedule</span>';
-        calendarBtn.onclick = () => {
-            renderCalendarPage();
-            closeMobileSidebar();
-        };
-        container.appendChild(calendarBtn);
-    }
 
     // Dynamic Terms/Units
     courseData.terms.forEach(term => {
@@ -163,9 +151,9 @@ function renderSidebar(role) {
             const unitPrefix = unitParts[0];
             const unitSuffix = unitParts.slice(1).join(':');
 
-            // --- UNIT BUTTON ---
+            // --- UNIT BUTTON (Reduced padding to py-2) ---
             const unitBtn = document.createElement('button');
-            unitBtn.className = "w-full text-left px-6 py-3 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors flex justify-between items-center group whitespace-nowrap overflow-hidden";
+            unitBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors flex justify-between items-center group whitespace-nowrap overflow-hidden";
             unitBtn.innerHTML = `
                 <div class="truncate pr-2">
                     <span class="font-bold text-sm">${unitPrefix}</span>
@@ -261,15 +249,14 @@ function renderSidebar(role) {
         });
     });
 
-    // --- QUIZZES AND ACTIVITIES (Visible to All) ---
-    // Added below the Terms/Units but before Teacher Tools
+    // --- QUIZZES AND ACTIVITIES (Visible to All) (Reduced padding to py-2) ---
     const qaHeader = document.createElement('div');
     qaHeader.className = "px-6 py-2 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden";
     qaHeader.textContent = "Assessments";
     container.appendChild(qaHeader);
 
     const qaBtn = document.createElement('button');
-    qaBtn.className = "w-full text-left px-6 py-3 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-yellow-500 focus:outline-none whitespace-nowrap overflow-hidden";
+    qaBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-yellow-500 focus:outline-none whitespace-nowrap overflow-hidden";
     qaBtn.innerHTML = '<i class="fas fa-clipboard-list w-6"></i> <span class="sidebar-text-detail">Quizzes & Activities</span>';
     qaBtn.onclick = () => {
         renderQuizzesActivitiesPage(); 
@@ -277,21 +264,32 @@ function renderSidebar(role) {
     };
     container.appendChild(qaBtn);
 
-    // --- QUIZ & ACTIVITY CREATOR (Teachers Only) ---
+    // --- TEACHER TOOLS (Teachers Only) ---
     if (role === 'teacher') {
         const creatorHeader = document.createElement('div');
         creatorHeader.className = "px-6 py-2 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden";
         creatorHeader.textContent = "Teacher Tools";
         container.appendChild(creatorHeader);
 
+        // 1. Quiz & Activity Creator (Reduced padding to py-2)
         const creatorBtn = document.createElement('button');
-        creatorBtn.className = "w-full text-left px-6 py-3 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-green-500 focus:outline-none whitespace-nowrap overflow-hidden";
+        creatorBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-green-500 focus:outline-none whitespace-nowrap overflow-hidden";
         creatorBtn.innerHTML = '<i class="fas fa-magic w-6"></i> <span class="sidebar-text-detail">Quiz & Activity Creator</span>';
         creatorBtn.onclick = () => {
             renderCreatorPage(); 
             closeMobileSidebar();
         };
         container.appendChild(creatorBtn);
+
+        // 2. Course Schedule (Moved here, Reduced padding to py-2)
+        const calendarBtn = document.createElement('button');
+        calendarBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-purple-500 focus:outline-none whitespace-nowrap overflow-hidden";
+        calendarBtn.innerHTML = '<i class="fas fa-calendar-alt w-6"></i> <span class="sidebar-text-detail">Course Schedule</span>';
+        calendarBtn.onclick = () => {
+            renderCalendarPage();
+            closeMobileSidebar();
+        };
+        container.appendChild(calendarBtn);
     }
 }
 
