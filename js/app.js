@@ -1,6 +1,7 @@
 import { loginUser } from './auth.js';
 import { courseData } from './content/syllabus.js';
 import { formatRanges } from './utils.js';
+// import { renderQuizActivityCreator } from './quizAndActivityCreator.js'; // UNCOMMENT THIS WHEN FILE EXISTS
 
 // --- STATE MANAGEMENT ---
 let currentUser = null; 
@@ -258,6 +259,47 @@ function renderSidebar(role) {
             container.appendChild(unitSubmenu);
         });
     });
+
+    // --- QUIZ & ACTIVITY CREATOR (Teachers Only) ---
+    if (role === 'teacher') {
+        const creatorHeader = document.createElement('div');
+        creatorHeader.className = "px-6 py-2 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden";
+        creatorHeader.textContent = "Teacher Tools";
+        container.appendChild(creatorHeader);
+
+        const creatorBtn = document.createElement('button');
+        creatorBtn.className = "w-full text-left px-6 py-3 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-green-500 focus:outline-none whitespace-nowrap overflow-hidden";
+        creatorBtn.innerHTML = '<i class="fas fa-magic w-6"></i> <span class="sidebar-text-detail">Quiz & Activity Creator</span>';
+        creatorBtn.onclick = () => {
+            renderCreatorPage(); // Call the placeholder or imported function
+            closeMobileSidebar();
+        };
+        container.appendChild(creatorBtn);
+    }
+}
+
+// --- CREATOR PAGE RENDERER ---
+function renderCreatorPage() {
+    elements.pageTitle().innerText = "Quiz & Activity Creator";
+    const content = elements.contentArea();
+    content.innerHTML = '';
+
+    // If you have imported renderQuizActivityCreator, call it here:
+    // renderQuizActivityCreator(content);
+    
+    // Placeholder content until file is linked
+    content.innerHTML = `
+        <div class="w-full max-w-4xl mx-auto p-8">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+                <div class="mb-4 text-green-500">
+                    <i class="fas fa-magic text-5xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Quiz & Activity Creator</h2>
+                <p class="text-gray-600">The content for this module is being imported from <code>quizAndActivityCreator.js</code>.</p>
+                <p class="text-sm text-gray-400 mt-4">Please ensure the file is created and the import is uncommented in app.js</p>
+            </div>
+        </div>
+    `;
 }
 
 function renderLandingPage() {
