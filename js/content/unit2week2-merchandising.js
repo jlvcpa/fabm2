@@ -1460,11 +1460,10 @@ export const unit2Week2Data = {
       },
       {
         "date": "28",
-        "description": "Received payment from Client B for the balance due (after returns) within the discount period (Terms 2/10, n/30 were applicable).",
-        "rows": 4,
+        "description": "Received payment from Client B.",
+        "rows": 3,
         "solution": [
-          { "date": "28", "account": "Cash", "debit": 7056.00, "credit": "" },
-          { "date": "", "account": "Sales Discounts", "debit": 144.00, "credit": "" },
+          { "date": "28", "account": "Cash", "debit": 7200.00, "credit": "" },
           { "date": "", "account": "Accounts Receivable", "debit": "", "credit": 7200.00 },
           { "date": "", "account": "Received payment less discount", "debit": "", "credit": "", "isExplanation": true }
         ]
