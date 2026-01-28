@@ -302,12 +302,20 @@ async function generateQuizContent(activityData) {
         questions.forEach((q, qIdx) => {
             const uiId = `s${index}_q${qIdx}`;
             
+            // Robust helper to find correct answer even if 'answer' is missing or 0
+            const getSafeCorrectAnswer = (q) => {
+                if (q.answer !== undefined && q.answer !== null && q.answer !== "") return q.answer;
+                if (q.solution !== undefined && q.solution !== null && q.solution !== "") return q.solution;
+                if (q.correctAnswer !== undefined && q.correctAnswer !== null) return q.correctAnswer;
+                return null;
+            };
+
             questionData.push({ 
                 uiId: uiId, 
                 dbId: q.id, 
                 type: section.type,
                 questionText: q.question || (q.title || 'Journal Activity'),
-                correctAnswer: q.answer || q.solution,
+                correctAnswer: getSafeCorrectAnswer(q),
                 options: q.options || [],
                 explanation: q.explanation || '',
                 transactions: q.transactions || [],
@@ -315,26 +323,25 @@ async function generateQuizContent(activityData) {
             });
 
             const instructionText = (section.type === 'Journalizing' && q.instructions) ? q.instructions : section.instructions;
+            
+            // Generate sticky header (used inside loop for Journalizing, outside for others)
             const stickyHeader = `
-<div class="sticky top-0 bg-blue-50 border-b border-blue-200 px-4 py-2 z-10 shadow-sm mb-4">
-    <div class="flex flex-col gap-.5 text-xs text-gray-700">
-        <h3 class="text-lg font-semibold border-b pb-1 text-blue-900">
-            <span class="font-bold text-blue-800">Type:</span> ${section.type}
-        </h3>
-
-        <div class="border-b pb-1">
-            <span class="font-bold text-blue-800">Topic:</span> ${section.topics}
-        </div>
-
-        <div class="border-b pb-1">
-            <span class="font-bold text-blue-800">Instruction:</span> ${instructionText}
-        </div>
-
-        <div class="border-b pb-1">
-            <span class="font-bold text-blue-800">Rubric:</span> ${section.gradingRubrics || 'N/A'}
-        </div>
-    </div>
-</div>
+                <div class="sticky top-0 bg-blue-50 border-b border-blue-200 px-4 py-2 z-10 shadow-sm mb-4">
+                    <div class="flex flex-col gap-.5 text-xs text-gray-700">
+                        <h3 class="text-lg font-semibold border-b pb-1 text-blue-900">
+                            <span class="font-bold text-blue-800">Type:</span> ${section.type}
+                        </h3>
+                        <div class="border-b pb-1">
+                            <span class="font-bold text-blue-800">Topic:</span> ${section.topics}
+                        </div>
+                        <div class="border-b pb-1">
+                            <span class="font-bold text-blue-800">Instruction:</span> ${instructionText}
+                        </div>
+                        <div class="border-b pb-1">
+                            <span class="font-bold text-blue-800">Rubric:</span> ${section.gradingRubrics || 'N/A'}
+                        </div>
+                    </div>
+                </div>
             `;
 
             if (section.type !== "Journalizing") {
@@ -362,10 +369,10 @@ async function generateQuizContent(activityData) {
                     `;
                 }
 
+                // FIXED: Removed stickyHeader from individual blocks for MC/Problem Solving
                 questionsHtml += `
                     <div id="${uiId}" class="question-block w-full ${hiddenClass}">
                         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-4">
-                            ${stickyHeader}
                             
                             <div class="p-4 md:p-6">
                                 <div class="mb-2">
@@ -388,6 +395,7 @@ async function generateQuizContent(activityData) {
                 `;
             } 
             else {
+                // JOURNALIZING: Keep sticky header here as instructions often vary per question
                 const transactions = q.transactions || [];
                 const jHiddenClass = qIdx === 0 ? '' : 'hidden'; 
                 
@@ -399,7 +407,6 @@ async function generateQuizContent(activityData) {
                     const tHidden = tIdx === 0 ? '' : 'hidden';
                     const tActive = tIdx === 0 ? 'bg-blue-100 border-l-4 border-blue-600 text-blue-800' : 'bg-white border-l-4 border-transparent text-gray-600 hover:bg-gray-50';
 
-                    // CHANGED: Removed truncate, added whitespace-normal
                     transTrackerList += `
                         <button type="button" class="trans-tracker-btn w-full text-left p-3 border-b border-gray-100 text-xs md:text-sm font-medium transition-colors focus:outline-none ${tActive}" data-target-trans="${transUiId}" data-t-index="${tIdx}">
                             <div class="font-bold whitespace-nowrap">${trans.date}</div>
@@ -461,8 +468,8 @@ async function generateQuizContent(activityData) {
                                      
                                      ${questions.length > 1 ? `
                                      <div class="mt-4 pt-4 border-t border-gray-100 flex justify-end space-x-2">
-                                         <button type="button" class="nav-prev-btn px-3 py-1 bg-white border border-gray-300 rounded text-sm hover:bg-gray-50">Previous Question</button>
-                                         <button type="button" class="nav-next-btn px-3 py-1 bg-blue-800 text-white rounded text-sm hover:bg-blue-900">Next Question</button>
+                                          <button type="button" class="nav-prev-btn px-3 py-1 bg-white border border-gray-300 rounded text-sm hover:bg-gray-50">Previous Question</button>
+                                          <button type="button" class="nav-next-btn px-3 py-1 bg-blue-800 text-white rounded text-sm hover:bg-blue-900">Next Question</button>
                                      </div>` : ''}
                                  </div>
                              </div>
@@ -482,7 +489,28 @@ async function generateQuizContent(activityData) {
         });
 
         if (section.type !== "Journalizing") {
+            // FIXED: Add Sticky Header ONCE at the top for Multiple Choice / Problem Solving
+            const sectionHeaderHtml = `
+                <div class="sticky top-0 bg-blue-50 border-b border-blue-200 px-4 py-2 z-10 shadow-sm mb-4">
+                    <div class="flex flex-col gap-.5 text-xs text-gray-700">
+                        <h3 class="text-lg font-semibold border-b pb-1 text-blue-900">
+                            <span class="font-bold text-blue-800">Type:</span> ${section.type}
+                        </h3>
+                        <div class="border-b pb-1">
+                            <span class="font-bold text-blue-800">Topic:</span> ${section.topics}
+                        </div>
+                        <div class="border-b pb-1">
+                            <span class="font-bold text-blue-800">Instruction:</span> ${section.instructions || "Select the best answer."}
+                        </div>
+                        <div class="border-b pb-1">
+                            <span class="font-bold text-blue-800">Rubric:</span> ${section.gradingRubrics || 'N/A'}
+                        </div>
+                    </div>
+                </div>
+            `;
+
             sectionsHtml += `
+                ${sectionHeaderHtml}
                 <div class="flex flex-col md:flex-row md:items-start gap-4">
                     <div class="flex-1 min-w-0">
                         ${questionsHtml}
@@ -859,7 +887,9 @@ async function submitQuiz(activityData, questionData, user) {
 
             if (section.type === "Multiple Choice") {
                 sectionMaxScore++;
-                if (String(studentAnswer) === String(q.correctAnswer)) sectionScore++;
+                // FIXED: Treat matching strings OR student "0" matching null answer key as correct
+                const isZeroMatch = (String(studentAnswer) === "0" && (q.correctAnswer === null || q.correctAnswer === undefined));
+                if (String(studentAnswer) === String(q.correctAnswer) || isZeroMatch) sectionScore++;
             } 
             else if (section.type === "Problem Solving") {
                 sectionMaxScore++;
@@ -872,7 +902,8 @@ async function submitQuiz(activityData, questionData, user) {
                     const rowCount = trans.rows || 2;
 
                     for(let r=0; r < rowCount; r++) {
-                        const cellKey = `${tIdx}_${r}`;
+                        // FIXED: Adjusted key format to match saved data (t0_r0 instead of 0_0)
+                        const cellKey = `t${tIdx}_r${r}`;
                         const cellData = (studentAnswer && studentAnswer[cellKey]) ? studentAnswer[cellKey] : { date:'', acct:'', dr:'', cr:'' };
                         const solRow = solRows[r] || null;
 
@@ -1050,6 +1081,25 @@ async function renderQuizResultPreview(activityData, user, resultData) {
             sectionBodyHtml += `<p class="text-gray-400 italic">No data available for this section.</p>`;
         }
 
+        // FIXED: Add Sticky Header ONCE at the top for Multiple Choice / Problem Solving in Preview too
+        if (section.type !== "Journalizing") {
+            sectionBodyHtml += `
+                <div class="sticky top-0 bg-blue-50 border-b border-blue-200 px-4 py-2 z-10 shadow-sm mb-4">
+                    <div class="flex flex-col gap-.5 text-xs text-gray-700">
+                        <div class="border-b pb-1">
+                            <span class="font-bold text-blue-800">Topic:</span> ${section.topics || 'N/A'}
+                        </div>
+                        <div class="border-b pb-1">
+                            <span class="font-bold text-blue-800">Instruction:</span> ${section.instructions || "Refer to specific question details."}
+                        </div>
+                        <div class="border-b pb-1">
+                            <span class="font-bold text-blue-800">Rubric:</span> ${section.gradingRubrics || 'N/A'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         sectionQuestions.forEach((q, qIdx) => {
             const studentAnswer = resultData.answers ? resultData.answers[q.uiId] : null;
 
@@ -1076,12 +1126,17 @@ async function renderQuizResultPreview(activityData, user, resultData) {
             // --- 1. MULTIPLE CHOICE ---
             if (section.type === "Multiple Choice") {
                 sectionMaxScore++;
-                const isCorrect = String(studentAnswer) === String(q.correctAnswer);
+                // FIXED: Check match OR check if student 0 matches null key
+                const isCorrect = String(studentAnswer) === String(q.correctAnswer) || 
+                                  (String(studentAnswer) === "0" && (q.correctAnswer === null || q.correctAnswer === undefined));
+                
                 if(isCorrect) sectionScore++;
 
                 const optionsHtml = (q.options || []).map((opt, optIdx) => {
                     const isSelected = String(studentAnswer) === String(optIdx);
-                    const isOptCorrect = String(q.correctAnswer) === String(optIdx); 
+                    // FIXED: Correct option is the defined one OR 0 if defined is null
+                    const isOptCorrect = String(q.correctAnswer) === String(optIdx) ||
+                                         (String(optIdx) === "0" && (q.correctAnswer === null || q.correctAnswer === undefined));
                     
                     let bgClass = "bg-white border-gray-200";
                     let icon = "";
@@ -1093,9 +1148,9 @@ async function renderQuizResultPreview(activityData, user, resultData) {
                     return `<div class="p-2 border rounded mb-1 text-sm flex items-center ${bgClass}">${opt} ${icon}</div>`;
                 }).join('');
 
+                // FIXED: Removed stickyHeaderHtml from individual card
                 sectionBodyHtml += `
                     <div class="bg-white rounded shadow-sm border border-gray-200 mb-4 overflow-hidden">
-                        ${stickyHeaderHtml}
                         <div class="p-4">
                             <p class="font-bold text-gray-800 mb-2">${qIdx+1}. ${q.questionText}</p>
                             <div class="mb-3">${optionsHtml}</div>
@@ -1111,9 +1166,9 @@ async function renderQuizResultPreview(activityData, user, resultData) {
                 const isCorrect = studentAnswer && q.correctAnswer && studentAnswer.trim().toLowerCase() === q.correctAnswer.trim().toLowerCase();
                 if(isCorrect) sectionScore++;
 
+                // FIXED: Removed stickyHeaderHtml from individual card
                 sectionBodyHtml += `
                     <div class="bg-white rounded shadow-sm border border-gray-200 mb-4 overflow-hidden">
-                        ${stickyHeaderHtml}
                         <div class="p-4 space-y-4">
                             <p class="font-bold text-gray-800">${qIdx+1}. ${q.questionText}</p>
                             <div class="space-y-1">
@@ -1145,7 +1200,8 @@ async function renderQuizResultPreview(activityData, user, resultData) {
 
                     // --- Build Student Answer Table WITH SCORING ---
                     for(let r=0; r < rowCount; r++) {
-                        const cellKey = `${tIdx}_${r}`; 
+                        // FIXED: Adjusted key format to match saved data (t0_r0 instead of 0_0)
+                        const cellKey = `t${tIdx}_r${r}`; 
                         const cellData = (studentAnswer && studentAnswer[cellKey]) ? studentAnswer[cellKey] : { date:'', acct:'', dr:'', cr:'' };
                         
                         const solRow = solRows[r] || null;
