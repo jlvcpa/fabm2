@@ -1,7 +1,8 @@
 import { createPlaceholderDays } from '../utils.js';
 import { unit1Data } from './unit1-accounting-cycle.js';
-import { unit2Data } from './unit2-merchandising.js'; 
-import { unit2Week2Data } from './unit2week2-merchandising.js';
+import { unit2Week1Data } from './unit2Week1Merch.js'; 
+import { unit2Week2Data } from './unit2Week2Merch.js';
+import { unit2Week3Data } from './unit2Week3Merch.js';
 
 
 export const courseData = {
@@ -78,7 +79,7 @@ export const courseData = {
     <ul class="list-disc pl-5 text-gray-600 space-y-2">
         <li><strong>Week 1:</strong> Introduction to Merchandising & Inventory Systems – Service vs. Merchandising models, Merchandise Inventory, Perpetual vs. Periodic Systems.</li>
         <li><strong>Week 2:</strong> Merchandising Transactions – Recording discounts, returns, freight - on purchases and sales transactions .</li>
-        <li><strong>Week 3:</strong> Financial Statement – Net Sales, Cost of Goods sold, Gross Profit, Operating Expenses, Net Income or Loss.</li>
+        <li><strong>Week 3:</strong> Financial Statement – Worksheet, Net Sales, Cost of Goods sold, Gross Profit, Operating Expenses, Net Income or Loss.</li>
         <li><strong>Week 4:</strong> Unit Performance Task – Merchandising Cycle Simulation (Transactions → Financial Statements).</li>
     </ul>
 
@@ -143,7 +144,7 @@ export const courseData = {
                         { 
                             id: "u2w1", 
                             title: "Week 1: Intro to Merchandising", 
-                            days: unit2Data.week1 
+                            days: unit2Week1Data.week1 
                         },
                         {
                             id: "u2w2",
@@ -153,7 +154,8 @@ export const courseData = {
                         },
                         { 
                             id: "u2w3", title: "Week 3: Financial Statement", 
-                            days: createPlaceholderDays(["Net Sales, COGS, and Pross Profit", "Opertaing Expenses", "Single and Multi-Step Income Statement", "Balance Sheet"]) 
+                            days: unit2Week3Data.week3
+                              // createPlaceholderDays(["Worksheet and Ending Inventory", "Net Sales, COGS, Gross Profit, and Opertaing Expenses", "Single and Multi-Step Income Statement", "Balance Sheet"]) 
                         },
                         { 
                             id: "u2w4", title: "Week 4: Performance Task - Merchandising Cycle Simulation", 
