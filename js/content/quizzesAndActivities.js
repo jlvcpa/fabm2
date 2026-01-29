@@ -1,7 +1,10 @@
 import { getFirestore, collection, getDocs, doc, getDoc, setDoc, query, where, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 import { getLetterGrade } from "../utils.js"; 
-import { AntiCheatSystem } from '../antiCheat.js'; // Imported as requested
+import { AntiCheatSystem } from '../antiCheat.js';
+import { qbMerchMultipleChoice } from "./questionBank/qbMerchMultipleChoice.js";
+import { qbMerchProblemSolving } from "./questionBank/qbMerchProblemSolving.js";
+import { qbMerchJournalizing } from "./questionBank/qbMerchJournalizing.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAgOsKAZWwExUzupxSNytsfOo9BOppF0ng",
@@ -15,15 +18,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Global timer interval variable
 let quizTimerInterval = null;
-// Global AntiCheat instance to manage state across functions
 let currentAntiCheat = null;
 
 export async function renderQuizzesAndActivities(containerElement, user) {
     const contentArea = document.getElementById('content-area');
     
-    // Layout: Collapsible Sidebar (Left) + Main Content (Right)
     contentArea.innerHTML = `
         <div class="flex h-full relative overflow-hidden bg-gray-50">
             <div id="qa-sidebar" class="w-full md:w-80 bg-white border-r border-gray-200 flex flex-col h-full z-10 transition-transform absolute md:relative transform -translate-x-full md:translate-x-0">
@@ -49,7 +49,6 @@ export async function renderQuizzesAndActivities(containerElement, user) {
         </div>
     `;
 
-    // Mobile Sidebar Logic
     const sidebar = document.getElementById('qa-sidebar');
     document.getElementById('qa-toggle-sidebar').addEventListener('click', () => {
         sidebar.classList.remove('-translate-x-full');
@@ -80,7 +79,6 @@ async function loadStudentActivities(user) {
             const data = docSnap.data();
             data.id = docSnap.id; 
             
-            // Filter: Students see only their section. Teachers see ALL.
             if (user.role === 'student' && data.section !== user.Section) {
                 return; 
             }
@@ -110,12 +108,10 @@ async function loadStudentActivities(user) {
             `;
 
             card.onclick = () => {
-                // Teachers can open any activity. Students are restricted by date.
                 if (isFuture && user.role !== 'teacher') {
                     alert(`This activity starts on ${start.toLocaleString()}`);
                 } else {
                     if(quizTimerInterval) clearInterval(quizTimerInterval); 
-                    // Ensure previous anti-cheat is stopped before starting new one
                     if(currentAntiCheat) currentAntiCheat.stopMonitoring();
                     
                     renderQuizRunner(data, user);
@@ -136,14 +132,10 @@ async function loadStudentActivities(user) {
     }
 }
 
-// --- QUIZ RUNNER LOGIC ---
-
 async function renderQuizRunner(data, user) {
     const container = document.getElementById('qa-runner-container');
     container.innerHTML = '<div class="flex justify-center items-center h-full"><i class="fas fa-spinner fa-spin text-4xl text-blue-800"></i><span class="ml-3">Checking Permissions...</span></div>';
     
-    // 1. ACCESS CONTROL CHECK
-    // Allow if user is in student list OR if user is a teacher
     if (user.role !== 'teacher' && data.students && !data.students.includes(user.Idnumber)) {
         container.innerHTML = `
             <div class="h-full flex flex-col items-center justify-center text-red-600 bg-white p-8 text-center">
@@ -157,13 +149,11 @@ async function renderQuizRunner(data, user) {
         return;
     }
 
-    // 2. CHECK FOR EXISTING SUBMISSION
     const collectionName = `results_${data.activityname}_${data.section}`;
     const docId = `${user.CN}-${user.Idnumber}-${user.LastName} ${user.FirstName}`;
     
     try {
         const resultDoc = await getDoc(doc(db, collectionName, docId));
-        
         if (resultDoc.exists()) {
             await renderQuizResultPreview(data, user, resultDoc.data());
             return;
@@ -172,11 +162,9 @@ async function renderQuizRunner(data, user) {
         console.error("Error checking submission:", e);
     }
 
-    // 3. CHECK EXPIRED
     const now = new Date();
     const expireTime = new Date(data.dateTimeExpire);
 
-    // Teachers can bypass expiry to test
     if (now > expireTime && user.role !== 'teacher') {
         container.innerHTML = `
             <div class="h-full flex flex-col items-center justify-center text-gray-500 bg-white p-8 text-center">
@@ -192,12 +180,10 @@ async function renderQuizRunner(data, user) {
         return;
     }
 
-    // 4. START QUIZ
     container.innerHTML = '<div class="flex justify-center items-center h-full"><i class="fas fa-spinner fa-spin text-4xl text-blue-800"></i><span class="ml-3">Generating Activity...</span></div>';
     
     const generatedContent = await generateQuizContent(data);
 
-    // --- ANTICHEAT HTML INJECTION ---
     const antiCheatHtml = `
         <div id="black-curtain" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color:black; z-index:9999;"></div>
         <div id="cheat-lockout" class="hidden fixed inset-0 bg-gray-900 z-[100] flex items-center justify-center text-white p-6 text-center">
@@ -271,30 +257,28 @@ async function generateQuizContent(activityData) {
         sectionsHtml += `<div id="test-section-${index}" class="test-section-panel w-full ${isHidden}" data-section-type="${section.type}">`;
 
         let questions = [];
-        let collectionName = '';
-        if (section.type === "Multiple Choice") collectionName = 'qbMultipleChoice';
-        else if (section.type === "Problem Solving") collectionName = 'qbProblemSolving';
-        else if (section.type === "Journalizing") collectionName = 'qbJournalizing';
-
         const count = parseInt(section.noOfQuestions) || 5;
 
-        if (collectionName && sectionTopics.length > 0) {
-            try {
-                const qRef = collection(db, collectionName);
-                const qQuery = query(
-                    qRef, 
-                    where("subject", "==", "FABM1"), 
-                    where("topic", "in", sectionTopics.slice(0, 10)) 
-                );
-                const qSnap = await getDocs(qQuery);
-                let candidates = [];
-                qSnap.forEach(doc => candidates.push({ id: doc.id, ...doc.data() }));
-                candidates.sort(() => 0.5 - Math.random());
-                questions = candidates.slice(0, count);
-            } catch (error) {
-                console.error(`Error fetching questions:`, error);
-            }
-        }
+        // REVISED SELECTION LOGIC: Pull from local JS files instead of Firestore
+        let localSource = [];
+        if (section.type === "Multiple Choice") localSource = qbMerchMultipleChoice;
+        else if (section.type === "Problem Solving") localSource = qbMerchProblemSolving;
+        else if (section.type === "Journalizing") localSource = qbMerchJournalizing;
+
+        // Flatten the array of objects into a standard array of questions
+        const flattenedCandidates = localSource.map(obj => {
+            const id = Object.keys(obj)[0];
+            return { id, ...obj[id] };
+        });
+
+        // Filter by subject and topic
+        let candidates = flattenedCandidates.filter(q => 
+            q.subject === "FABM1" && sectionTopics.includes(q.topic)
+        );
+
+        // Randomize and slice
+        candidates.sort(() => 0.5 - Math.random());
+        questions = candidates.slice(0, count);
         
         let questionsHtml = '';
         let trackerHtml = '';
@@ -302,7 +286,6 @@ async function generateQuizContent(activityData) {
         questions.forEach((q, qIdx) => {
             const uiId = `s${index}_q${qIdx}`;
             
-            // Robust helper to find correct answer even if 'answer' is missing or 0
             const getSafeCorrectAnswer = (q) => {
                 if (q.answer !== undefined && q.answer !== null && q.answer !== "") return q.answer;
                 if (q.solution !== undefined && q.solution !== null && q.solution !== "") return q.solution;
@@ -324,7 +307,6 @@ async function generateQuizContent(activityData) {
 
             const instructionText = (section.type === 'Journalizing' && q.instructions) ? q.instructions : section.instructions;
             
-            // Generate sticky header (used inside loop for Journalizing, outside for others)
             const stickyHeader = `
                 <div class="sticky top-0 bg-blue-50 border-b border-blue-200 px-4 py-2 z-10 shadow-sm mb-4">
                     <div class="flex flex-col gap-.5 text-xs text-gray-700">
@@ -369,7 +351,6 @@ async function generateQuizContent(activityData) {
                     `;
                 }
 
-                // FIXED: Removed stickyHeader from individual blocks for MC/Problem Solving
                 questionsHtml += `
                     <div id="${uiId}" class="question-block w-full ${hiddenClass}">
                         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-4">
@@ -395,7 +376,6 @@ async function generateQuizContent(activityData) {
                 `;
             } 
             else {
-                // JOURNALIZING: Keep sticky header here as instructions often vary per question
                 const transactions = q.transactions || [];
                 const jHiddenClass = qIdx === 0 ? '' : 'hidden'; 
                 
@@ -489,7 +469,6 @@ async function generateQuizContent(activityData) {
         });
 
         if (section.type !== "Journalizing") {
-            // FIXED: Add Sticky Header ONCE at the top for Multiple Choice / Problem Solving
             const sectionHeaderHtml = `
                 <div class="sticky top-0 bg-blue-50 border-b border-blue-200 px-4 py-2 z-10 shadow-sm mb-4">
                     <div class="flex flex-col gap-.5 text-xs text-gray-700">
@@ -912,7 +891,21 @@ async function submitQuiz(activityData, questionData, user) {
                              sectionMaxScore++; 
                              if (r === 0) {
                                  const expectedRegex = (tIdx === 0) ? /^[A-Z][a-z]{2}\s\d{1,2}$/ : /^\d{1,2}$/;
-                                 if (sDate.match(expectedRegex) && sDate === solRow.date) sectionScore++;
+                                 
+                                 // FIXED: Date validation logic
+                                 let isDateCorrect = false;
+                                 if (tIdx === 0) {
+                                     // First transaction: Must match full date (e.g., "Dec 1")
+                                     isDateCorrect = (sDate === solRow.date);
+                                 } else {
+                                     // Subsequent transactions: Match only the day part of the solution
+                                     // Handle "Dec 2" -> "2" or "2" -> "2"
+                                     const parts = solRow.date.split(' ');
+                                     const solDay = parts.length > 1 ? parts[parts.length - 1] : parts[0];
+                                     isDateCorrect = (sDate === solDay);
+                                 }
+
+                                 if (sDate.match(expectedRegex) && isDateCorrect) sectionScore++;
                              } else {
                                  if (sDate === '') sectionScore++;
                              }
@@ -1220,7 +1213,18 @@ async function renderQuizResultPreview(activityData, user, resultData) {
                              sectionMaxScore++; // Expecting answer
                              if (r === 0) {
                                  const expectedRegex = (tIdx === 0) ? /^[A-Z][a-z]{2}\s\d{1,2}$/ : /^\d{1,2}$/;
-                                 if (sDate.match(expectedRegex) && sDate === solRow.date) {
+                                 
+                                 // FIXED: Date validation logic matching submitQuiz
+                                 let isDateCorrect = false;
+                                 if (tIdx === 0) {
+                                     isDateCorrect = (sDate === solRow.date);
+                                 } else {
+                                     const parts = solRow.date.split(' ');
+                                     const solDay = parts.length > 1 ? parts[parts.length - 1] : parts[0];
+                                     isDateCorrect = (sDate === solDay);
+                                 }
+
+                                 if (sDate.match(expectedRegex) && isDateCorrect) {
                                      dateValid = true;
                                      sectionScore++;
                                  }
@@ -1333,9 +1337,17 @@ async function renderQuizResultPreview(activityData, user, resultData) {
                                 const drFmt = solRow.debit ? Number(solRow.debit).toFixed(2) : '';
                                 const crFmt = solRow.credit ? Number(solRow.credit).toFixed(2) : '';
 
+                                // FIXED: Display Date Format in Solution Table
+                                // If tIdx > 0 (second transaction onwards), show only the day (d/dd)
+                                let displayDate = solRow.date || '';
+                                if (tIdx > 0 && displayDate.includes(' ')) {
+                                    const parts = displayDate.split(' ');
+                                    displayDate = parts[parts.length - 1]; // Take only the last part (the day)
+                                }
+
                                 solutionRowsHtml += `
                                 <tr class="border-b border-gray-100 bg-white">
-                                    <td class="p-1.5 border-r border-green-100 font-mono text-xs text-right text-gray-800">${solRow.date || ''}</td>
+                                    <td class="p-1.5 border-r border-green-100 font-mono text-xs text-right text-gray-800">${displayDate}</td>
                                     <td class="p-1.5 border-r border-green-100 font-mono text-xs text-left font-semibold text-gray-800">${indentHtml}${solRow.account || ''}</td>
                                     <td class="p-1.5 border-r border-green-100 font-mono text-xs text-right text-gray-800">${drFmt}</td>
                                     <td class="p-1.5 font-mono text-xs text-right text-gray-800">${crFmt}</td>
@@ -1359,7 +1371,7 @@ async function renderQuizResultPreview(activityData, user, resultData) {
                                     <div class="bg-blue-50 py-1 px-3 text-[10px] font-bold text-blue-800 uppercase border-b border-blue-100">Your Answer</div>
                                     <table class="w-full border-collapse table-fixed">
                                         <thead>
-                                            <tr class="bg-gray-50 text-[10px] text-gray-500 uppercase border-b border-gray-200">
+                                            <tr class="bg-gray-5 text-[10px] text-gray-500 uppercase border-b border-gray-200">
                                                 <th class="py-1 px-1 w-24 text-right">Date</th>
                                                 <th class="py-1 px-2 text-left w-auto">Account</th>
                                                 <th class="py-1 px-1 w-28 text-right">Dr</th>
