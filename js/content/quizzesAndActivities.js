@@ -150,7 +150,8 @@ async function renderQuizRunner(data, user) {
     }
 
     const collectionName = `results_${data.activityname}_${data.section}`;
-    const docId = `${user.CN}-${user.Idnumber}-${user.LastName} ${user.FirstName}`;
+    // const docId = `${user.CN}-${user.Idnumber}-${user.LastName} ${user.FirstName}`;
+    const docId = `${user.CN}-${user.Idnumber}-${user.LastName.trim()} ${user.FirstName.trim()}`;
     
     try {
         const resultDoc = await getDoc(doc(db, collectionName, docId));
@@ -966,7 +967,8 @@ async function submitQuiz(activityData, questionData, user) {
     });
 
     const collectionName = `results_${activityData.activityname}_${activityData.section}`;
-    const docName = `${user.CN}-${user.Idnumber}-${user.LastName} ${user.FirstName}`;
+    //const docName = `${user.CN}-${user.Idnumber}-${user.LastName} ${user.FirstName}`;
+    const docName = `${user.CN}-${user.Idnumber}-${user.LastName.trim()} ${user.FirstName.trim()}`;
     
     const submissionPayload = {
         activityId: activityData.id,
