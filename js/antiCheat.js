@@ -1,4 +1,4 @@
-// antiCheat.js
+// antiCheat.js  --
 
 export class AntiCheatSystem {
     constructor(config) {
