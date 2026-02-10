@@ -1,26 +1,145 @@
-// -------------------
-// --- utils.js for Constants and Logic Helpers for Accounting Cycle ---
-// ------------------
-
+// --- js/content/accountingCycle/utils.js ----
 
 export const APP_VERSION = "Version: 2025-12-10 17:11 PST";
-
 export const EQUITY_CAUSES = ['', 'Increase in Capital', 'Decrease in Capital', 'Increase in Drawings', 'Decrease in Drawings', 'Increase in Income', 'Decrease in Income', 'Increase in Expense', 'Decrease in Expense'];
-
 export const CANONICAL_ACCOUNT_ORDER = ["Cash", "Accounts Receivable", "Merchandise Inventory", "Supplies", "Prepaid Rent", "Equipment", "Accumulated Depreciation - Equipment", "Furniture", "Accumulated Depreciation - Furniture", "Building", "Accumulated Depreciation - Building", "Land", "Accounts Payable", "Notes Payable", "Salaries Payable", "Utilities Payable", "Interest Payable", "Unearned Revenue", "Owner, Capital", "Owner, Drawings", "Share Capital", "Retained Earnings", "Dividends", "Service Revenue", "Sales", "Sales Discounts", "Sales Returns and Allowances", "Interest Income", "Cost of Goods Sold", "Purchases", "Purchase Discounts", "Purchase Returns and Allowances", "Freight In", "Freight Out", "Rent Expense", "Salaries Expense", "Utilities Expense", "Supplies Expense", "Repairs and Maintenance Expense", "Dues and Subscriptions Expense", "Depreciation Expense", "Insurance Expense", "Advertising Expense", "Interest Expense"];
-
 export const STEPS = [
     { id: 1, title: 'Transaction Analysis', description: 'Identify impact on Assets, Liabilities, and Equity' },
-    { id: 2, title: 'Journalizing', description: 'Record transactions in the General Journal' },
+    { id: 2, title: 'Journalizing Transactions', description: 'Record transactions in the General Journal' },
     { id: 3, title: 'Posting to Ledger', description: 'Post journal entries to T-Accounts/Ledger' },
-    { id: 4, title: 'Trial Balance', description: 'Prepare Unadjusted Trial Balance' },
-    { id: 5, title: '10-Column Worksheet', description: 'Prepare Worksheet with Adjustments' },
-    { id: 6, title: 'Financial Statements', description: 'Prepare Income Statement and Balance Sheet' },
-    { id: 7, title: 'Adjusting Entries', description: 'Journalize and Post Adjusting Entries' },
-    { id: 8, title: 'Closing Entries', description: 'Journalize and Post Closing Entries' },
-    { id: 9, title: 'Post-Closing Trial Balance', description: 'Prepare Post-Closing Trial Balance' },
+    { id: 4, title: 'Preparing the Unadjusted Trial Balance', description: 'Prepare Unadjusted Trial Balance' },
+    { id: 5, title: 'Preparing the 10-Columns Worksheet', description: 'Prepare Worksheet with Adjustments' },
+    { id: 6, title: 'Preparing the Financial Statements', description: 'Prepare Income Statement and Balance Sheet' },
+    { id: 7, title: 'Journalizing and Posting the Adjusting Entries', description: 'Journalize and Post Adjusting Entries' },
+    { id: 8, title: 'Journalizing and Posting the Closing Entries', description: 'Journalize and Post Closing Entries' },
+    { id: 9, title: 'Preparing the Post-Closing Trial Balance', description: 'Prepare Post-Closing Trial Balance' },
     { id: 10, title: 'Reversing Entries', description: 'Setup new period and Reversing Entries' },
 ];
+
+// --- UTILS: ACCOUNT SORTING & CLASSIFICATION ---
+
+export const getAccountType = (acc) => {
+    const name = acc.trim();
+    
+    // 1. ASSETS
+    if (['Cash', 'Accounts Receivable', 'Merchandise Inventory', 'Supplies', 'Prepaid Rent', 'Equipment', 'Furniture', 'Building', 'Land'].includes(name)) return 'Asset';
+    if (name.includes('Prepaid') || name.includes('Receivable') || name.includes('Accumulated Depreciation')) return 'Asset';
+
+    // 2. LIABILITIES
+    if (name.includes('Payable') || name.includes('Unearned')) return 'Liability';
+
+    // 3. EQUITY (Income Summary is strictly Equity for classification, but sorted specifically later)
+    if (name.includes('Capital') || name.includes('Drawings') || name.includes('Retained Earnings') || name.includes('Dividends')) return 'Equity';
+
+    // 4. REVENUE
+    if (name === 'Income Summary'  || name.includes('Revenue') || name === 'Sales' || name.includes('Income') || name.includes('Sales Discounts') || name.includes('Sales Returns')) return 'Revenue';
+
+    // 5. EXPENSES
+    if (name.includes('Expense') || name === 'Cost of Goods Sold' || name === 'Purchases' || name.includes('Purchase Discounts') || name.includes('Purchase Returns') || name === 'Freight In' || name === 'Freight Out') return 'Expense';
+
+    return 'Asset'; // Default
+};
+
+// Helper to assign a specific "Rank" to accounts for sorting
+const getAccountRank = (accountName) => {
+    const name = accountName.trim();
+    const type = getAccountType(name);
+    const n = name.toLowerCase();
+
+    // RANK 100: ASSETS
+    if (type === 'Asset') {
+        if (n.includes('cash')) return 100;
+        if (n.includes('receivable')) return 110;
+        if (n.includes('inventory')) return 120;
+        if (n.includes('supplies')) return 130;
+        if (n.includes('prepaid')) return 135;
+
+        // Non-current
+        if (n.includes('land')) return 140;
+
+        if (n.includes('building')) return 150;
+        if (n.includes('accumulated') && n.includes('building')) return 151;
+
+        if (n.includes('equipment') || n.includes('machinery')) return 160;
+        if (n.includes('accumulated') && (n.includes('equipment') || n.includes('machinery'))) return 161;
+
+        if (n.includes('furniture') || n.includes('fixtures')) return 162;
+        if (n.includes('accumulated') && (n.includes('furniture') || n.includes('fixtures'))) return 163;
+
+        if (n.includes('accumulated')) return 180;
+
+        return 199;
+
+ // Other Assets
+    }
+
+    // RANK 200: LIABILITIES
+    if (type === 'Liability') {
+        if (n.includes('accounts payable')) return 200;
+        if (n.includes('notes payable')) return 210;
+        if (n.includes('accrued expenses payable')) return 220;
+        if (n.includes('salaries') || n.includes('wages')) return 230;
+        if (n.includes('interest')) return 240;
+        if (n.includes('unearned')) return 250;
+        if (n.includes('mortgage') || n.includes('loan')) return 260; // Non-current
+        return 299;
+    }
+
+    // RANK 300: EQUITY
+    if (type === 'Equity') {
+        if (n.includes('capital') || n.includes('share')) return 300;
+        if (n.includes('retained')) return 310;
+        if (n.includes('drawings') || n.includes('withdrawal') || n.includes('dividends')) return 320;
+        // User Request: Income Summary is last among equity
+        return 398;
+    }
+
+    // RANK 400: REVENUE
+    if (type === 'Revenue') {
+        if (n.includes('income summary')) return 399; 
+        if (n === 'sales' || n === 'sales revenue') return 400;
+        if (n.includes('sales returns')) return 410;
+        if (n.includes('sales discounts')) return 420;
+        if (n === 'service income' || n === 'service revenue') return 430;
+        if (n.includes('interest income')) return 490; // Other income last
+        return 450;
+    }
+
+    // RANK 500: COST OF GOODS SOLD / PURCHASES (Specific Request: Before Op Expenses)
+    if (type === 'Expense') {
+        // COGS Group
+        if (n === 'cost of goods sold') return 500;
+        if (n === 'purchases') return 510;
+        if (n.includes('purchase returns')) return 520;
+        if (n.includes('purchase discounts')) return 530;
+        if (n.includes('freight in')) return 540;
+
+        // RANK 600: OPERATING EXPENSES
+        if (n.includes('salaries expense')) return 601;
+        if (n.includes('supplies expense')) return 604;
+        if (n.includes('depreciation expense')) return 608;
+        if (n.includes('insurance expense')) return 612;
+        if (n.includes('utilities expense')) return 676;
+        if (n.includes('interest expense')) return 680;
+        
+        return 699; 
+    }
+
+    return 999; // Catch-all
+};
+
+export const sortAccounts = (accounts) => {
+    return [...accounts].sort((a, b) => {
+        const rankA = getAccountRank(a);
+        const rankB = getAccountRank(b);
+
+        if (rankA !== rankB) {
+            return rankA - rankB; // Sort by Rank Group
+        }
+        // If same rank group, sort alphabetically
+        return a.localeCompare(b);
+    });
+};
 
 export const ActivityHelper = {
     getRubricHTML: (taskNum, taskTitle) => {
@@ -41,11 +160,10 @@ export const ActivityHelper = {
     getCustomPrintFooterHTML: () => `<div id="print-footer" class="hidden print:block fixed bottom-0 left-0 right-0 z-50 bg-white border-t-8 border-indigo-600"></div>`,
     
     // --- UPDATED INSTRUCTIONS GENERATOR ---
-    getInstructionsHTML: (stepId, taskTitle, validAccounts = [], isSubsequentYear = false, beginningBalances = null, deferredExpenseMethod = 'Asset', deferredIncomeMethod = 'Liability') => {
+    getInstructionsHTML: (stepId, taskTitle, validAccounts = [], isSubsequentYear = false, beginningBalances = null, deferredExpenseMethod = 'Asset', deferredIncomeMethod = 'Liability', inventorySystem = 'Periodic', ledgerData = null, adjustments = []) => {
         let instructionsHTML = "";
         let accountsList = "";
         
-        // Logic for the extra bullet point
         const showDeferredNote = (deferredExpenseMethod === 'Expense' || deferredIncomeMethod === 'Income');
         const deferredLine = showDeferredNote ? "<li>Expense or Income method is to be used in accounting for Deferred Items.</li>" : "";
 
@@ -70,16 +188,15 @@ export const ActivityHelper = {
 
         if (stepId === 1) {
             instructionsHTML = `
-                <li>Analyze the increase or decrease effects of each transactions on assets, liabilities, and equity. If it affects equity, determine the cause.</li>
+                <li>Analyze the increase or decrease effects of each transactions on assets, liabilities, and equity using <strong>${inventorySystem} Inventory System</strong>. If it affects equity, determine the cause.</li>
                 ${deferredLine}
                 <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
             `;
         } else if (stepId === 2) {
             instructionsHTML = `
-                <li>Journalize the transactions using the rules of debit and credit and the manual process of recording transactions.</li>
+                <li>Journalize the transactions using <strong>${inventorySystem} Inventory System</strong> and use the following accounts: ${accountsList}</li>
                 ${deferredLine}
                 <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
-                <li>Use the following accounts in journalizing the transactions below: ${accountsList}</li>
             `;
         } else if (stepId === 3) {
             let firstBullet = `Setup the general ledger using the following accounts (chart of accounts): ${accountsList}`;
@@ -102,15 +219,86 @@ export const ActivityHelper = {
             }
         } else if (stepId === 4) {
             instructionsHTML = `
-                <li>Prepare the Unadjusted Trial Balance based on the balances in the General Ledger.</li>
+                <li>Prepare the Unadjusted Trial Balance based on the balances in the General Ledger. Accounts with a zero unadjusted balance may not be included.</li>
                 ${deferredLine}
                 <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
             `;
         } else if (stepId === 5) {
+            // --- TASK 5 SPECIAL INSTRUCTIONS ---
+            
+            // 1. Generate Ledger Balances View (Text List)
+            let ledgerListStr = '';
+            if (ledgerData) {
+                const accountsSet = new Set(Object.keys(ledgerData));
+                if (Array.isArray(adjustments)) {
+                    adjustments.forEach(adj => {
+                        if(adj.drAcc) accountsSet.add(adj.drAcc);
+                        if(adj.crAcc) accountsSet.add(adj.crAcc);
+                        if (Array.isArray(adj.solution)) {
+                            adj.solution.forEach(line => {
+                                if (line.account && !line.isExplanation && line.account !== "No Entry") {
+                                    accountsSet.add(line.account);
+                                }
+                            });
+                        }
+                    });
+                }
+                const allAccounts = sortAccounts(Array.from(accountsSet).filter(a => a));
+                
+                const ledgerItems = allAccounts.map(acc => {
+                    const accData = ledgerData[acc] || { debit: 0, credit: 0 };
+                    const bal = accData.debit - accData.credit;
+                    const absBal = Math.abs(bal);
+                    
+                    // Logic to show 'Dr' or 'Cr' ONLY if abnormal balance
+                    const type = getAccountType(acc);
+                    const name = acc.toLowerCase();
+                    let normalBalance = 'Dr'; // Default Normal
+
+                    if (type === 'Asset') normalBalance = 'Dr';
+                    if (name.includes('accumulated depreciation')) normalBalance = 'Cr';
+
+                    if (type === 'Liability') normalBalance = 'Cr';
+
+                    if (type === 'Equity') normalBalance = 'Cr';
+                    if (name.includes('drawings') || name.includes('withdrawal') || name.includes('dividends')) normalBalance = 'Dr';
+
+                    if (type === 'Revenue') normalBalance = 'Cr';
+                    if (name.includes('sales returns') || name.includes('sales discounts')) normalBalance = 'Dr';
+
+                    if (type === 'Expense') normalBalance = 'Dr';
+                    if (name.includes('purchase returns') || name.includes('purchase discounts')) normalBalance = 'Cr';
+
+                    const isDebit = bal >= 0;
+                    let suffix = '';
+                    
+                    // Only append suffix if balance is opposite of normal
+                    if (isDebit && normalBalance === 'Cr') suffix = ' Dr'; 
+                    else if (!isDebit && normalBalance === 'Dr') suffix = ' Cr';
+
+                    return `${acc}: ₱${absBal.toLocaleString()}${suffix}`; 
+                });
+                ledgerListStr = `<span class="font-mono text-xs text-blue-700 font-bold">${ledgerItems.join('; ')}</span>`;
+            }
+
+            // 2. Generate Adjustments List (Concatenated Sentence with Numbering)
+            let adjustmentsSentence = '';
+            if (Array.isArray(adjustments)) {
+                adjustmentsSentence = adjustments.map((adj, i) => {
+                    let d = adj.desc || adj.description || '';
+                    d = d.trim();
+                    if (d && !d.endsWith('.')) d += '.';
+                    return `(${i + 1}) ${d}`;
+                }).join(' ');
+            }
+            
+            const highlightedAdj = `<span class="font-mono text-xs text-orange-800 font-bold bg-orange-50 px-1 rounded">${adjustmentsSentence}</span>`;
+
             instructionsHTML = `
-                <li>Complete the 10-column worksheet, applying adjustments and correctly extending balances.</li>
+                <li>Complete the 10-column worksheet using the following unadjusted general ledger accounts and corresponding balances: ${ledgerListStr}</li>
+                <li>Apply the following adjustments: ${highlightedAdj}</li>
                 ${deferredLine}
-                <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
+                <li>Complete all required fields by extended the balances correctly. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
             `;
         } else {
              instructionsHTML = `
@@ -128,26 +316,6 @@ export const ActivityHelper = {
         `;
     }
 };
-
-export const getAccountType = (acc) => {
-    if (['Cash', 'Accounts Receivable', 'Merchandise Inventory', 'Supplies', 'Prepaid Rent', 'Equipment', 'Furniture', 'Building', 'Land'].includes(acc)) return 'Asset';
-    if (acc.includes('Accumulated Depreciation')) return 'Asset';
-    if (['Accounts Payable', 'Notes Payable', 'Salaries Payable', 'Utilities Payable', 'Interest Payable', 'Unearned Revenue'].includes(acc)) return 'Liability';
-    if (['Owner, Capital', 'Share Capital', 'Retained Earnings'].includes(acc)) return 'Equity'; 
-    if (['Owner, Drawings', 'Dividends'].includes(acc)) return 'Equity';
-    if (acc.includes('Revenue') || acc === 'Sales' || acc.includes('Income') || acc.includes('Sales Discounts') || acc.includes('Sales Returns')) return 'Revenue';
-    if (acc.includes('Expense') || acc === 'Cost of Goods Sold' || acc === 'Purchases' || acc.includes('Purchase Discounts') || acc.includes('Purchase Returns') || acc === 'Freight In' || acc === 'Freight Out') return 'Expense';
-    return 'Asset';
-};
-
-export const sortAccounts = (accounts) => [...accounts].sort((a, b) => {
-    const indexA = CANONICAL_ACCOUNT_ORDER.indexOf(a);
-    const indexB = CANONICAL_ACCOUNT_ORDER.indexOf(b);
-    if (indexA === -1 && indexB === -1) return a.localeCompare(b);
-    if (indexA === -1) return 1;
-    if (indexB === -1) return -1;
-    return indexA - indexB;
-});
 
 export const generateBeginningBalances = (businessType, ownership) => {
     const balances = {};
@@ -178,8 +346,6 @@ export const generateBeginningBalances = (businessType, ownership) => {
     else { balances[equityAcc] = { dr: 0, cr: equityNeeded }; totalCr += equityNeeded; }
     return { balances, total: totalDr };
 };
-
-const fmt = (n) => `P${n.toLocaleString()}`;
 
 export const generateTransactions = (count, type, ownership, inventorySystem, options, isSubsequentYear, deferredExpenseMethod, deferredIncomeMethod) => {
     const transactions = [];
