@@ -1,4 +1,6 @@
-// --- steps/Step02Journalizing.js ---
+// --- steps/Step02Journalizing.js ----
+// --- js/content/accountingCycle/steps/Step02Journalizing.js ---
+
 import React, { useEffect } from 'https://esm.sh/react@18.2.0';
 import htm from 'https://esm.sh/htm';
 import { Plus, Check, X, Trash2 } from 'https://esm.sh/lucide-react@0.263.1';
@@ -7,7 +9,6 @@ import { getLetterGrade } from '../utils.js';
 const html = htm.bind(React.createElement);
 
 // --- HELPER: DETERMINE LOGICAL LINE INDEX ---
-// Maps the Grid Row Index (idx) to the Transaction Line Index (0, 1, 2...)
 const getLogicalIndex = (tIdx, idx) => {
     if (tIdx === 0) {
         if (idx === 0) return -1; // Year Row (Special)
@@ -17,14 +18,13 @@ const getLogicalIndex = (tIdx, idx) => {
 };
 
 // --- HELPER: GET EXPECTED CONFIGURATION ---
-// Determines if a specific line SHOULD be a Debit or Credit based on the Answer Key
 const getExpectedConfig = (t, logicalIdx) => {
     if (logicalIdx < 0) return null; // Year row
     
     const numDebits = t.debits.length;
     const totalLines = numDebits + t.credits.length;
     
-    if (logicalIdx >= totalLines) return null; // Out of bounds (extra row)
+    if (logicalIdx >= totalLines) return null; // Out of bounds
 
     if (logicalIdx < numDebits) {
         return { type: 'debit', data: t.debits[logicalIdx] };
@@ -40,7 +40,6 @@ const validateRow = (row, t, tIdx, idx) => {
 
     // 1. Date Validation
     if (tIdx === 0 && idx === 0) {
-        // First row of first transaction: Needs Year
         const txnDate = new Date(t.date);
         const yyyy = txnDate.getFullYear().toString();
         const val = row.date?.trim() || ""; 
@@ -54,7 +53,6 @@ const validateRow = (row, t, tIdx, idx) => {
             result.date = false;
         }
     } else if ((tIdx === 0 && idx === 1) || (tIdx > 0 && idx === 0)) {
-        // Date row (Month/Day)
         const txnDate = new Date(t.date);
         const mm = txnDate.toLocaleString('default', { month: 'short' });
         const dd = txnDate.getDate().toString();
@@ -73,7 +71,6 @@ const validateRow = (row, t, tIdx, idx) => {
             result.date = false;
         }
     } else {
-        // Rows that shouldn't have dates
         result.date = true; 
     }
 
@@ -82,55 +79,40 @@ const validateRow = (row, t, tIdx, idx) => {
         const expected = getExpectedConfig(t, logicalIdx);
         
         if (expected) {
-            result.maxScore += 2; // 1 for Account, 1 for Amount
+            result.maxScore += 2; 
 
             const acc = row.acc || "";
             const dr = Number(row.dr) || 0;
             const cr = Number(row.cr) || 0;
 
-            // --- DEBIT EXPECTATION ---
             if (expected.type === 'debit') {
-                result.crAmt = null; // Should not be in credit column
-
-                // Account Name Check (Must not start with space)
+                result.crAmt = null; 
                 const accValid = acc.length > 0 && !acc.startsWith(' ') && acc.trim() === expected.data.account;
-                
                 if (!accValid) result.acc = false;
                 else { result.acc = true; result.score += 1; }
 
-                // Amount Check
-                // Must be in Debit column, matches amount, Credit column is empty
                 const amtValid = Math.abs(dr - expected.data.amount) <= 1 && cr === 0;
-                
                 if (!amtValid) result.drAmt = false;
                 else { result.drAmt = true; result.score += 1; }
             }
-            
-            // --- CREDIT EXPECTATION ---
             else if (expected.type === 'credit') {
-                result.drAmt = null; // Should not be in debit column
-
-                // Account Name Check (Must have 3 spaces)
-                const threeSpaces = '   ';
-                const startsWith3 = acc.startsWith(threeSpaces);
-                const fourthCharNotSpace = acc.length > 3 && acc[3] !== ' '; 
-                const cleanName = acc.substring(3);
+                result.drAmt = null; 
+                const fiveSpaces = '     ';
+                const startsWith5 = acc.startsWith(fiveSpaces);
+                const sixthCharNotSpace = acc.length > 5 && acc[5] !== ' '; 
+                const cleanName = acc.substring(5);
                 
-                const accValid = startsWith3 && fourthCharNotSpace && cleanName === expected.data.account;
+                const accValid = startsWith5 && sixthCharNotSpace && cleanName === expected.data.account;
 
                 if (!accValid) result.acc = false;
                 else { result.acc = true; result.score += 1; }
 
-                // Amount Check
-                // Must be in Credit column, matches amount, Debit column is empty
                 const amtValid = Math.abs(cr - expected.data.amount) <= 1 && dr === 0;
 
                 if (!amtValid) result.crAmt = false;
                 else { result.crAmt = true; result.score += 1; }
             }
         } else if (logicalIdx >= 0) {
-            // Extra row that shouldn't exist (but isn't description/year)
-            // If user filled it, mark wrong
             if (row.acc || row.dr || row.cr) {
                 result.acc = false;
                 result.drAmt = false;
@@ -148,7 +130,6 @@ export const validateStep02 = (transactions, currentAns = {}) => {
     let maxScore = 0;
     let correctTx = 0;
     
-    // Safety check
     if (!transactions || transactions.length === 0) {
         return { isCorrect: false, score: 0, maxScore: 0, letterGrade: 'IR' };
     }
@@ -161,30 +142,19 @@ export const validateStep02 = (transactions, currentAns = {}) => {
         let txMax = 0;
         let isTxPerfect = true;
 
-        // Calculate Max Score for this transaction structure
-        // Date pts: 2 for first Tx, 1 for others
         if (tIdx === 0) txMax += 2; else txMax += 1;
-        // Line pts: 2 per line (Account + Amount)
         const expectedCount = t.debits.length + t.credits.length;
         txMax += (expectedCount * 2);
 
-        // Validate existing rows
         rows.forEach((row, rIdx) => {
             const res = validateRow(row, t, tIdx, rIdx);
             txScore += res.score;
-            
-            // Check for failure flags
             if (res.date === false || res.acc === false || res.drAmt === false || res.crAmt === false) {
                 isTxPerfect = false;
             }
         });
 
-        // Penalize for missing rows (User hasn't added enough rows yet)
-        // ✅ CORRECTED 
-        const contentRows = rows.filter((r, rIdx) => !r.isDescription && !((r.id === 'year' || rIdx === 0) && tIdx === 0)); 
-        // Note: Counting content rows accurately is tricky with the year row mixed in.
-        // Simplified check: If score < max, it's not perfect.
-        
+        // Check if any required logic was missed (optional stricter check)
         if (txScore < txMax) isTxPerfect = false;
 
         totalScore += txScore;
@@ -207,17 +177,14 @@ const StatusIcon = ({ status, show }) => {
     if (!show) return null;
     if (status === true) return html`<${Check} size=${14} className="text-green-600" />`;
     if (status === false) return html`<${X} size=${14} className="text-red-600" />`;
-    return null; // status is null/undefined
+    return null; 
 };
 
 const JournalRow = ({ row, idx, tIdx, updateRow, deleteRow, showFeedback, isReadOnly, t }) => {
     const isDesc = row.isDescription;
     const isYearRow = tIdx === 0 && idx === 0;
-    
-    // Run validation logic
     const valResult = validateRow(row, t, tIdx, idx);
     
-    // Determine placeholders
     let datePlaceholder = "";
     if (tIdx === 0) { 
         if (idx === 0) datePlaceholder = "YYYY"; 
@@ -226,7 +193,6 @@ const JournalRow = ({ row, idx, tIdx, updateRow, deleteRow, showFeedback, isRead
         if (idx === 0) datePlaceholder = "dd"; 
     }
 
-    // Input background helper
     const bgClass = (status) => showFeedback && status === false ? 'bg-red-50' : '';
 
     return html`
@@ -274,12 +240,12 @@ const JournalRow = ({ row, idx, tIdx, updateRow, deleteRow, showFeedback, isRead
             <div className="w-24 h-full border-r relative">
                 ${!isDesc && !isYearRow && html`
                     <input type="number" 
-                        className=${`w-full h-full px-2 pr-6 text-right outline-none bg-transparent ${bgClass(valResult?.drAmt)}`} 
+                        className=${`w-full h-full pl-6 pr-1 text-right outline-none bg-transparent ${bgClass(valResult?.drAmt)}`} 
                         value=${row.dr||''} 
                         onChange=${(e)=>updateRow(idx,'dr',e.target.value)} 
                         disabled=${isReadOnly} 
                     />
-                    <div className="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <div className="absolute left-1 top-1/2 -translate-y-1/2 pointer-events-none">
                         <${StatusIcon} show=${showFeedback} status=${valResult?.drAmt} />
                     </div>
                 `}
@@ -288,12 +254,12 @@ const JournalRow = ({ row, idx, tIdx, updateRow, deleteRow, showFeedback, isRead
             <div className="w-24 h-full border-r relative">
                 ${!isDesc && !isYearRow && html`
                     <input type="number" 
-                        className=${`w-full h-full px-2 pr-6 text-right outline-none bg-transparent ${bgClass(valResult?.crAmt)}`} 
+                        className=${`w-full h-full pl-6 pr-1 text-right outline-none bg-transparent ${bgClass(valResult?.crAmt)}`} 
                         value=${row.cr||''} 
                         onChange=${(e)=>updateRow(idx,'cr',e.target.value)} 
                         disabled=${isReadOnly} 
                     />
-                    <div className="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <div className="absolute left-1 top-1/2 -translate-y-1/2 pointer-events-none">
                         <${StatusIcon} show=${showFeedback} status=${valResult?.crAmt} />
                     </div>
                 `}
@@ -315,30 +281,36 @@ export default function Step02Journalizing({ transactions = [], data, onChange, 
         if (showFeedback && !isReadOnly) {
             transactions.forEach((t, tIdx) => {
                 const entry = data[t.id] || {};
-                const currentRows = entry.rows || [];
                 
-                // Calculate Required Rows
-                // T1: 1 (Year) + Debits + Credits + 1 (Desc)
-                // Tn: Debits + Credits + 1 (Desc)
-                const lineItems = t.debits.length + t.credits.length;
-                const requiredCount = (tIdx === 0 ? 1 : 0) + lineItems + 1;
+                if (entry.rows) {
+                    const currentRows = entry.rows;
+                    
+                    // --- DYNAMIC COUNT LOGIC ---
+                    const neededDataLines = (t.solution && t.solution.filter(l => !l.isExplanation && (l.debit || l.credit)).length) 
+                                            || (t.debits.length + t.credits.length) 
+                                            || 2;
 
-                if (currentRows.length < requiredCount) {
-                    const newRows = [...currentRows];
-                    
-                    // Temporarily remove desc row if exists
-                    const descIndex = newRows.findIndex(r => r.isDescription);
-                    const descRow = descIndex >= 0 ? newRows.splice(descIndex, 1)[0] : { id: 'desc', date: '', acc: `      ${t.description}`, dr: '', cr: '', pr: '', isDescription: true };
-                    
-                    // Fill lines
-                    const needed = requiredCount - 1; // target count excluding desc
-                    while (newRows.length < needed) {
-                        newRows.push({ id: Date.now() + Math.random(), date: '', acc: '', dr: '', cr: '', pr: '' });
+                    let requiredCount = neededDataLines + 1;
+                    if (tIdx === 0) requiredCount += 1;
+
+                    if (currentRows.length < requiredCount) {
+                        const newRows = [...currentRows];
+                        const descIndex = newRows.findIndex(r => r.isDescription);
+                        
+                        let descRow;
+                        if (descIndex >= 0) {
+                            descRow = newRows.splice(descIndex, 1)[0];
+                        } else {
+                            descRow = { id: 'desc', date: '', acc: `        ${t.description}`, dr: '', cr: '', pr: '', isDescription: true };
+                        }
+                        
+                        while (newRows.length < (requiredCount - 1)) {
+                            newRows.push({ id: Date.now() + Math.random(), date: '', acc: '', dr: '', cr: '', pr: '' });
+                        }
+                        
+                        newRows.push(descRow);
+                        onChange(t.id, { rows: newRows });
                     }
-                    
-                    // Put desc back
-                    newRows.push(descRow);
-                    onChange(t.id, newRows);
                 }
             });
         }
@@ -346,12 +318,12 @@ export default function Step02Journalizing({ transactions = [], data, onChange, 
 
     if (!transactions || transactions.length === 0) return html`<div className="p-4 bg-red-50 text-red-600 rounded border border-red-200">No transactions generated.</div>`;
     
-    // Calculate Score for Display (Read Only)
     const result = validateStep02(transactions, data);
 
+    // REMOVE 'false &&' IN  ${false && showFeedback && html` TO UNHIDE THE BANNER
     return html`
         <div>
-            ${showFeedback && html`
+         ${false && showFeedback && html`
                 <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-2 mb-4 flex justify-between items-center shadow-sm">
                     <span className="font-bold">Validation Results:</span>
                     <span className="font-mono font-bold text-lg">Score: ${result.score} of ${result.maxScore} - (${result.letterGrade})</span>
@@ -369,31 +341,66 @@ export default function Step02Journalizing({ transactions = [], data, onChange, 
                 ${transactions.map((t, tIdx) => {
                     const entry = data[t.id] || {};
                     let initialRows = entry.rows;
+                    
                     if (!initialRows) {
-                        if (tIdx === 0) { 
-                            initialRows = [
-                                { id: 'year', date: '', acc: '', dr: '', cr: '', pr: '' }, 
-                                { id: 1, date: '', acc: '', dr: '', cr: '', pr: '' }, 
-                                { id: 2, date: '', acc: '', dr: '', cr: '', pr: '' }, 
-                                { id: 'desc', date: '', acc: `      ${t.description}`, dr: '', cr: '', pr: '', isDescription: true }
-                            ]; 
-                        } else { 
-                            initialRows = [
-                                { id: 1, date: '', acc: '', dr: '', cr: '', pr: '' }, 
-                                { id: 2, date: '', acc: '', dr: '', cr: '', pr: '' }, 
-                                { id: 'desc', date: '', acc: `      ${t.description}`, dr: '', cr: '', pr: '', isDescription: true }
-                            ]; 
+                        // --- DYNAMIC INITIALIZATION LOGIC (Runs once per empty state) ---
+                        const neededDataLines = (t.solution && t.solution.filter(l => !l.isExplanation && (l.debit || l.credit)).length) 
+                                                || (t.debits.length + t.credits.length) 
+                                                || 2;
+                        
+                        initialRows = [];
+
+                        if (tIdx === 0) {
+                            initialRows.push({ id: 'year', date: '', acc: '', dr: '', cr: '', pr: '' });
                         }
+
+                        for (let i = 0; i < neededDataLines; i++) {
+                            initialRows.push({ id: i, date: '', acc: '', dr: '', cr: '', pr: '' });
+                        }
+
+                        initialRows.push({ 
+                            id: 'desc', 
+                            date: '', 
+                            acc: `        ${t.description}`, 
+                            dr: '', 
+                            cr: '', 
+                            pr: '', 
+                            isDescription: true 
+                        });
                     }
+                    
                     const rows = initialRows;
-                    const updateRow = (idx, field, val) => { const newRows = [...rows]; if(!newRows[idx]) newRows[idx] = {}; newRows[idx] = { ...newRows[idx], [field]: val }; onChange(t.id, newRows); };
-                    const addRow = () => { const newRows = [...rows]; const descRow = newRows.pop(); newRows.push({ id: Date.now(), date: '', acc: '', dr: '', cr: '', pr: '' }); newRows.push(descRow); onChange(t.id, newRows); };
-                    const deleteRow = (idx) => { const minRows = tIdx === 0 ? 4 : 3; if (rows.length <= minRows) return; const newRows = rows.filter((_, i) => i !== idx); onChange(t.id, newRows); };
+                    
+                    // --- NEW: Generate display date with year included ---
+                    const txnDate = new Date(t.date);
+                    const displayDate = txnDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+                    const updateRow = (idx, field, val) => { 
+                        const newRows = [...rows]; 
+                        if(!newRows[idx]) newRows[idx] = {}; 
+                        newRows[idx] = { ...newRows[idx], [field]: val }; 
+                        onChange(t.id, { rows: newRows }); 
+                    };
+                    
+                    const addRow = () => { 
+                        const newRows = [...rows]; 
+                        const descRow = newRows.pop(); 
+                        newRows.push({ id: Date.now(), date: '', acc: '', dr: '', cr: '', pr: '' }); 
+                        newRows.push(descRow); 
+                        onChange(t.id, { rows: newRows }); 
+                    };
+                    
+                    const deleteRow = (idx) => { 
+                        const minRows = tIdx === 0 ? 3 : 2; 
+                        if (rows.length <= minRows) return; 
+                        const newRows = rows.filter((_, i) => i !== idx); 
+                        onChange(t.id, { rows: newRows }); 
+                    };
                     
                     return html`
                         <div key=${t.id} className="border-b border-gray-300 text-sm">
-                            <div className="bg-gray-50 px-2 py-1 text-xs font-bold text-gray-700 border-b border-gray-200 block no-print">${t.date}. ${t.description}</div>
-                            ${rows.map((row, idx) => html`<${JournalRow} key=${idx} row=${row} idx=${idx} tIdx=${tIdx} updateRow=${updateRow} deleteRow=${deleteRow} showFeedback=${showFeedback} isReadOnly=${isReadOnly} t=${t} />`)}
+                            <div className="bg-gray-50 px-2 py-1 text-xs font-bold text-gray-700 border-b border-gray-200 block no-print">${displayDate}. ${t.description}</div>
+                            ${rows.map((row, idx) => html`<${JournalRow} key=${row.id} row=${row} idx=${idx} tIdx=${tIdx} updateRow=${updateRow} deleteRow=${deleteRow} showFeedback=${showFeedback} isReadOnly=${isReadOnly} t=${t} />`)}
                             <div className="bg-gray-50 p-1 flex justify-center border-t no-print">${!isReadOnly && html`<button onClick=${addRow} className="text-xs border border-dashed border-gray-400 rounded px-2 py-1 text-gray-600 hover:bg-white hover:text-blue-600 flex items-center gap-1 transition-colors"><${Plus} size=${12}/> Add Row</button>`}</div>
                         </div>
                     `;
