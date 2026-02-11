@@ -160,6 +160,7 @@ export const unit2Week1Data = {
                         <div class="space-y-6 border-t border-gray-200 pt-6">
                             <h4 class="font-bold text-gray-800 text-lg">Detailed Policies & Procedures</h4>
 
+// PURCHASES AND ACCOUNTS PAYABLE CYCLE --
                            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-400">
     <h4 class="font-bold text-xl text-slate-900 mb-4 pb-2 border-b border-orange-200">
         Purchases and Accounts Payable Cycle
@@ -239,17 +240,101 @@ export const unit2Week1Data = {
     </ul>
 </div>
 
-
+// SALES AND ACCOUNTS RECEIVABLE CYCLE ---
                         <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-red-400">
-                            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                                <i class="fas fa-cash-register mr-2 text-red-500"></i> Phase 3: Selling
-                            </h5>
-                            <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
-                                <li><strong>Cash Sales:</strong> Use cash registers that provide a receipt to the customer and record the transaction internally. At the end of the day, the physical cash in the drawer is reconciled with the register tape.</li>
-                                <li><strong>Sales on Account (Credit):</strong> Credit approval must be separated from the sales department. A credit manager must approve the customer's credit limit <em>before</em> the sale is finalized to minimize bad debts.</li>
-                                <li><strong>Shipping Documents:</strong> For goods sold, a pre-numbered shipping document (Delivery Receipt) serves as proof that goods left the warehouse.</li>
-                            </ul>
-                        </div>
+    <h4 class="font-bold text-xl text-slate-900 mb-4 pb-2 border-b border-red-200">
+        Sales and Accounts Receivable Cycle
+    </h4>
+
+    <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+        <i class="fas fa-clipboard-check mr-2 text-red-500"></i> Phase 1: Order Entry and Credit Approval
+    </h5>
+    <p class="text-sm text-slate-600 mb-2 italic">The gatekeeper phase. Before goods leave, we must ensure the customer is good for the money.</p>
+    <ul class="list-disc pl-5 text-sm text-slate-700 space-y-3 mb-4">
+        <li>
+            <strong>1. Receiving the Customer Order</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> A customer sends a Purchase Order (PO) or places an order via a salesperson.</p>
+                <p><strong>Adequate Documents:</strong> The sales department generates a pre-numbered Sales Order (SO). This internal document standardizes the customer's request.</p>
+                <p><strong>Proper Authorization (Price):</strong> Salespeople must sell based on the authorized Master Price List. Any discounts above a certain threshold (e.g., >5%) require specific approval from the Sales Manager.</p>
+            </div>
+        </li>
+        <li>
+            <strong>2. Credit Check (CRITICAL CONTROL)</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Separation of Duties:</strong> The Credit Department must be completely separate from the Sales Department.</p>
+                <p><strong>Why?</strong> Salespeople are motivated by commissions and volume; they might sell to a "bad" customer just to hit a quota. The Credit Manager’s only goal is minimizing bad debt.</p>
+                <p><strong>Proper Authorization (Credit):</strong>
+                    <br><span class="text-xs text-slate-500 ml-2">- Existing Customers: Check if the new order keeps them within their pre-set credit limit.</span>
+                    <br><span class="text-xs text-slate-500 ml-2">- New Customers: Perform a credit investigation (financial statements, bank references).</span>
+                </p>
+                <p><strong>Outcome:</strong> The Sales Order is only "Approved" for shipment once Credit signs off.</p>
+            </div>
+        </li>
+    </ul>
+
+    <h5 class="font-bold text-slate-800 mb-2 mt-4 flex items-center border-t border-slate-200 pt-4">
+        <i class="fas fa-truck mr-2 text-red-500"></i> Phase 2: Shipping (Fulfillment)
+    </h5>
+    <p class="text-sm text-slate-600 mb-2 italic">The point where inventory leaves the building (Custody).</p>
+    <ul class="list-disc pl-5 text-sm text-slate-700 space-y-3 mb-4">
+        <li>
+            <strong>3. Picking and Packing</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> The Warehouse receives an approved "Stock Release" or "Picking Ticket" (generated from the approved SO).</p>
+                <p><strong>Physical Control:</strong> Inventory is kept in a secured area. Warehouse staff should never release goods without an authorized Picking Ticket.</p>
+                <p><strong>Separation of Duties:</strong> The Warehouse Personnel (Custody) must be separate from the Billing/Accounting staff (Record Keeping). If one person does both, they could ship goods to a friend and never bill them.</p>
+            </div>
+        </li>
+        <li>
+            <strong>4. Shipping</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Adequate Documents:</strong> A multi-copy Bill of Lading (for the carrier) and Packing Slip (for the customer) are generated.</p>
+                <p><strong>Independent Check:</strong> The Shipping Clerk counts the goods against the Picking Ticket before loading them onto the truck to ensure the right items are leaving.</p>
+            </div>
+        </li>
+    </ul>
+
+    <h5 class="font-bold text-slate-800 mb-2 mt-4 flex items-center border-t border-slate-200 pt-4">
+        <i class="fas fa-file-invoice-dollar mr-2 text-red-500"></i> Phase 3: Billing and Recording
+    </h5>
+    <p class="text-sm text-slate-600 mb-2 italic">The point where the asset (Inventory) becomes a claim (Receivable).</p>
+    <ul class="list-disc pl-5 text-sm text-slate-700 space-y-3 mb-4">
+        <li>
+            <strong>5. Invoicing the Customer</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> Billing (Accounting) creates the Sales Invoice.</p>
+                <p><strong>Independent Check (The Three-Way Match for Sales):</strong> Before sending the invoice, the Billing Clerk verifies:
+                    <br><span class="text-xs text-slate-500 ml-2">1. Sales Order: What did the customer want?</span>
+                    <br><span class="text-xs text-slate-500 ml-2">2. Shipping Document: What did we actually ship?</span>
+                    <br><span class="text-xs text-slate-500 ml-2">3. Price List: Are we charging the right amount?</span>
+                </p>
+                <p><strong>Control:</strong> This prevents "short-shipping" (billing for 10 items when only 8 were shipped).</p>
+            </div>
+        </li>
+        <li>
+            <strong>6. Recording Accounts Receivable (AR)</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Adequate Documents:</strong> The Sales Invoice is recorded in the Sales Journal and posted to the AR Subsidiary Ledger.</p>
+                <p><strong>Separation of Duties:</strong> The person maintaining the AR Subsidiary Ledger should not have access to Cash Receipts.</p>
+                <p><strong>Why?</strong> If the AR clerk also handles checks, they can commit Lapping (stealing Customer A’s payment and covering it with Customer B’s payment later).</p>
+            </div>
+        </li>
+    </ul>
+
+    <h5 class="font-bold text-slate-800 mb-2 mt-4 flex items-center border-t border-slate-200 pt-4">
+        <i class="fas fa-undo-alt mr-2 text-red-500"></i> Phase 4: Returns and Allowances (High Risk Area)
+    </h5>
+    <p class="text-sm text-slate-600 mb-2 italic">Returns are often used to conceal theft.</p>
+    <ul class="list-disc pl-5 text-sm text-slate-700 space-y-3">
+        <li>
+            <div class="space-y-1">
+                <p><strong>Proper Authorization:</strong> A Credit Memo (reducing what a customer owes) must be authorized by a Sales Manager or Controller, not just the AR clerk.</p>
+                <p><strong>Physical Control:</strong> Returned goods must be physically counted and inspected by the Receiving Department before a Credit Memo is issued. A Receiving Report for Returns is mandatory.</p>
+            </div>
+        </li>
+    </ul>
+</div>>
 
                         <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-purple-400">
                             <h5 class="font-bold text-slate-800 mb-2 flex items-center">
