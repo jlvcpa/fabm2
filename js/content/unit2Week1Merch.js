@@ -161,6 +161,10 @@ export const unit2Week1Data = {
                             <h4 class="font-bold text-gray-800 text-lg">Detailed Policies & Procedures</h4>
 
                            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-400">
+    <h4 class="font-bold text-xl text-slate-900 mb-4 pb-2 border-b border-orange-200">
+        Purchases and Accounts Payable Cycle
+    </h4>
+
     <h5 class="font-bold text-slate-800 mb-2 flex items-center">
         <i class="fas fa-shopping-cart mr-2 text-orange-500"></i> Phase 1: Requesting and Ordering
     </h5>
@@ -235,17 +239,6 @@ export const unit2Week1Data = {
     </ul>
 </div>
 
-                        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-blue-400">
-                            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                                <i class="fas fa-box-open mr-2 text-blue-500"></i> Phase 2: Receiving & Storage
-                            </h5>
-                            <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
-                                <li><strong>The Blind Count:</strong> The receiving clerk should count the goods arriving <em>without</em> looking at the quantity on the invoice. This forces an accurate physical count.</li>
-                                <li><strong>Receiving Report:</strong> A document is generated listing the item, quantity, and condition. This is matched against the Purchase Order.</li>
-                                <li><strong>Storage Security:</strong> Inventory must be stored in a secured area (warehouse) with restricted access. High-value items (like jewelry or electronics) require additional locks.</li>
-                                <li><strong>Segregation of Duties:</strong> The person who has custody of the assets (warehouse manager) should not be the same person who maintains the accounting records.</li>
-                            </ul>
-                        </div>
 
                         <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-red-400">
                             <h5 class="font-bold text-slate-800 mb-2 flex items-center">
