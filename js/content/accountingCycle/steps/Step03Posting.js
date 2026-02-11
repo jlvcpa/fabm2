@@ -12,14 +12,11 @@ const norm = (str) => (str || '').toString().toLowerCase().trim();
 const getExpectedLedgerData = (transactions, beginningBalances, validAccounts) => {
     const expected = {};
     
-    // Determine the year dynamically from the first transaction
-    // If no transactions, default to current year, though this shouldn't happen in the app flow
     let targetYear = new Date().getFullYear();
     if (transactions && transactions.length > 0) {
         targetYear = new Date(transactions[0].date).getFullYear();
     }
 
-    // 1. Initialize all valid accounts
     validAccounts.forEach(acc => {
         expected[acc] = {
             rows: [], 
@@ -32,7 +29,6 @@ const getExpectedLedgerData = (transactions, beginningBalances, validAccounts) =
         };
     });
 
-    // 2. Process Beginning Balances
     if (beginningBalances && beginningBalances.balances) {
         Object.entries(beginningBalances.balances).forEach(([acc, bal]) => {
             if (!expected[acc]) return;
@@ -46,7 +42,6 @@ const getExpectedLedgerData = (transactions, beginningBalances, validAccounts) =
                     amount: Math.abs(net),
                     type: isDr ? 'dr' : 'cr',
                     isBegBal: true,
-                    // Use the dynamic year for the Beginning Balance object
                     txnDateObj: new Date(`${targetYear}-01-01`),
                     refKey: null 
                 };
@@ -57,7 +52,6 @@ const getExpectedLedgerData = (transactions, beginningBalances, validAccounts) =
         });
     }
 
-    // 3. Process Transactions
     transactions.forEach((t) => {
         const dateObj = new Date(t.date);
         const mm = dateObj.toLocaleString('default', { month: 'short' });
@@ -110,36 +104,30 @@ export const validateStep03 = (activityData, studentAnswer) => {
     const studentLedgers = studentAnswer.ledgers || [];
     const journalPRs = studentAnswer.journalPRs || {};
     
-    // Determine the expected Year string for validation (e.g. "2026")
     let targetYearStr = new Date().getFullYear().toString();
     if (transactions && transactions.length > 0) {
         targetYearStr = new Date(transactions[0].date).getFullYear().toString();
     }
 
-    // 1. Generate Answer Key
     const expectedData = getExpectedLedgerData(transactions, beginningBalances, validAccounts);
     
     let totalScore = 0;
     let maxScore = 0;
     
-    // Track correctly posted transaction keys (e.g. "dr-1-0") to award points for checkboxes
     const correctlyPostedKeys = new Set();
     const validationResults = { ledgers: {}, checkboxes: {} }; 
 
-    // --- A. CALCULATE MAX SCORE ---
-    
-    // Ledger Points
     Object.keys(expectedData).forEach(accName => {
         const exp = expectedData[accName];
-        maxScore += 1; // Account Title
-        if (exp.hasDrEntries || exp.hasCrEntries) maxScore += 1; // Balance Line
+        maxScore += 1; 
+        if (exp.hasDrEntries || exp.hasCrEntries) maxScore += 1; 
 
         ['dr', 'cr'].forEach(type => {
             const hasEntries = type === 'dr' ? exp.hasDrEntries : exp.hasCrEntries;
             const expRows = exp.rows.filter(r => r.type === type);
             if (hasEntries) {
-                maxScore += 1; // Year
-                maxScore += 1; // Total
+                maxScore += 1; 
+                maxScore += 1; 
                 expRows.forEach(row => {
                     if (row.isBegBal) maxScore += 3;
                     else maxScore += 4;
@@ -148,12 +136,9 @@ export const validateStep03 = (activityData, studentAnswer) => {
         });
     });
 
-    // Checkbox Points (Max Score = Total Debits + Credits)
     transactions.forEach(t => {
         maxScore += (t.debits.length + t.credits.length);
     });
-
-    // --- B. SCORE LEDGERS FIRST (To determine valid postings) ---
 
     studentLedgers.forEach(l => {
         const accName = l.account;
@@ -161,20 +146,16 @@ export const validateStep03 = (activityData, studentAnswer) => {
         const ledgerRes = { acc: false, balance: false, leftRows: [], rightRows: [], drTotal: null, crTotal: null };
 
         if (exp) {
-            // Account Title
             if (norm(l.account) === norm(accName)) {
                 totalScore += 1;
                 ledgerRes.acc = true;
             }
 
-            // --- DEBIT SIDE ---
             const uLeft = l.leftRows || [];
             const eDrRows = exp.rows.filter(r => r.type === 'dr');
             
-            // Year Validation (Dynamic)
             const uYearL = uLeft[0] || {};
             if (exp.hasDrEntries) {
-                // Accepts "2026" or "(2026)"
                 const yValid = norm(uYearL.date) === `(${targetYearStr})` || norm(uYearL.date) === targetYearStr;
                 if (yValid) { totalScore += 1; ledgerRes.leftRows[0] = { date: true }; }
                 else { ledgerRes.leftRows[0] = { date: false }; }
@@ -186,7 +167,6 @@ export const validateStep03 = (activityData, studentAnswer) => {
             if (uYearL.pr) { totalScore -= 1; ledgerRes.leftRows[0] = { ...ledgerRes.leftRows[0], pr: false }; }
             if (uYearL.amount) { totalScore -= 1; ledgerRes.leftRows[0] = { ...ledgerRes.leftRows[0], amount: false }; }
 
-            // Rows
             eDrRows.forEach((row, i) => {
                 const uRow = uLeft[i + 1] || {};
                 const res = {};
@@ -205,7 +185,7 @@ export const validateStep03 = (activityData, studentAnswer) => {
                 } else if (uRow.pr) {
                     totalScore -= 1; res.pr = false; 
                 } else {
-                    prValid = true; // technically correct empty PR for BB
+                    prValid = true; 
                 }
 
                 const aValid = Math.abs((Number(uRow.amount) || 0) - row.amount) < 1;
@@ -218,7 +198,6 @@ export const validateStep03 = (activityData, studentAnswer) => {
                 }
             });
 
-            // Total
             if (exp.hasDrEntries) {
                 const expTot = exp.begBalDr + exp.totalDr;
                 if (Math.abs((Number(l.drTotal) || 0) - expTot) < 1) { totalScore += 1; ledgerRes.drTotal = true; }
@@ -227,7 +206,6 @@ export const validateStep03 = (activityData, studentAnswer) => {
                 totalScore -= 1; ledgerRes.drTotal = false;
             }
 
-            // Deductions
             for(let i = eDrRows.length + 1; i < uLeft.length; i++) {
                 const r = uLeft[i];
                 const res = {};
@@ -238,11 +216,9 @@ export const validateStep03 = (activityData, studentAnswer) => {
                 ledgerRes.leftRows[i] = res;
             }
 
-            // --- CREDIT SIDE ---
             const uRight = l.rightRows || [];
             const eCrRows = exp.rows.filter(r => r.type === 'cr');
 
-            // Year Validation (Dynamic)
             const uYearR = uRight[0] || {};
             if (exp.hasCrEntries) {
                 const yValid = norm(uYearR.date) === `(${targetYearStr})` || norm(uYearR.date) === targetYearStr;
@@ -256,7 +232,6 @@ export const validateStep03 = (activityData, studentAnswer) => {
             if (uYearR.pr) { totalScore -= 1; ledgerRes.rightRows[0] = { ...ledgerRes.rightRows[0], pr: false }; }
             if (uYearR.amount) { totalScore -= 1; ledgerRes.rightRows[0] = { ...ledgerRes.rightRows[0], amount: false }; }
 
-            // Rows
             eCrRows.forEach((row, i) => {
                 const uRow = uRight[i + 1] || {};
                 const res = {};
@@ -286,7 +261,6 @@ export const validateStep03 = (activityData, studentAnswer) => {
                 }
             });
 
-            // Total
             if (exp.hasCrEntries) {
                 const expTot = exp.begBalCr + exp.totalCr;
                 if (Math.abs((Number(l.crTotal) || 0) - expTot) < 1) { totalScore += 1; ledgerRes.crTotal = true; }
@@ -295,7 +269,6 @@ export const validateStep03 = (activityData, studentAnswer) => {
                 totalScore -= 1; ledgerRes.crTotal = false;
             }
 
-            // Deductions
             for(let i = eCrRows.length + 1; i < uRight.length; i++) {
                 const r = uRight[i];
                 const res = {};
@@ -306,7 +279,6 @@ export const validateStep03 = (activityData, studentAnswer) => {
                 ledgerRes.rightRows[i] = res;
             }
 
-            // --- BALANCE ---
             const hasActivity = exp.hasDrEntries || exp.hasCrEntries;
             if (hasActivity) {
                 const totalDr = exp.begBalDr + exp.totalDr;
@@ -329,28 +301,24 @@ export const validateStep03 = (activityData, studentAnswer) => {
             }
 
         } else {
-            // Wrong Account Title used
             ledgerRes.acc = false;
         }
 
         validationResults.ledgers[l.id] = ledgerRes;
     });
 
-    // --- C. SCORE CHECKBOXES (Dependent on Ledger Posting) ---
     transactions.forEach(t => {
         t.debits.forEach((d, i) => {
             const key = `dr-${t.id}-${i}`;
             const isChecked = !!journalPRs[key];
             const isPosted = correctlyPostedKeys.has(key);
             
-            // SCORE RULE: 1 point if Checked AND Posted
             if (isChecked) {
                 if (isPosted) {
                     totalScore += 1;
-                    validationResults.checkboxes[key] = true; // Green Check
+                    validationResults.checkboxes[key] = true; 
                 } else {
-                    // Checked but NOT posted/wrong posting -> 0 Points (no deduction, but marked wrong visually)
-                    validationResults.checkboxes[key] = false; // Red X
+                    validationResults.checkboxes[key] = false; 
                 }
             } else {
                 validationResults.checkboxes[key] = null;
@@ -423,77 +391,81 @@ const JournalSourceView = ({ transactions, journalPRs, onTogglePR, showFeedback,
             </div>
             ${expanded && html`
                 <div className="flex flex-col h-full overflow-hidden">
-                    <div className="flex bg-gray-50 text-gray-700 border-b border-gray-300 font-bold text-xs text-center flex-shrink-0">
-                        <div className="w-16 border-r p-2 flex-shrink-0">Date</div>
-                        <div className="flex-1 border-r p-2 text-left">Account Titles and Explanation</div>
-                        <div className="w-16 border-r p-2 flex-shrink-0">P.R.</div>
-                        <div className="w-24 border-r p-2 text-right flex-shrink-0">Debit</div>
-                        <div className="w-24 p-2 text-right flex-shrink-0">Credit</div>
-                    </div>
-                    <div className="overflow-y-auto flex-1">
-                        ${transactions.map((t, tIdx) => {
-                            const txnDate = new Date(t.date);
-                            const yyyy = txnDate.getFullYear();
-                            const mm = txnDate.toLocaleString('default', { month: 'short' });
-                            const dd = txnDate.getDate().toString().padStart(2, '0');
-                            const isFirst = tIdx === 0;
-                            const dateDisplay = isFirst ? `${mm} ${dd}` : dd;
+                    <div className="overflow-x-auto w-full">
+                        <div className="min-w-[600px]">
+                            <div className="flex bg-gray-50 text-gray-700 border-b border-gray-300 font-bold text-xs text-center flex-shrink-0">
+                                <div className="w-16 border-r p-2 flex-shrink-0">Date</div>
+                                <div className="flex-1 border-r p-2 text-left">Account Titles and Explanation</div>
+                                <div className="w-16 border-r p-2 flex-shrink-0">P.R.</div>
+                                <div className="w-24 border-r p-2 text-right flex-shrink-0">Debit</div>
+                                <div className="w-24 p-2 text-right flex-shrink-0">Credit</div>
+                            </div>
+                            <div className="overflow-y-auto flex-1">
+                                ${transactions.map((t, tIdx) => {
+                                    const txnDate = new Date(t.date);
+                                    const yyyy = txnDate.getFullYear();
+                                    const mm = txnDate.toLocaleString('default', { month: 'short' });
+                                    const dd = txnDate.getDate().toString().padStart(2, '0');
+                                    const isFirst = tIdx === 0;
+                                    const dateDisplay = isFirst ? `${mm} ${dd}` : dd;
 
-                            return html`
-                                <React.Fragment key=${t.id}>
-                                    ${isFirst && html`
-                                        <div className="flex border-b border-gray-100 text-xs h-8 items-center">
-                                            <div className="w-16 border-r text-right pr-1 font-bold text-gray-500 flex-shrink-0">${yyyy}</div>
-                                            <div className="flex-1 border-r"></div>
-                                            <div className="w-16 border-r flex-shrink-0"></div>
-                                            <div className="w-24 border-r flex-shrink-0"></div>
-                                            <div className="w-24 flex-shrink-0"></div>
-                                        </div>
-                                    `}
-                                    
-                                    ${t.debits.map((d, i) => {
-                                        const key = `dr-${t.id}-${i}`;
-                                        const isChecked = !!journalPRs[key];
-                                        return html`
-                                            <div key=${key} className="flex border-b border-gray-100 text-xs h-8 items-center hover:bg-gray-50">
-                                                <div className="w-16 border-r text-right pr-1 flex-shrink-0">${i === 0 ? dateDisplay : ''}</div>
-                                                <div className="flex-1 border-r pl-1 font-medium text-gray-800 truncate" title=${d.account}>${d.account}</div>
-                                                <div className="w-16 border-r text-center flex justify-center items-center flex-shrink-0">
-                                                    <input type="checkbox" checked=${isChecked} onChange=${() => onTogglePR(key)} disabled=${isReadOnly} className="cursor-pointer accent-blue-600" /> 
-                                                    <${CheckboxStatus} show=${showFeedback} status=${cbResults[key]} />
+                                    return html`
+                                        <React.Fragment key=${t.id}>
+                                            ${isFirst && html`
+                                                <div className="flex border-b border-gray-100 text-xs h-8 items-center">
+                                                    <div className="w-16 border-r text-right pr-1 font-bold text-gray-500 flex-shrink-0">${yyyy}</div>
+                                                    <div className="flex-1 border-r"></div>
+                                                    <div className="w-16 border-r flex-shrink-0"></div>
+                                                    <div className="w-24 border-r flex-shrink-0"></div>
+                                                    <div className="w-24 flex-shrink-0"></div>
                                                 </div>
-                                                <div className="w-24 border-r text-right pr-1 flex-shrink-0">${d.amount.toLocaleString()}</div>
-                                                <div className="w-24 text-right pr-1 flex-shrink-0"></div>
-                                            </div>
-                                        `;
-                                    })}
-                                    ${t.credits.map((c, i) => {
-                                        const key = `cr-${t.id}-${i}`;
-                                        const isChecked = !!journalPRs[key];
-                                        return html`
-                                            <div key=${key} className="flex border-b border-gray-100 text-xs h-8 items-center hover:bg-gray-50">
+                                            `}
+                                            
+                                            ${t.debits.map((d, i) => {
+                                                const key = `dr-${t.id}-${i}`;
+                                                const isChecked = !!journalPRs[key];
+                                                return html`
+                                                    <div key=${key} className="flex border-b border-gray-100 text-xs h-8 items-center hover:bg-gray-50">
+                                                        <div className="w-16 border-r text-right pr-1 flex-shrink-0">${i === 0 ? dateDisplay : ''}</div>
+                                                        <div className="flex-1 border-r pl-1 font-medium text-gray-800 truncate" title=${d.account}>${d.account}</div>
+                                                        <div className="w-16 border-r text-center flex justify-center items-center flex-shrink-0">
+                                                            <input type="checkbox" checked=${isChecked} onChange=${() => onTogglePR(key)} disabled=${isReadOnly} className="cursor-pointer accent-blue-600" /> 
+                                                            <${CheckboxStatus} show=${showFeedback} status=${cbResults[key]} />
+                                                        </div>
+                                                        <div className="w-24 border-r text-right pr-1 flex-shrink-0">${d.amount.toLocaleString()}</div>
+                                                        <div className="w-24 text-right pr-1 flex-shrink-0"></div>
+                                                    </div>
+                                                `;
+                                            })}
+                                            ${t.credits.map((c, i) => {
+                                                const key = `cr-${t.id}-${i}`;
+                                                const isChecked = !!journalPRs[key];
+                                                return html`
+                                                    <div key=${key} className="flex border-b border-gray-100 text-xs h-8 items-center hover:bg-gray-50">
+                                                        <div className="w-16 border-r flex-shrink-0"></div>
+                                                        <div className="flex-1 border-r pl-6 text-gray-800 truncate" title=${c.account}>${c.account}</div>
+                                                        <div className="w-16 border-r text-center flex justify-center items-center flex-shrink-0">
+                                                             <input type="checkbox" checked=${isChecked} onChange=${() => onTogglePR(key)} disabled=${isReadOnly} className="cursor-pointer accent-blue-600" />
+                                                             <${CheckboxStatus} show=${showFeedback} status=${cbResults[key]} />
+                                                        </div>
+                                                        <div className="w-24 border-r flex-shrink-0"></div>
+                                                        <div className="w-24 text-right pr-1 flex-shrink-0">${c.amount.toLocaleString()}</div>
+                                                    </div>
+                                                `;
+                                            })}
+                                            <div key=${'desc' + t.id} className="flex border-b border-gray-200 text-xs h-8 items-center text-gray-500 italic">
                                                 <div className="w-16 border-r flex-shrink-0"></div>
-                                                <div className="flex-1 border-r pl-6 text-gray-800 truncate" title=${c.account}>${c.account}</div>
-                                                <div className="w-16 border-r text-center flex justify-center items-center flex-shrink-0">
-                                                     <input type="checkbox" checked=${isChecked} onChange=${() => onTogglePR(key)} disabled=${isReadOnly} className="cursor-pointer accent-blue-600" />
-                                                     <${CheckboxStatus} show=${showFeedback} status=${cbResults[key]} />
-                                                </div>
+                                                <div className="flex-1 border-r pl-8 truncate" title=${t.description}>(${t.description})</div>
+                                                <div className="w-16 border-r flex-shrink-0"></div>
                                                 <div className="w-24 border-r flex-shrink-0"></div>
-                                                <div className="w-24 text-right pr-1 flex-shrink-0">${c.amount.toLocaleString()}</div>
+                                                <div className="w-24 flex-shrink-0"></div>
                                             </div>
-                                        `;
-                                    })}
-                                    <div key=${'desc' + t.id} className="flex border-b border-gray-200 text-xs h-8 items-center text-gray-500 italic">
-                                        <div className="w-16 border-r flex-shrink-0"></div>
-                                        <div className="flex-1 border-r pl-8 truncate" title=${t.description}>(${t.description})</div>
-                                        <div className="w-16 border-r flex-shrink-0"></div>
-                                        <div className="w-24 border-r flex-shrink-0"></div>
-                                        <div className="w-24 flex-shrink-0"></div>
-                                    </div>
-                                </React.Fragment>
-                            `;
-                        })}
-                        <div className="h-12"></div>
+                                        </React.Fragment>
+                                    `;
+                                })}
+                                <div className="h-12"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `}
@@ -512,100 +484,102 @@ const LedgerAccount = ({ l, idx, updateLedger, updateSideRow, addRow, deleteLedg
         : null;
 
     return html`
-        <div className="border-2 border-gray-800 bg-white shadow-md">
-            <div className="border-b-2 border-gray-800 p-2 flex justify-between bg-gray-100 relative">
-                <div className="absolute left-2 top-2">
-                    ${showFeedback && (vResult?.acc === true 
-                        ? html`<${Check} size=${16} className="text-green-600"/>` 
-                        : vResult?.acc === false ? html`<${X} size=${16} className="text-red-600"/>` : null)}
+        <div className="border-2 border-gray-800 bg-white shadow-md overflow-x-auto">
+            <div className="min-w-[700px]">
+                <div className="border-b-2 border-gray-800 p-2 flex justify-between bg-gray-100 relative">
+                    <div className="absolute left-2 top-2">
+                        ${showFeedback && (vResult?.acc === true 
+                            ? html`<${Check} size=${16} className="text-green-600"/>` 
+                            : vResult?.acc === false ? html`<${X} size=${16} className="text-red-600"/>` : null)}
+                    </div>
+                    <div className="w-full text-center mx-8 relative">
+                        <input list="step3-accs" className="w-full border-b border-gray-400 text-center bg-transparent font-bold text-lg outline-none" placeholder="Account Title" value=${l.account} onChange=${(e)=>updateLedger(idx,'account',e.target.value)} disabled=${isReadOnly} />
+                    </div>
+                    ${!isReadOnly && html`<button onClick=${() => deleteLedger(idx)} className="absolute right-2 top-2 text-red-500 hover:text-red-700"><${Trash2} size=${16}/></button>`}
                 </div>
-                <div className="w-full text-center mx-8 relative">
-                    <input list="step3-accs" className="w-full border-b border-gray-400 text-center bg-transparent font-bold text-lg outline-none" placeholder="Account Title" value=${l.account} onChange=${(e)=>updateLedger(idx,'account',e.target.value)} disabled=${isReadOnly} />
-                </div>
-                ${!isReadOnly && html`<button onClick=${() => deleteLedger(idx)} className="absolute right-2 top-2 text-red-500 hover:text-red-700"><${Trash2} size=${16}/></button>`}
-            </div>
-            <div className="flex">
-                <div className="flex-1 border-r-2 border-gray-800">
-                    <div className="text-center font-bold border-b border-gray-400 bg-gray-50 text-xs py-1">DEBIT</div>
-                    <div className="flex text-xs font-bold border-b border-gray-400"><div className="w-16 border-r p-1 text-center">Date</div><div className="flex-1 border-r p-1 text-center">Particulars</div><div className="w-10 border-r p-1 text-center">PR</div><div className="w-20 p-1 text-center">Amount</div></div>
-                    ${displayRows.map(rowIdx => {
-                        const row = leftRows[rowIdx] || {};
-                        const rVal = vResult && vResult.leftRows[rowIdx] ? vResult.leftRows[rowIdx] : {};
-                        return html`
-                            <div key=${`l-${rowIdx}`} className="flex text-xs border-b border-gray-200 h-8 relative">
-                                <div className="w-16 border-r relative group">
-                                    <input type="text" className="w-full h-full text-right px-1 outline-none bg-transparent" value=${row.date||''} onChange=${(e)=>updateSideRow(idx,'left',rowIdx,'date',e.target.value)} disabled=${isReadOnly} placeholder=${rowIdx===0 ? "(YYYY)" : ""}/>
-                                    <${ValidationIcon} show=${showFeedback} status=${rVal.date} position="left-1" />
+                <div className="flex">
+                    <div className="flex-1 border-r-2 border-gray-800">
+                        <div className="text-center font-bold border-b border-gray-400 bg-gray-50 text-xs py-1">DEBIT</div>
+                        <div className="flex text-xs font-bold border-b border-gray-400"><div className="w-16 border-r p-1 text-center flex-shrink-0">Date</div><div className="flex-1 border-r p-1 text-center">Particulars</div><div className="w-10 border-r p-1 text-center flex-shrink-0">PR</div><div className="w-20 p-1 text-center flex-shrink-0">Amount</div></div>
+                        ${displayRows.map(rowIdx => {
+                            const row = leftRows[rowIdx] || {};
+                            const rVal = vResult && vResult.leftRows[rowIdx] ? vResult.leftRows[rowIdx] : {};
+                            return html`
+                                <div key=${`l-${rowIdx}`} className="flex text-xs border-b border-gray-200 h-8 relative">
+                                    <div className="w-16 border-r relative group flex-shrink-0">
+                                        <input type="text" className="w-full h-full text-right px-1 outline-none bg-transparent" value=${row.date||''} onChange=${(e)=>updateSideRow(idx,'left',rowIdx,'date',e.target.value)} disabled=${isReadOnly} placeholder=${rowIdx===0 ? "(YYYY)" : ""}/>
+                                        <${ValidationIcon} show=${showFeedback} status=${rVal.date} position="left-1" />
+                                    </div>
+                                    <div className="flex-1 border-r relative group">
+                                        <input type="text" className="w-full h-full text-left px-1 outline-none bg-transparent" value=${row.part||''} onChange=${(e)=>updateSideRow(idx,'left',rowIdx,'part',e.target.value)} disabled=${isReadOnly}/>
+                                        <${ValidationIcon} show=${showFeedback} status=${rVal.part} />
+                                    </div>
+                                    <div className="w-10 border-r relative group flex-shrink-0">
+                                        <input type="text" className="w-full h-full text-center outline-none bg-transparent" value=${row.pr||''} onChange=${(e)=>updateSideRow(idx,'left',rowIdx,'pr',e.target.value)} disabled=${isReadOnly}/>
+                                        <${ValidationIcon} show=${showFeedback} status=${rVal.pr} />
+                                    </div>
+                                    <div className="w-20 relative group flex-shrink-0">
+                                        <input type="number" className="w-full h-full pl-5 pr-1 text-right outline-none bg-transparent" value=${row.amount||''} onChange=${(e)=>updateSideRow(idx,'left',rowIdx,'amount',e.target.value)} disabled=${isReadOnly}/>
+                                        <${ValidationIcon} show=${showFeedback} status=${rVal.amount} position="left-1" />
+                                    </div>
                                 </div>
-                                <div className="flex-1 border-r relative group">
-                                    <input type="text" className="w-full h-full text-left px-1 outline-none bg-transparent" value=${row.part||''} onChange=${(e)=>updateSideRow(idx,'left',rowIdx,'part',e.target.value)} disabled=${isReadOnly}/>
-                                    <${ValidationIcon} show=${showFeedback} status=${rVal.part} />
-                                </div>
-                                <div className="w-10 border-r relative group">
-                                    <input type="text" className="w-full h-full text-center outline-none bg-transparent" value=${row.pr||''} onChange=${(e)=>updateSideRow(idx,'left',rowIdx,'pr',e.target.value)} disabled=${isReadOnly}/>
-                                    <${ValidationIcon} show=${showFeedback} status=${rVal.pr} />
-                                </div>
-                                <div className="w-20 relative group">
-                                    <input type="number" className="w-full h-full pl-5 pr-1 text-right outline-none bg-transparent" value=${row.amount||''} onChange=${(e)=>updateSideRow(idx,'left',rowIdx,'amount',e.target.value)} disabled=${isReadOnly}/>
-                                    <${ValidationIcon} show=${showFeedback} status=${rVal.amount} position="left-1" />
-                                </div>
+                            `;
+                        })}
+                        <div className="border-t-2 border-gray-800 p-1 flex justify-between items-center bg-gray-50 relative">
+                            <span className="text-xs font-bold">Total Debit</span>
+                            <div className="relative">
+                                <input type="number" className="w-24 text-right border border-gray-300" value=${l.drTotal||''} onChange=${(e)=>updateLedger(idx,'drTotal',e.target.value)} disabled=${isReadOnly} />
+                                <${ValidationIcon} show=${showFeedback} status=${vResult?.drTotal} position="left-1" />
                             </div>
-                        `;
-                    })}
-                    <div className="border-t-2 border-gray-800 p-1 flex justify-between items-center bg-gray-50 relative">
-                        <span className="text-xs font-bold">Total Debit</span>
-                        <div className="relative">
-                            <input type="number" className="w-24 text-right border border-gray-300" value=${l.drTotal||''} onChange=${(e)=>updateLedger(idx,'drTotal',e.target.value)} disabled=${isReadOnly} />
-                            <${ValidationIcon} show=${showFeedback} status=${vResult?.drTotal} position="left-1" />
+                        </div>
+                    </div>
+                    
+                    <div className="flex-1">
+                        <div className="text-center font-bold border-b border-gray-400 bg-gray-50 text-xs py-1">CREDIT</div>
+                        <div className="flex text-xs font-bold border-b border-gray-400 bg-white"><div className="w-16 border-r p-1 text-center flex-shrink-0">Date</div><div className="flex-1 border-r p-1 text-center">Particulars</div><div className="w-10 border-r p-1 text-center flex-shrink-0">PR</div><div className="w-20 p-1 text-center border-r flex-shrink-0">Amount</div><div className="w-6 flex-shrink-0"></div></div>
+                        ${displayRows.map(rowIdx => {
+                            const row = rightRows[rowIdx] || {};
+                            const rVal = vResult && vResult.rightRows[rowIdx] ? vResult.rightRows[rowIdx] : {};
+                            return html`
+                                <div key=${`r-${rowIdx}`} className="flex text-xs border-b border-gray-200 h-8 relative">
+                                    <div className="w-16 border-r relative group flex-shrink-0">
+                                        <input type="text" className="w-full h-full text-right px-1 outline-none bg-transparent" value=${row.date||''} onChange=${(e)=>updateSideRow(idx,'right',rowIdx,'date',e.target.value)} disabled=${isReadOnly} placeholder=${rowIdx===0 ? "(YYYY)" : ""}/>
+                                        <${ValidationIcon} show=${showFeedback} status=${rVal.date} position="left-1" />
+                                    </div>
+                                    <div className="flex-1 border-r relative group">
+                                        <input type="text" className="w-full h-full text-left px-1 outline-none bg-transparent" value=${row.part||''} onChange=${(e)=>updateSideRow(idx,'right',rowIdx,'part',e.target.value)} disabled=${isReadOnly}/>
+                                        <${ValidationIcon} show=${showFeedback} status=${rVal.part} />
+                                    </div>
+                                    <div className="w-10 border-r relative group flex-shrink-0">
+                                        <input type="text" className="w-full h-full text-center outline-none bg-transparent" value=${row.pr||''} onChange=${(e)=>updateSideRow(idx,'right',rowIdx,'pr',e.target.value)} disabled=${isReadOnly}/>
+                                        <${ValidationIcon} show=${showFeedback} status=${rVal.pr} />
+                                    </div>
+                                    <div className="w-20 border-r relative group flex-shrink-0">
+                                        <input type="number" className="w-full h-full pl-5 pr-1 text-right outline-none bg-transparent" value=${row.amount||''} onChange=${(e)=>updateSideRow(idx,'right',rowIdx,'amount',e.target.value)} disabled=${isReadOnly}/>
+                                        <${ValidationIcon} show=${showFeedback} status=${rVal.amount} position="left-1" />
+                                    </div>
+                                </div>
+                            `;
+                        })}
+                        <div className="border-t-2 border-gray-800 p-1 flex justify-between items-center bg-gray-50 relative">
+                            <span className="text-xs font-bold">Total Credit</span>
+                            <div className="relative">
+                                <input type="number" className="w-24 text-right border border-gray-300" value=${l.crTotal||''} onChange=${(e)=>updateLedger(idx,'crTotal',e.target.value)} disabled=${isReadOnly} />
+                                <${ValidationIcon} show=${showFeedback} status=${vResult?.crTotal} position="left-1" />
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div className="flex-1">
-                    <div className="text-center font-bold border-b border-gray-400 bg-gray-50 text-xs py-1">CREDIT</div>
-                    <div className="flex text-xs font-bold border-b border-gray-400 bg-white"><div className="w-16 border-r p-1 text-center">Date</div><div className="flex-1 border-r p-1 text-center">Particulars</div><div className="w-10 border-r p-1 text-center">PR</div><div className="w-20 p-1 text-center border-r">Amount</div><div className="w-6"></div></div>
-                    ${displayRows.map(rowIdx => {
-                        const row = rightRows[rowIdx] || {};
-                        const rVal = vResult && vResult.rightRows[rowIdx] ? vResult.rightRows[rowIdx] : {};
-                        return html`
-                            <div key=${`r-${rowIdx}`} className="flex text-xs border-b border-gray-200 h-8 relative">
-                                <div className="w-16 border-r relative group">
-                                    <input type="text" className="w-full h-full text-right px-1 outline-none bg-transparent" value=${row.date||''} onChange=${(e)=>updateSideRow(idx,'right',rowIdx,'date',e.target.value)} disabled=${isReadOnly} placeholder=${rowIdx===0 ? "(YYYY)" : ""}/>
-                                    <${ValidationIcon} show=${showFeedback} status=${rVal.date} position="left-1" />
-                                </div>
-                                <div className="flex-1 border-r relative group">
-                                    <input type="text" className="w-full h-full text-left px-1 outline-none bg-transparent" value=${row.part||''} onChange=${(e)=>updateSideRow(idx,'right',rowIdx,'part',e.target.value)} disabled=${isReadOnly}/>
-                                    <${ValidationIcon} show=${showFeedback} status=${rVal.part} />
-                                </div>
-                                <div className="w-10 border-r relative group">
-                                    <input type="text" className="w-full h-full text-center outline-none bg-transparent" value=${row.pr||''} onChange=${(e)=>updateSideRow(idx,'right',rowIdx,'pr',e.target.value)} disabled=${isReadOnly}/>
-                                    <${ValidationIcon} show=${showFeedback} status=${rVal.pr} />
-                                </div>
-                                <div className="w-20 border-r relative group">
-                                    <input type="number" className="w-full h-full pl-5 pr-1 text-right outline-none bg-transparent" value=${row.amount||''} onChange=${(e)=>updateSideRow(idx,'right',rowIdx,'amount',e.target.value)} disabled=${isReadOnly}/>
-                                    <${ValidationIcon} show=${showFeedback} status=${rVal.amount} position="left-1" />
-                                </div>
-                            </div>
-                        `;
-                    })}
-                    <div className="border-t-2 border-gray-800 p-1 flex justify-between items-center bg-gray-50 relative">
-                        <span className="text-xs font-bold">Total Credit</span>
-                        <div className="relative">
-                            <input type="number" className="w-24 text-right border border-gray-300" value=${l.crTotal||''} onChange=${(e)=>updateLedger(idx,'crTotal',e.target.value)} disabled=${isReadOnly} />
-                            <${ValidationIcon} show=${showFeedback} status=${vResult?.crTotal} position="left-1" />
-                        </div>
+                <div className="border-t border-gray-300 p-2 flex justify-center items-center gap-2 relative">
+                    <span className="text-xs font-bold uppercase text-gray-600">Balance:</span>
+                    <select className="border border-gray-300 rounded text-xs p-1 outline-none bg-white" value=${l.balanceType || ''} onChange=${(e)=>updateLedger(idx, 'balanceType', e.target.value)} disabled=${isReadOnly}><option value="" disabled>Debit or Credit?</option><option value="Dr">Debit</option><option value="Cr">Credit</option></select>
+                    <div className="relative">
+                        <input type="number" className="w-32 text-center border-b-2 border-double border-black bg-white font-bold text-sm outline-none" placeholder="0" value=${l.balance||''} onChange=${(e)=>updateLedger(idx,'balance',e.target.value)} disabled=${isReadOnly} />
+                        <${ValidationIcon} show=${showFeedback} status=${vResult?.balance} />
                     </div>
                 </div>
+                ${!isReadOnly && html`<div className="p-2 text-center bg-gray-50 border-t border-gray-300"><button onClick=${()=>addRow(idx)} className="text-xs border border-dashed border-gray-400 rounded px-3 py-1 text-gray-600 hover:bg-white hover:text-blue-600 flex items-center gap-1 mx-auto"><${Plus} size=${12}/> Add Row</button></div>`}
             </div>
-            <div className="border-t border-gray-300 p-2 flex justify-center items-center gap-2 relative">
-                <span className="text-xs font-bold uppercase text-gray-600">Balance:</span>
-                <select className="border border-gray-300 rounded text-xs p-1 outline-none bg-white" value=${l.balanceType || ''} onChange=${(e)=>updateLedger(idx, 'balanceType', e.target.value)} disabled=${isReadOnly}><option value="" disabled>Debit or Credit?</option><option value="Dr">Debit</option><option value="Cr">Credit</option></select>
-                <div className="relative">
-                    <input type="number" className="w-32 text-center border-b-2 border-double border-black bg-white font-bold text-sm outline-none" placeholder="0" value=${l.balance||''} onChange=${(e)=>updateLedger(idx,'balance',e.target.value)} disabled=${isReadOnly} />
-                    <${ValidationIcon} show=${showFeedback} status=${vResult?.balance} />
-                </div>
-            </div>
-            ${!isReadOnly && html`<div className="p-2 text-center bg-gray-50 border-t border-gray-300"><button onClick=${()=>addRow(idx)} className="text-xs border border-dashed border-gray-400 rounded px-3 py-1 text-gray-600 hover:bg-white hover:text-blue-600 flex items-center gap-1 mx-auto"><${Plus} size=${12}/> Add Row</button></div>`}
         </div>
     `;
 };
