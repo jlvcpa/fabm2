@@ -160,8 +160,7 @@ export const unit2Week1Data = {
                         <div class="space-y-6 border-t border-gray-200 pt-6">
                             <h4 class="font-bold text-gray-800 text-lg">Detailed Policies & Procedures</h4>
 
-// PURCHASES AND ACCOUNTS PAYABLE CYCLE --
-                           <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-400">
+                         <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-400">
     <h4 class="font-bold text-xl text-slate-900 mb-4 pb-2 border-b border-orange-200">
         Purchases and Accounts Payable Cycle
     </h4>
@@ -240,8 +239,7 @@ export const unit2Week1Data = {
     </ul>
 </div>
 
-// SALES AND ACCOUNTS RECEIVABLE CYCLE ---
-                        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-red-400">
+                       <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-red-400">
     <h4 class="font-bold text-xl text-slate-900 mb-4 pb-2 border-b border-red-200">
         Sales and Accounts Receivable Cycle
     </h4>
@@ -336,22 +334,198 @@ export const unit2Week1Data = {
     </ul>
 </div>>
 
-                        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-purple-400">
-                            <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                                <i class="fas fa-book mr-2 text-purple-500"></i> Phase 4: Recording & Posting
-                            </h5>
-                            <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
-                                <li><strong>The 3-Way Match:</strong> Before paying a supplier, the accountant matches three documents: 
-                                    <ol class="list-decimal pl-4 mt-1 text-slate-500">
-                                        <li>The Purchase Order (What we ordered)</li>
-                                        <li>The Receiving Report (What we got)</li>
-                                        <li>The Supplier's Invoice (What we are charged)</li>
-                                    </ol>
-                                </li>
-                                <li><strong>General Journal:</strong> Transactions are recorded chronologically. Automated systems post these simultaneously to the General Ledger to keep account balances (like Accounts Payable) updated in real-time.</li>
-                                <li><strong>Monthly Reconciliation:</strong> The General Ledger balance for "Inventory" is compared against a physical count of the stock at least once a year (Periodic) or continuously (Perpetual).</li>
-                            </ul>
-                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-green-400">
+    <h4 class="font-bold text-xl text-slate-900 mb-4 pb-2 border-b border-green-200">
+        Collection of Accounts Receivable and Cash Sales
+    </h4>
+
+    <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+        <i class="fas fa-cash-register mr-2 text-green-500"></i> A. Cash Sales (Over-the-Counter)
+    </h5>
+    <p class="text-sm text-slate-600 mb-2 italic">Scenario: A customer walks into the store, picks up an item, and pays at the register.</p>
+    <ul class="list-disc pl-5 text-sm text-slate-700 space-y-3 mb-4">
+        <li>
+            <strong>1. The Point of Sale (POS)</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> The sales clerk scans the item. The POS system retrieves the price from the master file.</p>
+                <p><strong>Proper Authorization:</strong> The clerk cannot manually change prices. Any discount or void must be authorized by a supervisor with a key card or code.</p>
+                <p><strong>Adequate Documents & Records:</strong>
+                    <br><span class="text-xs text-slate-500 ml-2">- Cash Register Tape (Internal): Locked inside the machine or stored on a secure server.</span>
+                    <br><span class="text-xs text-slate-500 ml-2">- Sales Receipt (External): Given to the customer. This encourages the customer to act as an "independent checker."</span>
+                </p>
+                <p><strong>Physical Control:</strong> The cash drawer should automatically lock when not in use. Only one clerk should be assigned to a drawer at a time (access codes).</p>
+            </div>
+        </li>
+        <li>
+            <strong>2. End-of-Day Balancing</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> At the end of the shift, the clerk counts the cash in the drawer.</p>
+                <p><strong>Separation of Duties:</strong> The clerk who collects the cash should not have access to the internal register tape/report.</p>
+                <p><strong>Independent Check:</strong> A supervisor or head cashier takes the cash drawer and compares the actual cash count against the register reading (Z-reading).</p>
+                <p><strong>Discrepancy:</strong> Any shortage or overage is recorded in a "Cash Short/Over" account and investigated.</p>
+            </div>
+        </li>
+    </ul>
+
+    <h5 class="font-bold text-slate-800 mb-2 mt-4 flex items-center border-t border-slate-200 pt-4">
+        <i class="fas fa-envelope-open-text mr-2 text-green-500"></i> B. Collections on Account (Mail or Checks)
+    </h5>
+    <p class="text-sm text-slate-600 mb-2 italic">Scenario: A corporate customer sends a check to pay off their invoice.</p>
+    <ul class="list-disc pl-5 text-sm text-slate-700 space-y-3 mb-4">
+        <li>
+            <strong>1. Mail Room Opening</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> Mail is opened by a receptionist or mail clerk (someone with no access to accounting records).</p>
+                <p><strong>Separation of Duties:</strong> The person opening the mail must not be the Accounts Receivable (AR) clerk or the Cashier.
+                   <br><span class="text-xs text-slate-500 ml-2 italic">Why? If the AR clerk opens the check, they could steal it and manipulate the customer’s account (lapping) to hide the theft.</span>
+                </p>
+                <p><strong>Adequate Documents:</strong> The mail clerk creates a Remittance Advice (list of checks received) in triplicate:
+                    <br><span class="text-xs text-slate-500 ml-2">- Copy 1: Goes with the checks to the Cashier.</span>
+                    <br><span class="text-xs text-slate-500 ml-2">- Copy 2: Goes to Accounts Receivable (for recording).</span>
+                    <br><span class="text-xs text-slate-500 ml-2">- Copy 3: Kept by the mail clerk (for the audit trail).</span>
+                </p>
+                <p><strong>Physical Control:</strong> Checks should be immediately stamped "For Deposit Only" to prevent them from being cashed by employees.</p>
+            </div>
+        </li>
+        <li>
+            <strong>2. Cashier Department (Custody)</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> The Cashier receives the physical checks and Copy 1 of the list.</p>
+                <p><strong>Activity:</strong> Prepares the Bank Deposit Slip.</p>
+                <p><strong>Physical Control:</strong> Cash and checks are kept in a safe until deposited (usually daily).</p>
+                <p><strong>Proper Authorization:</strong> The deposit slip is validated by the bank.</p>
+            </div>
+        </li>
+        <li>
+            <strong>3. Accounts Receivable Department (Recording)</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> The AR clerk receives Copy 2 of the remittance list.</p>
+                <p><strong>Activity:</strong> Posts the payment to the Customer’s Subsidiary Ledger (credits the customer's account).</p>
+                <p><strong>Separation of Duties:</strong> Notice the AR clerk never touches the physical money. They only see a piece of paper saying money arrived.</p>
+            </div>
+        </li>
+        <li>
+            <strong>4. General Accounting (Reconciliation)</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> The General Ledger (GL) accountant receives the validated deposit slip from the Cashier and the summary totals from AR.</p>
+                <p><strong>Independent Check:</strong> The GL accountant compares:
+                    <br><span class="text-xs text-slate-500 ml-2">- Total cash deposited (from Cashier)</span>
+                    <br><span class="text-xs text-slate-500 ml-2">- Total credit to AR (from AR clerk)</span>
+                    <br>They must match.
+                </p>
+            </div>
+        </li>
+    </ul>
+
+    <h5 class="font-bold text-slate-800 mb-2 mt-4 flex items-center border-t border-slate-200 pt-4">
+        <i class="fas fa-university mr-2 text-green-500"></i> C. The Critical "Lockbox" System (Advanced Control)
+    </h5>
+    <p class="text-sm text-slate-600 mb-2 italic">For high-volume businesses, a Lockbox System is the ultimate separation of duties.</p>
+    <ul class="list-disc pl-5 text-sm text-slate-700 space-y-3">
+        <li>
+            <div class="space-y-1">
+                <p><strong>Procedure:</strong> Customers mail checks directly to a P.O. Box controlled by the company's Bank.</p>
+                <p><strong>Control Benefit:</strong> Company employees never touch the cash. The bank collects it, deposits it, and sends the company a digital file of the payments to update records.</p>
+            </div>
+        </li>
+    </ul>
+</div>
+
+                        <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-blue-400">
+    <h4 class="font-bold text-xl text-slate-900 mb-4 pb-2 border-b border-blue-200">
+        Payment of Accounts Payable and Cash Purchases
+    </h4>
+
+    <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+        <i class="fas fa-file-invoice-dollar mr-2 text-blue-500"></i> A. Payment of Accounts Payable (The Voucher System)
+    </h5>
+    <p class="text-sm text-slate-600 mb-2 italic">Scenario: It is Friday, and the company is processing its weekly payments to suppliers.</p>
+    <ul class="list-disc pl-5 text-sm text-slate-700 space-y-3 mb-4">
+        <li>
+            <strong>1. Voucher Selection (Cash Management)</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> The Accounts Payable (AP) Clerk reviews the Unpaid Voucher File (organized by due date) and selects invoices due for payment to take advantage of cash discounts (e.g., 2/10, n/30).</p>
+                <p><strong>Adequate Documents:</strong> The clerk retrieves the full Voucher Package (Purchase Order + Receiving Report + Vendor Invoice) for each item to be paid.</p>
+                <p><strong>Proper Authorization:</strong> The Treasurer (or CFO) determines the total amount of cash available for release this week.</p>
+            </div>
+        </li>
+        <li>
+            <strong>2. Check Preparation</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> The AP Clerk prepares the checks (or queues the bank transfer) for the selected vouchers.</p>
+                <p><strong>Separation of Duties (CRITICAL):</strong> The AP Clerk prepares the check but cannot sign it.
+                    <br><span class="text-xs text-slate-500 ml-2 italic">Why? If the person who records the liability can also sign the check, they can create a fake vendor and pay themselves.</span>
+                </p>
+                <p><strong>Physical Control:</strong> Unused blank checks are kept in a locked safe. Checks must be pre-numbered to ensure none are missing.</p>
+            </div>
+        </li>
+        <li>
+            <strong>3. Review and Signing (The Gatekeeper)</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> The checks and the supporting Voucher Packages are sent to the Treasurer (or authorized signatory).</p>
+                <p><strong>Independent Check:</strong> The Treasurer acts as an independent checker. Before signing, they must verify:
+                    <br><span class="text-xs text-slate-500 ml-2">- Is the Voucher Package complete? (Is the PO and Receiving Report attached?)</span>
+                    <br><span class="text-xs text-slate-500 ml-2">- Does the check amount match the invoice amount?</span>
+                    <br><span class="text-xs text-slate-500 ml-2">- Has this invoice already been paid?</span>
+                </p>
+                <p><strong>Proper Authorization:</strong> Only the Treasurer (or specific authorized managers) has bank signing authority. For checks over a certain limit (e.g., ₱100,000), two signatures are required.</p>
+            </div>
+        </li>
+        <li>
+            <strong>4. Cancellation of Documents</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> Immediately after signing the check, the Treasurer stamps the invoice and all supporting documents "PAID" or perforates them.</p>
+                <p><strong>Physical Control:</strong> This prevents the resubmission of the same documents for a second payment (double payment fraud).</p>
+            </div>
+        </li>
+        <li>
+            <strong>5. Mailing and Recording</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> The signed check is sent directly to the mailroom or released to the vendor.</p>
+                <p><strong>Separation of Duties (Custody vs. Record Keeping):</strong> The signed check must never go back to the AP Clerk.
+                    <br><span class="text-xs text-slate-500 ml-2 italic">Why? If the AP clerk gets the signed check, they could alter the payee or hold it to manipulate the books.</span>
+                </p>
+                <p><strong>Recording:</strong> The Treasurer sends a "Remittance Advice" (a list of paid checks) back to Accounting so they can record the entry: <em>Debit Accounts Payable / Credit Cash</em>.</p>
+            </div>
+        </li>
+    </ul>
+
+    <h5 class="font-bold text-slate-800 mb-2 mt-4 flex items-center border-t border-slate-200 pt-4">
+        <i class="fas fa-coins mr-2 text-blue-500"></i> B. Cash Purchases (Petty Cash Fund)
+    </h5>
+    <p class="text-sm text-slate-600 mb-2 italic">Scenario: The office needs to buy ₱500 worth of stamps or pay for a delivery fee. We don't write a check for this; we use Petty Cash.</p>
+    <ul class="list-disc pl-5 text-sm text-slate-700 space-y-3 mb-4">
+        <li>
+            <strong>1. Establishing the Fund</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Proper Authorization:</strong> A check is written (e.g., for ₱5,000) to establish the fund. It is cashed by the Petty Cash Custodian.</p>
+                <p><strong>Physical Control:</strong> The cash is kept in a locked box or safe. Only the Custodian has the key.</p>
+            </div>
+        </li>
+        <li>
+            <strong>2. Making a Purchase (Disbursement)</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> An employee asks for cash to buy supplies.</p>
+                <p><strong>Adequate Documents:</strong> A Petty Cash Voucher is filled out. Must include: Date, Amount, Purpose, and Signature of the recipient.</p>
+                <p><strong>Independent Check:</strong> The Custodian requires the employee to bring back the official receipt and attach it to the voucher.</p>
+                <p><strong>Reconciliation:</strong> At any moment, the box must contain:
+                    <br><span class="font-mono text-xs bg-slate-200 px-1 rounded">Cash Remaining + Signed Vouchers = Total Fund Amount</span>
+                </p>
+            </div>
+        </li>
+        <li>
+            <strong>3. Replenishing the Fund</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> When the cash gets low, the Custodian sums up the vouchers and requests a replenishment check.</p>
+                <p><strong>Independent Check:</strong> The AP Clerk reviews the Petty Cash Vouchers to ensure they are for valid business expenses before authorizing the reimbursement check.</p>
+                <p><strong>Proper Authorization:</strong> The Treasurer signs the replenishment check only after seeing the summary of expenses.</p>
+                <p><strong>Recording:</strong> This is the only time expenses (Supplies, Postage, etc.) are recorded in the journals.</p>
+            </div>
+        </li>
+    </ul>
+</div>
+
+                        
                     </div>
                 </li>
                 </ul>   
