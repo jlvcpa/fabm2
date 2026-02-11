@@ -160,16 +160,80 @@ export const unit2Week1Data = {
                         <div class="space-y-6 border-t border-gray-200 pt-6">
                             <h4 class="font-bold text-gray-800 text-lg">Detailed Policies & Procedures</h4>
 
-                            <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-400">
-                                <h5 class="font-bold text-slate-800 mb-2 flex items-center">
-                                    <i class="fas fa-shopping-cart mr-2 text-orange-500"></i> Phase 1: Purchasing (Buying)
-                                </h5>
-                                <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2">
-                                <li><strong>Authorization (Purchase Order):</strong> Inventory should never be ordered verbally. A pre-numbered <em>Purchase Order (PO)</em> must be approved by a purchasing manager. This ensures the company only buys what it needs.</li>
-                                <li><strong>Buying on Credit:</strong> When buying on account, the supplier must be on an "Approved Vendor List" to prevent fraud. The PO serves as evidence of the contract.</li>
-                                <li><strong>Buying with Cash:</strong> For minor purchases, a "Petty Cash Voucher" system is used. For major cash purchases, a check or bank transfer is preferred over physical cash to create a paper trail.</li>
-                            </ul>
-                        </div>
+                           <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-orange-400">
+    <h5 class="font-bold text-slate-800 mb-2 flex items-center">
+        <i class="fas fa-shopping-cart mr-2 text-orange-500"></i> Phase 1: Requesting and Ordering
+    </h5>
+    <p class="text-sm text-slate-600 mb-2 italic">The initiation of the purchase.</p>
+    <ul class="list-disc pl-5 text-sm text-slate-700 space-y-3 mb-4">
+        <li>
+            <strong>1. Purchase Requisition (The "Need")</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> A department (e.g., Sales or Warehouse) realizes stock is low and requests new inventory.</p>
+                <p><strong>Proper Authorization:</strong> The request must be signed by a department head. A junior clerk cannot simply order 100 units of expensive stock without approval.</p>
+                <p><strong>Adequate Documents:</strong> A pre-numbered Purchase Requisition form is used.</p>
+                <p><strong>Separation of Duties:</strong> The person requesting the goods cannot be the one placing the order with the vendor.</p>
+            </div>
+        </li>
+        <li>
+            <strong>2. Purchase Order (The "Contract")</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> The Purchasing Department selects a vendor and places the order.</p>
+                <p><strong>Independent Checks:</strong> The Purchasing Agent checks the prices against a master price list or competitive bids to ensure the company isn't overpaying.</p>
+                <p><strong>Proper Authorization:</strong> If the order is above a certain threshold (e.g., ₱50,000), it requires approval from the Purchasing Manager or CFO.</p>
+                <p><strong>Adequate Documents:</strong> A pre-numbered Purchase Order (PO) is generated.
+                    <br><span class="text-xs text-slate-500 ml-2">- Copy 1: Goes to Vendor.</span>
+                    <br><span class="text-xs text-slate-500 ml-2">- Copy 2: Goes to Accounting (to anticipate liability).</span>
+                    <br><span class="text-xs text-slate-500 ml-2">- Copy 3: Goes to Receiving (often a "Blind Copy").</span>
+                </p>
+            </div>
+        </li>
+    </ul>
+
+    <h5 class="font-bold text-slate-800 mb-2 mt-4 flex items-center border-t border-slate-200 pt-4">
+        <i class="fas fa-shopping-cart mr-2 text-orange-500"></i> Phase 2: Receiving
+    </h5>
+    <p class="text-sm text-slate-600 mb-2 italic">The physical transfer of assets. This is a high-risk area for theft.</p>
+    <ul class="list-disc pl-5 text-sm text-slate-700 space-y-3 mb-4">
+        <li>
+            <strong>3. Receiving the Goods</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> The vendor delivers the goods to the warehouse/receiving dock.</p>
+                <p><strong>Separation of Duties:</strong> The Receiving Department must be completely separate from the Purchasing Department. If the Purchasing Agent can also receive goods, they could order items for personal use and "receive" them themselves (theft).</p>
+                <p><strong>Independent Checks (The "Blind Count"):</strong> The Receiving Clerk receives a copy of the PO that has the quantities blacked out (blind copy). This forces them to physically count the goods rather than just glancing at the box and assuming the number is correct.</p>
+                <p><strong>Physical Control:</strong> The receiving area should be locked and restricted. Only authorized warehouse personnel should handle the goods until they are moved to the main inventory floor.</p>
+                <p><strong>Adequate Documents:</strong> A Receiving Report (RR) is generated, listing the exact quantity and condition of goods received.</p>
+            </div>
+        </li>
+    </ul>
+
+    <h5 class="font-bold text-slate-800 mb-2 mt-4 flex items-center border-t border-slate-200 pt-4">
+        <i class="fas fa-shopping-cart mr-2 text-orange-500"></i> Phase 3: Recording and Liability
+    </h5>
+    <p class="text-sm text-slate-600 mb-2 italic">The accounting recognition.</p>
+    <ul class="list-disc pl-5 text-sm text-slate-700 space-y-3">
+        <li>
+            <strong>4. Approval of Invoice (The "Voucher")</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Procedure:</strong> The vendor sends the invoice to the Accounting Department (Accounts Payable).</p>
+                <p><strong>Separation of Duties:</strong> The Accounts Payable clerk records the liability but does not have authority to sign the check (Custody of Assets).</p>
+                <p><strong>Independent Checks (The Three-Way Match):</strong> The AP Clerk pulls the file and compares:
+                    <br><span class="text-xs text-slate-500 ml-2">1. PO (Did we order it at this price?)</span>
+                    <br><span class="text-xs text-slate-500 ml-2">2. Receiving Report (Did we actually get it?)</span>
+                    <br><span class="text-xs text-slate-500 ml-2">3. Invoice (Is the math correct?)</span>
+                    <br>If all three match, the invoice is approved for payment.
+                </p>
+            </div>
+        </li>
+        <li>
+            <strong>5. Recording in the Purchase Journal</strong>
+            <div class="mt-1 space-y-1">
+                <p><strong>Adequate Documents:</strong> The approved invoice is attached to the PO and RR to form a Voucher Package. This package is stamped "PAID" or "ENTERED" to prevent it from being used to support a duplicate payment later.</p>
+                <p><strong>Physical Control over Records:</strong> Access to the Master Vendor File (in the accounting software) is password-protected. Only specific staff can add new vendors to prevent an employee from creating a fake "shell company" vendor and paying themselves.</p>
+            </div>
+        </li>
+    </ul>
+</div>
 
                         <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-blue-400">
                             <h5 class="font-bold text-slate-800 mb-2 flex items-center">
