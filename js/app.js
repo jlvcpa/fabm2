@@ -441,7 +441,7 @@ function renderAccCycleCreatorPage() {
     renderAccountingCycleCreator(content);
 }
 
-/ --- NEW RENDERER FOR RESULTS REVIEW ---
+// --- NEW RENDERER FOR RESULTS REVIEW ---
 function renderTeacherResultsReviewPage() {
     elements.pageTitle().innerText = "Student Results Review";
     const content = elements.contentArea();
