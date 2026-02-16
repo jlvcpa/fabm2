@@ -74,7 +74,7 @@ const deriveAnalysis = (debits, credits) => {
     return analysis;
 };
 
-const adaptStaticDataToSimulator = (questionData) => {
+export const adaptStaticDataToSimulator = (questionData) => {
     const { transactions, adjustments } = questionData;
     const validAccounts = new Set();
 
