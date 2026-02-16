@@ -234,7 +234,6 @@ async function showStudentSubmissions(activityDoc, teacherUser) {
     const listItems = document.getElementById('student-list-items');
     const titleEl = document.getElementById('selected-activity-title');
 
-    // UI state management
     studentSidebar.classList.remove('hidden');
     studentSidebar.classList.add('flex');
     titleEl.textContent = activityDoc.activityname;
@@ -251,60 +250,48 @@ async function showStudentSubmissions(activityDoc, teacherUser) {
             return;
         }
 
-        // Convert snapshot to array for sorting
         const students = [];
-        snap.forEach(doc => students.push({ id: doc.id, ...doc.data() }));
+        snap.forEach(docSnap => {
+            const data = docSnap.data();
+            const docId = docSnap.id;
+            // Parse CN from the start of the document name
+            const extractedCN = docId.split('-')[0] || data.CN || '#';
+            
+            students.push({ 
+                id: docId, 
+                ...data, 
+                CN: extractedCN 
+            });
+        });
         
-        // Sort numerically by Class Number (CN)
-        students.sort((a, b) => (Number(a.CN || a.cn) || 999) - (Number(b.CN || b.cn) || 999));
+        // Sort by the extracted Class Number
+        students.sort((a, b) => (Number(a.CN) || 999) - (Number(b.CN) || 999));
 
         students.forEach(res => {
             const btn = document.createElement('button');
             btn.className = "w-full text-left p-3 border-b border-gray-100 hover:bg-blue-50 transition-colors flex items-center gap-3 group";
-            
-            // Safely get CN
-            const classNum = res.CN || res.cn || '#';
-
-            // Construct HTML with prominent CN display
             btn.innerHTML = `
-                <div class="w-8 h-8 shrink-0 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center text-xs font-bold text-blue-800 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                    ${classNum}
-                </div>
+                <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-gray-500 group-hover:bg-blue-200 group-hover:text-blue-700">${res.CN}</div>
                 <div class="truncate flex-1">
-                    <div class="text-xs font-bold text-gray-800 truncate">${res.studentName}</div>
-                    <div class="text-[10px] text-gray-500 flex items-center gap-2">
-                        <span class="font-semibold text-blue-600">CN: ${classNum}</span> 
-                        <span class="text-gray-300">|</span> 
-                        <span>${new Date(res.timestamp).toLocaleDateString()}</span>
-                    </div>
+                    <div class="text-xs font-bold text-gray-800">${res.studentName}</div>
+                    <div class="text-[9px] text-gray-400">${new Date(res.timestamp).toLocaleDateString()}</div>
                 </div>
-                <i class="fas fa-chevron-right text-[10px] text-gray-300 group-hover:text-blue-500"></i>
+                <i class="fas fa-chevron-right text-[10px] text-gray-300"></i>
             `;
             
             btn.onclick = () => {
                 const previewArea = document.getElementById('qa-runner-container');
-                
-                // Cleanup existing React root before rendering new one
                 if (previewArea._reactRoot) {
                      previewArea._reactRoot.unmount();
                      delete previewArea._reactRoot;
                 }
-                
-                previewArea.innerHTML = `
-                    <div class="p-20 text-center">
-                        <i class="fas fa-spinner fa-spin text-4xl text-blue-900"></i>
-                        <p class="mt-4 text-sm text-gray-500">Loading Student Result...</p>
-                    </div>`;
-                
-                // Invoke the viewer from activityResultPreview.js
+                previewArea.innerHTML = '<div class="p-20 text-center"><i class="fas fa-spinner fa-spin text-4xl text-blue-900"></i><p class="mt-4 text-sm text-gray-500">Loading Student Result...</p></div>';
                 renderStudentResultDetail(previewArea, teacherUser, activityDoc, res, collectionName, res.id);
             };
-            
             listItems.appendChild(btn);
         });
     } catch (e) {
-        console.error("Error fetching submissions:", e);
-        listItems.innerHTML = `<div class="p-4 text-red-500 text-xs text-center">Error: ${e.message}</div>`;
+        listItems.innerHTML = `<div class="p-4 text-red-500 text-xs">Error: ${e.message}</div>`;
     }
 }
 
