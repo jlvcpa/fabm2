@@ -288,7 +288,6 @@ async function renderQuizRunner(data, user, customRunner = null) {
         if (resultDoc.exists()) {
             const rData = resultDoc.data();
             if (rData.status === "final") {
-                // CALL THE NEW MODULE WITH DB & DOC INFO FOR UPDATES
                 await renderQuizResultPreview(data, user, rData, db, collectionName, docId);
                 return;
             } else {
@@ -297,8 +296,33 @@ async function renderQuizRunner(data, user, customRunner = null) {
         }
     } catch (e) { console.error(e); }
 
-    container.innerHTML = '<div class="flex justify-center items-center h-full"><i class="fas fa-spinner fa-spin text-4xl text-blue-800"></i><span class="ml-3">Generating Activity...</span></div>';
+    // --- INSERT EXPIRED ACTIVITY HANDLER HERE ---
+    const now = new Date();
+    // Determine the correct expiry date (from main config or the first test section)
+    const expireDate = data.dateTimeExpire ? new Date(data.dateTimeExpire) : new Date(data.testQuestions?.[0]?.dateTimeExpire);
     
+    // If current time is past expiry AND the student hasn't reached "final" status
+    if (now > expireDate && user.role !== 'teacher') {
+        container.innerHTML = `
+            <div class="h-full flex flex-col items-center justify-center text-center p-8 bg-white">
+                <div class="bg-red-50 p-10 rounded-2xl border-2 border-red-100 shadow-sm max-w-md">
+                    <i class="fas fa-clock text-red-400 text-6xl mb-6"></i>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Activity Expired</h2>
+                    <p class="text-gray-500 mb-6">The deadline for this activity was <strong>${expireDate.toLocaleString()}</strong>.</p>
+                    <div class="p-4 bg-red-100 text-red-800 rounded-lg font-medium text-sm">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        The activity has expired and you failed to answer or complete it.
+                    </div>
+                    <button onclick="document.getElementById('qa-toggle-sidebar').click()" class="mt-8 px-6 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition shadow">
+                        Return to List
+                    </button>
+                </div>
+            </div>`;
+        return; // Stop here and do not load the quiz
+    }
+    // --- END OF EXPIRED HANDLER ---
+
+    container.innerHTML = '<div class="flex justify-center items-center h-full"><i class="fas fa-spinner fa-spin text-4xl text-blue-800"></i><span class="ml-3">Generating Activity...</span></div>';    
     const generatedContent = await generateQuizContent(data, savedState);
 
     // Standard Anti-Cheat HTML
@@ -738,11 +762,10 @@ function initializeQuizManager(activityData, questionData, user, savedState) {
                     timerDisplay.parentElement.classList.add('text-red-800');
                 }
                 
-                // AUTO SUBMIT TRIGGER
                 if (!hasSubmittedOnExpire) {
                     hasSubmittedOnExpire = true;
-                    // Pass 'true' for force submit to skip confirmation
-                    submitQuiz(activityData, questionData, user, true, true);
+                    alert("Time is up! Your current progress is locked but will not be auto-submitted. Please contact your instructor.");
+                    window.location.reload();
                 }
                 
             } else {
