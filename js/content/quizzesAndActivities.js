@@ -254,17 +254,23 @@ async function showStudentSubmissions(activityDoc, teacherUser) {
         snap.forEach(docSnap => {
             const data = docSnap.data();
             const docId = docSnap.id;
-            // Parse CN from the start of the document name
+
+            // 1. Extract CN from the first part of ID
             const extractedCN = docId.split('-')[0] || data.CN || '#';
+
+            // 2. Extract Name from the third part of ID
+            // This grabs "LastName FirstName" from the end of the string
+            const extractedName = docId.split('-')[2] || data.studentName || 'Unknown Student';
             
             students.push({ 
                 id: docId, 
                 ...data, 
-                CN: extractedCN 
+                CN: extractedCN,
+                studentName: extractedName // Overwrite with extracted name to fix 'undefined'
             });
         });
         
-        // Sort by the extracted Class Number
+        // Sort by Class Number (CN)
         students.sort((a, b) => (Number(a.CN) || 999) - (Number(b.CN) || 999));
 
         students.forEach(res => {
@@ -286,6 +292,8 @@ async function showStudentSubmissions(activityDoc, teacherUser) {
                      delete previewArea._reactRoot;
                 }
                 previewArea.innerHTML = '<div class="p-20 text-center"><i class="fas fa-spinner fa-spin text-4xl text-blue-900"></i><p class="mt-4 text-sm text-gray-500">Loading Student Result...</p></div>';
+                
+                // Pass the data (now containing the corrected name) to the viewer
                 renderStudentResultDetail(previewArea, teacherUser, activityDoc, res, collectionName, res.id);
             };
             listItems.appendChild(btn);
