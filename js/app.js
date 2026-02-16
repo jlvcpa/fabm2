@@ -365,14 +365,14 @@ function renderSidebar(role) {
         toolsSubmenu.appendChild(importerBtn);
 
         // 5. Results Review (NEW)
-        const reviewBtn = document.createElement('button');
-        reviewBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-orange-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-orange-500";
-        reviewBtn.innerHTML = '<i class="fas fa-poll text-xs"></i> <span class="text-sm">Results Review</span>';
-        reviewBtn.onclick = () => {
-            renderTeacherResultsReviewPage();
-            closeMobileSidebar();
-        };
-        toolsSubmenu.appendChild(reviewBtn);
+        // const reviewBtn = document.createElement('button');
+        // reviewBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-orange-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-orange-500";
+        // reviewBtn.innerHTML = '<i class="fas fa-poll text-xs"></i> <span class="text-sm">Results Review</span>';
+        // reviewBtn.onclick = () => {
+        //    renderTeacherResultsReviewPage();
+        //    closeMobileSidebar();
+        //};
+        // toolsSubmenu.appendChild(reviewBtn);
     }
 }
 
