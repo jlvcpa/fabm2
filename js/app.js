@@ -300,8 +300,6 @@ function renderSidebar(role) {
 
     container.appendChild(qaSubmenu);
 
-
-    // --- TEACHER TOOLS (Teachers Only) ---
     // --- TEACHER TOOLS (Teachers Only) ---
     if (role === 'teacher') {
         const creatorHeader = document.createElement('button');
