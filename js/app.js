@@ -387,36 +387,53 @@ function renderQuestionImporterPage() {
      }
 }
 
-function renderQuizzesActivitiesPage() {
-    elements.pageTitle().innerText = "Quizzes & Activities";
+// --- REVISED & NEW PAGE RENDERERS ---
+
+function renderFormativeActivitiesPage() {
+    elements.pageTitle().innerText = "Formative Activities";
     const content = elements.contentArea();
     content.innerHTML = '';
-
     if (typeof renderQuizzesAndActivities === 'function') {
-        // This function typically renders the LIST of available quizzes.
-        // It will now include summative and formative tests.
-        // Filter: 'test' (ensures only relevant items show)
-        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Test');
-    } else {
-        content.innerHTML = `<div class="p-8 text-center text-gray-500">Module not loaded properly.</div>`;
+        // Filter: Looks for 'formative' in the name/type
+        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'formative');
     }
 }
 
-// Renders Performance Tasks (Accounting Cycle)
+function renderSummativeActivitiesPage() {
+    elements.pageTitle().innerText = "Summative Activities";
+    const content = elements.contentArea();
+    content.innerHTML = '';
+    if (typeof renderQuizzesAndActivities === 'function') {
+        // Filter: Looks for 'summative' in the name/type
+        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'summative');
+    }
+}
+
 function renderPerformanceTasksPage() {
     elements.pageTitle().innerText = "Performance Tasks";
     const content = elements.contentArea();
     content.innerHTML = '';
-
     if (typeof renderQuizzesAndActivities === 'function') {
-        // 1. Target Container: content
-        // 2. User Context: currentUser
-        // 3. Runner Function: renderAccountingCycleActivity (passed as reference)
-        // 4. Filter: 'Task' (Shows items with 'Task' in type or name, depending on your list logic)
-        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Task'); 
-    } else {
-        content.innerHTML = `<div class="p-8 text-center text-gray-500">Module not loaded properly.</div>`;
+        // Filter: Looks for 'performance' in the name/type
+        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'performance'); 
     }
+}
+
+function renderTermExamsPage() {
+    elements.pageTitle().innerText = "Term Examinations";
+    const content = elements.contentArea();
+    content.innerHTML = '';
+    if (typeof renderQuizzesAndActivities === 'function') {
+        // Filter: We use a custom logic check here if your backend supports multiple strings, 
+        // otherwise we pass 'Exam' as a general filter. 
+        // Given your request, we target 'MidTerm' or 'FinalTerm'.
+        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Exam'); 
+    }
+}
+
+// Keep this for compatibility but it is now effectively replaced by the submenus above
+function renderQuizzesActivitiesPage() {
+    renderFormativeActivitiesPage(); 
 }
 function renderCreatorPage() {
     elements.pageTitle().innerText = "Quiz & Activity Creator";
