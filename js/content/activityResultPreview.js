@@ -436,32 +436,32 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
     };
 
     return html`
-        <div className="max-w-5xl mx-auto">
-            <div className="bg-white rounded-lg shadow p-6 mb-8 border-l-4 border-blue-600 flex justify-between items-start">
-                <div>
-                    <h2 className="text-2xl font-bold text-gray-800 mb-1">${resultData.studentName}</h2>
-                    <div className="flex gap-6 text-sm text-gray-600">
-                        <span>ID: <strong>${resultData.studentId}</strong></span>
-                        <span>Submitted: <strong>${new Date(resultData.timestamp || resultData.lastUpdated).toLocaleString()}</strong></span>
-                    </div>
+    <div className="max-w-5xl mx-auto">
+        <div className="bg-white rounded-lg shadow p-4 mb-4 border-l-4 border-blue-600 flex justify-between items-center">
+            <div>
+                <h2 className="text-xl font-bold text-gray-800 mb-0">${resultData.studentName}</h2>
+                <div className="flex gap-4 text-xs text-gray-600">
+                    <span>ID: <strong>${resultData.studentId}</strong></span>
+                    <span>Submitted: <strong>${new Date(resultData.timestamp || resultData.lastUpdated).toLocaleString()}</strong></span>
                 </div>
-                ${currentUser.role === 'teacher' && activityConfig.type !== 'accounting_cycle' && html`
-                    <button onClick=${handleSaveScores} className="px-4 py-2 bg-yellow-600 text-white text-sm font-bold rounded hover:bg-yellow-700 shadow flex items-center gap-2">
-                        <${Save} size=${16}/> Update Scores
-                    </button>
-                `}
             </div>
-
-            ${(activityConfig.type === 'accounting_cycle' || activityConfig.tasks)
-                ? html`<${AccountingCycleResultView} resultData=${resultData} activityConfig=${activityConfig} />`
-                : html`<${StandardQuizResultView} 
-                    resultData=${resultData} 
-                    activityConfig=${activityConfig} 
-                    onScoreUpdate=${(scores) => setPendingScores(scores)} 
-                  />`
-            }
+            ${currentUser.role === 'teacher' && activityConfig.type !== 'accounting_cycle' && html`
+                <button onClick=${handleSaveScores} className="px-4 py-2 bg-yellow-600 text-white text-sm font-bold rounded hover:bg-yellow-700 shadow flex items-center gap-2">
+                    <${Save} size=${16}/> Update Scores
+                </button>
+            `}
         </div>
-    `;
+
+        ${(activityConfig.type === 'accounting_cycle' || activityConfig.tasks)
+            ? html`<${AccountingCycleResultView} resultData=${resultData} activityConfig=${activityConfig} />`
+            : html`<${StandardQuizResultView} 
+                resultData=${resultData} 
+                activityConfig=${activityConfig} 
+                onScoreUpdate=${(scores) => setPendingScores(scores)} 
+              />`
+        }
+    </div>
+`;
 };
 
 // --- EXPORTED RENDERER (RENAMED TO MATCH NEW USE CASE) ---
