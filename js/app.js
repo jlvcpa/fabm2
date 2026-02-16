@@ -8,7 +8,7 @@ import { merchTransactionPracData } from './content/questionBank/qbMerchTransact
 // --- NEW IMPORTS ---
 import { renderAccountingCycleCreator } from './content/accountingCycleCreator.js';
 import { renderAccountingCycleActivity } from './content/accountingCycleActivity.js'; 
-
+import { renderTeacherReviewDashboard } from './content/activityResultPreview.js';
 import Step05Worksheet, { validateStep05 } from './content/accountingCycle/steps/Step05Worksheet.js';
 import Step06FinancialStatements, { validateStep06 } from './content/accountingCycle/steps/Step06FinancialStatements.js';
 import React from 'https://esm.sh/react@18.2.0';
@@ -362,6 +362,16 @@ function renderSidebar(role) {
         };
         toolsSubmenu.appendChild(importerBtn);
 
+        // 5. Results Review (NEW)
+        const reviewBtn = document.createElement('button');
+        reviewBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-orange-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-orange-500";
+        reviewBtn.innerHTML = '<i class="fas fa-poll text-xs"></i> <span class="text-sm">Results Review</span>';
+        reviewBtn.onclick = () => {
+            renderTeacherResultsReviewPage();
+            closeMobileSidebar();
+        };
+        toolsSubmenu.appendChild(reviewBtn);
+
         container.appendChild(toolsSubmenu);
     }
 }
@@ -429,6 +439,21 @@ function renderAccCycleCreatorPage() {
     const content = elements.contentArea();
     content.innerHTML = '';
     renderAccountingCycleCreator(content);
+}
+
+/ --- NEW RENDERER FOR RESULTS REVIEW ---
+function renderTeacherResultsReviewPage() {
+    elements.pageTitle().innerText = "Student Results Review";
+    const content = elements.contentArea();
+    content.innerHTML = '';
+    
+    // Create a container for the React root
+    const container = document.createElement('div');
+    container.id = "teacher-review-container";
+    container.className = "w-full h-full"; // Full height for the layout
+    content.appendChild(container);
+
+    renderTeacherReviewDashboard(container, currentUser);
 }
 
 function renderLandingPage() {
