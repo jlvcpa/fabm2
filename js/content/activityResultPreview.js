@@ -5,7 +5,7 @@ import { createRoot } from 'https://esm.sh/react-dom@18.2.0/client';
 import htm from 'https://esm.sh/htm';
 import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 import { Check, X, User, ChevronRight, AlertCircle, BookOpen, RefreshCw, Save } from 'https://esm.sh/lucide-react@0.263.1';
-import { getLetterGrade, ActivityHelper } from '../utils.js';
+import { getLetterGrade, ActivityHelper } from './accountingCycle/utils.js';
 
 // --- IMPORTS FOR STANDARD QUIZZES ---
 import { qbMerchMultipleChoice } from "./questionBank/qbMerchMultipleChoice.js";
