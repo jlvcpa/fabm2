@@ -302,6 +302,7 @@ function renderSidebar(role) {
 
 
     // --- TEACHER TOOLS (Teachers Only) ---
+    // --- TEACHER TOOLS (Teachers Only) ---
     if (role === 'teacher') {
         const creatorHeader = document.createElement('button');
         creatorHeader.className = "w-full text-left px-6 py-3 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden flex justify-between items-center group hover:text-slate-300 focus:outline-none";
@@ -321,6 +322,7 @@ function renderSidebar(role) {
         };
 
         container.appendChild(creatorHeader);
+        container.appendChild(toolsSubmenu); // <--- THIS WAS MISSING. IT IS REQUIRED.
         
         // 1. Quiz & Activity Creator (Original)
         const creatorBtn = document.createElement('button');
@@ -371,8 +373,6 @@ function renderSidebar(role) {
             closeMobileSidebar();
         };
         toolsSubmenu.appendChild(reviewBtn);
-
-        container.appendChild(toolsSubmenu);
     }
 }
 
@@ -450,7 +450,7 @@ function renderTeacherResultsReviewPage() {
     // Create a container for the React root
     const container = document.createElement('div');
     container.id = "teacher-review-container";
-    container.className = "w-full h-full"; // Full height for the layout
+    container.className = "w-full h-full"; 
     content.appendChild(container);
 
     renderTeacherReviewDashboard(container, currentUser);
