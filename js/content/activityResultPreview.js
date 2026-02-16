@@ -64,8 +64,10 @@ const AccountingCycleResultView = ({ resultData, activityConfig }) => {
         if (qId) {
             const rawQ = merchTransactionsExamData.find(q => q.id === qId);
             if (rawQ) {
-                const dateTaken = new Date(resultData.timestamp);
+                // FIXED: Use lastUpdated or startedAt if timestamp is missing
+                const dateTaken = new Date(resultData.lastUpdated || resultData.startedAt || resultData.timestamp || new Date());
                 const year = dateTaken.getFullYear() || new Date().getFullYear();
+                
                 const qCopy = JSON.parse(JSON.stringify(rawQ));
                 if (qCopy.transactions) qCopy.transactions.forEach(t => t.date = `${t.date}, ${year}`);
                 const adapted = adaptStaticDataToSimulator(qCopy);
@@ -81,11 +83,13 @@ const AccountingCycleResultView = ({ resultData, activityConfig }) => {
             ${activityConfig.tasks.map((task, idx) => {
                 const stepId = idx + 1;
                 const StepComponent = STEP_COMPONENTS[stepId];
-                const studentAnswer = resultData.answers?.[stepId] || {};
-                const scoreData = resultData.scores?.[stepId] || { score: 0, maxScore: 0 };
-                const status = resultData.stepStatus?.[stepId] || {};
                 
-                if (!status.completed && !studentAnswer) return null;
+                // FIXED: Accessing flat keys "answers.1", "scores.1", etc.
+                const studentAnswer = resultData[`answers.${stepId}`] || {};
+                const scoreData = resultData[`scores.${stepId}`] || { score: 0, maxScore: 0 };
+                const status = resultData[`stepStatus.${stepId}`] || {};
+                
+                if (!status.completed && (!studentAnswer || Object.keys(studentAnswer).length === 0)) return null;
 
                 const letterGrade = getLetterGrade(scoreData.score, scoreData.maxScore);
                 const rubricHtml = ActivityHelper.getRubricHTML(stepId, task.stepName);
@@ -93,13 +97,31 @@ const AccountingCycleResultView = ({ resultData, activityConfig }) => {
                 return html`
                     <div key=${stepId} className="bg-white border rounded-lg shadow-sm overflow-hidden break-inside-avoid">
                         <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
-                            <div><h3 className="text-lg font-bold">Step ${stepId}: ${task.stepName}</h3><div className="text-xs text-slate-300">Attempts: ${status.attempts || 0}</div></div>
-                            <div className="text-right"><div className="text-2xl font-bold text-yellow-400">${scoreData.score} <span className="text-sm text-slate-400">/ ${scoreData.maxScore}</span></div><div className="text-xs font-bold px-2 py-0.5 bg-slate-600 rounded inline-block">${letterGrade}</div></div>
+                            <div>
+                                <h3 className="text-lg font-bold">Step ${stepId}: ${task.stepName}</h3>
+                                <div className="text-xs text-slate-300">Attempts: ${status.attempts || 0}</div>
+                            </div>
+                            <div className="text-right">
+                                <div className="text-2xl font-bold text-yellow-400">
+                                    ${scoreData.score} <span className="text-sm text-slate-400">/ ${scoreData.maxScore}</span>
+                                </div>
+                                <div className="text-xs font-bold px-2 py-0.5 bg-slate-600 rounded inline-block">
+                                    ${letterGrade}
+                                </div>
+                            </div>
                         </div>
                         <div className="p-6">
-                            <div className="mb-6 p-4 bg-blue-50 text-sm text-blue-900 rounded border border-blue-100" dangerouslySetInnerHTML=${{ __html: rubricHtml }}></div>
+                            <div className="mb-6 p-4 bg-blue-50 text-sm text-blue-900 rounded border border-blue-100" 
+                                 dangerouslySetInnerHTML=${{ __html: rubricHtml }}></div>
                             <div className="border border-gray-200 rounded p-2 bg-gray-50">
-                                <${StepComponent} activityData=${simData} transactions=${simData.transactions} data=${studentAnswer} onChange=${() => {}} showFeedback=${true} isReadOnly=${true} />
+                                <${StepComponent} 
+                                    activityData=${simData} 
+                                    transactions=${simData.transactions} 
+                                    data=${studentAnswer} 
+                                    onChange=${() => {}} 
+                                    showFeedback=${true} 
+                                    isReadOnly=${true} 
+                                />
                             </div>
                         </div>
                     </div>
@@ -107,7 +129,7 @@ const AccountingCycleResultView = ({ resultData, activityConfig }) => {
             })}
         </div>
     `;
-};
+};;
 
 // -------------------------------------------------------------------------
 // COMPONENT 2: STANDARD QUIZ RESULT (RESTORED FEATURES)
