@@ -400,7 +400,14 @@ const ActivityRunner = ({ activityDoc, user, goBack }) => {
             questionId: questionId,
             lastUpdated: new Date().toISOString()
         }, { merge: true });
-    };
+
+        const activityIndexId = `${activityDoc.activityname}_${activityDoc.section}`; 
+        await setDoc(doc(db, "results_list", activityIndexId), { 
+            created: new Date().toISOString(),
+            activityName: activityDoc.activityname, // Changed from activityData to activityDoc
+            section: activityDoc.section           // Changed from activityData to activityDoc
+        }, { merge: true }); // Added merge: true and closed the function properly
+       };
 
     if (loading || !activityData) return html`<div className="p-8 text-center text-gray-500">Loading activity data...</div>`;
     if (!activityDoc.tasks || activityDoc.tasks.length === 0) return html`<div className="p-8 text-center text-red-500">Error: No tasks defined.</div>`;
