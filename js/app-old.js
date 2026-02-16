@@ -1,14 +1,26 @@
 import { loginUser } from './auth.js';
 import { courseData } from './content/syllabus.js';
 import { formatRanges } from './utils.js';
-// import { renderQuizActivityCreator } from './quizAndActivityCreator.js'; // UNCOMMENT THIS WHEN FILE EXISTS
-// import { renderQuizzesAndActivities } from './quizzesAndActivities.js'; // UNCOMMENT THIS WHEN FILE EXISTS
+import { renderQuizActivityCreator } from './content/quizAndActivityCreator.js'; 
+import { renderQuizzesAndActivities } from './content/quizzesAndActivities.js'; 
+import { renderQuestionImporter } from './content/toolQuestionImporter.js'; 
+import { merchTransactionPracData } from './content/questionBank/qbMerchTransactions.js';
+// --- NEW IMPORTS ---
+import { renderAccountingCycleCreator } from './content/accountingCycleCreator.js';
+import { renderAccountingCycleActivity } from './content/accountingCycleActivity.js'; 
+
+import Step05Worksheet, { validateStep05 } from './content/accountingCycle/steps/Step05Worksheet.js';
+import Step06FinancialStatements, { validateStep06 } from './content/accountingCycle/steps/Step06FinancialStatements.js';
+import React from 'https://esm.sh/react@18.2.0';
+import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
 
 // --- STATE MANAGEMENT ---
 let currentUser = null; 
 let calendarAssignments = JSON.parse(localStorage.getItem('fabm2_calendar')) || {};
 let flatTopics = []; 
 let currentCalendarYear, currentCalendarMonth;
+const worksheetRoots = new Map();
+const fsRoots = new Map(); 
 
 // --- DOM ELEMENTS ---
 const elements = {
@@ -36,17 +48,13 @@ function init() {
     setupEventListeners();
     setPhilippineTimeDefaults();
     generateFlatTopics();
-    
-    // Expose updateSchedule to window for HTML onchange attributes
     window.updateSchedule = updateSchedule;
 }
 
 function setupEventListeners() {
-    // Auth
     elements.btnLogin().addEventListener('click', handleLogin);
     elements.btnLogout().addEventListener('click', handleLogout);
     
-    // Sidebar
     elements.desktopSidebarToggle().addEventListener('click', () => {
         elements.sidebar().classList.toggle('collapsed');
     });
@@ -129,7 +137,7 @@ function renderSidebar(role) {
     const container = elements.navContainer();
     container.innerHTML = ''; 
 
-    // Course Outline Button (Reduced padding to py-2)
+    // Course Outline Button
     const outlineBtn = document.createElement('button');
     outlineBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-blue-500 focus:outline-none whitespace-nowrap overflow-hidden";
     outlineBtn.innerHTML = '<i class="fas fa-home w-6"></i> <span class="sidebar-text-detail">Course Outline</span>';
@@ -151,7 +159,6 @@ function renderSidebar(role) {
             const unitPrefix = unitParts[0];
             const unitSuffix = unitParts.slice(1).join(':');
 
-            // --- UNIT BUTTON (Reduced padding to py-2) ---
             const unitBtn = document.createElement('button');
             unitBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors flex justify-between items-center group whitespace-nowrap overflow-hidden";
             unitBtn.innerHTML = `
@@ -163,7 +170,7 @@ function renderSidebar(role) {
             `;
             
             const unitSubmenu = document.createElement('div');
-            unitSubmenu.className = "unit-submenu bg-slate-950 hidden"; // Hidden by default
+            unitSubmenu.className = "unit-submenu bg-slate-950 hidden"; 
             
             unitBtn.onclick = () => {
                 const icon = unitBtn.querySelector('.fa-chevron-down');
@@ -176,7 +183,6 @@ function renderSidebar(role) {
                 }
             };
 
-            // --- WEEK RENDERER ---
             unit.weeks.forEach(week => {
                 const weekParts = week.title.split(':');
                 const weekPrefix = weekParts[0];
@@ -249,102 +255,180 @@ function renderSidebar(role) {
         });
     });
 
-    // --- QUIZZES AND ACTIVITIES (Visible to All) (Reduced padding to py-2) ---
+    // --- QUIZZES AND ACTIVITIES (Submenu for Everyone) ---
     const qaHeader = document.createElement('div');
     qaHeader.className = "px-6 py-2 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden";
     qaHeader.textContent = "Assessments";
     container.appendChild(qaHeader);
 
+    // Parent Button for Quizzes & Activities
     const qaBtn = document.createElement('button');
-    qaBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-yellow-500 focus:outline-none whitespace-nowrap overflow-hidden";
-    qaBtn.innerHTML = '<i class="fas fa-clipboard-list w-6"></i> <span class="sidebar-text-detail">Quizzes & Activities</span>';
+    qaBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-yellow-500 focus:outline-none whitespace-nowrap overflow-hidden flex justify-between items-center group";
+    qaBtn.innerHTML = '<span><i class="fas fa-clipboard-list w-6"></i> Quizzes & Activities</span> <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>';
+    
+    // Submenu Container
+    const qaSubmenu = document.createElement('div');
+    qaSubmenu.className = "hidden bg-slate-950 border-l border-slate-800 ml-4 mb-2";
+
     qaBtn.onclick = () => {
-        renderQuizzesActivitiesPage(); 
-        closeMobileSidebar();
+        qaSubmenu.classList.toggle('hidden');
+        const icon = qaBtn.querySelector('.fa-chevron-down');
+        icon.classList.toggle('rotate-180');
     };
     container.appendChild(qaBtn);
 
+    // 1. Formative and Summative (Original quizzesAndActivities.js)
+    const formativeBtn = document.createElement('button');
+    formativeBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-yellow-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-yellow-500";
+    formativeBtn.innerHTML = '<i class="fas fa-check-square text-xs"></i> <span class="text-sm">Formative & Summative</span>';
+    formativeBtn.onclick = () => {
+        renderQuizzesActivitiesPage(); 
+        closeMobileSidebar();
+    };
+    qaSubmenu.appendChild(formativeBtn);
+
+    // 2. Performance Tasks (Accounting Cycle)
+    const perfTaskBtn = document.createElement('button');
+    perfTaskBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
+    perfTaskBtn.innerHTML = '<i class="fas fa-project-diagram text-xs"></i> <span class="text-sm">Performance Tasks</span>';
+    perfTaskBtn.onclick = () => {
+        renderPerformanceTasksPage(); // Opens list filtered for 'accounting_cycle'
+        closeMobileSidebar();
+    };
+    
+    qaSubmenu.appendChild(perfTaskBtn);
+
+    container.appendChild(qaSubmenu);
+
+
     // --- TEACHER TOOLS (Teachers Only) ---
     if (role === 'teacher') {
-        const creatorHeader = document.createElement('div');
-        creatorHeader.className = "px-6 py-2 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden";
-        creatorHeader.textContent = "Teacher Tools";
-        container.appendChild(creatorHeader);
+        const creatorHeader = document.createElement('button');
+        creatorHeader.className = "w-full text-left px-6 py-3 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden flex justify-between items-center group hover:text-slate-300 focus:outline-none";
+        creatorHeader.innerHTML = '<span>Teacher Tools</span> <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>';
+        
+        const toolsSubmenu = document.createElement('div');
+        toolsSubmenu.className = "hidden bg-slate-950 border-l border-slate-800 ml-4 mb-4"; 
 
-        // 1. Quiz & Activity Creator (Reduced padding to py-2)
+        creatorHeader.onclick = () => {
+            toolsSubmenu.classList.toggle('hidden');
+            const icon = creatorHeader.querySelector('.fa-chevron-down');
+            if (toolsSubmenu.classList.contains('hidden')) {
+                icon.classList.remove('rotate-180');
+            } else {
+                icon.classList.add('rotate-180');
+            }
+        };
+
+        container.appendChild(creatorHeader);
+        
+        // 1. Quiz & Activity Creator (Original)
         const creatorBtn = document.createElement('button');
-        creatorBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-green-500 focus:outline-none whitespace-nowrap overflow-hidden";
-        creatorBtn.innerHTML = '<i class="fas fa-magic w-6"></i> <span class="sidebar-text-detail">Quiz & Activity Creator</span>';
+        creatorBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-green-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-green-500";
+        creatorBtn.innerHTML = '<i class="fas fa-magic text-xs"></i> <span class="text-sm">Quiz Creator</span>';
         creatorBtn.onclick = () => {
             renderCreatorPage(); 
             closeMobileSidebar();
         };
-        container.appendChild(creatorBtn);
+        toolsSubmenu.appendChild(creatorBtn);
 
-        // 2. Course Schedule (Moved here, Reduced padding to py-2)
+        // 2. Accounting Cycle Manager (NEW)
+        const accCycleBtn = document.createElement('button');
+        accCycleBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
+        accCycleBtn.innerHTML = '<i class="fas fa-cogs text-xs"></i> <span class="text-sm">AC Manager</span>';
+        accCycleBtn.onclick = () => {
+            renderAccCycleCreatorPage(); 
+            closeMobileSidebar();
+        };
+        toolsSubmenu.appendChild(accCycleBtn);
+
+        // 3. Course Schedule
         const calendarBtn = document.createElement('button');
-        calendarBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-purple-500 focus:outline-none whitespace-nowrap overflow-hidden";
-        calendarBtn.innerHTML = '<i class="fas fa-calendar-alt w-6"></i> <span class="sidebar-text-detail">Course Schedule</span>';
+        calendarBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-purple-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-purple-500";
+        calendarBtn.innerHTML = '<i class="fas fa-calendar-alt text-xs"></i> <span class="text-sm">Schedule</span>';
         calendarBtn.onclick = () => {
             renderCalendarPage();
             closeMobileSidebar();
         };
-        container.appendChild(calendarBtn);
+        toolsSubmenu.appendChild(calendarBtn);
+
+        // 4. Question Bank Importer
+        const importerBtn = document.createElement('button');
+        importerBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-blue-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-blue-500";
+        importerBtn.innerHTML = '<i class="fas fa-file-import text-xs"></i> <span class="text-sm">Importer</span>';
+        importerBtn.onclick = () => {
+            renderQuestionImporterPage();
+            closeMobileSidebar();
+        };
+        toolsSubmenu.appendChild(importerBtn);
+
+        container.appendChild(toolsSubmenu);
     }
 }
 
-// --- QUIZZES & ACTIVITIES PAGE RENDERER ---
+// --- PAGE RENDERERS ---
+
+function renderQuestionImporterPage() {
+    elements.pageTitle().innerText = "Question Bank Importer";
+    const content = elements.contentArea();
+    content.innerHTML = ''; 
+
+    const container = document.createElement('div');
+    container.id = "importer-container";
+    container.className = "w-full h-full p-4";
+    content.appendChild(container);
+
+     if(typeof renderQuestionImporter === 'function') {
+         renderQuestionImporter('importer-container');
+     } else {
+         container.innerHTML = `<div class="p-8 text-center text-gray-500">Importer module not loaded.</div>`;
+     }
+}
+
 function renderQuizzesActivitiesPage() {
     elements.pageTitle().innerText = "Quizzes & Activities";
     const content = elements.contentArea();
     content.innerHTML = '';
 
-    // UNCOMMENT AND USE THIS BLOCK WHEN quizzesAndActivities.js IS READY
-    /*
     if (typeof renderQuizzesAndActivities === 'function') {
-        renderQuizzesAndActivities(content, currentUser);
+        // This function typically renders the LIST of available quizzes.
+        // It will now include summative and formative tests.
+        // Filter: 'test' (ensures only relevant items show)
+        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Test');
     } else {
         content.innerHTML = `<div class="p-8 text-center text-gray-500">Module not loaded properly.</div>`;
     }
-    */
-
-    // Placeholder content until file is linked
-    content.innerHTML = `
-        <div class="w-full max-w-4xl mx-auto p-8">
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-                <div class="mb-4 text-yellow-500">
-                    <i class="fas fa-clipboard-list text-5xl"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Quizzes & Activities</h2>
-                <p class="text-gray-600">The content for this module is being imported from <code>quizzesAndActivities.js</code>.</p>
-                <p class="text-sm text-gray-400 mt-4">Please ensure the file is created and the import is uncommented in app.js</p>
-            </div>
-        </div>
-    `;
 }
 
-// --- CREATOR PAGE RENDERER ---
+// Renders Performance Tasks (Accounting Cycle)
+function renderPerformanceTasksPage() {
+    elements.pageTitle().innerText = "Performance Tasks";
+    const content = elements.contentArea();
+    content.innerHTML = '';
+
+    if (typeof renderQuizzesAndActivities === 'function') {
+        // 1. Target Container: content
+        // 2. User Context: currentUser
+        // 3. Runner Function: renderAccountingCycleActivity (passed as reference)
+        // 4. Filter: 'Task' (Shows items with 'Task' in type or name, depending on your list logic)
+        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Task'); 
+    } else {
+        content.innerHTML = `<div class="p-8 text-center text-gray-500">Module not loaded properly.</div>`;
+    }
+}
 function renderCreatorPage() {
     elements.pageTitle().innerText = "Quiz & Activity Creator";
     const content = elements.contentArea();
     content.innerHTML = '';
+    renderQuizActivityCreator(content);
+}
 
-    // If you have imported renderQuizActivityCreator, call it here:
-    // renderQuizActivityCreator(content);
-    
-    // Placeholder content until file is linked
-    content.innerHTML = `
-        <div class="w-full max-w-4xl mx-auto p-8">
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-                <div class="mb-4 text-green-500">
-                    <i class="fas fa-magic text-5xl"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Quiz & Activity Creator</h2>
-                <p class="text-gray-600">The content for this module is being imported from <code>quizAndActivityCreator.js</code>.</p>
-                <p class="text-sm text-gray-400 mt-4">Please ensure the file is created and the import is uncommented in app.js</p>
-            </div>
-        </div>
-    `;
+// --- NEW RENDERER FOR ACCOUNTING CYCLE CREATOR ---
+function renderAccCycleCreatorPage() {
+    elements.pageTitle().innerText = "Accounting Cycle Manager";
+    const content = elements.contentArea();
+    content.innerHTML = '';
+    renderAccountingCycleCreator(content);
 }
 
 function renderLandingPage() {
@@ -396,6 +480,145 @@ function renderLandingPage() {
     };
 }
 
+// ... [Existing Wrappers (WorksheetWrapper, FSWrapper) & Calendar Logic remains unchanged] ...
+// I am omitting the unchanged WorksheetWrapper, FSWrapper, and Calendar Logic 
+// to prevent the response from being cut off, as they were not modified.
+// Please assume the code below this comment is identical to your provided original file
+// until the init() call at the bottom.
+
+// --- DAY RENDERER (The Core Content Logic) ---
+// (Copy existing renderDayContent, renderCategoryContent, toggleRightSidebar, handleJournalIndent logic here)
+// Note: Ensure FSWrapper and WorksheetWrapper are defined or imported if they were externalized.
+// In this file they are internal functions, so they persist.
+
+function WorksheetWrapper({ ledger, adjustments }) {
+    const [wsState, setWsState] = React.useState({ footers: {} }); 
+    const [showFeedback, setShowFeedback] = React.useState(false);
+
+    const handleChange = (field, val) => {
+        setWsState(prev => ({ ...prev, [field]: val }));
+    };
+
+    const validation = React.useMemo(() => {
+        return validateStep05(ledger, adjustments, wsState);
+    }, [ledger, adjustments, wsState]);
+
+    const percentage = validation.maxScore > 0 ? (validation.score / validation.maxScore) : 0;
+    const showButton = percentage >= 0.75;
+
+    return React.createElement('div', { className: "flex flex-col gap-6 pb-12" },
+        React.createElement(Step05Worksheet, {
+            ledgerData: ledger, 
+            adjustments: adjustments,
+            data: wsState,
+            onChange: handleChange,
+            showFeedback: showFeedback
+        }),
+        showButton ? React.createElement('div', { className: "flex justify-center" }, 
+            React.createElement('button', {
+                className: `px-6 py-3 font-bold rounded shadow transition-colors flex items-center gap-2 ${showFeedback ? 'bg-gray-600 hover:bg-gray-700 text-white' : 'bg-blue-600 hover:bg-blue-700 text-white'}`,
+                onClick: () => setShowFeedback(!showFeedback)
+            }, showFeedback ? React.createElement('span', null, "Hide Solution") : React.createElement('span', null, "Show Solution"))
+        ) : null
+    );
+}
+
+// NEW FS WRAPPER
+// ... imports remain the same
+
+// UPDATED FS WRAPPER
+function FSWrapper({ activityData }) {
+    // 1. Calculate the 'Truth' Ledger from transactions + beginning balances
+    const calculatedLedger = React.useMemo(() => {
+        const ledger = {};
+        
+        // Add beginning balances
+        if (activityData.beginningBalances && activityData.beginningBalances.balances) {
+            Object.entries(activityData.beginningBalances.balances).forEach(([acc, bal]) => {
+                ledger[acc] = { debit: bal.dr || 0, credit: bal.cr || 0 };
+            });
+        }
+
+        // Add transactions from solution rows
+        if (activityData.transactions) {
+            activityData.transactions.forEach(tx => {
+                tx.solution.forEach(line => {
+                    if (line.isExplanation || line.account === "No Entry") return;
+                    if (!ledger[line.account]) ledger[line.account] = { debit: 0, credit: 0 };
+                    
+                    const dr = parseFloat(line.debit) || 0;
+                    const cr = parseFloat(line.credit) || 0;
+                    
+                    if (dr > 0) ledger[line.account].debit += dr;
+                    if (cr > 0) ledger[line.account].credit += cr;
+                });
+            });
+        }
+        return ledger;
+    }, [activityData]);
+
+    // 2. Preprocess Adjustments (THE FIX)
+    // Converts "solution array" format (Day 4) into "drAcc/crAcc" format (Step06 expectation)
+    const processedAdjustments = React.useMemo(() => {
+        if (!activityData.adjustments) return [];
+        
+        return activityData.adjustments.map(adj => {
+            // If already in simple format (legacy/Day 1), keep it
+            if (adj.drAcc && adj.crAcc) return adj;
+
+            // If in Day 4 "Transaction" format with a solution array
+            if (adj.solution && Array.isArray(adj.solution)) {
+                const drLine = adj.solution.find(l => Number(l.debit) > 0);
+                const crLine = adj.solution.find(l => Number(l.credit) > 0);
+
+                if (drLine && crLine) {
+                    return {
+                        drAcc: drLine.account,
+                        crAcc: crLine.account,
+                        amount: Number(drLine.debit)
+                    };
+                }
+            }
+            return null;
+        }).filter(Boolean); // Remove any nulls to prevent 'undefined' crashes
+    }, [activityData]);
+
+    const [fsState, setFsState] = React.useState({ is: {}, bs: {}, sce: {}, scf: {} });
+    const [showFeedback, setShowFeedback] = React.useState(false);
+
+    const handleChange = (section, val) => {
+        setFsState(prev => ({ ...prev, [section]: val }));
+    };
+
+    // Calculate score
+    const validation = React.useMemo(() => {
+        // Pass processedAdjustments instead of raw activityData.adjustments
+        return validateStep06(calculatedLedger, processedAdjustments, activityData, fsState);
+    }, [calculatedLedger, processedAdjustments, activityData, fsState]);
+
+    const percentage = validation.maxScore > 0 ? (validation.score / validation.maxScore) : 0;
+    const showButton = percentage >= 0.75;
+
+    return React.createElement('div', { className: "flex flex-col gap-6 pb-12" },
+        React.createElement(Step06FinancialStatements, {
+            ledgerData: calculatedLedger,
+            adjustments: processedAdjustments, // Pass the fixed data here
+            activityData: activityData,
+            data: fsState,
+            onChange: handleChange,
+            showFeedback: showFeedback
+        }),
+        showButton ? React.createElement('div', { className: "flex justify-center" }, 
+            React.createElement('button', {
+                className: `px-6 py-3 font-bold rounded shadow transition-colors flex items-center gap-2 ${showFeedback ? 'bg-gray-600 hover:bg-gray-700 text-white' : 'bg-blue-600 hover:bg-blue-700 text-white'}`,
+                onClick: () => setShowFeedback(!showFeedback)
+            }, showFeedback ? React.createElement('span', null, "Hide Solution") : React.createElement('span', null, "Show Solution"))
+        ) : null
+    );
+}
+
+// ... rest of app.js logic
+
 // --- DAY RENDERER (The Core Content Logic) ---
 
 function renderDayContent(unit, week, dayIndex) {
@@ -429,6 +652,31 @@ function renderDayContent(unit, week, dayIndex) {
     const hasMcq = exercises.some(e => e.type === 'mcq');
     const hasProb = exercises.some(e => e.type === 'problem');
     const hasJourn = exercises.some(e => e.type === 'journalizing');
+    
+    // Detect Worksheet Activities
+    const worksheetActivities = exercises
+        .filter(ex => ex.type === 'worksheet' || ex.type === 'accountingCycleSimulation' || ex.id?.includes('Worksheet'))
+        .map(ex => {
+            if (typeof merchTransactionPracData !== 'undefined') {
+                const qbData = merchTransactionPracData.find(qb => qb.id === ex.id);
+                return qbData ? { ...ex, ...qbData } : ex;
+            }
+            return ex;
+        });
+
+    // Detect Financial Statement Activities (NEW)
+    const fsActivities = exercises
+        .filter(ex => ex.type === 'financialStatement' || ex.id?.includes('FinancialStatement'))
+        .map(ex => {
+            // Check if we need to pull data from qbMerchTransactions
+            // Usually matching by ID
+            if (typeof merchTransactionPracData !== 'undefined') {
+                // Try to find matching data based on base ID (e.g., if exercise ID is "FS_Practice_1", looks for matching practice data)
+                const qbData = merchTransactionPracData.find(qb => qb.id === ex.id);
+                return qbData ? { ...ex, ...qbData } : ex;
+            }
+            return ex;
+        });
 
     const card = document.createElement('div');
     card.className = "bg-white rounded-xl shadow-sm border border-gray-200 flex-1 flex flex-col overflow-hidden fade-in";
@@ -449,7 +697,6 @@ function renderDayContent(unit, week, dayIndex) {
     navBar.className = "flex flex-wrap items-center justify-between border-b border-gray-200 bg-white min-h-[50px]";
 
     const tabsContainer = document.createElement('div');
-    // Added overflow-x-auto and whitespace-nowrap for horizontal scrolling on mobile
     tabsContainer.className = "flex overflow-x-auto whitespace-nowrap no-scrollbar";
     
     const createTabBtn = (id, icon, label, isActive) => {
@@ -469,7 +716,7 @@ function renderDayContent(unit, week, dayIndex) {
     tabsContainer.appendChild(tabConcepts);
 
     // Conditional Tabs
-    let tabMcq, tabProb, tabJourn;
+    let tabMcq, tabProb, tabJourn, tabWorksheet, tabFS;
 
     if (hasMcq) {
         tabMcq = createTabBtn('tab-btn-mcq', 'fa-list-ul', 'Practice - Multiple Choice', false);
@@ -483,10 +730,18 @@ function renderDayContent(unit, week, dayIndex) {
         tabJourn = createTabBtn('tab-btn-journ', 'fa-pen-fancy', 'Practice - Journalizing', false);
         tabsContainer.appendChild(tabJourn);
     }
+    if (worksheetActivities.length > 0) {
+        tabWorksheet = createTabBtn('tab-btn-worksheet', 'fa-table', 'Practice - 10 Columns Worksheet', false);
+        tabsContainer.appendChild(tabWorksheet);
+    }
+    if (fsActivities.length > 0) {
+        tabFS = createTabBtn('tab-btn-fs', 'fa-chart-line', 'Practice - Financial Statements', false);
+        tabsContainer.appendChild(tabFS);
+    }
 
     navBar.appendChild(tabsContainer);
 
-    // Prev/Next Buttons (Hidden on small screens since we have swipe/scroll)
+    // Prev/Next Buttons
     const navButtonsGroup = document.createElement('div');
     navButtonsGroup.className = "hidden md:flex items-center gap-2 py-2 px-4 ml-auto"; 
 
@@ -514,7 +769,6 @@ function renderDayContent(unit, week, dayIndex) {
     card.appendChild(navBar);
 
     // --- CONTENT AREA ---
-    // Modified to be a flex container to hold the split panes (content + right sidebar)
     const tabContentWrapper = document.createElement('div');
     tabContentWrapper.className = "flex-1 relative overflow-hidden bg-white flex flex-col";
 
@@ -530,7 +784,7 @@ function renderDayContent(unit, week, dayIndex) {
     if (hasMcq) {
         mcqDiv = document.createElement('div');
         mcqDiv.id = "tab-content-mcq";
-        mcqDiv.className = "hidden h-full"; // Full height for internal scrolling
+        mcqDiv.className = "hidden h-full"; 
         mcqDiv.innerHTML = renderCategoryContent(exercises, dayIndex, 'mcq');
         tabContentWrapper.appendChild(mcqDiv);
     }
@@ -555,6 +809,27 @@ function renderDayContent(unit, week, dayIndex) {
         tabContentWrapper.appendChild(journDiv);
     }
 
+    // 5. Worksheet Content
+    let worksheetDiv;
+    if (worksheetActivities.length > 0) {
+        worksheetDiv = document.createElement('div');
+        worksheetDiv.id = "tab-content-worksheet";
+        worksheetDiv.className = "hidden h-full";
+        worksheetDiv.innerHTML = renderWorksheetContent(worksheetActivities, dayIndex, 'worksheet');
+        tabContentWrapper.appendChild(worksheetDiv);
+    }
+
+    // 6. Financial Statement Content (NEW)
+    let fsDiv;
+    if (fsActivities.length > 0) {
+        fsDiv = document.createElement('div');
+        fsDiv.id = "tab-content-fs";
+        fsDiv.className = "hidden h-full";
+        // Using same layout helper as worksheet
+        fsDiv.innerHTML = renderWorksheetContent(fsActivities, dayIndex, 'financialStatement');
+        tabContentWrapper.appendChild(fsDiv);
+    }
+
     card.appendChild(tabContentWrapper);
     container.appendChild(card);
     content.appendChild(container);
@@ -566,9 +841,11 @@ function renderDayContent(unit, week, dayIndex) {
         if (mcqDiv) mcqDiv.classList.add('hidden');
         if (probDiv) probDiv.classList.add('hidden');
         if (journDiv) journDiv.classList.add('hidden');
+        if (worksheetDiv) worksheetDiv.classList.add('hidden');
+        if (fsDiv) fsDiv.classList.add('hidden');
 
         // Deactivate all buttons
-        [tabConcepts, tabMcq, tabProb, tabJourn].forEach(btn => {
+        [tabConcepts, tabMcq, tabProb, tabJourn, tabWorksheet, tabFS].forEach(btn => {
             if (btn) btn.className = btn.className.replace('border-blue-600 text-blue-900 bg-blue-50', 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50');
         });
 
@@ -586,6 +863,60 @@ function renderDayContent(unit, week, dayIndex) {
         } else if (targetType === 'journal' && journDiv) {
             journDiv.classList.remove('hidden');
             activeBtn = tabJourn;
+        } else if (targetType === 'worksheet' && worksheetDiv) {
+            worksheetDiv.classList.remove('hidden');
+            activeBtn = tabWorksheet;
+            
+            // Mount Worksheet Components
+            worksheetActivities.forEach((activity, i) => {
+                 const mountId = `worksheet-mount-${dayIndex}-${i}`;
+                 const mountEl = document.getElementById(mountId);
+                 
+                 if (mountEl && !worksheetRoots.has(mountId)) {
+                    // Logic to calculate Ledger Balances from Transactions
+                    const ledger = {};
+                    if(activity.transactions) {
+                        activity.transactions.forEach(tx => {
+                            tx.solution.forEach(line => {
+                                if (line.isExplanation || line.account === "No Entry") return;
+                                if (!ledger[line.account]) ledger[line.account] = { debit: 0, credit: 0 };
+                                const dr = parseFloat(line.debit) || 0;
+                                const cr = parseFloat(line.credit) || 0;
+                                if (dr > 0) ledger[line.account].debit += dr;
+                                if (cr > 0) ledger[line.account].credit += cr;
+                            });
+                        });
+                    }
+
+                    const root = ReactDOM.createRoot(mountEl);
+                    root.render(
+                        React.createElement(WorksheetWrapper, {
+                            ledger: ledger,
+                            adjustments: activity.adjustments
+                        })
+                    );
+                    worksheetRoots.set(mountId, root);
+                 }
+            });
+        } else if (targetType === 'fs' && fsDiv) {
+            fsDiv.classList.remove('hidden');
+            activeBtn = tabFS;
+
+            // Mount FS Components
+            fsActivities.forEach((activity, i) => {
+                const mountId = `financialStatement-mount-${dayIndex}-${i}`; // Matches ID gen in renderWorksheetContent
+                const mountEl = document.getElementById(mountId);
+
+                if (mountEl && !fsRoots.has(mountId)) {
+                    const root = ReactDOM.createRoot(mountEl);
+                    root.render(
+                        React.createElement(FSWrapper, {
+                            activityData: activity
+                        })
+                    );
+                    fsRoots.set(mountId, root);
+                }
+            });
         }
 
         // Activate Button
@@ -598,6 +929,8 @@ function renderDayContent(unit, week, dayIndex) {
     if (tabMcq) tabMcq.onclick = () => switchTab('mcq');
     if (tabProb) tabProb.onclick = () => switchTab('problem');
     if (tabJourn) tabJourn.onclick = () => switchTab('journal');
+    if (tabWorksheet) tabWorksheet.onclick = () => switchTab('worksheet');
+    if (tabFS) tabFS.onclick = () => switchTab('fs');
 
     // Attach Listeners
     attachExerciseListeners();
@@ -613,6 +946,78 @@ function executeExerciseMounts(exercises) {
             }, 0);
         }
     });
+}
+
+// --- CONTENT RENDERER (Supports Quick Nav) ---
+// type argument determines ID generation: 'worksheet' or 'financialStatement'
+function renderWorksheetContent(activities, dayIndex, type = 'worksheet') {
+    let contentHtml = '';
+    let navLinksHtml = '';
+
+    // Build Nav Links if multiple
+    if (activities.length > 1) {
+        activities.forEach((item, index) => {
+            const label = type === 'worksheet' ? `Worksheet #${index + 1}` : `FS Set #${index + 1}`;
+            const targetId = `${type}-set-${dayIndex}-${index}`;
+            navLinksHtml += `
+                <button onclick="document.getElementById('${targetId}').scrollIntoView({behavior: 'smooth', block: 'start'})" 
+                class="w-full text-left px-4 py-3 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-blue-700 transition-colors border-b border-gray-100 flex items-center group">
+                    <i class="fas fa-chevron-right text-xs text-gray-400 mr-2 group-hover:text-blue-500"></i>
+                    ${label}
+                </button>
+            `;
+        });
+    }
+
+    // Build Content
+    activities.forEach((activity, i) => {
+        const setId = `${type}-set-${dayIndex}-${i}`;
+        const mountId = `${type}-mount-${dayIndex}-${i}`;
+        const defaultTitle = type === 'worksheet' ? `Worksheet ${i+1}` : `Financial Statements ${i+1}`;
+        
+        contentHtml += `
+            <div id="${setId}" class="mb-12 border-t-4 border-blue-500 pt-6">
+                <div class="prose prose-blue max-w-none mb-4">
+                    <h3 class="text-blue-700"><i class="fas ${type === 'worksheet' ? 'fa-file-invoice' : 'fa-chart-pie'} mr-2"></i>${activity.title || defaultTitle}</h3>
+                    <p class="text-gray-600">${activity.instructions || 'Complete the exercise using the data below.'}</p>
+                </div>
+                <div id="${mountId}" class="w-full min-h-[500px]"></div>
+            </div>
+        `;
+    });
+
+    // --- Construct Layout with Collapsible Sidebar (Reusable) ---
+    const sidebarId = `sidebar-${type}`;
+    const contentId = `content-${type}`;
+    
+    // Only show sidebar if we have nav links
+    const sidebarWidthClass = navLinksHtml ? "w-0 md:w-64" : "hidden";
+    const toggleBtnHtml = navLinksHtml ? `
+        <button onclick="toggleRightSidebar('${sidebarId}')" class="md:hidden absolute top-4 right-4 z-30 bg-white text-blue-600 p-2 rounded-full shadow-lg border border-gray-200 hover:bg-gray-50">
+            <i class="fas fa-list-ul"></i>
+        </button>
+    ` : '';
+
+    return `
+    <div class="flex h-full relative">
+        <div id="${contentId}" class="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth h-full">
+            ${contentHtml}
+        </div>
+
+        <div id="${sidebarId}" class="${sidebarWidthClass} transition-all duration-300 border-l border-gray-200 bg-gray-50 flex flex-col h-full absolute md:relative right-0 z-20 shadow-xl md:shadow-none overflow-hidden group">
+            <div class="flex items-center justify-between p-4 border-b border-gray-200 bg-white min-w-[250px]">
+                <span class="font-bold text-gray-700 text-sm"><i class="fas fa-location-arrow mr-2"></i> Quick Nav</span>
+                <button onclick="toggleRightSidebar('${sidebarId}')" class="text-gray-400 hover:text-red-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto min-w-[250px] p-2">
+                ${navLinksHtml}
+            </div>
+        </div>
+        ${toggleBtnHtml}
+    </div>
+    `;
 }
 
 // --- NEW CATEGORY CONTENT RENDERER ---
