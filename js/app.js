@@ -277,18 +277,6 @@ function renderSidebar(role) {
     };
     container.appendChild(qaBtn);
 
-    // Helper to create submenu items
-    const createQaItem = (label, icon, colorClass, onClickFn) => {
-        const btn = document.createElement('button');
-        btn.className = `w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-${colorClass}-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-${colorClass}-500`;
-        btn.innerHTML = `<i class="fas ${icon} text-xs"></i> <span class="text-sm">${label}</span>`;
-        btn.onclick = () => {
-            onClickFn();
-            closeMobileSidebar();
-        };
-        return btn;
-    };
-
     // 1. Formative Activities
     const formativeBtn = document.createElement('button');
     formativeBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-yellow-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-yellow-500";
