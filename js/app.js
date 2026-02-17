@@ -412,6 +412,8 @@ function renderFormativeActivitiesPage() {
     if (typeof renderQuizzesAndActivities === 'function') {
         // Filter: Looks for 'formative' in the name/type
         renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Formative');
+    } else {
+        content.innerHTML = `<div class="p-8 text-center text-gray-500">Module not loaded properly.</div>`;
     }
 }
 
@@ -422,6 +424,8 @@ function renderSummativeActivitiesPage() {
     if (typeof renderQuizzesAndActivities === 'function') {
         // Filter: Looks for 'summative' in the name/type
         renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Summative');
+    } else {
+        content.innerHTML = `<div class="p-8 text-center text-gray-500">Module not loaded properly.</div>`;
     }
 }
 
@@ -432,6 +436,8 @@ function renderPerformanceTasksPage() {
     if (typeof renderQuizzesAndActivities === 'function') {
         // Filter: Looks for 'performance' in the name/type
         renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Performance'); 
+    } else {
+        content.innerHTML = `<div class="p-8 text-center text-gray-500">Module not loaded properly.</div>`;
     }
 }
 
@@ -443,7 +449,9 @@ function renderTermExamsPage() {
         // Filter: We use a custom logic check here if your backend supports multiple strings, 
         // otherwise we pass 'Exam' as a general filter. 
         // Given your request, we target 'MidTerm' or 'FinalTerm'.
-        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Exam'); 
+        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Exam');
+    } else {
+        content.innerHTML = `<div class="p-8 text-center text-gray-500">Module not loaded properly.</div>`;
     }
 }
 
