@@ -434,7 +434,7 @@ function renderTermExamsPage() {
 // Keep this for compatibility but it is now effectively replaced by the submenus above
    // function renderQuizzesActivitiesPage() {
    //    renderFormativeActivitiesPage(); 
-      }
+   // }
 function renderCreatorPage() {
     elements.pageTitle().innerText = "Quiz & Activity Creator";
     const content = elements.contentArea();
