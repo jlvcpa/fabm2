@@ -285,6 +285,7 @@ function renderSidebar(role) {
         renderFormativeActivitiesPage(); 
         closeMobileSidebar();
     };
+    qaSubmenu.appendChild(formativeBtn);
     
     // 2. Summative Activities
     const summativeBtn = document.createElement('button');
@@ -294,6 +295,7 @@ function renderSidebar(role) {
         renderSummativeActivitiesPage();
         closeMobileSidebar();
     };
+    qaSubmenu.appendChild(summativeBtn);
     
     // 3. Performance Tasks
     const perfTaskBtn = document.createElement('button');
@@ -303,6 +305,7 @@ function renderSidebar(role) {
         renderPerformanceTasksPage(); // Opens list filtered for 'accounting_cycle'
         closeMobileSidebar();
     };
+    qaSubmenu.appendChild(perfTaskBtn);
 
     // 4. Term Exams
     const termExamsBtn = document.createElement('button');
@@ -312,6 +315,8 @@ function renderSidebar(role) {
         renderTermExamsPage(); // Opens list filtered for 'accounting_cycle'
         closeMobileSidebar();
     };
+    qaSubmenu.appendChild(termExamsBtn);
+
     container.appendChild(qaSubmenu);
 
     // --- TEACHER TOOLS (Teachers Only) ---
