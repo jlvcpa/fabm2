@@ -288,9 +288,9 @@ function renderSidebar(role) {
     
     // 2. Summative Activities
     const summativeBtn = document.createElement('button');
-    perfTaskBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
-    perfTaskBtn.innerHTML = '<i class="fas fa-project-diagram text-xs"></i> <span class="text-sm">Summative Activities</span>';
-    perfTaskBtn.onclick = () => {
+    summativeBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
+    summativeBtn.innerHTML = '<i class="fas fa-project-diagram text-xs"></i> <span class="text-sm">Summative Activities</span>';
+    summativeBtn.onclick = () => {
         renderSummativeActivitiesPage();
         closeMobileSidebar();
     };
@@ -306,9 +306,9 @@ function renderSidebar(role) {
 
     // 4. Term Exams
     const termExamsBtn = document.createElement('button');
-    perfTaskBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
-    perfTaskBtn.innerHTML = '<i class="fas fa-project-diagram text-xs"></i> <span class="text-sm">Term Exams</span>';
-    perfTaskBtn.onclick = () => {
+    termExamsBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
+    termExamsBtn.innerHTML = '<i class="fas fa-project-diagram text-xs"></i> <span class="text-sm">Term Exams</span>';
+    termExamsBtn.onclick = () => {
         renderTermExamsPage(); // Opens list filtered for 'accounting_cycle'
         closeMobileSidebar();
     };
