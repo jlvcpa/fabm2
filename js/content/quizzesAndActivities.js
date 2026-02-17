@@ -163,24 +163,37 @@ async function loadStudentActivities(user, customRunner, filterType) {
                                       data.type === 'accounting_cycle' || 
                                       (data.activityname && data.activityname.includes('Task'));
 
-            // 3. APPLY SMART FILTERING
-            if (filterType) {
-                const searchStr = filterType.toLowerCase();
-                
-                if (filterType === 'Task' || filterType === 'Performance') {
-                    // Force only Performance Tasks
-                    if (!isPerformanceTask) return;
-                } else if (filterType === 'Test') {
-                    // Force only standard quizzes/tests
-                    if (isPerformanceTask) return;
-                } else {
-                    // Generic Keyword Matching (Formative, Summative, Exam, MidTerm, etc.)
-                    const nameMatch = data.activityname && data.activityname.toLowerCase().includes(searchStr);
-                    const typeMatch = data.type && data.type.toLowerCase().includes(searchStr);
-                    
-                    if (!nameMatch && !typeMatch) return;
+            // 2. Extract and Normalize Name/Type
+            const activityName = (data.activityname || "").toLowerCase();
+            
+            // 3. IMPLEMENT SPECIFIC FILTERING RULES
+            let matchesFilter = false;
+
+            if (filterType === 'Formative') {
+                if (activityName.includes('formative')) matchesFilter = true;
+            } 
+            else if (filterType === 'Summative') {
+                if (activityName.includes('summative')) matchesFilter = true;
+            } 
+            else if (filterType === 'Performance') {
+                if (activityName.includes('performance')) matchesFilter = true;
+            } 
+            else if (filterType === 'Exam') {
+                // Rule: Shall have "Midterm Exam" or "Final Exam"
+                if (activityName.includes('midterm exam') || activityName.includes('final exam')) {
+                    matchesFilter = true;
                 }
             }
+            // Fallback for general usage if filterType is 'Task' or 'Test'
+            else if (filterType === 'Task' || filterType === 'accounting_cycle') {
+                if (data.type === 'accounting_cycle' || activityName.includes('task')) matchesFilter = true;
+            }
+            else if (filterType === 'Test') {
+                if (!activityName.includes('task')) matchesFilter = true;
+            }
+
+            // If we have a filterType set and this activity doesn't match, skip it
+            if (filterType && !matchesFilter) return;
 
             hasItems = true;
             const expire = data.dateTimeExpire ? new Date(data.dateTimeExpire) : new Date();
