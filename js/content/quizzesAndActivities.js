@@ -163,10 +163,23 @@ async function loadStudentActivities(user, customRunner, filterType) {
                                       data.type === 'accounting_cycle' || 
                                       (data.activityname && data.activityname.includes('Task'));
 
-            if (filterType === 'Task' || filterType === 'accounting_cycle') {
-                if (!isPerformanceTask) return; 
-            } else if (filterType === 'Test') { // Changed 'standard' to 'Test' to match generic usage
-                if (isPerformanceTask) return;
+            // 3. APPLY SMART FILTERING
+            if (filterType) {
+                const searchStr = filterType.toLowerCase();
+                
+                if (filterType === 'Task' || filterType === 'Performance') {
+                    // Force only Performance Tasks
+                    if (!isPerformanceTask) return;
+                } else if (filterType === 'Test') {
+                    // Force only standard quizzes/tests
+                    if (isPerformanceTask) return;
+                } else {
+                    // Generic Keyword Matching (Formative, Summative, Exam, MidTerm, etc.)
+                    const nameMatch = data.activityname && data.activityname.toLowerCase().includes(searchStr);
+                    const typeMatch = data.type && data.type.toLowerCase().includes(searchStr);
+                    
+                    if (!nameMatch && !typeMatch) return;
+                }
             }
 
             hasItems = true;
