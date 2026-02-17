@@ -290,17 +290,40 @@ function renderSidebar(role) {
     };
 
     // 1. Formative Activities
-    qaSubmenu.appendChild(createQaItem('Formative Activities', 'fa-pencil-alt', 'yellow', renderFormativeActivitiesPage));
-
+    const formativeBtn = document.createElement('button');
+    formativeBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-yellow-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-yellow-500";
+    formativeBtn.innerHTML = '<i class="fas fa-check-square text-xs"></i> <span class="text-sm">Formative </span>';
+    formativeBtn.onclick = () => {
+        renderFormativeActivitiesPage(); 
+        closeMobileSidebar();
+    };
+    
     // 2. Summative Activities
-    qaSubmenu.appendChild(createQaItem('Summative Activities', 'fa-file-signature', 'orange', renderSummativeActivitiesPage));
-
+    const perfTaskBtn = document.createElement('button');
+    perfTaskBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
+    perfTaskBtn.innerHTML = '<i class="fas fa-project-diagram text-xs"></i> <span class="text-sm">Summative Activities</span>';
+    perfTaskBtn.onclick = () => {
+        renderSummativeActivitiesPage();
+        closeMobileSidebar();
+    };
+    
     // 3. Performance Tasks
-    qaSubmenu.appendChild(createQaItem('Performance Tasks', 'fa-project-diagram', 'indigo', renderPerformanceTasksPage));
+    const perfTaskBtn = document.createElement('button');
+    perfTaskBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
+    perfTaskBtn.innerHTML = '<i class="fas fa-project-diagram text-xs"></i> <span class="text-sm">Performance Tasks</span>';
+    perfTaskBtn.onclick = () => {
+        renderPerformanceTasksPage(); // Opens list filtered for 'accounting_cycle'
+        closeMobileSidebar();
+    };
 
     // 4. Term Exams
-    qaSubmenu.appendChild(createQaItem('Term Exams', 'fa-graduation-cap', 'red', renderTermExamsPage));
-
+    const perfTaskBtn = document.createElement('button');
+    perfTaskBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
+    perfTaskBtn.innerHTML = '<i class="fas fa-project-diagram text-xs"></i> <span class="text-sm">Term Exams</span>';
+    perfTaskBtn.onclick = () => {
+        renderTermExamsPage(); // Opens list filtered for 'accounting_cycle'
+        closeMobileSidebar();
+    };
     container.appendChild(qaSubmenu);
 
     // --- TEACHER TOOLS (Teachers Only) ---
