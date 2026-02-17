@@ -395,7 +395,7 @@ function renderFormativeActivitiesPage() {
     content.innerHTML = '';
     if (typeof renderQuizzesAndActivities === 'function') {
         // Filter: Looks for 'formative' in the name/type
-        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'formative');
+        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Formative');
     }
 }
 
@@ -405,7 +405,7 @@ function renderSummativeActivitiesPage() {
     content.innerHTML = '';
     if (typeof renderQuizzesAndActivities === 'function') {
         // Filter: Looks for 'summative' in the name/type
-        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'summative');
+        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Summative');
     }
 }
 
@@ -415,7 +415,7 @@ function renderPerformanceTasksPage() {
     content.innerHTML = '';
     if (typeof renderQuizzesAndActivities === 'function') {
         // Filter: Looks for 'performance' in the name/type
-        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'performance'); 
+        renderQuizzesAndActivities(content, currentUser, renderAccountingCycleActivity, 'Performance'); 
     }
 }
 
@@ -432,9 +432,9 @@ function renderTermExamsPage() {
 }
 
 // Keep this for compatibility but it is now effectively replaced by the submenus above
-function renderQuizzesActivitiesPage() {
-    renderFormativeActivitiesPage(); 
-}
+   // function renderQuizzesActivitiesPage() {
+   //    renderFormativeActivitiesPage(); 
+      }
 function renderCreatorPage() {
     elements.pageTitle().innerText = "Quiz & Activity Creator";
     const content = elements.contentArea();
