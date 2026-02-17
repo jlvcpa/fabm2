@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, doc, getDoc, setDoc, updateDoc, query, where, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, getDoc, setDoc, updateDoc, query, where, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 import { getLetterGrade } from "../utils.js"; 
 import { AntiCheatSystem } from '../antiCheat.js';
@@ -8,8 +8,9 @@ import { qbMerchMultipleChoice } from "./questionBank/qbMerchMultipleChoice.js";
 import { qbMerchProblemSolving } from "./questionBank/qbMerchProblemSolving.js";
 import { qbMerchJournalizing } from "./questionBank/qbMerchJournalizing.js";
 
-// --- IMPORT THE PREVIEW MODULE ---
-import { renderQuizResultPreview } from "./quizResultPreview.js";
+// --- IMPORT THE NEW PREVIEW MODULE ---
+// Ensure this matches the exported function name in activityResultPreview.js
+import { renderStudentResultDetail } from "./activityResultPreview.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAgOsKAZWwExUzupxSNytsfOo9BOppF0ng",
@@ -25,6 +26,7 @@ const db = getFirestore(app);
 
 let sectionIntervals = []; 
 let currentAntiCheat = null;
+let selectedSectionFilter = "All Sections"; // Default filter
 
 // --- GLOBAL QUESTION MAP (Source of Truth) ---
 const globalQuestionMap = new Map();
@@ -45,22 +47,44 @@ buildQuestionMap();
 // --- MAIN ENTRY POINT ---
 export async function renderQuizzesAndActivities(containerElement, user, customRunner = null, filterType = null) {
     const contentArea = containerElement;
+    
+    // UI Layout with Sidebar, Student List (Teacher Only), and Content Area
     contentArea.innerHTML = `
         <div class="flex h-full relative overflow-hidden bg-gray-50">
             <div id="qa-sidebar" class="w-full md:w-80 bg-white border-r border-gray-200 flex flex-col h-full z-10 transition-transform absolute md:relative transform -translate-x-full md:translate-x-0">
-                <div class="p-4 border-b border-gray-200 bg-blue-900 text-white flex justify-between items-center">
-                    <h2 class="font-bold">Your Activities</h2>
-                    <button id="qa-close-sidebar" class="md:hidden text-white"><i class="fas fa-times"></i></button>
+                <div class="p-1 border-b border-gray-200 bg-blue-900 text-white">
+                    <div class="flex justify-between items-center mb-3">
+                        <h2 class="font-bold text-sm">Activities</h2>
+                        <button id="qa-close-sidebar" class="md:hidden text-white"><i class="fas fa-times"></i></button>
+                    </div>
+                    
+                    <div id="teacher-filter-area" class="${user.role === 'teacher' ? '' : 'hidden'}">
+                        <select id="section-filter-dropdown" class="w-full p-2 rounded bg-blue-800 text-white text-xs border border-blue-700 outline-none focus:ring-1 focus:ring-blue-400">
+                            <option value="All Sections">Loading Sections...</option>
+                        </select>
+                    </div>
                 </div>
-                <div id="qa-list-container" class="flex-1 overflow-y-auto p-2 space-y-2">
-                    <p class="text-center text-gray-400 mt-4 text-sm">Loading activities...</p>
+                <div id="qa-list-container" class="flex-1 overflow-y-auto p-2 space-y-2 scrollbar-thin">
+                    <p class="text-center text-gray-400 mt-4 text-xs">Loading activities...</p>
                 </div>
             </div>
+
+            <div id="student-sidebar" class="w-64 bg-white border-r border-gray-200 hidden flex-col h-full shrink-0 z-0">
+                <div class="p-4 bg-gray-50 border-b">
+                    <h3 id="selected-activity-title" class="font-bold text-xs text-blue-900 truncate">Select Activity</h3>
+                    <p class="text-[10px] text-gray-500 uppercase font-bold tracking-tight mt-1">Student Submissions</p>
+                </div>
+                <div id="student-list-items" class="flex-1 overflow-y-auto scrollbar-thin">
+                    <div class="p-8 text-center text-gray-400 text-xs italic">Select an activity to see results.</div>
+                </div>
+            </div>
+
             <button id="qa-toggle-sidebar" class="md:hidden absolute top-4 left-4 z-20 bg-blue-900 text-white p-2 rounded shadow"><i class="fas fa-bars"></i></button>
-            <div id="qa-runner-container" class="flex-1 overflow-hidden relative bg-gray-100">
-                <div class="h-full flex flex-col items-center justify-center text-gray-400 p-4 md:p-8">
-                    <i class="fas fa-arrow-left text-4xl mb-4 hidden md:block"></i>
-                    <p>Select an activity from the list to begin.</p>
+            
+            <div id="qa-runner-container" class="flex-1 overflow-y-auto relative bg-gray-100 flex">
+                <div id="qa-placeholder" class="flex-1 flex flex-col items-center justify-center text-gray-400 p-4 md:p-8">
+                    <i class="fas fa-clipboard-check text-4xl mb-4"></i>
+                    <p>Select an activity to view details.</p>
                 </div>
             </div>
         </div>
@@ -73,7 +97,44 @@ export async function renderQuizzesAndActivities(containerElement, user, customR
     if (toggleBtn) toggleBtn.addEventListener('click', () => sidebar.classList.remove('-translate-x-full'));
     if (closeBtn) closeBtn.addEventListener('click', () => sidebar.classList.add('-translate-x-full'));
 
-    await loadStudentActivities(user, customRunner, filterType);
+    if (user.role === 'teacher') {
+        setupTeacherFilters(user, customRunner, filterType);
+    } else {
+        await loadStudentActivities(user, customRunner, filterType);
+    }
+}
+
+async function setupTeacherFilters(user, customRunner, filterType) {
+    const dropdown = document.getElementById('section-filter-dropdown');
+    
+    try {
+        const q = query(collection(db, "results_list"));
+        const snapshot = await getDocs(q);
+        const sections = new Set();
+        
+        snapshot.forEach(docSnap => {
+            const data = docSnap.data();
+            if (data.section) sections.add(data.section);
+        });
+
+        const sortedSections = Array.from(sections).sort();
+        // Construct Dropdown: Sections first, "All Sections" last as requested
+        dropdown.innerHTML = sortedSections.map(s => `<option value="${s}">${s}</option>`).join('') + 
+                           `<option value="All Sections" selected>All Sections</option>`;
+
+        dropdown.onchange = (e) => {
+            selectedSectionFilter = e.target.value;
+            // Hide student list if we change the section filter to avoid confusion
+            document.getElementById('student-sidebar').classList.add('hidden');
+            document.getElementById('student-sidebar').classList.remove('flex');
+            loadStudentActivities(user, customRunner, filterType);
+        };
+
+        // Initial Load
+        await loadStudentActivities(user, customRunner, filterType);
+    } catch (e) {
+        console.error("Error loading filters:", e);
+    }
 }
 
 async function loadStudentActivities(user, customRunner, filterType) {
@@ -85,11 +146,6 @@ async function loadStudentActivities(user, customRunner, filterType) {
         const snapshot = await getDocs(q);
 
         listContainer.innerHTML = '';
-        if(snapshot.empty) {
-            listContainer.innerHTML = '<p class="text-center text-gray-400 mt-4 text-sm">No activities found.</p>';
-            return;
-        }
-
         const now = new Date();
         let hasItems = false;
 
@@ -97,7 +153,11 @@ async function loadStudentActivities(user, customRunner, filterType) {
             const data = docSnap.data();
             data.id = docSnap.id; 
             
+            // Student Filter
             if (user.role === 'student' && data.section !== user.Section) return;
+            
+            // Teacher Filter
+            if (user.role === 'teacher' && selectedSectionFilter !== "All Sections" && data.section !== selectedSectionFilter) return;
             
             const isPerformanceTask = (data.tasks && Array.isArray(data.tasks)) || 
                                       data.type === 'accounting_cycle' || 
@@ -105,67 +165,60 @@ async function loadStudentActivities(user, customRunner, filterType) {
 
             if (filterType === 'Task' || filterType === 'accounting_cycle') {
                 if (!isPerformanceTask) return; 
-            } 
-            else if (filterType === 'standard') {
+            } else if (filterType === 'Test') { // Changed 'standard' to 'Test' to match generic usage
                 if (isPerformanceTask) return;
             }
 
             hasItems = true;
-
-            // Date Handling
-            let start, expire;
-            if (data.testQuestions && data.testQuestions.length > 0 && data.testQuestions[0].dateTimeStart) {
-                start = new Date(data.testQuestions[0].dateTimeStart);
-                expire = new Date(data.testQuestions[0].dateTimeExpire);
+            const expire = data.dateTimeExpire ? new Date(data.dateTimeExpire) : new Date();
+            const isExpired = now > expire;
+            
+            // Teacher gets simple cards, Students get detailed status cards
+            const card = document.createElement('div');
+            
+            if (user.role === 'teacher') {
+                 card.className = "p-3 rounded border border-gray-200 cursor-pointer hover:border-blue-500 hover:shadow-sm transition bg-white mb-2";
+                 card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <h3 class="font-bold text-gray-800 text-xs leading-tight">${data.activityname}</h3>
+                        <span class="text-[9px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded uppercase font-bold">${data.section}</span>
+                    </div>
+                    <p class="text-[9px] text-gray-400 mt-1">${isPerformanceTask ? 'Performance Task' : 'Standard Quiz'}</p>
+                `;
             } else {
-                start = new Date(data.dateTimeStart);
-                expire = new Date(data.dateTimeExpire);
+                let statusBadge = '';
+                if(isExpired) statusBadge = '<span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded font-bold">Expired</span>';
+                else if(now < new Date(data.dateTimeStart)) statusBadge = '<span class="text-xs bg-yellow-100 text-yellow-600 px-2 py-0.5 rounded font-bold">Upcoming</span>';
+                else statusBadge = '<span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded font-bold">Active</span>';
+
+                card.className = `p-3 rounded border cursor-pointer hover:shadow-md transition bg-white ${isExpired ? 'border-red-200 bg-red-50 opacity-75' : 'border-blue-200'} mb-2`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-bold text-gray-800 text-sm">${data.activityname}</h3>
+                        ${statusBadge}
+                    </div>
+                    <div class="text-xs text-gray-500">
+                        <p><i class="far fa-clock mr-1"></i> Due: ${expire.toLocaleString()}</p>
+                    </div>
+                `;
             }
 
-            const isExpired = now > expire;
-            const isFuture = now < start;
-
-            const card = document.createElement('div');
-            card.className = `p-3 rounded border cursor-pointer hover:shadow-md transition bg-white ${isExpired ? 'border-red-200 bg-red-50 opacity-75' : 'border-blue-200'}`;
-            
-            let statusBadge = '';
-            if(isExpired) statusBadge = '<span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded font-bold">Expired</span>';
-            else if(isFuture) statusBadge = '<span class="text-xs bg-yellow-100 text-yellow-600 px-2 py-0.5 rounded font-bold">Upcoming</span>';
-            else statusBadge = '<span class="text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded font-bold">Active</span>';
-
-            card.innerHTML = `
-                <div class="flex justify-between items-start mb-1">
-                    <h3 class="font-bold text-gray-800 text-sm">${data.activityname}</h3>
-                    ${statusBadge}
-                </div>
-                <div class="text-xs text-gray-500">
-                    <p><i class="far fa-clock mr-1"></i> Due: ${expire.toLocaleString()}</p>
-                </div>
-            `;
-
             card.onclick = () => {
-                if (isFuture && user.role !== 'teacher') {
-                    alert(`This activity starts on ${start.toLocaleString()}`);
+                // Clear state
+                sectionIntervals.forEach(int => clearInterval(int));
+                if(currentAntiCheat) currentAntiCheat.stopMonitoring();
+                
+                if (user.role === 'teacher') {
+                    showStudentSubmissions(data, user);
                 } else {
-                    sectionIntervals.forEach(int => clearInterval(int));
-                    sectionIntervals = [];
-
-                    if(currentAntiCheat) {
-                        currentAntiCheat.stopMonitoring();
-                        currentAntiCheat = null;
-                    }
-                    
                     renderQuizRunner(data, user, customRunner);
                     document.getElementById('qa-sidebar').classList.add('-translate-x-full');
                 }
             };
-
             listContainer.appendChild(card);
         });
         
-        if (!hasItems) {
-             listContainer.innerHTML = '<p class="text-center text-gray-400 mt-4 text-sm">No available activities for this category.</p>';
-        }
+        if (!hasItems) listContainer.innerHTML = '<p class="text-center text-gray-400 mt-4 text-xs">No matching activities.</p>';
 
     } catch (e) {
         console.error("Error loading activities:", e);
@@ -173,11 +226,90 @@ async function loadStudentActivities(user, customRunner, filterType) {
     }
 }
 
+/**
+ * TEACHER ONLY: Displays the list of students on the right when an activity is clicked
+ */
+async function showStudentSubmissions(activityDoc, teacherUser) {
+    const studentSidebar = document.getElementById('student-sidebar');
+    const listItems = document.getElementById('student-list-items');
+    const titleEl = document.getElementById('selected-activity-title');
+
+    studentSidebar.classList.remove('hidden');
+    studentSidebar.classList.add('flex');
+    titleEl.textContent = activityDoc.activityname;
+    listItems.innerHTML = '<div class="p-10 text-center"><i class="fas fa-spinner fa-spin text-blue-900"></i></div>';
+
+    const collectionName = `results_${activityDoc.activityname}_${activityDoc.section}`;
+    
+    try {
+        const snap = await getDocs(collection(db, collectionName));
+        listItems.innerHTML = '';
+        
+        if (snap.empty) {
+            listItems.innerHTML = '<div class="p-8 text-center text-gray-400 text-xs italic">No submissions yet.</div>';
+            return;
+        }
+
+        const students = [];
+        snap.forEach(docSnap => {
+            const data = docSnap.data();
+            const docId = docSnap.id;
+
+            // 1. Extract CN from the first part of ID
+            const extractedCN = docId.split('-')[0] || data.CN || '#';
+
+            // 2. Extract Name from the third part of ID
+            // This grabs "LastName FirstName" from the end of the string
+            const extractedName = docId.split('-')[2] || data.studentName || 'Unknown Student';
+            
+            students.push({ 
+                id: docId, 
+                ...data, 
+                CN: extractedCN,
+                studentName: extractedName // Overwrite with extracted name to fix 'undefined'
+            });
+        });
+        
+        // Sort by Class Number (CN)
+        students.sort((a, b) => (Number(a.CN) || 999) - (Number(b.CN) || 999));
+
+        students.forEach(res => {
+            const btn = document.createElement('button');
+            btn.className = "w-full text-left p-3 border-b border-gray-100 hover:bg-blue-50 transition-colors flex items-center gap-3 group";
+            btn.innerHTML = `
+                <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-gray-500 group-hover:bg-blue-200 group-hover:text-blue-700">${res.CN}</div>
+                <div class="truncate flex-1">
+                    <div class="text-xs font-bold text-gray-800">${res.studentName}</div>
+                    <div class="text-[9px] text-gray-400">${new Date(res.timestamp).toLocaleDateString()}</div>
+                </div>
+                <i class="fas fa-chevron-right text-[10px] text-gray-300"></i>
+            `;
+            
+            btn.onclick = () => {
+                const previewArea = document.getElementById('qa-runner-container');
+                if (previewArea._reactRoot) {
+                     previewArea._reactRoot.unmount();
+                     delete previewArea._reactRoot;
+                }
+                previewArea.innerHTML = '<div class="p-20 text-center"><i class="fas fa-spinner fa-spin text-4xl text-blue-900"></i><p class="mt-4 text-sm text-gray-500">Loading Student Result...</p></div>';
+                
+                // Pass the data (now containing the corrected name) to the viewer
+                renderStudentResultDetail(previewArea, teacherUser, activityDoc, res, collectionName, res.id);
+            };
+            listItems.appendChild(btn);
+        });
+    } catch (e) {
+        listItems.innerHTML = `<div class="p-4 text-red-500 text-xs">Error: ${e.message}</div>`;
+    }
+}
+
 async function renderQuizRunner(data, user, customRunner = null) {
     const container = document.getElementById('qa-runner-container');
     
     // --- SMART ROUTING LOGIC ---
-    const isAccountingCycle = data.tasks && Array.isArray(data.tasks) && data.tasks.length > 0;
+    const isAccountingCycle = (data.tasks && Array.isArray(data.tasks) && data.tasks.length > 0) || 
+                              data.type === 'accounting_cycle' || 
+                              (data.activityname && data.activityname.includes('Task'));
 
     if (isAccountingCycle && customRunner && typeof customRunner === 'function') {
         if (container._reactRoot) {
@@ -211,19 +343,48 @@ async function renderQuizRunner(data, user, customRunner = null) {
     const docId = `${user.CN}-${user.Idnumber}-${user.LastName} ${user.FirstName}`;
     let savedState = null;
 
+    // 1. Check for existing "Final" Results
     try {
         const resultDoc = await getDoc(doc(db, collectionName, docId));
         if (resultDoc.exists()) {
             const rData = resultDoc.data();
             if (rData.status === "final") {
-                // CALL THE NEW MODULE WITH DB & DOC INFO FOR UPDATES
-                await renderQuizResultPreview(data, user, rData, db, collectionName, docId);
+                // IMPORTANT: Let finished students see their results even if expired
+                // Clear any leftover HTML first
+                container.innerHTML = '';
+                renderStudentResultDetail(container, user, data, rData, collectionName, docId);
                 return;
             } else {
                 savedState = rData;
             }
         }
     } catch (e) { console.error(e); }
+
+    // 2. CHECK EXPIRY (REVISED - BLOCK ENTRY)
+    const now = new Date();
+    // Determine the correct expiry date (from main config or the first test section)
+    const expireDate = data.dateTimeExpire ? new Date(data.dateTimeExpire) : new Date(data.testQuestions?.[0]?.dateTimeExpire);
+    
+    // If current time is past expiry AND the student hasn't reached "final" status
+    if (now > expireDate && user.role !== 'teacher') {
+        container.innerHTML = `
+            <div class="h-full flex flex-col items-center justify-center text-center p-8 bg-white">
+                <div class="bg-red-50 p-10 rounded-2xl border-2 border-red-100 shadow-sm max-w-md">
+                    <i class="fas fa-clock text-red-400 text-6xl mb-6"></i>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Activity Expired</h2>
+                    <p class="text-gray-500 mb-6">The deadline for this activity was <strong>${expireDate.toLocaleString()}</strong>.</p>
+                    <div class="p-4 bg-red-100 text-red-800 rounded-lg font-medium text-sm">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        The activity has expired and you failed to answer or complete it.
+                    </div>
+                    <button onclick="document.getElementById('qa-toggle-sidebar').click()" class="mt-8 px-6 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition shadow">
+                        Return to List
+                    </button>
+                </div>
+            </div>`;
+        return; // Stop here and do not load the quiz
+    }
+    // --- END OF EXPIRED HANDLER ---
 
     container.innerHTML = '<div class="flex justify-center items-center h-full"><i class="fas fa-spinner fa-spin text-4xl text-blue-800"></i><span class="ml-3">Generating Activity...</span></div>';
     
@@ -666,11 +827,15 @@ function initializeQuizManager(activityData, questionData, user, savedState) {
                     timerDisplay.parentElement.classList.add('text-red-800');
                 }
                 
-                // AUTO SUBMIT TRIGGER
+                // EXPIRE HANDLER: NO AUTO-SUBMIT
                 if (!hasSubmittedOnExpire) {
                     hasSubmittedOnExpire = true;
-                    // Pass 'true' for force submit to skip confirmation
-                    submitQuiz(activityData, questionData, user, true, true);
+                    // Stop all timers
+                    sectionIntervals.forEach(i => clearInterval(i));
+                    // Alert the user
+                    alert("Time is up! Your current progress is locked but will not be auto-submitted. Please contact your instructor.");
+                    // Force refresh to trigger the "Access Denied" screen
+                    window.location.reload();
                 }
                 
             } else {
@@ -942,14 +1107,14 @@ async function saveProgress(activityData, questionData, user) {
                  const inputs = document.querySelectorAll(`input[name^="${q.uiId}"]`);
                  let currentRow = {};
                  inputs.forEach(input => {
-                      const name = input.name;
-                      const parts = name.split('_'); 
-                      const tIdx = parts[2];
-                      const rIdx = parts[3];
-                      const field = parts[4];
-                      const key = `${tIdx}_${rIdx}`;
-                      if(!currentRow[key]) currentRow[key] = {};
-                      currentRow[key][field] = input.value;
+                       const name = input.name;
+                       const parts = name.split('_'); 
+                       const tIdx = parts[2];
+                       const rIdx = parts[3];
+                       const field = parts[4];
+                       const key = `${tIdx}_${rIdx}`;
+                       if(!currentRow[key]) currentRow[key] = {};
+                       currentRow[key][field] = input.value;
                  });
                  value = currentRow; hasValue = true;
              }
@@ -984,6 +1149,16 @@ async function saveProgress(activityData, questionData, user) {
 
     try {
         await setDoc(doc(db, collectionName, docName), payload);
+        
+        // Ensure this progress is registered in the list so teachers can see it
+        // even if it's not "final" yet.
+        const listId = `${activityData.activityname}_${activityData.section}`;
+        await setDoc(doc(db, "results_list", listId), { 
+            created: new Date().toISOString(),
+            activityName: activityData.activityname,
+            section: activityData.section
+        }, { merge: true });
+
         alert("Progress saved! Page will reload to lock saved answers.");
         renderQuizRunner(activityData, user); // Reload to apply disabled state
     } catch (e) {
@@ -1040,24 +1215,24 @@ async function submitQuiz(activityData, questionData, user, isFinal = false, for
              const disabledInput = document.querySelector(`[name="${q.uiId}"][disabled]`);
              if (disabledInput) {
                  if (q.type === 'Multiple Choice') {
-                     const chk = document.querySelector(`input[name="${q.uiId}"]:checked`);
-                     if(chk) val = chk.value;
+                      const chk = document.querySelector(`input[name="${q.uiId}"]:checked`);
+                      if(chk) val = chk.value;
                  } else if (q.type === 'Problem Solving') {
-                     val = disabledInput.value;
+                      val = disabledInput.value;
                  } else if (q.type === 'Journalizing') {
-                     const inputs = document.querySelectorAll(`input[name^="${q.uiId}"]`);
-                     let currentRow = {};
-                     inputs.forEach(input => {
-                          const name = input.name;
-                          const parts = name.split('_'); 
-                          const tIdx = parts[2];
-                          const rIdx = parts[3];
-                          const field = parts[4];
-                          const key = `${tIdx}_${rIdx}`;
-                          if(!currentRow[key]) currentRow[key] = {};
-                          currentRow[key][field] = input.value;
-                      });
-                      val = currentRow;
+                      const inputs = document.querySelectorAll(`input[name^="${q.uiId}"]`);
+                      let currentRow = {};
+                      inputs.forEach(input => {
+                           const name = input.name;
+                           const parts = name.split('_'); 
+                           const tIdx = parts[2];
+                           const rIdx = parts[3];
+                           const field = parts[4];
+                           const key = `${tIdx}_${rIdx}`;
+                           if(!currentRow[key]) currentRow[key] = {};
+                           currentRow[key][field] = input.value;
+                       });
+                       val = currentRow;
                  }
              }
         }
@@ -1090,7 +1265,9 @@ async function submitQuiz(activityData, questionData, user, isFinal = false, for
     try {
         await setDoc(doc(db, collectionName, docName), submissionPayload);
         
-        await setDoc(doc(db, "results_list", collectionName), { 
+        // FIXED: Use a consistent ID generation strategy for the results_list
+        const listId = `${activityData.activityname}_${activityData.section}`;
+        await setDoc(doc(db, "results_list", listId), { 
             created: new Date().toISOString(),
             activityName: activityData.activityname,
             section: activityData.section
