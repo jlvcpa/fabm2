@@ -137,10 +137,13 @@ function renderSidebar(role) {
     const container = elements.navContainer();
     container.innerHTML = ''; 
 
+    // IMPORTANT: Ensure the sidebar element has the 'group' class for the CSS logic to work
+    elements.sidebar().classList.add('group');
+
     // Course Outline Button
     const outlineBtn = document.createElement('button');
     outlineBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-blue-500 focus:outline-none whitespace-nowrap overflow-hidden";
-    outlineBtn.innerHTML = '<i class="fas fa-home w-6"></i> <span class="sidebar-text-detail">Course Outline</span>';
+    outlineBtn.innerHTML = '<i class="fas fa-home w-6"></i> <span class="sidebar-text-detail group-[.collapsed]:hidden">Course Outline</span>';
     outlineBtn.onclick = () => {
         renderLandingPage();
         closeMobileSidebar();
@@ -150,7 +153,8 @@ function renderSidebar(role) {
     // Dynamic Terms/Units
     courseData.terms.forEach(term => {
         const termHeader = document.createElement('div');
-        termHeader.className = "px-6 py-2 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden";
+        // Hide headers in collapsed mode
+        termHeader.className = "px-6 py-2 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden group-[.collapsed]:hidden";
         termHeader.textContent = term.title;
         container.appendChild(termHeader);
 
@@ -160,19 +164,26 @@ function renderSidebar(role) {
             const unitSuffix = unitParts.slice(1).join(':');
 
             const unitBtn = document.createElement('button');
-            unitBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors flex justify-between items-center group whitespace-nowrap overflow-hidden";
+            unitBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors flex justify-between items-center group/item whitespace-nowrap overflow-hidden";
+            
+            // Logic: Show Full Title normally, show Prefix only (e.g., "Unit 1") when collapsed
             unitBtn.innerHTML = `
                 <div class="truncate pr-2">
                     <span class="font-bold text-sm">${unitPrefix}</span>
-                    <span class="font-medium text-sm sidebar-text-detail">:${unitSuffix}</span>
+                    <span class="font-medium text-sm sidebar-text-detail group-[.collapsed]:hidden">:${unitSuffix}</span>
                 </div>
-                <i class="fas fa-chevron-down text-xs transform transition-transform duration-300 group-hover:text-blue-400"></i>
+                <i class="fas fa-chevron-down text-xs transform transition-transform duration-300 group-hover/item:text-blue-400 group-[.collapsed]:hidden"></i>
             `;
             
             const unitSubmenu = document.createElement('div');
-            unitSubmenu.className = "unit-submenu bg-slate-950 hidden"; 
+            unitSubmenu.className = "unit-submenu bg-slate-950 hidden group-[.collapsed]:hidden"; // Hide submenus entirely in collapsed mode
             
             unitBtn.onclick = () => {
+                // Auto-expand sidebar if user clicks a Unit while collapsed
+                if(elements.sidebar().classList.contains('collapsed')) {
+                    elements.sidebar().classList.remove('collapsed');
+                }
+
                 const icon = unitBtn.querySelector('.fa-chevron-down');
                 if (unitSubmenu.classList.contains('hidden')) {
                     unitSubmenu.classList.remove('hidden');
@@ -189,13 +200,13 @@ function renderSidebar(role) {
                 const weekSuffix = weekParts.slice(1).join(':');
 
                 const weekBtn = document.createElement('button');
-                weekBtn.className = "w-full text-left pl-10 pr-6 py-2 text-sm text-slate-400 hover:text-blue-300 hover:bg-slate-900 transition-colors border-l-2 border-transparent hover:border-blue-500 relative whitespace-nowrap overflow-hidden flex justify-between items-center group";
+                weekBtn.className = "w-full text-left pl-10 pr-6 py-2 text-sm text-slate-400 hover:text-blue-300 hover:bg-slate-900 transition-colors border-l-2 border-transparent hover:border-blue-500 relative whitespace-nowrap overflow-hidden flex justify-between items-center group/week";
                 
                 weekBtn.innerHTML = `
                     <div class="truncate">
                         <span>${weekPrefix}</span><span class="sidebar-text-detail">:${weekSuffix}</span>
                     </div>
-                    ${(week.days && week.days.length > 0) ? '<i class="fas fa-chevron-down text-[10px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></i>' : ''}
+                    ${(week.days && week.days.length > 0) ? '<i class="fas fa-chevron-down text-[10px] opacity-0 group-hover/week:opacity-100 transition-opacity duration-300"></i>' : ''}
                 `;
                 
                 const daySubmenu = document.createElement('div');
@@ -237,9 +248,6 @@ function renderSidebar(role) {
                                 icon.classList.add('rotate-180', 'opacity-100', 'text-blue-400');
                                 icon.classList.remove('opacity-0');
                             }
-                            if (elements.sidebar().classList.contains('collapsed')) {
-                                elements.sidebar().classList.remove('collapsed');
-                            }
                         }
                     };
                 } else {
@@ -257,18 +265,27 @@ function renderSidebar(role) {
 
     // --- QUIZZES AND ACTIVITIES (Organized Submenus) ---
     const qaHeader = document.createElement('div');
-    qaHeader.className = "px-6 py-2 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden";
+    qaHeader.className = "px-6 py-2 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden group-[.collapsed]:hidden";
     qaHeader.textContent = "Assessments";
     container.appendChild(qaHeader);
 
     // Parent Button for Quizzes & Activities
     const qaBtn = document.createElement('button');
-    qaBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-yellow-500 focus:outline-none whitespace-nowrap overflow-hidden flex justify-between items-center group";
-    qaBtn.innerHTML = '<span><i class="fas fa-clipboard-list w-6"></i> Quizzes & Activities</span> <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>';
+    qaBtn.className = "w-full text-left px-6 py-2 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors border-l-4 border-transparent hover:border-yellow-500 focus:outline-none whitespace-nowrap overflow-hidden flex justify-between items-center group/qa";
+    
+    // UPDATED: Toggles between "Quizzes & Activities" and "Q & A"
+    qaBtn.innerHTML = `
+        <span class="flex items-center">
+            <i class="fas fa-clipboard-list w-6 shrink-0"></i> 
+            <span class="group-[.collapsed]:hidden ml-1">Quizzes & Activities</span>
+            <span class="hidden group-[.collapsed]:inline pl-1 font-bold">Q & A</span>
+        </span> 
+        <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-[.collapsed]:hidden"></i>
+    `;
     
     // Submenu Container
     const qaSubmenu = document.createElement('div');
-    qaSubmenu.className = "hidden bg-slate-950 border-l border-slate-800 ml-4 mb-2";
+    qaSubmenu.className = "hidden bg-slate-950 border-l border-slate-800 ml-4 mb-2 group-[.collapsed]:ml-0 group-[.collapsed]:border-l-0";
 
     qaBtn.onclick = () => {
         qaSubmenu.classList.toggle('hidden');
@@ -277,42 +294,51 @@ function renderSidebar(role) {
     };
     container.appendChild(qaBtn);
 
-    // 1. Formative Activities
+    // Helper for Short/Long Text generation
+    const createMenuLabel = (icon, text, shortText) => {
+        return `
+            <i class="fas ${icon} text-xs w-4 text-center shrink-0"></i> 
+            <span class="text-sm ml-2 group-[.collapsed]:hidden">${text}</span>
+            <span class="text-sm ml-2 hidden group-[.collapsed]:inline font-bold">${shortText}</span>
+        `;
+    };
+
+    // 1. Formative Activities -> FA
     const formativeBtn = document.createElement('button');
-    formativeBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-yellow-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-yellow-500";
-    formativeBtn.innerHTML = '<i class="fas fa-check-square text-xs"></i> <span class="text-sm">Formative Activities</span>';
+    formativeBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-yellow-400 transition-colors flex items-center gap-0 border-l-2 border-transparent hover:border-yellow-500";
+    formativeBtn.innerHTML = createMenuLabel('fa-check-square', 'Formative Activities', 'FA');
     formativeBtn.onclick = () => {
         renderFormativeActivitiesPage(); 
         closeMobileSidebar();
     };
     qaSubmenu.appendChild(formativeBtn);
     
-    // 2. Summative Activities
+    // 2. Summative Activities -> SA
     const summativeBtn = document.createElement('button');
-    summativeBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
-    summativeBtn.innerHTML = '<i class="fas fa-project-diagram text-xs"></i> <span class="text-sm">Summative Activities</span>';
+    summativeBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-0 border-l-2 border-transparent hover:border-indigo-500";
+    summativeBtn.innerHTML = createMenuLabel('fa-project-diagram', 'Summative Activities', 'SA');
     summativeBtn.onclick = () => {
         renderSummativeActivitiesPage();
         closeMobileSidebar();
     };
     qaSubmenu.appendChild(summativeBtn);
     
-    // 3. Performance Tasks
+    // 3. Performance Tasks -> PT
     const perfTaskBtn = document.createElement('button');
-    perfTaskBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
-    perfTaskBtn.innerHTML = '<i class="fas fa-project-diagram text-xs"></i> <span class="text-sm">Performance Tasks</span>';
+    perfTaskBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-0 border-l-2 border-transparent hover:border-indigo-500";
+    perfTaskBtn.innerHTML = createMenuLabel('fa-tasks', 'Performance Tasks', 'PT');
     perfTaskBtn.onclick = () => {
-        renderPerformanceTasksPage(); // Opens list filtered for 'accounting_cycle'
+        renderPerformanceTasksPage();
         closeMobileSidebar();
     };
     qaSubmenu.appendChild(perfTaskBtn);
 
-    // 4. Term Exams
+    // 4. Term Exams -> TE
     const termExamsBtn = document.createElement('button');
-    termExamsBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
-    termExamsBtn.innerHTML = '<i class="fas fa-project-diagram text-xs"></i> <span class="text-sm">Term Exams</span>';
+    termExamsBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-0 border-l-2 border-transparent hover:border-indigo-500";
+    termExamsBtn.innerHTML = createMenuLabel('fa-file-signature', 'Term Exams', 'TE');
     termExamsBtn.onclick = () => {
-        renderTermExamsPage(); // Opens list filtered for 'accounting_cycle'
+        renderTermExamsPage();
         closeMobileSidebar();
     };
     qaSubmenu.appendChild(termExamsBtn);
@@ -322,8 +348,11 @@ function renderSidebar(role) {
     if (role === 'teacher') {
         const creatorHeader = document.createElement('button');
         creatorHeader.className = "w-full text-left px-6 py-3 mt-4 text-xs font-bold text-slate-500 uppercase tracking-wider sidebar-text-detail whitespace-nowrap overflow-hidden flex justify-between items-center group hover:text-slate-300 focus:outline-none";
-        creatorHeader.innerHTML = '<span>Teacher Tools</span> <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>';
-        
+        // Hide Teacher Tools header text when collapsed, show icon maybe? Or hide completely.
+        creatorHeader.innerHTML = '<span>Teacher Tools</span> <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-[.collapsed]:hidden"></i>';
+        // Hide this header entirely if collapsed to save space or adjust as needed
+        creatorHeader.classList.add("group-[.collapsed]:hidden");
+
         const toolsSubmenu = document.createElement('div');
         toolsSubmenu.className = "hidden bg-slate-950 border-l border-slate-800 ml-4 mb-4"; 
 
@@ -338,22 +367,22 @@ function renderSidebar(role) {
         };
 
         container.appendChild(creatorHeader);
-        container.appendChild(toolsSubmenu); // <--- THIS WAS MISSING. IT IS REQUIRED.
+        container.appendChild(toolsSubmenu);
         
-        // 1. Quiz & Activity Creator (Original)
+        // 1. Quiz & Activity Creator
         const creatorBtn = document.createElement('button');
         creatorBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-green-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-green-500";
-        creatorBtn.innerHTML = '<i class="fas fa-magic text-xs"></i> <span class="text-sm">Quiz Creator</span>';
+        creatorBtn.innerHTML = '<i class="fas fa-magic text-xs w-4"></i> <span class="text-sm">Quiz Creator</span>';
         creatorBtn.onclick = () => {
             renderCreatorPage(); 
             closeMobileSidebar();
         };
         toolsSubmenu.appendChild(creatorBtn);
 
-        // 2. Accounting Cycle Manager (NEW)
+        // 2. Accounting Cycle Manager
         const accCycleBtn = document.createElement('button');
         accCycleBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-indigo-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-indigo-500";
-        accCycleBtn.innerHTML = '<i class="fas fa-cogs text-xs"></i> <span class="text-sm">AC Manager</span>';
+        accCycleBtn.innerHTML = '<i class="fas fa-cogs text-xs w-4"></i> <span class="text-sm">AC Manager</span>';
         accCycleBtn.onclick = () => {
             renderAccCycleCreatorPage(); 
             closeMobileSidebar();
@@ -363,7 +392,7 @@ function renderSidebar(role) {
         // 3. Course Schedule
         const calendarBtn = document.createElement('button');
         calendarBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-purple-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-purple-500";
-        calendarBtn.innerHTML = '<i class="fas fa-calendar-alt text-xs"></i> <span class="text-sm">Schedule</span>';
+        calendarBtn.innerHTML = '<i class="fas fa-calendar-alt text-xs w-4"></i> <span class="text-sm">Schedule</span>';
         calendarBtn.onclick = () => {
             renderCalendarPage();
             closeMobileSidebar();
@@ -373,13 +402,12 @@ function renderSidebar(role) {
         // 4. Question Bank Importer
         const importerBtn = document.createElement('button');
         importerBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-blue-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-blue-500";
-        importerBtn.innerHTML = '<i class="fas fa-file-import text-xs"></i> <span class="text-sm">Importer</span>';
+        importerBtn.innerHTML = '<i class="fas fa-file-import text-xs w-4"></i> <span class="text-sm">Importer</span>';
         importerBtn.onclick = () => {
             renderQuestionImporterPage();
             closeMobileSidebar();
         };
         toolsSubmenu.appendChild(importerBtn);
-
     }
 }
 
