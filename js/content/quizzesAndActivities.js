@@ -523,6 +523,7 @@ async function renderQuizRunner(data, user, customRunner = null) {
 }
 
 // --- CONTENT GENERATOR ---
+// --- CONTENT GENERATOR ---
 async function generateQuizContent(activityData, savedState = null) {
     let tabsHtml = '';
     let sectionsHtml = '';
@@ -593,28 +594,6 @@ async function generateQuizContent(activityData, savedState = null) {
 
         sectionsHtml += `<div id="test-section-${index}" class="test-section-panel w-full ${isHidden}" data-section-type="${section.type}">`;
 
-        // -- STICKY HEADER IMPLEMENTATION --
-        const stickyHeaderHtml = `
-            <div class="sticky top-14 bg-blue-50 border-b border-blue-200 px-4 py-2 z-10 shadow-sm mb-4">
-                <div class="flex flex-col gap-.5 text-xs text-gray-700">
-                    <h3 class="text-lg font-semibold border-b pb-1 text-blue-900">
-                        <span class="font-bold text-blue-800">Type:</span> ${section.type}
-                    </h3>
-                    <div class="border-b pb-1">
-                        <span class="font-bold text-blue-800">Topic:</span> ${section.topics}
-                    </div>
-                    <div class="border-b pb-1">
-                        <span class="font-bold text-blue-800">Instruction:</span> ${section.instructions}
-                    </div>
-                    <div class="border-b pb-1">
-                        <span class="font-bold text-blue-800">Rubric:</span> ${section.gradingRubrics || 'N/A'}
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        sectionsHtml += stickyHeaderHtml;
-
         let questions = [];
         const count = parseInt(section.noOfQuestions) || 5;
 
@@ -645,15 +624,11 @@ async function generateQuizContent(activityData, savedState = null) {
             const uiId = `s${index}_q${i}`;
             let selectedQ = null;
 
-            // 1. Try to load SAVED question for this specific slot
             if (savedState && savedState.questionsTaken && savedState.questionsTaken[uiId]) {
                 const savedRef = savedState.questionsTaken[uiId];
-                
-                // FORCE LOOKUP: We primarily trust the Live Source Map now
                 if (savedRef.dbId && globalQuestionMap.has(savedRef.dbId)) {
                     selectedQ = { ...globalQuestionMap.get(savedRef.dbId) };
                 } else {
-                    // Fallback to saved ref if source is missing (e.g. deleted question)
                     selectedQ = {
                         id: savedRef.id || "legacy",
                         question: savedRef.questionText,
@@ -667,7 +642,6 @@ async function generateQuizContent(activityData, savedState = null) {
                 selectedQ.isSaved = true; 
             } 
             
-            // 2. If no saved question for this slot, pick NEW random
             if (!selectedQ) {
                 if (candidates.length > 0) {
                     selectedQ = candidates.pop(); 
@@ -677,6 +651,35 @@ async function generateQuizContent(activityData, savedState = null) {
 
             if (selectedQ) questions.push(selectedQ);
         }
+
+        // --- DYNAMIC INSTRUCTION LOGIC ---
+        // We check if the first question has specific instructions. 
+        // If it does, we use it. Otherwise, we fall back to the activity config.
+        const displayInstructions = (questions.length > 0 && questions[0].instructions) 
+            ? questions[0].instructions 
+            : section.instructions;
+
+        // -- STICKY HEADER IMPLEMENTATION --
+        const stickyHeaderHtml = `
+            <div class="sticky top-14 bg-blue-50 border-b border-blue-200 px-4 py-2 z-10 shadow-sm mb-4">
+                <div class="flex flex-col gap-.5 text-xs text-gray-700">
+                    <h3 class="text-lg font-semibold border-b pb-1 text-blue-900">
+                        <span class="font-bold text-blue-800">Type:</span> ${section.type}
+                    </h3>
+                    <div class="border-b pb-1">
+                        <span class="font-bold text-blue-800">Topic:</span> ${section.topics}
+                    </div>
+                    <div class="border-b pb-1">
+                        <span class="font-bold text-blue-800">Instruction:</span> ${displayInstructions}
+                    </div>
+                    <div class="border-b pb-1">
+                        <span class="font-bold text-blue-800">Rubric:</span> ${section.gradingRubrics || 'N/A'}
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        sectionsHtml += stickyHeaderHtml;
         
         let questionsHtml = '';
         let trackerHtml = '';
