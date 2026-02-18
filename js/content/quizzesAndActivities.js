@@ -254,6 +254,7 @@ async function loadStudentActivities(user, customRunner, filterType) {
 
 /**
  * TEACHER ONLY: Displays the list of students on the right when an activity is clicked
+ * MODIFIED: Now fetches ALL students in the section and highlights those without results.
  */
 async function showStudentSubmissions(activityDoc, teacherUser) {
     const studentSidebar = document.getElementById('student-sidebar');
@@ -263,72 +264,117 @@ async function showStudentSubmissions(activityDoc, teacherUser) {
     studentSidebar.classList.remove('hidden');
     studentSidebar.classList.add('flex');
     titleEl.textContent = activityDoc.activityname;
-    listItems.innerHTML = '<div class="p-10 text-center"><i class="fas fa-spinner fa-spin text-blue-900"></i></div>';
+    listItems.innerHTML = '<div class="p-10 text-center"><i class="fas fa-spinner fa-spin text-blue-900"></i><p class="text-xs text-gray-500 mt-2">Loading Class Roster...</p></div>';
 
     const collectionName = `results_${activityDoc.activityname}_${activityDoc.section}`;
     
     try {
-        const snap = await getDocs(collection(db, collectionName));
+        // 1. Fetch the Actual Results (Answers)
+        const resultsSnap = await getDocs(collection(db, collectionName));
+        const resultsMap = new Map();
+        
+        resultsSnap.forEach(docSnap => {
+            const rData = docSnap.data();
+            // Map results by Student ID for fast lookup
+            // Fallback: parse ID if studentId field is missing
+            const sId = rData.studentId || docSnap.id.split('-')[1]; 
+            resultsMap.set(sId, { id: docSnap.id, ...rData });
+        });
+
+        // 2. Fetch the Master Student List for this Section
+        const studentsQuery = query(collection(db, 'students'), where('Section', '==', activityDoc.section));
+        const studentsSnap = await getDocs(studentsQuery);
+
         listItems.innerHTML = '';
         
-        if (snap.empty) {
-            listItems.innerHTML = '<div class="p-8 text-center text-gray-400 text-xs italic">No submissions yet.</div>';
+        if (studentsSnap.empty) {
+            listItems.innerHTML = '<div class="p-8 text-center text-gray-400 text-xs italic">No students found in this section.</div>';
             return;
         }
 
-        const students = [];
-        snap.forEach(docSnap => {
-            const data = docSnap.data();
-            const docId = docSnap.id;
+        const roster = [];
 
-            // 1. Extract CN from the first part of ID
-            const extractedCN = docId.split('-')[0] || data.CN || '#';
+        // 3. Merge Data
+        studentsSnap.forEach(docSnap => {
+            const sData = docSnap.data();
+            const resultData = resultsMap.get(sData.Idnumber); // Check if this student has a result
 
-            // 2. Extract Name from the third part of ID
-            // This grabs "LastName FirstName" from the end of the string
-            const extractedName = docId.split('-')[2] || data.studentName || 'Unknown Student';
-            
-            students.push({ 
-                id: docId, 
-                ...data, 
-                CN: extractedCN,
-                studentName: extractedName // Overwrite with extracted name to fix 'undefined'
+            roster.push({
+                ...sData, // Contains CN, LastName, FirstName, Idnumber
+                hasResult: !!resultData,
+                resultData: resultData || null,
+                // If no result, use placeholder timestamp or null
+                timestamp: resultData ? resultData.timestamp : null 
             });
         });
-        
-        // Sort by Class Number (CN)
-        students.sort((a, b) => (Number(a.CN) || 999) - (Number(b.CN) || 999));
 
-        students.forEach(res => {
+        // 4. Sort by Class Number (CN)
+        roster.sort((a, b) => (Number(a.CN) || 999) - (Number(b.CN) || 999));
+
+        // 5. Render List
+        roster.forEach(student => {
             const btn = document.createElement('button');
-            btn.className = "w-full text-left p-3 border-b border-gray-100 hover:bg-blue-50 transition-colors flex items-center gap-3 group";
+            
+            // CONDITIONAL STYLING:
+            // If hasResult = Normal (White/Blue hover)
+            // If !hasResult = Red Background
+            const bgClass = student.hasResult 
+                ? "bg-white hover:bg-blue-50 border-gray-100" 
+                : "bg-red-100 hover:bg-red-200 border-red-200";
+
+            const statusText = student.hasResult 
+                ? `<div class="text-[9px] text-gray-400">${new Date(student.timestamp).toLocaleDateString()}</div>`
+                : `<div class="text-[9px] text-red-500 font-bold italic">No Submission</div>`;
+
+            btn.className = `w-full text-left p-3 border-b transition-colors flex items-center gap-3 group ${bgClass}`;
+            
             btn.innerHTML = `
-                <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-gray-500 group-hover:bg-blue-200 group-hover:text-blue-700">${res.CN}</div>
+                <div class="w-6 h-6 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[10px] font-bold text-gray-500 group-hover:text-blue-700">${student.CN}</div>
                 <div class="truncate flex-1">
-                    <div class="text-xs font-bold text-gray-800">${res.studentName}</div>
-                    <div class="text-[9px] text-gray-400">${new Date(res.timestamp).toLocaleDateString()}</div>
+                    <div class="text-xs font-bold text-gray-800">${student.LastName}, ${student.FirstName}</div>
+                    ${statusText}
                 </div>
-                <i class="fas fa-chevron-right text-[10px] text-gray-300"></i>
+                <i class="fas fa-chevron-right text-[10px] text-gray-400 opacity-50"></i>
             `;
             
             btn.onclick = () => {
                 const previewArea = document.getElementById('qa-runner-container');
                 if (previewArea._reactRoot) {
-                     previewArea._reactRoot.unmount();
-                     delete previewArea._reactRoot;
+                      previewArea._reactRoot.unmount();
+                      delete previewArea._reactRoot;
                 }
-                previewArea.innerHTML = '<div class="p-20 text-center"><i class="fas fa-spinner fa-spin text-4xl text-blue-900"></i><p class="mt-4 text-sm text-gray-500">Loading Student Result...</p></div>';
                 
-                // Pass the data (now containing the corrected name) to the viewer
-                renderStudentResultDetail(previewArea, teacherUser, activityDoc, res, collectionName, res.id);
+                // CONDITIONAL VIEWING LOGIC
+                if (student.hasResult) {
+                    previewArea.innerHTML = '<div class="p-20 text-center"><i class="fas fa-spinner fa-spin text-4xl text-blue-900"></i><p class="mt-4 text-sm text-gray-500">Loading Student Result...</p></div>';
+                    renderStudentResultDetail(previewArea, teacherUser, activityDoc, student.resultData, collectionName, student.resultData.id);
+                } else {
+                    // Display "Not Taken" message directly
+                    previewArea.innerHTML = `
+                        <div class="h-full flex flex-col items-center justify-center text-center p-8 bg-gray-50">
+                            <div class="bg-white p-10 rounded-2xl border border-gray-200 shadow-sm max-w-md">
+                                <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i class="fas fa-user-clock text-red-400 text-4xl"></i>
+                                </div>
+                                <h2 class="text-2xl font-bold text-gray-800 mb-2">${student.LastName}, ${student.FirstName}</h2>
+                                <p class="text-gray-500 mb-6">This student has not started or submitted this activity yet.</p>
+                                <div class="p-4 bg-gray-100 text-gray-600 rounded-lg text-xs font-mono">
+                                    Status: No Record Found<br>
+                                    ID: ${student.Idnumber}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
             };
             listItems.appendChild(btn);
         });
+
     } catch (e) {
-        listItems.innerHTML = `<div class="p-4 text-red-500 text-xs">Error: ${e.message}</div>`;
+        console.error(e);
+        listItems.innerHTML = `<div class="p-4 text-red-500 text-xs">Error loading roster: ${e.message}</div>`;
     }
 }
-
 async function renderQuizRunner(data, user, customRunner = null) {
     const container = document.getElementById('qa-runner-container');
     
