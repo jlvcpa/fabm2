@@ -30,14 +30,29 @@ let selectedSectionFilter = "All Sections"; // Default filter
 
 // --- GLOBAL QUESTION MAP (Source of Truth) ---
 const globalQuestionMap = new Map();
+
 function buildQuestionMap() {
     if (globalQuestionMap.size > 0) return;
+    
     const allSources = [qbMerchMultipleChoice, qbMerchProblemSolving, qbMerchJournalizing];
-    allSources.forEach(sourceArray => {
-        if(Array.isArray(sourceArray)) {
-            sourceArray.forEach(item => {
+    
+    allSources.forEach(source => {
+        if (Array.isArray(source)) {
+            // CASE 1: Source is an Array (e.g., Multiple Choice)
+            // Structure: [ { "ID_1": {...} }, { "ID_2": {...} } ]
+            source.forEach(item => {
                 const id = Object.keys(item)[0];
                 globalQuestionMap.set(id, { id, ...item[id] });
+            });
+        } 
+        else if (typeof source === 'object' && source !== null) {
+            // CASE 2: Source is an Object (e.g., Journalizing)
+            // Structure: { "ID_1": {...}, "ID_2": {...} }
+            Object.keys(source).forEach(id => {
+                // Ensure we don't pick up non-question keys if any exist
+                if (typeof source[id] === 'object') {
+                    globalQuestionMap.set(id, { id, ...source[id] });
+                }
             });
         }
     });
