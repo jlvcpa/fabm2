@@ -1,4 +1,3 @@
-// --- Step04TrialBalance.js ---
 import React, { useState } from 'https://esm.sh/react@18.2.0';
 import htm from 'https://esm.sh/htm';
 import { Book, Check, X, Table, Trash2, Plus, AlertCircle } from 'https://esm.sh/lucide-react@0.263.1';
@@ -7,7 +6,6 @@ import { sortAccounts, getLetterGrade } from '../utils.js';
 const html = htm.bind(React.createElement);
 
 // --- HELPER FUNCTIONS ---
-
 const getLastDayOfMonth = (dateStr) => {
     if (!dateStr) return '';
     const date = new Date(dateStr);
@@ -19,12 +17,8 @@ const getLastDayOfMonth = (dateStr) => {
 
 // --- VALIDATION LOGIC ---
 export const validateStep04 = (transactions, data, expectedLedger) => {
-    // Safety guard
     if (!expectedLedger || !data) {
-        return { 
-            score: 0, maxScore: 0, isCorrect: false, letterGrade: 'IR', 
-            feedback: { header: {}, rows: [], totals: {} } 
-        };
+        return { score: 0, maxScore: 0, isCorrect: false, letterGrade: 'IR', feedback: { header: {}, rows: [], totals: {} } };
     }
 
     let score = 0;
@@ -35,19 +29,16 @@ export const validateStep04 = (transactions, data, expectedLedger) => {
     maxScore += 3;
     const header = data.header || {};
     
-    // A. Company Name
     const companyName = (header.company || '').trim();
     const isCompanyValid = companyName.length > 3; 
     if (isCompanyValid) score += 1;
     feedback.header.company = isCompanyValid;
 
-    // B. Document Name
     const docName = (header.doc || '').trim().toLowerCase();
     const isDocValid = docName === 'trial balance';
     if (isDocValid) score += 1;
     feedback.header.doc = isDocValid;
 
-    // C. Date
     const targetDate = getLastDayOfMonth(transactions ? transactions[0]?.date : '');
     const inputDate = (header.date || '').trim();
     const isDateValid = targetDate && inputDate.toLowerCase() === targetDate.toLowerCase();
@@ -59,7 +50,6 @@ export const validateStep04 = (transactions, data, expectedLedger) => {
     const totals = data.totals || { dr: '', cr: '' };
     const expectedAccounts = Object.keys(expectedLedger);
     
-    // Calculate Expected Totals & Map for Lookup
     let expTotalDr = 0;
     let expTotalCr = 0;
     const expBalances = {};
@@ -71,12 +61,11 @@ export const validateStep04 = (transactions, data, expectedLedger) => {
             expBalances[acc] = { amount: absNet, side: net >= 0 ? 'dr' : 'cr' };
             if (net >= 0) expTotalDr += net;
             else expTotalCr += Math.abs(net);
-            maxScore += 2; // 1 for Acc Name, 1 for Amount
+            maxScore += 2;
         }
     });
 
-    // Max Score for Totals
-    maxScore += 2;
+    maxScore += 2; // For totals
 
     const processedAccounts = new Set();
 
@@ -91,12 +80,10 @@ export const validateStep04 = (transactions, data, expectedLedger) => {
             const matchedKey = Object.keys(expBalances).find(k => k.toLowerCase() === userAcc.toLowerCase());
             
             if (matchedKey && !processedAccounts.has(matchedKey)) {
-                // Point 1: Account Name Match
                 score += 1;
                 rowFeedback.acc = true;
                 processedAccounts.add(matchedKey);
 
-                // Point 2: Correct Amount AND Side
                 const exp = expBalances[matchedKey];
                 const isDrCorrect = exp.side === 'dr' && Math.abs(userDr - exp.amount) <= 1 && userCr === 0;
                 const isCrCorrect = exp.side === 'cr' && Math.abs(userCr - exp.amount) <= 1 && userDr === 0;
@@ -110,7 +97,6 @@ export const validateStep04 = (transactions, data, expectedLedger) => {
         feedback.rows[idx] = rowFeedback;
     });
 
-    // 3. TOTALS VALIDATION (Compare USER INPUT to EXPECTED SUMS)
     const userTotalDrInput = Number(totals.dr) || 0;
     const userTotalCrInput = Number(totals.cr) || 0;
 
@@ -122,7 +108,6 @@ export const validateStep04 = (transactions, data, expectedLedger) => {
     
     feedback.totals = { dr: isTotalDrCorrect, cr: isTotalCrCorrect };
 
-    // Grade Calculation using Utility
     const letterGrade = getLetterGrade(score, maxScore);
 
     return { score, maxScore, isCorrect: score === maxScore, letterGrade, feedback };
@@ -139,7 +124,8 @@ const StatusIcon = ({ correct, show }) => {
 
 const LedgerSourceView = ({ transactions, validAccounts, beginningBalances, isSubsequentYear }) => {
     const [expanded, setExpanded] = useState(true);
-    const sortedAccounts = sortAccounts(validAccounts || []);
+    const accountsSafe = Array.isArray(validAccounts) ? validAccounts : [];
+    const sortedAccounts = sortAccounts(accountsSafe);
 
     return html`
         <div className="mb-4 border rounded-lg shadow-sm bg-blue-50 overflow-hidden no-print h-full flex flex-col">
@@ -148,6 +134,7 @@ const LedgerSourceView = ({ transactions, validAccounts, beginningBalances, isSu
             </div>
             ${expanded && html`
                 <div className="p-4 overflow-y-auto custom-scrollbar flex-1 flex flex-col gap-6 bg-gray-50">
+                    ${sortedAccounts.length === 0 && html`<div className="text-gray-500 text-center text-sm">No ledger accounts found.</div>`}
                     ${sortedAccounts.map(acc => {
                         const rowsL = [];
                         const rowsR = [];
@@ -231,9 +218,11 @@ const LedgerSourceView = ({ transactions, validAccounts, beginningBalances, isSu
 };
 
 const TrialBalanceForm = ({ data, onChange, showFeedback, isReadOnly, validationResult }) => {
-    const rows = data.rows || Array(15).fill({ account: '', dr: '', cr: '' });
-    const header = data.header || { company: '', doc: '', date: '' };
-    const totals = data.totals || { dr: '', cr: '' };
+    // Safety check to ensure data is an object before accessing properties
+    const safeData = data || {};
+    const rows = safeData.rows || Array(15).fill({ account: '', dr: '', cr: '' });
+    const header = safeData.header || { company: '', doc: '', date: '' };
+    const totals = safeData.totals || { dr: '', cr: '' };
     const fb = validationResult?.feedback || { header: {}, rows: [], totals: {} };
 
     const updateHeader = (field, val) => {
@@ -364,20 +353,33 @@ const TrialBalanceForm = ({ data, onChange, showFeedback, isReadOnly, validation
     `;
 };
 
-export default function Step04TrialBalance({ transactions, validAccounts, beginningBalances, isSubsequentYear, data, onChange, showFeedback, isReadOnly, expectedLedger }) {
+export default function Step04TrialBalance({ activityData, data, onChange, showFeedback, isReadOnly }) {
+    const transactions = activityData?.transactions || [];
+    const validAccounts = activityData?.validAccounts || [];
+    const beginningBalances = activityData?.beginningBalances || null;
+    const isSubsequentYear = activityData?.config?.isSubsequentYear || false;
+    const expectedLedger = activityData?.ledger || {};
+
     const validationResult = showFeedback 
         ? validateStep04(transactions, data, expectedLedger) 
         : null;
 
     const result = validationResult || {};
 
+    // IMPORTANT FIX: 
+    // We create a deep copy of the current 'data' object (or default empty object).
+    // We merge the new 'key' (header, rows, or totals) into it.
+    // We send the ENTIRE object to the parent 'onChange'.
     const handleChange = (key, val) => {
-        onChange(key, val);
+        const currentData = data || {};
+        const newData = { ...currentData, [key]: val };
+        onChange(newData); 
     };
 
+    // REMOVE 'false &&' IN  ${false && showFeedback && html` TO UNHIDE THE BANNER
     return html`
         <div className="flex flex-col h-[calc(100vh-140px)] min-h-[600px]">
-            ${showFeedback && html`
+            ${false && showFeedback && html`
                 <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-2 mb-4 flex justify-between items-center shadow-sm w-full flex-shrink-0">
                     <span className="font-bold flex items-center gap-2"><${AlertCircle} size=${18}/> Validation Results:</span>
                     <span className="font-mono font-bold text-lg">Score: ${result.score || 0} of ${result.maxScore || 0} - (${result.letterGrade || 'IR'})</span>
