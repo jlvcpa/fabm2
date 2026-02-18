@@ -49,13 +49,20 @@ export async function renderQuizzesAndActivities(containerElement, user, customR
     const contentArea = containerElement;
     
     // UI Layout with Sidebar, Student List (Teacher Only), and Content Area
+    // MODIFIED: Added 'transition-all duration-300' to sidebar for smooth animation
+    // MODIFIED: Added Collapse/Expand buttons in the HTML structure
     contentArea.innerHTML = `
         <div class="flex h-full relative overflow-hidden bg-gray-50">
-            <div id="qa-sidebar" class="w-full md:w-80 bg-white border-r border-gray-200 flex flex-col h-full z-10 transition-transform absolute md:relative transform -translate-x-full md:translate-x-0">
+            <div id="qa-sidebar" class="w-full md:w-80 bg-white border-r border-gray-200 flex flex-col h-full z-10 transition-all duration-300 ease-in-out absolute md:relative transform -translate-x-full md:translate-x-0">
                 <div class="p-1 border-b border-gray-200 bg-blue-900 text-white">
                     <div class="flex justify-between items-center mb-3">
-                        <h2 class="font-bold text-sm">Activities</h2>
-                        <button id="qa-close-sidebar" class="md:hidden text-white"><i class="fas fa-times"></i></button>
+                        <h2 class="font-bold text-sm pl-2">Activities</h2>
+                        <div class="flex items-center gap-2">
+                            <button id="qa-close-sidebar" class="md:hidden text-white"><i class="fas fa-times"></i></button>
+                            <button id="qa-desktop-collapse" class="hidden md:block text-white hover:text-blue-200 text-xs mr-2" title="Collapse Sidebar">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
                     </div>
                     
                     <div id="teacher-filter-area" class="${user.role === 'teacher' ? '' : 'hidden'}">
@@ -81,6 +88,10 @@ export async function renderQuizzesAndActivities(containerElement, user, customR
 
             <button id="qa-toggle-sidebar" class="md:hidden absolute top-4 left-4 z-20 bg-blue-900 text-white p-2 rounded shadow"><i class="fas fa-bars"></i></button>
             
+            <button id="qa-desktop-expand" class="hidden absolute top-14 left-0 z-20 bg-blue-900 text-white p-2 rounded-r shadow-md hover:bg-blue-800 transition-transform text-xs" title="Expand Sidebar">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
             <div id="qa-runner-container" class="flex-1 overflow-y-auto relative bg-gray-100 flex">
                 <div id="qa-placeholder" class="flex-1 flex flex-col items-center justify-center text-gray-400 p-4 md:p-8">
                     <i class="fas fa-clipboard-check text-4xl mb-4"></i>
@@ -93,9 +104,31 @@ export async function renderQuizzesAndActivities(containerElement, user, customR
     const sidebar = document.getElementById('qa-sidebar');
     const toggleBtn = document.getElementById('qa-toggle-sidebar');
     const closeBtn = document.getElementById('qa-close-sidebar');
+    
+    // New Buttons
+    const collapseBtn = document.getElementById('qa-desktop-collapse');
+    const expandBtn = document.getElementById('qa-desktop-expand');
 
+    // Mobile Logic
     if (toggleBtn) toggleBtn.addEventListener('click', () => sidebar.classList.remove('-translate-x-full'));
     if (closeBtn) closeBtn.addEventListener('click', () => sidebar.classList.add('-translate-x-full'));
+
+    // Desktop Collapse Logic
+    if (collapseBtn && expandBtn) {
+        collapseBtn.addEventListener('click', () => {
+            // Collapse: Remove width, hide overflow, hide self, show expand button
+            sidebar.classList.remove('md:w-80');
+            sidebar.classList.add('md:w-0', 'w-0', 'overflow-hidden');
+            expandBtn.classList.remove('hidden');
+        });
+
+        expandBtn.addEventListener('click', () => {
+            // Expand: Restore width, show overflow, hide self
+            sidebar.classList.add('md:w-80');
+            sidebar.classList.remove('md:w-0', 'w-0', 'overflow-hidden');
+            expandBtn.classList.add('hidden');
+        });
+    }
 
     if (user.role === 'teacher') {
         setupTeacherFilters(user, customRunner, filterType);
