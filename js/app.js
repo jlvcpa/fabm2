@@ -276,9 +276,8 @@ function renderSidebar(role) {
     // UPDATED: Toggles between "Quizzes & Activities" and "Q & A"
     qaBtn.innerHTML = `
         <span class="flex items-center">
-            <i class="fas fa-clipboard-list w-6 shrink-0"></i> 
-            <span class="group-[.collapsed]:hidden ml-1">Quizzes & Activities</span>
-            <span class="hidden group-[.collapsed]:inline pl-1 font-bold">Q & A</span>
+            <span class="group-[.collapsed]:hidden">Quizzes & Activities</span>
+            <span class="hidden group-[.collapsed]:inline font-bold">Q & A</span>
         </span> 
         <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-[.collapsed]:hidden"></i>
     `;
