@@ -20,42 +20,63 @@ const getLastDayOfMonth = (dateStr) => {
 };
 
 // --- VALIDATION LOGIC ---
+// --- VALIDATION LOGIC ---
 export const validateStep09 = (data, activityData) => {
     // 1. Calculate Expected Post-Closing Balances
     const { validAccounts, ledger, adjustments, transactions } = activityData;
     
     // BUILD COMPREHENSIVE ACCOUNT LIST
-    // Accounts might be in validAccounts OR introduced in adjustments
     const allUniqueAccounts = new Set([...validAccounts]);
-    adjustments.forEach(a => {
-        if (a.drAcc) allUniqueAccounts.add(a.drAcc);
-        if (a.crAcc) allUniqueAccounts.add(a.crAcc);
-    });
+    if (adjustments) {
+        adjustments.forEach(a => {
+            if (a.drAcc) allUniqueAccounts.add(a.drAcc);
+            if (a.crAcc) allUniqueAccounts.add(a.crAcc);
+        });
+    }
     const completeAccountList = Array.from(allUniqueAccounts);
 
-    let totalRev = 0, totalExp = 0, totalDraw = 0;
+    let totalRevNet = 0, totalExpNet = 0, totalDraw = 0;
     let capitalAccName = '';
+    let incomeSummaryPreBalance = 0;
     const adjustedBalances = {};
 
-    // A. Calculate Adjusted Balances & Identify Nominal Totals
+    // A. Calculate Adjusted Balances & Identify Nominal Totals (Pure REID)
     completeAccountList.forEach(acc => {
         const rawDr = ledger[acc]?.debit || 0;
         const rawCr = ledger[acc]?.credit || 0;
         let adjDr = 0, adjCr = 0;
-        adjustments.forEach(a => { if (a.drAcc === acc) adjDr += a.amount; if (a.crAcc === acc) adjCr += a.amount; });
+        if (adjustments) {
+            adjustments.forEach(a => { if (a.drAcc === acc) adjDr += a.amount; if (a.crAcc === acc) adjCr += a.amount; });
+        }
         
+        // Capture any pre-existing Income Summary balance (like from ending inventory)
+        if (acc === 'Income Summary') {
+            incomeSummaryPreBalance = (rawCr + adjCr) - (rawDr + adjDr);
+        }
+
         // Net Balance (+Dr, -Cr)
         const net = (rawDr + adjDr) - (rawCr + adjCr);
         adjustedBalances[acc] = net;
 
+        const absNet = Math.abs(net);
+        if (absNet === 0) return;
+
         const type = getAccountType(acc);
-        if (type === 'Revenue') totalRev += Math.abs(net); // Normal Cr
-        else if (type === 'Expense') totalExp += Math.abs(net); // Normal Dr
-        else if (acc.includes('Drawing') || acc.includes('Dividends')) totalDraw += Math.abs(net); // Normal Dr
-        else if (acc.includes('Capital') || acc.includes('Retained Earnings')) capitalAccName = acc;
+        
+        if (type === 'Revenue' && acc !== 'Income Summary') {
+            if (net < 0) totalRevNet += absNet; // Normal Cr
+            else if (net > 0) totalRevNet -= absNet; // Contra Dr
+        } else if (type === 'Expense' && acc !== 'Income Summary') {
+            if (net > 0) totalExpNet += absNet; // Normal Dr
+            else if (net < 0) totalExpNet -= absNet; // Contra Cr
+        } else if (acc.includes('Drawing') || acc.includes('Dividends')) {
+            totalDraw += absNet; // Normal Dr
+        } else if (acc.includes('Capital') || acc.includes('Retained Earnings')) {
+            capitalAccName = acc;
+        }
     });
 
-    const netIncome = totalRev - totalExp;
+    const netIncome = incomeSummaryPreBalance + totalRevNet - totalExpNet;
 
     // B. Build Expected Post-Closing Ledger
     const expBalances = {}; 
@@ -71,9 +92,9 @@ export const validateStep09 = (data, activityData) => {
             finalBal = 0; // Closed
         } else if (acc === capitalAccName) {
             // Capital = Old + NetIncome - Drawings
-            const oldCap = Math.abs(adjustedBalances[acc] || 0); 
-            const newCap = oldCap + netIncome - totalDraw;
-            finalBal = -newCap; // Represent as Credit (negative)
+            const oldCapCr = -(adjustedBalances[acc] || 0); // Reverse to make Cr positive
+            const newCapCr = oldCapCr + netIncome - totalDraw;
+            finalBal = -newCapCr; // Represent as Credit (negative)
         } else {
             finalBal = adjustedBalances[acc] || 0; // Assets/Liabilities unchanged
         }
@@ -225,71 +246,109 @@ const LedgerSourceView = ({ transactions, validAccounts, beginningBalances, isSu
     }, [validAccounts, transactions, adjustments, closingEntries]);
 
 
-    // Construct "Correct" Closing Entries if user input is missing OR to visualize flow
-    // We use 'allAccounts' here to ensure we close everything found.
+    // Construct "Correct" Closing Entries using PURE REID LOGIC to match Step 08
     const computedClosingEntries = useMemo(() => {
         if (closingEntries && closingEntries.length > 0 && closingEntries[0]?.rows) return closingEntries;
         
         // --- AUTO-GENERATE CLOSING ENTRIES (FALLBACK) ---
-        let totalRev = 0, totalExp = 0, totalDraw = 0;
+        const revDebits = [];
+        const revCredits = [];
+        let totalRevNet = 0;
+
+        const expCredits = [];
+        const expDebits = [];
+        let totalExpNet = 0;
+
+        let drawingAmt = 0;
+        let drawingAccName = '';
         let capitalAccName = '';
-        const tempLedger = {};
+        let incomeSummaryPreBalance = 0;
 
         // Calculate balances including Adj
         allAccounts.forEach(acc => {
-            let bal = 0;
+            let drTotal = 0;
+            let crTotal = 0;
+
             // Beg Bal
             if (isSubsequentYear && beginningBalances?.balances[acc]) {
-                bal += (beginningBalances.balances[acc].dr - beginningBalances.balances[acc].cr);
+                drTotal += beginningBalances.balances[acc].dr || 0;
+                crTotal += beginningBalances.balances[acc].cr || 0;
             }
             // Trans
             transactions.forEach(t => {
-                t.debits.forEach(d => { if(d.account===acc) bal += d.amount; });
-                t.credits.forEach(c => { if(c.account===acc) bal -= c.amount; });
+                t.debits.forEach(d => { if(d.account===acc) drTotal += d.amount; });
+                t.credits.forEach(c => { if(c.account===acc) crTotal += c.amount; });
             });
             // Adj
             adjustments.forEach(a => {
-                if(a.drAcc===acc) bal += a.amount;
-                if(a.crAcc===acc) bal -= a.amount;
+                if(a.drAcc===acc) drTotal += a.amount;
+                if(a.crAcc===acc) crTotal += a.amount;
             });
-            tempLedger[acc] = bal;
+
+            if (acc === 'Income Summary') {
+                incomeSummaryPreBalance = crTotal - drTotal;
+                return;
+            }
+
+            const net = drTotal - crTotal;
+            const absNet = Math.abs(net);
+
+            if (absNet === 0) return;
 
             const type = getAccountType(acc);
-            if(type==='Revenue') totalRev += Math.abs(bal);
-            else if(type==='Expense') totalExp += Math.abs(bal); 
-            else if(acc.includes('Drawing') || acc.includes('Dividends')) { totalDraw += Math.abs(bal); }
-            else if(acc.includes('Capital') || acc.includes('Retained Earnings')) { capitalAccName = acc; }
+            
+            if (type === 'Revenue') {
+                if (net < 0) {
+                    totalRevNet += absNet; 
+                    revDebits.push({ acc, amt: absNet });
+                } else if (net > 0) {
+                    totalRevNet -= absNet;
+                    revCredits.push({ acc, amt: absNet });
+                }
+            } else if (type === 'Expense') {
+                if (net > 0) {
+                    totalExpNet += absNet;
+                    expCredits.push({ acc, amt: absNet });
+                } else if (net < 0) {
+                    totalExpNet -= absNet;
+                    expDebits.push({ acc, amt: absNet });
+                }
+            } else if (acc.includes('Drawing') || acc.includes('Dividends')) {
+                drawingAmt = absNet;
+                drawingAccName = acc;
+            } else if (acc.includes('Capital') || acc.includes('Retained Earnings')) {
+                capitalAccName = acc;
+            }
         });
 
-        const ni = totalRev - totalExp;
+        const ni = incomeSummaryPreBalance + totalRevNet - totalExpNet;
         const entries = [];
 
         // 1. Close Rev
-        allAccounts.forEach(acc => {
-            if (getAccountType(acc) === 'Revenue' && Math.abs(tempLedger[acc]) > 0) {
-                entries.push({ rows: [{acc: acc, dr: Math.abs(tempLedger[acc])}, {acc: 'Income Summary', cr: Math.abs(tempLedger[acc])}] });
-            }
-        });
-        
+        const step1Rows = [];
+        revDebits.forEach(r => step1Rows.push({acc: r.acc, dr: r.amt, cr: 0}));
+        revCredits.forEach(r => step1Rows.push({acc: r.acc, dr: 0, cr: r.amt}));
+        if (totalRevNet > 0) step1Rows.push({acc: 'Income Summary', dr: 0, cr: totalRevNet});
+        if (step1Rows.length > 0) entries.push({ rows: step1Rows });
+
         // 2. Close Exp
-        allAccounts.forEach(acc => {
-            if (getAccountType(acc) === 'Expense' && tempLedger[acc] > 0) {
-                entries.push({ rows: [{acc: 'Income Summary', dr: tempLedger[acc]}, {acc: acc, cr: tempLedger[acc]}] });
-            }
-        });
+        const step2Rows = [];
+        if (totalExpNet > 0) step2Rows.push({acc: 'Income Summary', dr: totalExpNet, cr: 0});
+        expDebits.forEach(r => step2Rows.push({acc: r.acc, dr: r.amt, cr: 0}));
+        expCredits.forEach(r => step2Rows.push({acc: r.acc, dr: 0, cr: r.amt}));
+        if (step2Rows.length > 0) entries.push({ rows: step2Rows });
 
         // 3. Close NI
-        if (ni !== 0) {
-             if (ni > 0) entries.push({ rows: [{acc: 'Income Summary', dr: ni}, {acc: capitalAccName, cr: ni}] });
-             else entries.push({ rows: [{acc: capitalAccName, dr: Math.abs(ni)}, {acc: 'Income Summary', cr: Math.abs(ni)}] });
+        if (ni > 0) {
+            entries.push({ rows: [{acc: 'Income Summary', dr: ni, cr: 0}, {acc: capitalAccName, dr: 0, cr: ni}] });
+        } else if (ni < 0) {
+            entries.push({ rows: [{acc: capitalAccName, dr: Math.abs(ni), cr: 0}, {acc: 'Income Summary', dr: 0, cr: Math.abs(ni)}] });
         }
 
         // 4. Close Draw
-        allAccounts.forEach(acc => {
-            if ((acc.includes('Drawing') || acc.includes('Dividends')) && tempLedger[acc] > 0) {
-                 entries.push({ rows: [{acc: capitalAccName, dr: tempLedger[acc]}, {acc: acc, cr: tempLedger[acc]}] });
-            }
-        });
+        if (drawingAmt > 0) {
+            entries.push({ rows: [{acc: capitalAccName, dr: drawingAmt, cr: 0}, {acc: drawingAccName, dr: 0, cr: drawingAmt}] });
+        }
 
         return entries;
     }, [closingEntries, allAccounts, transactions, adjustments, beginningBalances, isSubsequentYear]);
@@ -626,7 +685,8 @@ export default function Step09PostClosingTB({ activityData, data, onChange, show
     const result = validationResult || {};
 
     const handleChange = (key, val) => {
-        onChange(key, val);
+        // FIX: Reconstruct the full data object for the parent state
+        onChange({ ...data, [key]: val });
     };
 
     return html`
