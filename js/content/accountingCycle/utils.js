@@ -161,160 +161,162 @@ export const ActivityHelper = {
     
     // --- UPDATED INSTRUCTIONS GENERATOR ---
     getInstructionsHTML: (stepId, taskTitle, validAccounts = [], isSubsequentYear = false, beginningBalances = null, deferredExpenseMethod = 'Asset', deferredIncomeMethod = 'Liability', inventorySystem = 'Periodic', ledgerData = null, adjustments = []) => {
-        let instructionsHTML = "";
-        let accountsList = "";
-        
-        const showDeferredNote = (deferredExpenseMethod === 'Expense' || deferredIncomeMethod === 'Income');
-        const deferredLine = showDeferredNote ? "<li>Expense or Income method is to be used in accounting for Deferred Items.</li>" : "";
+    let instructionsHTML = "";
+    let accountsList = "";
+    
+    const showDeferredNote = (deferredExpenseMethod === 'Expense' || deferredIncomeMethod === 'Income');
+    const deferredLine = showDeferredNote ? "<li>Expense or Income method is to be used in accounting for Deferred Items.</li>" : "";
 
-        if (stepId === 2 || stepId === 3) {
-            if (stepId === 3 && isSubsequentYear && beginningBalances) {
-                 const accountsWithBalances = validAccounts.map(a => {
-                     let balText = "";
-                     if (beginningBalances.balances && beginningBalances.balances[a]) {
-                         const b = beginningBalances.balances[a];
-                         const net = b.dr - b.cr;
-                         if (net !== 0) {
-                             balText = ` (Beg: ${Math.abs(net).toLocaleString()} ${net > 0 ? 'Dr' : 'Cr'})`;
-                         }
+    if (stepId === 2 || stepId === 3) {
+        if (stepId === 3 && isSubsequentYear && beginningBalances) {
+             const accountsWithBalances = validAccounts.map(a => {
+                 let balText = "";
+                 if (beginningBalances.balances && beginningBalances.balances[a]) {
+                     const b = beginningBalances.balances[a];
+                     const net = b.dr - b.cr;
+                     if (net !== 0) {
+                         balText = ` (Beg: ${Math.abs(net).toLocaleString()} ${net > 0 ? 'Dr' : 'Cr'})`;
                      }
-                     return `${a}${balText}`;
-                 });
-                 accountsList = `<span class="font-mono text-xs text-blue-700 font-bold">${accountsWithBalances.join(', ')}</span>`;
-            } else {
-                 accountsList = `<span class="font-mono text-xs text-blue-700 font-bold">${validAccounts.join(', ')}</span>`;
-            }
+                 }
+                 return `${a}${balText}`;
+             });
+             accountsList = `<span class="font-mono text-xs text-blue-700 font-bold">${accountsWithBalances.join(', ')}</span>`;
+        } else {
+             accountsList = `<span class="font-mono text-xs text-blue-700 font-bold">${validAccounts.join(', ')}</span>`;
         }
+    }
 
-        if (stepId === 1) {
+    if (stepId === 1) {
+        instructionsHTML = `
+            <li>Analyze the increase or decrease effects of each transactions on assets, liabilities, and equity using <strong>${inventorySystem} Inventory System</strong>. If it affects equity, determine the cause.</li>
+            ${deferredLine}
+            <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
+        `;
+    } else if (stepId === 2) {
+        instructionsHTML = `
+            <li>Journalize the transactions using <strong>${inventorySystem} Inventory System</strong> and use the following accounts: ${accountsList}</li>
+            ${deferredLine}
+            <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
+        `;
+    } else if (stepId === 3) {
+        let firstBullet = `Setup the general ledger using the following accounts (chart of accounts): ${accountsList}`;
+        
+        if (isSubsequentYear) {
             instructionsHTML = `
-                <li>Analyze the increase or decrease effects of each transactions on assets, liabilities, and equity using <strong>${inventorySystem} Inventory System</strong>. If it affects equity, determine the cause.</li>
+                <li>${firstBullet}</li>
                 ${deferredLine}
+                <li>Enter the beginning balances of the account general ledger created using the amounts provided together with the accounts in the first instruction - YYYY in the first row, date column. Date column second row shall be Mmm dd or Mmm, d. Second row particulars shall be BB that stands for beginning balance, 2nd row PR is blank, and then the debit or credit beginning balance amount.</li>
+                <li>Post the journal entries to the appropriate General Ledger accounts. Use GJ for the particulars and 1 for the PR in the General Ledger.</li>
                 <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
-            `;
-        } else if (stepId === 2) {
-            instructionsHTML = `
-                <li>Journalize the transactions using <strong>${inventorySystem} Inventory System</strong> and use the following accounts: ${accountsList}</li>
-                ${deferredLine}
-                <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
-            `;
-        } else if (stepId === 3) {
-            let firstBullet = `Setup the general ledger using the following accounts (chart of accounts): ${accountsList}`;
-            
-            if (isSubsequentYear) {
-                instructionsHTML = `
-                    <li>${firstBullet}</li>
-                    ${deferredLine}
-                    <li>Enter the beginning balances of the account general ledger created using the amounts provided together with the accounts in the first instruction - YYYY in the first row, date column. Date column second row shall be Mmm dd or Mmm, d. Second row particulars shall be BB that stands for beginning balance, 2nd row PR is blank, and then the debit or credit beginning balance amount.</li>
-                    <li>Post the journal entries to the appropriate General Ledger accounts. Use GJ for the particulars and 1 for the PR in the General Ledger.</li>
-                    <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
-                `;
-            } else {
-                instructionsHTML = `
-                    <li>${firstBullet}</li>
-                    ${deferredLine}
-                    <li>Post the journal entries to the appropriate General Ledger accounts.</li>
-                    <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
-                `;
-            }
-        } else if (stepId === 4) {
-            instructionsHTML = `
-                <li>Prepare the Unadjusted Trial Balance based on the balances in the General Ledger. Accounts with a zero unadjusted balance may not be included.</li>
-                ${deferredLine}
-                <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
-            `;
-        } else if (stepId === 5) {
-            // --- TASK 5 SPECIAL INSTRUCTIONS ---
-            
-            // 1. Generate Ledger Balances View (Text List)
-            let ledgerListStr = '';
-            if (ledgerData) {
-                const accountsSet = new Set(Object.keys(ledgerData));
-                if (Array.isArray(adjustments)) {
-                    adjustments.forEach(adj => {
-                        if(adj.drAcc) accountsSet.add(adj.drAcc);
-                        if(adj.crAcc) accountsSet.add(adj.crAcc);
-                        if (Array.isArray(adj.solution)) {
-                            adj.solution.forEach(line => {
-                                if (line.account && !line.isExplanation && line.account !== "No Entry") {
-                                    accountsSet.add(line.account);
-                                }
-                            });
-                        }
-                    });
-                }
-                const allAccounts = sortAccounts(Array.from(accountsSet).filter(a => a));
-                
-                const ledgerItems = allAccounts.map(acc => {
-                    const accData = ledgerData[acc] || { debit: 0, credit: 0 };
-                    const bal = accData.debit - accData.credit;
-                    const absBal = Math.abs(bal);
-                    
-                    // Logic to show 'Dr' or 'Cr' ONLY if abnormal balance
-                    const type = getAccountType(acc);
-                    const name = acc.toLowerCase();
-                    let normalBalance = 'Dr'; // Default Normal
-
-                    if (type === 'Asset') normalBalance = 'Dr';
-                    if (name.includes('accumulated depreciation')) normalBalance = 'Cr';
-
-                    if (type === 'Liability') normalBalance = 'Cr';
-
-                    if (type === 'Equity') normalBalance = 'Cr';
-                    if (name.includes('drawings') || name.includes('withdrawal') || name.includes('dividends')) normalBalance = 'Dr';
-
-                    if (type === 'Revenue') normalBalance = 'Cr';
-                    if (name.includes('sales returns') || name.includes('sales discounts')) normalBalance = 'Dr';
-
-                    if (type === 'Expense') normalBalance = 'Dr';
-                    if (name.includes('purchase returns') || name.includes('purchase discounts')) normalBalance = 'Cr';
-
-                    const isDebit = bal >= 0;
-                    let suffix = '';
-                    
-                    // Only append suffix if balance is opposite of normal
-                    if (isDebit && normalBalance === 'Cr') suffix = ' Dr'; 
-                    else if (!isDebit && normalBalance === 'Dr') suffix = ' Cr';
-
-                    return `${acc}: ₱${absBal.toLocaleString()}${suffix}`; 
-                });
-                ledgerListStr = `<span class="font-mono text-xs text-blue-700 font-bold">${ledgerItems.join('; ')}</span>`;
-            }
-
-            // 2. Generate Adjustments List (Concatenated Sentence with Numbering)
-            let adjustmentsSentence = '';
-            if (Array.isArray(adjustments)) {
-                adjustmentsSentence = adjustments.map((adj, i) => {
-                    let d = adj.desc || adj.description || '';
-                    d = d.trim();
-                    if (d && !d.endsWith('.')) d += '.';
-                    return `(${i + 1}) ${d}`;
-                }).join(' ');
-            }
-            
-            const highlightedAdj = `<span class="font-mono text-xs text-orange-800 font-bold bg-orange-50 px-1 rounded">${adjustmentsSentence}</span>`;
-
-            instructionsHTML = `
-                <li>Complete the 10-column worksheet using the following unadjusted general ledger accounts and corresponding balances: ${ledgerListStr}</li>
-                <li>Apply the following adjustments: ${highlightedAdj}</li>
-                ${deferredLine}
-                <li>Complete all required fields by extended the balances correctly. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
             `;
         } else {
-             instructionsHTML = `
-                <li>Perform the necessary procedures to complete the ${taskTitle}.</li>
+            instructionsHTML = `
+                <li>${firstBullet}</li>
                 ${deferredLine}
+                <li>Post the journal entries to the appropriate General Ledger accounts.</li>
                 <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
             `;
         }
+    } else if (stepId === 4) {
+        instructionsHTML = `
+            <li>Prepare the Unadjusted Trial Balance based on the balances in the General Ledger. Accounts with a zero unadjusted balance may not be included.</li>
+            ${deferredLine}
+            <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
+        `;
+    } else if (stepId === 5) {
+        let ledgerListStr = '';
+        if (ledgerData) {
+            const accountsSet = new Set(Object.keys(ledgerData));
+            if (Array.isArray(adjustments)) {
+                adjustments.forEach(adj => {
+                    if(adj.drAcc) accountsSet.add(adj.drAcc);
+                    if(adj.crAcc) accountsSet.add(adj.crAcc);
+                    if (Array.isArray(adj.solution)) {
+                        adj.solution.forEach(line => {
+                            if (line.account && !line.isExplanation && line.account !== "No Entry") {
+                                accountsSet.add(line.account);
+                            }
+                        });
+                    }
+                });
+            }
+            const allAccounts = sortAccounts(Array.from(accountsSet).filter(a => a));
+            
+            const ledgerItems = allAccounts.map(acc => {
+                const accData = ledgerData[acc] || { debit: 0, credit: 0 };
+                const bal = accData.debit - accData.credit;
+                const absBal = Math.abs(bal);
+                
+                const type = getAccountType(acc);
+                const name = acc.toLowerCase();
+                let normalBalance = 'Dr';
 
-        return `
-            <p class="font-bold">Instructions:</p>
-            <ul class="list-disc list-inside space-y-1 ml-2">
-                ${instructionsHTML}
-            </ul>
+                if (type === 'Asset') normalBalance = 'Dr';
+                if (name.includes('accumulated depreciation')) normalBalance = 'Cr';
+                if (type === 'Liability') normalBalance = 'Cr';
+                if (type === 'Equity') normalBalance = 'Cr';
+                if (name.includes('drawings') || name.includes('withdrawal') || name.includes('dividends')) normalBalance = 'Dr';
+                if (type === 'Revenue') normalBalance = 'Cr';
+                if (name.includes('sales returns') || name.includes('sales discounts')) normalBalance = 'Dr';
+                if (type === 'Expense') normalBalance = 'Dr';
+                if (name.includes('purchase returns') || name.includes('purchase discounts')) normalBalance = 'Cr';
+
+                const isDebit = bal >= 0;
+                let suffix = '';
+                
+                if (isDebit && normalBalance === 'Cr') suffix = ' Dr'; 
+                else if (!isDebit && normalBalance === 'Dr') suffix = ' Cr';
+
+                return `${acc}: ₱${absBal.toLocaleString()}${suffix}`; 
+            });
+            ledgerListStr = `<span class="font-mono text-xs text-blue-700 font-bold">${ledgerItems.join('; ')}</span>`;
+        }
+
+        let adjustmentsSentence = '';
+        if (Array.isArray(adjustments)) {
+            adjustmentsSentence = adjustments.map((adj, i) => {
+                let d = adj.desc || adj.description || '';
+                d = d.trim();
+                if (d && !d.endsWith('.')) d += '.';
+                return `(${i + 1}) ${d}`;
+            }).join(' ');
+        }
+        
+        const highlightedAdj = `<span class="font-mono text-xs text-orange-800 font-bold bg-orange-50 px-1 rounded">${adjustmentsSentence}</span>`;
+
+        instructionsHTML = `
+            <li>Complete the 10-column worksheet using the following unadjusted general ledger accounts and corresponding balances: ${ledgerListStr}</li>
+            <li>Apply the following adjustments: ${highlightedAdj}</li>
+            ${deferredLine}
+            <li>Complete all required fields by extended the balances correctly. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
+        `;
+    } else if (stepId === 7) {
+        instructionsHTML = `
+            <li>Journalize and post the adjusting entries. Use Adj in the particulars and J2 in the PR columns.</li>
+            ${deferredLine}
+            <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
+        `;
+    } else if (stepId === 8) {
+        instructionsHTML = `
+            <li>Journalize and post the closing entries. Use Clos in the particulars and J3 in the PR columns.</li>
+            ${deferredLine}
+            <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
+        `;
+    } else {
+         instructionsHTML = `
+            <li>Perform the necessary procedures to complete the ${taskTitle}.</li>
+            ${deferredLine}
+            <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
         `;
     }
+
+    return `
+        <p class="font-bold">Instructions:</p>
+        <ul class="list-disc list-inside space-y-1 ml-2">
+            ${instructionsHTML}
+        </ul>
+    `;
+  }
 };
 
 export const generateBeginningBalances = (businessType, ownership) => {
