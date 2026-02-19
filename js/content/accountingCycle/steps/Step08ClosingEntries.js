@@ -583,11 +583,11 @@ export default function Step08ClosingEntries({ activityData, data, onChange, sho
     const ledgers = data.ledgers || {}; 
     
     // Define Handlers BEFORE use
-    const handleJournalChange = (entries) => onChange('journal', entries);
+    const handleJournalChange = (entries) => onChange({ ...data, journal: entries });
     
     const updateLedgerData = (accName, val) => {
         const newLedgers = { ...ledgers, [accName]: val };
-        onChange('ledgers', newLedgers);
+        onChange({ ...data, ledgers: newLedgers });
     };
 
     const { validAccounts, transactions, beginningBalances, config } = activityData;
