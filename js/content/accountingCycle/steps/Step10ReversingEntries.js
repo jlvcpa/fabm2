@@ -210,13 +210,7 @@ const ReversingEntryForm = ({ adjustments, data, onChange, isReadOnly, showFeedb
                     Journalize Reversing Entries (Jan 01)
                 </div>
             </div>
-            
-            <div className="bg-yellow-50 p-2 text-xs border-b border-yellow-200 text-yellow-800 flex items-start gap-2">
-                <${AlertCircle} size=${14} className="mt-0.5 flex-shrink-0"/>
-                <span>
-                    <strong>Instruction:</strong> Review the Adjusting Entries. If an adjustment requires a reversing entry (Accruals or Deferrals under Expense/Income method), record it below. If no entry is needed, leave the fields blank.
-                </span>
-            </div>
+                        
             <div className="overflow-y-auto p-2 flex-1 custom-scrollbar">
                 
                 <div className="flex bg-gray-50 text-gray-700 border-b border-gray-300 font-bold text-xs text-center flex-shrink-0 mb-2">
