@@ -199,9 +199,9 @@ export const ActivityHelper = {
             <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
         `;
     } else if (stepId === 3) {
-        let firstBullet = `Setup the general ledger using the following accounts (chart of accounts): ${accountsList}`;
+        let firstBullet = `Setup the general ledger using the following accounts (chart of accounts): ${accountsList}. Use GJ in the particulars and  in the PR columns`;
         
-        if (isSubsequentYear) {
+        if (isSubsequentYear) {1
             instructionsHTML = `
                 <li>${firstBullet}</li>
                 ${deferredLine}
@@ -299,6 +299,18 @@ export const ActivityHelper = {
     } else if (stepId === 8) {
         instructionsHTML = `
             <li>Journalize and post the closing entries. Use Clos in the particulars and J3 in the PR columns.</li>
+            ${deferredLine}
+            <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
+        `;
+    } else if (stepId === 8) {
+        instructionsHTML = `
+            <li>Journalize and post the closing entries. Use Clos in the particulars and J3 in the PR columns.</li>
+            ${deferredLine}
+            <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
+        `;
+    } else if (stepId === 10) {
+        instructionsHTML = `
+            <li>Review the Adjusting Entries. If an adjustment requires a reversing entry (Accruals or Deferrals under Expense/Income method), record it below. Use Reversing Entry in the description. If no entry is needed, leave the fields blank.</li>
             ${deferredLine}
             <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
         `;
