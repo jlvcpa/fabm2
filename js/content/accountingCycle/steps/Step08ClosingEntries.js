@@ -84,9 +84,10 @@ const WorksheetSourceView = ({ ledgerData, adjustments }) => {
 const ClosingEntryForm = ({ entries, onChange, isReadOnly, showFeedback, validationResult }) => {
     const { fieldStatus, correctValues } = validationResult || {};
 
+    // Reverted descriptions back to pure REID structure
     const defaultStructure = [
-        { id: 'closeRev', title: '1. Close Revenue & Nominal Credit Balances', desc: 'To close accounts with credit balances.' },
-        { id: 'closeExp', title: '2. Close Expense & Nominal Debit Balances', desc: 'To close accounts with debit balances.' },
+        { id: 'closeRev', title: '1. Close Revenue', desc: 'To close the revenue accounts.' },
+        { id: 'closeExp', title: '2. Close Expense', desc: 'To close the expense accounts.' },
         { id: 'closeInc', title: '3. Close Income Summary', desc: 'To close the income summary account.' },
         { id: 'closeDrw', title: '4. Close Drawings', desc: 'To close the drawing accounts.' }
     ];
