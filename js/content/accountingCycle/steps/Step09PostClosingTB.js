@@ -20,7 +20,6 @@ const getLastDayOfMonth = (dateStr) => {
 };
 
 // --- VALIDATION LOGIC ---
-// --- VALIDATION LOGIC ---
 export const validateStep09 = (data, activityData) => {
     // 1. Calculate Expected Post-Closing Balances
     const { validAccounts, ledger, adjustments, transactions } = activityData;
