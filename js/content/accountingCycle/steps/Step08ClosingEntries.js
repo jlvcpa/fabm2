@@ -18,7 +18,6 @@ const StatusIcon = ({ isCorrect, show }) => {
 
 // --- HELPER: Correct Answer Bubble ---
 const CorrectAnswerBubble = ({ value, show }) => {
-    
     // if (!show || value === undefined || value === null || value === '') return null;
     // return html`
     //     <div className="absolute left-0 -top-6 z-50 pointer-events-none">
@@ -28,7 +27,7 @@ const CorrectAnswerBubble = ({ value, show }) => {
     //         </div>
     //     </div>
     // `;
-    };
+};
 
 // --- COMPONENT: Worksheet Source View (Read-Only) ---
 const WorksheetSourceView = ({ ledgerData, adjustments }) => {
@@ -86,8 +85,8 @@ const ClosingEntryForm = ({ entries, onChange, isReadOnly, showFeedback, validat
     const { fieldStatus, correctValues } = validationResult || {};
 
     const defaultStructure = [
-        { id: 'closeRev', title: '1. Close Revenue', desc: 'To close the revenue accounts.' },
-        { id: 'closeExp', title: '2. Close Expense', desc: 'To close the expense accounts.' },
+        { id: 'closeRev', title: '1. Close Revenue & Nominal Credit Balances', desc: 'To close accounts with credit balances.' },
+        { id: 'closeExp', title: '2. Close Expense & Nominal Debit Balances', desc: 'To close accounts with debit balances.' },
         { id: 'closeInc', title: '3. Close Income Summary', desc: 'To close the income summary account.' },
         { id: 'closeDrw', title: '4. Close Drawings', desc: 'To close the drawing accounts.' }
     ];
@@ -631,14 +630,9 @@ export default function Step08ClosingEntries({ activityData, data, onChange, sho
     const getExpectedSides = (acc) => {
         const type = getAccountType(acc);
         const sides = { left: false, right: false };
-        if (acc === 'Income Summary') {
-            sides.left = true; sides.right = true;
-        } else if (acc.includes('Capital') || acc.includes('Retained Earnings')) {
-            sides.left = true; sides.right = true; // Could be net income/loss/drawing
-        } else if (type === 'Revenue') {
-            sides.left = true; // Close Revenue (Dr)
-        } else if (type === 'Expense') {
-            sides.right = true; // Close Expense (Cr)
+        // UI flexibility: Let users click either side for nominals and income summary so we don't give away the answer visually
+        if (acc === 'Income Summary' || acc.includes('Capital') || acc.includes('Retained Earnings') || type === 'Revenue' || type === 'Expense') {
+            sides.left = true; sides.right = true; 
         } else if (acc.includes('Drawing') || acc.includes('Dividends')) {
             sides.right = true; // Close Drawing (Cr)
         }
@@ -726,17 +720,14 @@ export const validateStep08 = (data, activityData) => {
     const fieldStatus = {};
     const correctValues = {}; // Store expected values for UI overlay
 
-    // 1. Calculate Correct Closing Amounts
-    let totalRev = 0, totalExp = 0, drawingAmt = 0;
+    // 1. Calculate Correct Closing Amounts based strictly on net balances
+    const step1Debits = []; // Nominal accounts with Credit Balances
+    let totalIncomeSummaryCr = 0;
     
-    // Group 1: Revenues + Contra-Revenues (Debit Balance accounts that close to Revenue)
-    const revAccounts = []; // Accounts to Debit in step 1
-    const contraRevAccounts = []; // Accounts to Credit in step 1 (if any, though rare in closing context)
-    
-    // Group 2: Expenses + Contra-Expenses (Credit Balance accounts that close to Expense)
-    const expAccounts = []; // Accounts to Credit in step 2
-    const contraExpAccounts = []; // Accounts to Debit in step 2
+    const step2Credits = []; // Nominal accounts with Debit Balances
+    let totalIncomeSummaryDr = 0;
 
+    let drawingAmt = 0;
     let drawingAccName = '';
     
     // Explicitly find the Capital Account (excluding drawings/dividends)
@@ -761,36 +752,26 @@ export const validateStep08 = (data, activityData) => {
         const rawDr = ledger[acc]?.debit || 0;
         const rawCr = ledger[acc]?.credit || 0;
         let adjDr = 0, adjCr = 0;
-        adjustments.forEach(a => { if (a.drAcc === acc) adjDr += a.amount; if (a.crAcc === acc) adjCr += a.amount; });
+        if (adjustments) {
+            adjustments.forEach(a => { if (a.drAcc === acc) adjDr += a.amount; if (a.crAcc === acc) adjCr += a.amount; });
+        }
         
         // Net Balance: (+Dr, -Cr)
         const net = (rawDr + adjDr) - (rawCr + adjCr); 
         const absNet = Math.abs(net);
 
-        // Classify for Closing
-        if (type === 'Revenue') {
-            // Revenue (Normal Cr, net < 0) OR Contra-Revenue (Normal Dr, net > 0)
+        if (absNet === 0) return; // Skip zero balance accounts for closing
+
+        // Classify Nominal Accounts for Closing dynamically based on actual balance
+        if (type === 'Revenue' || type === 'Expense') {
             if (net < 0) {
-                // Credit Balance -> Must Debit to Close (Standard Revenue)
-                totalRev += absNet; 
-                revAccounts.push({ acc, amt: absNet });
+                // Credit Balance (e.g., Sales, Purchase Returns) -> Must Debit to Close
+                totalIncomeSummaryCr += absNet; 
+                step1Debits.push({ acc, amt: absNet });
             } else if (net > 0) {
-                // Debit Balance -> Must Credit to Close (Sales Returns)
-                // Treated as a deduction from Revenue in Step 1
-                totalRev -= absNet;
-                contraRevAccounts.push({ acc, amt: absNet });
-            }
-        } else if (type === 'Expense') {
-            // Expense (Normal Dr, net > 0) OR Contra-Expense (Normal Cr, net < 0)
-            if (net > 0) {
-                // Debit Balance -> Must Credit to Close (Standard Expense)
-                totalExp += absNet;
-                expAccounts.push({ acc, amt: absNet });
-            } else if (net < 0) {
-                // Credit Balance -> Must Debit to Close (Purchase Discounts)
-                // Treated as deduction from Expense in Step 2
-                totalExp -= absNet;
-                contraExpAccounts.push({ acc, amt: absNet });
+                // Debit Balance (e.g., Expenses, Sales Discounts) -> Must Credit to Close
+                totalIncomeSummaryDr += absNet;
+                step2Credits.push({ acc, amt: absNet });
             }
         } else if (acc.includes('Drawing') || acc.includes('Dividends')) {
             drawingAmt = absNet;
@@ -798,41 +779,34 @@ export const validateStep08 = (data, activityData) => {
         } 
     });
 
-    const netIncome = totalRev - totalExp;
+    const netIncome = totalIncomeSummaryCr - totalIncomeSummaryDr;
 
     // --- Prepare Expected Journal Data ---
-    // STEP 1: Close Revenues
-    // Dr Revenue Accounts (Normal Cr)
-    // Cr Contra-Revenue Accounts (Normal Dr)
-    // Cr Income Summary (Net Revenue)
+    // STEP 1: Close Credit Balance Nominal Accounts (Revenues, Purchase Returns, etc.)
     const step1Rows = [
-        ...revAccounts.map(r => ({ acc: r.acc, dr: r.amt, cr: 0 })),
-        ...contraRevAccounts.map(cr => ({ acc: cr.acc, dr: 0, cr: cr.amt })),
-        { acc: 'Income Summary', dr: 0, cr: totalRev } // Net Revenue
+        ...step1Debits.map(r => ({ acc: r.acc, dr: r.amt, cr: 0 })),
+        ...(totalIncomeSummaryCr > 0 ? [{ acc: 'Income Summary', dr: 0, cr: totalIncomeSummaryCr }] : [])
     ];
 
-    // STEP 2: Close Expenses
-    // Dr Income Summary (Net Expense)
-    // Dr Contra-Expense Accounts (Normal Cr)
-    // Cr Expense Accounts (Normal Dr)
+    // STEP 2: Close Debit Balance Nominal Accounts (Expenses, Sales Returns, Sales Discounts, etc.)
     const step2Rows = [
-        { acc: 'Income Summary', dr: totalExp, cr: 0 }, // Net Expense
-        ...contraExpAccounts.map(ce => ({ acc: ce.acc, dr: ce.amt, cr: 0 })),
-        ...expAccounts.map(e => ({ acc: e.acc, dr: 0, cr: e.amt }))
+        ...(totalIncomeSummaryDr > 0 ? [{ acc: 'Income Summary', dr: totalIncomeSummaryDr, cr: 0 }] : []),
+        ...step2Credits.map(r => ({ acc: r.acc, dr: 0, cr: r.amt }))
     ];
 
-    // STEP 3: Close Income Summary
-    // If Net Income > 0: Income Summary has Credit Balance -> Dr IS, Cr Capital
-    // If Net Income < 0 (Loss): Income Summary has Debit Balance -> Dr Capital, Cr IS
-    const step3Rows = netIncome >= 0 
-        ? [{ acc: 'Income Summary', dr: netIncome, cr: 0 }, { acc: capitalAccName, dr: 0, cr: netIncome }]
-        : [{ acc: capitalAccName, dr: Math.abs(netIncome), cr: 0 }, { acc: 'Income Summary', dr: 0, cr: Math.abs(netIncome) }];
+    // STEP 3: Close Income Summary to Capital
+    let step3Rows = [];
+    if (netIncome > 0) {
+        step3Rows = [{ acc: 'Income Summary', dr: netIncome, cr: 0 }, { acc: capitalAccName, dr: 0, cr: netIncome }];
+    } else if (netIncome < 0) {
+        step3Rows = [{ acc: capitalAccName, dr: Math.abs(netIncome), cr: 0 }, { acc: 'Income Summary', dr: 0, cr: Math.abs(netIncome) }];
+    }
 
-    // STEP 4: Close Drawings
-    const step4Rows = [
+    // STEP 4: Close Drawings to Capital
+    const step4Rows = drawingAmt > 0 ? [
         { acc: capitalAccName, dr: drawingAmt, cr: 0 },
         { acc: drawingAccName, dr: 0, cr: drawingAmt }
-    ];
+    ] : [];
 
     const expectedJournal = {
         0: step1Rows,
@@ -864,27 +838,27 @@ export const validateStep08 = (data, activityData) => {
 
     // Generate Expectations from Journal Logic
     // Step 1
-    revAccounts.forEach(r => expPost(r.acc, 'left', r.amt));
-    contraRevAccounts.forEach(cr => expPost(cr.acc, 'right', cr.amt));
-    expPost('Income Summary', 'right', totalRev);
+    step1Debits.forEach(r => expPost(r.acc, 'left', r.amt));
+    if (totalIncomeSummaryCr > 0) expPost('Income Summary', 'right', totalIncomeSummaryCr);
 
     // Step 2
-    expPost('Income Summary', 'left', totalExp);
-    contraExpAccounts.forEach(ce => expPost(ce.acc, 'left', ce.amt));
-    expAccounts.forEach(e => expPost(e.acc, 'right', e.amt));
+    if (totalIncomeSummaryDr > 0) expPost('Income Summary', 'left', totalIncomeSummaryDr);
+    step2Credits.forEach(r => expPost(r.acc, 'right', r.amt));
 
     // Step 3
-    if (netIncome >= 0) {
+    if (netIncome > 0) {
         expPost('Income Summary', 'left', netIncome);
         expPost(capitalAccName, 'right', netIncome);
-    } else {
+    } else if (netIncome < 0) {
         expPost(capitalAccName, 'left', Math.abs(netIncome));
         expPost('Income Summary', 'right', Math.abs(netIncome));
     }
 
     // Step 4
-    expPost(capitalAccName, 'left', drawingAmt);
-    expPost(drawingAccName, 'right', drawingAmt);
+    if (drawingAmt > 0) {
+        expPost(capitalAccName, 'left', drawingAmt);
+        expPost(drawingAccName, 'right', drawingAmt);
+    }
 
 
     // --- VALIDATION LOGIC & DYNAMIC MAX SCORE CALCULATION ---
@@ -927,10 +901,12 @@ export const validateStep08 = (data, activityData) => {
         });
 
         // 3. Adjustments
-        adjustments.forEach(a => {
-            if(a.drAcc === acc) expDrTotal += a.amount;
-            if(a.crAcc === acc) expCrTotal += a.amount;
-        });
+        if (adjustments) {
+            adjustments.forEach(a => {
+                if(a.drAcc === acc) expDrTotal += a.amount;
+                if(a.crAcc === acc) expCrTotal += a.amount;
+            });
+        }
 
         // 4. Closing Entries
         expLeft.forEach(e => expDrTotal += e.amt);
@@ -978,7 +954,6 @@ export const validateStep08 = (data, activityData) => {
                 let matchIndex = expSideRows.findIndex((e, i) => !usedExpIndices.has(i) && Math.abs(e.amt - (Number(uRow.amount)||0)) < 1);
                 
                 // 2. If not found, Match by Slot (First available expectation)
-                // This ensures empty/wrong rows still map to an expectation slot to get feedback without deduction
                 if (matchIndex === -1) {
                     matchIndex = expSideRows.findIndex((e, i) => !usedExpIndices.has(i));
                 }
@@ -1002,7 +977,6 @@ export const validateStep08 = (data, activityData) => {
                     let dateOk = false;
                     
                     // Logic Check: Do we need Mmm dd?
-                    // Yes if: It's the first row (matchIndex=0) AND there is NO history on this account/side
                     const requiresMonth = matchIndex === 0 && !hasHistory;
 
                     if (requiresMonth) {
@@ -1013,7 +987,6 @@ export const validateStep08 = (data, activityData) => {
                          
                          dateOk = dStr === expectedFullDate || (mmmDdRegex.test(dStr) && dStr.includes(dayStr));
                     } else {
-                         // Otherwise, just dd is expected
                          const dayStr = expectedDate.toString();
                          dateOk = dStr === dayStr; 
                     }
@@ -1044,7 +1017,6 @@ export const validateStep08 = (data, activityData) => {
 
                 } else {
                     // UNMATCHED ROW (Extra/Unexpected)
-                    // If row is not empty, mark X and deduct
                     const isEmpty = !uRow.date && !uRow.item && !uRow.pr && !uRow.amount;
                     if (!isEmpty) {
                         fieldStatus[`${ledgerKeyBase}-${key}-date`] = false;
@@ -1084,33 +1056,33 @@ export const validateStep08 = (data, activityData) => {
         const type = getAccountType(acc);
         let rawDr = ledger[acc]?.debit || 0;
         let rawCr = ledger[acc]?.credit || 0;
-        adjustments.forEach(a => { if (a.drAcc === acc) rawDr += a.amount; if (a.crAcc === acc) rawCr += a.amount; });
+        if (adjustments) {
+            adjustments.forEach(a => { if (a.drAcc === acc) rawDr += a.amount; if (a.crAcc === acc) rawCr += a.amount; });
+        }
         let net = rawDr - rawCr;
-        if (type === 'Revenue') net -= net; 
-        else if (type === 'Expense') net += Math.abs(net);
         
         let expectedBal = 0;
-        if (['Revenue', 'Expense'].includes(type) || acc === drawingAccName || acc === 'Income Summary') expectedBal = 0;
-        else if (acc === capitalAccName) {
-            let capBal = (ledger[acc]?.credit || 0) - (ledger[acc]?.debit || 0); 
-            capBal += netIncome; capBal -= drawingAmt; expectedBal = capBal;
-        } else expectedBal = Math.abs(net);
-
-        const userBal = Number(userL.balance);
-        const userType = userL.balanceType;
-        const isZero = Math.abs(expectedBal) < 1;
-        
-        // CORRECTED CONTRA-ASSET LOGIC
         let expectedType = '';
-        const isContra = acc.includes('Accumulated Depreciation') || acc.includes('Allowance');
 
-        if (!isZero) {
+        if (['Revenue', 'Expense'].includes(type) || acc === drawingAccName || acc === 'Income Summary') {
+            expectedBal = 0;
+        } else if (acc === capitalAccName) {
+            let capBal = rawCr - rawDr; // Capital is normal credit
+            capBal += netIncome; // positive if income, negative if loss
+            capBal -= drawingAmt;
+            expectedBal = Math.abs(capBal);
+            expectedType = capBal >= 0 ? 'Cr' : 'Dr';
+        } else {
+            expectedBal = Math.abs(net);
+            const isContra = acc.includes('Accumulated Depreciation') || acc.includes('Allowance');
             const aType = getAccountType(acc);
-            if (acc === capitalAccName) expectedType = expectedBal >= 0 ? 'Cr' : 'Dr'; 
-            else if (aType === 'Asset') expectedType = isContra ? 'Cr' : 'Dr'; // Correct credit normal balance for contra
+            if (aType === 'Asset') expectedType = isContra ? 'Cr' : 'Dr'; 
             else if (aType === 'Liability') expectedType = 'Cr';
             else expectedType = (aType === 'Revenue' || aType === 'Equity') ? 'Cr' : 'Dr';
         }
+
+        const userBal = Number(userL.balance);
+        const userType = userL.balanceType;
         
         if (expectedBal > 0) {
             maxScore += 1; // 1 Point for Combined Balance
@@ -1144,7 +1116,6 @@ export const validateStep08 = (data, activityData) => {
 
         fieldStatus[`${ledgerKeyBase}-overall`] = (fieldStatus[`${ledgerKeyBase}-bal`] !== false) && (fieldStatus[`${ledgerKeyBase}-balType`] !== false);
     });
-
 
     // --- Validate Journal ---
     Object.keys(expectedJournal).forEach(bIdx => {
