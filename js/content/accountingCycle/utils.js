@@ -206,7 +206,7 @@ export const ActivityHelper = {
                     <li>${firstBullet}</li>
                     ${deferredLine}
                     <li>Enter the beginning balances of the account general ledger created using the amounts provided together with the accounts in the first instruction - YYYY in the first row, date column. Date column second row shall be Mmm dd or Mmm, d. Second row particulars shall be BB that stands for beginning balance, 2nd row PR is blank, and then the debit or credit beginning balance amount.</li>
-                    <li>Post the journal entries to the appropriate General Ledger accounts.</li>
+                    <li>Post the journal entries to the appropriate General Ledger accounts. Use GJ for the particulars and 1 for the PR in the General Ledger.</li>
                     <li>Complete all required fields. Enter amounts without commas and decimal places. Round off centavos to the nearest peso. Validate each task to unlock the next one.</li>
                 `;
             } else {
