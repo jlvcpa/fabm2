@@ -19,60 +19,157 @@ const getLastDayOfMonth = (dateStr) => {
     return lastDay.toLocaleString('default', { month: 'long', day: 'numeric', year: 'numeric' });
 };
 
-// --- MAIN COMPONENT ---
-export default function Step09PostClosingTB({ activityData, data, onChange, showFeedback, isReadOnly }) {
+// --- VALIDATION LOGIC ---
+export const validateStep09 = (data, activityData) => {
+    // 1. Calculate Expected Post-Closing Balances
+    const { validAccounts, ledger, adjustments, transactions } = activityData;
     
-    // DRY Validation Calculation
-    const validationResult = useMemo(() => {
-        if (!showFeedback && !isReadOnly) return null;
-        return validateStep09(data, activityData);
-    }, [data, activityData, showFeedback, isReadOnly]);
+    // BUILD COMPREHENSIVE ACCOUNT LIST
+    // Accounts might be in validAccounts OR introduced in adjustments
+    const allUniqueAccounts = new Set([...validAccounts]);
+    adjustments.forEach(a => {
+        if (a.drAcc) allUniqueAccounts.add(a.drAcc);
+        if (a.crAcc) allUniqueAccounts.add(a.crAcc);
+    });
+    const completeAccountList = Array.from(allUniqueAccounts);
 
-    const result = validationResult || {};
+    let totalRev = 0, totalExp = 0, totalDraw = 0;
+    let capitalAccName = '';
+    const adjustedBalances = {};
 
-    const handleChange = (key, val) => {
-        // FIX: Reconstruct the full data object for the parent state
-        onChange({ ...data, [key]: val });
+    // A. Calculate Adjusted Balances & Identify Nominal Totals
+    completeAccountList.forEach(acc => {
+        const rawDr = ledger[acc]?.debit || 0;
+        const rawCr = ledger[acc]?.credit || 0;
+        let adjDr = 0, adjCr = 0;
+        adjustments.forEach(a => { if (a.drAcc === acc) adjDr += a.amount; if (a.crAcc === acc) adjCr += a.amount; });
+        
+        // Net Balance (+Dr, -Cr)
+        const net = (rawDr + adjDr) - (rawCr + adjCr);
+        adjustedBalances[acc] = net;
+
+        const type = getAccountType(acc);
+        if (type === 'Revenue') totalRev += Math.abs(net); // Normal Cr
+        else if (type === 'Expense') totalExp += Math.abs(net); // Normal Dr
+        else if (acc.includes('Drawing') || acc.includes('Dividends')) totalDraw += Math.abs(net); // Normal Dr
+        else if (acc.includes('Capital') || acc.includes('Retained Earnings')) capitalAccName = acc;
+    });
+
+    const netIncome = totalRev - totalExp;
+
+    // B. Build Expected Post-Closing Ledger
+    const expBalances = {}; 
+    let expTotalDr = 0;
+    let expTotalCr = 0;
+    let expectedMaxScore = 3; // Start with Header points
+
+    completeAccountList.forEach(acc => {
+        const type = getAccountType(acc);
+        let finalBal = 0;
+
+        if (['Revenue', 'Expense'].includes(type) || acc.includes('Drawing') || acc === 'Income Summary') {
+            finalBal = 0; // Closed
+        } else if (acc === capitalAccName) {
+            // Capital = Old + NetIncome - Drawings
+            const oldCap = Math.abs(adjustedBalances[acc] || 0); 
+            const newCap = oldCap + netIncome - totalDraw;
+            finalBal = -newCap; // Represent as Credit (negative)
+        } else {
+            finalBal = adjustedBalances[acc] || 0; // Assets/Liabilities unchanged
+        }
+
+        const absNet = Math.abs(finalBal);
+        
+        // Only include in Expected TB if balance > 0
+        if (absNet > 0) { 
+            expBalances[acc] = { amount: absNet, side: finalBal >= 0 ? 'dr' : 'cr' };
+            if (finalBal >= 0) expTotalDr += absNet;
+            else expTotalCr += absNet;
+            expectedMaxScore += 2; // 1 for Acc Name, 1 for Amount
+        }
+    });
+
+    expectedMaxScore += 2; // Totals
+
+    // --- SCORING ---
+    let score = 0;
+    const feedback = { header: {}, rows: [], totals: {} };
+    const header = data.header || {};
+
+    // A. Company Name
+    const companyName = (header.company || '').trim();
+    const isCompanyValid = companyName.length > 3; 
+    if (isCompanyValid) score += 1;
+    feedback.header.company = isCompanyValid;
+
+    // B. Document Name
+    const docName = (header.doc || '').trim().toLowerCase();
+    const isDocValid = docName.includes('post-closing trial balance') || docName === 'post closing trial balance';
+    if (isDocValid) score += 1;
+    feedback.header.doc = isDocValid;
+
+    // C. Date
+    const targetDate = getLastDayOfMonth(transactions ? transactions[0]?.date : '');
+    const inputDate = (header.date || '').trim();
+    const isDateValid = targetDate && inputDate.toLowerCase() === targetDate.toLowerCase();
+    if (isDateValid) score += 1;
+    feedback.header.date = isDateValid;
+
+    // 2. BODY VALIDATION
+    const rows = data.rows || [];
+    const totals = data.totals || { dr: '', cr: '' };
+    const processedAccounts = new Set();
+
+    rows.forEach((row, idx) => {
+        const userAcc = (row.account || '').trim();
+        const userDr = Number(row.dr) || 0;
+        const userCr = Number(row.cr) || 0;
+        
+        const rowFeedback = { acc: false, amt: false };
+        
+        if (userAcc) {
+            const matchedKey = Object.keys(expBalances).find(k => k.toLowerCase() === userAcc.toLowerCase());
+            
+            if (matchedKey && !processedAccounts.has(matchedKey)) {
+                // Found a valid real account
+                score += 1;
+                rowFeedback.acc = true;
+                processedAccounts.add(matchedKey);
+
+                const exp = expBalances[matchedKey];
+                const isDrCorrect = exp.side === 'dr' && Math.abs(userDr - exp.amount) <= 1 && userCr === 0;
+                const isCrCorrect = exp.side === 'cr' && Math.abs(userCr - exp.amount) <= 1 && userDr === 0;
+
+                if (isDrCorrect || isCrCorrect) {
+                    score += 1;
+                    rowFeedback.amt = true;
+                }
+            }
+        }
+        feedback.rows[idx] = rowFeedback;
+    });
+
+    // 3. TOTALS VALIDATION
+    const userTotalDrInput = Number(totals.dr) || 0;
+    const userTotalCrInput = Number(totals.cr) || 0;
+
+    const isTotalDrCorrect = Math.abs(userTotalDrInput - expTotalDr) <= 1;
+    const isTotalCrCorrect = Math.abs(userTotalCrInput - expTotalCr) <= 1;
+
+    if (isTotalDrCorrect) score += 1;
+    if (isTotalCrCorrect) score += 1;
+    
+    feedback.totals = { dr: isTotalDrCorrect, cr: isTotalCrCorrect };
+
+    return { 
+        score, 
+        maxScore: expectedMaxScore, 
+        isCorrect: score === expectedMaxScore, 
+        letterGrade: getLetterGrade(score, expectedMaxScore), 
+        feedback,
+        year: '20XX'
     };
-
-    return html`
-        <div className="flex flex-col h-[calc(100vh-140px)] min-h-[600px]">
-            ${(showFeedback || isReadOnly) && validationResult && html`
-                <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-2 mb-4 flex justify-between items-center shadow-sm w-full flex-shrink-0">
-                    <span className="font-bold flex items-center gap-2"><${AlertCircle} size=${18}/> Validation Results:</span>
-                    <span className="font-mono font-bold text-lg">Score: ${result.score || 0} of ${result.maxScore || 0} - (${result.letterGrade || 'IR'})</span>
-                </div>
-            `}
-
-            <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
-                <div className="flex-1 lg:w-1/2 h-full min-h-0">
-                     <${LedgerSourceView} 
-                        transactions=${activityData.transactions} 
-                        validAccounts=${activityData.validAccounts} 
-                        beginningBalances=${activityData.beginningBalances} 
-                        isSubsequentYear=${activityData.config.isSubsequentYear} 
-                        adjustments=${activityData.adjustments}
-                        closingEntries=${data.closingJournal /* Passed from parent or undefined */} 
-                     /> 
-                </div>
-                <div className="flex-1 lg:w-1/2 border rounded bg-white flex flex-col shadow-sm overflow-hidden min-h-0">
-                    <div className="bg-green-100 p-2 font-bold text-green-900 flex justify-between items-center">
-                        <span><${Table} size=${16} className="inline mr-2"/>Post-Closing Trial Balance</span>
-                    </div>
-                    <div className="p-0 overflow-y-auto custom-scrollbar flex-1 bg-white">
-                         <${TrialBalanceForm} 
-                            data=${data} 
-                            onChange=${handleChange} 
-                            showFeedback=${showFeedback} 
-                            isReadOnly=${isReadOnly} 
-                            validationResult=${validationResult}
-                        />
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
+};
 
 // --- INTERNAL COMPONENTS ---
 
@@ -128,109 +225,71 @@ const LedgerSourceView = ({ transactions, validAccounts, beginningBalances, isSu
     }, [validAccounts, transactions, adjustments, closingEntries]);
 
 
-    // Construct "Correct" Closing Entries using PURE REID LOGIC to match Step 08
+    // Construct "Correct" Closing Entries if user input is missing OR to visualize flow
+    // We use 'allAccounts' here to ensure we close everything found.
     const computedClosingEntries = useMemo(() => {
         if (closingEntries && closingEntries.length > 0 && closingEntries[0]?.rows) return closingEntries;
         
         // --- AUTO-GENERATE CLOSING ENTRIES (FALLBACK) ---
-        const revDebits = [];
-        const revCredits = [];
-        let totalRevNet = 0;
-
-        const expCredits = [];
-        const expDebits = [];
-        let totalExpNet = 0;
-
-        let drawingAmt = 0;
-        let drawingAccName = '';
+        let totalRev = 0, totalExp = 0, totalDraw = 0;
         let capitalAccName = '';
-        let incomeSummaryPreBalance = 0;
+        const tempLedger = {};
 
         // Calculate balances including Adj
         allAccounts.forEach(acc => {
-            let drTotal = 0;
-            let crTotal = 0;
-
+            let bal = 0;
             // Beg Bal
             if (isSubsequentYear && beginningBalances?.balances[acc]) {
-                drTotal += beginningBalances.balances[acc].dr || 0;
-                crTotal += beginningBalances.balances[acc].cr || 0;
+                bal += (beginningBalances.balances[acc].dr - beginningBalances.balances[acc].cr);
             }
             // Trans
             transactions.forEach(t => {
-                t.debits.forEach(d => { if(d.account===acc) drTotal += d.amount; });
-                t.credits.forEach(c => { if(c.account===acc) crTotal += c.amount; });
+                t.debits.forEach(d => { if(d.account===acc) bal += d.amount; });
+                t.credits.forEach(c => { if(c.account===acc) bal -= c.amount; });
             });
             // Adj
             adjustments.forEach(a => {
-                if(a.drAcc===acc) drTotal += a.amount;
-                if(a.crAcc===acc) crTotal += a.amount;
+                if(a.drAcc===acc) bal += a.amount;
+                if(a.crAcc===acc) bal -= a.amount;
             });
-
-            if (acc === 'Income Summary') {
-                incomeSummaryPreBalance = crTotal - drTotal;
-                return;
-            }
-
-            const net = drTotal - crTotal;
-            const absNet = Math.abs(net);
-
-            if (absNet === 0) return;
+            tempLedger[acc] = bal;
 
             const type = getAccountType(acc);
-            
-            if (type === 'Revenue') {
-                if (net < 0) {
-                    totalRevNet += absNet; 
-                    revDebits.push({ acc, amt: absNet });
-                } else if (net > 0) {
-                    totalRevNet -= absNet;
-                    revCredits.push({ acc, amt: absNet });
-                }
-            } else if (type === 'Expense') {
-                if (net > 0) {
-                    totalExpNet += absNet;
-                    expCredits.push({ acc, amt: absNet });
-                } else if (net < 0) {
-                    totalExpNet -= absNet;
-                    expDebits.push({ acc, amt: absNet });
-                }
-            } else if (acc.includes('Drawing') || acc.includes('Dividends')) {
-                drawingAmt = absNet;
-                drawingAccName = acc;
-            } else if (acc.includes('Capital') || acc.includes('Retained Earnings')) {
-                capitalAccName = acc;
-            }
+            if(type==='Revenue') totalRev += Math.abs(bal);
+            else if(type==='Expense') totalExp += Math.abs(bal); 
+            else if(acc.includes('Drawing') || acc.includes('Dividends')) { totalDraw += Math.abs(bal); }
+            else if(acc.includes('Capital') || acc.includes('Retained Earnings')) { capitalAccName = acc; }
         });
 
-        const ni = incomeSummaryPreBalance + totalRevNet - totalExpNet;
+        const ni = totalRev - totalExp;
         const entries = [];
 
         // 1. Close Rev
-        const step1Rows = [];
-        revDebits.forEach(r => step1Rows.push({acc: r.acc, dr: r.amt, cr: 0}));
-        revCredits.forEach(r => step1Rows.push({acc: r.acc, dr: 0, cr: r.amt}));
-        if (totalRevNet > 0) step1Rows.push({acc: 'Income Summary', dr: 0, cr: totalRevNet});
-        if (step1Rows.length > 0) entries.push({ rows: step1Rows });
-
+        allAccounts.forEach(acc => {
+            if (getAccountType(acc) === 'Revenue' && Math.abs(tempLedger[acc]) > 0) {
+                entries.push({ rows: [{acc: acc, dr: Math.abs(tempLedger[acc])}, {acc: 'Income Summary', cr: Math.abs(tempLedger[acc])}] });
+            }
+        });
+        
         // 2. Close Exp
-        const step2Rows = [];
-        if (totalExpNet > 0) step2Rows.push({acc: 'Income Summary', dr: totalExpNet, cr: 0});
-        expDebits.forEach(r => step2Rows.push({acc: r.acc, dr: r.amt, cr: 0}));
-        expCredits.forEach(r => step2Rows.push({acc: r.acc, dr: 0, cr: r.amt}));
-        if (step2Rows.length > 0) entries.push({ rows: step2Rows });
+        allAccounts.forEach(acc => {
+            if (getAccountType(acc) === 'Expense' && tempLedger[acc] > 0) {
+                entries.push({ rows: [{acc: 'Income Summary', dr: tempLedger[acc]}, {acc: acc, cr: tempLedger[acc]}] });
+            }
+        });
 
         // 3. Close NI
-        if (ni > 0) {
-            entries.push({ rows: [{acc: 'Income Summary', dr: ni, cr: 0}, {acc: capitalAccName, dr: 0, cr: ni}] });
-        } else if (ni < 0) {
-            entries.push({ rows: [{acc: capitalAccName, dr: Math.abs(ni), cr: 0}, {acc: 'Income Summary', dr: 0, cr: Math.abs(ni)}] });
+        if (ni !== 0) {
+             if (ni > 0) entries.push({ rows: [{acc: 'Income Summary', dr: ni}, {acc: capitalAccName, cr: ni}] });
+             else entries.push({ rows: [{acc: capitalAccName, dr: Math.abs(ni)}, {acc: 'Income Summary', cr: Math.abs(ni)}] });
         }
 
         // 4. Close Draw
-        if (drawingAmt > 0) {
-            entries.push({ rows: [{acc: capitalAccName, dr: drawingAmt, cr: 0}, {acc: drawingAccName, dr: 0, cr: drawingAmt}] });
-        }
+        allAccounts.forEach(acc => {
+            if ((acc.includes('Drawing') || acc.includes('Dividends')) && tempLedger[acc] > 0) {
+                 entries.push({ rows: [{acc: capitalAccName, dr: tempLedger[acc]}, {acc: acc, cr: tempLedger[acc]}] });
+            }
+        });
 
         return entries;
     }, [closingEntries, allAccounts, transactions, adjustments, beginningBalances, isSubsequentYear]);
@@ -567,8 +626,7 @@ export default function Step09PostClosingTB({ activityData, data, onChange, show
     const result = validationResult || {};
 
     const handleChange = (key, val) => {
-        // FIX: Reconstruct the full data object for the parent state
-        onChange({ ...data, [key]: val });
+        onChange(key, val);
     };
 
     return html`
