@@ -521,7 +521,7 @@ const TrialBalanceForm = ({ data, onChange, showFeedback, isReadOnly, validation
             
             <div className="flex flex-col gap-2 mb-6 items-center px-8 mt-2">
                 <div className="w-3/4 flex items-center justify-center relative">
-                    <input type="text" placeholder="[StudentLastName] Accounting Services" className=${`text-center font-bold text-lg border-b-2 outline-none w-full transition-colors ${getHeaderStyle(fb.header.company)}`} value=${header.company} onChange=${(e) => updateHeader('company', e.target.value)} disabled=${isReadOnly}/>
+                    <input type="text" placeholder="[StudentLastName] Merchandising" className=${`text-center font-bold text-lg border-b-2 outline-none w-full transition-colors ${getHeaderStyle(fb.header.company)}`} value=${header.company} onChange=${(e) => updateHeader('company', e.target.value)} disabled=${isReadOnly}/>
                     <div className="absolute -right-6"><${StatusIcon} show=${showFeedback} correct=${fb.header.company} /></div>
                 </div>
                 <div className="w-1/2 flex items-center justify-center relative">
