@@ -763,7 +763,7 @@ export const validateStep08 = (data, activityData) => {
         if (absNet === 0) return; // Skip zero balance accounts for closing
 
         // Classify Nominal Accounts for Closing dynamically based on actual balance
-        if (type === 'Revenue' || type === 'Expense') {
+        if ((type === 'Revenue' || type === 'Expense') && acc !== 'Income Summary') {
             if (net < 0) {
                 // Credit Balance (e.g., Sales, Purchase Returns) -> Must Debit to Close
                 totalIncomeSummaryCr += absNet; 
