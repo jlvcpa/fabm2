@@ -306,6 +306,28 @@
     body.audience-mode #slides-container {
         height: 100% !important; /* Take up full height since controls are hidden */
     }
+
+	/* --- Mobile Landscape Responsiveness --- */
+    @media screen and (max-width: 1000px), screen and (max-height: 600px) {
+        .slide { padding: 20px 50px; }
+        .slide h1 { font-size: 2.5rem; margin-bottom: 15px; }
+        .slide h2 { font-size: 1.8rem; margin-bottom: 10px; }
+        .slide ul, .slide p { font-size: 1.3rem; }
+        .slide li { margin-bottom: 8px; }
+        
+        #caption-bar { height: 90px; padding: 0 100px; }
+        #caption-text { font-size: 1rem; max-height: 70px; }
+        #nav-controls { height: 90px; padding: 0 15px; }
+        .nav-btn { padding: 6px 15px; font-size: 1rem; }
+        
+        /* Shrink top controls and tuck them into the corner */
+        #top-controls { 
+            top: 15px; 
+            right: 15px; 
+            transform: scale(0.8); 
+            transform-origin: top right; 
+        }
+    }
 </style>
 </head>
 <body>
