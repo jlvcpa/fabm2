@@ -431,9 +431,17 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate }) =
                                                                     ${rows.map((row, r) => {
                                                                         const sol = row.solRow || { account: '', debit: '', credit: '' };
                                                                         const indent = sol.credit ? '   ' : (sol.isExplanation ? '     ' : '');
+                                                                        
+                                                                        // NEW FIX: Match the displayed solution date to validation expectations
+                                                                        let displaySolDate = sol.date || '';
+                                                                        if (displaySolDate && tIdx > 0 && r === 0) {
+                                                                            const parts = displaySolDate.split(' ');
+                                                                            displaySolDate = parts[parts.length - 1]; // Grabs just the day part
+                                                                        }
+
                                                                         return html`
                                                                             <tr key=${r} className="border-b border-gray-100 bg-green-50/30">
-                                                                                <td className="p-1 w-12 text-center border-r font-mono text-gray-500">${sol.date || ''}</td>
+                                                                                <td className="p-1 w-12 text-center border-r font-mono text-gray-500">${displaySolDate}</td>
                                                                                 <td className="p-1 border-r font-mono whitespace-pre text-gray-700 font-bold">${indent}${sol.account || ''}</td>
                                                                                 <td className="p-1 w-16 text-right border-r font-mono text-gray-700">${sol.debit || ''}</td>
                                                                                 <td className="p-1 w-16 text-right font-mono text-gray-700">${sol.credit || ''}</td>
