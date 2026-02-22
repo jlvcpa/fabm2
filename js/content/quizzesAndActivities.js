@@ -30,29 +30,14 @@ let selectedSectionFilter = "All Sections"; // Default filter
 
 // --- GLOBAL QUESTION MAP (Source of Truth) ---
 const globalQuestionMap = new Map();
-
 function buildQuestionMap() {
     if (globalQuestionMap.size > 0) return;
-    
     const allSources = [qbMerchMultipleChoice, qbMerchProblemSolving, qbMerchJournalizing];
-    
-    allSources.forEach(source => {
-        if (Array.isArray(source)) {
-            // CASE 1: Source is an Array (e.g., Multiple Choice)
-            // Structure: [ { "ID_1": {...} }, { "ID_2": {...} } ]
-            source.forEach(item => {
+    allSources.forEach(sourceArray => {
+        if(Array.isArray(sourceArray)) {
+            sourceArray.forEach(item => {
                 const id = Object.keys(item)[0];
                 globalQuestionMap.set(id, { id, ...item[id] });
-            });
-        } 
-        else if (typeof source === 'object' && source !== null) {
-            // CASE 2: Source is an Object (e.g., Journalizing)
-            // Structure: { "ID_1": {...}, "ID_2": {...} }
-            Object.keys(source).forEach(id => {
-                // Ensure we don't pick up non-question keys if any exist
-                if (typeof source[id] === 'object') {
-                    globalQuestionMap.set(id, { id, ...source[id] });
-                }
             });
         }
     });
@@ -551,6 +536,7 @@ async function generateQuizContent(activityData, savedState = null) {
     // --- START TABS HTML ---
     tabsHtml = `<div class="bg-white border-b border-gray-300 flex items-center px-2 overflow-x-auto whitespace-nowrap shrink-0 z-20 sticky top-0 shadow-sm">`;
     
+    // 1. Tab Buttons Left
     tabsHtml += `<div class="flex items-center">`;
     activityData.testQuestions.forEach((section, index) => {
         const isActive = index === 0 ? 'border-blue-800 text-blue-800 bg-blue-50' : 'border-transparent text-gray-600 hover:text-blue-600';
@@ -562,6 +548,7 @@ async function generateQuizContent(activityData, savedState = null) {
     });
     tabsHtml += `</div>`;
 
+    // 2. Center Info Panel (Timers & Dates)
     tabsHtml += `<div class="flex-1 flex justify-center items-center px-2">`;
     activityData.testQuestions.forEach((section, index) => {
         const isHidden = index === 0 ? '' : 'hidden';
@@ -583,6 +570,7 @@ async function generateQuizContent(activityData, savedState = null) {
     });
     tabsHtml += `</div>`;
 
+    // 3. Right Save Buttons
     tabsHtml += `
         <div class="ml-auto pl-4 py-2 flex gap-2">
             <button type="button" id="btn-save-progress" class="bg-blue-600 text-white text-sm font-bold px-4 py-1.5 rounded shadow hover:bg-blue-700 transition whitespace-nowrap">
@@ -609,26 +597,18 @@ async function generateQuizContent(activityData, savedState = null) {
         let questions = [];
         const count = parseInt(section.noOfQuestions) || 5;
 
+        // Source Selection
         let localSource = [];
         if (section.type === "Multiple Choice") localSource = qbMerchMultipleChoice;
         else if (section.type === "Problem Solving") localSource = qbMerchProblemSolving;
         else if (section.type === "Journalizing") localSource = qbMerchJournalizing;
 
-        let flattenedCandidates = [];
-        if (Array.isArray(localSource)) {
-            flattenedCandidates = localSource.map(obj => {
-                if (Object.keys(obj).length === 1 && typeof obj[Object.keys(obj)[0]] === 'object') {
-                    const id = Object.keys(obj)[0];
-                    return { id, ...obj[id] };
-                }
-                return obj;
-            });
-        } else if (typeof localSource === 'object' && localSource !== null) {
-            flattenedCandidates = Object.keys(localSource).map(id => {
-                return { id, ...localSource[id] };
-            });
-        }
+        const flattenedCandidates = localSource.map(obj => {
+            const id = Object.keys(obj)[0];
+            return { id, ...obj[id] };
+        });
 
+        // Filter Candidates
         let candidates = flattenedCandidates.filter(q => {
             const subjectMatch = q.subject === "FABM1";
             const topicMatch = sTopics.length === 0 || sTopics.includes(q.topic);
@@ -639,21 +619,18 @@ async function generateQuizContent(activityData, savedState = null) {
 
         candidates.sort(() => 0.5 - Math.random());
         
+        // --- SELECTION & GAP FILLING LOGIC ---
         for(let i=0; i < count; i++) {
             const uiId = `s${index}_q${i}`;
             let selectedQ = null;
 
             if (savedState && savedState.questionsTaken && savedState.questionsTaken[uiId]) {
                 const savedRef = savedState.questionsTaken[uiId];
-                
-                // CRITICAL FIX: Strictly use qbId to match existing Firebase data
-                const targetId = savedRef.qbId;
-
-                if (targetId && globalQuestionMap.has(targetId)) {
-                    selectedQ = { ...globalQuestionMap.get(targetId) };
+                if (savedRef.dbId && globalQuestionMap.has(savedRef.dbId)) {
+                    selectedQ = { ...globalQuestionMap.get(savedRef.dbId) };
                 } else {
                     selectedQ = {
-                        id: targetId || "legacy",
+                        id: savedRef.id || "legacy",
                         question: savedRef.questionText,
                         options: savedRef.options,
                         correctAnswer: savedRef.correctAnswer,
@@ -675,10 +652,14 @@ async function generateQuizContent(activityData, savedState = null) {
             if (selectedQ) questions.push(selectedQ);
         }
 
+        // --- DYNAMIC INSTRUCTION LOGIC ---
+        // We check if the first question has specific instructions. 
+        // If it does, we use it. Otherwise, we fall back to the activity config.
         const displayInstructions = (questions.length > 0 && questions[0].instructions) 
             ? questions[0].instructions 
             : section.instructions;
 
+        // -- STICKY HEADER IMPLEMENTATION --
         const stickyHeaderHtml = `
             <div class="sticky top-14 bg-blue-50 border-b border-blue-200 px-4 py-2 z-10 shadow-sm mb-4">
                 <div class="flex flex-col gap-.5 text-xs text-gray-700">
@@ -714,10 +695,9 @@ async function generateQuizContent(activityData, savedState = null) {
                 savedValue = savedState.answers[uiId];
             }
 
-            // CRITICAL FIX: Pass qbId down to the question data map
             questionData.push({ 
                 uiId: uiId, 
-                qbId: q.id, 
+                dbId: q.id, 
                 type: section.type,
                 questionText: q.question || (q.title || 'Journal Activity'),
                 correctAnswer: q.correctAnswer,
@@ -1223,6 +1203,7 @@ async function saveProgress(activityData, questionData, user) {
             }
         }
 
+        // Check for already saved (disabled) values
         if (document.querySelector(`[name="${q.uiId}"][disabled]`)) {
              if (q.type === 'Multiple Choice') {
                  const chk = document.querySelector(`input[name="${q.uiId}"]:checked`);
@@ -1247,15 +1228,13 @@ async function saveProgress(activityData, questionData, user) {
              }
         }
 
-        // CRITICAL FIX: Save unconditionally to prevent gap issues, strictly using qbId
-        questionsTaken[q.uiId] = {
-            qbId: q.qbId,
-            questionText: q.questionText,
-            type: q.type
-        };
-
         if (hasValue) {
             answers[q.uiId] = value;
+            questionsTaken[q.uiId] = {
+                dbId: q.dbId,
+                questionText: q.questionText,
+                type: q.type
+            };
         }
     });
 
@@ -1279,6 +1258,8 @@ async function saveProgress(activityData, questionData, user) {
     try {
         await setDoc(doc(db, collectionName, docName), payload);
         
+        // Ensure this progress is registered in the list so teachers can see it
+        // even if it's not "final" yet.
         const listId = `${activityData.activityname}_${activityData.section}`;
         await setDoc(doc(db, "results_list", listId), { 
             created: new Date().toISOString(),
@@ -1294,8 +1275,10 @@ async function saveProgress(activityData, questionData, user) {
     }
 }
 
+// --- SUBMIT QUIZ (REF-ONLY MODE with FORCE Option) ---
 // ADDED: forceSubmit parameter for timer expiry
 async function submitQuiz(activityData, questionData, user, isFinal = false, forceSubmit = false) {
+    // MODIFIED: Skip confirmation if forceSubmit is true
     if(!forceSubmit && !confirm("Are you sure you want to submit? This is final.")) return;
     
     if(currentAntiCheat) {
@@ -1311,9 +1294,8 @@ async function submitQuiz(activityData, questionData, user, isFinal = false, for
     const questionsTaken = {};
 
     questionData.forEach(q => {
-        // CRITICAL FIX: Strictly use qbId here as well
         questionsTaken[q.uiId] = {
-            qbId: q.qbId, 
+            dbId: q.dbId, 
             questionText: q.questionText,
             type: q.type
         };
@@ -1391,6 +1373,7 @@ async function submitQuiz(activityData, questionData, user, isFinal = false, for
     try {
         await setDoc(doc(db, collectionName, docName), submissionPayload);
         
+        // FIXED: Use a consistent ID generation strategy for the results_list
         const listId = `${activityData.activityname}_${activityData.section}`;
         await setDoc(doc(db, "results_list", listId), { 
             created: new Date().toISOString(),
