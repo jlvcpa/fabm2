@@ -799,14 +799,18 @@ async function generateQuizContent(activityData, savedState = null) {
                     for(let r=0; r < rowCount; r++) {
                         const cellKey = `t${tIdx}_r${r}`;
                         const cellData = (savedValue && savedValue[cellKey]) ? savedValue[cellKey] : { date:'', acct:'', dr:'', cr:'' };
-                        const inputDim = q.isSaved ? 'text-gray-500' : 'text-black';
+                        
+                        // NEW FIX: Only lock the row if the student actually typed something into it
+                        const isRowSaved = Boolean(cellData.date || cellData.acct || cellData.dr || cellData.cr);
+                        const rowDisabledAttr = (q.isSaved && isRowSaved) ? 'disabled' : '';
+                        const inputDim = (q.isSaved && isRowSaved) ? 'text-gray-500' : 'text-black';
 
                         rows += `
                         <tr class="border-b border-gray-200 bg-white">
-                            <td class="p-0 border-r border-gray-300 w-24"><input type="text" name="${transUiId}_r${r}_date" class="input-checker w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.date}" ${disabledAttr}></td>
-                            <td class="p-0 border-r border-gray-300 w-auto"><input type="text" name="${transUiId}_r${r}_acct" class="input-checker w-full p-2 text-left outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.acct}" ${disabledAttr}></td>
-                            <td class="p-0 border-r border-gray-300 w-28"><input type="number" name="${transUiId}_r${r}_dr" class="input-checker w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" style="appearance: textfield; -moz-appearance: textfield; -webkit-appearance: none;" placeholder="" value="${cellData.dr}" ${disabledAttr}></td>
-                            <td class="p-0 w-28"><input type="number" name="${transUiId}_r${r}_cr" class="input-checker w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" style="appearance: textfield; -moz-appearance: textfield; -webkit-appearance: none;" placeholder="" value="${cellData.cr}" ${disabledAttr}></td>
+                            <td class="p-0 border-r border-gray-300 w-24"><input type="text" name="${transUiId}_r${r}_date" class="input-checker w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.date}" ${rowDisabledAttr}></td>
+                            <td class="p-0 border-r border-gray-300 w-auto"><input type="text" name="${transUiId}_r${r}_acct" class="input-checker w-full p-2 text-left outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.acct}" ${rowDisabledAttr}></td>
+                            <td class="p-0 border-r border-gray-300 w-28"><input type="number" name="${transUiId}_r${r}_dr" class="input-checker w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" style="appearance: textfield; -moz-appearance: textfield; -webkit-appearance: none;" placeholder="" value="${cellData.dr}" ${rowDisabledAttr}></td>
+                            <td class="p-0 w-28"><input type="number" name="${transUiId}_r${r}_cr" class="input-checker w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" style="appearance: textfield; -moz-appearance: textfield; -webkit-appearance: none;" placeholder="" value="${cellData.cr}" ${rowDisabledAttr}></td>
                         </tr>`;
                     }
 
