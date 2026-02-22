@@ -214,14 +214,14 @@
     }
 
     /* Top Controls Group */
-    #top-controls {
+#top-controls {
         position: absolute;
         top: 30px;
         right: 30px;
         display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 12px;
+        flex-direction: row; /* Changed to row for a single horizontal line */
+        align-items: center;
+        gap: 15px;
         z-index: 60;
         opacity: 0;
         transition: opacity 0.5s;
@@ -307,24 +307,24 @@
         height: 100% !important; /* Take up full height since controls are hidden */
     }
 
-	/* --- Mobile Landscape Responsiveness --- */
+/* --- Mobile Landscape Responsiveness --- */
     @media screen and (max-width: 1000px), screen and (max-height: 600px) {
-        .slide { padding: 20px 50px; }
-        .slide h1 { font-size: 2.5rem; margin-bottom: 15px; }
-        .slide h2 { font-size: 1.8rem; margin-bottom: 10px; }
-        .slide ul, .slide p { font-size: 1.3rem; }
-        .slide li { margin-bottom: 8px; }
+        .slide { padding: 2vh 5vw; }
+        .slide h1 { font-size: 8vh; margin-bottom: 2vh; }
+        .slide h2 { font-size: 6vh; margin-bottom: 2vh; }
+        .slide ul, .slide p { font-size: 4vh; line-height: 1.2; max-width: 90vw; }
+        .slide li { margin-bottom: 1.5vh; }
         
-        #caption-bar { height: 90px; padding: 0 100px; }
-        #caption-text { font-size: 1rem; max-height: 70px; }
-        #nav-controls { height: 90px; padding: 0 15px; }
-        .nav-btn { padding: 6px 15px; font-size: 1rem; }
+        #caption-bar { height: 15vh; padding: 0 10vw; }
+        #caption-text { font-size: 3vh; max-height: 12vh; padding: 5px; }
+        #nav-controls { height: 15vh; padding: 0 15px; }
+        .nav-btn { padding: 1vh 2vw; font-size: 3vh; }
         
         /* Shrink top controls and tuck them into the corner */
         #top-controls { 
             top: 15px; 
             right: 15px; 
-            transform: scale(0.8); 
+            transform: scale(0.75); 
             transform-origin: top right; 
         }
     }
@@ -338,9 +338,7 @@
 </div>
 
 <div id="container">
-    <div id="top-controls">
-        <button id="audience-btn" class="nav-btn" style="padding: 8px 15px; font-size: 0.9rem; margin-bottom: 5px;" onclick="openAudienceView()">🖥️ Open Audience View</button>
-        <button id="live-indicator" class="off" onclick="toggleAudio()">Auto-Narrator OFF</button>
+	<div id="top-controls">
         <div class="caption-toggle-container">
             <span>SHOW CAPTIONS</span>
             <label class="switch">
@@ -348,6 +346,8 @@
                 <span class="slider"></span>
             </label>
         </div>
+        <button id="live-indicator" class="off" onclick="toggleAudio()">Auto-Narrator OFF</button>
+        <button id="audience-btn" class="nav-btn" style="padding: 8px 15px; font-size: 0.9rem;" onclick="openAudienceView()">🖥️ Open Audience View</button>
     </div>
     
     <div id="slides-container">
