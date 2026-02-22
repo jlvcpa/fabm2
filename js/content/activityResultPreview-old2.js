@@ -203,6 +203,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate }) =
                         
                         for(let r=0; r<rowCount; r++) {
                             const cellKey = `t${tIdx}_r${r}`;
+                            // CORRECTED: Pulling from nested JSON
                             const cellData = (studentAns && studentAns[cellKey]) ? studentAns[cellKey] : { date:'', acct:'', dr:'', cr:'' };
                             const solRow = solRows[r] || null;
                             const sDate = (cellData.date || '').trim();
@@ -319,6 +320,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate }) =
                                                 
                                                 for(let r=0; r<rowCount; r++) {
                                                     const cellKey = `t${tIdx}_r${r}`;
+                                                    // CORRECTED: Pulling from nested JSON for HTML rendering
                                                     const cellData = (studentAns && studentAns[cellKey]) ? studentAns[cellKey] : { date:'', acct:'', dr:'', cr:'' };
                                                     const solRow = solRows[r] || { account: '', debit: '', credit: '' };
                                                     const isAcctMatch = cellData.acct && solRow.account && cellData.acct.trim().toLowerCase() === solRow.account.trim().toLowerCase();
@@ -336,10 +338,10 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate }) =
                                                                 <table className="w-full">
                                                                     ${rows.map((row, r) => html`
                                                                         <tr key=${r} className="border-b border-gray-100">
-                                                                            <td className="p-1 w-12 text-center border-r font-mono">${row.cellData.date}</td>
-                                                                            <td className="p-1 border-r font-mono whitespace-pre">${row.cellData.acct}</td>
-                                                                            <td className="p-1 w-16 text-right border-r font-mono">${row.cellData.dr}</td>
-                                                                            <td className="p-1 w-16 text-right font-mono">${row.cellData.cr}</td>
+                                                                            <td className="p-1 w-12 text-center border-r font-mono">${row.cellData.date || ''}</td>
+                                                                            <td className="p-1 border-r font-mono whitespace-pre">${row.cellData.acct || ''}</td>
+                                                                            <td className="p-1 w-16 text-right border-r font-mono">${row.cellData.dr || ''}</td>
+                                                                            <td className="p-1 w-16 text-right font-mono">${row.cellData.cr || ''}</td>
                                                                         </tr>
                                                                     `)}
                                                                 </table>
