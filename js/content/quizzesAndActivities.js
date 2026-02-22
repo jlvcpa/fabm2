@@ -626,18 +626,35 @@ async function generateQuizContent(activityData, savedState = null) {
 
             if (savedState && savedState.questionsTaken && savedState.questionsTaken[uiId]) {
                 const savedRef = savedState.questionsTaken[uiId];
-                if (savedRef.dbId && globalQuestionMap.has(savedRef.dbId)) {
-                    selectedQ = { ...globalQuestionMap.get(savedRef.dbId) };
-                } else {
-                    selectedQ = {
-                        id: savedRef.id || "legacy",
-                        question: savedRef.questionText,
-                        options: savedRef.options,
-                        correctAnswer: savedRef.correctAnswer,
-                        explanation: savedRef.explanation,
-                        transactions: savedRef.transactions,
-                        instructions: savedRef.instructions
-                    };
+                
+                // --- NEW ISOLATED FIX FOR JOURNALIZING ---
+                // If it's a Journalizing question, manually extract the full data from qbMerchJournalizing
+                if (savedRef.type === 'Journalizing' && savedRef.dbId) {
+                    if (Array.isArray(qbMerchJournalizing)) {
+                        const foundObj = qbMerchJournalizing.find(item => item[savedRef.dbId] || item.id === savedRef.dbId);
+                        if (foundObj) {
+                            selectedQ = foundObj[savedRef.dbId] ? { id: savedRef.dbId, ...foundObj[savedRef.dbId] } : { ...foundObj };
+                        }
+                    } else if (typeof qbMerchJournalizing === 'object' && qbMerchJournalizing[savedRef.dbId]) {
+                        selectedQ = { id: savedRef.dbId, ...qbMerchJournalizing[savedRef.dbId] };
+                    }
+                }
+
+                // --- UNTOUCHED OLD LOGIC FOR MULTIPLE CHOICE ---
+                if (!selectedQ) {
+                    if (savedRef.dbId && globalQuestionMap.has(savedRef.dbId)) {
+                        selectedQ = { ...globalQuestionMap.get(savedRef.dbId) };
+                    } else {
+                        selectedQ = {
+                            id: savedRef.id || "legacy",
+                            question: savedRef.questionText,
+                            options: savedRef.options,
+                            correctAnswer: savedRef.correctAnswer,
+                            explanation: savedRef.explanation,
+                            transactions: savedRef.transactions,
+                            instructions: savedRef.instructions
+                        };
+                    }
                 }
                 selectedQ.isSaved = true; 
             } 
@@ -653,8 +670,6 @@ async function generateQuizContent(activityData, savedState = null) {
         }
 
         // --- DYNAMIC INSTRUCTION LOGIC ---
-        // We check if the first question has specific instructions. 
-        // If it does, we use it. Otherwise, we fall back to the activity config.
         const displayInstructions = (questions.length > 0 && questions[0].instructions) 
             ? questions[0].instructions 
             : section.instructions;
