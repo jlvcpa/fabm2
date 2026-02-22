@@ -1,7 +1,6 @@
 export const qbMerchJournalizing = [
 {
     "FABM1-Merch-Period-FIFO-001": {
-      "id": "set1_periodic_fifo_comprehensive",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Utilities Expense, Owner's Capital, Owner's Drawings, Rent Expense, Salaries Expense.",
       "subject": "FABM1",
       "title": "Set 1: Periodic Inventory - FIFO Costing",
@@ -28,7 +27,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-002": {
-      "id": "set1_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Utilities Expense, Owner's Capital, Owner's Drawings, No Entry.",
       "subject": "FABM1",
       "title": "Set 2: FIFO Costing (Periodic)",
@@ -55,7 +53,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-003": {
-      "id": "set3_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Rent Expense, Owner's Capital, Owner's Drawings.",
       "subject": "FABM1",
       "title": "Set 3: FIFO Costing (Periodic)",
@@ -82,7 +79,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-004": {
-      "id": "set4_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Advertising Expense, Owner's Capital, Owner's Drawings.",
       "subject": "FABM1",
       "title": "Set 4: FIFO Costing (Periodic)",
@@ -109,7 +105,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-005": {
-      "id": "set5_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Supplies, Owner's Capital, Owner's Drawings, Salaries Expense, Utilities Expense.",
       "subject": "FABM1",
       "title": "Set 5: FIFO Costing (Periodic)",
@@ -136,7 +131,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-006": {
-      "id": "set6_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Rent Expense, Salaries Expense.",
       "subject": "FABM1",
       "title": "Set 6: Periodic Inventory (FIFO)",
@@ -163,7 +157,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-007": {
-      "id": "set7_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Advertising Expense, Utilities Expense.",
       "subject": "FABM1",
       "title": "Set 7: Periodic Inventory (FIFO)",
@@ -190,7 +183,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-008": {
-      "id": "set8_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Supplies, Supplies Expense, Rent Expense.",
       "subject": "FABM1",
       "title": "Set 8: Periodic Inventory (FIFO)",
@@ -217,7 +209,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-009": {
-      "id": "set9_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Accounts Payable, Owner's Capital, Salaries Expense, Utilities Expense, Equipment, Notes Payable, Interest Expense.",
       "subject": "FABM1",
       "title": "Set 9: Periodic Inventory (FIFO)",
@@ -244,7 +235,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-010": {
-      "id": "set10_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Freight Out, Advertising Expense, No Entry.",
       "subject": "FABM1",
       "title": "Set 10: Periodic Inventory (FIFO)",
@@ -271,7 +261,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-011": {
-      "id": "set11_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Accounts Payable, Owner's Capital, Insurance Expense, Salaries Expense, Prepaid Insurance.",
       "subject": "FABM1",
       "title": "Set 11: Periodic Inventory (FIFO)",
@@ -298,7 +287,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-012": {
-      "id": "set12_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Utilities Expense, Rent Expense, No Entry.",
       "subject": "FABM1",
       "title": "Set 12: Periodic Inventory (FIFO)",
@@ -325,7 +313,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-013": {
-      "id": "set13_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Salaries Expense, Utilities Expense, Supplies.",
       "subject": "FABM1",
       "title": "Set 13: Periodic Inventory (FIFO)",
@@ -352,7 +339,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-014": {
-      "id": "set14_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Advertising Expense, Rent Expense, No Entry.",
       "subject": "FABM1",
       "title": "Set 14: Periodic Inventory (FIFO)",
@@ -379,7 +365,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-FIFO-015": {
-      "id": "set15_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Salaries Expense, Utilities Expense.",
       "subject": "FABM1",
       "title": "Set 15: Periodic Inventory (FIFO)",
@@ -406,7 +391,6 @@ export const qbMerchJournalizing = [
   },
 {
     "FABM1-Merch-Period-WeightedAvg-001": {
-      "id": "set1_periodic_weighted_avg_comprehensive",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Utilities Expense, Owner's Capital, Owner's Drawings, Rent Expense, Salaries Expense.",
       "subject": "FABM1",
       "title": "Set 1: Weighted Average Costing (Periodic)",
@@ -433,7 +417,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-002": {
-      "id": "set2_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Utilities Expense, Owner's Capital, Owner's Drawings, No Entry.",
       "subject": "FABM1",
       "title": "Set 2: Weighted Average Costing (Periodic)",
@@ -460,7 +443,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-003": {
-      "id": "set3_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Rent Expense, Owner's Capital, Owner's Drawings.",
       "subject": "FABM1",
       "title": "Set 3: Weighted Average Costing (Periodic)",
@@ -487,7 +469,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-004": {
-      "id": "set4_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Advertising Expense, Owner's Capital, Owner's Drawings.",
       "subject": "FABM1",
       "title": "Set 4: Weighted Average Costing (Periodic)",
@@ -514,7 +495,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-005": {
-      "id": "set5_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Supplies, Owner's Capital, Owner's Drawings, Salaries Expense, Utilities Expense.",
       "subject": "FABM1",
       "title": "Set 5: Weighted Average Costing (Periodic)",
@@ -541,7 +521,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-006": {
-      "id": "set6_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Rent Expense, Salaries Expense.",
       "subject": "FABM1",
       "title": "Set 6: Periodic Inventory (Weighted Avg)",
@@ -568,7 +547,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-007": {
-      "id": "set7_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Advertising Expense, Utilities Expense.",
       "subject": "FABM1",
       "title": "Set 7: Periodic Inventory (Weighted Avg)",
@@ -595,7 +573,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-008": {
-      "id": "set8_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Supplies, Supplies Expense, Rent Expense.",
       "subject": "FABM1",
       "title": "Set 8: Periodic Inventory (Weighted Avg)",
@@ -622,7 +599,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-009": {
-      "id": "set9_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Accounts Payable, Owner's Capital, Salaries Expense, Utilities Expense, Equipment, Notes Payable, Interest Expense.",
       "subject": "FABM1",
       "title": "Set 9: Periodic Inventory (Weighted Avg)",
@@ -649,7 +625,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-010": {
-      "id": "set10_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Freight Out, Advertising Expense, No Entry.",
       "subject": "FABM1",
       "title": "Set 10: Periodic Inventory (Weighted Avg)",
@@ -676,7 +651,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-011": {
-      "id": "set11_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Accounts Payable, Owner's Capital, Insurance Expense, Salaries Expense, Prepaid Insurance.",
       "subject": "FABM1",
       "title": "Set 11: Periodic Inventory (Weighted Avg)",
@@ -703,7 +677,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-012": {
-      "id": "set12_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Utilities Expense, Rent Expense, No Entry.",
       "subject": "FABM1",
       "title": "Set 12: Periodic Inventory (Weighted Avg)",
@@ -730,7 +703,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-013": {
-      "id": "set13_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Salaries Expense, Utilities Expense, Supplies.",
       "subject": "FABM1",
       "title": "Set 13: Periodic Inventory (Weighted Avg)",
@@ -757,7 +729,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-014": {
-      "id": "set14_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Advertising Expense, Rent Expense, No Entry.",
       "subject": "FABM1",
       "title": "Set 14: Periodic Inventory (Weighted Avg)",
@@ -784,7 +755,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Period-WeightedAvg-015": {
-      "id": "set15_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Salaries Expense, Utilities Expense.",
       "subject": "FABM1",
       "title": "Set 15: Periodic Inventory (Weighted Avg)",
@@ -811,7 +781,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-001": {
-      "id": "set1_perpetual_fifo_comprehensive",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Cost of Goods Sold, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Utilities Expense, Owner's Capital, Owner's Drawings, Rent Expense, Salaries Expense, Supplies.",
       "subject": "FABM1",
       "title": "Set 1: FIFO Costing (Perpetual)",
@@ -838,7 +807,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-002": {
-      "id": "set2_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Cost of Goods Sold, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Utilities Expense, Owner's Capital, Owner's Drawings, No Entry.",
       "subject": "FABM1",
       "title": "Set 2: FIFO Costing (Perpetual)",
@@ -865,7 +833,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-003": {
-      "id": "set3_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Cost of Goods Sold, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Rent Expense, Owner's Capital, Owner's Drawings.",
       "subject": "FABM1",
       "title": "Set 3: FIFO Costing (Perpetual)",
@@ -892,7 +859,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-004": {
-      "id": "set4_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Cost of Goods Sold, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Advertising Expense, Owner's Capital, Owner's Drawings.",
       "subject": "FABM1",
       "title": "Set 4: FIFO Costing (Perpetual)",
@@ -919,7 +885,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-005": {
-      "id": "set5_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Cost of Goods Sold, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Supplies, Owner's Capital, Owner's Drawings, Salaries Expense, Utilities Expense.",
       "subject": "FABM1",
       "title": "Set 5: FIFO Costing (Perpetual)",
@@ -946,7 +911,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-006": {
-      "id": "set6_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Rent Expense, Salaries Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 6: Perpetual Inventory (FIFO)",
@@ -973,7 +937,6 @@ export const qbMerchJournalizing = [
   },
 {
     "FABM1-Merch-Perpe-FIFO-007": {
-      "id": "set7_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Advertising Expense, Utilities Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 7: Perpetual Inventory (FIFO)",
@@ -1000,7 +963,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-008": {
-      "id": "set8_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Supplies, Supplies Expense, Rent Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 8: Perpetual Inventory (FIFO)",
@@ -1027,7 +989,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-009": {
-      "id": "set9_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Accounts Payable, Owner's Capital, Salaries Expense, Utilities Expense, Equipment, Notes Payable, Interest Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 9: Perpetual Inventory (FIFO)",
@@ -1054,7 +1015,6 @@ export const qbMerchJournalizing = [
   },
 {
     "FABM1-Merch-Perpe-FIFO-010": {
-      "id": "set10_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Freight Out, Advertising Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 10: Perpetual Inventory (FIFO)",
@@ -1081,7 +1041,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-011": {
-      "id": "set11_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Accounts Payable, Owner's Capital, Insurance Expense, Salaries Expense, Prepaid Insurance, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 11: Perpetual Inventory (FIFO)",
@@ -1108,7 +1067,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-012": {
-      "id": "set12_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Utilities Expense, Rent Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 12: Perpetual Inventory (FIFO)",
@@ -1135,7 +1093,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-013": {
-      "id": "set13_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Salaries Expense, Utilities Expense, Supplies, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 13: Perpetual Inventory (FIFO)",
@@ -1162,7 +1119,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-014": {
-      "id": "set14_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Advertising Expense, Rent Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 14: Perpetual Inventory (FIFO)",
@@ -1189,7 +1145,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-FIFO-015": {
-      "id": "set15_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Salaries Expense, Utilities Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 15: Perpetual Inventory (FIFO)",
@@ -1216,7 +1171,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-001": {
-      "id": "set1_perpetual_average_comprehensive",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Cost of Goods Sold, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Utilities Expense, Owner's Capital, Owner's Drawings, Rent Expense, Salaries Expense, Supplies.",
       "subject": "FABM1",
       "title": "Set 1: Moving Average Costing (Perpetual)",
@@ -1243,7 +1197,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-002": {
-      "id": "set2_perpetual_average",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Cost of Goods Sold, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Utilities Expense, Owner's Capital, Owner's Drawings.",
       "subject": "FABM1",
       "title": "Set 2: Moving Average Costing",
@@ -1270,7 +1223,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-003": {
-      "id": "set3_perpetual_average",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Cost of Goods Sold, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Rent Expense, Owner's Capital, Owner's Drawings.",
       "subject": "FABM1",
       "title": "Set 3: Moving Average Costing",
@@ -1297,7 +1249,6 @@ export const qbMerchJournalizing = [
   },
 {
     "FABM1-Merch-Perpe-MovingAvg-004": {
-      "id": "set4_perpetual_average",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Cost of Goods Sold, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Advertising Expense, Owner's Capital, Owner's Drawings.",
       "subject": "FABM1",
       "title": "Set 4: Moving Average Costing",
@@ -1324,7 +1275,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-005": {
-      "id": "set5_perpetual_average",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Cost of Goods Sold, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Supplies, Owner's Capital, Owner's Drawings, Salaries Expense.",
       "subject": "FABM1",
       "title": "Set 5: Moving Average Costing",
@@ -1351,7 +1301,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-006": {
-      "id": "set6_perpetual_movingavg",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Rent Expense, Salaries Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 6: Perpetual Inventory (Moving Avg)",
@@ -1378,7 +1327,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-007": {
-      "id": "set7_perpetual_movingavg",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Advertising Expense, Utilities Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 7: Perpetual Inventory (Moving Avg)",
@@ -1405,7 +1353,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-008": {
-      "id": "set8_perpetual_movingavg",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Supplies, Supplies Expense, Rent Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 8: Perpetual Inventory (Moving Avg)",
@@ -1432,7 +1379,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-009": {
-      "id": "set9_perpetual_movingavg",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Accounts Payable, Owner's Capital, Salaries Expense, Utilities Expense, Equipment, Notes Payable, Interest Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 9: Perpetual Inventory (Moving Avg)",
@@ -1459,7 +1405,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-010": {
-      "id": "set10_perpetual_movingavg",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Freight Out, Advertising Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 10: Perpetual Inventory (Moving Avg)",
@@ -1486,7 +1431,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-011": {
-      "id": "set11_perpetual_movingavg",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Accounts Payable, Owner's Capital, Insurance Expense, Salaries Expense, Prepaid Insurance, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 11: Perpetual Inventory (Moving Avg)",
@@ -1513,7 +1457,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-012": {
-      "id": "set12_perpetual_movingavg",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Utilities Expense, Rent Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 12: Perpetual Inventory (Moving Avg)",
@@ -1540,7 +1483,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-013": {
-      "id": "set13_perpetual_movingavg",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Salaries Expense, Utilities Expense, Supplies, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 13: Perpetual Inventory (Moving Avg)",
@@ -1567,7 +1509,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-014": {
-      "id": "set14_perpetual_movingavg",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Advertising Expense, Rent Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 14: Perpetual Inventory (Moving Avg)",
@@ -1594,7 +1535,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Perpe-MovingAvg-015": {
-      "id": "set15_perpetual_movingavg",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Cash, Accounts Receivable, Purchases, Purchase Returns and Allowances, Purchase Discounts, Freight In, Freight Out, Sales, Sales Returns and Allowances, Sales Discounts, Accounts Payable, Owner's Capital, Owner's Drawings, Salaries Expense, Utilities Expense, Merchandise Inventory, Cost of Goods Sold.",
       "subject": "FABM1",
       "title": "Set 15: Perpetual Inventory (Moving Avg)",
@@ -1621,7 +1561,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Practice-Period-WeightedAvg-001": {
-      "id": "set1_periodic_weighted_avg",
       "instructions": "Journalize the transactions using Periodic Inventory System and Weighted Average Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Purchases, Purchase Returns and Allowances, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Supplies, Owner's Capital, Owner's Drawings, Salaries Expense.",
       "subject": "FABM1",
       "title": "Set 1: Weighted Average Costing (Periodic)",
@@ -1648,7 +1587,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Practice-Perpe-MovingAvg-001": {
-      "id": "set1_perpetual_average",
       "instructions": "Journalize the transactions using Perpetual Inventory System and Moving Average Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Cost of Goods Sold, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Supplies, Owner's Capital, Owner's Drawings, Salaries Expense.",
       "subject": "FABM1",
       "title": "Set 1: Moving Average Costing",
@@ -1675,7 +1613,6 @@ export const qbMerchJournalizing = [
   },
 {
     "FABM1-Merch-Practice-Period-FIFO-001": {
-      "id": "set1_periodic_fifo",
       "instructions": "Journalize the transactions using Periodic Inventory System and FIFO Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Purchases, Purchase Returns and Allowances, Freight In, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Supplies, Owner's Capital, Owner's Drawings, Salaries Expense, Purchase Discounts.",
       "subject": "FABM1",
       "title": "Set 1: FIFO Costing (Periodic)",
@@ -1702,7 +1639,6 @@ export const qbMerchJournalizing = [
   },
   {
     "FABM1-Merch-Practice-Perpe-FIFO-001": {
-      "id": "set1_perpetual_fifo",
       "instructions": "Journalize the transactions using Perpetual Inventory System and FIFO Costing. Use the following accounts: Accounts Payable, Accounts Receivable, Cash, Cost of Goods Sold, Merchandise Inventory, Sales, Sales Returns and Allowances, Sales Discounts, Freight Out, Supplies, Owner's Capital, Owner's Drawings, Salaries Expense.",
       "subject": "FABM1",
       "title": "Set 1: FIFO Costing (Perpetual)",
