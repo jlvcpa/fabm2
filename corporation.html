@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction to Corporations</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #0d1117;
+        color: #ffffff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        max-width: 1920px;
+        max-height: 1080px;
+        aspect-ratio: 16 / 9;
+        background: #000;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        display: flex;
+        flex-direction: column;
+    }
+
+    #overlay {
+        position: absolute;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    button.start-btn {
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: transform 0.2s, background 0.3s;
+    }
+
+    button.start-btn:hover { 
+        background: #2563eb; 
+        transform: scale(1.05);
+    }
+
+    /* Slide System Styles */
+    #slides-container {
+        flex: 1;
+        position: relative;
+        width: 100%;
+        height: calc(100% - 150px);
+        background: #161b22;
+    }
+
+    .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 100px;
+        box-sizing: border-box;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        pointer-events: none;
+        text-align: center;
+    }
+
+    .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .slide h1 {
+        font-size: 4.5rem;
+        color: #58a6ff;
+        margin-bottom: 30px;
+    }
+
+    .slide h2 {
+        font-size: 3rem;
+        color: #e6edf3;
+        margin-bottom: 20px;
+    }
+
+    .slide ul {
+        text-align: left;
+        font-size: 2.2rem;
+        line-height: 1.1;
+        color: #c9d1d9;
+        max-width: 1400px;
+    }
+
+    .slide li {
+        margin-bottom: 15px;
+    }
+
+    .slide p {
+        font-size: 2.2rem;
+        line-height: 1.6;
+        color: #c9d1d9;
+        max-width: 1400px;
+    }
+
+    /* Professional Caption Bar (Text Only) */
+    #caption-bar {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 150px;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 150px; 
+        box-sizing: border-box;
+        z-index: 40;
+        transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    #caption-bar.hidden-captions {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    #caption-text {
+        color: #ffffff;
+        font-size: 1.5rem;
+        text-align: center;
+        max-width: 1400px;
+        width: 100%;
+        max-height: 130px; /* Fits neatly inside the 150px caption bar */
+        overflow-y: auto;  /* Adds the vertical scrollbar when needed */
+        line-height: 1.4;
+        font-weight: 400;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    /* Custom Dark-Theme Scrollbar */
+    #caption-text::-webkit-scrollbar {
+        width: 8px;
+    }
+    #caption-text::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 4px;
+    }
+    #caption-text::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+    }
+    #caption-text::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Independent Navigation Controls */
+    #nav-controls {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 150px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 40px;
+        box-sizing: border-box;
+        pointer-events: none; 
+        z-index: 50;
+    }
+
+    .nav-btn {
+        padding: 10px 25px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        background: rgba(13, 17, 23, 0.8);
+        color: #58a6ff;
+        border: 2px solid #58a6ff;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: all 0.2s;
+        pointer-events: auto; 
+    }
+
+    .nav-btn:hover {
+        background: #58a6ff;
+        color: #000;
+    }
+
+    /* Top Controls Group */
+    #top-controls {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 12px;
+        z-index: 60;
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+
+    .active-sim #top-controls { opacity: 1; }
+
+    #live-indicator {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(239, 68, 68, 0.8);
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        border: none;
+        color: white;
+        transition: transform 0.2s, background 0.3s;
+    }
+
+    #live-indicator.off { background: rgba(100, 116, 139, 0.8); }
+
+    .caption-toggle-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #94a3b8;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+    }
+
+    .switch input { opacity: 0; width: 0; height: 0; }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #334155;
+        transition: .4s;
+        border-radius: 20px;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 14px; width: 14px;
+        left: 3px; bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+    input:checked + .slider { background-color: #3b82f6; }
+    input:checked + .slider:before { transform: translateX(20px); }
+
+    .dot {
+        width: 10px; height: 10px;
+        background: white; border-radius: 50%;
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    /* --- NEW AUDIENCE MODE STYLES --- */
+    body.audience-mode #top-controls,
+    body.audience-mode #nav-controls,
+    body.audience-mode #caption-bar {
+        display: none !important;
+    }
+    
+    body.audience-mode #slides-container {
+        height: 100% !important; /* Take up full height since controls are hidden */
+    }
+</style>
+</head>
+<body>
+
+<div id="overlay">
+    <p style="margin-bottom: 20px; color: #94a3b8; font-size: 1.5rem;">Corporate Law & Structure Module</p>
+    <button class="start-btn" onclick="startPresentation()">Start Presentation</button>
+</div>
+
+<div id="container">
+    <div id="top-controls">
+        <button id="audience-btn" class="nav-btn" style="padding: 8px 15px; font-size: 0.9rem; margin-bottom: 5px;" onclick="openAudienceView()">🖥️ Open Audience View</button>
+        <button id="live-indicator" class="off" onclick="toggleAudio()">Auto-Narrator OFF</button>
+        <div class="caption-toggle-container">
+            <span>SHOW CAPTIONS</span>
+            <label class="switch">
+                <input type="checkbox" onchange="toggleCaptions(this)">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+    
+    <div id="slides-container">
+        
+        <div class="slide" 
+             data-voiceover="audio/slide1.wav" 
+             data-text="Welcome. In this module, we will be discussing an Introduction to the topic of Corporations.">
+            <h1>Introduction to the Topic: Corporation</h1>
+            <p>A comprehensive guide to understanding corporate structures.</p>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide2.wav" 
+             data-text="Our learning objectives for today are twofold. First, to understand the legal nature and defining characteristics of a corporation. Second, to remember the various classifications of corporations based on capital structure, number of incorporators, and nationality.">
+            <h2>Learning Objectives</h2>
+            <ul>
+                <li><strong>1. To understand</strong> the legal nature and defining characteristics of a corporation.</li>
+                <li><strong>2. To remember</strong> the various classifications of corporations based on capital structure, number of incorporators, and nationality.</li>
+            </ul>
+        </div>
+
+        <div class="slide"
+            data-voiceover="audio/slide3.wav"
+            data-text="A corporation is an artificial being created by operation of law, endowed with the right of succession and vested with powers, attributes, and properties expressly authorized by law or incidental to its existence. As an artificial being, a corporation has no physical body, consciousness, or biological life; it exists and persists only because the legal system recognizes and sustains it. Its agency is exercised indirectly through human agents—directors, officers, employees, and agents—who make decisions and perform acts in the corporation’s name. The corporation’s rights and duties are primarily legal and instrumental: it may own property, enter contracts, sue and be sued, and incur obligations, but these capacities are conferred and limited by statute and charter. Unlike human beings, who are concrete biological substances with direct causal powers, moral consciousness, and personal responsibility, a corporation’s personhood is institutional and dependent on social and legal practices; it can be held liable and regulated, yet its moral agency is mediated through the people who run it. Because corporate personhood is a legal fiction, courts may protect it to promote commerce and stability, but they may also disregard or pierce the corporate veil when the fiction is abused, fraudulent, or used to defeat public policy or creditors’ rights."">
+            <h2>Nature of Corporations</h2>
+
+            <p>
+            	A corporation is an <strong>artificial being created by operation of law</strong>, 
+            	endowed with the <strong>right of succession</strong> and vested with the 
+            	<strong>powers, attributes, and properties</strong> expressly authorized by law 
+            	or necessarily incidental to its existence.
+            </p>
+
+        </div>
+
+	<div class="slide"
+            data-voiceover="audio/slide4.wav"
+            data-text="Corporations are governed primarily by the Revised Corporation Code, which sets out formation, governance, corporate powers, and dissolution; by the Securities Regulation Code, which regulates securities, public offerings, and SEC oversight; by the Foreign Investments Act, which prescribes rules, registration and ownership limits for foreign investors; by sectoral statutes such as the General Banking Law and Insurance Code that impose industry‑specific licensing, prudential and supervisory rules; and by constitutional provisions on national economy and patrimony that limit foreign ownership and protect public interest. The Revised Corporation Code (R.A. 11232) modernized corporate formation (including the One‑Person Corporation), governance, perpetual existence, and shareholder protections. The Securities Regulation Code (R.A. 8799) defines securities, investor protection policies, registration and disclosure requirements, and the powers of the Securities and Exchange Commission. The Foreign Investments Act (R.A. 7042, as amended) establishes the Foreign Investment Negative List, capitalization and registration requirements, and procedures for foreign enterprises doing business in the Philippines. Sectoral laws such as the General Banking Law (R.A. 8791), the Insurance Code, and other special statutes impose licensing, capital, governance, and supervisory regimes for regulated industries and vest oversight in agencies like the Bangko Sentral and the Insurance Commission. Constitutional provisions on the national economy and patrimony (Article XII) restrict land and certain industry ownership to Filipino citizens or corporations with required Filipino ownership percentages, shaping what corporations may lawfully own or do.">
+            <h2>Governing Laws</h2>
+
+            <p>
+             Corporations are primarily governed by the <strong>Revised Corporation Code of the Philippines (R.A. 11232)</strong>, which sets out formation, corporate powers, governance, and dissolution.
+            </p>
+
+            <ul>
+            <li><strong>Revised Corporation Code (R.A. 11232)</strong> — formation, corporate attributes, governance, and dissolution.</li>
+            <li><strong>Securities Regulation Code (R.A. 8799)</strong> — regulation of securities, public offerings, and SEC oversight.</li>
+            <li><strong>Foreign Investments Act and related statutes</strong> — rules on foreign equity, restrictions, and incentives.</li>
+            <li><strong>Special laws and sectoral codes</strong> — e.g., Banking Law, Insurance Code, Cooperative Code, Public Utilities regulations; these govern corporations in regulated industries.</li>
+            <li><strong>Constitutional provisions</strong> — national patrimony and ownership limitations that affect corporate structure and permissible activities.</li>
+            </ul>
+        </div>
+
+
+        <div class="slide" 
+             data-voiceover="audio/slide4.wav" 
+             data-text="There are four key characteristics of a corporation. It has a separate legal personality, offers limited liability to its shareholders, allows for the free transferability of units or shares, and features centralized management usually through a Board of Directors.">
+            <h2>Characteristics of a Corporation</h2>
+            <ul>
+                <li><strong>Separate Legal Personality:</strong> Distinct from its shareholders and members.</li>
+                <li><strong>Limited Liability:</strong> Shareholders are generally only liable up to their investment amount.</li>
+                <li><strong>Free Transferability:</strong> Shares can usually be bought or sold without dissolving the corporation.</li>
+                <li><strong>Centralized Management:</strong> Governed by a Board of Directors or Trustees.</li>
+            </ul>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide5.wav" 
+             data-text="Corporations are classified by capital structure into stock and nonstock types. Stock corporations divide capital into shares and may distribute dividends to shareholders; their net income is subject to corporate income tax and dividends may carry withholding or final tax consequences, and on dissolution remaining assets (after liabilities) are distributed to shareholders according to shareholdings. Nonstock corporations do not issue shares and may not distribute net income as dividends to members; any surplus must be applied to the corporation’s stated purposes, may be retained as reserves or endowments, and reasonable compensation to officers and employees is permitted but private inurement is prohibited. Nonstock corporations that engage in commercial activities may incur tax on unrelated business income under the tax code. On dissolution, nonstock corporations must dispose of remaining assets in accordance with their articles, bylaws, and law—typically transferring them to another nonstock or charitable entity rather than distributing them to members.">
+
+            <h2>Classification by Capital Structure</h2>
+            <ul>
+                <li><strong>Stock Corporations:</strong> Capital stock is divided into shares and are authorized to distribute to the holders of such shares dividends or allotments of the surplus profits.</li>
+                <li><strong>Non-Stock Corporations:</strong> No part of its income is distributable as dividends to its members, trustees, or officers.</li>
+            </ul>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide6.wav" 
+             data-text="When looking at the number of incorporators, we classify them as a Corporation Sole, formed by one religious head; a One Person Corporation, which is formed by a single stockholder; and an Ordinary Corporation, formed by multiple incorporators.">
+            <h2>Classification by Number of Incorporators</h2>
+            <ul>
+                <li><strong>Corporation Sole:</strong> Formed for the purpose of administering and managing, as trustee, the affairs, property, and temporalities of any religious denomination.</li>
+                <li><strong>One Person Corporation (OPC):</strong> A corporation with a single stockholder.</li>
+                <li><strong>Ordinary Corporation:</strong> Formed by multiple incorporators (typically 2 to 15, or more depending on jurisdiction).</li>
+            </ul>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide7.wav" 
+             data-text="Special corporations serve specific societal needs. Common examples include Educational corporations, which manage schools and universities, and Religious corporations, which govern religious societies.">
+            <h2>Special Corporations</h2>
+            <ul>
+                <li><strong>Educational Corporations:</strong> Organized for educational purposes, governing schools, colleges, and universities.</li>
+                <li><strong>Religious Corporations:</strong> Organized by religious groups, societies, or sects.</li>
+            </ul>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide8.wav" 
+             data-text="By nationality, a corporation is Domestic if it is incorporated under local laws. It is considered a Foreign corporation if it is formed, organized, or existing under any laws other than those of the local jurisdiction.">
+            <h2>Classification by Nationality</h2>
+            <ul>
+                <li><strong>Domestic Corporation:</strong> Incorporated under the laws of the host country.</li>
+                <li><strong>Foreign Corporation:</strong> Formed, organized, or existing under any laws other than those of the host country, and whose laws allow local citizens to do business.</li>
+            </ul>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide9.wav" 
+             data-text="Finally, other classifications exist based on purpose or legal status. They can be Public or Private, and legally, they can be classified as De Jure, meaning strict compliance with the law, or De Facto, meaning there is a defect in incorporation despite a good faith attempt.">
+            <h2>Other Classifications Based on Purpose / Legal Status</h2>
+            <ul>
+                <li><strong>Public vs. Private:</strong> Public entities are formed to govern a portion of the state, while private entities are formed for private aim or benefit.</li>
+                <li><strong>De Jure vs. De Facto:</strong> De Jure corporations have strictly complied with all legal requirements. De Facto corporations have a defect in their incorporation but exist in fact and act as a corporation.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div id="nav-controls">
+        <button class="nav-btn" onclick="prevSlide()">&#9664; Prev</button>
+        <button class="nav-btn" onclick="nextSlide()">Next &#9654;</button>
+    </div>
+
+    <div id="caption-bar" class="hidden-captions">
+        <div id="caption-text">Press Start Presentation to begin.</div>
+    </div>
+</div>
+
+<script>
+    // --- ROBUST PRESENTATION SYNC LOGIC ---
+    const isAudience = window.location.search.includes('mode=audience');
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const captionText = document.getElementById('caption-text');
+    const captionBar = document.getElementById('caption-bar');
+    let currentAudio = null;
+    let isAudioEnabled = false;
+
+    // Audience Window Setup
+    if (isAudience) {
+        document.body.classList.add('audience-mode');
+        
+        // 1. Auto-start the audience window and hide the overlay on load
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('container').classList.add('active-sim');
+            
+            // Catch up to whatever slide the teacher is currently on
+            let savedIndex = parseInt(localStorage.getItem('presentationSyncIndex')) || 0;
+            updateSlideVisuals(savedIndex);
+        });
+
+        // 2. Listen for slide changes broadcasted by the Teacher window
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'presentationSyncIndex') {
+                updateSlideVisuals(parseInt(event.newValue));
+            }
+        });
+    }
+
+    function openAudienceView() {
+        if (!isAudience) {
+            // Force the bulletin board to match the teacher's current slide
+            localStorage.setItem('presentationSyncIndex', currentSlideIndex.toString());
+            // Strip any existing URL parameters and open the audience window
+            const baseUrl = window.location.href.split('?')[0];
+            window.open(baseUrl + '?mode=audience', 'AudienceView', 'width=1280,height=720');
+        }
+    }
+
+    function startPresentation() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('container').classList.add('active-sim');
+        
+        if (!isAudience) {
+            // Reset to 0 when first starting, but do not open the audience window yet
+            currentSlideIndex = 0; 
+            localStorage.setItem('presentationSyncIndex', '0');
+        }
+        
+        showSlide(currentSlideIndex);
+    }
+
+    function toggleAudio() {
+        isAudioEnabled = !isAudioEnabled;
+        const indicatorBtn = document.getElementById('live-indicator');
+        if (isAudioEnabled) {
+            indicatorBtn.innerHTML = '<div class="dot"></div> Auto-Narrator ON';
+            indicatorBtn.classList.remove("off");
+            playNarrative(slides[currentSlideIndex]);
+        } else {
+            indicatorBtn.innerHTML = 'Auto-Narrator OFF';
+            indicatorBtn.classList.add("off");
+            if (currentAudio) currentAudio.pause();
+            window.speechSynthesis.cancel();
+        }
+    }
+
+    function toggleCaptions(checkbox) {
+        if (checkbox.checked) {
+            captionBar.classList.remove('hidden-captions');
+        } else {
+            captionBar.classList.add('hidden-captions');
+        }
+    }
+
+    // Helper function that just changes the screen visuals silently
+    function updateSlideVisuals(index) {
+        if (index < 0) index = 0;
+        if (index >= slides.length) index = slides.length - 1;
+        
+        slides.forEach(slide => slide.classList.remove('active'));
+        currentSlideIndex = index;
+        slides[currentSlideIndex].classList.add('active');
+    }
+
+    function showSlide(index) {
+        updateSlideVisuals(index);
+        
+        if (!isAudience) {
+            // 3. Broadcast the new slide number to the Audience window
+            localStorage.setItem('presentationSyncIndex', currentSlideIndex.toString());
+            // Play audio for the teacher view only
+            playNarrative(slides[currentSlideIndex]);
+        }
+    }
+
+    function playNarrative(slideElement) {
+        if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+        window.speechSynthesis.cancel();
+        
+        const voiceoverFile = slideElement.getAttribute('data-voiceover');
+        const textToRead = slideElement.getAttribute('data-text');
+        
+        captionText.innerText = textToRead;
+        
+        if (!isAudioEnabled) return;
+        
+        if (voiceoverFile && voiceoverFile.trim() !== "") {
+            currentAudio = new Audio(voiceoverFile);
+            currentAudio.play().catch(error => speakText(textToRead));
+        } else {
+            speakText(textToRead);
+        }
+    }
+
+    function speakText(text) {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.95;
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+
+    function nextSlide() { if (currentSlideIndex < slides.length - 1) showSlide(currentSlideIndex + 1); }
+    function prevSlide() { if (currentSlideIndex > 0) showSlide(currentSlideIndex - 1); }
+</script>
+</body>
+</html>
