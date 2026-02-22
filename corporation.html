@@ -127,6 +127,51 @@
         max-width: 1400px;
     }
 
+	/* Checkpoint Quiz Styles */
+    .mcq-option {
+        margin-bottom: 12px;
+        padding: 15px 20px;
+        background: rgba(13, 17, 23, 0.6);
+        border: 2px solid #30363d;
+        border-radius: 8px;
+        list-style: none;
+        transition: all 0.2s;
+        max-width: 1200px;
+    }
+    .mcq-option:hover {
+        border-color: #58a6ff;
+        background: rgba(88, 166, 255, 0.1);
+    }
+    .reveal-btn {
+        background: #238636;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 25px;
+        transition: background 0.2s;
+    }
+    .reveal-btn:hover {
+        background: #2ea043;
+    }
+    .correct-answer {
+        display: none;
+        margin-top: 25px;
+        padding: 15px 30px;
+        background: rgba(46, 160, 67, 0.15);
+        border-left: 5px solid #3fb950;
+        color: #e6edf3;
+        font-size: 1.8rem;
+        max-width: 1200px;
+    }
+    .correct-answer span {
+        color: #3fb950;
+        font-weight: bold;
+    }
+
     /* Professional Caption Bar (Text Only) */
     #caption-bar {
         position: absolute;
@@ -415,19 +460,8 @@
         </div>
 
         <div class="slide" 
-             data-voiceover="audio/slide5.wav" 
-             data-text="Corporations are classified by capital structure into stock and nonstock types. Stock corporations divide capital into shares and may distribute dividends to shareholders; their net income is subject to corporate income tax and dividends may carry withholding or final tax consequences, and on dissolution remaining assets (after liabilities) are distributed to shareholders according to shareholdings. Nonstock corporations do not issue shares and may not distribute net income as dividends to members; any surplus must be applied to the corporation’s stated purposes, may be retained as reserves or endowments, and reasonable compensation to officers and employees is permitted but private inurement is prohibited. Nonstock corporations that engage in commercial activities may incur tax on unrelated business income under the tax code. On dissolution, nonstock corporations must dispose of remaining assets in accordance with their articles, bylaws, and law—typically transferring them to another nonstock or charitable entity rather than distributing them to members.">
-
-            <h2>Classification by Capital Structure</h2>
-            <ul>
-                <li><strong>Stock Corporations:</strong> Capital stock is divided into shares and are authorized to distribute to the holders of such shares dividends or allotments of the surplus profits.</li>
-                <li><strong>Non-Stock Corporations:</strong> No part of its income is distributable as dividends to its members, trustees, or officers.</li>
-            </ul>
-        </div>
-
-        <div class="slide" 
              data-voiceover="audio/slide6.wav" 
-             data-text="When looking at the number of incorporators, we classify them as a Corporation Sole, formed by one religious head; a One Person Corporation, which is formed by a single stockholder; and an Ordinary Corporation, formed by multiple incorporators.">
+             data-text="Another essential way to classify corporations is by examining the number of incorporators who originally formed the entity. The first classification is the Corporation Sole, which is quite unique in its structure. It is formed by a single religious leader, such as a bishop or head of a denomination. Its primary purpose is to administer and manage the affairs, property, and temporalities of that specific religious group as a trustee. A more recent and highly popular classification under the Revised Corporation Code is the One Person Corporation, or OPC. The OPC allows a single stockholder, who can be a natural person, trust, or estate, to form a corporation without needing partners. This grants the sole owner the shield of limited liability, previously only available to groups of investors. Finally, we have the Ordinary Corporation, which is the most common business structure. This traditional form is created by multiple incorporators working together to pool their resources. Typically, the law requires anywhere from two to fifteen incorporators to establish this kind of entity, depending on specific jurisdictional rules.">
             <h2>Classification by Number of Incorporators</h2>
             <ul>
                 <li><strong>Corporation Sole:</strong> Formed for the purpose of administering and managing, as trustee, the affairs, property, and temporalities of any religious denomination.</li>
@@ -438,7 +472,7 @@
 
         <div class="slide" 
              data-voiceover="audio/slide7.wav" 
-             data-text="Special corporations serve specific societal needs. Common examples include Educational corporations, which manage schools and universities, and Religious corporations, which govern religious societies.">
+             data-text="Beyond standard business structures, the law recognizes Special Corporations designed to serve specific societal needs. These entities are governed by special provisions because of the vital public interests they handle. A prominent example is the Educational Corporation, which is explicitly organized for educational and learning purposes. These corporations govern the operations of schools, colleges, and universities within the country. They are subject to the oversight of educational agencies and must maintain strict standards to fulfill their academic missions. Similarly, the law provides for Religious Corporations, which are formed to govern religious groups, societies, or sects. These can be further divided into corporations sole, which we discussed earlier, or religious societies formed by a group of believers. Their primary function is not to generate profit for investors, but to ensure the organized practice and administration of their faith. By giving these institutions corporate status, the law allows them to own property, enter into contracts, and protect their members. Together, these special corporations play a crucial role in shaping the educational and spiritual landscape of the nation.">
             <h2>Special Corporations</h2>
             <ul>
                 <li><strong>Educational Corporations:</strong> Organized for educational purposes, governing schools, colleges, and universities.</li>
@@ -448,7 +482,7 @@
 
         <div class="slide" 
              data-voiceover="audio/slide8.wav" 
-             data-text="By nationality, a corporation is Domestic if it is incorporated under local laws. It is considered a Foreign corporation if it is formed, organized, or existing under any laws other than those of the local jurisdiction.">
+             data-text="Corporations are also classified based on their nationality, which dictates how they are taxed and regulated by the state. The first category is the Domestic Corporation, which is straightforward to identify. A domestic corporation is one that is formally incorporated and organized under the laws of the host country, such as the Philippines. Because it owes its legal existence to the local government, it is subject to the full regulatory power and protection of that state. In contrast, a Foreign Corporation is formed, organized, or existing under any laws other than those of the local jurisdiction. Despite being created abroad, these entities often seek to expand their operations and participate in the local economy. To legally conduct business within the host country, a foreign corporation must first obtain a specific license from the Securities and Exchange Commission. This licensing process ensures that the foreign entity agrees to be bound by local laws and can be sued in local courts. Furthermore, the laws of its home country must reciprocally allow local citizens to do business there. Understanding this distinction is vital for determining compliance with foreign ownership restrictions in certain nationalized industries.">
             <h2>Classification by Nationality</h2>
             <ul>
                 <li><strong>Domestic Corporation:</strong> Incorporated under the laws of the host country.</li>
@@ -458,12 +492,391 @@
 
         <div class="slide" 
              data-voiceover="audio/slide9.wav" 
-             data-text="Finally, other classifications exist based on purpose or legal status. They can be Public or Private, and legally, they can be classified as De Jure, meaning strict compliance with the law, or De Facto, meaning there is a defect in incorporation despite a good faith attempt.">
+             data-text="Finally, we can classify corporations based on their overarching purpose and their precise legal status upon formation. When categorized by purpose, we distinguish between Public and Private corporations. Public corporations are entities created by the state to govern a portion of the state itself, such as cities, municipalities, or provinces. Private corporations, on the other hand, are formed by individuals for a private aim, whether that is generating profit or supporting a charitable cause. Looking at legal status, a corporation is considered 'De Jure' when it has strictly and completely complied with all legal requirements for its creation. A De Jure corporation has a flawless legal existence that cannot be directly attacked by anyone, not even the state. Conversely, a 'De Facto' corporation is one that exists in reality, but has a specific defect or flaw in its incorporation process. For a De Facto corporation to exist, there must have been a valid law under which it could be formed and a genuine, good faith attempt to organize under that law. Despite the defect, it acts as a corporation and conducts business in the real world. The law temporarily recognizes its corporate acts to protect innocent third parties who deal with it, although the state can legally challenge its existence later.">
             <h2>Other Classifications Based on Purpose / Legal Status</h2>
             <ul>
                 <li><strong>Public vs. Private:</strong> Public entities are formed to govern a portion of the state, while private entities are formed for private aim or benefit.</li>
                 <li><strong>De Jure vs. De Facto:</strong> De Jure corporations have strictly complied with all legal requirements. De Facto corporations have a defect in their incorporation but exist in fact and act as a corporation.</li>
             </ul>
+        </div>
+
+		<div class="slide" 
+             data-voiceover="" 
+             data-text="Let us pause for a moment to test your memory on the governing laws of corporations. The legal framework is complex and relies on very specific statutes. We discussed the Revised Corporation Code, the Securities Regulation Code, and the Foreign Investments Act. Each of these laws plays a distinct role in corporate regulation. The question is: Which specific Republic Act establishes the Foreign Investment Negative List, sets capitalization and registration requirements, and outlines procedures for foreign enterprises doing business in the Philippines? Is it A, R.A. 11232; B, R.A. 8791; C, R.A. 8799; or D, R.A. 7042? Take a moment to review the options and recall the specific statute numbers we discussed earlier. When you are ready, click the Reveal Answer button to see if you are correct.">
+            <h2>Checkpoint Question 1: Governing Laws</h2>
+            <p style="margin-bottom: 20px;">Which specific statute establishes the Foreign Investment Negative List and prescribes rules for foreign enterprises doing business in the Philippines?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) R.A. 11232 (Revised Corporation Code)</li>
+                <li class="mcq-option">B) R.A. 8791 (General Banking Law)</li>
+                <li class="mcq-option">C) R.A. 8799 (Securities Regulation Code)</li>
+                <li class="mcq-option">D) R.A. 7042 (Foreign Investments Act)</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: D.</span> R.A. 7042 (Foreign Investments Act, as amended)</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Let us test your understanding of the legal nature of a corporation. We established that a corporation is an artificial being created by operation of law. It has no physical body, but is instead a legal fiction designed to promote commerce and stability. Because it is a legal fiction, its protections are not absolute. Under what specific circumstances did the text state that courts will disregard, or 'pierce', this corporate veil? Is it A, when the corporation fails to generate a profit for three consecutive years? Is it B, when the legal fiction is abused, fraudulent, or used to defeat public policy or creditors' rights? Is it C, when the corporation engages in a joint venture with a foreign entity? Or is it D, when all shares are transferred to a single individual? Think back to the limitations of corporate personhood before revealing the answer.">
+            <h2>Checkpoint Question 2: Nature of Corporations</h2>
+            <p style="margin-bottom: 20px;">Because corporate personhood is a legal fiction, under what specific circumstance will courts disregard or "pierce the corporate veil"?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) When the corporation fails to generate profit for three consecutive years.</li>
+                <li class="mcq-option">B) When the fiction is abused, fraudulent, or used to defeat public policy or creditors' rights.</li>
+                <li class="mcq-option">C) When the corporation engages in a joint venture with a foreign entity.</li>
+                <li class="mcq-option">D) When all corporate shares are transferred to a single individual.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> When the fiction is abused, fraudulent, or used to defeat public policy or creditors' rights.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Now, let's review the classification of corporations based on the number of incorporators. The Revised Corporation Code introduced some modernizations to this area. We discussed the Corporation Sole, the One Person Corporation, and the Ordinary Corporation. It is easy to confuse entities that have only one primary figurehead. The question is: An entity formed by a single stockholder who can be a natural person, a trust, or an estate is legally known as what? Is it A, a Corporation Sole? Is it B, a De Facto Corporation? Is it C, a One Person Corporation? Or is it D, a Public Corporation? Remember the distinction between managing temporalities for a religious denomination versus holding shares as an estate or trust. Lock in your answer, then click reveal.">
+            <h2>Checkpoint Question 3: Incorporators</h2>
+            <p style="margin-bottom: 20px;">An entity formed by a single stockholder, who can specifically be a natural person, a trust, or an estate, is legally classified as:</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) A Corporation Sole</li>
+                <li class="mcq-option">B) A De Facto Corporation</li>
+                <li class="mcq-option">C) A One Person Corporation (OPC)</li>
+                <li class="mcq-option">D) A Public Corporation</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: C.</span> A One Person Corporation (OPC). A Corporation Sole is strictly for religious heads managing temporalities.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="This checkpoint focuses on the legal status of a corporation upon formation. Sometimes, the incorporation process does not go perfectly. We differentiated between De Jure and De Facto corporations. A corporation that exists in reality, acts as a corporation, and made a genuine, good-faith attempt to organize under a valid law, but possesses a specific flaw or defect in its incorporation process, is classified as what? Is it A, a De Jure Corporation? Is it B, an Ordinary Corporation? Is it C, a Domestic Corporation? Or is it D, a De Facto Corporation? Recall how the law temporarily recognizes the acts of these flawed entities to protect innocent third parties who conduct business with them. Think carefully before you reveal the correct terminology.">
+            <h2>Checkpoint Question 4: Legal Status</h2>
+            <p style="margin-bottom: 20px;">A corporation that acts as a corporation and made a good-faith attempt to organize under valid law, but possesses a specific flaw in its incorporation process, is classified as:</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) A De Jure Corporation</li>
+                <li class="mcq-option">B) An Ordinary Corporation</li>
+                <li class="mcq-option">C) A Domestic Corporation</li>
+                <li class="mcq-option">D) A De Facto Corporation</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: D.</span> A De Facto Corporation. De Jure requires strict compliance with no flaws.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="For our final checkpoint, let us test your memory on the requirements for foreign corporations. Nationality dictates how an entity is taxed and regulated. We know that a domestic corporation is formed under local laws. However, a foreign corporation is formed under the laws of another country. For a foreign corporation to legally conduct business within the Philippines and be capable of being sued in local courts, what strict requirement must be met? Is it A, it must reorganize with 15 Filipino incorporators? Is it B, it must obtain a specific SEC license, and its home country must grant reciprocal rights to Filipinos? Is it C, it must surrender its limited liability protection? Or is it D, it must be classified as an Educational Corporation? Recall the oversight powers of the Securities and Exchange Commission and the principle of reciprocity before checking the answer.">
+            <h2>Checkpoint Question 5: Nationality</h2>
+            <p style="margin-bottom: 20px;">For a foreign corporation to legally conduct business in the Philippines and be capable of being sued in local courts, what must happen?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) It must reorganize internally to have exactly 15 Filipino incorporators.</li>
+                <li class="mcq-option">B) It must obtain a specific SEC license, and its home country must grant reciprocal rights.</li>
+                <li class="mcq-option">C) It must surrender its limited liability shield for local operations.</li>
+                <li class="mcq-option">D) It must re-classify itself specifically as an Educational Corporation.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> It must obtain a specific SEC license, and its home country laws must allow local citizens reciprocal rights to do business.</div>
+        </div>
+
+		<div class="slide"
+            data-voiceover="audio/slide5.wav"
+            data-text="The creation of a corporation formally begins with its registration at the Securities and Exchange Commission, commonly known as the SEC. The first crucial step is reserving a corporate name, which must be distinct and not confusingly similar to existing registered names. Once the name is approved, the incorporators must draft and execute the primary formation documents. These documents are then submitted to the SEC through their online company registration portal. After a thorough review of the submitted files, the applicant must pay the corresponding filing fees. Upon successful payment and final verification, the SEC issues the Certificate of Incorporation. This certificate marks the legal birth of the corporation. From this moment, the entity acquires a separate juridical personality and can legally operate under its approved name.">
+            <h2>SEC Registration Process</h2>
+            <p>
+             The formal legal existence of a corporation commences only upon the issuance of the <strong>Certificate of Incorporation</strong> by the SEC.
+            </p>
+            <br>
+            
+            <ul>
+            <li><strong>Name Verification:</strong> Reserving a distinct and legally permissible corporate name.</li>
+            <li><strong>Document Preparation:</strong> Drafting the Articles of Incorporation and By-laws.</li>
+            <li><strong>Online Filing:</strong> Submission of signed documents through the SEC online portal.</li>
+            <li><strong>Payment of Fees:</strong> Settling filing and legal research fees based on authorized capital.</li>
+            <li><strong>Issuance of Certificate:</strong> The official act granting juridical personality to the corporation.</li>
+            </ul>
+        </div>
+
+        <div class="slide"
+            data-voiceover="audio/slide6.wav"
+            data-text="The Articles of Incorporation serves as the supreme charter of the corporation and establishes its primary franchise from the State. It acts as a binding contract between the state and the corporation, between the shareholders and the corporation, and among the shareholders themselves. This pivotal document must clearly state the corporate name and its primary and secondary purposes. It also designates the principal office address, which determines the legal venue for corporate actions. Furthermore, the Articles identify the founding incorporators, the initial directors or trustees, and the corporation's initial capitalization details. Under the Revised Corporation Code, corporations now enjoy perpetual existence unless a specific term is stated in this document. Any substantial changes to the nature of the business require amending the Articles, which mandates both shareholder and SEC approval.">
+            <h2>Articles of Incorporation (AOI)</h2>
+            <p>
+             The <strong>Articles of Incorporation</strong> is the basic contract document defining the corporation's charter, powers, and fundamental structure.
+            </p>
+            <br>
+            
+            <ul>
+            <li><strong>Corporate Name & Purpose:</strong> Identifies the entity and defines the scope of its authorized business activities.</li>
+            <li><strong>Principal Office:</strong> Establites the official legal address within the Philippines.</li>
+            <li><strong>Corporate Term:</strong> Grants perpetual existence by default under the Revised Corporation Code.</li>
+            <li><strong>Founders:</strong> Lists the names, nationalities, and residences of the incorporators.</li>
+            <li><strong>Capital Structure:</strong> Details the authorized capital stock, number of shares, and initial subscriber commitments.</li>
+            </ul>
+        </div>
+
+        <div class="slide"
+            data-voiceover="audio/slide7.wav"
+            data-text="Incorporators are the founding members who originally form the corporation and whose signatures appear on the Articles of Incorporation. Under the modernized rules, any person, partnership, association, or corporation can act as an incorporator. An ordinary stock corporation generally requires between two to fifteen incorporators to establish the entity. It is strictly required that incorporators must be of legal age and must own or subscribe to at least one share of the capital stock. Once the corporation is registered, management is entrusted to the Board of Directors or Trustees. The individuals listed in the Articles of Incorporation serve as the initial directors until the first formal stockholders' meeting is convened. These initial directors are responsible for formally organizing the corporation, including the election of corporate officers.">
+            <h2>Incorporators & Initial Management</h2>
+            <p>
+             <strong>Incorporators</strong> are the signatories to the AOI who bring the corporation into existence, while the <strong>Board of Directors</strong> manages its operations.
+            </p>
+            <ul>
+            <li><strong>Qualifications:</strong> Can be natural persons of legal age, partnerships, associations, or other corporations.</li>
+            <li><strong>Number required:</strong> Usually 2 to 15 for an ordinary corporation (or just 1 for a One Person Corporation).</li>
+            <li><strong>Shareholding Requirement:</strong> Each incorporator of a stock corporation must own or subscribe to at least one (1) share.</li>
+            <li><strong>Initial Directors:</strong> The AOI names the interim board responsible for organizational tasks until the first shareholder election.</li>
+            </ul>
+        </div>
+
+        <div class="slide"
+            data-voiceover="audio/slide8.wav"
+            data-text="Understanding a corporation's financial foundation requires distinguishing between three key capitalization terms. The Authorized Capital Stock represents the maximum amount of shares the corporation is legally permitted to issue, as stated in its Articles of Incorporation. From this authorized amount, investors commit to buy a certain portion, which becomes the Subscribed Capital Stock. The Subscribed Capital Stock reflects the binding financial pledges made by the shareholders to the corporation. Meanwhile, the Paid-up Capital represents the actual cash or property that shareholders have already transferred to the corporate treasury. Historically, the law required specific percentages of the authorized stock to be subscribed and paid upon incorporation. However, the Revised Corporation Code has generally removed these minimum capitalization requirements, except when mandated by special industry laws.">
+            <h2>Understanding Capitalization Terms</h2>
+            <p>
+             The financial structure of a stock corporation is categorized into authorized, subscribed, and paid-up capital stock.
+            </p>
+            <br>
+            
+            <ul>
+            <li><strong>Authorized Capital Stock:</strong> The absolute maximum value and number of shares the corporation can issue based on its AOI.</li>
+            <li><strong>Subscribed Capital Stock:</strong> The portion of the authorized capital that investors have legally committed to purchase.</li>
+            <li><strong>Paid-up Capital:</strong> The actual portion of the subscribed capital that has been paid to the corporate treasury.</li>
+            <li><strong>General Rule:</strong> The Revised Corporation Code eliminated minimum subscribed and paid-up requirements for ordinary corporations upon incorporation, subject to special laws.</li>
+            </ul>
+        </div>
+
+        <div class="slide"
+            data-voiceover="audio/slide9.wav"
+            data-text="Receiving the Certificate of Incorporation from the SEC does not mean the company can immediately begin its operations. The corporation must formally adopt its By-laws, which serve as the internal rulebook governing the conduct of its officers and meetings. Following SEC registration, the entity must register with the Bureau of Internal Revenue to obtain a Tax Identification Number and authority to print receipts. Local government compliance is also mandatory, requiring the acquisition of a Barangay Clearance and a Mayor's Business Permit in the municipality where the principal office is located. Additionally, the corporation must register as an employer with statutory agencies like SSS, PhilHealth, and Pag-IBIG. If the corporation engages in regulated activities, it must secure secondary licenses from appropriate government bodies. Only after completing these post-incorporation steps is the business fully compliant and legally cleared to operate.">
+            <h2>Post-Incorporation Requirements</h2>
+            <p>
+             SEC registration provides legal existence, but a corporation must comply with other government agency requirements before commencing commercial operations.
+            </p>
+            <ul>
+            <li><strong>Adoption of By-laws:</strong> Must be filed within the prescribed period to govern internal corporate administration.</li>
+            <li><strong>BIR Registration:</strong> Securing a Tax Identification Number (TIN), registering books of accounts, and Authority to Print (ATP) invoices.</li>
+            <li><strong>Local Government Units (LGU):</strong> Obtaining Barangay Clearance and the Mayor's / Business Permit.</li>
+            <li><strong>Statutory Benefits:</strong> Registering as an employer with SSS, PhilHealth, and Pag-IBIG.</li>
+            <li><strong>Secondary Licenses:</strong> Procuring specialized permits from agencies (e.g., BSP, Insurance Commission) if entering regulated industries.</li>
+            </ul>
+        </div>
+
+		<div class="slide" 
+             data-voiceover="" 
+             data-text="Let's test your memory on the SEC registration process. Creating a corporation involves multiple steps, from reserving a name to paying filing fees. However, there is one specific moment when the legal fiction of the corporation officially comes to life. Which specific event officially grants a separate juridical personality to the newly formed corporation? Is it A, the successful online filing of the Articles of Incorporation? Is it B, the reservation of a distinct and legally permissible corporate name? Is it C, the payment of filing and legal research fees based on authorized capital? Or is it D, the issuance of the Certificate of Incorporation by the SEC? Think carefully about what act formally concludes the registration process, then click reveal.">
+            <h2>Checkpoint Question 6: SEC Registration</h2>
+            <p style="margin-bottom: 20px;">Which specific event officially grants a separate juridical personality to the newly formed corporation?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) The successful online filing of the Articles of Incorporation.</li>
+                <li class="mcq-option">B) The reservation of a distinct and legally permissible corporate name.</li>
+                <li class="mcq-option">C) The payment of filing and legal research fees based on authorized capital.</li>
+                <li class="mcq-option">D) The issuance of the Certificate of Incorporation by the SEC.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: D.</span> The issuance of the Certificate of Incorporation by the SEC.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Let's move on to the Articles of Incorporation, the supreme charter of the company. This document contains several vital pieces of information, including the corporate name, purpose, and term. It also requires the designation of a principal office. According to the Articles of Incorporation, what is the specific legal significance of designating this principal office address? Is it A, it determines the tax rate applied by the Bureau of Internal Revenue? Is it B, it establishes the legal venue for corporate actions and lawsuits? Is it C, it defines the geographic limits where the corporation can sell its products? Or is it D, it dictates the nationality of the corporation's founding incorporators? Lock in your answer and reveal the correct one.">
+            <h2>Checkpoint Question 7: Articles of Incorporation</h2>
+            <p style="margin-bottom: 20px;">According to the Articles of Incorporation, what is the specific legal significance of designating the principal office address?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) It determines the tax rate applied by the Bureau of Internal Revenue.</li>
+                <li class="mcq-option">B) It establishes the legal venue for corporate actions and lawsuits.</li>
+                <li class="mcq-option">C) It defines the geographic limits where the corporation can sell its products.</li>
+                <li class="mcq-option">D) It dictates the nationality of the corporation's founding incorporators.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> It establishes the legal venue for corporate actions and lawsuits.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Now, let's review the rules surrounding incorporators. We know that natural persons, partnerships, and other corporations can act as incorporators. However, there are strict rules for those who sign the Articles to form a stock corporation. What is a strict, mandatory requirement for an individual or entity to act as an incorporator of a stock corporation? Is it A, they must own or subscribe to at least one share of the capital stock? Is it B, they must be a Filipino citizen residing in the principal office's municipality? Is it C, they must contribute a minimum paid-up capital of five thousand pesos? Or is it D, they must serve on the initial Board of Directors for a minimum of five years? Recall the specific shareholding requirements before clicking reveal.">
+            <h2>Checkpoint Question 8: Incorporators</h2>
+            <p style="margin-bottom: 20px;">What is a strict, mandatory requirement for an individual or entity to act as an incorporator of a stock corporation?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) They must own or subscribe to at least one share of the capital stock.</li>
+                <li class="mcq-option">B) They must be a Filipino citizen residing in the principal office's municipality.</li>
+                <li class="mcq-option">C) They must contribute a minimum paid-up capital of 5,000 pesos.</li>
+                <li class="mcq-option">D) They must serve on the initial Board of Directors for a minimum of five years.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: A.</span> They must own or subscribe to at least one (1) share of the capital stock.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="This checkpoint tackles capitalization terms, which can be tricky. We differentiated between authorized, subscribed, and paid-up capital. Historically, the law required 25% to be subscribed and 25% of that to be paid up. How does the modern Revised Corporation Code generally treat these minimum requirements for ordinary corporations upon incorporation? Is it A, it strictly maintains the 25% subscription and 25% paid-up rule? Is it B, it dictates that all subscribed capital must be fully paid-up before the SEC issues a certificate? Is it C, it has eliminated minimum subscribed and paid-up requirements, except when mandated by special industry laws? Or is it D, it requires a fixed minimum paid-up capital of one million pesos for all new domestic corporations? Think about how the new code modernized the formation process.">
+            <h2>Checkpoint Question 9: Capitalization</h2>
+            <p style="margin-bottom: 20px;">How does the Revised Corporation Code generally treat the minimum requirements for subscribed and paid-up capital upon incorporation for ordinary corporations?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) It strictly maintains the traditional 25% subscription and 25% paid-up rule.</li>
+                <li class="mcq-option">B) It dictates that all subscribed capital must be fully paid-up before the SEC issues a certificate.</li>
+                <li class="mcq-option">C) It eliminated minimum subscribed and paid-up requirements, except when mandated by special laws.</li>
+                <li class="mcq-option">D) It requires a fixed minimum paid-up capital of 1,000,000 pesos for all new domestic corporations.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: C.</span> It eliminated minimum subscribed and paid-up requirements, except when mandated by special industry laws.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="For our final checkpoint in this section, let's look at post-incorporation requirements. Getting your SEC certificate is only the beginning. You also have to deal with the BIR, Local Government Units, and statutory benefit agencies. Following SEC registration, what specific BIR compliance step must a corporation fulfill to legally issue official receipts or invoices to its customers? Is it A, adopt and submit the corporate By-laws? Is it B, secure an Authority to Print, or ATP, invoices? Is it C, obtain a Mayor's Business Permit? Or is it D, register as an employer with SSS and PhilHealth? Recall the specific functions of the Bureau of Internal Revenue to find the correct answer.">
+            <h2>Checkpoint Question 10: Post-Incorporation</h2>
+            <p style="margin-bottom: 20px;">Following SEC registration, what specific BIR compliance step must a corporation fulfill to legally issue official receipts to its customers?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) Adopt and submit the corporate By-laws.</li>
+                <li class="mcq-option">B) Secure an Authority to Print (ATP) invoices.</li>
+                <li class="mcq-option">C) Obtain a Mayor's Business Permit.</li>
+                <li class="mcq-option">D) Register as an employer with SSS, PhilHealth, and Pag-IBIG.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> Secure an Authority to Print (ATP) invoices.</div>
+        </div>
+
+		<div class="slide" 
+             data-voiceover="audio/slide10.wav" 
+             data-text="To truly understand a stock corporation, we must examine the concept of shares of stock. A share of stock represents the interest or right that a stockholder has in the management, surplus profits, and upon dissolution, the assets of the corporation. It is a unit of ownership that grants the holder a specific bundle of legal rights. First and foremost among these rights is the right to participate in the management of the corporation, usually exercised through voting. Second, shareholders have the right to receive dividends when declared by the Board of Directors out of unrestricted retained earnings. Third, they possess the pre-emptive right to subscribe to all issues or disposition of shares of any class, protecting them from ownership dilution. Fourth, they have the right to inspect corporate books and records at reasonable hours on business days. Finally, they hold the right to a proportionate share of the remaining corporate assets upon liquidation. Understanding these fundamental rights is essential for any investor or corporate officer. Together, these rights ensure that the ultimate control and economic benefit of the enterprise remain securely with its owners.">
+            <h2>Shares of Stock & Basic Shareholder Rights</h2>
+            <br>
+            
+            <ul>
+                <li><strong>Nature:</strong> Represents a unit of ownership and the stockholder's interest in the corporation.</li>
+                <li><strong>Voting Rights:</strong> The right to participate in management by electing directors and approving major corporate acts.</li>
+                <li><strong>Dividend Rights:</strong> The right to share in surplus profits when declared by the Board.</li>
+                <li><strong>Pre-emptive Rights:</strong> The right to subscribe to new share issuances to prevent dilution of ownership.</li>
+                <li><strong>Inspection & Liquidation:</strong> The right to inspect books and share in remaining assets after dissolution.</li>
+            </ul>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide11.wav" 
+             data-text="The most basic and prevalent class of corporate stock is the common share. Common shares represent the residual ownership of the corporation, meaning these shareholders bear the ultimate risk of loss and reap the ultimate reward of success. Unlike other classes of shares, common stock is not entitled to any fixed or guaranteed dividend. Instead, common shareholders receive dividends only after all obligations to preferred shareholders have been fully satisfied. Because they carry the greatest financial risk, the law guarantees that common shares always inherently possess complete voting rights. They are the primary voice in electing the Board of Directors and directing the long-term vision of the company. Furthermore, a corporation cannot issue common shares without voting rights, ensuring that those who bear the residual risk maintain control. In the event of corporate liquidation, common shareholders are the very last to receive any distribution from the remaining assets. Despite this subordinate position in liquidation, the potential for capital appreciation and unlimited dividend growth makes common shares a highly attractive investment. They truly represent the foundational equity of any stock corporation.">
+            <h2>Common Shares</h2>
+            <p>Common shares represent the basic, residual ownership of the corporation without any fixed guarantees on returns.</p>
+            <br>
+            
+            <ul>
+                <li><strong>Residual Ownership:</strong> Holders bear the ultimate risk of loss but enjoy the maximum potential for growth.</li>
+                <li><strong>Dividend Priority:</strong> Dividends are paid only after all preferred share obligations are satisfied.</li>
+                <li><strong>Voting Power:</strong> Inherently possesses complete and unrestricted voting rights.</li>
+                <li><strong>Liquidation Claim:</strong> Last in line to receive distributions if the corporation is dissolved and liquidated.</li>
+            </ul>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide12.wav" 
+             data-text="In contrast to common shares, corporations may issue preferred shares to attract specific types of more conservative investors. Preferred shares are a special class of stock that grants its holders certain privileges or preferences not enjoyed by common shareholders. The most typical preference is the right to receive dividends before any distributions are made to the common stockholders. Additionally, preferred shares usually carry a preference in the distribution of corporate assets in the unfortunate event of liquidation. However, these financial advantages come with a significant trade-off regarding corporate control. Under the Revised Corporation Code, preferred shares are generally issued as non-voting shares, meaning holders cannot vote for the Board of Directors. Despite being classified as non-voting, the law expressly reserves their right to vote on crucial, fundamental corporate matters, such as amending the articles of incorporation or dissolving the company. It is also important to note that preferred shares can only be issued with a stated par value. By offering a safer, more predictable return, preferred shares effectively bridge the gap between pure equity and debt financing. They provide corporations with flexible capital structuring options while protecting the day-to-day voting control of common shareholders.">
+            <h2>Preferred Shares</h2>
+            <p>Preferred shares grant specific advantages in dividends and liquidation but generally restrict standard management control.</p>
+            <ul>
+                <li><strong>Dividend Preference:</strong> Entitled to receive dividends before common shareholders.</li>
+                <li><strong>Liquidation Preference:</strong> Priority claim over common shares on remaining assets during dissolution.</li>
+                <li><strong>Voting Restrictions:</strong> Generally non-voting for the Board of Directors, but retain voting rights on fundamental corporate changes.</li>
+                <li><strong>Par Value Requirement:</strong> The law mandates that preferred shares must always be issued with a stated par value.</li>
+            </ul>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide13.wav" 
+             data-text="Corporations also utilize specialized classes of stock for capital management, notably redeemable and treasury shares. Redeemable shares are a unique class of stock that the corporation expressly reserves the right to buy back or redeem at a specified date or upon a certain event. What makes redeemable shares particularly powerful is that they can be purchased by the corporation regardless of whether there are unrestricted retained earnings, provided the redemption does not cause corporate insolvency. Treasury shares, on the other hand, are ordinary shares that have been previously issued, fully paid for, and subsequently reacquired by the corporation through purchase, donation, or other lawful means. Unlike unissued shares, treasury shares do not possess voting rights and do not receive dividends while held in the corporate treasury. However, the corporation can resell treasury shares at any reasonable price fixed by the Board of Directors. It is critical to note that a corporation can only purchase its own shares to become treasury shares if it has sufficient unrestricted retained earnings to cover the cost. This rule strictly protects the corporation's creditors by ensuring capital is not unlawfully returned to shareholders. Together, these two types of shares give management essential tools to adjust the company's capital structure and respond dynamically to market conditions.">
+            <h2>Redeemable & Treasury Shares</h2>
+            <ul>
+                <li><strong>Redeemable Shares:</strong> Shares the corporation can buy back at a fixed date or event, regardless of unrestricted retained earnings (provided it doesn't cause insolvency).</li>
+                <li><strong>Treasury Shares:</strong> Shares previously issued and fully paid, then reacquired by the corporation.</li>
+                <li><strong>Rights Suspended:</strong> Treasury shares have no voting rights and are not entitled to dividends while held by the corporation.</li>
+                <li><strong>Acquisition Limits:</strong> Acquiring treasury shares strictly requires the corporation to have sufficient unrestricted retained earnings.</li>
+            </ul>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide14.wav" 
+             data-text="Finally, we must examine founders' shares, which are a specialized class of stock generally issued to the original organizers and promoters of a corporation. The primary purpose of founders' shares is to reward the individuals who took the initial risk to establish the business enterprise. To provide this reward, the law allows founders' shares to be granted certain exclusive rights and privileges not available to other classes of stock. The most significant and common privilege is the exclusive right to vote for and be voted as directors of the corporation. However, to prevent the perpetual monopolization of corporate control, the Securities and Exchange Commission strictly limits this exclusive voting right. Under the Revised Corporation Code, this exclusive privilege cannot exceed a period of five years from the date of incorporation. Once this five-year period expires, the exclusive voting rights are automatically terminated, and the founders' shares typically revert to the status of ordinary voting shares. Any other financial preferences granted to founders' shares must not violate the anti-fraud provisions of corporate law. This balanced approach allows founders to steer the company securely through its crucial early years while ensuring long-term democratic control for all investors.">
+            <h2>Founders' Shares</h2>
+            <p>Shares issued to organizers and promoters to reward them for establishing the corporate enterprise.</p>
+            <ul>
+                <li><strong>Exclusive Privileges:</strong> Granted special rights not given to other classes of stock.</li>
+                <li><strong>Board Control:</strong> Commonly given the exclusive right to vote and be voted as members of the Board of Directors.</li>
+                <li><strong>Time Limitation:</strong> The exclusive right to elect directors is strictly limited to a maximum of five (5) years from the date of incorporation.</li>
+                <li><strong>Reversion:</strong> After the five-year period, founders' shares generally share the same voting rights as ordinary common shares.</li>
+            </ul>
+        </div>
+
+		<div class="slide" 
+             data-voiceover="" 
+             data-text="Let's test your knowledge on the fundamental rights attached to shares of stock. Owning a share grants the holder a specific bundle of legal rights that protect their investment. These rights include voting, receiving dividends, inspecting records, and sharing in liquidation. One very important right protects investors from having their ownership percentage diluted when the company decides to issue new shares. Which basic shareholder right is specifically designed to allow an investor to subscribe to new share issuances to prevent this dilution? Is it A, the Dividend Right? Is it B, the Pre-emptive Right? Is it C, the Residual Ownership Right? Or is it D, the Liquidation Right? Think about the term used to describe getting the first opportunity to buy, then reveal the answer.">
+            <h2>Checkpoint Question 11: Shareholder Rights</h2>
+            <p style="margin-bottom: 20px;">Which basic shareholder right is specifically designed to allow an investor to subscribe to new share issuances in order to prevent the dilution of their current ownership stake?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) The Dividend Right</li>
+                <li class="mcq-option">B) The Pre-emptive Right</li>
+                <li class="mcq-option">C) The Residual Ownership Right</li>
+                <li class="mcq-option">D) The Liquidation Right</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> The Pre-emptive Right.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Moving on to the different classes of shares, let's look at preferred stock. Preferred shares offer specific advantages, such as priority in dividends and liquidation, making them attractive to conservative investors. However, they usually come with restrictions on voting for the Board of Directors. Beyond these standard features, corporate law imposes a very specific structural requirement on the issuance of preferred shares that is not inherently required for common shares. According to the rules governing different classes of stock, what is this strict legal requirement? Is it A, they must be issued with a stated par value? Is it B, they must guarantee a minimum ten percent annual dividend? Is it C, they must be issued only to original founders? Or is it D, they must grant exclusive voting rights for five years? Make your choice and reveal the answer.">
+            <h2>Checkpoint Question 12: Preferred Shares</h2>
+            <p style="margin-bottom: 20px;">According to the rules governing different classes of stock, what is a strict legal requirement specifically imposed on the issuance of preferred shares that is not required for common shares?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) They must be issued with a stated par value.</li>
+                <li class="mcq-option">B) They must guarantee a minimum 10% annual dividend.</li>
+                <li class="mcq-option">C) They must be issued only to original founders.</li>
+                <li class="mcq-option">D) They must grant exclusive voting rights for the first 5 years.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: A.</span> They must be issued with a stated par value.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="This next checkpoint is quite difficult and tests a highly technical rule regarding capital management. Corporations sometimes buy back their own shares, but the source of the funds used for this is strictly regulated to protect creditors. We discussed two specific types of shares: Redeemable Shares and Treasury Shares. When a corporation wishes to acquire its own shares, what is the crucial legal distinction regarding unrestricted retained earnings between these two? Is it A, Treasury shares can be acquired regardless of retained earnings, while redeemable shares strictly require them? Is it B, Both strictly require unrestricted retained earnings? Is it C, Redeemable shares can be purchased regardless of unrestricted retained earnings provided there is no insolvency, whereas acquiring treasury shares strictly requires them? Or is it D, Neither requires them if the Board approves? Take your time analyzing these options.">
+            <h2>Checkpoint Question 13: Capital Management</h2>
+            <br>
+            
+            <p style="margin-bottom: 20px;">When a corporation acquires its own shares, what is the crucial legal distinction regarding "unrestricted retained earnings" between Redeemable Shares and Treasury Shares?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) Treasury shares can be acquired regardless of retained earnings, while redeemable shares strictly require them.</li>
+                <li class="mcq-option">B) Both share types strictly require unrestricted retained earnings before the corporation can acquire them.</li>
+                <li class="mcq-option">C) Redeemable shares can be purchased regardless of unrestricted retained earnings (if not causing insolvency), whereas acquiring treasury shares strictly requires them.</li>
+                <li class="mcq-option">D) Neither share type requires unrestricted retained earnings, provided the Board of Directors approves the acquisition.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: C.</span> Redeemable shares can be purchased regardless of unrestricted retained earnings (if not causing insolvency), whereas acquiring treasury shares strictly requires them.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Let's continue testing your understanding of Treasury Shares. Remember that these are ordinary shares that were previously issued, fully paid for, and then reacquired by the corporation itself. They are not canceled, but rather held in the corporate treasury for future use or resale. While these shares sit in the corporate treasury, their legal status changes compared to shares held by ordinary investors. What exactly happens to the specific rights attached to those shares once they become Treasury Shares? Is it A, they retain full voting and dividend rights but cannot be resold? Is it B, their voting rights and dividend entitlements are suspended? Is it C, they automatically convert into preferred shares? Or is it D, their voting rights are doubled? Remember who actually holds the shares at this point in time.">
+            <h2>Checkpoint Question 14: Treasury Shares</h2>
+            <p style="margin-bottom: 20px;">Once ordinary shares have been fully paid for and subsequently reacquired by the corporation to be held as Treasury Shares, what happens to the specific rights attached to those shares?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) They retain full voting and dividend rights but cannot be resold.</li>
+                <li class="mcq-option">B) Their voting rights and dividend entitlements are suspended while held in the corporate treasury.</li>
+                <li class="mcq-option">C) They automatically convert into preferred shares with guaranteed dividends.</li>
+                <li class="mcq-option">D) Their voting rights are doubled to give the Board of Directors more control.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> Their voting rights and dividend entitlements are suspended while held by the corporation.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="For our final checkpoint in this module, let's review the strict rules surrounding Founders' Shares. These shares are designed to reward the original organizers and promoters who took the initial risk to establish the business. To do this, the law allows them to be granted exclusive privileges, most notably the exclusive right to vote for and be voted as directors. However, to ensure corporate democracy in the long run, the SEC strictly limits this power. Under the Revised Corporation Code, what is the strict limitation placed on this exclusive privilege? Is it A, it expires exactly ten years from the first board meeting? Is it B, it cannot exceed a period of five years from the date of incorporation? Is it C, it is perpetually valid as long as the founder holds one share? Or is it D, it expires immediately upon the first cash dividend declaration? Lock in your final answer.">
+            <h2>Checkpoint Question 15: Founders' Shares</h2>
+            <p style="margin-bottom: 20px;">Founders' shares are often granted the exclusive privilege to vote and be voted as members of the Board of Directors. Under the Revised Corporation Code, what is the strict limitation placed on this exclusive right?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) It expires exactly 10 years from the date of the first board meeting.</li>
+                <li class="mcq-option">B) It cannot exceed a period of five (5) years from the date of incorporation.</li>
+                <li class="mcq-option">C) It is perpetually valid as long as the founder holds at least one share.</li>
+                <li class="mcq-option">D) It expires immediately once the corporation declares its first cash dividend.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> It cannot exceed a period of five (5) years from the date of incorporation.</div>
         </div>
 
     </div>
