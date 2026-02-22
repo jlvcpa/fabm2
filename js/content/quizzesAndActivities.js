@@ -523,7 +523,6 @@ async function renderQuizRunner(data, user, customRunner = null) {
 }
 
 // --- CONTENT GENERATOR ---
-// --- CONTENT GENERATOR ---
 async function generateQuizContent(activityData, savedState = null) {
     let tabsHtml = '';
     let sectionsHtml = '';
@@ -627,35 +626,34 @@ async function generateQuizContent(activityData, savedState = null) {
             if (savedState && savedState.questionsTaken && savedState.questionsTaken[uiId]) {
                 const savedRef = savedState.questionsTaken[uiId];
                 
-                // --- NEW ISOLATED FIX FOR JOURNALIZING ---
-                // If it's a Journalizing question, manually extract the full data from qbMerchJournalizing
-                if (savedRef.type === 'Journalizing' && savedRef.dbId) {
-                    if (Array.isArray(qbMerchJournalizing)) {
-                        const foundObj = qbMerchJournalizing.find(item => item[savedRef.dbId] || item.id === savedRef.dbId);
-                        if (foundObj) {
-                            selectedQ = foundObj[savedRef.dbId] ? { id: savedRef.dbId, ...foundObj[savedRef.dbId] } : { ...foundObj };
-                        }
-                    } else if (typeof qbMerchJournalizing === 'object' && qbMerchJournalizing[savedRef.dbId]) {
-                        selectedQ = { id: savedRef.dbId, ...qbMerchJournalizing[savedRef.dbId] };
+                // --- THE SPECIFIC FIX ---
+                // Before falling back to the legacy Firebase data, we use the dbId to grab the 
+                // FULL question data (including the transactions array) directly from the Question Bank.
+                if (savedRef.dbId) {
+                    const fullDataFound = flattenedCandidates.find(q => q.id === savedRef.dbId);
+                    if (fullDataFound) {
+                        selectedQ = { ...fullDataFound };
                     }
                 }
-
-                // --- UNTOUCHED OLD LOGIC FOR MULTIPLE CHOICE ---
+                
+                // Untouched Old Version Fallback
                 if (!selectedQ) {
                     if (savedRef.dbId && globalQuestionMap.has(savedRef.dbId)) {
                         selectedQ = { ...globalQuestionMap.get(savedRef.dbId) };
                     } else {
                         selectedQ = {
-                            id: savedRef.id || "legacy",
+                            id: savedRef.id || savedRef.dbId || "legacy",
                             question: savedRef.questionText,
                             options: savedRef.options,
                             correctAnswer: savedRef.correctAnswer,
                             explanation: savedRef.explanation,
-                            transactions: savedRef.transactions,
+                            transactions: savedRef.transactions, // This is undefined in Firebase, which caused the blank table
                             instructions: savedRef.instructions
                         };
                     }
                 }
+                // --- END FIX ---
+
                 selectedQ.isSaved = true; 
             } 
             
