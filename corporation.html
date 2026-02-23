@@ -1009,13 +1009,39 @@
         }
     }
 
-    function speakText(text) {
+function speakText(text) {
         if ('speechSynthesis' in window) {
             const utterance = new SpeechSynthesisUtterance(text);
+            
+            // Get all available voices on the device
+            const voices = window.speechSynthesis.getVoices();
+            
+            // Attempt to find a voice that is likely male
+            // We search for "Male", "David", "James", or "Google UK English Male"
+            const maleVoice = voices.find(voice => 
+                voice.name.includes('Male') || 
+                voice.name.includes('David') || 
+                voice.name.includes('James') ||
+                voice.name.includes('Google UK English Male')
+            );
+
+            // If a male voice is found, use it; otherwise, use the first available voice
+            if (maleVoice) {
+                utterance.voice = maleVoice;
+            }
+
             utterance.rate = 0.95;
+            utterance.pitch = 1;
             window.speechSynthesis.speak(utterance);
+        } else {
+            console.log("Text-to-speech not supported in this browser.");
         }
     }
+
+    // Crucial: Some browsers need a slight delay to load voices
+    window.speechSynthesis.onvoiceschanged = function() {
+        window.speechSynthesis.getVoices();
+    };
 
     function nextSlide() { if (currentSlideIndex < slides.length - 1) showSlide(currentSlideIndex + 1); }
     function prevSlide() { if (currentSlideIndex > 0) showSlide(currentSlideIndex - 1); }
