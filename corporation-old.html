@@ -127,7 +127,7 @@
         max-width: 1400px;
     }
 
-	/* Checkpoint Quiz Styles */
+    /* Checkpoint Quiz Styles */
     .mcq-option {
         margin-bottom: 12px;
         padding: 15px 20px;
@@ -201,8 +201,8 @@
         text-align: center;
         max-width: 1400px;
         width: 100%;
-        max-height: 130px; /* Fits neatly inside the 150px caption bar */
-        overflow-y: auto;  /* Adds the vertical scrollbar when needed */
+        max-height: 130px; 
+        overflow-y: auto;  
         line-height: 1.4;
         font-weight: 400;
         padding: 10px;
@@ -259,12 +259,12 @@
     }
 
     /* Top Controls Group */
-#top-controls {
+    #top-controls {
         position: absolute;
         top: 30px;
         right: 30px;
         display: flex;
-        flex-direction: row; /* Changed to row for a single horizontal line */
+        flex-direction: row; 
         align-items: center;
         gap: 15px;
         z-index: 60;
@@ -341,7 +341,41 @@
 
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    /* --- NEW AUDIENCE MODE STYLES --- */
+    /* --- NEW VOICE SELECT STYLES --- */
+    #voice-select {
+        background: rgba(13, 17, 23, 0.8);
+        color: #58a6ff;
+        border: 2px solid #58a6ff;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        cursor: pointer;
+        outline: none;
+        max-width: 180px;
+        text-overflow: ellipsis;
+        transition: all 0.2s;
+    }
+    
+    #voice-select option {
+        background: #0d1117;
+        color: #ffffff;
+    }
+
+    /* --- PROFESSIONAL FOOTER STYLES --- */
+    .presentation-footer {
+        position: absolute;
+        bottom: 15px;
+        width: 100%;
+        text-align: center;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.25);
+        z-index: 45; /* Below the nav controls, above the slide content */
+        pointer-events: none;
+        letter-spacing: 1px;
+    }
+
+    /* --- AUDIENCE MODE STYLES --- */
     body.audience-mode #top-controls,
     body.audience-mode #nav-controls,
     body.audience-mode #caption-bar {
@@ -349,10 +383,10 @@
     }
     
     body.audience-mode #slides-container {
-        height: 100% !important; /* Take up full height since controls are hidden */
+        height: 100% !important; 
     }
 
-/* --- Mobile Landscape Responsiveness --- */
+    /* --- Mobile Landscape Responsiveness --- */
     @media screen and (max-width: 1000px), screen and (max-height: 600px) {
         .slide { padding: 2vh 5vw; }
         .slide h1 { font-size: 8vh; margin-bottom: 2vh; }
@@ -365,12 +399,16 @@
         #nav-controls { height: 15vh; padding: 0 15px; }
         .nav-btn { padding: 1vh 2vw; font-size: 3vh; }
         
-        /* Shrink top controls and tuck them into the corner */
         #top-controls { 
             top: 15px; 
             right: 15px; 
             transform: scale(0.75); 
             transform-origin: top right; 
+        }
+
+        .presentation-footer {
+            font-size: 0.7rem;
+            bottom: 5px;
         }
     }
 </style>
@@ -383,7 +421,7 @@
 </div>
 
 <div id="container">
-	<div id="top-controls">
+    <div id="top-controls">
         <div class="caption-toggle-container">
             <span>SHOW CAPTIONS</span>
             <label class="switch">
@@ -391,6 +429,9 @@
                 <span class="slider"></span>
             </label>
         </div>
+        
+        <select id="voice-select" title="Select Narrator Voice"></select>
+        
         <button id="live-indicator" class="off" onclick="toggleAudio()">Auto-Narrator OFF</button>
         <button id="audience-btn" class="nav-btn" style="padding: 8px 15px; font-size: 0.9rem;" onclick="openAudienceView()">🖥️ Open Audience View</button>
     </div>
@@ -416,19 +457,19 @@
 
         <div class="slide"
             data-voiceover="audio/slide3.wav"
-            data-text="A corporation is an artificial being created by operation of law, endowed with the right of succession and vested with powers, attributes, and properties expressly authorized by law or incidental to its existence. As an artificial being, a corporation has no physical body, consciousness, or biological life; it exists and persists only because the legal system recognizes and sustains it. Its agency is exercised indirectly through human agents—directors, officers, employees, and agents—who make decisions and perform acts in the corporation’s name. The corporation’s rights and duties are primarily legal and instrumental: it may own property, enter contracts, sue and be sued, and incur obligations, but these capacities are conferred and limited by statute and charter. Unlike human beings, who are concrete biological substances with direct causal powers, moral consciousness, and personal responsibility, a corporation’s personhood is institutional and dependent on social and legal practices; it can be held liable and regulated, yet its moral agency is mediated through the people who run it. Because corporate personhood is a legal fiction, courts may protect it to promote commerce and stability, but they may also disregard or pierce the corporate veil when the fiction is abused, fraudulent, or used to defeat public policy or creditors’ rights."">
+            data-text="A corporation is an artificial being created by operation of law, endowed with the right of succession and vested with powers, attributes, and properties expressly authorized by law or incidental to its existence. As an artificial being, a corporation has no physical body, consciousness, or biological life; it exists and persists only because the legal system recognizes and sustains it. Its agency is exercised indirectly through human agents—directors, officers, employees, and agents—who make decisions and perform acts in the corporation’s name. The corporation’s rights and duties are primarily legal and instrumental: it may own property, enter contracts, sue and be sued, and incur obligations, but these capacities are conferred and limited by statute and charter. Unlike human beings, who are concrete biological substances with direct causal powers, moral consciousness, and personal responsibility, a corporation’s personhood is institutional and dependent on social and legal practices; it can be held liable and regulated, yet its moral agency is mediated through the people who run it. Because corporate personhood is a legal fiction, courts may protect it to promote commerce and stability, but they may also disregard or pierce the corporate veil when the fiction is abused, fraudulent, or used to defeat public policy or creditors’ rights.">
             <h2>Nature of Corporations</h2>
 
             <p>
-            	A corporation is an <strong>artificial being created by operation of law</strong>, 
-            	endowed with the <strong>right of succession</strong> and vested with the 
-            	<strong>powers, attributes, and properties</strong> expressly authorized by law 
-            	or necessarily incidental to its existence.
+                A corporation is an <strong>artificial being created by operation of law</strong>, 
+                endowed with the <strong>right of succession</strong> and vested with the 
+                <strong>powers, attributes, and properties</strong> expressly authorized by law 
+                or necessarily incidental to its existence.
             </p>
 
         </div>
 
-	<div class="slide"
+    <div class="slide"
             data-voiceover="audio/slide4.wav"
             data-text="Corporations are governed primarily by the Revised Corporation Code, which sets out formation, governance, corporate powers, and dissolution; by the Securities Regulation Code, which regulates securities, public offerings, and SEC oversight; by the Foreign Investments Act, which prescribes rules, registration and ownership limits for foreign investors; by sectoral statutes such as the General Banking Law and Insurance Code that impose industry‑specific licensing, prudential and supervisory rules; and by constitutional provisions on national economy and patrimony that limit foreign ownership and protect public interest. The Revised Corporation Code (R.A. 11232) modernized corporate formation (including the One‑Person Corporation), governance, perpetual existence, and shareholder protections. The Securities Regulation Code (R.A. 8799) defines securities, investor protection policies, registration and disclosure requirements, and the powers of the Securities and Exchange Commission. The Foreign Investments Act (R.A. 7042, as amended) establishes the Foreign Investment Negative List, capitalization and registration requirements, and procedures for foreign enterprises doing business in the Philippines. Sectoral laws such as the General Banking Law (R.A. 8791), the Insurance Code, and other special statutes impose licensing, capital, governance, and supervisory regimes for regulated industries and vest oversight in agencies like the Bangko Sentral and the Insurance Commission. Constitutional provisions on the national economy and patrimony (Article XII) restrict land and certain industry ownership to Filipino citizens or corporations with required Filipino ownership percentages, shaping what corporations may lawfully own or do.">
             <h2>Governing Laws</h2>
@@ -500,7 +541,7 @@
             </ul>
         </div>
 
-		<div class="slide" 
+        <div class="slide" 
              data-voiceover="" 
              data-text="Let us pause for a moment to test your memory on the governing laws of corporations. The legal framework is complex and relies on very specific statutes. We discussed the Revised Corporation Code, the Securities Regulation Code, and the Foreign Investments Act. Each of these laws plays a distinct role in corporate regulation. The question is: Which specific Republic Act establishes the Foreign Investment Negative List, sets capitalization and registration requirements, and outlines procedures for foreign enterprises doing business in the Philippines? Is it A, R.A. 11232; B, R.A. 8791; C, R.A. 8799; or D, R.A. 7042? Take a moment to review the options and recall the specific statute numbers we discussed earlier. When you are ready, click the Reveal Answer button to see if you are correct.">
             <h2>Checkpoint Question 1: Governing Laws</h2>
@@ -575,7 +616,7 @@
             <div class="correct-answer"><span>Correct Answer: B.</span> It must obtain a specific SEC license, and its home country laws must allow local citizens reciprocal rights to do business.</div>
         </div>
 
-		<div class="slide"
+        <div class="slide"
             data-voiceover="audio/slide5.wav"
             data-text="The creation of a corporation formally begins with its registration at the Securities and Exchange Commission, commonly known as the SEC. The first crucial step is reserving a corporate name, which must be distinct and not confusingly similar to existing registered names. Once the name is approved, the incorporators must draft and execute the primary formation documents. These documents are then submitted to the SEC through their online company registration portal. After a thorough review of the submitted files, the applicant must pay the corresponding filing fees. Upon successful payment and final verification, the SEC issues the Certificate of Incorporation. This certificate marks the legal birth of the corporation. From this moment, the entity acquires a separate juridical personality and can legally operate under its approved name.">
             <h2>SEC Registration Process</h2>
@@ -659,7 +700,7 @@
             </ul>
         </div>
 
-		<div class="slide" 
+        <div class="slide" 
              data-voiceover="" 
              data-text="Let's test your memory on the SEC registration process. Creating a corporation involves multiple steps, from reserving a name to paying filing fees. However, there is one specific moment when the legal fiction of the corporation officially comes to life. Which specific event officially grants a separate juridical personality to the newly formed corporation? Is it A, the successful online filing of the Articles of Incorporation? Is it B, the reservation of a distinct and legally permissible corporate name? Is it C, the payment of filing and legal research fees based on authorized capital? Or is it D, the issuance of the Certificate of Incorporation by the SEC? Think carefully about what act formally concludes the registration process, then click reveal.">
             <h2>Checkpoint Question 6: SEC Registration</h2>
@@ -734,7 +775,7 @@
             <div class="correct-answer"><span>Correct Answer: B.</span> Secure an Authority to Print (ATP) invoices.</div>
         </div>
 
-		<div class="slide" 
+        <div class="slide" 
              data-voiceover="audio/slide10.wav" 
              data-text="To truly understand a stock corporation, we must examine the concept of shares of stock. A share of stock represents the interest or right that a stockholder has in the management, surplus profits, and upon dissolution, the assets of the corporation. It is a unit of ownership that grants the holder a specific bundle of legal rights. First and foremost among these rights is the right to participate in the management of the corporation, usually exercised through voting. Second, shareholders have the right to receive dividends when declared by the Board of Directors out of unrestricted retained earnings. Third, they possess the pre-emptive right to subscribe to all issues or disposition of shares of any class, protecting them from ownership dilution. Fourth, they have the right to inspect corporate books and records at reasonable hours on business days. Finally, they hold the right to a proportionate share of the remaining corporate assets upon liquidation. Understanding these fundamental rights is essential for any investor or corporate officer. Together, these rights ensure that the ultimate control and economic benefit of the enterprise remain securely with its owners.">
             <h2>Shares of Stock & Basic Shareholder Rights</h2>
@@ -802,7 +843,7 @@
             </ul>
         </div>
 
-		<div class="slide" 
+        <div class="slide" 
              data-voiceover="" 
              data-text="Let's test your knowledge on the fundamental rights attached to shares of stock. Owning a share grants the holder a specific bundle of legal rights that protect their investment. These rights include voting, receiving dividends, inspecting records, and sharing in liquidation. One very important right protects investors from having their ownership percentage diluted when the company decides to issue new shares. Which basic shareholder right is specifically designed to allow an investor to subscribe to new share issuances to prevent this dilution? Is it A, the Dividend Right? Is it B, the Pre-emptive Right? Is it C, the Residual Ownership Right? Or is it D, the Liquidation Right? Think about the term used to describe getting the first opportunity to buy, then reveal the answer.">
             <h2>Checkpoint Question 11: Shareholder Rights</h2>
@@ -879,7 +920,294 @@
             <div class="correct-answer"><span>Correct Answer: B.</span> It cannot exceed a period of five (5) years from the date of incorporation.</div>
         </div>
 
+        <div class="slide" 
+             data-voiceover="audio/slide16.wav" 
+             data-text="In the Philippine accounting setting, corporations generally utilize one of two accepted methods to record transactions relating to their capital stock. These two approaches are known as the Memorandum Method and the Journal Entry Method. Both methods are designed to track the authorization, subscription, and eventual payment of corporate shares. Ultimately, regardless of which method a corporation chooses to adopt, both will yield the exact same total stockholders' equity on the balance sheet. The primary difference between the two lies purely in how they monitor the authorized and unissued shares within the general ledger system. It is also important to clarify the terminology used in these equity transactions. For instance, the term 'Paid-Up Capital' is not actually a specific account title used in formal journal entries. Instead, Paid-Up Capital simply represents the actual cash or property that has been received from the shareholders. In the financial statements, this paid-up portion is formally represented by the sum of the Share Capital and any Additional Paid-in Capital accounts. In the succeeding slides, we will compare these two methods side-by-side using practical proforma entries.">
+            <h2>Recording Equity: Two Methods</h2>
+            <p>Corporations use two primary methods to record authorized, subscribed, and issued capital stock.</p>
+            <br>
+            
+            <ul>
+                <li><strong>The Memorandum Method:</strong> The most widely used approach in practice; relies on descriptive memos for authorization.</li>
+                <li><strong>The Journal Entry Method:</strong> Uses formal ledger accounts to track the total authorized and unissued shares.</li>
+                <li><strong>Shared Outcome:</strong> Both methods ultimately yield the exact same Total Stockholders' Equity presentation.</li>
+                <li><strong>Clarification:</strong> "Paid-Up Capital" is not a formal account title, but rather the sum of Share Capital and Additional Paid-in Capital (APIC).</li>
+            </ul>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide17.wav" 
+             data-text="The first major event in corporate accounting is the official authorization to issue shares of stock. This authorization is granted by the Securities and Exchange Commission upon the approval of the Articles of Incorporation. Under the Memorandum Method, this event is not recorded using formal debits and credits. Instead, the accountant simply writes a descriptive memorandum entry directly into the general journal. This memo details the total number of authorized shares and their designated par value. Conversely, the Journal Entry Method requires formal accounting recognition of this authorization. Under this second method, the accountant debits a specific account called Unissued Capital Stock for the total authorized amount. Simultaneously, a corresponding credit is made to the Authorized Capital Stock account for the exact same value. This establishes a formal ledger baseline representing the maximum legal limit of shares the corporation can distribute. Throughout the life of the corporation, this Authorized Capital Stock account balance will remain unchanged unless formally amended through the SEC.">
+            <h2>Proforma: Authorization of Capital Stock</h2>
+            <br>
+            
+            <table style="width: 100%; border-collapse: collapse; text-align: left; background: rgba(13, 17, 23, 0.8); border: 1px solid #30363d; font-size: 1.8rem; margin-top: 20px;">
+                <tr style="background: #21262d; border-bottom: 2px solid #58a6ff;">
+                    <th style="padding: 15px; width: 50%; border-right: 1px solid #30363d;">Memorandum Method</th>
+                    <th style="padding: 15px; width: 50%;">Journal Entry Method</th>
+                </tr>
+                <tr>
+                    <td style="padding: 20px; border-right: 1px solid #30363d; vertical-align: top;">
+                        <em>(No formal journal entry)</em><br><br>
+                        <strong>Memo:</strong> The corporation was authorized to issue [X] ordinary shares with a par value of ₱[Y].
+                    </td>
+                    <td style="padding: 20px; vertical-align: top;">
+                        <strong>Dr.</strong> Unissued Capital Stock<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Authorized Capital Stock<br><br>
+                        <em>To record the authorized capitalization of the corporation.</em>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide18.wav" 
+             data-text="The next phase in the equity cycle occurs when investors formally commit to purchasing shares, known as a subscription. When an investor signs a subscription contract, a legally binding receivable is created in favor of the corporation. Interestingly, recording the initial subscription is completely identical under both the Memorandum and Journal Entry methods. The accountant will debit the Subscriptions Receivable account to represent the amount owed by the investors. Simultaneously, a credit is made to the Subscribed Capital Stock account. This Subscribed Capital Stock account represents shares that are reserved for the investor but have not yet been fully paid or issued. It is strictly recorded at the par value of the shares subscribed. If the investors agreed to buy the shares at a price higher than the par value, a premium is generated. This excess amount is immediately credited to the Additional Paid-in Capital or Share Premium account at the exact moment of subscription. Recognizing the premium during the subscription phase is crucial because the economic benefit is already contractually secured.">
+            <h2>Proforma: Subscription of Capital Stock</h2>
+            <br>
+            
+            <table style="width: 100%; border-collapse: collapse; text-align: left; background: rgba(13, 17, 23, 0.8); border: 1px solid #30363d; font-size: 1.8rem; margin-top: 20px;">
+                <tr style="background: #21262d; border-bottom: 2px solid #58a6ff;">
+                    <th style="padding: 15px; width: 50%; border-right: 1px solid #30363d;">Memorandum Method</th>
+                    <th style="padding: 15px; width: 50%;">Journal Entry Method</th>
+                </tr>
+                <tr>
+                    <td style="padding: 20px; border-right: 1px solid #30363d; vertical-align: top;">
+                        <strong>Dr.</strong> Subscriptions Receivable<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Subscribed Capital Stock<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Additional Paid-in Capital <em>(if above par)</em>
+                    </td>
+                    <td style="padding: 20px; vertical-align: top;">
+                        <strong>Dr.</strong> Subscriptions Receivable<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Subscribed Capital Stock<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Additional Paid-in Capital <em>(if above par)</em>
+                    </td>
+                </tr>
+            </table>
+            <p style="font-size: 1.5rem; text-align: center; margin-top: 15px; color: #8b949e;"><em>Note: The entry to record subscriptions is identical under both methods.</em></p>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide19.wav" 
+             data-text="Following the subscription, investors will begin making payments, either partially or in full. Let us first examine a scenario where shares are subscribed and paid exactly at their stated par value, meaning no additional paid-in capital is involved. When cash is collected, both methods simply debit the Cash account and credit the Subscriptions Receivable account. Once the subscription is fully paid, the corporation is legally obligated to issue the formal stock certificates. It is at this moment of issuance that the two accounting methods diverge once again. Under the Memorandum Method, the accountant debits Subscribed Capital Stock to remove the temporary reservation. The corresponding credit is then made directly to the primary Capital Stock or Share Capital account. However, under the Journal Entry Method, the entry looks slightly different. While the debit remains to Subscribed Capital Stock, the credit is made to the Unissued Capital Stock account instead. This credit reduces the pool of unissued shares, reflecting that they have now been officially transferred to the shareholders.">
+            <h2>Payment & Issuance (At Par / Without APIC)</h2>
+            <br>
+            
+            <table style="width: 100%; border-collapse: collapse; text-align: left; background: rgba(13, 17, 23, 0.8); border: 1px solid #30363d; font-size: 1.6rem; margin-top: 20px;">
+                <tr style="background: #21262d; border-bottom: 2px solid #58a6ff;">
+                    <th style="padding: 15px; width: 50%; border-right: 1px solid #30363d;">Memorandum Method</th>
+                    <th style="padding: 15px; width: 50%;">Journal Entry Method</th>
+                </tr>
+                <tr>
+                    <td style="padding: 15px; border-right: 1px solid #30363d; vertical-align: top; border-bottom: 1px solid #30363d;">
+                        <em>To record full payment:</em><br>
+                        <strong>Dr.</strong> Cash<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Subscriptions Receivable
+                    </td>
+                    <td style="padding: 15px; vertical-align: top; border-bottom: 1px solid #30363d;">
+                        <em>To record full payment:</em><br>
+                        <strong>Dr.</strong> Cash<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Subscriptions Receivable
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 15px; border-right: 1px solid #30363d; vertical-align: top;">
+                        <em>To record issuance of stock certificates:</em><br>
+                        <strong>Dr.</strong> Subscribed Capital Stock<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Capital Stock (or Share Capital)
+                    </td>
+                    <td style="padding: 15px; vertical-align: top;">
+                        <em>To record issuance of stock certificates:</em><br>
+                        <strong>Dr.</strong> Subscribed Capital Stock<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Unissued Capital Stock
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide20.wav" 
+             data-text="Now, let us look at the payment and issuance phase when shares were originally subscribed at a premium, generating Additional Paid-in Capital. As we established earlier, the premium is fully recognized and credited during the initial subscription entry. Therefore, when the actual cash payments are collected from the investors, the entry is straightforward. The accountant merely debits Cash and credits Subscriptions Receivable for the total collection, which includes the premium portion. No adjustments are made to the Additional Paid-in Capital account during the payment collection process. When the final payment is received and the shares are issued, the entries to convert the stock are identical to the par value scenario. For the Memorandum Method, Subscribed Capital Stock is debited and the Capital Stock account is credited at par value. For the Journal Entry Method, Subscribed Capital Stock is debited and Unissued Capital Stock is credited, also at par value. The Share Premium remains untouched because it was already correctly positioned in the equity section during step two. This ensures that the par value of the issued stock and the excess premium are kept strictly separated in the financial records.">
+            <h2>Payment & Issuance (Above Par / With APIC)</h2>
+            <p>If shares are subscribed at a premium, the APIC is already recorded during subscription. The payment and issuance entries remain focused on clearing the receivable and converting the stock.</p>
+            <br>
+            
+            <table style="width: 100%; border-collapse: collapse; text-align: left; background: rgba(13, 17, 23, 0.8); border: 1px solid #30363d; font-size: 1.6rem; margin-top: 15px;">
+                <tr style="background: #21262d; border-bottom: 2px solid #58a6ff;">
+                    <th style="padding: 15px; width: 50%; border-right: 1px solid #30363d;">Memorandum Method</th>
+                    <th style="padding: 15px; width: 50%;">Journal Entry Method</th>
+                </tr>
+                <tr>
+                    <td style="padding: 15px; border-right: 1px solid #30363d; vertical-align: top; border-bottom: 1px solid #30363d;">
+                        <em>To record full payment (including premium):</em><br>
+                        <strong>Dr.</strong> Cash<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Subscriptions Receivable
+                    </td>
+                    <td style="padding: 15px; vertical-align: top; border-bottom: 1px solid #30363d;">
+                        <em>To record full payment (including premium):</em><br>
+                        <strong>Dr.</strong> Cash<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Subscriptions Receivable
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 15px; border-right: 1px solid #30363d; vertical-align: top;">
+                        <em>To record issuance of stock certificates:</em><br>
+                        <strong>Dr.</strong> Subscribed Capital Stock<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Capital Stock (at par value)
+                    </td>
+                    <td style="padding: 15px; vertical-align: top;">
+                        <em>To record issuance of stock certificates:</em><br>
+                        <strong>Dr.</strong> Subscribed Capital Stock<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>Cr.</strong> Unissued Capital Stock (at par value)
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/slide21.wav" 
+             data-text="As we conclude this topic, let us review the most critical takeaways regarding these corporate accounting methods. First, remember that Additional Paid-in Capital must be recognized at the time of subscription, not upon the final issuance of the stock certificate. This matching principle ensures that the premium is recorded as soon as the corporation secures the contractual right to receive it. Second, the Memorandum Method is generally the preferred and most widely used approach in actual accounting practice. Its simplicity reduces the number of general ledger accounts needed, making the bookkeeping process more streamlined. Third, always keep in mind that the financial statement presentation remains identical regardless of the method chosen. Under the Memorandum Method, the total issued capital is read directly from the ending balance of the Capital Stock account. Under the Journal Entry Method, you must mathematically determine the issued capital. This is done by deducting the current balance of the Unissued Capital Stock account from the static Authorized Capital Stock account. Both calculations will ultimately guide you to the exact same total stockholders' equity, ensuring accurate and transparent financial reporting.">
+            <h2>Key Takeaways</h2>
+            <br>
+            
+            <ul>
+                <li><strong>Timing of APIC:</strong> Additional Paid-in Capital is formally recognized at the time of <em>subscription</em>, not issuance.</li>
+                <li><strong>Practical Preference:</strong> The <strong>Memorandum Method</strong> is the most widely used approach in the real-world Philippine accounting setting due to its simplicity.</li>
+                <li><strong>Financial Presentation:</strong> Both methods result in the exact same Stockholders' Equity figures on the Balance Sheet.</li>
+                <li><strong>Calculating Issued Capital:</strong> 
+                    <ul>
+                        <li style="font-size: 1.8rem; margin-top: 5px;"><em>Memo Method:</em> Issued Capital = Ending balance of the Capital Stock account.</li>
+                        <li style="font-size: 1.8rem;"><em>Journal Method:</em> Issued Capital = Authorized Capital Stock <em>minus</em> Unissued Capital Stock.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Let us begin our final series of checkpoints by reviewing the Memorandum Method of accounting for corporate equity. This method is the most widely used approach in Philippine practice due to its straightforward nature. The very first step in a corporation's accounting life is recording its authorized capital stock, which represents the maximum number of shares it can legally issue. We discussed two distinct ways to record this event. Think back to the specific mechanics of the Memorandum Method. How is the initial authorization of capital stock formally recorded in the general ledger under this specific method? Is it A, Debit Unissued Capital Stock and Credit Authorized Capital Stock? Is it B, Debit Cash and Credit Capital Stock? Is it C, A descriptive memorandum entry without formal debits and credits? Or is it D, Debit Subscriptions Receivable and Credit Subscribed Capital Stock? Take a moment to recall the distinction before revealing the answer.">
+            <h2>Checkpoint Question 16: Memo Method (Authorization)</h2>
+            <p style="margin-bottom: 20px;">How is the initial authorization of capital stock formally recorded in the general ledger under the <strong>Memorandum Method</strong>?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) Debit Unissued Capital Stock, Credit Authorized Capital Stock</li>
+                <li class="mcq-option">B) Debit Cash, Credit Capital Stock</li>
+                <li class="mcq-option">C) A descriptive memorandum entry without formal debits and credits</li>
+                <li class="mcq-option">D) Debit Subscriptions Receivable, Credit Subscribed Capital Stock</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: C.</span> A descriptive memorandum entry without formal debits and credits.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Moving to the next phase, let's test your knowledge on recording subscriptions under the Memorandum Method. When an investor signs a subscription contract, they legally commit to purchasing a specific number of shares. Often, these shares are sold at a price higher than their stated par value, creating a premium. It is critical to recognize this premium at the correct stage of the accounting cycle. Under the Memorandum Method, a subscriber commits to buy shares at a price higher than the par value. Which specific account is credited to record the excess amount over the par value during this initial subscription entry? Is it A, Capital Stock? Is it B, Unissued Capital Stock? Is it C, Subscriptions Receivable? Or is it D, Additional Paid-in Capital or Share Premium? Remember the matching principle and when the economic benefit is secured.">
+            <h2>Checkpoint Question 17: Memo Method (Subscription)</h2>
+            <p style="margin-bottom: 20px;">Under the <strong>Memorandum Method</strong>, a subscriber commits to buy shares at a price higher than par value. Which account is credited for the excess over par value during the subscription entry?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) Capital Stock</li>
+                <li class="mcq-option">B) Unissued Capital Stock</li>
+                <li class="mcq-option">C) Subscriptions Receivable</li>
+                <li class="mcq-option">D) Additional Paid-in Capital (Share Premium)</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: D.</span> Additional Paid-in Capital (Share Premium).</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Now let us look at what happens when an investor completes their financial obligation to the corporation. Assume a subscriber originally committed to buy shares exactly at their par value. They have just submitted their final cash payment, clearing their Subscriptions Receivable account. Because the subscription is now fully paid, the corporation must formally issue the stock certificates to the investor. Under the Memorandum Method, what is the correct journal entry to formally record this issuance of stock certificates? Is it A, Debit Subscribed Capital Stock and Credit Capital Stock? Is it B, Debit Subscribed Capital Stock and Credit Unissued Capital Stock? Is it C, Debit Cash and Credit Capital Stock? Or is it D, Debit Capital Stock and Credit Subscribed Capital Stock? Recall how the reserved shares are transferred into fully recognized equity under this method.">
+            <h2>Checkpoint Question 18: Memo Method (Issuance)</h2>
+            <p style="margin-bottom: 20px;">Under the <strong>Memorandum Method</strong>, what is the correct journal entry to record the issuance of stock certificates to a subscriber who has fully paid their subscription at par value?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) Debit Subscribed Capital Stock, Credit Capital Stock</li>
+                <li class="mcq-option">B) Debit Subscribed Capital Stock, Credit Unissued Capital Stock</li>
+                <li class="mcq-option">C) Debit Cash, Credit Capital Stock</li>
+                <li class="mcq-option">D) Debit Capital Stock, Credit Subscribed Capital Stock</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: A.</span> Debit Subscribed Capital Stock, Credit Capital Stock.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="This checkpoint tests a very common area of confusion regarding stock premiums. Consider a scenario where a subscriber originally committed to purchase shares at a premium price. The premium was appropriately handled during the subscription phase. Now, the subscriber has paid their remaining balance in full, and it is time for the corporation to issue the physical stock certificates. Under the Memorandum Method, what accounts are involved in the formal journal entry to issue these stock certificates? Is it A, Debit Subscribed Capital Stock, Credit Capital Stock, and Credit Additional Paid-in Capital? Is it B, Debit Cash and Credit Capital Stock? Is it C, Debit Subscribed Capital Stock and Credit Capital Stock at par value? Or is it D, Debit Subscribed Capital Stock and Credit Unissued Capital Stock? Think carefully about where the premium already sits in the ledger before answering.">
+            <h2>Checkpoint Question 19: Memo Method (Issuance with Premium)</h2>
+            <p style="margin-bottom: 20px;">A subscriber originally committed to shares at a premium and has now paid in full. Under the <strong>Memorandum Method</strong>, what accounts are involved in the entry to formally issue the stock certificates?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) Debit Subscribed Capital Stock, Credit Capital Stock, Credit Additional Paid-in Capital</li>
+                <li class="mcq-option">B) Debit Cash, Credit Capital Stock</li>
+                <li class="mcq-option">C) Debit Subscribed Capital Stock, Credit Capital Stock (at par value)</li>
+                <li class="mcq-option">D) Debit Subscribed Capital Stock, Credit Unissued Capital Stock</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: C.</span> Debit Subscribed Capital Stock, Credit Capital Stock (at par value). The APIC was already recorded during subscription.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="We will now shift our focus to the second approach: the Journal Entry Method. This method takes a much more formal approach to tracking the corporation's capitalization limits directly within the general ledger. When the Securities and Exchange Commission approves the Articles of Incorporation, the total authorized capitalization must be recorded. How is this initial authorization to issue shares formally recorded in the general ledger under the Journal Entry Method? Is it A, A descriptive memo only? Is it B, Debit Unissued Capital Stock and Credit Authorized Capital Stock? Is it C, Debit Authorized Capital Stock and Credit Capital Stock? Or is it D, Debit Cash and Credit Unissued Capital Stock? Remember how this method tracks the pool of available shares before making your choice.">
+            <h2>Checkpoint Question 20: Journal Method (Authorization)</h2>
+            <p style="margin-bottom: 20px;">How is the initial authorization to issue shares formally recorded in the general ledger under the <strong>Journal Entry Method</strong>?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) A descriptive memo only</li>
+                <li class="mcq-option">B) Debit Unissued Capital Stock, Credit Authorized Capital Stock</li>
+                <li class="mcq-option">C) Debit Authorized Capital Stock, Credit Capital Stock</li>
+                <li class="mcq-option">D) Debit Cash, Credit Unissued Capital Stock</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> Debit Unissued Capital Stock, Credit Authorized Capital Stock.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Let's test your understanding of how the two accounting methods overlap. We are looking at the subscription phase under the Journal Entry Method. An investor signs a contract to purchase corporate shares at a price above the stated par value, creating a stock premium. When comparing how this specific subscription transaction is recorded under the Journal Entry Method versus the Memorandum Method, what is the primary difference? Is it A, It credits Unissued Capital Stock instead of Subscribed Capital Stock? Is it B, It does not recognize Additional Paid-in Capital until cash is actually paid? Is it C, The formal journal entry is exactly identical under both methods? Or is it D, It debits Authorized Capital Stock instead of Subscriptions Receivable? Recall the side-by-side comparison tables from the lecture before you reveal the correct statement.">
+            <h2>Checkpoint Question 21: Journal Method (Subscription)</h2>
+            <br>
+            
+            <p style="margin-bottom: 20px;">When recording a stock subscription at a premium under the <strong>Journal Entry Method</strong>, how does the entry differ from the Memorandum Method?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) It credits Unissued Capital Stock instead of Subscribed Capital Stock.</li>
+                <li class="mcq-option">B) It does not recognize Additional Paid-in Capital until cash is paid.</li>
+                <li class="mcq-option">C) The formal journal entry is exactly identical under both methods.</li>
+                <li class="mcq-option">D) It debits Authorized Capital Stock.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: C.</span> The formal journal entry is exactly identical under both methods.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="This checkpoint examines the issuance of stock certificates under the Journal Entry Method. Assume an investor subscribed to shares exactly at par value and has just remitted their final cash payment to the corporate treasury. The receivable is cleared, and the legal obligation to issue the shares is triggered. Under the Journal Entry Method, what is the correct journal entry to record the issuance of these stock certificates? Is it A, Debit Subscribed Capital Stock and Credit Capital Stock? Is it B, Debit Subscribed Capital Stock and Credit Unissued Capital Stock? Is it C, Debit Cash and Credit Authorized Capital Stock? Or is it D, Debit Unissued Capital Stock and Credit Subscribed Capital Stock? Remember that this method specifically uses an account to track the pool of shares that have not yet been distributed to the public.">
+            <h2>Checkpoint Question 22: Journal Method (Issuance)</h2>
+            <p style="margin-bottom: 20px;">Under the <strong>Journal Entry Method</strong>, what is the correct journal entry to record the issuance of stock certificates after a subscription is fully paid at par value?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) Debit Subscribed Capital Stock, Credit Capital Stock</li>
+                <li class="mcq-option">B) Debit Subscribed Capital Stock, Credit Unissued Capital Stock</li>
+                <li class="mcq-option">C) Debit Cash, Credit Authorized Capital Stock</li>
+                <li class="mcq-option">D) Debit Unissued Capital Stock, Credit Subscribed Capital Stock</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> Debit Subscribed Capital Stock, Credit Unissued Capital Stock.</div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="For our final checkpoint, let's combine the concepts of the Journal Entry Method and a stock premium. An investor originally subscribed to shares at a premium price and has now completed all required cash payments. The corporation is preparing the formal entry to issue the physical stock certificates to this fully paid investor. Under the Journal Entry Method, which specific account is credited to represent the final issuance of these shares? Is it A, Capital Stock? Is it B, Subscriptions Receivable? Is it C, Additional Paid-in Capital? Or is it D, Unissued Capital Stock? Keep in mind the defining characteristic of the Journal Entry Method and how it fundamentally tracks equity. Lock in your final answer and reveal the solution.">
+            <h2>Checkpoint Question 23: Journal Method (Issuance with Premium)</h2>
+            <p style="margin-bottom: 20px;">Under the <strong>Journal Entry Method</strong>, when issuing stock certificates to an investor who fully paid a subscription that included a premium, which account is credited to represent the issuance of shares?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) Capital Stock</li>
+                <li class="mcq-option">B) Subscriptions Receivable</li>
+                <li class="mcq-option">C) Additional Paid-in Capital</li>
+                <li class="mcq-option">D) Unissued Capital Stock</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: D.</span> Unissued Capital Stock. The credit is made to this account at par value, as the premium was already recorded during subscription.</div>
+        </div>
+
     </div>
+
+    <div class="presentation-footer">This presentation is a private property of Joselito Villarta, CPA, MBA</div>
 
     <div id="nav-controls">
         <button class="nav-btn" onclick="prevSlide()">&#9664; Prev</button>
@@ -898,8 +1226,48 @@
     const slides = document.querySelectorAll('.slide');
     const captionText = document.getElementById('caption-text');
     const captionBar = document.getElementById('caption-bar');
+    const voiceSelect = document.getElementById('voice-select');
     let currentAudio = null;
     let isAudioEnabled = false;
+    let availableVoices = [];
+
+    // --- VOICE SELECTION LOGIC ---
+    function populateVoiceList() {
+        if (typeof speechSynthesis === 'undefined') {
+            return;
+        }
+        
+        availableVoices = speechSynthesis.getVoices();
+        voiceSelect.innerHTML = '';
+        
+        let defaultIndex = -1;
+
+        availableVoices.forEach((voice, index) => {
+            const option = document.createElement('option');
+            option.textContent = `${voice.name} (${voice.lang})`;
+            option.value = index;
+            
+            // Auto-select a male voice by default on initial load
+            if (defaultIndex === -1 && (voice.name.includes('Male') || voice.name.includes('David') || voice.name.includes('James') || voice.name.includes('Google UK English Male'))) {
+                defaultIndex = index;
+            }
+            
+            voiceSelect.appendChild(option);
+        });
+
+        // Only set the default if the user hasn't manually selected something
+        if (voiceSelect.selectedIndex === -1 || voiceSelect.options.length === 0) {
+           if(defaultIndex !== -1) {
+               voiceSelect.selectedIndex = defaultIndex;
+           }
+        }
+    }
+
+    populateVoiceList();
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = populateVoiceList;
+    }
+
 
     // Audience Window Setup
     if (isAudience) {
@@ -1009,25 +1377,13 @@
         }
     }
 
-function speakText(text) {
+    function speakText(text) {
         if ('speechSynthesis' in window) {
             const utterance = new SpeechSynthesisUtterance(text);
             
-            // Get all available voices on the device
-            const voices = window.speechSynthesis.getVoices();
-            
-            // Attempt to find a voice that is likely male
-            // We search for "Male", "David", "James", or "Google UK English Male"
-            const maleVoice = voices.find(voice => 
-                voice.name.includes('Male') || 
-                voice.name.includes('David') || 
-                voice.name.includes('James') ||
-                voice.name.includes('Google UK English Male')
-            );
-
-            // If a male voice is found, use it; otherwise, use the first available voice
-            if (maleVoice) {
-                utterance.voice = maleVoice;
+            // Set the voice based on the dropdown selection
+            if (availableVoices.length > 0 && voiceSelect.value !== "") {
+                utterance.voice = availableVoices[voiceSelect.value];
             }
 
             utterance.rate = 0.95;
@@ -1037,11 +1393,6 @@ function speakText(text) {
             console.log("Text-to-speech not supported in this browser.");
         }
     }
-
-    // Crucial: Some browsers need a slight delay to load voices
-    window.speechSynthesis.onvoiceschanged = function() {
-        window.speechSynthesis.getVoices();
-    };
 
     function nextSlide() { if (currentSlideIndex < slides.length - 1) showSlide(currentSlideIndex + 1); }
     function prevSlide() { if (currentSlideIndex > 0) showSlide(currentSlideIndex - 1); }
