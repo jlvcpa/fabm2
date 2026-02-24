@@ -32,6 +32,7 @@
         box-shadow: 0 0 20px rgba(0,0,0,0.5);
         display: flex;
         flex-direction: column;
+        transition: background-color 0.4s ease;
     }
 
     #overlay {
@@ -71,6 +72,7 @@
         width: 100%;
         height: calc(100% - 150px);
         background: #161b22;
+        transition: background-color 0.4s ease;
     }
 
     .slide {
@@ -96,295 +98,200 @@
         pointer-events: auto;
     }
 
-    .slide h1 {
-        font-size: 4.5rem;
-        color: #58a6ff;
-        margin-bottom: 30px;
-    }
-
-    .slide h2 {
-        font-size: 3rem;
-        color: #e6edf3;
-        margin-bottom: 20px;
-    }
-
-    .slide ul {
-        text-align: left;
-        font-size: 2.2rem;
-        line-height: 1.1;
-        color: #c9d1d9;
-        max-width: 1400px;
-    }
-
-    .slide li {
-        margin-bottom: 15px;
-    }
-
-    .slide p {
-        font-size: 2.2rem;
-        line-height: 1.6;
-        color: #c9d1d9;
-        max-width: 1400px;
-    }
+    .slide h1 { font-size: 4.5rem; color: #58a6ff; margin-bottom: 30px; }
+    .slide h2 { font-size: 3rem; color: #e6edf3; margin-bottom: 20px; }
+    .slide ul { text-align: left; font-size: 2.2rem; line-height: 1.1; color: #c9d1d9; max-width: 1400px; }
+    .slide li { margin-bottom: 15px; }
+    .slide p { font-size: 2.2rem; line-height: 1.6; color: #c9d1d9; max-width: 1400px; }
 
     /* Checkpoint Quiz Styles */
     .mcq-option {
-        margin-bottom: 12px;
-        padding: 15px 20px;
-        background: rgba(13, 17, 23, 0.6);
-        border: 2px solid #30363d;
-        border-radius: 8px;
-        list-style: none;
-        transition: all 0.2s;
-        max-width: 1200px;
+        margin-bottom: 12px; padding: 15px 20px; background: rgba(13, 17, 23, 0.6);
+        border: 2px solid #30363d; border-radius: 8px; list-style: none; transition: all 0.2s; max-width: 1200px;
     }
-    .mcq-option:hover {
-        border-color: #58a6ff;
-        background: rgba(88, 166, 255, 0.1);
-    }
+    .mcq-option:hover { border-color: #58a6ff; background: rgba(88, 166, 255, 0.1); }
     .reveal-btn {
-        background: #238636;
-        color: white;
-        padding: 12px 30px;
-        border: none;
-        border-radius: 6px;
-        font-size: 1.2rem;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 25px;
-        transition: background 0.2s;
+        background: #238636; color: white; padding: 12px 30px; border: none;
+        border-radius: 6px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 25px; transition: background 0.2s;
     }
-    .reveal-btn:hover {
-        background: #2ea043;
-    }
+    .reveal-btn:hover { background: #2ea043; }
     .correct-answer {
-        display: none;
-        margin-top: 25px;
-        padding: 15px 30px;
-        background: rgba(46, 160, 67, 0.15);
-        border-left: 5px solid #3fb950;
-        color: #e6edf3;
-        font-size: 1.8rem;
-        max-width: 1200px;
+        display: none; margin-top: 25px; padding: 15px 30px; background: rgba(46, 160, 67, 0.15);
+        border-left: 5px solid #3fb950; color: #e6edf3; font-size: 1.8rem; max-width: 1200px;
     }
-    .correct-answer span {
-        color: #3fb950;
-        font-weight: bold;
-    }
+    .correct-answer span { color: #3fb950; font-weight: bold; }
 
-    /* Professional Caption Bar (Text Only) */
+    /* Professional Caption Bar */
     #caption-bar {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 150px;
-        background: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(10px);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 150px; 
-        box-sizing: border-box;
-        z-index: 40;
-        transition: transform 0.4s ease, opacity 0.4s ease;
+        position: absolute; bottom: 0; width: 100%; height: 150px; background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(10px); border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex; justify-content: center; align-items: center; padding: 0 150px; box-sizing: border-box;
+        z-index: 40; transition: transform 0.4s ease, opacity 0.4s ease;
     }
-
-    #caption-bar.hidden-captions {
-        transform: translateY(100%);
-        opacity: 0;
-    }
+    #caption-bar.hidden-captions { transform: translateY(100%); opacity: 0; }
 
     #caption-text {
-        color: #ffffff;
-        font-size: 1.5rem;
-        text-align: center;
-        max-width: 1400px;
-        width: 100%;
-        max-height: 130px; 
-        overflow-y: auto;  
-        line-height: 1.4;
-        font-weight: 400;
-        padding: 10px;
-        box-sizing: border-box;
+        color: #ffffff; font-size: 1.5rem; text-align: center; max-width: 1400px; width: 100%;
+        max-height: 110px; 
+        overflow-y: auto; line-height: 1.4; font-weight: 400; padding: 10px; box-sizing: border-box;
+        margin-bottom: 25px; 
     }
 
-    /* Custom Dark-Theme Scrollbar */
-    #caption-text::-webkit-scrollbar {
-        width: 8px;
-    }
-    #caption-text::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 4px;
-    }
-    #caption-text::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 4px;
-    }
-    #caption-text::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 0.5);
-    }
+    #caption-text::-webkit-scrollbar { width: 8px; }
+    #caption-text::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 4px; }
+    #caption-text::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 4px; }
+    #caption-text::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.5); }
 
     /* Independent Navigation Controls */
     #nav-controls {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 150px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 40px;
-        box-sizing: border-box;
-        pointer-events: none; 
-        z-index: 50;
+        position: absolute; bottom: 0; width: 100%; height: 150px; display: flex;
+        justify-content: space-between; align-items: center; padding: 0 40px; box-sizing: border-box;
+        pointer-events: none; z-index: 50;
     }
-
     .nav-btn {
-        padding: 10px 25px;
-        font-size: 1.2rem;
-        cursor: pointer;
-        background: rgba(13, 17, 23, 0.8);
-        color: #58a6ff;
-        border: 2px solid #58a6ff;
-        border-radius: 6px;
-        font-weight: bold;
-        transition: all 0.2s;
-        pointer-events: auto; 
+        padding: 10px 25px; font-size: 1.2rem; cursor: pointer; background: rgba(13, 17, 23, 0.8);
+        color: #58a6ff; border: 2px solid #58a6ff; border-radius: 6px; font-weight: bold;
+        transition: all 0.2s; pointer-events: auto; 
     }
-
-    .nav-btn:hover {
-        background: #58a6ff;
-        color: #000;
-    }
+    .nav-btn:hover { background: #58a6ff; color: #000; }
 
     /* Top Controls Group */
     #top-controls {
-        position: absolute;
-        top: 30px;
-        right: 30px;
-        display: flex;
-        flex-direction: row; 
-        align-items: center;
-        gap: 15px;
-        z-index: 60;
-        opacity: 0;
-        transition: opacity 0.5s;
+        position: absolute; top: 30px; right: 30px; display: flex; flex-direction: row; 
+        align-items: center; gap: 15px; z-index: 60; opacity: 0; transition: opacity 0.5s;
     }
-
     .active-sim #top-controls { opacity: 1; }
 
-    #live-indicator {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: rgba(239, 68, 68, 0.8);
-        padding: 8px 15px;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        cursor: pointer;
-        border: none;
-        color: white;
+    #live-indicator, #book-mode-btn {
+        display: flex; align-items: center; gap: 10px; background: rgba(239, 68, 68, 0.8);
+        padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: bold;
+        text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border: none; color: white;
         transition: transform 0.2s, background 0.3s;
     }
-
+    #book-mode-btn { background: #8b949e; }
+    #book-mode-btn:hover { background: #c9d1d9; color: #000; }
     #live-indicator.off { background: rgba(100, 116, 139, 0.8); }
 
-    .caption-toggle-container {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 0.8rem;
-        font-weight: bold;
-        color: #94a3b8;
-    }
+    .caption-toggle-container { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: bold; color: #94a3b8; }
+    
+    /* HIDE CAPTION OPTION IN BOOK MODE */
+    body.book-mode .caption-toggle-container { display: none !important; }
 
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 40px;
-        height: 20px;
-    }
-
+    .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
     .switch input { opacity: 0; width: 0; height: 0; }
-
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background-color: #334155;
-        transition: .4s;
-        border-radius: 20px;
-    }
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 14px; width: 14px;
-        left: 3px; bottom: 3px;
-        background-color: white;
-        transition: .4s;
-        border-radius: 50%;
-    }
-
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .4s; border-radius: 20px; }
+    .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
     input:checked + .slider { background-color: #3b82f6; }
     input:checked + .slider:before { transform: translateX(20px); }
-
-    .dot {
-        width: 10px; height: 10px;
-        background: white; border-radius: 50%;
-        animation: blink 1s infinite;
-    }
-
+    .dot { width: 10px; height: 10px; background: white; border-radius: 50%; animation: blink 1s infinite; }
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    /* --- NEW VOICE SELECT STYLES --- */
     #voice-select {
-        background: rgba(13, 17, 23, 0.8);
-        color: #58a6ff;
-        border: 2px solid #58a6ff;
-        border-radius: 6px;
-        padding: 6px 10px;
-        font-size: 0.8rem;
-        font-weight: bold;
-        cursor: pointer;
-        outline: none;
-        max-width: 180px;
-        text-overflow: ellipsis;
-        transition: all 0.2s;
+        background: rgba(13, 17, 23, 0.8); color: #58a6ff; border: 2px solid #58a6ff; border-radius: 6px;
+        padding: 6px 10px; font-size: 0.8rem; font-weight: bold; cursor: pointer; outline: none;
+        max-width: 180px; text-overflow: ellipsis; transition: all 0.2s;
     }
-    
-    #voice-select option {
-        background: #0d1117;
-        color: #ffffff;
-    }
+    #voice-select option { background: #0d1117; color: #ffffff; }
 
-    /* --- PROFESSIONAL FOOTER STYLES --- */
+    /* --- ENHANCED PROFESSIONAL FOOTER --- */
     .presentation-footer {
         position: absolute;
-        bottom: 15px;
+        bottom: 0;
+        left: 0;
         width: 100%;
+        padding: 10px 0;
         text-align: center;
-        font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.25);
-        z-index: 45; /* Below the nav controls, above the slide content */
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 500;
+        z-index: 500; 
         pointer-events: none;
         letter-spacing: 1px;
+        background: #0d1117; /* Dark Professional Background */
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+        transition: all 0.4s ease;
     }
+
+    /* --- SLIDE NAVIGATOR STYLES --- */
+    #nav-toggle-btn {
+        position: absolute; top: 30px; left: 30px; z-index: 80; background: rgba(13, 17, 23, 0.8);
+        color: #58a6ff; border: 2px solid #58a6ff; border-radius: 6px; padding: 8px 15px;
+        font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: all 0.2s; opacity: 0; pointer-events: none;
+    }
+    .active-sim #nav-toggle-btn { opacity: 1; pointer-events: auto; }
+    #nav-toggle-btn:hover { background: #58a6ff; color: #000; }
+
+    #slide-navigator {
+        position: absolute; top: 0; left: 0; width: 320px; height: 100%; background: rgba(13, 17, 23, 0.95);
+        border-right: 1px solid #30363d; z-index: 75; transform: translateX(0); transition: transform 0.3s ease;
+        display: flex; flex-direction: column; backdrop-filter: blur(10px);
+    }
+    #slide-navigator.collapsed { transform: translateX(-100%); }
+
+    .nav-header {
+        padding: 30px 20px 20px 80px; font-size: 1.2rem; font-weight: bold; color: #58a6ff;
+        border-bottom: 1px solid #30363d; text-transform: uppercase; letter-spacing: 1px;
+    }
+    #nav-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex: 1; }
+    .nav-item {
+        padding: 6px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 1rem; transition: background 0.2s; color: #8b949e;
+    }
+    .nav-item:hover { background: rgba(88, 166, 255, 0.1); color: #c9d1d9; }
+    .nav-item.active-nav { background: rgba(88, 166, 255, 0.2); color: #ffffff; border-left: 4px solid #58a6ff; font-weight: bold; }
+    #nav-list::-webkit-scrollbar { width: 6px; }
+    #nav-list::-webkit-scrollbar-track { background: transparent; }
+    #nav-list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 3px; }
+    #nav-list::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+
+    /* --- BOOK MODE ADJUSTMENTS --- */
+    body.book-mode #slides-container { background-color: #fdf6e3; }
+    body.book-mode .slide {
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 80px 150px 100px 150px; 
+        overflow-y: auto;
+    }
+    
+    body.book-mode .slide > :not(.book-content) { display: none !important; }
+    body.book-mode .book-content { display: block !important; }
+
+    /* BOOK MODE FOOTER COLOR */
+    body.book-mode .presentation-footer {
+        background: #fdf6e3;
+        color: #5c5c5c;
+        border-top: 1px solid #dcd6c5;
+    }
+
+    .book-content {
+        display: none;
+        font-family: 'Georgia', serif;
+        color: #333333;
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: justify;
+    }
+
+    .book-content h2 {
+        color: #111; font-family: 'Segoe UI', sans-serif; font-size: 2.5rem;
+        border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 25px; text-align: left;
+    }
+
+    .book-content p { color: #333; font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; text-indent: 40px; }
+    .book-content svg { display: block; margin: 40px auto; max-width: 100%; height: auto; }
 
     /* --- AUDIENCE MODE STYLES --- */
     body.audience-mode #top-controls,
     body.audience-mode #nav-controls,
-    body.audience-mode #caption-bar {
+    body.audience-mode #caption-bar,
+    body.audience-mode #nav-toggle-btn,
+    body.audience-mode #slide-navigator,
+    body.audience-mode .presentation-footer {
         display: none !important;
     }
-    
-    body.audience-mode #slides-container {
-        height: 100% !important; 
-    }
+    body.audience-mode #slides-container { height: 100% !important; }
 
     /* --- Mobile Landscape Responsiveness --- */
     @media screen and (max-width: 1000px), screen and (max-height: 600px) {
@@ -393,23 +300,16 @@
         .slide h2 { font-size: 6vh; margin-bottom: 2vh; }
         .slide ul, .slide p { font-size: 4vh; line-height: 1.2; max-width: 90vw; }
         .slide li { margin-bottom: 1.5vh; }
-        
         #caption-bar { height: 15vh; padding: 0 10vw; }
-        #caption-text { font-size: 3vh; max-height: 12vh; padding: 5px; }
+        #caption-text { font-size: 3vh; max-height: 8vh; padding: 5px; margin-bottom: 4vh; }
         #nav-controls { height: 15vh; padding: 0 15px; }
         .nav-btn { padding: 1vh 2vw; font-size: 3vh; }
+        #top-controls { top: 15px; right: 15px; transform: scale(0.75); transform-origin: top right; }
+        #nav-toggle-btn { top: 15px; left: 15px; transform: scale(0.75); transform-origin: top left; }
+        .presentation-footer { font-size: 0.65rem; padding: 4px 0; }
         
-        #top-controls { 
-            top: 15px; 
-            right: 15px; 
-            transform: scale(0.75); 
-            transform-origin: top right; 
-        }
-
-        .presentation-footer {
-            font-size: 0.7rem;
-            bottom: 5px;
-        }
+        body.book-mode .slide { padding: 40px 20px 60px 20px; }
+        .book-content p { font-size: 1.1rem; }
     }
 </style>
 </head>
@@ -421,17 +321,24 @@
 </div>
 
 <div id="container">
+    <button id="nav-toggle-btn" onclick="toggleNavigator(event)">☰ Menu</button>
+    <div id="slide-navigator" class="collapsed">
+        <div class="nav-header">Slide Navigator</div>
+        <ul id="nav-list"></ul>
+    </div>
+
     <div id="top-controls">
         <div class="caption-toggle-container">
             <span>SHOW CAPTIONS</span>
             <label class="switch">
-                <input type="checkbox" onchange="toggleCaptions(this)">
+                <input type="checkbox" id="caption-checkbox" onchange="toggleCaptions(this)">
                 <span class="slider"></span>
             </label>
         </div>
         
         <select id="voice-select" title="Select Narrator Voice"></select>
         
+        <button id="book-mode-btn" onclick="toggleBookMode()">📖 Book Mode</button>
         <button id="live-indicator" class="off" onclick="toggleAudio()">Auto-Narrator OFF</button>
         <button id="audience-btn" class="nav-btn" style="padding: 8px 15px; font-size: 0.9rem;" onclick="openAudienceView()">🖥️ Open Audience View</button>
     </div>
@@ -445,21 +352,28 @@
             <p>A comprehensive guide to understanding corporate structures.</p>
         </div>
 
+        <!-- DAY 1 START -->
         <div class="slide" 
              data-voiceover="audio/slide2.wav" 
-             data-text="Our learning objectives for today are twofold. First, to understand the legal nature and defining characteristics of a corporation. Second, to remember the various classifications of corporations based on capital structure, number of incorporators, and nationality.">
-            <h2>Learning Objectives</h2>
+             data-text="Welcome to Day 1. Our topic for today is the Legal Attributes, Classifications, and Formation of Corporations. We have three primary learning objectives. First, to remember the governing laws, SEC registration steps, and post-incorporation requirements. Second, to understand the legal nature of a corporation, its defining characteristics, and the significance of the Articles of Incorporation. Finally, to analyze the various classifications of corporations and the financial distinctions among authorized, subscribed, and paid-up capital.">
+            <h2>Day 1: Attributes, Classifications, and Formation</h2>
             <ul>
-                <li><strong>1. To understand</strong> the legal nature and defining characteristics of a corporation.</li>
-                <li><strong>2. To remember</strong> the various classifications of corporations based on capital structure, number of incorporators, and nationality.</li>
+                <li><strong>To remember</strong> the governing laws, SEC registration steps, and post-incorporation compliance requirements.</li>
+                <li><strong>To understand</strong> the legal nature of a corporation, its defining characteristics, and the significance of the Articles of Incorporation.</li>
+                <li><strong>To analyze</strong> the various classifications of corporations and the financial distinctions among authorized, subscribed, and paid-up capital.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>Learning Objectives</h2>
+                <p>In this comprehensive Day 1 module, we lay the foundation for corporate law by exploring the "life" of a corporation from a legal and structural perspective. The goal is to build a framework for corporate analysis.</p>
+                <p>Students will be expected to <strong>remember</strong> the governing laws (R.A. 11232 and others) and the exact procedural steps for SEC registration. You must <strong>understand</strong> why the law treats a corporation as an "artificial being" and how the Articles of Incorporation act as the supreme contract. Furthermore, we will <strong>analyze</strong> how the law categorizes these entities and deconstruct their initial financial terminology—authorized, subscribed, and paid-up capital.</p>
+            </div>
         </div>
 
         <div class="slide"
             data-voiceover="audio/slide3.wav"
             data-text="A corporation is an artificial being created by operation of law, endowed with the right of succession and vested with powers, attributes, and properties expressly authorized by law or incidental to its existence. As an artificial being, a corporation has no physical body, consciousness, or biological life; it exists and persists only because the legal system recognizes and sustains it. Its agency is exercised indirectly through human agents—directors, officers, employees, and agents—who make decisions and perform acts in the corporation’s name. The corporation’s rights and duties are primarily legal and instrumental: it may own property, enter contracts, sue and be sued, and incur obligations, but these capacities are conferred and limited by statute and charter. Unlike human beings, who are concrete biological substances with direct causal powers, moral consciousness, and personal responsibility, a corporation’s personhood is institutional and dependent on social and legal practices; it can be held liable and regulated, yet its moral agency is mediated through the people who run it. Because corporate personhood is a legal fiction, courts may protect it to promote commerce and stability, but they may also disregard or pierce the corporate veil when the fiction is abused, fraudulent, or used to defeat public policy or creditors’ rights.">
             <h2>Nature of Corporations</h2>
-
             <p>
                 A corporation is an <strong>artificial being created by operation of law</strong>, 
                 endowed with the <strong>right of succession</strong> and vested with the 
@@ -467,17 +381,22 @@
                 or necessarily incidental to its existence.
             </p>
 
+            <div class="book-content">
+                <h2>The Juridical Personality</h2>
+                <p>The defining concept of a corporation is its status as a "juridical person." This means the law grants it a personality separate and distinct from the people who own it. While a human is a "natural person" with biological life, the corporation is an "artificial being" that exists only on paper and in the eyes of the law.</p>
+                
+                <p>Its agency is exercised indirectly through human agents—directors, officers, employees, and agents—who make decisions and perform acts in the corporation’s name. The corporation’s rights and duties are primarily legal and instrumental: it may own property, enter contracts, sue and be sued, and incur obligations, but these capacities are conferred and limited by statute and charter.</p>
+                <p>Unlike human beings, who are concrete biological substances with direct causal powers, moral consciousness, and personal responsibility, a corporation’s personhood is institutional and dependent on social and legal practices; it can be held liable and regulated, yet its moral agency is mediated through the people who run it. Because corporate personhood is a legal fiction, courts may protect it to promote commerce and stability, but they may also disregard or pierce the corporate veil when the fiction is abused, fraudulent, or used to defeat public policy or creditors’ rights.</p>
+            </div>
         </div>
 
-    <div class="slide"
+        <div class="slide"
             data-voiceover="audio/slide4.wav"
             data-text="Corporations are governed primarily by the Revised Corporation Code, which sets out formation, governance, corporate powers, and dissolution; by the Securities Regulation Code, which regulates securities, public offerings, and SEC oversight; by the Foreign Investments Act, which prescribes rules, registration and ownership limits for foreign investors; by sectoral statutes such as the General Banking Law and Insurance Code that impose industry‑specific licensing, prudential and supervisory rules; and by constitutional provisions on national economy and patrimony that limit foreign ownership and protect public interest. The Revised Corporation Code (R.A. 11232) modernized corporate formation (including the One‑Person Corporation), governance, perpetual existence, and shareholder protections. The Securities Regulation Code (R.A. 8799) defines securities, investor protection policies, registration and disclosure requirements, and the powers of the Securities and Exchange Commission. The Foreign Investments Act (R.A. 7042, as amended) establishes the Foreign Investment Negative List, capitalization and registration requirements, and procedures for foreign enterprises doing business in the Philippines. Sectoral laws such as the General Banking Law (R.A. 8791), the Insurance Code, and other special statutes impose licensing, capital, governance, and supervisory regimes for regulated industries and vest oversight in agencies like the Bangko Sentral and the Insurance Commission. Constitutional provisions on the national economy and patrimony (Article XII) restrict land and certain industry ownership to Filipino citizens or corporations with required Filipino ownership percentages, shaping what corporations may lawfully own or do.">
             <h2>Governing Laws</h2>
-
             <p>
              Corporations are primarily governed by the <strong>Revised Corporation Code of the Philippines (R.A. 11232)</strong>, which sets out formation, corporate powers, governance, and dissolution.
             </p>
-
             <ul>
             <li><strong>Revised Corporation Code (R.A. 11232)</strong> — formation, corporate attributes, governance, and dissolution.</li>
             <li><strong>Securities Regulation Code (R.A. 8799)</strong> — regulation of securities, public offerings, and SEC oversight.</li>
@@ -485,8 +404,13 @@
             <li><strong>Special laws and sectoral codes</strong> — e.g., Banking Law, Insurance Code, Cooperative Code, Public Utilities regulations; these govern corporations in regulated industries.</li>
             <li><strong>Constitutional provisions</strong> — national patrimony and ownership limitations that affect corporate structure and permissible activities.</li>
             </ul>
-        </div>
 
+            <div class="book-content">
+                <h2>The Legal Framework</h2>
+                <p>In the Philippines, the primary authority for corporate law is <strong>Republic Act No. 11232</strong>, also known as the Revised Corporation Code. It modernized our laws by allowing for One-Person Corporations and perpetual existence. However, specialized laws also apply depending on the corporation's activities and ownership.</p>
+                <p>Publicly listed companies must follow the <strong>Securities Regulation Code</strong>, while foreign-owned entities comply with the <strong>Foreign Investments Act</strong>. Sectoral laws like the General Banking Law impose strict licensing for regulated industries. Furthermore, the Philippine Constitution restricts certain industries, such as land ownership or public utilities, to corporations that meet specific Filipino ownership percentages.</p>
+            </div>
+        </div>
 
         <div class="slide" 
              data-voiceover="audio/slide4.wav" 
@@ -498,6 +422,13 @@
                 <li><strong>Free Transferability:</strong> Shares can usually be bought or sold without dissolving the corporation.</li>
                 <li><strong>Centralized Management:</strong> Governed by a Board of Directors or Trustees.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>The Four Pillars of Corporate Form</h2>
+                <p>Why do entrepreneurs choose the corporate form over a partnership? It comes down to four essential pillars. <strong>Separate Personality</strong> means the corporation can own its own assets or bank account. <strong>Limited Liability</strong> protects the owner's personal house and savings from business creditors.</p>
+                
+                <p><strong>Free Transferability</strong> allows an investor to leave the business simply by selling their stock, without needing the permission of other owners. Finally, <strong>Centralized Management</strong> ensures efficiency; instead of every owner trying to run the store, they elect a Board of Directors to make the big decisions.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -509,6 +440,12 @@
                 <li><strong>One Person Corporation (OPC):</strong> A corporation with a single stockholder.</li>
                 <li><strong>Ordinary Corporation:</strong> Formed by multiple incorporators (typically 2 to 15, or more depending on jurisdiction).</li>
             </ul>
+
+            <div class="book-content">
+                <h2>Who can form a Corporation?</h2>
+                <p>Under the new law, the requirements for who can start a corporation have become very flexible. The traditional <strong>Ordinary Corporation</strong> requires a group of people (incorporators) to sign the founding documents. Historically, you needed at least five people, but the modern code has relaxed these numbers.</p>
+                <p>The <strong>One Person Corporation (OPC)</strong> is a revolutionary change in Philippine law. It allows a single individual to enjoy the benefits of limited liability without finding partners. The <strong>Corporation Sole</strong> remains a special religious category, allowing a Bishop or Priest to hold property in the name of the church rather than in their own personal name.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -519,6 +456,12 @@
                 <li><strong>Educational Corporations:</strong> Organized for educational purposes, governing schools, colleges, and universities.</li>
                 <li><strong>Religious Corporations:</strong> Organized by religious groups, societies, or sects.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>Non-Commercial Entities</h2>
+                <p>Not all corporations are built to sell products. <strong>Special Corporations</strong> are created for purposes that the State deems vital for the public good. <strong>Educational Corporations</strong> are strictly regulated by the Department of Education or CHED to ensure academic standards are met.</p>
+                <p><strong>Religious Corporations</strong> provide a way for faith-based groups to have a legal identity. By incorporating, a church can legally sign a lease for a building or open a bank account to manage donations, ensuring the organization outlasts its current leaders.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -529,6 +472,12 @@
                 <li><strong>Domestic Corporation:</strong> Incorporated under the laws of the host country.</li>
                 <li><strong>Foreign Corporation:</strong> Formed, organized, or existing under any laws other than those of the host country, and whose laws allow local citizens to do business.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>Domestic vs. Foreign</h2>
+                <p>A corporation's "citizenship" is determined by where it was born (incorporated). A <strong>Domestic Corporation</strong> is a child of the Philippine SEC and follows all local rules. A <strong>Foreign Corporation</strong> is created in a different country but may want to do business here.</p>
+                <p>To operate legally in the Philippines, a foreign corporation must obtain a "License to do Business" from the SEC. Without this license, they cannot use our court system to sue someone, although they can still be sued by Filipinos. This ensures that foreign entities are accountable to our local laws while they operate within our borders.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -539,6 +488,12 @@
                 <li><strong>Public vs. Private:</strong> Public entities are formed to govern a portion of the state, while private entities are formed for private aim or benefit.</li>
                 <li><strong>De Jure vs. De Facto:</strong> De Jure corporations have strictly complied with all legal requirements. De Facto corporations have a defect in their incorporation but exist in fact and act as a corporation.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>Legal Perfection and Purpose</h2>
+                <p>When looking at purpose, <strong>Public Corporations</strong> are those like cities or municipalities created to govern people. <strong>Private Corporations</strong> are formed by individuals for their own benefit, whether for profit (Stock) or charity (Non-stock).</p>
+                <p>From a technical legal standpoint, we look at <strong>De Jure</strong> and <strong>De Facto</strong> status. A De Jure corporation has done everything perfectly according to the SEC. A De Facto corporation has a "defect"—maybe a missing signature or a typo in the filings—but because they acted in good faith, the law recognizes them as a corporation for most business purposes to protect the people who deal with them.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -554,6 +509,12 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: D.</span> R.A. 7042 (Foreign Investments Act, as amended)</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Governing Laws</h2>
+                <p>It is vital for accountants and managers to know which specific laws apply to different corporate scenarios. While the <strong>Revised Corporation Code (A)</strong> is the general rulebook, foreign ownership is a specialized area of law.</p>
+                <p>The correct answer is <strong>D (R.A. 7042)</strong>. This law maintains the "Negative List," which lists industries where foreigners are prohibited or limited (like mass media or small-scale mining).</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -569,6 +530,12 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: B.</span> When the fiction is abused, fraudulent, or used to defeat public policy or creditors' rights.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: The Corporate Veil</h2>
+                <p>The "Corporate Veil" is a legal barrier that protects stockholders from being held liable for the corporation's debts. However, this protection is not absolute. If the court finds that the owners are using the company as a "dummy" or "alter ego" to commit fraud, they will <strong>pierce the veil</strong>.</p>
+                <p>Option <strong>B</strong> is correct because legal personhood is a privilege granted by the State to promote business stability, not to shield criminal activity. Options A, C, and D are perfectly legal scenarios and do not warrant losing limited liability protection.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -584,6 +551,12 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: C.</span> A One Person Corporation (OPC). A Corporation Sole is strictly for religious heads managing temporalities.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Single-Owner Entities</h2>
+                <p>It is easy to confuse a <strong>One Person Corporation (OPC)</strong> with a <strong>Corporation Sole</strong>. The key difference lies in the nature of the owner. A Corporation Sole (A) is strictly for a religious leader (like a Bishop) to manage church properties. </p>
+                <p>The correct answer is <strong>C</strong>. The Revised Corporation Code specifically allows a natural person, a trust, or an estate to be the "single stockholder" of an OPC. This allows individual entrepreneurs to gain corporate protections without needing to include "nominee" partners just to meet a headcount requirement.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -599,6 +572,12 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: D.</span> A De Facto Corporation. De Jure requires strict compliance with no flaws.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Legal Existence</h2>
+                <p>This question tests your ability to distinguish between "perfect" and "flawed" legal existence. A <strong>De Jure Corporation (A)</strong> has strictly complied with all legal requirements and is immune to legal attacks regarding its formation.</p>
+                <p>The correct answer is <strong>D</strong>. A De Facto corporation is one that is "good enough" for the time being. As long as there was a valid law and a good-faith effort to comply, the corporation's acts remain valid to protect third parties, even if the government might later challenge its registration due to the flaw.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -614,6 +593,12 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: B.</span> It must obtain a specific SEC license, and its home country laws must allow local citizens reciprocal rights to do business.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Foreign Entities</h2>
+                <p>National sovereignty dictates that a foreign company cannot just walk into the Philippines and start selling without permission. The correct answer is <strong>B</strong> because the State needs to ensure two things: First, that the foreign company is registered and "sue-able" here (via the SEC License); and second, that Filipinos are allowed to do business in that company's home country (Reciprocity).</p>
+                <p>Option A is incorrect because nationality is based on where the entity was <em>organized</em>, not the specific number of local people in it. Option C is wrong because the whole point of a corporation is to keep that limited liability shield regardless of nationality.</p>
+            </div>
         </div>
 
         <div class="slide"
@@ -632,6 +617,13 @@
             <li><strong>Payment of Fees:</strong> Settling filing and legal research fees based on authorized capital.</li>
             <li><strong>Issuance of Certificate:</strong> The official act granting juridical personality to the corporation.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>The Birth of a Corporation</h2>
+                <p>A corporation does not exist simply because people agree to do business together; it must be formally birthed by the State through the Securities and Exchange Commission (SEC).</p>
+                
+                <p>The process begins with securing a unique corporate name to prevent public confusion. The founders then draft the necessary documents, primarily the Articles of Incorporation and By-laws, and submit them via the SEC's online portal. The critical moment occurs when the SEC, satisfied with the documents and the payment of filing fees, issues the <strong>Certificate of Incorporation</strong>. It is exactly at this moment that the corporation gains its separate juridical personality and limited liability protections.</p>
+            </div>
         </div>
 
         <div class="slide"
@@ -645,11 +637,17 @@
             
             <ul>
             <li><strong>Corporate Name & Purpose:</strong> Identifies the entity and defines the scope of its authorized business activities.</li>
-            <li><strong>Principal Office:</strong> Establites the official legal address within the Philippines.</li>
+            <li><strong>Principal Office:</strong> Establishes the official legal address within the Philippines.</li>
             <li><strong>Corporate Term:</strong> Grants perpetual existence by default under the Revised Corporation Code.</li>
             <li><strong>Founders:</strong> Lists the names, nationalities, and residences of the incorporators.</li>
             <li><strong>Capital Structure:</strong> Details the authorized capital stock, number of shares, and initial subscriber commitments.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>The Supreme Charter</h2>
+                <p>The <strong>Articles of Incorporation (AOI)</strong> is the most important document in a corporation's existence. It acts as a three-way contract: between the State and the corporation, between the corporation and its shareholders, and among the shareholders themselves.</p>
+                <p>The AOI dictates what the corporation is legally allowed to do (its purpose). If a corporation engages in business outside of this stated purpose, those acts are considered <em>ultra vires</em> (beyond its powers). The document also locks in the principal office address, which is crucial because it dictates the legal venue where the corporation can be sued or file lawsuits.</p>
+            </div>
         </div>
 
         <div class="slide"
@@ -665,6 +663,12 @@
             <li><strong>Shareholding Requirement:</strong> Each incorporator of a stock corporation must own or subscribe to at least one (1) share.</li>
             <li><strong>Initial Directors:</strong> The AOI names the interim board responsible for organizational tasks until the first shareholder election.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>Founders and First Managers</h2>
+                <p><strong>Incorporators</strong> are the original founders. Their names and signatures are permanently etched into the Articles of Incorporation. To be an incorporator of a stock corporation, the law strictly requires that you must own or subscribe to at least one share of the capital stock; you cannot found a company you have no stake in.</p>
+                <p>Because a newly birthed corporation needs immediate leadership, the AOI also names the <strong>Initial Directors</strong>. This interim board acts as the caretakers of the company, handling the immediate organizational tasks—like opening a bank account and electing the first corporate officers—until the shareholders can hold their first official meeting to vote for a permanent board.</p>
+            </div>
         </div>
 
         <div class="slide"
@@ -682,6 +686,13 @@
             <li><strong>Paid-up Capital:</strong> The actual portion of the subscribed capital that has been paid to the corporate treasury.</li>
             <li><strong>General Rule:</strong> The Revised Corporation Code eliminated minimum subscribed and paid-up requirements for ordinary corporations upon incorporation, subject to special laws.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>The Financial Foundation</h2>
+                <p>To analyze a corporation's equity, you must understand three distinct layers of capitalization. <strong>Authorized Capital Stock</strong> is the legal ceiling. It is the absolute maximum number of shares the company is allowed to print and sell, as defined in its Articles of Incorporation.</p>
+                [Image illustrating a funnel: Large Authorized Capital pouring into a smaller Subscribed Capital, pouring into an even smaller Paid-up Capital]
+                <p><strong>Subscribed Capital Stock</strong> represents the legally binding promises made by investors to buy a portion of those authorized shares. Finally, <strong>Paid-up Capital</strong> is the hard reality—it represents the actual cash or property that has already been handed over to the corporate treasury by the subscribers. Under the modernized code, the old rules requiring 25% subscription and 25% paid-up capital upon formation have generally been eliminated to encourage business creation.</p>
+            </div>
         </div>
 
         <div class="slide"
@@ -698,6 +709,12 @@
             <li><strong>Statutory Benefits:</strong> Registering as an employer with SSS, PhilHealth, and Pag-IBIG.</li>
             <li><strong>Secondary Licenses:</strong> Procuring specialized permits from agencies (e.g., BSP, Insurance Commission) if entering regulated industries.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>Beyond the SEC Certificate</h2>
+                <p>Obtaining the SEC Certificate of Incorporation grants the corporation legal life, but it does not grant the right to immediately open shop and sell goods. A series of secondary compliances must be met.</p>
+                <p>Internally, the corporation must adopt its <strong>By-laws</strong>, which are the internal rules governing how meetings are run and officers are elected. Externally, the corporation must register with the <strong>Bureau of Internal Revenue (BIR)</strong> to legally issue invoices, and with the <strong>Local Government Unit (LGU)</strong> for a Mayor's Permit. Finally, to protect future employees, it must register with statutory benefit agencies like SSS, PhilHealth, and Pag-IBIG.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -713,6 +730,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: D.</span> The issuance of the Certificate of Incorporation by the SEC.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: The Birth of the Entity</h2>
+                <p>The correct answer is <strong>D</strong>. While drafting documents and paying fees are necessary precursors, the corporation does not legally exist until the State formally recognizes it by issuing the Certificate of Incorporation.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -728,6 +750,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: B.</span> It establishes the legal venue for corporate actions and lawsuits.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: The Principal Office</h2>
+                <p>The correct answer is <strong>B</strong>. The principal office listed in the AOI is the official residence of the corporation. In legal disputes, this address determines which specific city or provincial court has jurisdiction over the case.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -743,6 +770,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: A.</span> They must own or subscribe to at least one (1) share of the capital stock.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Incorporator Requirements</h2>
+                <p>The correct answer is <strong>A</strong>. To be a founding member of a stock corporation, the law requires that you have some financial stake in the entity. You cannot form a stock entity without subscribing to at least a single share.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -758,6 +790,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: C.</span> It eliminated minimum subscribed and paid-up requirements, except when mandated by special industry laws.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Minimum Capital Rules</h2>
+                <p>The correct answer is <strong>C</strong>. The Revised Corporation Code removed the old 25%-25% rule to make it easier for entrepreneurs to start businesses. However, special laws governing industries like banking or insurance still impose strict minimum capital requirements.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -773,6 +810,31 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: B.</span> Secure an Authority to Print (ATP) invoices.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Post-Registration Compliance</h2>
+                <p>The correct answer is <strong>B</strong>. While the SEC handles legal formation, the Bureau of Internal Revenue (BIR) manages taxation. You cannot legally print or issue official sales invoices without first securing an ATP from the BIR.</p>
+            </div>
+        </div>
+        <!-- DAY 1 END -->
+
+        <!-- DAY 2 START -->
+        <div class="slide" 
+             data-voiceover="audio/day2_intro.wav" 
+             data-text="Welcome to Day 2. Our topic for today is Corporate Equity: Shares of Stock and Accounting Methods. We have three primary learning objectives. First, to remember the fundamental rights of a shareholder and the various classes of corporate stock, such as common and preferred shares. Second, to understand how a corporation manages its capital through specialized stock like treasury and redeemable shares. Finally, to analyze the two primary accounting methods used in the Philippines—the Memorandum Method and the Journal Entry Method—and how they record the authorization, subscription, and issuance of capital stock.">
+            <h2>Day 2: Corporate Equity and Accounting Methods</h2>
+            <br>
+            <ul>
+                <li><strong>To remember</strong> the fundamental rights of a shareholder and the different classes of corporate stock (Common, Preferred, Founders').</li>
+                <li><strong>To understand</strong> the legal mechanisms and restrictions involved in managing capital through Treasury and Redeemable shares.</li>
+                <li><strong>To analyze</strong> the differences between the Memorandum Method and the Journal Entry Method when recording equity transactions.</li>
+            </ul>
+
+            <div class="book-content">
+                <h2>Learning Objectives</h2>
+                <p>In Day 2, we shift our focus to the financial engine of the corporation: its equity structure. You cannot analyze a corporation without understanding the units of ownership that fund it.</p>
+                <p>Students will be expected to <strong>remember</strong> the bundle of legal rights attached to shares and the specific privileges (or limitations) of different stock classes. We will ensure you <strong>understand</strong> how a corporation legally buys back its own stock. Most importantly for accountants, we will deeply <strong>analyze</strong> the journal entries used to track these transactions, comparing the Memorandum Method against the formal Journal Entry Method.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -788,6 +850,12 @@
                 <li><strong>Pre-emptive Rights:</strong> The right to subscribe to new share issuances to prevent dilution of ownership.</li>
                 <li><strong>Inspection & Liquidation:</strong> The right to inspect books and share in remaining assets after dissolution.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>The Bundle of Rights</h2>
+                <p>A share of stock is more than just a piece of paper; it represents a fractional ownership interest in the corporation. Owning a share grants the investor a specific "bundle of rights."</p>
+                <p>These rights include the power to vote for the Board of Directors, ensuring the owners maintain ultimate control. Shareholders also have the right to receive a portion of the profits (dividends) when declared. To protect their percentage of ownership from shrinking when new shares are issued, they hold <strong>Pre-emptive Rights</strong>, allowing them first refusal to buy the new stock. Furthermore, they maintain the right to inspect corporate records to prevent management fraud, and the right to a share of whatever is left over if the corporation is dissolved and liquidated.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -803,6 +871,12 @@
                 <li><strong>Voting Power:</strong> Inherently possesses complete and unrestricted voting rights.</li>
                 <li><strong>Liquidation Claim:</strong> Last in line to receive distributions if the corporation is dissolved and liquidated.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>The Backbone of Equity</h2>
+                <p><strong>Common Shares</strong> are the standard unit of corporate ownership. The law refers to them as holding "residual ownership." This means that in both dividend payouts and company liquidation, common shareholders stand at the very back of the line. All creditors, bondholders, and preferred shareholders must be paid before a common shareholder sees a single peso.</p>
+                <p>Why buy them? Because their upside is unlimited. While preferred shares might be capped at a 5% return, if the company invents the next smartphone, the common shareholders absorb all the massive excess profits. Furthermore, because they bear the most risk, corporate law dictates that common shares must always possess full voting rights to control the company's destiny.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -816,6 +890,12 @@
                 <li><strong>Voting Restrictions:</strong> Generally non-voting for the Board of Directors, but retain voting rights on fundamental corporate changes.</li>
                 <li><strong>Par Value Requirement:</strong> The law mandates that preferred shares must always be issued with a stated par value.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>Trading Control for Security</h2>
+                <p>Corporations issue <strong>Preferred Shares</strong> to attract conservative investors who want safer returns. A preferred share acts as a hybrid between stock and a bond. The defining feature is the "preference"—meaning these shareholders get their declared dividends before the common stockholders get anything.</p>
+                <p>However, this financial security comes at a cost to corporate control. Preferred shares are almost always issued as <strong>non-voting shares</strong>. While they cannot vote for the daily management (the Board of Directors), the law protects them by allowing them to vote on massive, fundamental changes, like selling all corporate assets or amending the corporate charter. Legally, preferred shares must always be issued with a stated par value.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -828,6 +908,12 @@
                 <li><strong>Rights Suspended:</strong> Treasury shares have no voting rights and are not entitled to dividends while held by the corporation.</li>
                 <li><strong>Acquisition Limits:</strong> Acquiring treasury shares strictly requires the corporation to have sufficient unrestricted retained earnings.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>Managing the Capital Structure</h2>
+                <p>Sometimes a corporation needs to buy back its own shares. <strong>Treasury Shares</strong> are ordinary shares that were fully paid for, but the corporation bought them back. While sitting in the corporate "treasury," these shares are dormant—they earn no dividends and cannot be voted. However, to protect the company's creditors, a corporation can only buy treasury shares if it has enough profits (Unrestricted Retained Earnings) to afford them.</p>
+                <p><strong>Redeemable Shares</strong> are different. They are issued with a pre-planned expiration date where the company has the right (or obligation) to buy them back. Because investors know this from day one, the law allows the corporation to redeem them even if there are no retained earnings, provided the buyback doesn't bankrupt the company.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -841,6 +927,12 @@
                 <li><strong>Time Limitation:</strong> The exclusive right to elect directors is strictly limited to a maximum of five (5) years from the date of incorporation.</li>
                 <li><strong>Reversion:</strong> After the five-year period, founders' shares generally share the same voting rights as ordinary common shares.</li>
             </ul>
+
+            <div class="book-content">
+                <h2>Rewarding the Visionaries</h2>
+                <p>Building a corporation from nothing is difficult and risky. To reward the original organizers, the law allows the creation of <strong>Founders' Shares</strong>. These shares can be granted exclusive privileges that normal common stock does not possess.</p>
+                <p>The most powerful privilege granted is usually the exclusive right to elect the Board of Directors. This ensures the founders retain complete control over the company's direction during its critical startup phase, even if they sell off majority ownership to outside investors. However, to prevent permanent dictatorships, the SEC strictly limits this exclusive voting right to a maximum of <strong>five (5) years</strong>. After that, the shares revert to normal voting power.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -856,6 +948,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: B.</span> The Pre-emptive Right.</div>
+
+            <div class="book-content">
+                <h2>Review: Shareholder Rights</h2>
+                <p>The correct answer is <strong>B.</strong> Pre-emptive rights ensure that if a corporation decides to print and sell more stock, the existing owners get the first chance to buy them in proportion to their current holdings. This prevents external investors from suddenly diluting the voting power of the original owners.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -871,6 +968,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: A.</span> They must be issued with a stated par value.</div>
+
+            <div class="book-content">
+                <h2>Review: Preferred Structures</h2>
+                <p>The correct answer is <strong>A.</strong> While common shares can be issued with or without a par value, the law mandates that preferred shares must always have a stated par value. This is necessary because dividend preferences are almost always calculated as a percentage of that specific par value.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -888,6 +990,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: C.</span> Redeemable shares can be purchased regardless of unrestricted retained earnings (if not causing insolvency), whereas acquiring treasury shares strictly requires them.</div>
+
+            <div class="book-content">
+                <h2>Review: Buyback Restrictions</h2>
+                <p>The correct answer is <strong>C.</strong> Treasury shares represent a company deciding to use its extra cash to buy back stock; therefore, it MUST have unrestricted profits to do so, protecting creditors from the company draining its capital. Redeemable shares are a pre-agreed contract, so the company can buy them back even without profits, as long as it doesn't cause bankruptcy.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -903,6 +1010,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: B.</span> Their voting rights and dividend entitlements are suspended while held by the corporation.</div>
+
+            <div class="book-content">
+                <h2>Review: Dormant Shares</h2>
+                <p>The correct answer is <strong>B.</strong> It would be illogical for a corporation to pay dividends to itself or to allow the management board to vote using the company's own shares to keep themselves in power. Therefore, while in the treasury, the shares exist but are entirely dormant.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -918,6 +1030,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: B.</span> It cannot exceed a period of five (5) years from the date of incorporation.</div>
+
+            <div class="book-content">
+                <h2>Review: Limiting Founder Control</h2>
+                <p>The correct answer is <strong>B.</strong> The law balances the need to reward founders with the need for corporate democracy. Giving founders an absolute dictatorship forever would harm public investors. Therefore, the exclusive right to elect the board is strictly capped at five years.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -933,6 +1050,12 @@
                 <li><strong>Shared Outcome:</strong> Both methods ultimately yield the exact same Total Stockholders' Equity presentation.</li>
                 <li><strong>Clarification:</strong> "Paid-Up Capital" is not a formal account title, but rather the sum of Share Capital and Additional Paid-in Capital (APIC).</li>
             </ul>
+
+            <div class="book-content">
+                <h2>The Mechanics of Equity Accounting</h2>
+                <p>When a corporation raises funds by selling shares, the accounting department must meticulously track three stages: Authorization, Subscription, and Issuance. In the Philippines, this is done using either the <strong>Memorandum Method</strong> or the <strong>Journal Entry Method</strong>.</p>
+                <p>While the mechanical debits and credits differ slightly between the two, it is vital to remember that <strong>both methods arrive at the exact same Total Stockholders' Equity</strong> on the Balance Sheet. A common point of confusion for students is the term "Paid-up Capital." You will never write a journal entry that debits cash and credits "Paid-up Capital." Instead, that term is an umbrella concept representing the combined balances of the Share Capital account and the Additional Paid-in Capital account.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -958,6 +1081,12 @@
                     </td>
                 </tr>
             </table>
+
+            <div class="book-content">
+                <h2>Recording the Authorization</h2>
+                <p>When the SEC issues the Certificate of Incorporation, the company is officially granted the power to sell shares. The two methods treat this initial event very differently.</p>
+                <p>The <strong>Memorandum Method</strong> is popular because it is simple: no financial transaction has occurred yet, so no debits or credits are made. The accountant merely writes a sticky note (a memo) in the ledger stating the legal facts. The <strong>Journal Entry Method</strong>, however, takes a formal approach. It immediately establishes the ceiling of the company's equity by crediting <em>Authorized Capital Stock</em> and simultaneously debiting <em>Unissued Capital Stock</em>, essentially creating a tracking pool of shares waiting to be sold.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -985,6 +1114,12 @@
                 </tr>
             </table>
             <p style="font-size: 1.5rem; text-align: center; margin-top: 15px; color: #8b949e;"><em>Note: The entry to record subscriptions is identical under both methods.</em></p>
+
+            <div class="book-content">
+                <h2>Recording the Subscription</h2>
+                <p>A subscription is a legally binding promise by an investor to buy stock. Because the promise is legally enforceable, it creates an asset for the company: <strong>Subscriptions Receivable</strong>.</p>
+                <p>This entry is the one time the Memorandum and Journal Entry methods are exactly identical. A critical rule to master here is the handling of premiums. If a share has a par value of ₱100, but the investor agrees to buy it for ₱150, the extra ₱50 is a premium. The accountant must credit the <strong>Additional Paid-in Capital</strong> account for that ₱50 <em>immediately upon subscription</em>, not later when the cash is collected. The economic benefit is locked in the moment the contract is signed.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -1023,6 +1158,12 @@
                     </td>
                 </tr>
             </table>
+
+            <div class="book-content">
+                <h2>Clearing the Receivable and Issuing Stock</h2>
+                <p>When the subscriber finally pays cash, the entry is simple: Debit Cash, Credit Subscriptions Receivable. This is true under both methods.</p>
+                <p>However, once the balance reaches zero, the company must issue the physical stock certificates. This requires clearing out the temporary <em>Subscribed Capital Stock</em> account. Under the <strong>Memorandum Method</strong>, the stock is finalized by crediting the main <em>Capital Stock</em> account directly. Under the <strong>Journal Entry Method</strong>, the accountant credits <em>Unissued Capital Stock</em>, thereby shrinking the pool of available shares established in step one.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -1062,6 +1203,12 @@
                     </td>
                 </tr>
             </table>
+
+            <div class="book-content">
+                <h2>Issuance Involving Premiums</h2>
+                <p>If you understood the subscription phase, this step is easy. Because the Additional Paid-in Capital (Premium) was securely recorded when the contract was signed, the subsequent payment entries ignore it entirely.</p>
+                <p>When the subscriber hands over the cash, the accountant debits Cash for the full amount (Par + Premium) and credits the Receivable. When the certificate is issued, the accountant debits <em>Subscribed Capital Stock</em> and credits either <em>Capital Stock</em> (Memo) or <em>Unissued Capital Stock</em> (Journal). This issuance entry is made strictly at the par value of the stock, keeping the par value separate from the premium in the ledgers.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -1081,6 +1228,12 @@
                     </ul>
                 </li>
             </ul>
+
+            <div class="book-content">
+                <h2>Summary of Equity Methods</h2>
+                <p>While the mechanical steps of the Memorandum and Journal Entry methods differ, the destination is the same. Real-world accountants vastly prefer the <strong>Memorandum Method</strong> because it avoids creating unnecessary "dummy" accounts like Unissued Capital Stock.</p>
+                <p>However, understanding both is essential for CPA board examinations. If you are analyzing a balance sheet built with the Journal Entry Method, you must know how to calculate the true issued capital: you take the static <em>Authorized Capital Stock</em> limit and subtract whatever is left sitting in the <em>Unissued Capital Stock</em> pool.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -1096,6 +1249,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: C.</span> A descriptive memorandum entry without formal debits and credits.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Method Distinctions</h2>
+                <p>The correct answer is <strong>C.</strong> The defining characteristic of the Memorandum Method is its simplicity. Because authorization is merely a legal event and not a financial exchange, no formal debit/credit journal entry is required.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -1111,6 +1269,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: D.</span> Additional Paid-in Capital (Share Premium).</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Timing the Premium</h2>
+                <p>The correct answer is <strong>D.</strong> According to accounting principles, the premium must be recognized at the very moment the subscription contract is signed, because the economic benefit is now legally enforceable.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -1126,6 +1289,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: A.</span> Debit Subscribed Capital Stock, Credit Capital Stock.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Finalizing the Stock</h2>
+                <p>The correct answer is <strong>A.</strong> Under the Memorandum method, you eliminate the temporary holding account (Debit Subscribed Capital Stock) and transfer the balance directly to the permanent equity account (Credit Capital Stock).</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -1141,6 +1309,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: C.</span> Debit Subscribed Capital Stock, Credit Capital Stock (at par value). The APIC was already recorded during subscription.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Isolating the Premium</h2>
+                <p>The correct answer is <strong>C.</strong> A common trap is trying to record the premium during issuance. However, the premium was already credited during the subscription phase. Therefore, the issuance entry only deals with transferring the par value amounts.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -1156,6 +1329,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: B.</span> Debit Unissued Capital Stock, Credit Authorized Capital Stock.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Formalizing Authorization</h2>
+                <p>The correct answer is <strong>B.</strong> The Journal Entry method requires a formal entry to establish the equity ceiling. It creates a pool of shares waiting to be sold by debiting Unissued Capital Stock and crediting the permanent Authorized Capital Stock account.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -1173,6 +1351,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: C.</span> The formal journal entry is exactly identical under both methods.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Method Intersection</h2>
+                <p>The correct answer is <strong>C.</strong> Both methods treat the act of a subscriber signing a contract identically: debiting Subscriptions Receivable and crediting Subscribed Capital Stock (along with any APIC if a premium is involved).</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -1188,6 +1371,11 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: B.</span> Debit Subscribed Capital Stock, Credit Unissued Capital Stock.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Deducting from the Pool</h2>
+                <p>The correct answer is <strong>B.</strong> Under the Journal Entry method, the act of issuing a certificate means you are taking shares out of the available pool. Therefore, you must credit (reduce) the Unissued Capital Stock account.</p>
+            </div>
         </div>
 
         <div class="slide" 
@@ -1203,11 +1391,516 @@
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
             <div class="correct-answer"><span>Correct Answer: D.</span> Unissued Capital Stock. The credit is made to this account at par value, as the premium was already recorded during subscription.</div>
+
+            <div class="book-content">
+                <h2>Review Challenge: Finalizing the Ledger</h2>
+                <p>The correct answer is <strong>D.</strong> Even though a premium was involved, that premium was already recorded earlier. To issue the actual certificate under the Journal Entry method, you simply credit the Unissued Capital Stock account to reflect the transfer of ownership.</p>
+            </div>
+        </div>
+        <!-- DAY 2 END -->
+
+        <!-- DAY 3 START -->
+        <div class="slide" 
+             data-voiceover="audio/day3_intro.wav" 
+             data-text="Welcome to Day 3. Our topic for today is the Statement of Changes in Equity for a corporation. We have three primary learning objectives for this module. First, we aim to remember the specific components that make up the corporate equity section. Second, we need to understand the technical aspects of transactions that either increase or decrease these equity balances. Third, we will analyze and apply these concepts to prepare a Statement of Changes in Equity. We will progress from basic scenarios to comprehensive examples involving multiple adjustments. Mastering this statement is crucial for any aspiring accountant. It bridges the gap between the income statement and the balance sheet. Let us begin our deep dive into corporate equity.">
+            <h2>Day 3: Statement of Changes in Equity</h2>
+            <br>
+            <ul>
+                <li><strong>To remember</strong> the components and purpose of the corporate Statement of Changes in Equity.</li>
+                <li><strong>To understand</strong> the technical aspects and transactions that increase or decrease specific equity accounts.</li>
+                <li><strong>To analyze and apply</strong> accounting rules to properly prepare the statement from basic to comprehensive scenarios.</li>
+            </ul>
+
+            <div class="book-content">
+                <h2>Learning Objectives</h2>
+                <p>In this module, we will explore the critical financial report that tracks the wealth of the corporate owners: The Statement of Changes in Equity (SCE). This statement acts as the vital bridge between the Income Statement and the Balance Sheet.</p>
+                <p>Students will be expected to <strong>remember</strong> the individual columns that make up this matrix. You must <strong>understand</strong> the exact rules governing what makes Retained Earnings and Share Capital go up or down. Finally, you will <strong>analyze</strong> raw financial data to manually prepare this statement, handling everything from simple net income to complex prior period adjustments.</p>
+            </div>
         </div>
 
+        <div class="slide" 
+             data-voiceover="audio/day3_slide2.wav" 
+             data-text="The Statement of Changes in Equity is a fundamental financial report. Its primary purpose is to reconcile the opening balances of equity accounts to their closing balances. This statement tells the story of wealth creation and distribution within the company over a specific period. It details all the changes in an entity's equity between two balance sheet dates. For a corporation, this section is significantly more complex than a sole proprietorship. It is divided into several distinct accounts, primarily Share Capital, Additional Paid-in Capital, and Retained Earnings. Investors rely on this statement to track whether the company is growing its net worth. Furthermore, it clearly shows how much of the profit was reinvested versus distributed as dividends. Understanding the movement within these accounts is essential for financial analysis. Ultimately, it provides a transparent view of the owners' residual claims.">
+            <h2>Purpose and Components of the SCE</h2>
+            <br>
+            <ul>
+                <li><strong>Primary Purpose:</strong> Reconciles opening equity balances to closing equity balances over a period.</li>
+                <li><strong>Key Components:</strong>
+                    <ul>
+                        <li>Share Capital (At Par)</li>
+                        <li>Additional Paid-in Capital (Share Premium)</li>
+                        <li>Retained Earnings</li>
+                        <li>Treasury Shares (Contra-equity)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="book-content">
+                <h2>Why Do We Need This Statement?</h2>
+                <p>The Statement of Changes in Equity (SCE) is a mandatory financial statement. While the Income Statement shows performance and the Balance Sheet shows a snapshot of financial position, the SCE shows the <em>movement</em> of the owners' wealth over time.</p>
+                
+                <p>Because a corporation has many investors and complex laws governing its capital, its equity cannot be lumped into a single "Owner's Capital" account like a small bakery. The SCE separates contributed capital (money from investors) from earned capital (profits generated by the business), providing absolute transparency to stakeholders.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/day3_slide3.wav" 
+             data-text="The first major columns in our statement belong to Share Capital and Additional Paid-in Capital. Share Capital represents the total par value of all shares that have been formally issued. Whenever new shares are issued to investors, this account increases by the exact par value of those shares. However, investors frequently pay more than the par value to acquire these shares. This excess amount must be recorded separately to maintain legal capital compliance. Therefore, the premium is credited to the Additional Paid-in Capital account, also known as Share Premium. These two accounts together form the contributed capital of the corporation. They reflect the actual investments directly infused by the shareholders. They do not increase from the daily profitable operations of the business. Changes here are strictly driven by transactions between the corporation and its owners acting in their capacity as owners.">
+            <h2>Share Capital & Additional Paid-in Capital</h2>
+            <br>
+            <ul>
+                <li><strong>Share Capital:</strong> Increases only when new shares are issued, and is strictly recorded at <strong>Par Value</strong>.</li>
+                <li><strong>Additional Paid-in Capital (APIC):</strong> Also known as Share Premium.</li>
+                <li><strong>The Premium:</strong> Captures any amount paid by investors in excess of the par value.</li>
+                <li><strong>Contributed Capital:</strong> Together, these accounts represent funds directly infused by owners, not earned by business operations.</li>
+            </ul>
+
+            <div class="book-content">
+                <h2>Tracking Owner Investments</h2>
+                <p>The first sections of the SCE deal with <strong>Contributed Capital</strong>. This is the money the corporation raised by selling pieces of itself. It is critical to strictly separate the legal minimum (Par Value) from the excess paid by investors (Premium).</p>
+                <p>For example, if a share has a par value of ₱10 and is sold for ₱25, the Share Capital account receives ₱10, and the Additional Paid-in Capital (APIC) account receives ₱15. These accounts will only change when the company issues new shares, retires old shares, or declares stock dividends. They are never affected by the company's daily sales or expenses.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/day3_slide4.wav" 
+             data-text="Retained Earnings acts as the financial engine of the corporation's equity. It represents the accumulated, undivided profits of the company since its inception. This account increases every year when the company generates a net income from its operations. Conversely, it decreases if the company suffers a net loss. The other major factor that decreases Retained Earnings is the declaration of dividends. When the Board of Directors declares cash, property, or stock dividends, they are essentially distributing these accumulated profits back to the shareholders. It is important to note that dividends are not business expenses; they are equity distributions. Sometimes, the Board may restrict a portion of these earnings for a specific purpose, like a new building. This creates Appropriated Retained Earnings, which limits the amount available for dividend declarations. Overall, this account reflects the organic financial growth of the corporation.">
+            <h2>Retained Earnings: The Core Engine</h2>
+            <br>
+            <ul>
+                <li><strong>Definition:</strong> The accumulated, undistributed profits of the corporation since its inception.</li>
+                <li><strong>Increases via:</strong> Net Income generated during the accounting period.</li>
+                <li><strong>Decreases via:</strong> Net Losses and the declaration of Dividends (Cash, Property, or Stock).</li>
+                <li><strong>Appropriations:</strong> The Board can temporarily restrict a portion of Retained Earnings for specific future projects.</li>
+            </ul>
+
+            <div class="book-content">
+                <h2>Tracking Earned Capital</h2>
+                <p>If Share Capital is the money given <em>to</em> the business, <strong>Retained Earnings</strong> is the money made <em>by</em> the business. At the end of every year, the Net Income from the Income Statement is closed out and added directly to the Retained Earnings balance.</p>
+                <p>However, this balance doesn't just grow forever. When the Board of Directors decides to reward the investors, they declare <strong>Dividends</strong>. Declaring a dividend directly reduces the Retained Earnings balance. Furthermore, the Board might "Appropriate" a portion of these earnings—meaning they set it aside for a specific purpose, like paying off a future loan, legally preventing it from being paid out as dividends.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/day3_slide5.wav" 
+             data-text="Not all equity transactions increase the company's net worth. When a corporation buys back its own stock, it creates Treasury Shares. These repurchased shares are recorded at their acquisition cost and are presented as a deduction from total equity. They are not considered assets because a company cannot own itself. Another critical adjustment you will encounter involves prior period errors. If an accountant discovers a material mistake in a previous year's financial statements, it cannot be fixed in the current year's income statement. Instead, the correction is made directly to the beginning balance of Retained Earnings. This is known as a prior period adjustment, and it ensures the current year's net income remains undistorted. Changes in accounting policies are handled in this exact same manner. These retroactive adjustments are prominently displayed on the very first lines of the statement.">
+            <h2>Treasury Shares & Prior Period Adjustments</h2>
+            <br>
+            <ul>
+                <li><strong>Treasury Shares:</strong> The company's own stock that has been bought back.</li>
+                <li><strong>Contra-Equity:</strong> Presented as a negative figure (deduction) at acquisition cost.</li>
+                <li><strong>Prior Period Errors:</strong> Mistakes from previous years cannot alter the current year's Income Statement.</li>
+                <li><strong>Restatement:</strong> Material errors and changes in accounting policy are corrected directly against the <em>Beginning Balance of Retained Earnings</em>.</li>
+            </ul>
+
+            <div class="book-content">
+                <h2>Deductions and Corrections</h2>
+                <p>A corporation's equity can shrink for reasons other than losses. When a company uses its spare cash to buy back its own shares from the stock market, these become <strong>Treasury Shares</strong>. These are not assets; they are a <em>contra-equity</em> account that reduces total Stockholders' Equity.</p>
+                <p>Another major technical concept is the <strong>Prior Period Adjustment</strong>. Imagine finding out you forgot to record a massive expense three years ago. You cannot record a three-year-old expense on today's Income Statement. Instead, accounting rules require you to deduct it directly from your opening Retained Earnings balance on the SCE. This ensures the historical mistake is fixed without ruining the accuracy of your current year's performance metrics.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/day3_slide6.wav" 
+             data-text="Preparing the Statement of Changes in Equity requires a highly structured, columnar format. Each major component of equity is assigned its own dedicated vertical column. The final column on the far right always represents the Total Equity. The statement begins with the unadjusted opening balances from the prior year. If there are prior period adjustments or changes in accounting policy, they are listed next to arrive at the Restated Beginning Balance. Following this, we record the total comprehensive income for the period, which includes net income. Subsequent rows capture all transactions with owners, such as the issuance of new shares, dividend declarations, and treasury stock purchases. The accountant must carefully map each transaction to its correct specific column. Finally, all columns are totaled at the bottom to yield the ending balances. These final figures are then perfectly transferred to the equity section of the Balance Sheet.">
+            <h2>Technical Presentation and Format</h2>
+            <br>
+            <ul>
+                <li><strong>Columnar Layout:</strong> Each equity account gets its own column, ending with a "Total Equity" column.</li>
+                <li><strong>Step 1: Opening Balances:</strong> Start with the unadjusted balances from January 1.</li>
+                <li><strong>Step 2: Restatements:</strong> Apply prior period adjustments to establish a "Restated Balance".</li>
+                <li><strong>Step 3: Comprehensive Income:</strong> Add the current year's Net Income to Retained Earnings.</li>
+                <li><strong>Step 4: Owner Transactions:</strong> Record share issuances, dividends, and treasury buybacks.</li>
+            </ul>
+
+            <div class="book-content">
+                <h2>Structuring the Matrix</h2>
+                <p>The SCE is built like a grid or matrix. Across the top (the columns), you list every equity account: Share Capital, APIC, Retained Earnings, Treasury Stock, and Total Equity. Down the side (the rows), you list the chronological events of the year.</p>
+                
+                <p>You always begin with the January 1 balances. The very next row must be for Prior Period Adjustments (if any exist) to create a "Restated Jan 1 Balance." From there, you map the year's events. Net income goes into the Retained Earnings column. A share issuance goes into the Share Capital column. By reading horizontally, you see the total effect of an event. By reading vertically, you calculate the ending balance of each account for the December 31 Balance Sheet.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Let's pause and test your understanding of the theory behind equity accounts. The Retained Earnings account is the core engine of corporate growth, but it is not affected by every single transaction. Think about the specific transactions we discussed that cause this account to increase or decrease. The question is: Which of the following corporate transactions does NOT directly affect the Retained Earnings account? Is it A, The generation of Net Income for the year? Is it B, The declaration of Cash Dividends to shareholders? Is it C, The issuance of new ordinary shares at par value? Or is it D, Prior period adjustments for accounting errors? Recall the specific definitions of contributed versus earned capital before answering.">
+            <h2>Checkpoint Question 1: Retained Earnings</h2>
+            <p style="margin-bottom: 20px;">Which of the following transactions does <strong>NOT</strong> directly affect the Retained Earnings account?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) The generation of Net Income for the year.</li>
+                <li class="mcq-option">B) The declaration of Cash Dividends to shareholders.</li>
+                <li class="mcq-option">C) The issuance of new ordinary shares at par value.</li>
+                <li class="mcq-option">D) Prior period adjustments for accounting errors.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: C.</span> The issuance of new ordinary shares at par value.</div>
+
+            <div class="book-content">
+                <h2>Review: Earned vs. Contributed Capital</h2>
+                <p>The correct answer is <strong>C</strong>. Issuing new shares at par value only affects <strong>Share Capital</strong> (and Cash). Retained Earnings is strictly reserved for "earned" capital—profits made by the business (A), distributions of those profits (B), or historical corrections to those profits (D).</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Our next checkpoint covers the presentation of Treasury Shares. When a company buys back its own stock, it is holding pieces of itself. This cannot be treated as a normal asset or investment. How exactly are treasury shares presented in the Statement of Changes in Equity? Is it A, As an addition to the Share Capital account? Is it B, As a deduction from the total Stockholders' Equity? Is it C, As a current asset on the Balance Sheet? Or is it D, As an immediate deduction from Retained Earnings? Think back to the specific term used to describe this type of account.">
+            <h2>Checkpoint Question 2: Treasury Shares</h2>
+            <p style="margin-bottom: 20px;">How are Treasury Shares properly presented within the Statement of Changes in Equity?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) As an addition to the Share Capital account.</li>
+                <li class="mcq-option">B) As a deduction from the total Stockholders' Equity.</li>
+                <li class="mcq-option">C) As a current asset on the Balance Sheet.</li>
+                <li class="mcq-option">D) As an immediate deduction from Retained Earnings.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> As a deduction from the total Stockholders' Equity.</div>
+
+            <div class="book-content">
+                <h2>Review: Contra-Equity Accounts</h2>
+                <p>The correct answer is <strong>B</strong>. Treasury Shares represent capital that the corporation has returned to the shareholders. Because equity is shrinking, it is recorded at cost and presented as a negative figure (deduction) at the bottom of the equity section.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="This checkpoint deals with the strict rules surrounding historical accounting errors. Imagine you are preparing the current year's financial statements and you discover a massive, material error made by the previous accountant two years ago. According to accounting standards, how must a correction of a material prior period error be recorded? Is it A, As a massive expense adjustment to the current year's net income? Is it B, As a direct adjustment to the beginning balance of Retained Earnings? Is it C, As an addition to the Additional Paid-in Capital account? Or is it D, It is ignored because the prior year is already closed? Recall the step-by-step format of the statement.">
+            <h2>Checkpoint Question 3: Prior Period Errors</h2>
+            <p style="margin-bottom: 20px;">According to accounting standards, how must a correction of a material accounting error from a prior period be recorded?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) As an expense adjustment to the current year's Net Income.</li>
+                <li class="mcq-option">B) As a direct adjustment to the beginning balance of Retained Earnings.</li>
+                <li class="mcq-option">C) As a deduction from Additional Paid-in Capital.</li>
+                <li class="mcq-option">D) It is ignored because the prior year's books are permanently closed.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> As a direct adjustment to the beginning balance of Retained Earnings.</div>
+
+            <div class="book-content">
+                <h2>Review: Protecting the Current Year</h2>
+                <p>The correct answer is <strong>B</strong>. You cannot put a prior year's mistake into the current year's Income Statement, or it will make the current management look artificially good or bad. The error must bypass the income statement entirely and directly adjust the opening balance of Retained Earnings.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Let's test your memory on the visual layout of the statement. We discussed how this specific financial report must be structured to provide maximum transparency to the readers. Which specific layout format is universally used and required to present the Statement of Changes in Equity for a corporation? Is it A, The traditional T-Account format? Is it B, The single-step vertical format? Is it C, The columnar matrix format? Or is it D, The standard report form? Think about how we track multiple accounts simultaneously.">
+            <h2>Checkpoint Question 4: Statement Format</h2>
+            <p style="margin-bottom: 20px;">Which format is universally used to present the Statement of Changes in Equity for a corporation?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) The T-Account format</li>
+                <li class="mcq-option">B) The single-step vertical format</li>
+                <li class="mcq-option">C) The columnar matrix format</li>
+                <li class="mcq-option">D) The standard report form</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: C.</span> The columnar matrix format.</div>
+
+            <div class="book-content">
+                <h2>Review: The Matrix Layout</h2>
+                <p>The correct answer is <strong>C</strong>. Because a corporation has multiple moving parts (Share Capital, APIC, Retained Earnings, Treasury Stock), a columnar format is required. It allows a reader to see the starting balance, the specific changes, and the ending balance for every single account side-by-side.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="For our final theoretical checkpoint, let's examine dividend distributions. When the Board of Directors reviews a highly profitable year, they may decide to reward the investors. When a corporation officially declares a cash dividend, what is the immediate effect on the Statement of Changes in Equity? Is it A, It increases Share Capital? Is it B, It decreases Retained Earnings? Is it C, It increases Additional Paid-in Capital? Or is it D, It decreases Treasury Stock? Remember what pool of money dividends are legally taken from.">
+            <h2>Checkpoint Question 5: Dividends</h2>
+            <p style="margin-bottom: 20px;">When a corporation declares a cash dividend, what is the immediate effect on the Statement of Changes in Equity?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) It increases Share Capital.</li>
+                <li class="mcq-option">B) It decreases Retained Earnings.</li>
+                <li class="mcq-option">C) It increases Additional Paid-in Capital.</li>
+                <li class="mcq-option">D) It decreases Treasury Stock.</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> It decreases Retained Earnings.</div>
+
+            <div class="book-content">
+                <h2>Review: Profit Distribution</h2>
+                <p>The correct answer is <strong>B</strong>. Dividends represent the corporation handing its accumulated profits back to the owners. Because Retained Earnings is the account holding those profits, declaring a dividend permanently decreases the Retained Earnings balance.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/day3_slide7.wav" 
+             data-text="Let us examine the most basic form of a Statement of Changes in Equity. In this simple scenario, the corporation only has two equity accounts: Ordinary Share Capital and Retained Earnings. We start by placing the opening balances of both accounts in their respective columns on the first row. During the year, the company generated a net income of five hundred thousand pesos. This net income is added directly and exclusively to the Retained Earnings column. Later in the year, the Board of Directors declared cash dividends of one hundred thousand pesos. This dividend declaration is recorded as a deduction from the Retained Earnings column. Because there were no new shares issued, the Ordinary Share Capital balance remains completely unchanged from the beginning to the end of the year. The final step is to sum the columns downward to find the closing balances. This basic matrix highlights how operations directly feed into the owners' equity.">
+            <h2>Example 1: Basic Statement</h2>
+            <p>A simple scenario involving only net income and dividend declarations.</p>
+            <br>
+            
+            <table style="width: 100%; border-collapse: collapse; text-align: center; background: rgba(13, 17, 23, 0.8); border: 1px solid #30363d; font-size: 1.6rem; margin-top: 10px;">
+                <tr style="background: #21262d; border-bottom: 2px solid #58a6ff;">
+                    <th style="padding: 10px; border-right: 1px solid #30363d;">Particulars</th>
+                    <th style="padding: 10px; border-right: 1px solid #30363d;">Share Capital</th>
+                    <th style="padding: 10px; border-right: 1px solid #30363d;">Retained Earnings</th>
+                    <th style="padding: 10px;">Total Equity</th>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; text-align: left; border-right: 1px solid #30363d;">Balances, Jan 1</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">₱ 1,000,000</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">₱ 400,000</td>
+                    <td style="padding: 10px;">₱ 1,400,000</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; text-align: left; border-right: 1px solid #30363d;">Net Income</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">500,000</td>
+                    <td style="padding: 10px;">500,000</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; text-align: left; border-right: 1px solid #30363d;">Dividends Declared</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 10px; color: #f85149; border-right: 1px solid #30363d;">(100,000)</td>
+                    <td style="padding: 10px; color: #f85149;">(100,000)</td>
+                </tr>
+                <tr style="background: rgba(88, 166, 255, 0.1); border-top: 2px solid #58a6ff; font-weight: bold;">
+                    <td style="padding: 10px; text-align: left; border-right: 1px solid #30363d;">Balances, Dec 31</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">₱ 1,000,000</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">₱ 800,000</td>
+                    <td style="padding: 10px;">₱ 1,800,000</td>
+                </tr>
+            </table>
+
+            <div class="book-content">
+                <h2>Analyzing the Basic Format</h2>
+                <p>Observe the matrix above. The vertical columns represent the separate "buckets" of equity. The horizontal rows tell the story of the year.</p>
+                <p>Because the company did not sell any new stock this year, the <strong>Share Capital</strong> column remains at ₱1,000,000 from January 1 to December 31. All the action happened in the <strong>Retained Earnings</strong> column. The company made ₱500,000 in profit (which goes up) and distributed ₱100,000 to owners (which goes down). The math across the bottom gives us the final numbers for the Balance Sheet.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/day3_slide8.wav" 
+             data-text="We will now escalate to an intermediate example by introducing share premiums and treasury stock. The statement expands to include columns for Additional Paid-in Capital and Treasury Shares. The corporation issues new ordinary shares at a price significantly higher than their par value. The par value portion of the proceeds is added to the Share Capital column. Simultaneously, the excess premium is added to the Additional Paid-in Capital column. Later, management decides to buy back some outstanding shares from the open market. The cost of this buyback is recorded in the Treasury Shares column as a negative figure. Remember, treasury stock is a contra-equity account that reduces the overall total equity. The net income for the year is added to Retained Earnings, just as in the basic example. Summing across and down ensures that every single financial movement with the owners is perfectly captured.">
+            <h2>Example 2: Intermediate Statement</h2>
+            <p>Adding the issuance of shares at a premium and the acquisition of Treasury Shares.</p>
+            <br>
+            
+            <table style="width: 100%; border-collapse: collapse; text-align: center; background: rgba(13, 17, 23, 0.8); border: 1px solid #30363d; font-size: 1.4rem; margin-top: 5px;">
+                <tr style="background: #21262d; border-bottom: 2px solid #58a6ff;">
+                    <th style="padding: 10px; border-right: 1px solid #30363d;">Particulars</th>
+                    <th style="padding: 10px; border-right: 1px solid #30363d;">Share Cap</th>
+                    <th style="padding: 10px; border-right: 1px solid #30363d;">APIC</th>
+                    <th style="padding: 10px; border-right: 1px solid #30363d;">Ret. Earnings</th>
+                    <th style="padding: 10px; border-right: 1px solid #30363d;">Treasury</th>
+                    <th style="padding: 10px;">Total</th>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; text-align: left; border-right: 1px solid #30363d;">Bal, Jan 1</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">1,000k</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">200k</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">800k</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 10px;">2,000k</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; text-align: left; border-right: 1px solid #30363d;">Issuance at Premium</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d; color:#3fb950;">500k</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d; color:#3fb950;">150k</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 10px; color:#3fb950;">650k</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; text-align: left; border-right: 1px solid #30363d;">Buyback Treasury</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d; color:#f85149;">(100k)</td>
+                    <td style="padding: 10px; color:#f85149;">(100k)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; text-align: left; border-right: 1px solid #30363d;">Net Income</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">300k</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 10px;">300k</td>
+                </tr>
+                <tr style="background: rgba(88, 166, 255, 0.1); border-top: 2px solid #58a6ff; font-weight: bold;">
+                    <td style="padding: 10px; text-align: left; border-right: 1px solid #30363d;">Bal, Dec 31</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">1,500k</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">350k</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d;">1,100k</td>
+                    <td style="padding: 10px; border-right: 1px solid #30363d; color:#f85149;">(100k)</td>
+                    <td style="padding: 10px;">2,850k</td>
+                </tr>
+            </table>
+
+            <div class="book-content">
+                <h2>Analyzing the Intermediate Format</h2>
+                <p>When transactions become more complex, the matrix simply expands to include more columns. Notice the "Issuance at Premium" row. The company sold stock for ₱650,000 total. The strict par value (₱500,000) goes into Share Capital, while the excess (₱150,000) is placed in APIC.</p>
+                <p>Also, observe the Treasury column. When the company bought back ₱100,000 of its own stock, we do not deduct it from Share Capital or Retained Earnings. It gets its own column, and because it is a contra-equity account, it is entered in brackets to represent a deduction against the Total Equity on the far right.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="audio/day3_slide9.wav" 
+             data-text="Finally, we arrive at a comprehensive Statement of Changes in Equity. This advanced matrix includes all previous elements, plus prior period adjustments and appropriations. The statement begins with an unadjusted Retained Earnings balance that requires immediate correction. The accountant discovered an unrecorded depreciation expense from the previous year. This error is deducted directly from the opening Retained Earnings to establish a Restated Beginning Balance. During the year, the Board officially restricted a portion of Retained Earnings for future plant expansion. This requires a negative entry in Unappropriated Retained Earnings and a positive entry in Appropriated Retained Earnings. The total Retained Earnings does not change; the funds are simply reclassified horizontally. Add in the year's net income, new share issuances, and dividend payouts to complete the picture. This comprehensive format proves the statement's power to track every complex equity movement in a corporate entity.">
+            <h2>Example 3: Comprehensive Statement</h2>
+            <p>Integrating Prior Period Adjustments and Retained Earnings Appropriations.</p>
+            
+            <table style="width: 100%; border-collapse: collapse; text-align: center; background: rgba(13, 17, 23, 0.8); border: 1px solid #30363d; font-size: 1.3rem; margin-top: 10px;">
+                <tr style="background: #21262d; border-bottom: 2px solid #58a6ff;">
+                    <th style="padding: 8px; border-right: 1px solid #30363d;">Particulars</th>
+                    <th style="padding: 8px; border-right: 1px solid #30363d;">Share Cap</th>
+                    <th style="padding: 8px; border-right: 1px solid #30363d;">Unapprop. RE</th>
+                    <th style="padding: 8px; border-right: 1px solid #30363d;">Approp. RE</th>
+                    <th style="padding: 8px;">Total Equity</th>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Unadjusted Jan 1</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">1,000k</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">800k</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px;">1,800k</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Prior Period Error</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d; color:#f85149;">(50k)</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; color:#f85149;">(50k)</td>
+                </tr>
+                <tr style="background: rgba(255, 255, 255, 0.05);">
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d; font-style:italic;">Restated Jan 1</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">1,000k</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">750k</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px;">1,750k</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Appropriation for Plant</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d; color:#f85149;">(200k)</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d; color:#3fb950;">200k</td>
+                    <td style="padding: 8px;">-</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Net Income</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">400k</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px;">400k</td>
+                </tr>
+                <tr style="background: rgba(88, 166, 255, 0.1); border-top: 2px solid #58a6ff; font-weight: bold;">
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Balances, Dec 31</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">1,000k</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">950k</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">200k</td>
+                    <td style="padding: 8px;">2,150k</td>
+                </tr>
+            </table>
+
+            <div class="book-content">
+                <h2>Analyzing the Comprehensive Format</h2>
+                <p>This final matrix introduces two highly technical concepts. First, look at row 2. A ₱50k accounting error from last year was discovered. It is subtracted directly from the "Unadjusted Jan 1" balance to create the true "Restated Jan 1" starting line.</p>
+                <p>Second, look at the "Appropriation for Plant" row. The Board decided to reserve ₱200k for a new building. Notice that this is deducted from Unappropriated RE, but added to Appropriated RE. Because it is simply moving horizontally from one equity bucket to another, the Total Equity column on the far right shows a net change of zero.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Time to test your accounting skills. Let's calculate some ending balances just like you would when preparing the actual statement. A corporation has a beginning Retained Earnings balance of 500,000 pesos. During the current year, the company generated a Net Income of 200,000 pesos. However, the Board of Directors also declared a cash dividend of 50,000 pesos to reward the shareholders. Based on these three figures, what will be the final ending balance of the Retained Earnings account on December 31? Grab a calculator if you need to. Is it A, 700,000? B, 650,000? C, 550,000? Or D, 450,000? Do the math before revealing the correct answer.">
+            <h2>Checkpoint Question 6: Calculate Ending RE</h2>
+            <p style="margin-bottom: 20px;">A corporation has a beginning Retained Earnings balance of ₱500,000. During the year, it generated a Net Income of ₱200,000 and declared cash dividends of ₱50,000. What is the ending balance of Retained Earnings?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) ₱ 700,000</li>
+                <li class="mcq-option">B) ₱ 650,000</li>
+                <li class="mcq-option">C) ₱ 550,000</li>
+                <li class="mcq-option">D) ₱ 450,000</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> ₱ 650,000. (500,000 + 200,000 - 50,000).</div>
+
+            <div class="book-content">
+                <h2>Preparation Challenge: Retained Earnings</h2>
+                <p>To prepare the statement, you must track the flow of profits. Begin with the opening balance (₱500k). Add the new wealth generated this year (Net income: +₱200k). Subtract the wealth distributed to owners (Dividends: -₱50k). The final math yields exactly ₱650,000.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Let's practice splitting capital and premiums. A company starts the year with a Share Capital balance of 1,000,000 pesos, representing 10,000 shares at a 100 peso par value. During the year, the company issues an additional 2,000 shares to new investors. Because the company is doing well, these investors agree to pay 150 pesos per share. What will be the final ending balance of the strictly 'Share Capital' account? Be careful not to mix your buckets. Is it A, 1,300,000? B, 1,200,000? C, 1,000,000? Or D, 1,500,000? Remember the strict rule regarding how Share Capital must be recorded.">
+            <h2>Checkpoint Question 7: Calculate Share Capital</h2>
+            <p style="margin-bottom: 20px;">Beginning Share Capital is ₱1,000,000 (10,000 shares @ ₱100 par). The company issues 2,000 new shares at a price of ₱150 per share. What is the ending balance of the <strong>Share Capital</strong> account?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) ₱ 1,300,000</li>
+                <li class="mcq-option">B) ₱ 1,200,000</li>
+                <li class="mcq-option">C) ₱ 1,000,000</li>
+                <li class="mcq-option">D) ₱ 1,500,000</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> ₱ 1,200,000. (The Share Capital account ONLY accepts par value: 2,000 shares × ₱100 = ₱200k increase).</div>
+
+            <div class="book-content">
+                <h2>Preparation Challenge: Par Value Rule</h2>
+                <p>The correct answer is <strong>B</strong>. No matter how much cash the investor hands over, the core Share Capital column can ONLY be increased by the Par Value. Therefore, 2,000 new shares multiplied by the ₱100 par value adds exactly ₱200,000 to the 1 Million beginning balance.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Following up on the previous question, let's figure out what happened to the rest of the money. The company issued 2,000 new shares. The par value is 100 pesos, but the investors paid 150 pesos per share. We know the 100 pesos went into Share Capital. Based on this specific transaction alone, what is the total increase that must be recorded in the Additional Paid-in Capital column? Is it A, 300,000? B, 100,000? C, 200,000? Or D, Zero? Calculate the total premium generated by these new shares.">
+            <h2>Checkpoint Question 8: Calculate APIC</h2>
+            <p style="margin-bottom: 20px;">From the previous scenario (Issuing 2,000 shares at ₱150 per share, when par is ₱100), what is the total increase recorded in the <strong>Additional Paid-in Capital</strong> account for this transaction?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) ₱ 300,000</li>
+                <li class="mcq-option">B) ₱ 100,000</li>
+                <li class="mcq-option">C) ₱ 200,000</li>
+                <li class="mcq-option">D) ₱ 0</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> ₱ 100,000. (The premium is ₱50 per share. 2,000 shares × ₱50 = ₱100,000).</div>
+
+            <div class="book-content">
+                <h2>Preparation Challenge: The Premium</h2>
+                <p>The correct answer is <strong>B</strong>. The investors paid a ₱50 premium above par value (₱150 - ₱100 = ₱50). Multiply that ₱50 premium by the 2,000 shares issued, and the accountant must place ₱100,000 into the APIC column.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="Let's practice a prior period adjustment. The unadjusted beginning balance of Retained Earnings on January 1 is 800,000 pesos. Before recording this year's income, the accountant discovers that last year, the company failed to record 100,000 pesos in depreciation expense. The current year's net income is 300,000 pesos. When preparing the statement, what is the 'Restated Beginning Balance' of Retained Earnings before adding the current year's income? Is it A, 800,000? B, 900,000? C, 700,000? Or D, 1,000,000? Think carefully about how a missed expense affects previous profits.">
+            <h2>Checkpoint Question 9: Restated Balance</h2>
+            <p style="margin-bottom: 20px;">Unadjusted Beg RE is ₱800,000. The accountant discovers a failure to record a ₱100,000 expense from last year. What is the <strong>Restated Beginning Balance</strong> of Retained Earnings?</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) ₱ 800,000</li>
+                <li class="mcq-option">B) ₱ 900,000</li>
+                <li class="mcq-option">C) ₱ 700,000</li>
+                <li class="mcq-option">D) ₱ 1,000,000</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: C.</span> ₱ 700,000. (Missing an expense means last year's profits were overstated. You must deduct the 100k from the 800k balance).</div>
+
+            <div class="book-content">
+                <h2>Preparation Challenge: Error Correction</h2>
+                <p>The correct answer is <strong>C</strong>. If an expense was forgotten last year, it means last year's Net Income (and therefore Retained Earnings) was artificially too high. To fix it, you must subtract the ₱100k error from the unadjusted ₱800k starting line, yielding a true Restated Balance of ₱700,000.</p>
+            </div>
+        </div>
+
+        <div class="slide" 
+             data-voiceover="" 
+             data-text="For our final Day 3 checkpoint, let's calculate the grand total. You have finished your matrix. The ending balances are as follows: Share Capital is 1,000,000 pesos. Additional Paid-in Capital is 200,000 pesos. Retained Earnings is 1,000,000 pesos. However, the company also bought back Treasury Shares at a cost of 150,000 pesos. Based on these final column totals, what is the absolute Total Stockholders' Equity that will be presented on the Balance Sheet? Add it up carefully. Is it A, 2,200,000? B, 2,050,000? C, 1,900,000? Or D, 2,350,000? Remember how treasury stock behaves mathematically.">
+            <h2>Checkpoint Question 10: Total Equity</h2>
+            <p style="margin-bottom: 20px;">Calculate the Total Stockholders' Equity given the following ending balances:<br>Share Capital: ₱1,000,000<br>APIC: ₱200,000<br>Retained Earnings: ₱1,000,000<br>Treasury Shares: ₱150,000</p>
+            <ul style="padding-left: 0;">
+                <li class="mcq-option">A) ₱ 2,200,000</li>
+                <li class="mcq-option">B) ₱ 2,050,000</li>
+                <li class="mcq-option">C) ₱ 1,900,000</li>
+                <li class="mcq-option">D) ₱ 2,350,000</li>
+            </ul>
+            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+            <div class="correct-answer"><span>Correct Answer: B.</span> ₱ 2,050,000. (1M + 200k + 1M - 150k deduction for Treasury = 2.05M).</div>
+
+            <div class="book-content">
+                <h2>Preparation Challenge: The Final Summation</h2>
+                <p>The correct answer is <strong>B</strong>. You add all the standard equity accounts together (1M + 200k + 1M = 2.2M). However, Treasury Shares are a contra-equity account. You must deduct the ₱150k cost of the buyback, resulting in a final Total Equity of ₱2,050,000.</p>
+            </div>
+        </div>
+        <!-- DAY 3 END -->
     </div>
 
-    <div class="presentation-footer">This presentation is a private property of Joselito Villarta, CPA, MBA</div>
+    <div class="presentation-footer">This courseware is a private property of Joselito Villarta, CPA, MBA</div>
 
     <div id="nav-controls">
         <button class="nav-btn" onclick="prevSlide()">&#9664; Prev</button>
@@ -1220,82 +1913,109 @@
 </div>
 
 <script>
-    // --- ROBUST PRESENTATION SYNC LOGIC ---
     const isAudience = window.location.search.includes('mode=audience');
     let currentSlideIndex = 0;
     const slides = document.querySelectorAll('.slide');
     const captionText = document.getElementById('caption-text');
     const captionBar = document.getElementById('caption-bar');
     const voiceSelect = document.getElementById('voice-select');
+    const captionCheckbox = document.getElementById('caption-checkbox');
     let currentAudio = null;
     let isAudioEnabled = false;
     let availableVoices = [];
 
-    // --- VOICE SELECTION LOGIC ---
-    function populateVoiceList() {
-        if (typeof speechSynthesis === 'undefined') {
-            return;
+    // --- NAVIGATOR PANEL LOGIC ---
+    function populateNavigator() {
+        const navList = document.getElementById('nav-list');
+        navList.innerHTML = '';
+        slides.forEach((slide, index) => {
+            let heading = slide.querySelector('h1, h2');
+            let titleText = heading ? heading.innerText : `Slide ${index + 1}`;
+            const li = document.createElement('li');
+            li.className = 'nav-item';
+            li.innerText = titleText;
+            li.onclick = () => {
+                showSlide(index);
+                const nav = document.getElementById('slide-navigator');
+                const btn = document.getElementById('nav-toggle-btn');
+                nav.classList.add('collapsed');
+                btn.innerText = '☰ Menu';
+            };
+            navList.appendChild(li);
+        });
+    }
+    populateNavigator();
+
+    function toggleNavigator(event) {
+        if (event) event.stopPropagation(); 
+        const nav = document.getElementById('slide-navigator');
+        const btn = document.getElementById('nav-toggle-btn');
+        nav.classList.toggle('collapsed');
+        btn.innerText = nav.classList.contains('collapsed') ? '☰ Menu' : '☰';
+    }
+
+    document.addEventListener('click', function(event) {
+        const nav = document.getElementById('slide-navigator');
+        const btn = document.getElementById('nav-toggle-btn');
+        if (!nav.classList.contains('collapsed') && !nav.contains(event.target) && event.target !== btn) {
+            nav.classList.add('collapsed');
+            btn.innerText = '☰ Menu';
         }
+    });
+
+    function toggleBookMode() {
+        document.body.classList.toggle('book-mode');
+        const btn = document.getElementById('book-mode-btn');
+        const isBook = document.body.classList.contains('book-mode');
         
+        if(isBook) {
+            btn.innerText = '📺 Presentation Mode';
+            btn.style.background = '#2ea043';
+            // Force captions off when entering book mode
+            captionBar.classList.add('hidden-captions');
+            captionCheckbox.checked = false;
+        } else {
+            btn.innerText = '📖 Book Mode';
+            btn.style.background = '#8b949e';
+        }
+    }
+
+    function populateVoiceList() {
+        if (typeof speechSynthesis === 'undefined') return;
         availableVoices = speechSynthesis.getVoices();
         voiceSelect.innerHTML = '';
-        
         let defaultIndex = -1;
-
         availableVoices.forEach((voice, index) => {
             const option = document.createElement('option');
             option.textContent = `${voice.name} (${voice.lang})`;
             option.value = index;
-            
-            // Auto-select a male voice by default on initial load
             if (defaultIndex === -1 && (voice.name.includes('Male') || voice.name.includes('David') || voice.name.includes('James') || voice.name.includes('Google UK English Male'))) {
                 defaultIndex = index;
             }
-            
             voiceSelect.appendChild(option);
         });
-
-        // Only set the default if the user hasn't manually selected something
-        if (voiceSelect.selectedIndex === -1 || voiceSelect.options.length === 0) {
-           if(defaultIndex !== -1) {
-               voiceSelect.selectedIndex = defaultIndex;
-           }
-        }
+        if (voiceSelect.selectedIndex === -1 && defaultIndex !== -1) voiceSelect.selectedIndex = defaultIndex;
     }
 
     populateVoiceList();
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-        speechSynthesis.onvoiceschanged = populateVoiceList;
-    }
+    if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = populateVoiceList;
 
-
-    // Audience Window Setup
     if (isAudience) {
         document.body.classList.add('audience-mode');
-        
-        // 1. Auto-start the audience window and hide the overlay on load
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('container').classList.add('active-sim');
-            
-            // Catch up to whatever slide the teacher is currently on
             let savedIndex = parseInt(localStorage.getItem('presentationSyncIndex')) || 0;
             updateSlideVisuals(savedIndex);
         });
-
-        // 2. Listen for slide changes broadcasted by the Teacher window
         window.addEventListener('storage', (event) => {
-            if (event.key === 'presentationSyncIndex') {
-                updateSlideVisuals(parseInt(event.newValue));
-            }
+            if (event.key === 'presentationSyncIndex') updateSlideVisuals(parseInt(event.newValue));
         });
     }
 
     function openAudienceView() {
         if (!isAudience) {
-            // Force the bulletin board to match the teacher's current slide
             localStorage.setItem('presentationSyncIndex', currentSlideIndex.toString());
-            // Strip any existing URL parameters and open the audience window
             const baseUrl = window.location.href.split('?')[0];
             window.open(baseUrl + '?mode=audience', 'AudienceView', 'width=1280,height=720');
         }
@@ -1304,13 +2024,10 @@
     function startPresentation() {
         document.getElementById('overlay').style.display = 'none';
         document.getElementById('container').classList.add('active-sim');
-        
         if (!isAudience) {
-            // Reset to 0 when first starting, but do not open the audience window yet
             currentSlideIndex = 0; 
             localStorage.setItem('presentationSyncIndex', '0');
         }
-        
         showSlide(currentSlideIndex);
     }
 
@@ -1324,73 +2041,55 @@
         } else {
             indicatorBtn.innerHTML = 'Auto-Narrator OFF';
             indicatorBtn.classList.add("off");
-            if (currentAudio) currentAudio.pause();
             window.speechSynthesis.cancel();
         }
     }
 
     function toggleCaptions(checkbox) {
-        if (checkbox.checked) {
-            captionBar.classList.remove('hidden-captions');
-        } else {
-            captionBar.classList.add('hidden-captions');
-        }
+        if (checkbox.checked) captionBar.classList.remove('hidden-captions');
+        else captionBar.classList.add('hidden-captions');
     }
 
-    // Helper function that just changes the screen visuals silently
     function updateSlideVisuals(index) {
         if (index < 0) index = 0;
         if (index >= slides.length) index = slides.length - 1;
-        
         slides.forEach(slide => slide.classList.remove('active'));
         currentSlideIndex = index;
         slides[currentSlideIndex].classList.add('active');
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach((item, i) => {
+            if (i === currentSlideIndex) {
+                item.classList.add('active-nav');
+                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else item.classList.remove('active-nav');
+        });
     }
 
     function showSlide(index) {
         updateSlideVisuals(index);
-        
         if (!isAudience) {
-            // 3. Broadcast the new slide number to the Audience window
             localStorage.setItem('presentationSyncIndex', currentSlideIndex.toString());
-            // Play audio for the teacher view only
             playNarrative(slides[currentSlideIndex]);
         }
     }
 
     function playNarrative(slideElement) {
-        if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
         window.speechSynthesis.cancel();
-        
-        const voiceoverFile = slideElement.getAttribute('data-voiceover');
         const textToRead = slideElement.getAttribute('data-text');
-        
         captionText.innerText = textToRead;
-        
         if (!isAudioEnabled) return;
-        
-        if (voiceoverFile && voiceoverFile.trim() !== "") {
-            currentAudio = new Audio(voiceoverFile);
-            currentAudio.play().catch(error => speakText(textToRead));
-        } else {
-            speakText(textToRead);
-        }
+        speakText(textToRead);
     }
 
     function speakText(text) {
         if ('speechSynthesis' in window) {
             const utterance = new SpeechSynthesisUtterance(text);
-            
-            // Set the voice based on the dropdown selection
             if (availableVoices.length > 0 && voiceSelect.value !== "") {
                 utterance.voice = availableVoices[voiceSelect.value];
             }
-
             utterance.rate = 0.95;
             utterance.pitch = 1;
             window.speechSynthesis.speak(utterance);
-        } else {
-            console.log("Text-to-speech not supported in this browser.");
         }
     }
 
