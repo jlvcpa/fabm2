@@ -32,6 +32,7 @@
         box-shadow: 0 0 20px rgba(0,0,0,0.5);
         display: flex;
         flex-direction: column;
+        transition: background-color 0.4s ease;
     }
 
     #overlay {
@@ -71,6 +72,7 @@
         width: 100%;
         height: calc(100% - 150px);
         background: #161b22;
+        transition: background-color 0.4s ease;
     }
 
     .slide {
@@ -96,295 +98,200 @@
         pointer-events: auto;
     }
 
-    .slide h1 {
-        font-size: 4.5rem;
-        color: #58a6ff;
-        margin-bottom: 30px;
-    }
-
-    .slide h2 {
-        font-size: 3rem;
-        color: #e6edf3;
-        margin-bottom: 20px;
-    }
-
-    .slide ul {
-        text-align: left;
-        font-size: 2.2rem;
-        line-height: 1.1;
-        color: #c9d1d9;
-        max-width: 1400px;
-    }
-
-    .slide li {
-        margin-bottom: 15px;
-    }
-
-    .slide p {
-        font-size: 2.2rem;
-        line-height: 1.6;
-        color: #c9d1d9;
-        max-width: 1400px;
-    }
+    .slide h1 { font-size: 4.5rem; color: #58a6ff; margin-bottom: 30px; }
+    .slide h2 { font-size: 3rem; color: #e6edf3; margin-bottom: 20px; }
+    .slide ul { text-align: left; font-size: 2.2rem; line-height: 1.1; color: #c9d1d9; max-width: 1400px; }
+    .slide li { margin-bottom: 15px; }
+    .slide p { font-size: 2.2rem; line-height: 1.6; color: #c9d1d9; max-width: 1400px; }
 
     /* Checkpoint Quiz Styles */
     .mcq-option {
-        margin-bottom: 12px;
-        padding: 15px 20px;
-        background: rgba(13, 17, 23, 0.6);
-        border: 2px solid #30363d;
-        border-radius: 8px;
-        list-style: none;
-        transition: all 0.2s;
-        max-width: 1200px;
+        margin-bottom: 12px; padding: 15px 20px; background: rgba(13, 17, 23, 0.6);
+        border: 2px solid #30363d; border-radius: 8px; list-style: none; transition: all 0.2s; max-width: 1200px;
     }
-    .mcq-option:hover {
-        border-color: #58a6ff;
-        background: rgba(88, 166, 255, 0.1);
-    }
+    .mcq-option:hover { border-color: #58a6ff; background: rgba(88, 166, 255, 0.1); }
     .reveal-btn {
-        background: #238636;
-        color: white;
-        padding: 12px 30px;
-        border: none;
-        border-radius: 6px;
-        font-size: 1.2rem;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 25px;
-        transition: background 0.2s;
+        background: #238636; color: white; padding: 12px 30px; border: none;
+        border-radius: 6px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 25px; transition: background 0.2s;
     }
-    .reveal-btn:hover {
-        background: #2ea043;
-    }
+    .reveal-btn:hover { background: #2ea043; }
     .correct-answer {
-        display: none;
-        margin-top: 25px;
-        padding: 15px 30px;
-        background: rgba(46, 160, 67, 0.15);
-        border-left: 5px solid #3fb950;
-        color: #e6edf3;
-        font-size: 1.8rem;
-        max-width: 1200px;
+        display: none; margin-top: 25px; padding: 15px 30px; background: rgba(46, 160, 67, 0.15);
+        border-left: 5px solid #3fb950; color: #e6edf3; font-size: 1.8rem; max-width: 1200px;
     }
-    .correct-answer span {
-        color: #3fb950;
-        font-weight: bold;
-    }
+    .correct-answer span { color: #3fb950; font-weight: bold; }
 
-    /* Professional Caption Bar (Text Only) */
+    /* Professional Caption Bar */
     #caption-bar {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 150px;
-        background: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(10px);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 150px; 
-        box-sizing: border-box;
-        z-index: 40;
-        transition: transform 0.4s ease, opacity 0.4s ease;
+        position: absolute; bottom: 0; width: 100%; height: 150px; background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(10px); border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex; justify-content: center; align-items: center; padding: 0 150px; box-sizing: border-box;
+        z-index: 40; transition: transform 0.4s ease, opacity 0.4s ease;
     }
-
-    #caption-bar.hidden-captions {
-        transform: translateY(100%);
-        opacity: 0;
-    }
+    #caption-bar.hidden-captions { transform: translateY(100%); opacity: 0; }
 
     #caption-text {
-        color: #ffffff;
-        font-size: 1.5rem;
-        text-align: center;
-        max-width: 1400px;
-        width: 100%;
-        max-height: 130px; 
-        overflow-y: auto;  
-        line-height: 1.4;
-        font-weight: 400;
-        padding: 10px;
-        box-sizing: border-box;
+        color: #ffffff; font-size: 1.5rem; text-align: center; max-width: 1400px; width: 100%;
+        max-height: 110px; 
+        overflow-y: auto; line-height: 1.4; font-weight: 400; padding: 10px; box-sizing: border-box;
+        margin-bottom: 25px; 
     }
 
-    /* Custom Dark-Theme Scrollbar */
-    #caption-text::-webkit-scrollbar {
-        width: 8px;
-    }
-    #caption-text::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 4px;
-    }
-    #caption-text::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 4px;
-    }
-    #caption-text::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 0.5);
-    }
+    #caption-text::-webkit-scrollbar { width: 8px; }
+    #caption-text::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 4px; }
+    #caption-text::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 4px; }
+    #caption-text::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.5); }
 
     /* Independent Navigation Controls */
     #nav-controls {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 150px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 40px;
-        box-sizing: border-box;
-        pointer-events: none; 
-        z-index: 50;
+        position: absolute; bottom: 0; width: 100%; height: 150px; display: flex;
+        justify-content: space-between; align-items: center; padding: 0 40px; box-sizing: border-box;
+        pointer-events: none; z-index: 50;
     }
-
     .nav-btn {
-        padding: 10px 25px;
-        font-size: 1.2rem;
-        cursor: pointer;
-        background: rgba(13, 17, 23, 0.8);
-        color: #58a6ff;
-        border: 2px solid #58a6ff;
-        border-radius: 6px;
-        font-weight: bold;
-        transition: all 0.2s;
-        pointer-events: auto; 
+        padding: 10px 25px; font-size: 1.2rem; cursor: pointer; background: rgba(13, 17, 23, 0.8);
+        color: #58a6ff; border: 2px solid #58a6ff; border-radius: 6px; font-weight: bold;
+        transition: all 0.2s; pointer-events: auto; 
     }
-
-    .nav-btn:hover {
-        background: #58a6ff;
-        color: #000;
-    }
+    .nav-btn:hover { background: #58a6ff; color: #000; }
 
     /* Top Controls Group */
     #top-controls {
-        position: absolute;
-        top: 30px;
-        right: 30px;
-        display: flex;
-        flex-direction: row; 
-        align-items: center;
-        gap: 15px;
-        z-index: 60;
-        opacity: 0;
-        transition: opacity 0.5s;
+        position: absolute; top: 30px; right: 30px; display: flex; flex-direction: row; 
+        align-items: center; gap: 15px; z-index: 60; opacity: 0; transition: opacity 0.5s;
     }
-
     .active-sim #top-controls { opacity: 1; }
 
-    #live-indicator {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: rgba(239, 68, 68, 0.8);
-        padding: 8px 15px;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        cursor: pointer;
-        border: none;
-        color: white;
+    #live-indicator, #book-mode-btn {
+        display: flex; align-items: center; gap: 10px; background: rgba(239, 68, 68, 0.8);
+        padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: bold;
+        text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border: none; color: white;
         transition: transform 0.2s, background 0.3s;
     }
-
+    #book-mode-btn { background: #8b949e; }
+    #book-mode-btn:hover { background: #c9d1d9; color: #000; }
     #live-indicator.off { background: rgba(100, 116, 139, 0.8); }
 
-    .caption-toggle-container {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 0.8rem;
-        font-weight: bold;
-        color: #94a3b8;
-    }
+    .caption-toggle-container { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: bold; color: #94a3b8; }
+    
+    /* HIDE CAPTION OPTION IN BOOK MODE */
+    body.book-mode .caption-toggle-container { display: none !important; }
 
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 40px;
-        height: 20px;
-    }
-
+    .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
     .switch input { opacity: 0; width: 0; height: 0; }
-
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background-color: #334155;
-        transition: .4s;
-        border-radius: 20px;
-    }
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 14px; width: 14px;
-        left: 3px; bottom: 3px;
-        background-color: white;
-        transition: .4s;
-        border-radius: 50%;
-    }
-
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .4s; border-radius: 20px; }
+    .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
     input:checked + .slider { background-color: #3b82f6; }
     input:checked + .slider:before { transform: translateX(20px); }
-
-    .dot {
-        width: 10px; height: 10px;
-        background: white; border-radius: 50%;
-        animation: blink 1s infinite;
-    }
-
+    .dot { width: 10px; height: 10px; background: white; border-radius: 50%; animation: blink 1s infinite; }
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    /* --- NEW VOICE SELECT STYLES --- */
     #voice-select {
-        background: rgba(13, 17, 23, 0.8);
-        color: #58a6ff;
-        border: 2px solid #58a6ff;
-        border-radius: 6px;
-        padding: 6px 10px;
-        font-size: 0.8rem;
-        font-weight: bold;
-        cursor: pointer;
-        outline: none;
-        max-width: 180px;
-        text-overflow: ellipsis;
-        transition: all 0.2s;
+        background: rgba(13, 17, 23, 0.8); color: #58a6ff; border: 2px solid #58a6ff; border-radius: 6px;
+        padding: 6px 10px; font-size: 0.8rem; font-weight: bold; cursor: pointer; outline: none;
+        max-width: 180px; text-overflow: ellipsis; transition: all 0.2s;
     }
-    
-    #voice-select option {
-        background: #0d1117;
-        color: #ffffff;
-    }
+    #voice-select option { background: #0d1117; color: #ffffff; }
 
-    /* --- PROFESSIONAL FOOTER STYLES --- */
+    /* --- ENHANCED PROFESSIONAL FOOTER --- */
     .presentation-footer {
         position: absolute;
-        bottom: 15px;
+        bottom: 0;
+        left: 0;
         width: 100%;
+        padding: 10px 0;
         text-align: center;
-        font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.25);
-        z-index: 45; /* Below the nav controls, above the slide content */
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 500;
+        z-index: 500; 
         pointer-events: none;
         letter-spacing: 1px;
+        background: #0d1117; /* Dark Professional Background */
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+        transition: all 0.4s ease;
     }
+
+    /* --- SLIDE NAVIGATOR STYLES --- */
+    #nav-toggle-btn {
+        position: absolute; top: 30px; left: 30px; z-index: 80; background: rgba(13, 17, 23, 0.8);
+        color: #58a6ff; border: 2px solid #58a6ff; border-radius: 6px; padding: 8px 15px;
+        font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: all 0.2s; opacity: 0; pointer-events: none;
+    }
+    .active-sim #nav-toggle-btn { opacity: 1; pointer-events: auto; }
+    #nav-toggle-btn:hover { background: #58a6ff; color: #000; }
+
+    #slide-navigator {
+        position: absolute; top: 0; left: 0; width: 320px; height: 100%; background: rgba(13, 17, 23, 0.95);
+        border-right: 1px solid #30363d; z-index: 75; transform: translateX(0); transition: transform 0.3s ease;
+        display: flex; flex-direction: column; backdrop-filter: blur(10px);
+    }
+    #slide-navigator.collapsed { transform: translateX(-100%); }
+
+    .nav-header {
+        padding: 30px 20px 20px 80px; font-size: 1.2rem; font-weight: bold; color: #58a6ff;
+        border-bottom: 1px solid #30363d; text-transform: uppercase; letter-spacing: 1px;
+    }
+    #nav-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex: 1; }
+    .nav-item {
+        padding: 6px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 1rem; transition: background 0.2s; color: #8b949e;
+    }
+    .nav-item:hover { background: rgba(88, 166, 255, 0.1); color: #c9d1d9; }
+    .nav-item.active-nav { background: rgba(88, 166, 255, 0.2); color: #ffffff; border-left: 4px solid #58a6ff; font-weight: bold; }
+    #nav-list::-webkit-scrollbar { width: 6px; }
+    #nav-list::-webkit-scrollbar-track { background: transparent; }
+    #nav-list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 3px; }
+    #nav-list::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+
+    /* --- BOOK MODE ADJUSTMENTS --- */
+    body.book-mode #slides-container { background-color: #fdf6e3; }
+    body.book-mode .slide {
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 80px 150px 100px 150px; 
+        overflow-y: auto;
+    }
+    
+    body.book-mode .slide > :not(.book-content) { display: none !important; }
+    body.book-mode .book-content { display: block !important; }
+
+    /* BOOK MODE FOOTER COLOR */
+    body.book-mode .presentation-footer {
+        background: #fdf6e3;
+        color: #5c5c5c;
+        border-top: 1px solid #dcd6c5;
+    }
+
+    .book-content {
+        display: none;
+        font-family: 'Georgia', serif;
+        color: #333333;
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: justify;
+    }
+
+    .book-content h2 {
+        color: #111; font-family: 'Segoe UI', sans-serif; font-size: 2.5rem;
+        border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 25px; text-align: left;
+    }
+
+    .book-content p { color: #333; font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; text-indent: 40px; }
+    .book-content svg { display: block; margin: 40px auto; max-width: 100%; height: auto; }
 
     /* --- AUDIENCE MODE STYLES --- */
     body.audience-mode #top-controls,
     body.audience-mode #nav-controls,
-    body.audience-mode #caption-bar {
+    body.audience-mode #caption-bar,
+    body.audience-mode #nav-toggle-btn,
+    body.audience-mode #slide-navigator,
+    body.audience-mode .presentation-footer {
         display: none !important;
     }
-    
-    body.audience-mode #slides-container {
-        height: 100% !important; 
-    }
+    body.audience-mode #slides-container { height: 100% !important; }
 
     /* --- Mobile Landscape Responsiveness --- */
     @media screen and (max-width: 1000px), screen and (max-height: 600px) {
@@ -393,23 +300,16 @@
         .slide h2 { font-size: 6vh; margin-bottom: 2vh; }
         .slide ul, .slide p { font-size: 4vh; line-height: 1.2; max-width: 90vw; }
         .slide li { margin-bottom: 1.5vh; }
-        
         #caption-bar { height: 15vh; padding: 0 10vw; }
-        #caption-text { font-size: 3vh; max-height: 12vh; padding: 5px; }
+        #caption-text { font-size: 3vh; max-height: 8vh; padding: 5px; margin-bottom: 4vh; }
         #nav-controls { height: 15vh; padding: 0 15px; }
         .nav-btn { padding: 1vh 2vw; font-size: 3vh; }
+        #top-controls { top: 15px; right: 15px; transform: scale(0.75); transform-origin: top right; }
+        #nav-toggle-btn { top: 15px; left: 15px; transform: scale(0.75); transform-origin: top left; }
+        .presentation-footer { font-size: 0.65rem; padding: 4px 0; }
         
-        #top-controls { 
-            top: 15px; 
-            right: 15px; 
-            transform: scale(0.75); 
-            transform-origin: top right; 
-        }
-
-        .presentation-footer {
-            font-size: 0.7rem;
-            bottom: 5px;
-        }
+        body.book-mode .slide { padding: 40px 20px 60px 20px; }
+        .book-content p { font-size: 1.1rem; }
     }
 </style>
 </head>
@@ -421,17 +321,24 @@
 </div>
 
 <div id="container">
+    <button id="nav-toggle-btn" onclick="toggleNavigator(event)">☰ Menu</button>
+    <div id="slide-navigator" class="collapsed">
+        <div class="nav-header">Slide Navigator</div>
+        <ul id="nav-list"></ul>
+    </div>
+
     <div id="top-controls">
         <div class="caption-toggle-container">
             <span>SHOW CAPTIONS</span>
             <label class="switch">
-                <input type="checkbox" onchange="toggleCaptions(this)">
+                <input type="checkbox" id="caption-checkbox" onchange="toggleCaptions(this)">
                 <span class="slider"></span>
             </label>
         </div>
         
         <select id="voice-select" title="Select Narrator Voice"></select>
         
+        <button id="book-mode-btn" onclick="toggleBookMode()">📖 Book Mode</button>
         <button id="live-indicator" class="off" onclick="toggleAudio()">Auto-Narrator OFF</button>
         <button id="audience-btn" class="nav-btn" style="padding: 8px 15px; font-size: 0.9rem;" onclick="openAudienceView()">🖥️ Open Audience View</button>
     </div>
@@ -458,8 +365,8 @@
         <div class="slide"
             data-voiceover="audio/slide3.wav"
             data-text="A corporation is an artificial being created by operation of law, endowed with the right of succession and vested with powers, attributes, and properties expressly authorized by law or incidental to its existence. As an artificial being, a corporation has no physical body, consciousness, or biological life; it exists and persists only because the legal system recognizes and sustains it. Its agency is exercised indirectly through human agents—directors, officers, employees, and agents—who make decisions and perform acts in the corporation’s name. The corporation’s rights and duties are primarily legal and instrumental: it may own property, enter contracts, sue and be sued, and incur obligations, but these capacities are conferred and limited by statute and charter. Unlike human beings, who are concrete biological substances with direct causal powers, moral consciousness, and personal responsibility, a corporation’s personhood is institutional and dependent on social and legal practices; it can be held liable and regulated, yet its moral agency is mediated through the people who run it. Because corporate personhood is a legal fiction, courts may protect it to promote commerce and stability, but they may also disregard or pierce the corporate veil when the fiction is abused, fraudulent, or used to defeat public policy or creditors’ rights.">
+            
             <h2>Nature of Corporations</h2>
-
             <p>
                 A corporation is an <strong>artificial being created by operation of law</strong>, 
                 endowed with the <strong>right of succession</strong> and vested with the 
@@ -467,9 +374,18 @@
                 or necessarily incidental to its existence.
             </p>
 
+            <div class="book-content">
+                <h2>Nature of Corporations</h2>
+                <p>A corporation is an artificial being created by operation of law, endowed with the right of succession and vested with powers, attributes, and properties expressly authorized by law or incidental to its existence. As an artificial being, a corporation has no physical body, consciousness, or biological life; it exists and persists only because the legal system recognizes and sustains it.</p>
+                
+                
+
+                <p>Its agency is exercised indirectly through human agents—directors, officers, employees, and agents—who make decisions and perform acts in the corporation’s name. The corporation’s rights and duties are primarily legal and instrumental: it may own property, enter contracts, sue and be sued, and incur obligations, but these capacities are conferred and limited by statute and charter.</p>
+                <p>Unlike human beings, who are concrete biological substances with direct causal powers, moral consciousness, and personal responsibility, a corporation’s personhood is institutional and dependent on social and legal practices; it can be held liable and regulated, yet its moral agency is mediated through the people who run it. Because corporate personhood is a legal fiction, courts may protect it to promote commerce and stability, but they may also disregard or pierce the corporate veil when the fiction is abused, fraudulent, or used to defeat public policy or creditors’ rights.</p>
+            </div>
         </div>
 
-    <div class="slide"
+            <div class="slide"
             data-voiceover="audio/slide4.wav"
             data-text="Corporations are governed primarily by the Revised Corporation Code, which sets out formation, governance, corporate powers, and dissolution; by the Securities Regulation Code, which regulates securities, public offerings, and SEC oversight; by the Foreign Investments Act, which prescribes rules, registration and ownership limits for foreign investors; by sectoral statutes such as the General Banking Law and Insurance Code that impose industry‑specific licensing, prudential and supervisory rules; and by constitutional provisions on national economy and patrimony that limit foreign ownership and protect public interest. The Revised Corporation Code (R.A. 11232) modernized corporate formation (including the One‑Person Corporation), governance, perpetual existence, and shareholder protections. The Securities Regulation Code (R.A. 8799) defines securities, investor protection policies, registration and disclosure requirements, and the powers of the Securities and Exchange Commission. The Foreign Investments Act (R.A. 7042, as amended) establishes the Foreign Investment Negative List, capitalization and registration requirements, and procedures for foreign enterprises doing business in the Philippines. Sectoral laws such as the General Banking Law (R.A. 8791), the Insurance Code, and other special statutes impose licensing, capital, governance, and supervisory regimes for regulated industries and vest oversight in agencies like the Bangko Sentral and the Insurance Commission. Constitutional provisions on the national economy and patrimony (Article XII) restrict land and certain industry ownership to Filipino citizens or corporations with required Filipino ownership percentages, shaping what corporations may lawfully own or do.">
             <h2>Governing Laws</h2>
@@ -1207,7 +1123,7 @@
 
     </div>
 
-    <div class="presentation-footer">This presentation is a private property of Joselito Villarta, CPA, MBA</div>
+    <div class="presentation-footer">This courseware is a private property of Joselito Villarta, CPA, MBA</div>
 
     <div id="nav-controls">
         <button class="nav-btn" onclick="prevSlide()">&#9664; Prev</button>
@@ -1220,82 +1136,109 @@
 </div>
 
 <script>
-    // --- ROBUST PRESENTATION SYNC LOGIC ---
     const isAudience = window.location.search.includes('mode=audience');
     let currentSlideIndex = 0;
     const slides = document.querySelectorAll('.slide');
     const captionText = document.getElementById('caption-text');
     const captionBar = document.getElementById('caption-bar');
     const voiceSelect = document.getElementById('voice-select');
+    const captionCheckbox = document.getElementById('caption-checkbox');
     let currentAudio = null;
     let isAudioEnabled = false;
     let availableVoices = [];
 
-    // --- VOICE SELECTION LOGIC ---
-    function populateVoiceList() {
-        if (typeof speechSynthesis === 'undefined') {
-            return;
+    // --- NAVIGATOR PANEL LOGIC ---
+    function populateNavigator() {
+        const navList = document.getElementById('nav-list');
+        navList.innerHTML = '';
+        slides.forEach((slide, index) => {
+            let heading = slide.querySelector('h1, h2');
+            let titleText = heading ? heading.innerText : `Slide ${index + 1}`;
+            const li = document.createElement('li');
+            li.className = 'nav-item';
+            li.innerText = titleText;
+            li.onclick = () => {
+                showSlide(index);
+                const nav = document.getElementById('slide-navigator');
+                const btn = document.getElementById('nav-toggle-btn');
+                nav.classList.add('collapsed');
+                btn.innerText = '☰ Menu';
+            };
+            navList.appendChild(li);
+        });
+    }
+    populateNavigator();
+
+    function toggleNavigator(event) {
+        if (event) event.stopPropagation(); 
+        const nav = document.getElementById('slide-navigator');
+        const btn = document.getElementById('nav-toggle-btn');
+        nav.classList.toggle('collapsed');
+        btn.innerText = nav.classList.contains('collapsed') ? '☰ Menu' : '☰';
+    }
+
+    document.addEventListener('click', function(event) {
+        const nav = document.getElementById('slide-navigator');
+        const btn = document.getElementById('nav-toggle-btn');
+        if (!nav.classList.contains('collapsed') && !nav.contains(event.target) && event.target !== btn) {
+            nav.classList.add('collapsed');
+            btn.innerText = '☰ Menu';
         }
+    });
+
+    function toggleBookMode() {
+        document.body.classList.toggle('book-mode');
+        const btn = document.getElementById('book-mode-btn');
+        const isBook = document.body.classList.contains('book-mode');
         
+        if(isBook) {
+            btn.innerText = '📺 Presentation Mode';
+            btn.style.background = '#2ea043';
+            // Force captions off when entering book mode
+            captionBar.classList.add('hidden-captions');
+            captionCheckbox.checked = false;
+        } else {
+            btn.innerText = '📖 Book Mode';
+            btn.style.background = '#8b949e';
+        }
+    }
+
+    function populateVoiceList() {
+        if (typeof speechSynthesis === 'undefined') return;
         availableVoices = speechSynthesis.getVoices();
         voiceSelect.innerHTML = '';
-        
         let defaultIndex = -1;
-
         availableVoices.forEach((voice, index) => {
             const option = document.createElement('option');
             option.textContent = `${voice.name} (${voice.lang})`;
             option.value = index;
-            
-            // Auto-select a male voice by default on initial load
             if (defaultIndex === -1 && (voice.name.includes('Male') || voice.name.includes('David') || voice.name.includes('James') || voice.name.includes('Google UK English Male'))) {
                 defaultIndex = index;
             }
-            
             voiceSelect.appendChild(option);
         });
-
-        // Only set the default if the user hasn't manually selected something
-        if (voiceSelect.selectedIndex === -1 || voiceSelect.options.length === 0) {
-           if(defaultIndex !== -1) {
-               voiceSelect.selectedIndex = defaultIndex;
-           }
-        }
+        if (voiceSelect.selectedIndex === -1 && defaultIndex !== -1) voiceSelect.selectedIndex = defaultIndex;
     }
 
     populateVoiceList();
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-        speechSynthesis.onvoiceschanged = populateVoiceList;
-    }
+    if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = populateVoiceList;
 
-
-    // Audience Window Setup
     if (isAudience) {
         document.body.classList.add('audience-mode');
-        
-        // 1. Auto-start the audience window and hide the overlay on load
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('container').classList.add('active-sim');
-            
-            // Catch up to whatever slide the teacher is currently on
             let savedIndex = parseInt(localStorage.getItem('presentationSyncIndex')) || 0;
             updateSlideVisuals(savedIndex);
         });
-
-        // 2. Listen for slide changes broadcasted by the Teacher window
         window.addEventListener('storage', (event) => {
-            if (event.key === 'presentationSyncIndex') {
-                updateSlideVisuals(parseInt(event.newValue));
-            }
+            if (event.key === 'presentationSyncIndex') updateSlideVisuals(parseInt(event.newValue));
         });
     }
 
     function openAudienceView() {
         if (!isAudience) {
-            // Force the bulletin board to match the teacher's current slide
             localStorage.setItem('presentationSyncIndex', currentSlideIndex.toString());
-            // Strip any existing URL parameters and open the audience window
             const baseUrl = window.location.href.split('?')[0];
             window.open(baseUrl + '?mode=audience', 'AudienceView', 'width=1280,height=720');
         }
@@ -1304,13 +1247,10 @@
     function startPresentation() {
         document.getElementById('overlay').style.display = 'none';
         document.getElementById('container').classList.add('active-sim');
-        
         if (!isAudience) {
-            // Reset to 0 when first starting, but do not open the audience window yet
             currentSlideIndex = 0; 
             localStorage.setItem('presentationSyncIndex', '0');
         }
-        
         showSlide(currentSlideIndex);
     }
 
@@ -1324,73 +1264,55 @@
         } else {
             indicatorBtn.innerHTML = 'Auto-Narrator OFF';
             indicatorBtn.classList.add("off");
-            if (currentAudio) currentAudio.pause();
             window.speechSynthesis.cancel();
         }
     }
 
     function toggleCaptions(checkbox) {
-        if (checkbox.checked) {
-            captionBar.classList.remove('hidden-captions');
-        } else {
-            captionBar.classList.add('hidden-captions');
-        }
+        if (checkbox.checked) captionBar.classList.remove('hidden-captions');
+        else captionBar.classList.add('hidden-captions');
     }
 
-    // Helper function that just changes the screen visuals silently
     function updateSlideVisuals(index) {
         if (index < 0) index = 0;
         if (index >= slides.length) index = slides.length - 1;
-        
         slides.forEach(slide => slide.classList.remove('active'));
         currentSlideIndex = index;
         slides[currentSlideIndex].classList.add('active');
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach((item, i) => {
+            if (i === currentSlideIndex) {
+                item.classList.add('active-nav');
+                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else item.classList.remove('active-nav');
+        });
     }
 
     function showSlide(index) {
         updateSlideVisuals(index);
-        
         if (!isAudience) {
-            // 3. Broadcast the new slide number to the Audience window
             localStorage.setItem('presentationSyncIndex', currentSlideIndex.toString());
-            // Play audio for the teacher view only
             playNarrative(slides[currentSlideIndex]);
         }
     }
 
     function playNarrative(slideElement) {
-        if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
         window.speechSynthesis.cancel();
-        
-        const voiceoverFile = slideElement.getAttribute('data-voiceover');
         const textToRead = slideElement.getAttribute('data-text');
-        
         captionText.innerText = textToRead;
-        
         if (!isAudioEnabled) return;
-        
-        if (voiceoverFile && voiceoverFile.trim() !== "") {
-            currentAudio = new Audio(voiceoverFile);
-            currentAudio.play().catch(error => speakText(textToRead));
-        } else {
-            speakText(textToRead);
-        }
+        speakText(textToRead);
     }
 
     function speakText(text) {
         if ('speechSynthesis' in window) {
             const utterance = new SpeechSynthesisUtterance(text);
-            
-            // Set the voice based on the dropdown selection
             if (availableVoices.length > 0 && voiceSelect.value !== "") {
                 utterance.voice = availableVoices[voiceSelect.value];
             }
-
             utterance.rate = 0.95;
             utterance.pitch = 1;
             window.speechSynthesis.speak(utterance);
-        } else {
-            console.log("Text-to-speech not supported in this browser.");
         }
     }
 
