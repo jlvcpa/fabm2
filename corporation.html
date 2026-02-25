@@ -85,7 +85,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 50px 100px;
+        padding: 50px 100px 80px 100px;
         box-sizing: border-box;
         opacity: 0;
         transition: opacity 0.5s ease-in-out;
@@ -231,7 +231,7 @@
         padding: 30px 20px 20px 80px; font-size: 1.2rem; font-weight: bold; color: #58a6ff;
         border-bottom: 1px solid #30363d; text-transform: uppercase; letter-spacing: 1px;
     }
-    #nav-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex: 1; }
+    #nav-list { list-style: none; padding: 0 0 60px 0; margin: 0; overflow-y: auto; flex: 1; }
 
     /* Right-aligned Page Number Style */
     .nav-pg-num {
@@ -318,7 +318,7 @@
     body.book-mode .slide {
         align-items: flex-start;
         justify-content: flex-start;
-        padding: 80px 150px 100px 150px; 
+        padding: 80px 150px 160px 150px; 
         overflow-y: auto;
     }
     
@@ -363,7 +363,7 @@
 
     /* --- Mobile Landscape Responsiveness --- */
     @media screen and (max-width: 1000px), screen and (max-height: 600px) {
-        .slide { padding: 2vh 5vw; }
+        .slide { padding: 2vh 5vw 8vh 5vw; }
         .slide h1 { font-size: 8vh; margin-bottom: 2vh; }
         .slide h2 { font-size: 6vh; margin-bottom: 2vh; }
         .slide ul, .slide p { font-size: 4vh; line-height: 1.2; max-width: 90vw; }
@@ -377,7 +377,7 @@
         .presentation-footer { font-size: 0.65rem; padding: 4px 0; }
         .slide-number-display { bottom: 15px; right: 20px; font-size: 1.2rem; }
         
-        body.book-mode .slide { padding: 40px 20px 60px 20px; }
+        body.book-mode .slide { padding: 40px 20px 100px 20px; }
         .book-content p { font-size: 1.1rem; }
     }
 </style>
