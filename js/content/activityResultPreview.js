@@ -551,25 +551,61 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
     <div className="max-w-5xl mx-auto">
         <style>
             @media print {
-                #qa-sidebar, #student-sidebar, button[id^="qa-"] { display: none !important; }
-                html, body, #qa-runner-container, .flex.h-full.relative.overflow-hidden {
-                    height: auto !important; min-height: auto !important; overflow: visible !important;
-                    position: static !important; display: block !important;
+                /* Hide UI Elements & Isolated Parts */
+                #qa-sidebar, #student-sidebar, button, .print\\:hidden, .hide-in-print { 
+                    display: none !important; 
+                }
+
+                /* 1. FIX BLANK FIRST PAGE: Flatten all main structural wrappers */
+                html, body, #root, #qa-runner-container, .flex.h-full.relative.overflow-hidden, .max-w-5xl {
+                    height: auto !important;
+                    min-height: auto !important;
+                    max-height: none !important;
+                    overflow: visible !important;
+                    position: static !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    display: block !important; /* Overrides flex constraints causing white space */
                 }
                 body { background-color: white !important; }
-                .bg-white.border.rounded-lg, .border.rounded.p-4, .break-inside-avoid {
-                    page-break-inside: auto !important; break-inside: auto !important; position: static !important;
-                }
-                .overflow-y-auto, .overflow-x-auto, .overflow-auto, .overflow-hidden,
-                [class*="max-h-"], [class*="h-full"], .absolute, [class*="absolute"] {
-                    max-height: none !important; height: auto !important; overflow: visible !important;
-                    position: static !important; display: block !important;
-                }
-                table { page-break-inside: auto !important; width: 100% !important; }
-                tr { page-break-inside: avoid !important; page-break-after: auto !important; }
-                thead { display: table-header-group !important; }
                 
-                .hide-in-print { display: none !important; }
+                /* Remove the flex gap that might render even when items are hidden */
+                .flex-col.gap-12 { gap: 0 !important; display: block !important; }
+                .mb-8 { margin-bottom: 2rem !important; }
+
+                /* 2. FIX OVERLAPPING LEDGERS: Force all internal wrappers to expand downward */
+                .overflow-y-auto, .overflow-x-auto, .overflow-auto, .overflow-hidden,
+                .absolute, .relative, .fixed, .inset-0, [class*="max-h-"], [class*="h-"], .flex-1 {
+                    height: auto !important;
+                    max-height: none !important;
+                    min-height: auto !important;
+                    overflow: visible !important;
+                    position: static !important;
+                    flex: none !important; /* Stop flex components from trapping heights */
+                }
+
+                /* Specifically target the Accounting Step internal containers */
+                .border-gray-200.rounded.p-2.bg-gray-50 *, .border-gray-200.rounded.p-2.bg-gray-50 {
+                    position: static !important;
+                    overflow: visible !important;
+                    height: auto !important;
+                    max-height: none !important;
+                }
+
+                /* 3. FIX PAGE BREAKS: Allow large containers to break naturally */
+                .bg-white.border.rounded-lg, .border.rounded.p-4, .break-inside-avoid, .question-block {
+                    page-break-inside: auto !important;
+                    break-inside: auto !important;
+                    page-break-after: auto !important;
+                    page-break-before: auto !important;
+                    margin-top: 0 !important;
+                }
+
+                /* Table specifically */
+                table { page-break-inside: auto !important; width: 100% !important; border-collapse: collapse !important; }
+                tr { page-break-inside: avoid !important; page-break-after: auto !important; }
+                td, th { page-break-inside: avoid !important; }
+                thead { display: table-header-group !important; }
             }
         </style>
         
