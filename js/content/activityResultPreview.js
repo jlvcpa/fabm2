@@ -536,18 +536,21 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
                 }
                 body { background-color: white !important; }
                 
-                /* Avoid breaking the main container cards */
-                .bg-white.border.rounded-lg, .border.rounded.p-4 {
-                    page-break-inside: avoid;
-                    break-inside: avoid;
+                /* Allow massive step cards (like the Ledger) to break naturally across pages */
+                .bg-white.border.rounded-lg, .border.rounded.p-4, .break-inside-avoid {
+                    page-break-inside: auto !important;
+                    break-inside: auto !important;
+                    position: static !important;
                 }
 
-                /* FORCE ALL SCROLLABLE LEDGERS AND TABLES TO EXPAND FULLY */
+                /* FORCE SCROLLABLE LEDGERS TO EXPAND AND PUSH CONTENT DOWN INSTEAD OF OVERLAPPING */
                 .overflow-y-auto, .overflow-x-auto, .overflow-auto, .overflow-hidden,
-                [class*="max-h-"] {
+                [class*="max-h-"], [class*="h-full"], .absolute, [class*="absolute"] {
                     max-height: none !important;
                     height: auto !important;
                     overflow: visible !important;
+                    position: static !important; /* Stops absolute elements from hovering over others */
+                    display: block !important; /* Overrides flex constraints */
                 }
 
                 /* TABLE PRINTING FIXES */
