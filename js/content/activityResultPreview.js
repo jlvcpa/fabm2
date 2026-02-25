@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'https://esm.sh
 import { createRoot } from 'https://esm.sh/react-dom@18.2.0/client';
 import htm from 'https://esm.sh/htm';
 import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
-import { Check, X, Save } from 'https://esm.sh/lucide-react@0.263.1';
+import { Check, X, Save, Printer } from 'https://esm.sh/lucide-react@0.263.1';
 import { getLetterGrade, ActivityHelper } from './accountingCycle/utils.js';
 
 // --- IMPORTS FOR STANDARD QUIZZES ---
@@ -526,19 +526,35 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
 
     return html`
     <div className="max-w-5xl mx-auto">
-        <div className="bg-white rounded-lg shadow p-4 mb-4 border-l-4 border-blue-600 flex justify-between items-center">
-            <div>
-                <h2 className="text-xl font-bold text-gray-800 mb-0">${resultData.studentName}</h2>
-                <div className="flex gap-4 text-xs text-gray-600">
-                    <span>ID: <strong>${resultData.studentId}</strong></span>
-                    <span>Submitted: <strong>${new Date(resultData.timestamp || resultData.lastUpdated).toLocaleString()}</strong></span>
-                </div>
-            </div>
-            ${currentUser.role === 'teacher' && activityConfig.type !== 'accounting_cycle' && html`
+        
+        <div className="flex justify-end gap-2 mb-4 print:hidden">
+            <button onClick=${() => window.print()} className="px-4 py-2 bg-indigo-600 text-white text-sm font-bold rounded hover:bg-indigo-700 shadow flex items-center gap-2">
+                <${Printer} size=${16}/> Print / Save PDF
+            </button>
+            ${currentUser.role === 'teacher' && activityConfig.type !== 'accounting_cycle' ? html`
                 <button onClick=${handleSaveScores} className="px-4 py-2 bg-yellow-600 text-white text-sm font-bold rounded hover:bg-yellow-700 shadow flex items-center gap-2">
                     <${Save} size=${16}/> Update Scores
                 </button>
-            `}
+            ` : ''}
+        </div>
+
+        <header className="text-center mb-4 pb-4 border-b-4 border-indigo-600 p-4 print:bg-white print:text-black print:border-none">
+            <img src="./shs-adc-logo.png" onError=${(e) => { e.target.style.display='none'; }} alt="School Logo" className="mx-auto mb-2 h-20 w-auto"/>
+            <p className="text-sm mt-1">SY 2025-2026 | 2nd Semester</p>
+            <h1 className="text-3xl font-extrabold text-yellow-300 print:text-black">${activityConfig.title || activityConfig.name || 'Activity Results'}</h1>
+        </header>
+
+        <div id="student-print-info" className="block mb-4 w-full">
+            <div className="w-full mb-2 text-sm text-black font-bold font-mono border-b-2 border-black pb-2">
+                <div className="flex justify-between items-center">
+                    <span className="text-left">CN: ${resultData.classNumber || resultData.studentId || ''}</span>
+                    <span className="text-right">Section: ${resultData.gradeSection || ''}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                    <span className="text-left">Name: ${resultData.studentName || ''}</span>
+                    <span className="text-right">Date: ${new Date(resultData.timestamp || resultData.lastUpdated).toLocaleString()}</span>
+                </div>
+            </div>
         </div>
 
         ${(activityConfig.type === 'accounting_cycle' || activityConfig.tasks)
