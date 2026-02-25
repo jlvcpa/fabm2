@@ -556,24 +556,32 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
                     display: none !important; 
                 }
 
-                /* 1. FIX BLANK FIRST PAGE: Flatten all main structural wrappers */
+                /* Ensure the page uses full width and proper margins */
+                @page {
+                    size: auto;
+                    margin: 10mm;
+                }
+
+                /* 1. RESET MAIN WRAPPERS TO PREVENT LEFT-SHIFTING & WHITE SPACE */
                 html, body, #root, #qa-runner-container, .flex.h-full.relative.overflow-hidden, .max-w-5xl {
                     height: auto !important;
                     min-height: auto !important;
                     max-height: none !important;
+                    width: 100% !important;
+                    max-width: 100% !important;
                     overflow: visible !important;
                     position: static !important;
                     margin: 0 !important;
                     padding: 0 !important;
-                    display: block !important; /* Overrides flex constraints causing white space */
+                    display: block !important;
+                    background-color: white !important;
                 }
-                body { background-color: white !important; }
                 
-                /* Remove the flex gap that might render even when items are hidden */
-                .flex-col.gap-12 { gap: 0 !important; display: block !important; }
+                /* Remove flex gaps */
+                .flex-col.gap-12, .flex-col.gap-8, .flex-col.gap-6 { gap: 0 !important; display: block !important; }
                 .mb-8 { margin-bottom: 2rem !important; }
 
-                /* 2. FIX OVERLAPPING LEDGERS: Force all internal wrappers to expand downward */
+                /* 2. FORCE SCROLLABLE PANELS TO EXPAND */
                 .overflow-y-auto, .overflow-x-auto, .overflow-auto, .overflow-hidden,
                 .absolute, .relative, .fixed, .inset-0, [class*="max-h-"], [class*="h-"], .flex-1 {
                     height: auto !important;
@@ -581,10 +589,9 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
                     min-height: auto !important;
                     overflow: visible !important;
                     position: static !important;
-                    flex: none !important; /* Stop flex components from trapping heights */
+                    flex: none !important;
                 }
 
-                /* Specifically target the Accounting Step internal containers */
                 .border-gray-200.rounded.p-2.bg-gray-50 *, .border-gray-200.rounded.p-2.bg-gray-50 {
                     position: static !important;
                     overflow: visible !important;
@@ -592,20 +599,47 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
                     max-height: none !important;
                 }
 
-                /* 3. FIX PAGE BREAKS: Allow large containers to break naturally */
+                /* 3. FIX PAGE BREAKS AND REMOVE BULKY CONTAINERS */
                 .bg-white.border.rounded-lg, .border.rounded.p-4, .break-inside-avoid, .question-block {
                     page-break-inside: auto !important;
                     break-inside: auto !important;
                     page-break-after: auto !important;
                     page-break-before: auto !important;
-                    margin-top: 0 !important;
+                    margin: 0 0 20px 0 !important;
+                    border: none !important;
+                    box-shadow: none !important;
                 }
 
-                /* Table specifically */
-                table { page-break-inside: auto !important; width: 100% !important; border-collapse: collapse !important; }
+                /* Clean up headers for print (saves ink, fixes spacing) */
+                .bg-slate-800, .bg-blue-900 {
+                    background-color: transparent !important;
+                    color: black !important;
+                    border-bottom: 2px solid black !important;
+                    padding: 5px 0 !important;
+                }
+                .text-yellow-400, .text-yellow-300, .text-white { color: black !important; }
+
+                /* 4. SHRINK AND FIT TABLES TO PREVENT CUTOFF */
+                table { 
+                    page-break-inside: auto !important; 
+                    width: 100% !important; 
+                    max-width: 100% !important;
+                    border-collapse: collapse !important; 
+                    font-size: 10px !important; 
+                }
                 tr { page-break-inside: avoid !important; page-break-after: auto !important; }
-                td, th { page-break-inside: avoid !important; }
+                td, th { page-break-inside: avoid !important; padding: 3px !important; }
                 thead { display: table-header-group !important; }
+                
+                input, textarea {
+                    border: none !important;
+                    background: transparent !important;
+                    font-size: 10px !important;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    height: auto !important;
+                    resize: none !important;
+                }
             }
         </style>
         
