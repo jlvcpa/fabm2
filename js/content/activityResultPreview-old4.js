@@ -539,7 +539,7 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
         <header className="text-center mb-4 pb-4 border-b-4 border-indigo-600 p-4 print:bg-white print:text-black print:border-none">
             <img src="./shs-adc-logo.png" onError=${(e) => { e.target.style.display='none'; }} alt="School Logo" className="mx-auto mb-2 h-20 w-auto"/>
             <p className="text-sm mt-1">SY 2025-2026 | 2nd Semester</p>
-            <h1 className="text-3xl font-bold text-black print:text-black">
+            <h1 className="text-3xl font-normal text-black print:text-black">
                 ${activityConfig.activityname || resultData.activityName || activityConfig.title || 'Activity Results'}
             </h1>
         </header>
