@@ -535,9 +535,32 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
                     display: block !important;
                 }
                 body { background-color: white !important; }
+                
+                /* Avoid breaking the main container cards */
                 .bg-white.border.rounded-lg, .border.rounded.p-4 {
                     page-break-inside: avoid;
                     break-inside: avoid;
+                }
+
+                /* FORCE ALL SCROLLABLE LEDGERS AND TABLES TO EXPAND FULLY */
+                .overflow-y-auto, .overflow-x-auto, .overflow-auto, .overflow-hidden,
+                [class*="max-h-"] {
+                    max-height: none !important;
+                    height: auto !important;
+                    overflow: visible !important;
+                }
+
+                /* TABLE PRINTING FIXES */
+                table { 
+                    page-break-inside: auto !important; 
+                    width: 100% !important; 
+                }
+                tr { 
+                    page-break-inside: avoid !important; 
+                    page-break-after: auto !important; 
+                }
+                thead { 
+                    display: table-header-group !important; 
                 }
             }
         </style>
