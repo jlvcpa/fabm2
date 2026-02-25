@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Introduction to Corporations</title>
+<title>Corporate Law & Structure</title>
 <style>
     body, html {
         margin: 0;
@@ -173,8 +173,6 @@
     #live-indicator.off { background: rgba(100, 116, 139, 0.8); }
 
     .caption-toggle-container { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; font-weight: bold; color: #94a3b8; }
-    
-    /* HIDE CAPTION OPTION IN BOOK MODE */
     body.book-mode .caption-toggle-container { display: none !important; }
 
     .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
@@ -213,7 +211,7 @@
         transition: all 0.4s ease;
     }
 
-    /* --- ENHANCED HIERARCHICAL SLIDE NAVIGATOR STYLES --- */
+    /* --- 3-LEVEL HIERARCHICAL NAVIGATOR STYLES --- */
     #nav-toggle-btn {
         position: absolute; top: 30px; left: 30px; z-index: 80; background: rgba(13, 17, 23, 0.8);
         color: #58a6ff; border: 2px solid #58a6ff; border-radius: 6px; padding: 8px 15px;
@@ -223,7 +221,7 @@
     #nav-toggle-btn:hover { background: #58a6ff; color: #000; }
 
     #slide-navigator {
-        position: absolute; top: 0; left: 0; width: 340px; height: 100%; background: rgba(13, 17, 23, 0.95);
+        position: absolute; top: 0; left: 0; width: 350px; height: 100%; background: rgba(13, 17, 23, 0.95);
         border-right: 1px solid #30363d; z-index: 75; transform: translateX(0); transition: transform 0.3s ease;
         display: flex; flex-direction: column; backdrop-filter: blur(10px);
     }
@@ -235,37 +233,85 @@
     }
     #nav-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex: 1; }
 
-    /* Parent Style (Days) */
-    .nav-parent {
+    /* Right-aligned Page Number Style */
+    .nav-pg-num {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-weight: normal;
+        white-space: nowrap;
+        margin-left: 10px;
+    }
+
+    /* Level 1: Grandparent (Weeks) */
+    .nav-grandparent {
         padding: 12px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
-        font-size: 1.1rem; font-weight: bold; color: #58a6ff; background: rgba(0,0,0,0.3);
+        font-size: 1.15rem; font-weight: bold; color: #ffffff; background: rgba(0,0,0,0.6);
+        transition: background 0.2s; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .nav-grandparent:hover { background: rgba(88, 166, 255, 0.2); }
+    .nav-week-children { list-style: none; padding: 0; margin: 0; display: none; }
+
+    /* Level 2: Parent (Days) */
+    .nav-parent {
+        padding: 10px 20px 10px 30px; /* 30px indent */
+        cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 1.05rem; font-weight: bold; color: #58a6ff; background: rgba(13, 17, 23, 0.6);
         transition: background 0.2s;
+        display: flex; justify-content: space-between; align-items: center; /* Flex for right pg alignment */
     }
     .nav-parent:hover { background: rgba(88, 166, 255, 0.2); color: #ffffff; }
     .nav-parent.active-nav { background: rgba(88, 166, 255, 0.3); color: #ffffff; border-left: 4px solid #58a6ff; }
+    .nav-day-children { list-style: none; padding: 0; margin: 0; display: none; }
 
-    /* Child Style (Indented Topics) */
-    .nav-children { list-style: none; padding: 0; margin: 0; display: block; }
+    /* Level 3: Child (Slides) */
     .nav-child-item {
-        padding: 6px 20px 6px 40px; /* 40px indent */
-        cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);
+        padding: 8px 20px 8px 50px; /* 50px indent */
+        cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.02);
         font-size: 0.95rem; transition: background 0.2s; color: #8b949e;
+        display: flex; justify-content: space-between; align-items: center; /* Flex for right pg alignment */
     }
     .nav-child-item:hover { background: rgba(88, 166, 255, 0.1); color: #c9d1d9; }
     .nav-child-item.active-nav { background: rgba(88, 166, 255, 0.2); color: #ffffff; border-left: 4px solid #58a6ff; font-weight: bold; }
 
-    /* Generic Style (Before any Days) */
+    /* Generic Slides (Before Week 1) */
     .nav-item-generic {
-        padding: 8px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);
-        font-size: 1rem; transition: background 0.2s; color: #8b949e;
+        padding: 10px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 1.05rem; transition: background 0.2s; color: #8b949e; font-weight: bold;
+        display: flex; justify-content: space-between; align-items: center; /* Flex for right pg alignment */
     }
     .nav-item-generic:hover { background: rgba(88, 166, 255, 0.1); color: #c9d1d9; }
-    .nav-item-generic.active-nav { background: rgba(88, 166, 255, 0.2); color: #ffffff; border-left: 4px solid #58a6ff; font-weight: bold; }
+    .nav-item-generic.active-nav { background: rgba(88, 166, 255, 0.2); color: #ffffff; border-left: 4px solid #58a6ff; }
 
     #nav-list::-webkit-scrollbar { width: 6px; }
     #nav-list::-webkit-scrollbar-track { background: transparent; }
     #nav-list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 3px; }
     #nav-list::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+
+    /* --- DYNAMIC NUMBERING DISPLAYS --- */
+    .slide-number-display {
+        position: absolute;
+        bottom: 30px;
+        right: 40px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: rgba(88, 166, 255, 0.4);
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .book-page-display {
+        text-align: center;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 1px solid #ccc;
+        font-family: 'Georgia', serif;
+        font-style: italic;
+        color: #888;
+        font-size: 1.1rem;
+    }
+
+    body.book-mode .slide-number-display { display: none !important; }
+    body:not(.book-mode) .book-page-display { display: none !important; }
 
     /* --- BOOK MODE ADJUSTMENTS --- */
     body.book-mode #slides-container { background-color: #fdf6e3; }
@@ -279,7 +325,6 @@
     body.book-mode .slide > :not(.book-content) { display: none !important; }
     body.book-mode .book-content { display: block !important; }
 
-    /* BOOK MODE FOOTER COLOR */
     body.book-mode .presentation-footer {
         background: #fdf6e3;
         color: #5c5c5c;
@@ -310,7 +355,8 @@
     body.audience-mode #caption-bar,
     body.audience-mode #nav-toggle-btn,
     body.audience-mode #slide-navigator,
-    body.audience-mode .presentation-footer {
+    body.audience-mode .presentation-footer,
+    body.audience-mode .slide-number-display {
         display: none !important;
     }
     body.audience-mode #slides-container { height: 100% !important; }
@@ -329,6 +375,7 @@
         #top-controls { top: 15px; right: 15px; transform: scale(0.75); transform-origin: top right; }
         #nav-toggle-btn { top: 15px; left: 15px; transform: scale(0.75); transform-origin: top left; }
         .presentation-footer { font-size: 0.65rem; padding: 4px 0; }
+        .slide-number-display { bottom: 15px; right: 20px; font-size: 1.2rem; }
         
         body.book-mode .slide { padding: 40px 20px 60px 20px; }
         .book-content p { font-size: 1.1rem; }
@@ -345,7 +392,7 @@
 <div id="container">
     <button id="nav-toggle-btn" onclick="toggleNavigator(event)">☰ Menu</button>
     <div id="slide-navigator" class="collapsed">
-        <div class="nav-header">Slide Navigator</div>
+        <div class="nav-header">Course Navigator</div>
         <ul id="nav-list"></ul>
     </div>
 
@@ -372,13 +419,17 @@
              data-text="Welcome. In this module, we will be discussing an Introduction to the topic of Corporations.">
             <h1>Introduction to the Topic: Corporation</h1>
             <p>A comprehensive guide to understanding corporate structures.</p>
+            <div class="book-content">
+                <h2>Introduction to the Topic: Corporation</h2>
+                <p>Welcome to this comprehensive guide to understanding corporate structures. Over the next few modules, we will cover everything from the basic legal nature of an entity to the complexities of accounting for corporate equity.</p>
+            </div>
         </div>
 
-        <!-- DAY 1 START -->
+<!-- DAY 1 START -->
         <div class="slide" 
              data-voiceover="audio/slide2.wav" 
              data-text="Welcome to Day 1. Our topic for today is the Legal Attributes, Classifications, and Formation of Corporations. We have three primary learning objectives. First, to remember the governing laws, SEC registration steps, and post-incorporation requirements. Second, to understand the legal nature of a corporation, its defining characteristics, and the significance of the Articles of Incorporation. Finally, to analyze the various classifications of corporations and the financial distinctions among authorized, subscribed, and paid-up capital.">
-            <h2>Day 1: Attributes, Classifications, and Formation</h2>
+            <h2>Week 1, Day 1: Attributes, Classifications, and Formation</h2>
             <ul>
                 <li><strong>To remember</strong> the governing laws, SEC registration steps, and post-incorporation compliance requirements.</li>
                 <li><strong>To understand</strong> the legal nature of a corporation, its defining characteristics, and the significance of the Articles of Incorporation.</li>
@@ -844,7 +895,7 @@
         <div class="slide" 
              data-voiceover="audio/day2_intro.wav" 
              data-text="Welcome to Day 2. Our topic for today is Corporate Equity: Shares of Stock and Accounting Methods. We have three primary learning objectives. First, to remember the fundamental rights of a shareholder and the various classes of corporate stock, such as common and preferred shares. Second, to understand how a corporation manages its capital through specialized stock like treasury and redeemable shares. Finally, to analyze the two primary accounting methods used in the Philippines—the Memorandum Method and the Journal Entry Method—and how they record the authorization, subscription, and issuance of capital stock.">
-            <h2>Day 2: Corporate Equity and Accounting Methods</h2>
+            <h2>Week 1, Day 2: Corporate Equity and Accounting Methods</h2>
             <br>
             <ul>
                 <li><strong>To remember</strong> the fundamental rights of a shareholder and the different classes of corporate stock (Common, Preferred, Founders').</li>
@@ -1425,7 +1476,7 @@
         <div class="slide" 
              data-voiceover="audio/day3_intro.wav" 
              data-text="Welcome to Day 3. Our topic for today is the Statement of Changes in Equity for a corporation. We have three primary learning objectives for this module. First, we aim to remember the specific components that make up the corporate equity section. Second, we need to understand the technical aspects of transactions that either increase or decrease these equity balances. Third, we will analyze and apply these concepts to prepare a Statement of Changes in Equity. We will progress from basic scenarios to comprehensive examples involving multiple adjustments. Mastering this statement is crucial for any aspiring accountant. It bridges the gap between the income statement and the balance sheet. Let us begin our deep dive into corporate equity.">
-            <h2>Day 3: Statement of Changes in Equity</h2>
+            <h2>Week 1, Day 3: Statement of Changes in Equity</h2>
             <br>
             <ul>
                 <li><strong>To remember</strong> the components and purpose of the corporate Statement of Changes in Equity.</li>
@@ -1920,239 +1971,3 @@
             </div>
         </div>
         <!-- DAY 3 END -->
-
-    </div>
-
-    <div class="presentation-footer">This courseware is a private property of Joselito Villarta, CPA, MBA</div>
-
-    <div id="nav-controls">
-        <button class="nav-btn" onclick="prevSlide()">&#9664; Prev</button>
-        <button class="nav-btn" onclick="nextSlide()">Next &#9654;</button>
-    </div>
-
-    <div id="caption-bar" class="hidden-captions">
-        <div id="caption-text">Press Start Presentation to begin.</div>
-    </div>
-</div>
-
-<script>
-    const isAudience = window.location.search.includes('mode=audience');
-    let currentSlideIndex = 0;
-    const slides = document.querySelectorAll('.slide');
-    const captionText = document.getElementById('caption-text');
-    const captionBar = document.getElementById('caption-bar');
-    const voiceSelect = document.getElementById('voice-select');
-    const captionCheckbox = document.getElementById('caption-checkbox');
-    let currentAudio = null;
-    let isAudioEnabled = false;
-    let availableVoices = [];
-
-    // --- ENHANCED HIERARCHICAL NAVIGATOR PANEL LOGIC ---
-    function populateNavigator() {
-        const navList = document.getElementById('nav-list');
-        navList.innerHTML = '';
-        
-        let currentChildrenContainer = null;
-
-        slides.forEach((slide, index) => {
-            let heading = slide.querySelector('h1, h2');
-            let titleText = heading ? heading.innerText : `Slide ${index + 1}`;
-            
-            // Check if this slide acts as a Parent Topic (Starts with "Day")
-            let isParent = titleText.trim().toLowerCase().startsWith('day');
-
-            const li = document.createElement('li');
-            li.innerText = titleText;
-            li.dataset.index = index; // Store original slide index
-
-            if (isParent) {
-                // It's a parent slide
-                li.className = 'nav-parent nav-slide-link';
-                navList.appendChild(li);
-                
-                // Create a new container to hold all subsequent child slides
-                currentChildrenContainer = document.createElement('ul');
-                currentChildrenContainer.className = 'nav-children';
-                navList.appendChild(currentChildrenContainer);
-            } else {
-                // It's a standard slide. Put it in the active parent's bucket, or root if no parent yet.
-                if (currentChildrenContainer) {
-                    li.className = 'nav-child-item nav-slide-link';
-                    currentChildrenContainer.appendChild(li);
-                } else {
-                    li.className = 'nav-item-generic nav-slide-link';
-                    navList.appendChild(li);
-                }
-            }
-
-            // Click Logic to jump to slide and close menu
-            li.onclick = () => {
-                showSlide(index);
-                const nav = document.getElementById('slide-navigator');
-                const btn = document.getElementById('nav-toggle-btn');
-                if (window.innerWidth <= 1000) {
-                    nav.classList.add('collapsed');
-                    btn.innerText = '☰ Menu';
-                }
-            };
-        });
-    }
-    populateNavigator();
-
-    function toggleNavigator(event) {
-        if (event) event.stopPropagation(); 
-        const nav = document.getElementById('slide-navigator');
-        const btn = document.getElementById('nav-toggle-btn');
-        nav.classList.toggle('collapsed');
-        btn.innerText = nav.classList.contains('collapsed') ? '☰ Menu' : '☰';
-    }
-
-    document.addEventListener('click', function(event) {
-        const nav = document.getElementById('slide-navigator');
-        const btn = document.getElementById('nav-toggle-btn');
-        if (!nav.classList.contains('collapsed') && !nav.contains(event.target) && event.target !== btn) {
-            nav.classList.add('collapsed');
-            btn.innerText = '☰ Menu';
-        }
-    });
-
-    function toggleBookMode() {
-        document.body.classList.toggle('book-mode');
-        const btn = document.getElementById('book-mode-btn');
-        const isBook = document.body.classList.contains('book-mode');
-        
-        if(isBook) {
-            btn.innerText = '📺 Presentation Mode';
-            btn.style.background = '#2ea043';
-            // Force captions off when entering book mode
-            captionBar.classList.add('hidden-captions');
-            captionCheckbox.checked = false;
-        } else {
-            btn.innerText = '📖 Book Mode';
-            btn.style.background = '#8b949e';
-        }
-    }
-
-    function populateVoiceList() {
-        if (typeof speechSynthesis === 'undefined') return;
-        availableVoices = speechSynthesis.getVoices();
-        voiceSelect.innerHTML = '';
-        let defaultIndex = -1;
-        availableVoices.forEach((voice, index) => {
-            const option = document.createElement('option');
-            option.textContent = `${voice.name} (${voice.lang})`;
-            option.value = index;
-            if (defaultIndex === -1 && (voice.name.includes('Male') || voice.name.includes('David') || voice.name.includes('James') || voice.name.includes('Google UK English Male'))) {
-                defaultIndex = index;
-            }
-            voiceSelect.appendChild(option);
-        });
-        if (voiceSelect.selectedIndex === -1 && defaultIndex !== -1) voiceSelect.selectedIndex = defaultIndex;
-    }
-
-    populateVoiceList();
-    if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = populateVoiceList;
-
-    if (isAudience) {
-        document.body.classList.add('audience-mode');
-        window.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('container').classList.add('active-sim');
-            let savedIndex = parseInt(localStorage.getItem('presentationSyncIndex')) || 0;
-            updateSlideVisuals(savedIndex);
-        });
-        window.addEventListener('storage', (event) => {
-            if (event.key === 'presentationSyncIndex') updateSlideVisuals(parseInt(event.newValue));
-        });
-    }
-
-    function openAudienceView() {
-        if (!isAudience) {
-            localStorage.setItem('presentationSyncIndex', currentSlideIndex.toString());
-            const baseUrl = window.location.href.split('?')[0];
-            window.open(baseUrl + '?mode=audience', 'AudienceView', 'width=1280,height=720');
-        }
-    }
-
-    function startPresentation() {
-        document.getElementById('overlay').style.display = 'none';
-        document.getElementById('container').classList.add('active-sim');
-        if (!isAudience) {
-            currentSlideIndex = 0; 
-            localStorage.setItem('presentationSyncIndex', '0');
-        }
-        showSlide(currentSlideIndex);
-    }
-
-    function toggleAudio() {
-        isAudioEnabled = !isAudioEnabled;
-        const indicatorBtn = document.getElementById('live-indicator');
-        if (isAudioEnabled) {
-            indicatorBtn.innerHTML = '<div class="dot"></div> Auto-Narrator ON';
-            indicatorBtn.classList.remove("off");
-            playNarrative(slides[currentSlideIndex]);
-        } else {
-            indicatorBtn.innerHTML = 'Auto-Narrator OFF';
-            indicatorBtn.classList.add("off");
-            window.speechSynthesis.cancel();
-        }
-    }
-
-    function toggleCaptions(checkbox) {
-        if (checkbox.checked) captionBar.classList.remove('hidden-captions');
-        else captionBar.classList.add('hidden-captions');
-    }
-
-    // Updated Visual Tracker to use the new navigation classes
-    function updateSlideVisuals(index) {
-        if (index < 0) index = 0;
-        if (index >= slides.length) index = slides.length - 1;
-        slides.forEach(slide => slide.classList.remove('active'));
-        currentSlideIndex = index;
-        slides[currentSlideIndex].classList.add('active');
-        
-        // Update styling in the new hierarchical menu
-        const navItems = document.querySelectorAll('.nav-slide-link');
-        navItems.forEach((item) => {
-            if (parseInt(item.dataset.index) === currentSlideIndex) {
-                item.classList.add('active-nav');
-                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-                item.classList.remove('active-nav');
-            }
-        });
-    }
-
-    function showSlide(index) {
-        updateSlideVisuals(index);
-        if (!isAudience) {
-            localStorage.setItem('presentationSyncIndex', currentSlideIndex.toString());
-            playNarrative(slides[currentSlideIndex]);
-        }
-    }
-
-    function playNarrative(slideElement) {
-        window.speechSynthesis.cancel();
-        const textToRead = slideElement.getAttribute('data-text');
-        captionText.innerText = textToRead;
-        if (!isAudioEnabled) return;
-        speakText(textToRead);
-    }
-
-    function speakText(text) {
-        if ('speechSynthesis' in window) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            if (availableVoices.length > 0 && voiceSelect.value !== "") {
-                utterance.voice = availableVoices[voiceSelect.value];
-            }
-            utterance.rate = 0.95;
-            utterance.pitch = 1;
-            window.speechSynthesis.speak(utterance);
-        }
-    }
-
-    function nextSlide() { if (currentSlideIndex < slides.length - 1) showSlide(currentSlideIndex + 1); }
-    function prevSlide() { if (currentSlideIndex > 0) showSlide(currentSlideIndex - 1); }
-</script>
-</body>
-</html>
