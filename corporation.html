@@ -402,6 +402,59 @@
         body.book-mode .slide { padding: 40px 20px 100px 20px; }
         .book-content p { font-size: 1.1rem; }
     }
+
+    /* --- BOOK MODE: COMPONENT OVERRIDES (Tables & Quizzes) --- */
+    
+    /* 1. Quiz / Checkpoint Overrides */
+    body.book-mode .mcq-option {
+        background: #ffffff;
+        border: 1px solid #dcd6c5;
+        color: #333333;
+    }
+    body.book-mode .mcq-option:hover {
+        background: #f0f4f8;
+        border-color: #3b82f6;
+    }
+    body.book-mode .reveal-btn {
+        background: #475569;
+        color: #ffffff;
+    }
+    body.book-mode .reveal-btn:hover {
+        background: #334155;
+    }
+    body.book-mode .correct-answer {
+        background: #f0fdf4;
+        border-left: 5px solid #16a34a;
+        color: #14532d;
+    }
+    body.book-mode .correct-answer span {
+        color: #16a34a;
+    }
+
+    /* 2. Table Overrides (Using !important to override inline dark styles) */
+    body.book-mode .book-content table {
+        background: #ffffff !important;
+        border: 1px solid #ccc !important;
+        color: #333333 !important;
+    }
+    body.book-mode .book-content tr {
+        background: transparent !important;
+        border-bottom: 1px solid #ccc !important;
+    }
+    body.book-mode .book-content th {
+        background: #e2e8f0 !important; /* Light gray header */
+        border-right: 1px solid #ccc !important;
+        color: #111111 !important;
+    }
+    body.book-mode .book-content td {
+        border-right: 1px solid #ccc !important;
+        color: #333333 !important;
+    }
+    /* Fix for the highlighted bottom rows in the tables */
+    body.book-mode .book-content tr[style*="background: rgba(88, 166, 255, 0.1)"] {
+        background: #f8fafc !important;
+        border-top: 2px solid #94a3b8 !important;
+    }
 </style>
 </head>
 <body>
@@ -2410,7 +2463,9 @@
                 <li class="mcq-option">D) ₱ 450,000</li>
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+                <div class="correct-answer">               
                 <p>To prepare the statement, you must track the flow of profits. Begin with the opening balance (₱500k). Add the new wealth generated this year (Net income: +₱200k). Subtract the wealth distributed to owners (Dividends: -₱50k). The final math yields exactly ₱650,000.</p>
+                </div>    
             </div>
         </div>
 
@@ -2439,7 +2494,9 @@
                 <li class="mcq-option">D) ₱ 1,500,000</li>
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+                <div class="correct-answer">                               
                 <p>The correct answer is <strong>B</strong>. No matter how much cash the investor hands over, the core Share Capital column can ONLY be increased by the Par Value. Therefore, 2,000 new shares multiplied by the ₱100 par value adds exactly ₱200,000 to the 1 Million beginning balance.</p>
+                </div>    
             </div>
         </div>
 
@@ -2468,7 +2525,9 @@
                 <li class="mcq-option">D) ₱ 0</li>
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+                <div class="correct-answer">               
                 <p>The correct answer is <strong>B</strong>. The investors paid a ₱50 premium above par value (₱150 - ₱100 = ₱50). Multiply that ₱50 premium by the 2,000 shares issued, and the accountant must place ₱100,000 into the APIC column.</p>
+                </div>
             </div>
         </div>
 
@@ -2497,7 +2556,9 @@
                 <li class="mcq-option">D) ₱ 1,000,000</li>
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+                <div class="correct-answer">               
                 <p>The correct answer is <strong>C</strong>. If an expense was forgotten last year, it means last year's Net Income (and therefore Retained Earnings) was artificially too high. To fix it, you must subtract the ₱100k error from the unadjusted ₱800k starting line, yielding a true Restated Balance of ₱700,000.</p>
+                </div>
             </div>
         </div>
 
@@ -2526,8 +2587,10 @@
                 <li class="mcq-option">D) ₱ 2,350,000</li>
             </ul>
             <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'">Reveal Answer</button>
+                <div class="correct-answer">
                 <p>The correct answer is <strong>B</strong>. You add all the standard equity accounts together (1M + 200k + 1M = 2.2M). However, Treasury Shares are a contra-equity account. You must deduct the ₱150k cost of the buyback, resulting in a final Total Equity of ₱2,050,000.</p>
-            </div>
+                </div>
+            </div>    
         </div>
         <!-- DAY 3 END -->
 
