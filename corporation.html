@@ -351,6 +351,22 @@
     }
 
     .book-content p { color: #333; font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; text-indent: 40px; }
+    /* Fix for bulleted lists inside Book Mode */
+    .book-content ul {
+        color: #333;
+        font-size: 1.4rem;
+        line-height: 1.8;
+        margin-bottom: 20px;
+        padding-left: 80px; /* Indents the bullets to match the book aesthetic */
+        text-align: left;
+        max-width: 100%;
+    }
+
+    .book-content li {
+        color: #333;
+        margin-bottom: 10px;
+    }
+    
     .book-content svg { display: block; margin: 40px auto; max-width: 100%; height: auto; }
 
     /* --- AUDIENCE MODE STYLES --- */
