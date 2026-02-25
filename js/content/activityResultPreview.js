@@ -49,7 +49,7 @@ function buildQuestionMap() {
 }
 buildQuestionMap();
 
-const AccountingCycleResultView = ({ resultData, activityConfig }) => {
+const AccountingCycleResultView = ({ resultData, activityConfig, printMode, onPrint }) => {
     const [simData, setSimData] = useState(null);
 
     useEffect(() => {
@@ -84,13 +84,21 @@ const AccountingCycleResultView = ({ resultData, activityConfig }) => {
 
                 const letterGrade = getLetterGrade(scoreData.score, scoreData.maxScore);
                 const rubricHtml = ActivityHelper.getRubricHTML(stepId, task.stepName);
+                
+                const sectionId = `step-${stepId}`;
+                const hideInPrintClass = (printMode !== 'all' && printMode !== sectionId) ? 'hide-in-print' : '';
 
                 return html`
-                    <div key=${stepId} className="bg-white border rounded-lg shadow-sm overflow-hidden break-inside-avoid">
+                    <div key=${stepId} className="bg-white border rounded-lg shadow-sm overflow-hidden break-inside-avoid mb-8 ${hideInPrintClass}">
                         <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
-                            <div>
-                                <h3 className="text-lg font-bold">Step ${stepId}: ${task.stepName}</h3>
-                                <div className="text-xs text-slate-300">Attempts: ${status.attempts || 0}</div>
+                            <div className="flex items-center gap-4">
+                                <div>
+                                    <h3 className="text-lg font-bold">Step ${stepId}: ${task.stepName}</h3>
+                                    <div className="text-xs text-slate-300">Attempts: ${status.attempts || 0}</div>
+                                </div>
+                                <button type="button" onClick=${() => onPrint(sectionId)} className="print:hidden p-1.5 bg-slate-700 hover:bg-slate-600 rounded text-white flex items-center shadow-sm transition" title="Print this step only">
+                                    <${Printer} size=${14}/> <span className="ml-1 text-xs">Print Part</span>
+                                </button>
                             </div>
                             <div className="text-right">
                                 <div className="text-2xl font-bold text-yellow-400">
@@ -132,7 +140,7 @@ const AccountingCycleResultView = ({ resultData, activityConfig }) => {
     `;
 };
 
-const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate }) => {
+const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, printMode, onPrint }) => {
     
     const getQuestionsTaken = () => {
         let qt = resultData.questionsTaken;
@@ -284,10 +292,18 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate }) =
                     })
                     .map(key => ({ uiId: key, ...questionsTaken[key] }));
 
+                const sectionId = `test-${idx}`;
+                const hideInPrintClass = (printMode !== 'all' && printMode !== sectionId) ? 'hide-in-print' : '';
+
                 return html`
-                    <div key=${idx} className="bg-white border rounded-lg shadow-sm overflow-hidden">
+                    <div key=${idx} className="bg-white border rounded-lg shadow-sm overflow-hidden mb-8 ${hideInPrintClass}">
                         <div className="bg-blue-900 text-white p-4 flex justify-between items-center">
-                            <h3 className="font-bold uppercase">Test ${idx + 1}: ${section.type}</h3>
+                            <div className="flex items-center gap-4">
+                                <h3 className="font-bold uppercase">Test ${idx + 1}: ${section.type}</h3>
+                                <button type="button" onClick=${() => onPrint(sectionId)} className="print:hidden p-1.5 bg-blue-800 hover:bg-blue-700 rounded text-white flex items-center shadow-sm transition" title="Print this test only">
+                                    <${Printer} size=${14}/> <span className="ml-1 text-xs">Print Part</span>
+                                </button>
+                            </div>
                             <div className="text-right">
                                 <span className="text-xl font-bold text-yellow-300">${live.score} / ${live.maxScore}</span>
                                 <span className="ml-2 text-xs bg-blue-800 px-2 py-1 rounded">${live.letterGrade}</span>
@@ -510,6 +526,15 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate }) =
 
 const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectionName, docId }) => {
     const [pendingScores, setPendingScores] = useState(null);
+    const [printMode, setPrintMode] = useState('all');
+
+    const handlePrint = (mode) => {
+        setPrintMode(mode);
+        setTimeout(() => {
+            window.print();
+            setTimeout(() => setPrintMode('all'), 500); // Reset print isolation after triggering dialog
+        }, 100);
+    };
 
     const handleSaveScores = async () => {
         if (!confirm("Overwrite the student's saved scores with these recalculated values?")) return;
@@ -528,49 +553,29 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
             @media print {
                 #qa-sidebar, #student-sidebar, button[id^="qa-"] { display: none !important; }
                 html, body, #qa-runner-container, .flex.h-full.relative.overflow-hidden {
-                    height: auto !important;
-                    min-height: auto !important;
-                    overflow: visible !important;
-                    position: static !important;
-                    display: block !important;
+                    height: auto !important; min-height: auto !important; overflow: visible !important;
+                    position: static !important; display: block !important;
                 }
                 body { background-color: white !important; }
-                
-                /* Allow massive step cards (like the Ledger) to break naturally across pages */
                 .bg-white.border.rounded-lg, .border.rounded.p-4, .break-inside-avoid {
-                    page-break-inside: auto !important;
-                    break-inside: auto !important;
-                    position: static !important;
+                    page-break-inside: auto !important; break-inside: auto !important; position: static !important;
                 }
-
-                /* FORCE SCROLLABLE LEDGERS TO EXPAND AND PUSH CONTENT DOWN INSTEAD OF OVERLAPPING */
                 .overflow-y-auto, .overflow-x-auto, .overflow-auto, .overflow-hidden,
                 [class*="max-h-"], [class*="h-full"], .absolute, [class*="absolute"] {
-                    max-height: none !important;
-                    height: auto !important;
-                    overflow: visible !important;
-                    position: static !important; /* Stops absolute elements from hovering over others */
-                    display: block !important; /* Overrides flex constraints */
+                    max-height: none !important; height: auto !important; overflow: visible !important;
+                    position: static !important; display: block !important;
                 }
-
-                /* TABLE PRINTING FIXES */
-                table { 
-                    page-break-inside: auto !important; 
-                    width: 100% !important; 
-                }
-                tr { 
-                    page-break-inside: avoid !important; 
-                    page-break-after: auto !important; 
-                }
-                thead { 
-                    display: table-header-group !important; 
-                }
+                table { page-break-inside: auto !important; width: 100% !important; }
+                tr { page-break-inside: avoid !important; page-break-after: auto !important; }
+                thead { display: table-header-group !important; }
+                
+                .hide-in-print { display: none !important; }
             }
         </style>
         
         <div className="flex justify-end gap-2 mb-4 print:hidden">
-            <button onClick=${() => window.print()} className="px-4 py-2 bg-indigo-600 text-white text-sm font-bold rounded hover:bg-indigo-700 shadow flex items-center gap-2">
-                <${Printer} size=${16}/> Print / Save PDF
+            <button onClick=${() => handlePrint('all')} className="px-4 py-2 bg-indigo-600 text-white text-sm font-bold rounded hover:bg-indigo-700 shadow flex items-center gap-2">
+                <${Printer} size=${16}/> Print All Parts
             </button>
             ${currentUser.role === 'teacher' && activityConfig.type !== 'accounting_cycle' ? html`
                 <button onClick=${handleSaveScores} className="px-4 py-2 bg-yellow-600 text-white text-sm font-bold rounded hover:bg-yellow-700 shadow flex items-center gap-2">
@@ -579,33 +584,42 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
             ` : ''}
         </div>
 
-        <header className="text-center mb-4 pb-4 border-b-4 border-indigo-600 p-4 print:bg-white print:text-black print:border-none">
-            <img src="./shs-adc-logo.png" onError=${(e) => { e.target.style.display='none'; }} alt="School Logo" className="mx-auto mb-2 h-20 w-auto"/>
-            <p className="text-sm mt-1">SY 2025-2026 | 2nd Semester</p>
-            <h1 className="text-3xl font-extrabold text-yellow-300 print:text-black">
-                ${activityConfig.activityname || resultData.activityName || activityConfig.title || 'Activity Results'}
-            </h1>
-        </header>
+        ${(() => {
+            const showHeaderInPrint = printMode === 'all' || printMode === 'step-1' || printMode === 'test-0';
+            const headerHideClass = !showHeaderInPrint ? 'hide-in-print' : '';
+            
+            return html`
+                <header className="text-center mb-4 pb-4 border-b-4 border-indigo-600 p-4 print:bg-white print:text-black print:border-none ${headerHideClass}">
+                    <img src="./shs-adc-logo.png" onError=${(e) => { e.target.style.display='none'; }} alt="School Logo" className="mx-auto mb-2 h-20 w-auto"/>
+                    <p className="text-sm mt-1">SY 2025-2026 | 2nd Semester</p>
+                    <h1 className="text-3xl font-extrabold text-yellow-300 print:text-black">
+                        ${activityConfig.activityname || resultData.activityName || activityConfig.title || 'Activity Results'}
+                    </h1>
+                </header>
 
-        <div id="student-print-info" className="block mb-4 w-full">
-            <div className="w-full mb-2 text-sm text-black font-bold font-mono border-b-2 border-black pb-2">
-                <div className="flex justify-between items-center">
-                    <span className="text-left">CN: ${resultData.CN || resultData.classNumber || resultData.studentId || ''}</span>
-                    <span className="text-right">Section: ${resultData.section || resultData.gradeSection || ''}</span>
+                <div id="student-print-info" className="block mb-4 w-full ${headerHideClass}">
+                    <div className="w-full mb-2 text-sm text-black font-bold font-mono border-b-2 border-black pb-2">
+                        <div className="flex justify-between items-center">
+                            <span className="text-left">CN: ${resultData.CN || resultData.classNumber || resultData.studentId || ''}</span>
+                            <span className="text-right">Section: ${resultData.section || resultData.gradeSection || ''}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <span className="text-left">Name: ${resultData.studentName || ''}</span>
+                            <span className="text-right">Date: ${new Date(resultData.timestamp || resultData.lastUpdated).toLocaleString()}</span>
+                        </div>
+                    </div>
                 </div>
-                <div className="flex justify-between items-center">
-                    <span className="text-left">Name: ${resultData.studentName || ''}</span>
-                    <span className="text-right">Date: ${new Date(resultData.timestamp || resultData.lastUpdated).toLocaleString()}</span>
-                </div>
-            </div>
-        </div>
+            `;
+        })()}
 
         ${(activityConfig.type === 'accounting_cycle' || activityConfig.tasks)
-            ? html`<${AccountingCycleResultView} resultData=${resultData} activityConfig=${activityConfig} />`
+            ? html`<${AccountingCycleResultView} resultData=${resultData} activityConfig=${activityConfig} printMode=${printMode} onPrint=${handlePrint} />`
             : html`<${StandardQuizResultView} 
                 resultData=${resultData} 
                 activityConfig=${activityConfig} 
                 onScoreUpdate=${(scores) => setPendingScores(scores)} 
+                printMode=${printMode} 
+                onPrint=${handlePrint} 
               />`
         }
     </div>
