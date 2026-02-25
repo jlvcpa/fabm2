@@ -302,13 +302,27 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate }) =
                     .map(key => ({ uiId: key, ...questionsTaken[key] }));
 
                 return html`
-                    <div key=${idx} className="bg-white border rounded-lg shadow-sm overflow-hidden">
-                        <div className="bg-blue-900 text-white p-4 flex justify-between items-center">
+                    <div className="bg-blue-900 text-white p-4 flex justify-between items-center">
                             <h3 className="font-bold uppercase">Test ${idx + 1}: ${section.type}</h3>
                             <div className="text-right">
                                 <span className="text-xl font-bold text-yellow-300">${live.score} / ${live.maxScore}</span>
                                 <span className="ml-2 text-xs bg-blue-800 px-2 py-1 rounded">${live.letterGrade}</span>
                             </div>
+                        </div>
+
+                        <div className="px-6 pt-6 flex flex-col gap-4">
+                            ${section.instructions ? html`
+                                <div className="p-4 bg-indigo-50 text-sm text-indigo-900 rounded border border-indigo-100">
+                                    <h4 className="font-bold mb-1">Instructions:</h4>
+                                    <div dangerouslySetInnerHTML=${{ __html: section.instructions }}></div>
+                                </div>
+                            ` : ''}
+                            ${section.gradingRubrics ? html`
+                                <div className="p-4 bg-blue-50 text-sm text-blue-900 rounded border border-blue-100">
+                                    <h4 className="font-bold mb-1">Rubric:</h4>
+                                    <div dangerouslySetInnerHTML=${{ __html: section.gradingRubrics }}></div>
+                                </div>
+                            ` : ''}
                         </div>
                         
                         <div className="p-6 flex flex-col gap-6">
