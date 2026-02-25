@@ -425,7 +425,7 @@
             </div>
         </div>
 
-<!-- DAY 1 START -->
+        <!-- DAY 1 START -->
         <div class="slide" 
              data-voiceover="audio/slide2.wav" 
              data-text="Welcome to Day 1. Our topic for today is the Legal Attributes, Classifications, and Formation of Corporations. We have three primary learning objectives. First, to remember the governing laws, SEC registration steps, and post-incorporation requirements. Second, to understand the legal nature of a corporation, its defining characteristics, and the significance of the Articles of Incorporation. Finally, to analyze the various classifications of corporations and the financial distinctions among authorized, subscribed, and paid-up capital.">
@@ -1971,3 +1971,325 @@
             </div>
         </div>
         <!-- DAY 3 END -->
+
+    </div>
+
+    <div class="presentation-footer">This courseware is a private property of Joselito Villarta, CPA, MBA</div>
+
+    <div id="nav-controls">
+        <button class="nav-btn" onclick="prevSlide()">&#9664; Prev</button>
+        <button class="nav-btn" onclick="nextSlide()">Next &#9654;</button>
+    </div>
+
+    <div id="caption-bar" class="hidden-captions">
+        <div id="caption-text">Press Start Presentation to begin.</div>
+    </div>
+</div>
+
+<script>
+    const isAudience = window.location.search.includes('mode=audience');
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const captionText = document.getElementById('caption-text');
+    const captionBar = document.getElementById('caption-bar');
+    const voiceSelect = document.getElementById('voice-select');
+    const captionCheckbox = document.getElementById('caption-checkbox');
+    let currentAudio = null;
+    let isAudioEnabled = false;
+    let availableVoices = [];
+
+    // --- 3-LEVEL ACCORDION NAVIGATOR & RIGHT-ALIGNED PAGE NUMBERS ---
+    function populateNavigator() {
+        const navList = document.getElementById('nav-list');
+        navList.innerHTML = '';
+        
+        let currentWeekContainer = null;
+        let currentDayContainer = null;
+        let currentWeekNum = -1;
+
+        slides.forEach((slide, index) => {
+            let heading = slide.querySelector('h1, h2');
+            let rawTitleText = heading ? heading.innerText : `Slide ${index + 1}`;
+            
+            // Regex detects formats like "Week 1, Day 1: Topic" or "Week 1, Day 1"
+            let weekDayMatch = rawTitleText.match(/^Week\s+(\d+),\s+(Day\s+\d+.*)$/i);
+            
+            // Continuous Global Page/Slide Numbering
+            let displayNum = index + 1; 
+            
+            // 1. Inject Slide Number for Presentation Mode
+            if (!slide.querySelector('.slide-number-display')) {
+                const slideNumDiv = document.createElement('div');
+                slideNumDiv.className = 'slide-number-display';
+                slideNumDiv.innerText = `Slide ${displayNum}`;
+                slide.appendChild(slideNumDiv);
+            }
+
+            // 2. Inject Page Number for Book Mode
+            const bookContent = slide.querySelector('.book-content');
+            if (bookContent && !bookContent.querySelector('.book-page-display')) {
+                const bookPageNum = document.createElement('div');
+                bookPageNum.className = 'book-page-display';
+                bookPageNum.innerText = `- Page ${displayNum} -`;
+                bookContent.appendChild(bookPageNum);
+            }
+
+            // 3. Build the Navigation Hierarchy
+            const li = document.createElement('li');
+            li.dataset.index = index;
+
+            // Generate HTML with flexbox setup: Title on Left, pg X on Right
+            let createNavHTML = (title) => `<span>${title}</span> <span class="nav-pg-num">pg ${displayNum}</span>`;
+
+            if (weekDayMatch) {
+                let weekNum = parseInt(weekDayMatch[1]);
+                let dayText = weekDayMatch[2]; // Extracts "Day X: Topic"
+                
+                // If it's a new Week, create the Grandparent container
+                if (weekNum !== currentWeekNum) {
+                    currentWeekNum = weekNum;
+                    
+                    const weekLi = document.createElement('li');
+                    weekLi.className = 'nav-grandparent';
+                    weekLi.innerText = `Week ${weekNum}`;
+                    
+                    currentWeekContainer = document.createElement('ul');
+                    currentWeekContainer.className = 'nav-week-children';
+                    
+                    navList.appendChild(weekLi);
+                    navList.appendChild(currentWeekContainer);
+                    
+                    // Grandparent Click Logic (Toggle Days, collapse other weeks)
+                    weekLi.onclick = (e) => {
+                        e.stopPropagation();
+                        const isOpening = currentWeekContainer.style.display !== 'block';
+                        document.querySelectorAll('.nav-week-children').forEach(ul => ul.style.display = 'none');
+                        if (isOpening) currentWeekContainer.style.display = 'block';
+                    };
+                }
+                
+                // Create the Day (Parent) Item
+                li.innerHTML = createNavHTML(dayText);
+                li.className = 'nav-parent nav-slide-link';
+                currentWeekContainer.appendChild(li);
+                
+                // Create container for the slides (Children) under this Day
+                currentDayContainer = document.createElement('ul');
+                currentDayContainer.className = 'nav-day-children';
+                currentWeekContainer.appendChild(currentDayContainer);
+                
+                // Parent Click Logic (Go to slide, Toggle children, collapse other days)
+                li.onclick = () => {
+                    showSlide(index);
+                    document.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
+                    currentDayContainer.style.display = 'block';
+                };
+                
+            } else {
+                // It is a Standard Slide (Child)
+                li.innerHTML = createNavHTML(rawTitleText);
+                
+                if (currentDayContainer) {
+                    // Belongs inside the active Day folder
+                    li.className = 'nav-child-item nav-slide-link';
+                    currentDayContainer.appendChild(li);
+                } else {
+                    // Precedes Week 1 (e.g., Intro Slide)
+                    li.className = 'nav-item-generic nav-slide-link';
+                    navList.appendChild(li);
+                }
+                
+                // Child Click Logic (Go to slide, hide menu on mobile)
+                li.onclick = () => {
+                    showSlide(index);
+                    const nav = document.getElementById('slide-navigator');
+                    const btn = document.getElementById('nav-toggle-btn');
+                    if (window.innerWidth <= 1000) {
+                        nav.classList.add('collapsed');
+                        btn.innerText = '☰ Menu';
+                    }
+                };
+            }
+        });
+    }
+    populateNavigator();
+
+    function toggleNavigator(event) {
+        if (event) event.stopPropagation(); 
+        const nav = document.getElementById('slide-navigator');
+        const btn = document.getElementById('nav-toggle-btn');
+        nav.classList.toggle('collapsed');
+        btn.innerText = nav.classList.contains('collapsed') ? '☰ Menu' : '☰';
+    }
+
+    document.addEventListener('click', function(event) {
+        const nav = document.getElementById('slide-navigator');
+        const btn = document.getElementById('nav-toggle-btn');
+        if (!nav.classList.contains('collapsed') && !nav.contains(event.target) && event.target !== btn) {
+            nav.classList.add('collapsed');
+            btn.innerText = '☰ Menu';
+        }
+    });
+
+    function toggleBookMode() {
+        document.body.classList.toggle('book-mode');
+        const btn = document.getElementById('book-mode-btn');
+        const isBook = document.body.classList.contains('book-mode');
+        
+        if(isBook) {
+            btn.innerText = '📺 Presentation Mode';
+            btn.style.background = '#2ea043';
+            captionBar.classList.add('hidden-captions');
+            captionCheckbox.checked = false;
+        } else {
+            btn.innerText = '📖 Book Mode';
+            btn.style.background = '#8b949e';
+        }
+    }
+
+    function populateVoiceList() {
+        if (typeof speechSynthesis === 'undefined') return;
+        availableVoices = speechSynthesis.getVoices();
+        voiceSelect.innerHTML = '';
+        let defaultIndex = -1;
+        availableVoices.forEach((voice, index) => {
+            const option = document.createElement('option');
+            option.textContent = `${voice.name} (${voice.lang})`;
+            option.value = index;
+            if (defaultIndex === -1 && (voice.name.includes('Male') || voice.name.includes('David') || voice.name.includes('James') || voice.name.includes('Google UK English Male'))) {
+                defaultIndex = index;
+            }
+            voiceSelect.appendChild(option);
+        });
+        if (voiceSelect.selectedIndex === -1 && defaultIndex !== -1) voiceSelect.selectedIndex = defaultIndex;
+    }
+
+    populateVoiceList();
+    if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = populateVoiceList;
+
+    if (isAudience) {
+        document.body.classList.add('audience-mode');
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('container').classList.add('active-sim');
+            let savedIndex = parseInt(localStorage.getItem('presentationSyncIndex')) || 0;
+            updateSlideVisuals(savedIndex);
+        });
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'presentationSyncIndex') updateSlideVisuals(parseInt(event.newValue));
+        });
+    }
+
+    function openAudienceView() {
+        if (!isAudience) {
+            localStorage.setItem('presentationSyncIndex', currentSlideIndex.toString());
+            const baseUrl = window.location.href.split('?')[0];
+            window.open(baseUrl + '?mode=audience', 'AudienceView', 'width=1280,height=720');
+        }
+    }
+
+    function startPresentation() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('container').classList.add('active-sim');
+        if (!isAudience) {
+            currentSlideIndex = 0; 
+            localStorage.setItem('presentationSyncIndex', '0');
+        }
+        showSlide(currentSlideIndex);
+    }
+
+    function toggleAudio() {
+        isAudioEnabled = !isAudioEnabled;
+        const indicatorBtn = document.getElementById('live-indicator');
+        if (isAudioEnabled) {
+            indicatorBtn.innerHTML = '<div class="dot"></div> Auto-Narrator ON';
+            indicatorBtn.classList.remove("off");
+            playNarrative(slides[currentSlideIndex]);
+        } else {
+            indicatorBtn.innerHTML = 'Auto-Narrator OFF';
+            indicatorBtn.classList.add("off");
+            window.speechSynthesis.cancel();
+        }
+    }
+
+    function toggleCaptions(checkbox) {
+        if (checkbox.checked) captionBar.classList.remove('hidden-captions');
+        else captionBar.classList.add('hidden-captions');
+    }
+
+    function updateSlideVisuals(index) {
+        if (index < 0) index = 0;
+        if (index >= slides.length) index = slides.length - 1;
+        slides.forEach(slide => slide.classList.remove('active'));
+        currentSlideIndex = index;
+        slides[currentSlideIndex].classList.add('active');
+        
+        // Update styling and Accordion auto-expand when navigating via Prev/Next buttons
+        const navItems = document.querySelectorAll('.nav-slide-link');
+        navItems.forEach((item) => {
+            if (parseInt(item.dataset.index) === currentSlideIndex) {
+                item.classList.add('active-nav');
+                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                if (item.classList.contains('nav-child-item')) {
+                    const dayUl = item.closest('.nav-day-children');
+                    const weekUl = item.closest('.nav-week-children');
+                    if (weekUl) {
+                        document.querySelectorAll('.nav-week-children').forEach(ul => ul.style.display = 'none');
+                        weekUl.style.display = 'block';
+                    }
+                    if (dayUl) {
+                        document.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
+                        dayUl.style.display = 'block';
+                    }
+                } else if (item.classList.contains('nav-parent')) {
+                    const weekUl = item.closest('.nav-week-children');
+                    const nextDayUl = item.nextElementSibling;
+                    if (weekUl) {
+                        document.querySelectorAll('.nav-week-children').forEach(ul => ul.style.display = 'none');
+                        weekUl.style.display = 'block';
+                    }
+                    if (nextDayUl && nextDayUl.classList.contains('nav-day-children')) {
+                        document.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
+                        nextDayUl.style.display = 'block';
+                    }
+                }
+            } else {
+                item.classList.remove('active-nav');
+            }
+        });
+    }
+
+    function showSlide(index) {
+        updateSlideVisuals(index);
+        if (!isAudience) {
+            localStorage.setItem('presentationSyncIndex', currentSlideIndex.toString());
+            playNarrative(slides[currentSlideIndex]);
+        }
+    }
+
+    function playNarrative(slideElement) {
+        window.speechSynthesis.cancel();
+        const textToRead = slideElement.getAttribute('data-text');
+        captionText.innerText = textToRead;
+        if (!isAudioEnabled) return;
+        speakText(textToRead);
+    }
+
+    function speakText(text) {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            if (availableVoices.length > 0 && voiceSelect.value !== "") {
+                utterance.voice = availableVoices[voiceSelect.value];
+            }
+            utterance.rate = 0.95;
+            utterance.pitch = 1;
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+
+    function nextSlide() { if (currentSlideIndex < slides.length - 1) showSlide(currentSlideIndex + 1); }
+    function prevSlide() { if (currentSlideIndex > 0) showSlide(currentSlideIndex - 1); }
+</script>
+</body>
+</html>
