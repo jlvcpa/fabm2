@@ -85,6 +85,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        /* FIXED: Increased bottom padding to 80px */
         padding: 50px 100px 80px 100px;
         box-sizing: border-box;
         opacity: 0;
@@ -231,6 +232,8 @@
         padding: 30px 20px 20px 80px; font-size: 1.2rem; font-weight: bold; color: #58a6ff;
         border-bottom: 1px solid #30363d; text-transform: uppercase; letter-spacing: 1px;
     }
+    
+    /* FIXED: Added 60px bottom padding so footer doesn't cover last item */
     #nav-list { list-style: none; padding: 0 0 60px 0; margin: 0; overflow-y: auto; flex: 1; }
 
     /* Right-aligned Page Number Style */
@@ -318,6 +321,7 @@
     body.book-mode .slide {
         align-items: flex-start;
         justify-content: flex-start;
+        /* FIXED: Increased bottom padding to 160px */
         padding: 80px 150px 160px 150px; 
         overflow-y: auto;
     }
@@ -363,6 +367,7 @@
 
     /* --- Mobile Landscape Responsiveness --- */
     @media screen and (max-width: 1000px), screen and (max-height: 600px) {
+        /* FIXED: Increased bottom padding */
         .slide { padding: 2vh 5vw 8vh 5vw; }
         .slide h1 { font-size: 8vh; margin-bottom: 2vh; }
         .slide h2 { font-size: 6vh; margin-bottom: 2vh; }
@@ -377,6 +382,7 @@
         .presentation-footer { font-size: 0.65rem; padding: 4px 0; }
         .slide-number-display { bottom: 15px; right: 20px; font-size: 1.2rem; }
         
+        /* FIXED: Increased bottom padding */
         body.book-mode .slide { padding: 40px 20px 100px 20px; }
         .book-content p { font-size: 1.1rem; }
     }
@@ -1998,7 +2004,7 @@
     let isAudioEnabled = false;
     let availableVoices = [];
 
-    // --- 3-LEVEL ACCORDION NAVIGATOR WITH PROPER CLOSURES & NUMBERING ---
+    // --- 3-LEVEL ACCORDION NAVIGATOR WITH TOGGLE-COLLAPSE FIX ---
     function populateNavigator() {
         const navList = document.getElementById('nav-list');
         navList.innerHTML = '';
@@ -2011,13 +2017,10 @@
             let heading = slide.querySelector('h1, h2');
             let rawTitleText = heading ? heading.innerText : `Slide ${index + 1}`;
             
-            // Regex detects formats like "Week 1, Day 1: Topic" or "Week 1, Day 1"
             let weekDayMatch = rawTitleText.match(/^Week\s+(\d+),\s+(Day\s+\d+.*)$/i);
             
-            // Continuous Global Page/Slide Numbering
             let displayNum = index + 1; 
             
-            // 1. Inject Slide Number for Presentation Mode
             if (!slide.querySelector('.slide-number-display')) {
                 const slideNumDiv = document.createElement('div');
                 slideNumDiv.className = 'slide-number-display';
@@ -2025,7 +2028,6 @@
                 slide.appendChild(slideNumDiv);
             }
 
-            // 2. Inject Page Number for Book Mode
             const bookContent = slide.querySelector('.book-content');
             if (bookContent && !bookContent.querySelector('.book-page-display')) {
                 const bookPageNum = document.createElement('div');
@@ -2034,18 +2036,15 @@
                 bookContent.appendChild(bookPageNum);
             }
 
-            // 3. Build the Navigation Hierarchy
             const li = document.createElement('li');
             li.dataset.index = index;
 
-            // Generate HTML with flexbox setup: Title on Left, pg X on Right
             let createNavHTML = (title) => `<span>${title}</span> <span class="nav-pg-num">pg ${displayNum}</span>`;
 
             if (weekDayMatch) {
                 let weekNum = parseInt(weekDayMatch[1]);
-                let dayText = weekDayMatch[2]; // Extracts "Day X: Topic"
+                let dayText = weekDayMatch[2]; 
                 
-                // If it's a new Week, create the Grandparent container
                 if (weekNum !== currentWeekNum) {
                     currentWeekNum = weekNum;
                     
@@ -2059,7 +2058,6 @@
                     navList.appendChild(weekLi);
                     navList.appendChild(currentWeekContainer);
                     
-                    // Scope closure fix for the Week click handler
                     const scopedWeekContainer = currentWeekContainer;
                     weekLi.onclick = (e) => {
                         e.stopPropagation();
@@ -2069,37 +2067,39 @@
                     };
                 }
                 
-                // Create the Day (Parent) Item
                 li.innerHTML = createNavHTML(dayText);
                 li.className = 'nav-parent nav-slide-link';
                 currentWeekContainer.appendChild(li);
                 
-                // Create container for the slides (Children) under this Day
                 currentDayContainer = document.createElement('ul');
                 currentDayContainer.className = 'nav-day-children';
                 currentWeekContainer.appendChild(currentDayContainer);
                 
-                // Instead of manually toggling, let updateSlideVisuals handle the accordion expansion
+                // FIXED: Day Menu Toggle to Collapse Logic
                 li.onclick = (e) => {
                     e.stopPropagation();
+                    const nextDayUl = li.nextElementSibling;
+                    const wasOpen = nextDayUl && nextDayUl.style.display === 'block';
+                    
                     showSlide(index);
+                    
+                    // If it was already open before showSlide() ran, collapse it now.
+                    if (wasOpen) {
+                        nextDayUl.style.display = 'none';
+                    }
                 };
                 
             } else {
-                // It is a Standard Slide (Child)
                 li.innerHTML = createNavHTML(rawTitleText);
                 
                 if (currentDayContainer) {
-                    // Belongs inside the active Day folder
                     li.className = 'nav-child-item nav-slide-link';
                     currentDayContainer.appendChild(li);
                 } else {
-                    // Precedes Week 1 (e.g., Intro Slide)
                     li.className = 'nav-item-generic nav-slide-link';
                     navList.appendChild(li);
                 }
                 
-                // Child Click Logic (Go to slide, hide menu on mobile)
                 li.onclick = (e) => {
                     e.stopPropagation();
                     showSlide(index);
@@ -2225,7 +2225,6 @@
         currentSlideIndex = index;
         slides[currentSlideIndex].classList.add('active');
         
-        // Update styling and Centralized Accordion Auto-Expand
         const navItems = document.querySelectorAll('.nav-slide-link');
         navItems.forEach((item) => {
             if (parseInt(item.dataset.index) === currentSlideIndex) {
