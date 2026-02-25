@@ -111,8 +111,18 @@ const AccountingCycleResultView = ({ resultData, activityConfig }) => {
                             </div>
                         </div>
                         <div className="p-6">
-                            <div className="mb-6 p-4 bg-blue-50 text-sm text-blue-900 rounded border border-blue-100" 
-                                 dangerouslySetInnerHTML=${{ __html: rubricHtml }}></div>
+                            <div className="mb-6 flex flex-col gap-4">
+                                ${task.instructions || task.description ? html`
+                                    <div className="p-4 bg-indigo-50 text-sm text-indigo-900 rounded border border-indigo-100">
+                                        <h4 className="font-bold mb-1">Instructions:</h4>
+                                        <div dangerouslySetInnerHTML=${{ __html: task.instructions || task.description }}></div>
+                                    </div>
+                                ` : ''}
+                                <div className="p-4 bg-blue-50 text-sm text-blue-900 rounded border border-blue-100">
+                                    <h4 className="font-bold mb-1">Rubric:</h4>
+                                    <div dangerouslySetInnerHTML=${{ __html: rubricHtml }}></div>
+                                </div>
+                            </div>
                             <div className="border border-gray-200 rounded p-2 bg-gray-50">
                                 <${StepComponent} 
                                     activityData=${simData} 
