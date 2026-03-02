@@ -1874,7 +1874,7 @@ export const qbMerchJournalizing = [
     "type": "Journalizing"
   }
   },
-    }
+    {
   "FABM2-Corp-Memo-Meth-010": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
