@@ -49,6 +49,13 @@ function buildQuestionMap() {
 }
 buildQuestionMap();
 
+const cleanAmt = (amt) => {
+    if (amt === null || amt === undefined) return NaN;
+    const str = String(amt).trim();
+    if (str === '') return NaN;
+    return Number(str.replace(/,/g, ''));
+};
+
 const AccountingCycleResultView = ({ resultData, activityConfig, printMode, onPrint }) => {
     const [simData, setSimData] = useState(null);
 
@@ -216,8 +223,10 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                         let isValidOrder = true;
                         let foundCr = false;
                         rawStudentRows.forEach(sr => {
-                            if (sr.cr && Number(sr.cr) > 0) foundCr = true;
-                            if (sr.dr && Number(sr.dr) > 0 && foundCr) isValidOrder = false;
+                            const cA = cleanAmt(sr.cr);
+                            const dA = cleanAmt(sr.dr);
+                            if (!isNaN(cA) && cA > 0) foundCr = true;
+                            if (!isNaN(dA) && dA > 0 && foundCr) isValidOrder = false;
                         });
 
                         const solRows = isMemoEntry ? [...rawSolRows] : [...rawSolRows].sort((a, b) => {
@@ -233,8 +242,10 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                         });
 
                         const sortedStudentRows = isMemoEntry ? [...rawStudentRows] : [...rawStudentRows].sort((a, b) => {
-                            const aDr = a.dr && Number(a.dr) > 0;
-                            const bDr = b.dr && Number(b.dr) > 0;
+                            const aDrAmt = cleanAmt(a.dr);
+                            const bDrAmt = cleanAmt(b.dr);
+                            const aDr = !isNaN(aDrAmt) && aDrAmt > 0;
+                            const bDr = !isNaN(bDrAmt) && bDrAmt > 0;
                             if (aDr && !bDr) return -1;
                             if (!aDr && bDr) return 1;
                             const aAcc = (a.acct||'').trim().toLowerCase();
@@ -250,8 +261,14 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
 
                             const sDate = (cellData.date || '').trim();
                             const sAcct = (cellData.acct || '');
-                            const sDr = (cellData.dr || '').trim();
-                            const sCr = (cellData.cr || '').trim();
+                            const rawDr = (cellData.dr || '').trim();
+                            const rawCr = (cellData.cr || '').trim();
+                            
+                            const sDr = cleanAmt(rawDr);
+                            const sCr = cleanAmt(rawCr);
+                            
+                            const expDr = solRow ? cleanAmt(solRow.debit) : NaN;
+                            const expCr = solRow ? cleanAmt(solRow.credit) : NaN;
 
                             if (isMemoEntry) {
                                 if (solRow && !solRow.isExplanation && (solRow.date || r === 0)) {
@@ -275,9 +292,9 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                 if (solRow) {
                                     secMax++;
                                     if (r === 1 || solRow.isExplanation) {
-                                        if (sAcct.startsWith('        ') && sAcct.trim().length > 0) secScore++;
+                                        if (sAcct.match(/^\s{8,}\S/)) secScore++;
                                     } else {
-                                        if (!sAcct.startsWith(' ') && sAcct.trim().length > 0 && sDr === '' && sCr === '') secScore++;
+                                        if (!sAcct.startsWith(' ') && sAcct.trim().length > 0 && rawDr === '' && rawCr === '') secScore++;
                                     }
                                 }
                             } else {
@@ -318,15 +335,15 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
 
                                 if (solRow && !solRow.isExplanation && solRow.debit) {
                                     secMax++;
-                                    if (Number(sDr) === Number(solRow.debit) && isValidOrder) secScore++;
-                                } else if (sDr !== '') {
+                                    if (sDr === expDr && isValidOrder) secScore++;
+                                } else if (rawDr !== '') {
                                     secScore--;
                                 }
 
                                 if (solRow && !solRow.isExplanation && solRow.credit) {
                                     secMax++;
-                                    if (Number(sCr) === Number(solRow.credit) && isValidOrder) secScore++;
-                                } else if (sCr !== '') {
+                                    if (sCr === expCr && isValidOrder) secScore++;
+                                } else if (rawCr !== '') {
                                     secScore--;
                                 }
                             }
@@ -420,8 +437,10 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                 let isValidOrder = true;
                                                 let foundCr = false;
                                                 rawStudentRows.forEach(sr => {
-                                                    if (sr.cr && Number(sr.cr) > 0) foundCr = true;
-                                                    if (sr.dr && Number(sr.dr) > 0 && foundCr) isValidOrder = false;
+                                                    const cA = cleanAmt(sr.cr);
+                                                    const dA = cleanAmt(sr.dr);
+                                                    if (!isNaN(cA) && cA > 0) foundCr = true;
+                                                    if (!isNaN(dA) && dA > 0 && foundCr) isValidOrder = false;
                                                 });
 
                                                 const solRows = isMemoEntry ? [...rawSolRows] : [...rawSolRows].sort((a, b) => {
@@ -437,8 +456,10 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                 });
 
                                                 const sortedStudentRows = isMemoEntry ? [...rawStudentRows] : [...rawStudentRows].sort((a, b) => {
-                                                    const aDr = a.dr && Number(a.dr) > 0;
-                                                    const bDr = b.dr && Number(b.dr) > 0;
+                                                    const aDrAmt = cleanAmt(a.dr);
+                                                    const bDrAmt = cleanAmt(b.dr);
+                                                    const aDr = !isNaN(aDrAmt) && aDrAmt > 0;
+                                                    const bDr = !isNaN(bDrAmt) && bDrAmt > 0;
                                                     if (aDr && !bDr) return -1;
                                                     if (!aDr && bDr) return 1;
                                                     const aAcc = (a.acct||'').trim().toLowerCase();
@@ -457,8 +478,14 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
 
                                                     const sDate = (cellData.date || '').trim();
                                                     const sAcct = (cellData.acct || '');
-                                                    const sDr = (cellData.dr || '').trim();
-                                                    const sCr = (cellData.cr || '').trim();
+                                                    const rawDr = (cellData.dr || '').trim();
+                                                    const rawCr = (cellData.cr || '').trim();
+                                                    
+                                                    const sDr = cleanAmt(rawDr);
+                                                    const sCr = cleanAmt(rawCr);
+                                                    
+                                                    const expDr = solRow ? cleanAmt(solRow.debit) : NaN;
+                                                    const expCr = solRow ? cleanAmt(solRow.credit) : NaN;
 
                                                     let dateCorrect = false, acctCorrect = false, drCorrect = false, crCorrect = false;
 
@@ -482,16 +509,16 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
 
                                                         if (solRow) {
                                                             if (r === 1 || solRow.isExplanation) {
-                                                                acctCorrect = sAcct.startsWith('        ') && sAcct.trim().length > 0;
+                                                                acctCorrect = !!sAcct.match(/^\s{8,}\S/);
                                                             } else {
-                                                                acctCorrect = !sAcct.startsWith(' ') && sAcct.trim().length > 0 && sDr === '' && sCr === '';
+                                                                acctCorrect = !sAcct.startsWith(' ') && sAcct.trim().length > 0 && rawDr === '' && rawCr === '';
                                                             }
                                                         } else {
                                                             acctCorrect = (sAcct === '');
                                                         }
 
-                                                        drCorrect = (sDr === '');
-                                                        crCorrect = (sCr === '');
+                                                        drCorrect = (rawDr === '');
+                                                        crCorrect = (rawCr === '');
                                                     } else {
                                                         if (solRow && !solRow.isExplanation && (solRow.date || r === 0)) {
                                                             if (r === 0) {
@@ -526,15 +553,15 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                         }
 
                                                         if (solRow && !solRow.isExplanation && solRow.debit) {
-                                                            drCorrect = (Number(sDr) === Number(solRow.debit)) && isValidOrder;
+                                                            drCorrect = (sDr === expDr) && isValidOrder;
                                                         } else {
-                                                            drCorrect = (sDr === '');
+                                                            drCorrect = (rawDr === '');
                                                         }
 
                                                         if (solRow && !solRow.isExplanation && solRow.credit) {
-                                                            crCorrect = (Number(sCr) === Number(solRow.credit)) && isValidOrder;
+                                                            crCorrect = (sCr === expCr) && isValidOrder;
                                                         } else {
-                                                            crCorrect = (sCr === '');
+                                                            crCorrect = (rawCr === '');
                                                         }
                                                     }
 
@@ -551,13 +578,27 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                     };
                                                 }
 
-                                                const renderCell = (val, isCorrect, isExpected) => {
-                                                    if (isCorrect) {
-                                                        if (!val) return '';
-                                                        return html`<span className="text-green-700 font-bold">${val} <${Check} size=${14} className="inline align-text-bottom ml-1"/></span>`;
-                                                    } else {
-                                                        if (!val && !isExpected) return '';
-                                                        return html`<span className="text-red-600 font-bold">${val || ''} <${X} size=${14} className="inline align-text-bottom ml-1"/></span>`;
+                                                const renderCell = (val, isCorrect, isExpected, colType, indent = '') => {
+                                                    let icon = null;
+                                                    if (isCorrect && val) {
+                                                        icon = html`<${Check} size=${14} className="text-green-600 flex-shrink-0"/>`;
+                                                    } else if (!isCorrect && (val || isExpected)) {
+                                                        icon = html`<${X} size=${14} className="text-red-600 flex-shrink-0"/>`;
+                                                    }
+                                            
+                                                    let textClass = isCorrect ? "text-green-700 font-bold" : "text-red-600 font-bold";
+                                                    if (!val && !isExpected) return '';
+                                            
+                                                    if (colType === 'date' || colType === 'amount') {
+                                                        return html`<div className="flex w-full items-center">
+                                                            <div className="w-4 flex-none flex justify-start">${icon}</div>
+                                                            <div className=${"flex-grow text-right " + textClass}>${val}</div>
+                                                        </div>`;
+                                                    } else if (colType === 'acct') {
+                                                        return html`<div className="flex w-full items-center">
+                                                            <div className=${"flex-grow text-left whitespace-pre " + textClass}>${indent}${val}</div>
+                                                            <div className="w-4 flex-none flex justify-end">${icon}</div>
+                                                        </div>`;
                                                     }
                                                 };
 
@@ -574,10 +615,10 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                                         const res = results[r];
                                                                         return html`
                                                                             <tr key=${r} className="border-b border-gray-100">
-                                                                                <td className="p-1 w-12 text-center border-r font-mono">${renderCell(row.date, res.dateCorrect, res.expDate)}</td>
-                                                                                <td className="p-1 border-r font-mono whitespace-pre">${renderCell(row.acct, res.acctCorrect, res.expAcct)}</td>
-                                                                                <td className="p-1 w-16 text-right border-r font-mono">${renderCell(row.dr, res.drCorrect, res.expDr)}</td>
-                                                                                <td className="p-1 w-16 text-right font-mono">${renderCell(row.cr, res.crCorrect, res.expCr)}</td>
+                                                                                <td className="p-1 w-20 align-top border-r font-mono">${renderCell(row.date, res.dateCorrect, res.expDate, 'date')}</td>
+                                                                                <td className="p-1 align-top border-r font-mono">${renderCell(row.acct, res.acctCorrect, res.expAcct, 'acct')}</td>
+                                                                                <td className="p-1 w-28 align-top border-r font-mono">${renderCell(row.dr, res.drCorrect, res.expDr, 'amount')}</td>
+                                                                                <td className="p-1 w-28 align-top font-mono">${renderCell(row.cr, res.crCorrect, res.expCr, 'amount')}</td>
                                                                             </tr>
                                                                         `;
                                                                     })}
@@ -587,7 +628,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                                 <div className="bg-green-100 p-1 font-bold text-center text-green-900 border-b border-green-200">Solution</div>
                                                                 <table className="w-full">
                                                                     ${solRows.map((sol, r) => {
-                                                                        const indent = sol.credit ? '   ' : (sol.isExplanation ? '        ' : '');
+                                                                        const indent = sol.credit ? '   ' : (sol.isExplanation ? (isMemoEntry ? '        ' : '     ') : '');
                                                                         let displaySolDate = sol.date || '';
                                                                         if (displaySolDate && tIdx > 0 && r === 0) {
                                                                             const parts = displaySolDate.split(' ');
@@ -595,10 +636,10 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                                         }
                                                                         return html`
                                                                             <tr key=${r} className="border-b border-gray-100 bg-green-50/30">
-                                                                                <td className="p-1 w-12 text-center border-r font-mono text-gray-500">${displaySolDate}</td>
-                                                                                <td className="p-1 border-r font-mono whitespace-pre text-gray-700 font-bold">${indent}${sol.account || ''}</td>
-                                                                                <td className="p-1 w-16 text-right border-r font-mono text-gray-700">${sol.debit || ''}</td>
-                                                                                <td className="p-1 w-16 text-right font-mono text-gray-700">${sol.credit || ''}</td>
+                                                                                <td className="p-1 w-20 align-top text-right border-r font-mono text-gray-500 pr-2">${displaySolDate}</td>
+                                                                                <td className="p-1 align-top text-left border-r font-mono whitespace-pre text-gray-700 font-bold">${indent}${sol.account || ''}</td>
+                                                                                <td className="p-1 w-28 align-top text-right border-r font-mono text-gray-700 pr-2">${sol.debit || ''}</td>
+                                                                                <td className="p-1 w-28 align-top text-right font-mono text-gray-700 pr-2">${sol.credit || ''}</td>
                                                                             </tr>
                                                                         `;
                                                                     })}
