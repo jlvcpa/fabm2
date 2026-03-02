@@ -1664,11 +1664,11 @@ export const qbMerchJournalizing = [
     }
   },
     {
-  "FABM2-Corp-Memo-Meth-001": {
+  "FABM2-Corp-Memo-Meth-001PM": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method (Practice)",
     "transactions": [
       { "date": "Jan 1", "description": "Authorized to issue 10,000 shares of P100 par common stock and 5,000 shares of P50 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 10,000 Common and 5,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 5", "description": "Received subscriptions for 2,000 shares of common stock at P120 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 240000, "credit": "", "date": "Jan 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 40000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1682,12 +1682,35 @@ export const qbMerchJournalizing = [
       { "date": "Mar 30", "description": "Reissued 50 treasury shares at P135 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 6750, "credit": "", "date": "Mar 30" }, { "account": "Share Premium - Treasury", "debit": 250, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 7000, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+   }
   },
+    {
+  "FABM2-Corp-Jnl-Meth-001PJ": {
+    "instructions": "Journalize the transactions using the Journal Entry Method. Use the following accounts: Authorized Common Stock, Unissued Common Stock, Authorized Preferred Stock, Unissued Preferred Stock, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
+    "subject": "FABM2",
+    "competency": "Create",
+    "topic": "Journalizing - Corporation Equity Transactions under Journal Entry Method (Practice)",
+    "transactions": [
+      { "date": "Jan 1", "description": "Authorized to issue 10,000 shares of P100 par common stock and 5,000 shares of P50 par preferred stock.", "rows": 5, "solution": [ { "account": "Unissued Common Stock", "debit": 1000000, "credit": "", "date": "Jan 1" }, { "account": "Authorized Common Stock", "debit": "", "credit": 1000000, "date": "" }, { "account": "Unissued Preferred Stock", "debit": 250000, "credit": "", "date": "" }, { "account": "Authorized Preferred Stock", "debit": "", "credit": 250000, "date": "" }, { "account": "Authorization of shares.", "isExplanation": true, "date": "" } ] },
+      { "date": "Jan 5", "description": "Received subscriptions for 2,000 shares of common stock at P120 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 240000, "credit": "", "date": "Jan 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 40000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
+      { "date": "Jan 10", "description": "Received subscriptions for 1,000 shares of preferred stock at P60 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Preferred", "debit": 60000, "credit": "", "date": "Jan 10" }, { "account": "Subscribed Preferred Stock", "debit": "", "credit": 50000, "date": "" }, { "account": "Share Premium - Preferred", "debit": "", "credit": 10000, "date": "" }, { "account": "Received subscriptions for preferred stock.", "isExplanation": true, "date": "" } ] },
+      { "date": "Jan 15", "description": "Collected 50% downpayment on the Jan 5 common stock subscriptions.", "rows": 3, "solution": [ { "account": "Cash", "debit": 120000, "credit": "", "date": "Jan 15" }, { "account": "Subscriptions Receivable - Common", "debit": "", "credit": 120000, "date": "" }, { "account": "Partial collection of subscriptions.", "isExplanation": true, "date": "" } ] },
+      { "date": "Jan 20", "description": "Collected full payment for the Jan 10 preferred stock subscriptions and issued the shares.", "rows": 5, "solution": [ { "account": "Cash", "debit": 60000, "credit": "", "date": "Jan 20" }, { "account": "Subscriptions Receivable - Preferred", "debit": "", "credit": 60000, "date": "" }, { "account": "Subscribed Preferred Stock", "debit": 50000, "credit": "", "date": "" }, { "account": "Unissued Preferred Stock", "debit": "", "credit": 50000, "date": "" }, { "account": "Full collection and issuance of preferred shares.", "isExplanation": true, "date": "" } ] },
+      { "date": "Feb 1", "description": "Issued 500 shares of common stock for cash at P130 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 65000, "credit": "", "date": "Feb 1" }, { "account": "Unissued Common Stock", "debit": "", "credit": 50000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 15000, "date": "" }, { "account": "Direct issuance of common stock.", "isExplanation": true, "date": "" } ] },
+      { "date": "Feb 10", "description": "Collected the remaining 50% balance of the Jan 5 common stock subscriptions and issued the shares.", "rows": 5, "solution": [ { "account": "Cash", "debit": 120000, "credit": "", "date": "Feb 10" }, { "account": "Subscriptions Receivable - Common", "debit": "", "credit": 120000, "date": "" }, { "account": "Subscribed Common Stock", "debit": 200000, "credit": "", "date": "" }, { "account": "Unissued Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Full collection and issuance of common shares.", "isExplanation": true, "date": "" } ] },
+      { "date": "Mar 1", "description": "Reacquired 200 shares of common stock to be held in treasury at P140 per share.", "rows": 3, "solution": [ { "account": "Treasury Stock", "debit": 28000, "credit": "", "date": "Mar 1" }, { "account": "Cash", "debit": "", "credit": 28000, "date": "" }, { "account": "Acquired treasury shares.", "isExplanation": true, "date": "" } ] },
+      { "date": "Mar 15", "description": "Reissued 100 treasury shares at P150 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 15000, "credit": "", "date": "Mar 15" }, { "account": "Treasury Stock", "debit": "", "credit": 14000, "date": "" }, { "account": "Share Premium - Treasury", "debit": "", "credit": 1000, "date": "" }, { "account": "Reissued treasury shares above cost.", "isExplanation": true, "date": "" } ] },
+      { "date": "Mar 30", "description": "Reissued 50 treasury shares at P135 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 6750, "credit": "", "date": "Mar 30" }, { "account": "Share Premium - Treasury", "debit": 250, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 7000, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
+    ],
+    "type": "Journalizing"
+  }
+},    
+    {
   "FABM2-Corp-Memo-Meth-002": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Feb 1", "description": "Authorized to issue 50,000 shares of P10 par common stock and 10,000 shares of P100 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Feb 1" }, { "account": "Authorized to issue 50,000 Common and 10,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Feb 3", "description": "Received subscriptions for 5,000 shares of common stock at P15 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 75000, "credit": "", "date": "Feb 3" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 50000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 25000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1701,12 +1724,14 @@ export const qbMerchJournalizing = [
       { "date": "Mar 20", "description": "Reissued 200 treasury shares at P15 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 3000, "credit": "", "date": "Mar 20" }, { "account": "Share Premium - Treasury", "debit": 600, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 3600, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+   }
   },
+    {
   "FABM2-Corp-Memo-Meth-003": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Apr 1", "description": "Authorized to issue 100,000 shares of P20 par common stock and 20,000 shares of P50 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Apr 1" }, { "account": "Authorized to issue 100,000 Common and 20,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Apr 4", "description": "Received subscriptions for 10,000 shares of common stock at P25 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 250000, "credit": "", "date": "Apr 4" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1720,12 +1745,14 @@ export const qbMerchJournalizing = [
       { "date": "May 25", "description": "Reissued 400 treasury shares at P26 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 10400, "credit": "", "date": "May 25" }, { "account": "Share Premium - Treasury", "debit": 1600, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 12000, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
+    {
   "FABM2-Corp-Memo-Meth-004": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jun 1", "description": "Authorized to issue 20,000 shares of P50 par common stock and 10,000 shares of P10 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jun 1" }, { "account": "Authorized to issue 20,000 Common and 10,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jun 3", "description": "Received subscriptions for 4,000 shares of common stock at P60 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 240000, "credit": "", "date": "Jun 3" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 40000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1739,12 +1766,14 @@ export const qbMerchJournalizing = [
       { "date": "Jul 30", "description": "Reissued 100 treasury shares at P62 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 6200, "credit": "", "date": "Jul 30" }, { "account": "Share Premium - Treasury", "debit": 800, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 7000, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
+    {
   "FABM2-Corp-Memo-Meth-005": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Aug 1", "description": "Authorized to issue 200,000 shares of P5 par common stock and 20,000 shares of P20 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Aug 1" }, { "account": "Authorized to issue 200,000 Common and 20,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Aug 4", "description": "Received subscriptions for 20,000 shares of common stock at P8 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 160000, "credit": "", "date": "Aug 4" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 60000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1758,12 +1787,14 @@ export const qbMerchJournalizing = [
       { "date": "Sep 25", "description": "Reissued 500 treasury shares at P9 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 4500, "credit": "", "date": "Sep 25" }, { "account": "Share Premium - Treasury", "debit": 1500, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 6000, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
+    {
   "FABM2-Corp-Memo-Meth-006": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Oct 1", "description": "Authorized to issue 5,000 shares of P100 par common stock and 2,000 shares of P200 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Oct 1" }, { "account": "Authorized to issue 5,000 Common and 2,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Oct 4", "description": "Received subscriptions for 1,000 shares of common stock at P150 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 150000, "credit": "", "date": "Oct 4" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1777,12 +1808,14 @@ export const qbMerchJournalizing = [
       { "date": "Nov 25", "description": "Reissued 100 treasury shares at P165 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 16500, "credit": "", "date": "Nov 25" }, { "account": "Share Premium - Treasury", "debit": 500, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 17000, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
+    {
   "FABM2-Corp-Memo-Meth-007": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jan 1", "description": "Authorized to issue 100,000 shares of P25 par common stock and 10,000 shares of P100 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 100,000 Common and 10,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 3", "description": "Received subscriptions for 8,000 shares of common stock at P30 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 240000, "credit": "", "date": "Jan 3" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 40000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1796,12 +1829,14 @@ export const qbMerchJournalizing = [
       { "date": "Mar 20", "description": "Reissued 300 treasury shares at P38 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 11400, "credit": "", "date": "Mar 20" }, { "account": "Share Premium - Treasury", "debit": 600, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 12000, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
+    {
   "FABM2-Corp-Memo-Meth-008": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Apr 1", "description": "Authorized to issue 50,000 shares of P40 par common stock and 15,000 shares of P80 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Apr 1" }, { "account": "Authorized to issue 50,000 Common and 15,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Apr 5", "description": "Received subscriptions for 5,000 shares of common stock at P50 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 250000, "credit": "", "date": "Apr 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1815,12 +1850,14 @@ export const qbMerchJournalizing = [
       { "date": "Jun 20", "description": "Reissued 200 treasury shares at P58 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 11600, "credit": "", "date": "Jun 20" }, { "account": "Share Premium - Treasury", "debit": 400, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 12000, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
+    {
   "FABM2-Corp-Memo-Meth-009": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jul 1", "description": "Authorized to issue 80,000 shares of P15 par common stock and 10,000 shares of P50 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jul 1" }, { "account": "Authorized to issue 80,000 Common and 10,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jul 4", "description": "Received subscriptions for 10,000 shares of common stock at P20 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 200000, "credit": "", "date": "Jul 4" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 150000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1834,12 +1871,14 @@ export const qbMerchJournalizing = [
       { "date": "Sep 20", "description": "Reissued 300 treasury shares at P23 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 6900, "credit": "", "date": "Sep 20" }, { "account": "Share Premium - Treasury", "debit": 600, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 7500, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
+    }
   "FABM2-Corp-Memo-Meth-010": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Oct 1", "description": "Authorized to issue 500,000 shares of P2 par common stock and 50,000 shares of P5 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Oct 1" }, { "account": "Authorized to issue 500,000 Common and 50,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Oct 5", "description": "Received subscriptions for 50,000 shares of common stock at P4 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 200000, "credit": "", "date": "Oct 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 100000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1860,7 +1899,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jan 1", "description": "Authorized to issue 20,000 shares of P50 par common stock and 5,000 shares of P100 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 20,000 Common and 5,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 5", "description": "Received subscriptions for 5,000 shares of common stock at P65 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 325000, "credit": "", "date": "Jan 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 250000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 75000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1874,12 +1913,14 @@ export const qbMerchJournalizing = [
       { "date": "Mar 30", "description": "Reissued 100 treasury shares at P75 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 7500, "credit": "", "date": "Mar 30" }, { "account": "Share Premium - Treasury", "debit": 500, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 8000, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
+{
   "FABM2-Corp-Memo-Meth-012": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Apr 1", "description": "Authorized to issue 100,000 shares of P10 par common stock and 5,000 shares of P200 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Apr 1" }, { "account": "Authorized to issue 100,000 Common and 5,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Apr 5", "description": "Received subscriptions for 10,000 shares of common stock at P15 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 150000, "credit": "", "date": "Apr 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1893,12 +1934,14 @@ export const qbMerchJournalizing = [
       { "date": "Jun 20", "description": "Reissued 400 treasury shares at P10 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 4000, "credit": "", "date": "Jun 20" }, { "account": "Share Premium - Treasury", "debit": 800, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 4800, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
+{
   "FABM2-Corp-Memo-Meth-013": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jul 1", "description": "Authorized to issue 50,000 shares of P100 par common stock and 10,000 shares of P50 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jul 1" }, { "account": "Authorized to issue 50,000 Common and 10,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jul 5", "description": "Received subscriptions for 2,000 shares of common stock at P125 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 250000, "credit": "", "date": "Jul 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1912,12 +1955,14 @@ export const qbMerchJournalizing = [
       { "date": "Sep 30", "description": "Reissued 100 treasury shares at P135 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 13500, "credit": "", "date": "Sep 30" }, { "account": "Share Premium - Treasury", "debit": 500, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 14000, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
+{
   "FABM2-Corp-Memo-Meth-014": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Oct 1", "description": "Authorized to issue 40,000 shares of P25 par common stock and 5,000 shares of P75 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Oct 1" }, { "account": "Authorized to issue 40,000 Common and 5,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Oct 5", "description": "Received subscriptions for 4,000 shares of common stock at P35 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 140000, "credit": "", "date": "Oct 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 40000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1931,12 +1976,14 @@ export const qbMerchJournalizing = [
       { "date": "Dec 20", "description": "Reissued 200 treasury shares at P42 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 8400, "credit": "", "date": "Dec 20" }, { "account": "Share Premium - Treasury", "debit": 600, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 9000, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
+{
   "FABM2-Corp-Memo-Meth-015": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jan 1", "description": "Authorized to issue 500,000 shares of P5 par common stock and 50,000 shares of P10 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 500,000 Common and 50,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 5", "description": "Received subscriptions for 50,000 shares of common stock at P8 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 400000, "credit": "", "date": "Jan 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 250000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 150000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1950,12 +1997,14 @@ export const qbMerchJournalizing = [
       { "date": "Mar 20", "description": "Reissued 1,000 treasury shares at P8 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 8000, "credit": "", "date": "Mar 20" }, { "account": "Share Premium - Treasury", "debit": 2000, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 10000, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
+{
   "FABM2-Corp-Memo-Meth-016": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Apr 1", "description": "Authorized to issue 200,000 shares of P20 par common stock and 20,000 shares of P100 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Apr 1" }, { "account": "Authorized to issue 200,000 Common and 20,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Apr 5", "description": "Received subscriptions for 20,000 shares of common stock at P30 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 600000, "credit": "", "date": "Apr 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 400000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 200000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1969,12 +2018,13 @@ export const qbMerchJournalizing = [
       { "date": "Jun 30", "description": "Reissued 500 treasury shares at P33 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 16500, "credit": "", "date": "Jun 30" }, { "account": "Share Premium - Treasury", "debit": 1000, "credit": "", "date": "" }, { "account": "Treasury Stock", "debit": "", "credit": 17500, "date": "" }, { "account": "Reissued treasury shares below cost.", "isExplanation": true, "date": "" } ] }
     ],
     "type": "Journalizing"
+  }
   },
   "FABM2-Corp-Memo-Meth-017": {
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jul 1", "description": "Authorized to issue 50,000 shares of P50 par common stock and 10,000 shares of P50 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jul 1" }, { "account": "Authorized to issue 50,000 Common and 10,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jul 4", "description": "Received subscriptions for 5,000 shares of common stock at P60 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 300000, "credit": "", "date": "Jul 4" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 250000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -1993,7 +2043,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Oct 1", "description": "Authorized to issue 100,000 shares of P20 par common stock and 20,000 shares of P20 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Oct 1" }, { "account": "Authorized to issue 100,000 Common and 20,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Oct 4", "description": "Received subscriptions for 10,000 shares of common stock at P25 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 250000, "credit": "", "date": "Oct 4" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -2012,7 +2062,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jan 1", "description": "Authorized to issue 50,000 shares of P10 par common stock and 10,000 shares of P10 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 50,000 Common and 10,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 5", "description": "Received subscriptions for 5,000 shares of common stock at P14 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 70000, "credit": "", "date": "Jan 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 50000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 20000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -2031,7 +2081,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Apr 1", "description": "Authorized to issue 20,000 shares of P100 par common stock and 5,000 shares of P100 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Apr 1" }, { "account": "Authorized to issue 20,000 Common and 5,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Apr 5", "description": "Received subscriptions for 2,000 shares of common stock at P120 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 240000, "credit": "", "date": "Apr 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 40000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -2052,7 +2102,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jan 1", "description": "Authorized to issue 40,000 shares of P20 par common stock and 10,000 shares of P100 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 40,000 Common and 10,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 4", "description": "Received subscriptions for 10,000 shares of common stock at P25 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 250000, "credit": "", "date": "Jan 4" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Received subscriptions for common stock.", "isExplanation": true, "date": "" } ] },
@@ -2071,7 +2121,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Apr 1", "description": "Authorized to issue 50,000 shares of P5 par common stock and 5,000 shares of P50 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Apr 1" }, { "account": "Authorized to issue 50,000 Common and 5,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Apr 4", "description": "Received subscriptions for 20,000 shares of common stock at P8 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 160000, "credit": "", "date": "Apr 4" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 60000, "date": "" }, { "account": "Common stock subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2090,7 +2140,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jul 1", "description": "Authorized to issue 10,000 shares of P50 par common stock and 2,000 shares of P100 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jul 1" }, { "account": "Authorized to issue 10,000 Common and 2,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jul 5", "description": "Received subscriptions for 4,000 shares of common stock at P60 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 240000, "credit": "", "date": "Jul 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 40000, "date": "" }, { "account": "Subscribed common stock.", "isExplanation": true, "date": "" } ] },
@@ -2109,7 +2159,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jan 1", "description": "Authorized to issue 200,000 shares of P10 par common stock and 20,000 shares of P50 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 200,000 Common and 20,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 5", "description": "Received subscriptions for 50,000 shares of common stock at P12 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 600000, "credit": "", "date": "Jan 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 500000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 100000, "date": "" }, { "account": "Subscription for common stock.", "isExplanation": true, "date": "" } ] },
@@ -2128,7 +2178,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Apr 1", "description": "Authorized to issue 100,000 shares of P25 par common stock and 50,000 shares of P50 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Apr 1" }, { "account": "Authorized to issue 100,000 Common and 50,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Apr 5", "description": "Received subscriptions for 10,000 common shares at P30 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 300000, "credit": "", "date": "Apr 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 250000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2147,7 +2197,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jul 1", "description": "Authorized to issue 50,000 shares of P40 par common stock and 5,000 shares of P100 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jul 1" }, { "account": "Authorized to issue 50,000 Common and 5,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jul 5", "description": "Received subscriptions for 5,000 common shares at P50 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 250000, "credit": "", "date": "Jul 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2166,7 +2216,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Oct 1", "description": "Authorized to issue 20,000 shares of P100 par common stock and 10,000 shares of P50 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Oct 1" }, { "account": "Authorized to issue 20,000 Common and 10,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Oct 5", "description": "Received subscriptions for 4,000 common shares at P120 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 480000, "credit": "", "date": "Oct 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 400000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 80000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2185,7 +2235,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jan 1", "description": "Authorized to issue 100,000 shares of P5 par common stock and 10,000 shares of P25 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 100,000 Common and 10,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 5", "description": "Received subscriptions for 10,000 common shares at P8 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 80000, "credit": "", "date": "Jan 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 50000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 30000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2204,7 +2254,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Apr 1", "description": "Authorized to issue 50,000 shares of P20 par common stock and 5,000 shares of P100 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Apr 1" }, { "account": "Authorized to issue 50,000 Common and 5,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Apr 5", "description": "Received subscriptions for 5,000 common shares at P25 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 125000, "credit": "", "date": "Apr 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 25000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2223,7 +2273,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jul 1", "description": "Authorized to issue 20,000 shares of P100 par common stock and 5,000 shares of P100 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jul 1" }, { "account": "Authorized to issue 20,000 Common and 5,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jul 4", "description": "Received subscriptions for 2,000 common shares at P110 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 220000, "credit": "", "date": "Jul 4" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 20000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2244,7 +2294,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jan 1", "description": "The corporation was authorized to issue 20,000 shares of common stock, P50 par, and 10,000 shares of 8% preferred stock, P100 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 20,000 common and 10,000 preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 5", "description": "Received subscriptions for 5,000 shares of common stock at P60 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 300000, "credit": "", "date": "Jan 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 250000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Common stock subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2263,7 +2313,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Apr 1", "description": "Authorized to issue 50,000 common shares, P10 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Apr 1" }, { "account": "Authorized to issue 50,000 common shares, P10 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Apr 4", "description": "Received subscriptions for 10,000 shares at P15 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 150000, "credit": "", "date": "Apr 4" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2282,7 +2332,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscribed Common Stock, Common Stock, Share Premium - Common, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jun 1", "description": "Authorized to issue 30,000 shares of common stock, P20 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jun 1" }, { "account": "Authorized to issue 30,000 common shares, P20 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Jun 5", "description": "Received subscriptions for 6,000 shares at P25 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 150000, "credit": "", "date": "Jun 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 120000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 30000, "date": "" }, { "account": "Subscription entry.", "isExplanation": true, "date": "" } ] },
@@ -2301,7 +2351,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Preferred, Subscribed Preferred Stock, Preferred Stock, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Aug 1", "description": "Authorized to issue 10,000 shares of 10% preferred stock, P200 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Aug 1" }, { "account": "Authorized to issue 10,000 preferred shares, P200 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Aug 5", "description": "Received subscriptions for 1,000 shares at P210 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Preferred", "debit": 210000, "credit": "", "date": "Aug 5" }, { "account": "Subscribed Preferred Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Preferred", "debit": "", "credit": 10000, "date": "" }, { "account": "Preferred stock subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2320,7 +2370,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscribed Common Stock, Common Stock, Share Premium - Common, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Oct 1", "description": "Authorized to issue 100,000 common shares, P5 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Oct 1" }, { "account": "Authorized to issue 100,000 common shares, P5 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Oct 5", "description": "Received subscriptions for 20,000 shares at P8 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 160000, "credit": "", "date": "Oct 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 60000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2339,7 +2389,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscribed Common Stock, Common Stock, Share Premium - Common, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jan 1", "description": "Authorized to issue 40,000 shares of common stock, P25 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 40,000 common shares, P25 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 5", "description": "Received subscriptions for 4,000 shares at P30 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 120000, "credit": "", "date": "Jan 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 20000, "date": "" }, { "account": "Subscription for common stock.", "isExplanation": true, "date": "" } ] },
@@ -2358,7 +2408,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Mar 1", "description": "Authorized to issue 50,000 shares of common stock, P40 par, and 5,000 shares of preferred stock, P80 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Mar 1" }, { "account": "Authorized to issue 50,000 common and 5,000 preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Mar 5", "description": "Received subscriptions for 4,000 common shares at P50 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 200000, "credit": "", "date": "Mar 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 160000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 40000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2377,7 +2427,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscribed Common Stock, Common Stock, Share Premium - Common, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jun 1", "description": "Authorized to issue 100,000 common shares, P15 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jun 1" }, { "account": "Authorized to issue 100,000 common shares, P15 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Jun 5", "description": "Received subscriptions for 10,000 shares at P20 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 200000, "credit": "", "date": "Jun 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 150000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2396,7 +2446,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscribed Common Stock, Common Stock, Share Premium - Common, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Sep 1", "description": "Authorized to issue 200,000 common shares, P1 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Sep 1" }, { "account": "Authorized to issue 200,000 common shares, P1 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Sep 5", "description": "Received subscriptions for 50,000 shares at P3 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 150000, "credit": "", "date": "Sep 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 50000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 100000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2415,7 +2465,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscribed Common Stock, Common Stock, Share Premium - Common, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Dec 1", "description": "Authorized to issue 50,000 common shares, P100 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Dec 1" }, { "account": "Authorized to issue 50,000 common shares, P100 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Dec 5", "description": "Received subscriptions for 1,000 shares at P120 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 120000, "credit": "", "date": "Dec 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 20000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2436,7 +2486,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jan 1", "description": "Authorized to issue 50,000 shares of common stock, P10 par, and 10,000 shares of preferred stock, P100 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 50,000 Common and 10,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 5", "description": "Received subscriptions for 10,000 shares of common stock at P15 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 150000, "credit": "", "date": "Jan 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Common stock subscriptions.", "isExplanation": true, "date": "" } ] },
@@ -2455,7 +2505,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscribed Common Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Apr 1", "description": "Authorized to issue 100,000 shares of common stock, P5 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Apr 1" }, { "account": "Authorized to issue 100,000 common shares, P5 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Apr 5", "description": "Issued 20,000 shares of common stock for cash at P8 per share.", "rows": 4, "solution": [ { "account": "Cash", "debit": 160000, "credit": "", "date": "Apr 5" }, { "account": "Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 60000, "date": "" }, { "account": "Cash issuance of common stock.", "isExplanation": true, "date": "" } ] },
@@ -2474,7 +2524,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jul 1", "description": "Authorized to issue 20,000 shares of P100 par common stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jul 1" }, { "account": "Authorized to issue 20,000 common shares, P100 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Jul 5", "description": "Received subscriptions for 5,000 shares of common stock at P110 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 550000, "credit": "", "date": "Jul 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 500000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Subscribed common stock.", "isExplanation": true, "date": "" } ] },
@@ -2493,7 +2543,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Oct 1", "description": "Authorized to issue 50,000 shares of P20 par common stock and 5,000 shares of P50 par preferred stock.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Oct 1" }, { "account": "Authorized to issue 50,000 Common and 5,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Oct 5", "description": "Received subscriptions for 10,000 common shares at P25 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 250000, "credit": "", "date": "Oct 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Subscribed common stock.", "isExplanation": true, "date": "" } ] },
@@ -2512,7 +2562,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscribed Common Stock, Common Stock, Share Premium - Common, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jan 1", "description": "Authorized to issue 100,000 shares of common stock, P50 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 100,000 common shares, P50 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 10", "description": "Issued 10,000 common shares for cash at P55 each.", "rows": 4, "solution": [ { "account": "Cash", "debit": 550000, "credit": "", "date": "Jan 10" }, { "account": "Common Stock", "debit": "", "credit": 500000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Direct issuance.", "isExplanation": true, "date": "" } ] },
@@ -2531,7 +2581,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Preferred, Subscribed Preferred Stock, Preferred Stock, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Apr 1", "description": "Authorized to issue 20,000 preferred shares, P100 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Apr 1" }, { "account": "Authorized to issue 20,000 preferred shares, P100 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Apr 5", "description": "Issued 5,000 preferred shares at P105 each for cash.", "rows": 4, "solution": [ { "account": "Cash", "debit": 525000, "credit": "", "date": "Apr 5" }, { "account": "Preferred Stock", "debit": "", "credit": 500000, "date": "" }, { "account": "Share Premium - Preferred", "debit": "", "credit": 25000, "date": "" }, { "account": "Direct issuance.", "isExplanation": true, "date": "" } ] },
@@ -2550,7 +2600,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscribed Common Stock, Common Stock, Share Premium - Common, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jul 1", "description": "Authorized to issue 50,000 shares of common stock, P10 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jul 1" }, { "account": "Authorized to issue 50,000 common shares, P10 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Jul 5", "description": "Issued 10,000 shares for cash at P15 each.", "rows": 4, "solution": [ { "account": "Cash", "debit": 150000, "credit": "", "date": "Jul 5" }, { "account": "Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 50000, "date": "" }, { "account": "Direct issuance.", "isExplanation": true, "date": "" } ] },
@@ -2569,7 +2619,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Oct 1", "description": "Authorized to issue 10,000 shares of common stock, P100 par, and 5,000 shares of preferred stock, P200 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Oct 1" }, { "account": "Authorized to issue 10,000 Common and 5,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Oct 5", "description": "Received subscriptions for 1,000 shares of common stock at P120 per share.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 120000, "credit": "", "date": "Oct 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 100000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 20000, "date": "" }, { "account": "Subscribed common stock.", "isExplanation": true, "date": "" } ] },
@@ -2588,7 +2638,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscribed Common Stock, Common Stock, Share Premium - Common, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Jan 1", "description": "Authorized to issue 200,000 common shares, P5 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Jan 1" }, { "account": "Authorized to issue 200,000 common shares, P5 par.", "isExplanation": true, "date": "" } ] },
       { "date": "Jan 5", "description": "Issued 50,000 shares for cash at P8 each.", "rows": 4, "solution": [ { "account": "Cash", "debit": 400000, "credit": "", "date": "Jan 5" }, { "account": "Common Stock", "debit": "", "credit": 250000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 150000, "date": "" }, { "account": "Direct issuance.", "isExplanation": true, "date": "" } ] },
@@ -2607,7 +2657,7 @@ export const qbMerchJournalizing = [
     "instructions": "Journalize the transactions using the memo entry method. Use the following accounts: Memo Entry, Cash, Subscriptions Receivable - Common, Subscriptions Receivable - Preferred, Subscribed Common Stock, Subscribed Preferred Stock, Common Stock, Preferred Stock, Share Premium - Common, Share Premium - Preferred, Treasury Stock, Share Premium - Treasury, Retained Earnings.",
     "subject": "FABM2",
     "competency": "Create",
-    "topic": "Journalizing - Corporation Equity Transactions",
+    "topic": "Journalizing - Corporation Equity Transactions under Memorandum Entry Method",
     "transactions": [
       { "date": "Apr 1", "description": "Authorized to issue 500,000 shares of common stock, P2 par, and 50,000 shares of preferred stock, P10 par.", "rows": 2, "solution": [ { "account": "Memo Entry", "debit": "", "credit": "", "date": "Apr 1" }, { "account": "Authorized to issue 500,000 Common and 50,000 Preferred shares.", "isExplanation": true, "date": "" } ] },
       { "date": "Apr 5", "description": "Received subscriptions for 100,000 common shares at P5 each.", "rows": 4, "solution": [ { "account": "Subscriptions Receivable - Common", "debit": 500000, "credit": "", "date": "Apr 5" }, { "account": "Subscribed Common Stock", "debit": "", "credit": 200000, "date": "" }, { "account": "Share Premium - Common", "debit": "", "credit": 300000, "date": "" }, { "account": "Common subscriptions.", "isExplanation": true, "date": "" } ] },
