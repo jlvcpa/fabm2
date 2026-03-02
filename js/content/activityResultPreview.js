@@ -203,13 +203,49 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                 else if (section.type === "Journalizing") {
                     const transactions = liveQ.transactions || [];
                     transactions.forEach((trans, tIdx) => {
-                        const solRows = trans.solution || [];
+                        const rawSolRows = trans.solution || [];
                         const rowCount = trans.rows || 2;
-                        
+
+                        const rawStudentRows = [];
+                        for(let r=0; r<rowCount; r++){
+                            rawStudentRows.push((studentAns && studentAns[`t${tIdx}_r${r}`]) ? { ...studentAns[`t${tIdx}_r${r}`], _origIdx: r } : { date:'', acct:'', dr:'', cr:'', _origIdx: r });
+                        }
+
+                        let isValidOrder = true;
+                        let foundCr = false;
+                        rawStudentRows.forEach(sr => {
+                            if (sr.cr && Number(sr.cr) > 0) foundCr = true;
+                            if (sr.dr && Number(sr.dr) > 0 && foundCr) isValidOrder = false;
+                        });
+
+                        const solRows = [...rawSolRows].sort((a, b) => {
+                            if (a.isExplanation && !b.isExplanation) return 1;
+                            if (!a.isExplanation && b.isExplanation) return -1;
+                            if (a.debit && !b.debit) return -1;
+                            if (!a.debit && b.debit) return 1;
+                            const aAcc = (a.account||'').trim().toLowerCase();
+                            const bAcc = (b.account||'').trim().toLowerCase();
+                            if (aAcc < bAcc) return -1;
+                            if (aAcc > bAcc) return 1;
+                            return 0;
+                        });
+
+                        const sortedStudentRows = [...rawStudentRows].sort((a, b) => {
+                            const aDr = a.dr && Number(a.dr) > 0;
+                            const bDr = b.dr && Number(b.dr) > 0;
+                            if (aDr && !bDr) return -1;
+                            if (!aDr && bDr) return 1;
+                            const aAcc = (a.acct||'').trim().toLowerCase();
+                            const bAcc = (b.acct||'').trim().toLowerCase();
+                            if (aAcc < bAcc) return -1;
+                            if (aAcc > bAcc) return 1;
+                            return 0;
+                        });
+
                         for(let r=0; r<rowCount; r++) {
-                            const cellKey = `t${tIdx}_r${r}`;
-                            const cellData = (studentAns && studentAns[cellKey]) ? studentAns[cellKey] : { date:'', acct:'', dr:'', cr:'' };
+                            const cellData = sortedStudentRows[r];
                             const solRow = solRows[r] || null;
+
                             const sDate = (cellData.date || '').trim();
                             const sAcct = (cellData.acct || '');
                             const sDr = (cellData.dr || '').trim();
@@ -229,7 +265,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                 } else {
                                     if (sDate === '') secScore++;
                                 }
-                            } else if (sDate !== '') {
+                            } else if (solRow && sDate !== '') {
                                 secScore--;
                             }
 
@@ -252,15 +288,17 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
 
                             if (solRow && !solRow.isExplanation && solRow.debit) {
                                 secMax++;
-                                const fmtSol = Number(solRow.debit).toFixed(2);
-                                if (sDr === fmtSol) secScore++;
-                            } else if (sDr !== '') { secScore--; }
+                                if (Number(sDr) === Number(solRow.debit) && isValidOrder) secScore++;
+                            } else if (sDr !== '') {
+                                secScore--;
+                            }
 
                             if (solRow && !solRow.isExplanation && solRow.credit) {
                                 secMax++;
-                                const fmtSol = Number(solRow.credit).toFixed(2);
-                                if (sCr === fmtSol) secScore++;
-                            } else if (sCr !== '') { secScore--; }
+                                if (Number(sCr) === Number(solRow.credit) && isValidOrder) secScore++;
+                            } else if (sCr !== '') {
+                                secScore--;
+                            }
                         }
                     });
                 }
@@ -337,24 +375,59 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                             <div className="text-sm italic text-gray-600 mb-4 bg-blue-50 p-2 rounded">${liveQ.question || "Journalize the following transactions."}</div>
                                             
                                             ${(liveQ.transactions || []).map((trans, tIdx) => {
-                                                const solRows = trans.solution || [];
+                                                const rawSolRows = trans.solution || [];
                                                 const rowCount = trans.rows || 2;
-                                                const rows = [];
+                                                const rawStudentRows = [];
                                                 
                                                 for(let r=0; r<rowCount; r++) {
                                                     const cellKey = `t${tIdx}_r${r}`;
-                                                    const cellData = (studentAns && studentAns[cellKey]) ? studentAns[cellKey] : { date:'', acct:'', dr:'', cr:'' };
+                                                    rawStudentRows.push((studentAns && studentAns[cellKey]) ? { ...studentAns[cellKey], _origIdx: r } : { date:'', acct:'', dr:'', cr:'', _origIdx: r });
+                                                }
+
+                                                let isValidOrder = true;
+                                                let foundCr = false;
+                                                rawStudentRows.forEach(sr => {
+                                                    if (sr.cr && Number(sr.cr) > 0) foundCr = true;
+                                                    if (sr.dr && Number(sr.dr) > 0 && foundCr) isValidOrder = false;
+                                                });
+
+                                                const solRows = [...rawSolRows].sort((a, b) => {
+                                                    if (a.isExplanation && !b.isExplanation) return 1;
+                                                    if (!a.isExplanation && b.isExplanation) return -1;
+                                                    if (a.debit && !b.debit) return -1;
+                                                    if (!a.debit && b.debit) return 1;
+                                                    const aAcc = (a.account||'').trim().toLowerCase();
+                                                    const bAcc = (b.account||'').trim().toLowerCase();
+                                                    if (aAcc < bAcc) return -1;
+                                                    if (aAcc > bAcc) return 1;
+                                                    return 0;
+                                                });
+
+                                                const sortedStudentRows = [...rawStudentRows].sort((a, b) => {
+                                                    const aDr = a.dr && Number(a.dr) > 0;
+                                                    const bDr = b.dr && Number(b.dr) > 0;
+                                                    if (aDr && !bDr) return -1;
+                                                    if (!aDr && bDr) return 1;
+                                                    const aAcc = (a.acct||'').trim().toLowerCase();
+                                                    const bAcc = (b.acct||'').trim().toLowerCase();
+                                                    if (aAcc < bAcc) return -1;
+                                                    if (aAcc > bAcc) return 1;
+                                                    return 0;
+                                                });
+
+                                                const results = new Array(rowCount).fill(null);
+
+                                                for(let r=0; r<rowCount; r++) {
+                                                    const cellData = sortedStudentRows[r];
                                                     const solRow = solRows[r] || null;
-                                                    
+                                                    const origIdx = cellData._origIdx;
+
                                                     const sDate = (cellData.date || '').trim();
                                                     const sAcct = (cellData.acct || '');
                                                     const sDr = (cellData.dr || '').trim();
                                                     const sCr = (cellData.cr || '').trim();
 
-                                                    let dateCorrect = false;
-                                                    let acctCorrect = false;
-                                                    let drCorrect = false;
-                                                    let crCorrect = false;
+                                                    let dateCorrect = false, acctCorrect = false, drCorrect = false, crCorrect = false;
 
                                                     if (solRow && !solRow.isExplanation && (solRow.date || r === 0)) {
                                                         if (r === 0) {
@@ -365,7 +438,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                                 const parts = solRow.date ? solRow.date.split(' ') : [];
                                                                 isDateMatched = (sDate === parts[parts.length - 1]);
                                                             }
-                                                            dateCorrect = sDate.match(expectedRegex) && isDateMatched;
+                                                            dateCorrect = !!sDate.match(expectedRegex) && isDateMatched;
                                                         } else {
                                                             dateCorrect = (sDate === '');
                                                         }
@@ -389,73 +462,72 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                     }
 
                                                     if (solRow && !solRow.isExplanation && solRow.debit) {
-                                                        drCorrect = (sDr === Number(solRow.debit).toFixed(2));
+                                                        drCorrect = (Number(sDr) === Number(solRow.debit)) && isValidOrder;
                                                     } else {
                                                         drCorrect = (sDr === '');
                                                     }
 
                                                     if (solRow && !solRow.isExplanation && solRow.credit) {
-                                                        crCorrect = (sCr === Number(solRow.credit).toFixed(2));
+                                                        crCorrect = (Number(sCr) === Number(solRow.credit)) && isValidOrder;
                                                     } else {
                                                         crCorrect = (sCr === '');
                                                     }
 
-                                                    const renderCell = (val, isCorrect, isExpected) => {
-                                                        if (isCorrect) {
-                                                            if (!val) return '';
-                                                            return html`<span className="text-green-700 font-bold">${val} <${Check} size=${14} className="inline align-text-bottom ml-1"/></span>`;
-                                                        } else {
-                                                            if (!val && !isExpected) return '';
-                                                            return html`<span className="text-red-600 font-bold">${val || ''} <${X} size=${14} className="inline align-text-bottom ml-1"/></span>`;
-                                                        }
-                                                    };
-
-                                                    const expDate = solRow && !solRow.isExplanation && (solRow.date || r === 0);
-                                                    const expAcct = !!solRow;
-                                                    const expDr = solRow && !solRow.isExplanation && solRow.debit;
-                                                    const expCr = solRow && !solRow.isExplanation && solRow.credit;
-
-                                                    rows.push({ 
-                                                        dateHtml: renderCell(cellData.date, dateCorrect, expDate),
-                                                        acctHtml: renderCell(cellData.acct, acctCorrect, expAcct),
-                                                        drHtml: renderCell(cellData.dr, drCorrect, expDr),
-                                                        crHtml: renderCell(cellData.cr, crCorrect, expCr),
+                                                    results[origIdx] = { 
+                                                        dateCorrect, 
+                                                        acctCorrect, 
+                                                        drCorrect, 
+                                                        crCorrect, 
+                                                        expDate: !!solRow && !solRow.isExplanation && (solRow.date || r === 0),
+                                                        expAcct: !!solRow,
+                                                        expDr: !!solRow && !solRow.isExplanation && solRow.debit,
+                                                        expCr: !!solRow && !solRow.isExplanation && solRow.credit,
                                                         solRow 
-                                                    });
+                                                    };
                                                 }
+
+                                                const renderCell = (val, isCorrect, isExpected) => {
+                                                    if (isCorrect) {
+                                                        if (!val) return '';
+                                                        return html`<span className="text-green-700 font-bold">${val} <${Check} size=${14} className="inline align-text-bottom ml-1"/></span>`;
+                                                    } else {
+                                                        if (!val && !isExpected) return '';
+                                                        return html`<span className="text-red-600 font-bold">${val || ''} <${X} size=${14} className="inline align-text-bottom ml-1"/></span>`;
+                                                    }
+                                                };
 
                                                 return html`
                                                     <div key=${tIdx} className="mb-4 border border-gray-300 rounded overflow-hidden">
                                                         <div className="bg-gray-100 px-3 py-2 text-sm font-bold border-b border-gray-300">
                                                             Transaction ${tIdx+1}: <span className="font-normal text-gray-600">${trans.date} - ${trans.description}</span>
                                                         </div>
-                                                        <div className="grid grid-cols-2 text-xs">
-                                                            <div className="border-r border-gray-300">
+                                                        <div className="flex flex-col text-xs">
+                                                            <div className="border-b border-gray-300 bg-white">
                                                                 <div className="bg-blue-100 p-1 font-bold text-center text-blue-900 border-b border-blue-200">Your Answer</div>
                                                                 <table className="w-full">
-                                                                    ${rows.map((row, r) => html`
-                                                                        <tr key=${r} className="border-b border-gray-100">
-                                                                            <td className="p-1 w-12 text-center border-r font-mono">${row.dateHtml}</td>
-                                                                            <td className="p-1 border-r font-mono whitespace-pre">${row.acctHtml}</td>
-                                                                            <td className="p-1 w-16 text-right border-r font-mono">${row.drHtml}</td>
-                                                                            <td className="p-1 w-16 text-right font-mono">${row.crHtml}</td>
-                                                                        </tr>
-                                                                    `)}
+                                                                    ${rawStudentRows.map((row, r) => {
+                                                                        const res = results[r];
+                                                                        return html`
+                                                                            <tr key=${r} className="border-b border-gray-100">
+                                                                                <td className="p-1 w-12 text-center border-r font-mono">${renderCell(row.date, res.dateCorrect, res.expDate)}</td>
+                                                                                <td className="p-1 border-r font-mono whitespace-pre">${renderCell(row.acct, res.acctCorrect, res.expAcct)}</td>
+                                                                                <td className="p-1 w-16 text-right border-r font-mono">${renderCell(row.dr, res.drCorrect, res.expDr)}</td>
+                                                                                <td className="p-1 w-16 text-right font-mono">${renderCell(row.cr, res.crCorrect, res.expCr)}</td>
+                                                                            </tr>
+                                                                        `;
+                                                                    })}
                                                                 </table>
                                                             </div>
-                                                            <div>
+                                                            <div className="bg-white">
                                                                 <div className="bg-green-100 p-1 font-bold text-center text-green-900 border-b border-green-200">Solution</div>
                                                                 <table className="w-full">
-                                                                    ${rows.map((row, r) => {
-                                                                        const sol = row.solRow || { account: '', debit: '', credit: '' };
+                                                                    ${solRows.map((sol, r) => {
                                                                         const indent = sol.credit ? '   ' : (sol.isExplanation ? '     ' : '');
-                                                                        
                                                                         let displaySolDate = sol.date || '';
                                                                         if (displaySolDate && tIdx > 0 && r === 0) {
                                                                             const parts = displaySolDate.split(' ');
                                                                             displaySolDate = parts[parts.length - 1];
                                                                         }
-
                                                                         return html`
                                                                             <tr key=${r} className="border-b border-gray-100 bg-green-50/30">
                                                                                 <td className="p-1 w-12 text-center border-r font-mono text-gray-500">${displaySolDate}</td>
