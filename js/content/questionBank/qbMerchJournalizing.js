@@ -1,4 +1,3 @@
-
 export const qbMerchJournalizing = [
 {
     "FABM1-Merch-Period-FIFO-001": {
