@@ -206,6 +206,8 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                         const rawSolRows = trans.solution || [];
                         const rowCount = trans.rows || 2;
 
+                        const isMemoEntry = rawSolRows.length > 0 && !!rawSolRows[0].account && rawSolRows[0].account.trim().toLowerCase() === 'memo entry';
+
                         const rawStudentRows = [];
                         for(let r=0; r<rowCount; r++){
                             rawStudentRows.push((studentAns && studentAns[`t${tIdx}_r${r}`]) ? { ...studentAns[`t${tIdx}_r${r}`], _origIdx: r } : { date:'', acct:'', dr:'', cr:'', _origIdx: r });
@@ -218,7 +220,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                             if (sr.dr && Number(sr.dr) > 0 && foundCr) isValidOrder = false;
                         });
 
-                        const solRows = [...rawSolRows].sort((a, b) => {
+                        const solRows = isMemoEntry ? [...rawSolRows] : [...rawSolRows].sort((a, b) => {
                             if (a.isExplanation && !b.isExplanation) return 1;
                             if (!a.isExplanation && b.isExplanation) return -1;
                             if (a.debit && !b.debit) return -1;
@@ -230,7 +232,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                             return 0;
                         });
 
-                        const sortedStudentRows = [...rawStudentRows].sort((a, b) => {
+                        const sortedStudentRows = isMemoEntry ? [...rawStudentRows] : [...rawStudentRows].sort((a, b) => {
                             const aDr = a.dr && Number(a.dr) > 0;
                             const bDr = b.dr && Number(b.dr) > 0;
                             if (aDr && !bDr) return -1;
@@ -251,53 +253,82 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                             const sDr = (cellData.dr || '').trim();
                             const sCr = (cellData.cr || '').trim();
 
-                            if (solRow && !solRow.isExplanation && (solRow.date || r === 0)) {
-                                secMax++;
-                                if (r === 0) {
-                                    const expectedRegex = (tIdx === 0) ? /^[A-Z][a-z]{2}\s\d{1,2}$/ : /^\d{1,2}$/;
-                                    let isDateCorrect = false;
-                                    if (tIdx === 0) isDateCorrect = (sDate === solRow.date);
-                                    else {
-                                        const parts = solRow.date ? solRow.date.split(' ') : [];
-                                        isDateCorrect = (sDate === parts[parts.length - 1]);
+                            if (isMemoEntry) {
+                                if (solRow && !solRow.isExplanation && (solRow.date || r === 0)) {
+                                    secMax++;
+                                    if (r === 0) {
+                                        const expectedRegex = (tIdx === 0) ? /^[A-Z][a-z]{2}\s\d{1,2}$/ : /^\d{1,2}$/;
+                                        let isDateCorrect = false;
+                                        if (tIdx === 0) isDateCorrect = (sDate === solRow.date);
+                                        else {
+                                            const parts = solRow.date ? solRow.date.split(' ') : [];
+                                            isDateCorrect = (sDate === parts[parts.length - 1]);
+                                        }
+                                        if (sDate.match(expectedRegex) && isDateCorrect) secScore++;
+                                    } else {
+                                        if (sDate === '') secScore++;
                                     }
-                                    if (sDate.match(expectedRegex) && isDateCorrect) secScore++;
-                                } else {
-                                    if (sDate === '') secScore++;
+                                } else if (solRow && sDate !== '') {
+                                    secScore--;
                                 }
-                            } else if (solRow && sDate !== '') {
-                                secScore--;
-                            }
 
-                            if (solRow) {
-                                secMax++;
-                                if (solRow.isExplanation) {
-                                    if (sAcct.match(/^\s{5,8}\S/)) secScore++;
-                                } else {
-                                    const cleanInput = sAcct.trim().toLowerCase();
-                                    const cleanSol = (solRow.account || '').trim().toLowerCase();
-                                    if (cleanInput === cleanSol && cleanSol !== '') {
-                                        if (solRow.credit) {
-                                            if (sAcct.match(/^\s{3,5}\S/)) secScore++;
-                                        } else {
-                                            if (sAcct.match(/^\S/)) secScore++;
+                                if (solRow) {
+                                    secMax++;
+                                    if (r === 1 || solRow.isExplanation) {
+                                        if (sAcct.startsWith('        ') && sAcct.trim().length > 0) secScore++;
+                                    } else {
+                                        if (!sAcct.startsWith(' ') && sAcct.trim().length > 0 && sDr === '' && sCr === '') secScore++;
+                                    }
+                                }
+                            } else {
+                                if (solRow && !solRow.isExplanation && (solRow.date || r === 0)) {
+                                    secMax++;
+                                    if (r === 0) {
+                                        const expectedRegex = (tIdx === 0) ? /^[A-Z][a-z]{2}\s\d{1,2}$/ : /^\d{1,2}$/;
+                                        let isDateCorrect = false;
+                                        if (tIdx === 0) isDateCorrect = (sDate === solRow.date);
+                                        else {
+                                            const parts = solRow.date ? solRow.date.split(' ') : [];
+                                            isDateCorrect = (sDate === parts[parts.length - 1]);
+                                        }
+                                        if (sDate.match(expectedRegex) && isDateCorrect) secScore++;
+                                    } else {
+                                        if (sDate === '') secScore++;
+                                    }
+                                } else if (solRow && sDate !== '') {
+                                    secScore--;
+                                }
+
+                                if (solRow) {
+                                    secMax++;
+                                    if (solRow.isExplanation) {
+                                        if (sAcct.match(/^\s{5,8}\S/)) secScore++;
+                                    } else {
+                                        const cleanInput = sAcct.trim().toLowerCase();
+                                        const cleanSol = (solRow.account || '').trim().toLowerCase();
+                                        if (cleanInput === cleanSol && cleanSol !== '') {
+                                            if (solRow.credit) {
+                                                if (sAcct.match(/^\s{3,5}\S/)) secScore++;
+                                            } else {
+                                                if (sAcct.match(/^\S/)) secScore++;
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            if (solRow && !solRow.isExplanation && solRow.debit) {
-                                secMax++;
-                                if (Number(sDr) === Number(solRow.debit) && isValidOrder) secScore++;
-                            } else if (sDr !== '') {
-                                secScore--;
-                            }
+                                if (solRow && !solRow.isExplanation && solRow.debit) {
+                                    secMax++;
+                                    if (Number(sDr) === Number(solRow.debit) && isValidOrder) secScore++;
+                                } else if (sDr !== '') {
+                                    secScore--;
+                                }
 
-                            if (solRow && !solRow.isExplanation && solRow.credit) {
-                                secMax++;
-                                if (Number(sCr) === Number(solRow.credit) && isValidOrder) secScore++;
-                            } else if (sCr !== '') {
-                                secScore--;
+                                if (solRow && !solRow.isExplanation && solRow.credit) {
+                                    secMax++;
+                                    if (Number(sCr) === Number(solRow.credit) && isValidOrder) secScore++;
+                                } else if (sCr !== '') {
+                                    secScore--;
+                                }
                             }
                         }
                     });
@@ -377,6 +408,8 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                             ${(liveQ.transactions || []).map((trans, tIdx) => {
                                                 const rawSolRows = trans.solution || [];
                                                 const rowCount = trans.rows || 2;
+                                                const isMemoEntry = rawSolRows.length > 0 && !!rawSolRows[0].account && rawSolRows[0].account.trim().toLowerCase() === 'memo entry';
+                                                
                                                 const rawStudentRows = [];
                                                 
                                                 for(let r=0; r<rowCount; r++) {
@@ -391,7 +424,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                     if (sr.dr && Number(sr.dr) > 0 && foundCr) isValidOrder = false;
                                                 });
 
-                                                const solRows = [...rawSolRows].sort((a, b) => {
+                                                const solRows = isMemoEntry ? [...rawSolRows] : [...rawSolRows].sort((a, b) => {
                                                     if (a.isExplanation && !b.isExplanation) return 1;
                                                     if (!a.isExplanation && b.isExplanation) return -1;
                                                     if (a.debit && !b.debit) return -1;
@@ -403,7 +436,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                     return 0;
                                                 });
 
-                                                const sortedStudentRows = [...rawStudentRows].sort((a, b) => {
+                                                const sortedStudentRows = isMemoEntry ? [...rawStudentRows] : [...rawStudentRows].sort((a, b) => {
                                                     const aDr = a.dr && Number(a.dr) > 0;
                                                     const bDr = b.dr && Number(b.dr) > 0;
                                                     if (aDr && !bDr) return -1;
@@ -429,48 +462,80 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
 
                                                     let dateCorrect = false, acctCorrect = false, drCorrect = false, crCorrect = false;
 
-                                                    if (solRow && !solRow.isExplanation && (solRow.date || r === 0)) {
-                                                        if (r === 0) {
-                                                            const expectedRegex = (tIdx === 0) ? /^[A-Z][a-z]{2}\s\d{1,2}$/ : /^\d{1,2}$/;
-                                                            let isDateMatched = false;
-                                                            if (tIdx === 0) isDateMatched = (sDate === solRow.date);
-                                                            else {
-                                                                const parts = solRow.date ? solRow.date.split(' ') : [];
-                                                                isDateMatched = (sDate === parts[parts.length - 1]);
+                                                    if (isMemoEntry) {
+                                                        if (solRow && !solRow.isExplanation && (solRow.date || r === 0)) {
+                                                            if (r === 0) {
+                                                                const expectedRegex = (tIdx === 0) ? /^[A-Z][a-z]{2}\s\d{1,2}$/ : /^\d{1,2}$/;
+                                                                let isDateMatched = false;
+                                                                if (tIdx === 0) isDateMatched = (sDate === solRow.date);
+                                                                else {
+                                                                    const parts = solRow.date ? solRow.date.split(' ') : [];
+                                                                    isDateMatched = (sDate === parts[parts.length - 1]);
+                                                                }
+                                                                dateCorrect = !!sDate.match(expectedRegex) && isDateMatched;
+                                                            } else {
+                                                                dateCorrect = (sDate === '');
                                                             }
-                                                            dateCorrect = !!sDate.match(expectedRegex) && isDateMatched;
                                                         } else {
                                                             dateCorrect = (sDate === '');
                                                         }
-                                                    } else {
-                                                        dateCorrect = (sDate === '');
-                                                    }
 
-                                                    if (solRow) {
-                                                        if (solRow.isExplanation) {
-                                                            acctCorrect = !!sAcct.match(/^\s{5,8}\S/);
-                                                        } else {
-                                                            const cleanInput = sAcct.trim().toLowerCase();
-                                                            const cleanSol = (solRow.account || '').trim().toLowerCase();
-                                                            if (cleanInput === cleanSol && cleanSol !== '') {
-                                                                if (solRow.credit) acctCorrect = !!sAcct.match(/^\s{3,5}\S/);
-                                                                else acctCorrect = !!sAcct.match(/^\S/);
+                                                        if (solRow) {
+                                                            if (r === 1 || solRow.isExplanation) {
+                                                                acctCorrect = sAcct.startsWith('        ') && sAcct.trim().length > 0;
+                                                            } else {
+                                                                acctCorrect = !sAcct.startsWith(' ') && sAcct.trim().length > 0 && sDr === '' && sCr === '';
                                                             }
+                                                        } else {
+                                                            acctCorrect = (sAcct === '');
                                                         }
-                                                    } else {
-                                                        acctCorrect = (sAcct === '');
-                                                    }
 
-                                                    if (solRow && !solRow.isExplanation && solRow.debit) {
-                                                        drCorrect = (Number(sDr) === Number(solRow.debit)) && isValidOrder;
-                                                    } else {
                                                         drCorrect = (sDr === '');
-                                                    }
-
-                                                    if (solRow && !solRow.isExplanation && solRow.credit) {
-                                                        crCorrect = (Number(sCr) === Number(solRow.credit)) && isValidOrder;
-                                                    } else {
                                                         crCorrect = (sCr === '');
+                                                    } else {
+                                                        if (solRow && !solRow.isExplanation && (solRow.date || r === 0)) {
+                                                            if (r === 0) {
+                                                                const expectedRegex = (tIdx === 0) ? /^[A-Z][a-z]{2}\s\d{1,2}$/ : /^\d{1,2}$/;
+                                                                let isDateMatched = false;
+                                                                if (tIdx === 0) isDateMatched = (sDate === solRow.date);
+                                                                else {
+                                                                    const parts = solRow.date ? solRow.date.split(' ') : [];
+                                                                    isDateMatched = (sDate === parts[parts.length - 1]);
+                                                                }
+                                                                dateCorrect = !!sDate.match(expectedRegex) && isDateMatched;
+                                                            } else {
+                                                                dateCorrect = (sDate === '');
+                                                            }
+                                                        } else {
+                                                            dateCorrect = (sDate === '');
+                                                        }
+
+                                                        if (solRow) {
+                                                            if (solRow.isExplanation) {
+                                                                acctCorrect = !!sAcct.match(/^\s{5,8}\S/);
+                                                            } else {
+                                                                const cleanInput = sAcct.trim().toLowerCase();
+                                                                const cleanSol = (solRow.account || '').trim().toLowerCase();
+                                                                if (cleanInput === cleanSol && cleanSol !== '') {
+                                                                    if (solRow.credit) acctCorrect = !!sAcct.match(/^\s{3,5}\S/);
+                                                                    else acctCorrect = !!sAcct.match(/^\S/);
+                                                                }
+                                                            }
+                                                        } else {
+                                                            acctCorrect = (sAcct === '');
+                                                        }
+
+                                                        if (solRow && !solRow.isExplanation && solRow.debit) {
+                                                            drCorrect = (Number(sDr) === Number(solRow.debit)) && isValidOrder;
+                                                        } else {
+                                                            drCorrect = (sDr === '');
+                                                        }
+
+                                                        if (solRow && !solRow.isExplanation && solRow.credit) {
+                                                            crCorrect = (Number(sCr) === Number(solRow.credit)) && isValidOrder;
+                                                        } else {
+                                                            crCorrect = (sCr === '');
+                                                        }
                                                     }
 
                                                     results[origIdx] = { 
@@ -522,7 +587,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                                 <div className="bg-green-100 p-1 font-bold text-center text-green-900 border-b border-green-200">Solution</div>
                                                                 <table className="w-full">
                                                                     ${solRows.map((sol, r) => {
-                                                                        const indent = sol.credit ? '   ' : (sol.isExplanation ? '     ' : '');
+                                                                        const indent = sol.credit ? '   ' : (sol.isExplanation ? '        ' : '');
                                                                         let displaySolDate = sol.date || '';
                                                                         if (displaySolDate && tIdx > 0 && r === 0) {
                                                                             const parts = displaySolDate.split(' ');
