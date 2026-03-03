@@ -10,7 +10,7 @@
         padding: 0;
         width: 100%;
         height: 100%;
-        background-color: #0d1117;Day
+        background-color: #0d1117;
         color: #ffffff;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         overflow: hidden;
@@ -455,6 +455,94 @@
         background: #f8fafc !important;
         border-top: 2px solid #94a3b8 !important;
     }
+
+    /* ========================================================================================= */
+    /* --- PRESENTATION MODE FIXES (Dark Theme Overrides for Tables, Inputs & SVGs) --- */
+    /* ========================================================================================= */
+    
+    /* Ensure Table Text is Bright in Dark Mode */
+    body:not(.book-mode) .slide table {
+        color: #e6edf3 !important;
+    }
+    body:not(.book-mode) .slide th {
+        color: #58a6ff !important;
+    }
+    body:not(.book-mode) .slide td {
+        color: #c9d1d9 !important;
+    }
+    
+    /* Ensure Input Fields Native to Dark Theme */
+    body:not(.book-mode) .slide input[type="number"] {
+        background-color: #0d1117 !important;
+        color: #e6edf3 !important;
+        border: 1px solid #30363d !important;
+        border-radius: 4px;
+        font-family: inherit;
+        font-weight: bold;
+    }
+    body:not(.book-mode) .slide input[type="number"]::placeholder {
+        color: #484f58 !important;
+    }
+    body:not(.book-mode) .slide input[type="number"]:focus {
+        outline: none;
+        border-color: #58a6ff !important;
+        box-shadow: 0 0 8px rgba(88, 166, 255, 0.4);
+    }
+
+    /* SVG Dark Mode Dynamic Recolor (Fixes Dark Text Issue) */
+    body:not(.book-mode) .slide svg {
+        background: transparent !important;
+        border-color: #30363d !important;
+    }
+    
+    /* Convert SVG Dark Text to Bright Colors */
+    body:not(.book-mode) .slide svg text[fill="#334155"],
+    body:not(.book-mode) .slide svg text[fill="#0f172a"] { fill: #e6edf3 !important; }
+    body:not(.book-mode) .slide svg text[fill="#475569"] { fill: #8b949e !important; }
+    body:not(.book-mode) .slide svg text[fill="#1e3a8a"] { fill: #79c0ff !important; }
+    body:not(.book-mode) .slide svg text[fill="#14532d"] { fill: #7ee787 !important; }
+    body:not(.book-mode) .slide svg text[fill="#7f1d1d"],
+    body:not(.book-mode) .slide svg text[fill="#b91c1c"],
+    body:not(.book-mode) .slide svg text[fill="#450a0a"] { fill: #ff7b72 !important; }
+    body:not(.book-mode) .slide svg text[fill="#854d0e"] { fill: #e3b341 !important; }
+    
+    /* Convert SVG Solid Boxes to Translucent Dark Theme Boxes */
+    body:not(.book-mode) .slide svg rect[fill="#e2e8f0"],
+    body:not(.book-mode) .slide svg rect[fill="#cbd5e1"] { fill: #21262d !important; stroke: #8b949e !important; }
+    body:not(.book-mode) .slide svg rect[fill="#bfdbfe"],
+    body:not(.book-mode) .slide svg rect[fill="#dbeafe"] { fill: rgba(88, 166, 255, 0.15) !important; stroke: #58a6ff !important; }
+    body:not(.book-mode) .slide svg rect[fill="#bbf7d0"] { fill: rgba(46, 160, 67, 0.15) !important; stroke: #3fb950 !important; }
+    body:not(.book-mode) .slide svg rect[fill="#fecaca"],
+    body:not(.book-mode) .slide svg rect[fill="#fca5a5"],
+    body:not(.book-mode) .slide svg rect[fill="#f87171"] { fill: rgba(248, 81, 73, 0.15) !important; stroke: #f85149 !important; }
+    body:not(.book-mode) .slide svg rect[fill="#fef08a"] { fill: rgba(210, 153, 34, 0.15) !important; stroke: #d29922 !important; }
+    
+    body:not(.book-mode) .slide svg circle[fill="#93c5fd"] { fill: rgba(88, 166, 255, 0.15) !important; stroke: #58a6ff !important; }
+    body:not(.book-mode) .slide svg circle[fill="#fef08a"] { fill: rgba(210, 153, 34, 0.15) !important; stroke: #d29922 !important; }
+    
+    /* Convert SVG Strokes (Lines/Arrows) */
+    body:not(.book-mode) .slide svg path[stroke="#334155"],
+    body:not(.book-mode) .slide svg line[stroke="#334155"],
+    body:not(.book-mode) .slide svg line[stroke="#94a3b8"] { stroke: #8b949e !important; }
+    body:not(.book-mode) .slide svg line[stroke="#cbd5e1"] { stroke: #30363d !important; }
+    
+    body:not(.book-mode) .slide svg path[stroke="#1e3a8a"],
+    body:not(.book-mode) .slide svg path[stroke="#2563eb"],
+    body:not(.book-mode) .slide svg path[stroke="#3b82f6"] { stroke: #58a6ff !important; }
+    body:not(.book-mode) .slide svg path[stroke="#16a34a"],
+    body:not(.book-mode) .slide svg path[stroke="#15803d"] { stroke: #3fb950 !important; }
+    body:not(.book-mode) .slide svg path[stroke="#dc2626"],
+    body:not(.book-mode) .slide svg path[stroke="#b91c1c"] { stroke: #f85149 !important; }
+    body:not(.book-mode) .slide svg path[stroke="#ca8a04"] { stroke: #d29922 !important; }
+    
+    body:not(.book-mode) .slide svg marker polygon[fill="#334155"] { fill: #8b949e !important; }
+    body:not(.book-mode) .slide svg marker polygon[fill="#1e3a8a"],
+    body:not(.book-mode) .slide svg marker polygon[fill="#3b82f6"],
+    body:not(.book-mode) .slide svg marker polygon[fill="#2563eb"] { fill: #58a6ff !important; }
+    body:not(.book-mode) .slide svg marker polygon[fill="#16a34a"],
+    body:not(.book-mode) .slide svg marker polygon[fill="#14532d"] { fill: #3fb950 !important; }
+    body:not(.book-mode) .slide svg marker polygon[fill="#dc2626"],
+    body:not(.book-mode) .slide svg marker polygon[fill="#991b1b"] { fill: #f85149 !important; }
 </style>
 </head>
 <body>
@@ -2640,7 +2728,6 @@
         </div>
         <!-- DAY 3 END -->
 
-        <!-- DAY 4 START -->
         <div class="slide" 
              data-voiceover="audio/day4_slide1.wav" 
              data-text="Welcome to Day 4. Yesterday, we established the theoretical foundation of the Statement of Changes in Equity. We learned the distinct buckets of corporate wealth: Contributed Capital, representing external investor funds, and Earned Capital, representing organic internal growth. Today, we transition from theory to practice. Our focus shifts to formative application. You will act as the chief accountant, taking raw transactional data and synthesizing it into a properly formatted, compliant statement. This exercise will test your ability to route financial events to their correct columns and ensure that the ultimate principle of cross-footing is mathematically preserved.">
@@ -3032,9 +3119,119 @@
                 Total Equity sum: 1.2M + 100k + 670k + 100k - 120k = 1,950,000.</p>
             </div>
         </div>
-        <!-- DAY 4 END -->
 
-    </div>
+<div class="slide" 
+             data-voiceover="audio/day4_slide11.wav" 
+             data-text="Here is the final, completed Statement of Changes in Equity for Consolacion Construction Corporation. Take a moment to compare your calculations with this formal matrix. Notice how every transaction has its own dedicated row, clearly telling the financial story of the year in chronological order. The prior period error is fixed before current operations begin. The issuance of shares is perfectly split between par and premium. The appropriation nets to zero horizontally. And finally, the treasury stock sits securely as a contra-equity deduction. If your cross-footing led to a final total equity of 1,950,000 pesos, excellent work.">
+            <h2>Consolacion Construction Corp.</h2>
+            <p style="font-size: 1.2rem; color: #8b949e; margin-top: -15px; margin-bottom: 20px; font-style: italic;">Statement of Changes in Equity for the Year Ended Dec 31, 2025</p>
+            <div style="display: inline-block; background-color: #0f172a; color: #f8fafc; padding: 4px 12px; border-radius: 16px; font-size: 0.85rem; font-weight: 600; margin-bottom: 15px; letter-spacing: 0.5px;">IPP Phase: Evaluation</div>
+            
+            <table style="width: 100%; border-collapse: collapse; text-align: center; background: rgba(13, 17, 23, 0.8); border: 1px solid #30363d; font-size: 1.1rem; margin-top: 5px;">
+                <tr style="background: #21262d; border-bottom: 2px solid #58a6ff;">
+                    <th style="padding: 8px; border-right: 1px solid #30363d; text-align: left;">Particulars</th>
+                    <th style="padding: 8px; border-right: 1px solid #30363d;">Share Capital</th>
+                    <th style="padding: 8px; border-right: 1px solid #30363d;">APIC</th>
+                    <th style="padding: 8px; border-right: 1px solid #30363d;">Unapprop. RE</th>
+                    <th style="padding: 8px; border-right: 1px solid #30363d;">Approp. RE</th>
+                    <th style="padding: 8px; border-right: 1px solid #30363d;">Treasury</th>
+                    <th style="padding: 8px;">Total Equity</th>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Balances, Jan 1 (Unadjusted)</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">1,000,000</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">600,000</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px;">1,600,000</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Prior period error (Depreciation)</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d; color: #f85149;">(50,000)</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; color: #f85149;">(50,000)</td>
+                </tr>
+                <tr style="background: rgba(255, 255, 255, 0.05); font-weight: bold;">
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d; font-style: italic;">Balances, Jan 1 (Restated)</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">1,000,000</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">550,000</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px;">1,550,000</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Issuance of ordinary shares</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">200,000</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">100,000</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px;">300,000</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Net Income</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">300,000</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px;">300,000</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Appropriation for equipment yard</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d; color: #f85149;">(100,000)</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">100,000</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px;">-</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Cash dividends declared</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d; color: #f85149;">(80,000)</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; color: #f85149;">(80,000)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Purchase of treasury shares</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">-</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d; color: #f85149;">(120,000)</td>
+                    <td style="padding: 8px; color: #f85149;">(120,000)</td>
+                </tr>
+                <tr style="background: rgba(88, 166, 255, 0.1); border-top: 2px solid #58a6ff; font-weight: bold;">
+                    <td style="padding: 8px; text-align: left; border-right: 1px solid #30363d;">Balances, Dec 31</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">1,200,000</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">100,000</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">670,000</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d;">100,000</td>
+                    <td style="padding: 8px; border-right: 1px solid #30363d; color: #f85149;">(120,000)</td>
+                    <td style="padding: 8px;">1,950,000</td>
+                </tr>
+            </table>
+
+            <div class="book-content">
+                <h2>Completed Matrix: Consolacion Construction Corp.</h2>
+                <p>This matrix represents the final output of the formative assessment. Notice how the principles of <strong>cross-footing</strong> ensure that every horizontal line accurately impacts the total equity column, while every vertical column precisely isolates a distinct legal capital category.</p>
+                <ul>
+                    <li>The <strong>Prior Period Error</strong> successfully bypassed the current year's income.</li>
+                    <li>The <strong>Share Issuance</strong> correctly split the par value and premium.</li>
+                    <li>The <strong>Appropriation</strong> shifted ₱100,000 sideways with no net effect on total wealth.</li>
+                    <li>The <strong>Treasury Shares</strong> were recorded at cost as a distinct deduction in parentheses.</li>
+                </ul>
+            </div>
+        </div>
+        </div>
 
     <div class="presentation-footer">This courseware is a private property of Joselito Villarta, CPA, MBA</div>
 
