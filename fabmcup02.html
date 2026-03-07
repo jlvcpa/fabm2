@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Corporation Accounting</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FABM Cup Practice</title>
 <style>
     body, html {
         margin: 0;
@@ -187,7 +187,7 @@
     .feedback-correct { background: rgba(46, 160, 67, 0.15); color: #3fb950; border-left: 5px solid #3fb950; }
     .feedback-wrong { background: rgba(248, 81, 73, 0.15); color: #f85149; border-left: 5px solid #f85149; }
 
-    /* HUD & Trackers */
+    /* HUD & Trackers (Centered Top) */
     #top-hud {
         position: absolute; top: 20px; left: 0; width: 100%; display: flex;
         justify-content: center; align-items: flex-start; z-index: 60; pointer-events: none;
@@ -197,7 +197,7 @@
         padding: 10px 20px; border-radius: 8px; border: 1px solid #f85149; display: none; pointer-events: auto; 
     }
     .score-display { 
-        position: absolute; right: 30px; font-size: 1.8rem; font-weight: bold; color: #58a6ff; 
+        position: absolute; right: 30px; top: 0; font-size: 1.8rem; font-weight: bold; color: #58a6ff; 
         background: rgba(0,0,0,0.5); padding: 10px 20px; border-radius: 8px; border: 1px solid #30363d; pointer-events: auto; 
     }
 
@@ -224,7 +224,7 @@
     .nav-btn:hover { background: #58a6ff; color: #000; }
     .nav-btn:disabled { border-color: #555; color: #555; cursor: not-allowed; background: transparent; }
 
-    /* Hierarchy Navigator Styles */
+    /* --- 3-LEVEL HIERARCHICAL NAVIGATOR STYLES --- */
     #nav-toggle-btn {
         position: absolute; top: 20px; left: 20px; z-index: 80; background: rgba(13, 17, 23, 0.9);
         color: #58a6ff; border: 2px solid #58a6ff; border-radius: 6px; padding: 10px 15px;
@@ -239,25 +239,37 @@
     }
     #slide-navigator.collapsed { transform: translateX(-100%); }
 
-    /* 70px top padding perfectly pushes header below the hamburger menu button */
     .nav-header { padding: 70px 20px 15px 20px; font-size: 1.1rem; font-weight: bold; color: #58a6ff; border-bottom: 1px solid #30363d; text-transform: uppercase; text-align: center; }
     #nav-list { list-style: none; padding: 0 0 40px 0; margin: 0; overflow-y: auto; flex: 1; }
 
-    .nav-set {
+    /* Level 1: Grandparent (Set) */
+    .nav-grandparent {
         padding: 12px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
-        font-size: 1.1rem; font-weight: bold; color: #ffffff; background: rgba(0,0,0,0.6);
-        text-transform: uppercase; display: flex; justify-content: space-between;
+        font-size: 1.15rem; font-weight: bold; color: #ffffff; background: rgba(0,0,0,0.6);
+        transition: background 0.2s; text-transform: uppercase; letter-spacing: 1px; display: flex; justify-content: space-between;
     }
-    .nav-diff {
-        padding: 10px 20px 10px 30px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);
-        font-size: 1rem; color: #58a6ff; background: rgba(13, 17, 23, 0.6); display: flex; justify-content: space-between;
+    .nav-grandparent:hover { background: rgba(88, 166, 255, 0.2); }
+    .nav-week-children { list-style: none; padding: 0; margin: 0; display: none; }
+
+    /* Level 2: Parent (Difficulty) */
+    .nav-parent {
+        padding: 10px 20px 10px 30px; 
+        cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 1.05rem; font-weight: bold; color: #58a6ff; background: rgba(13, 17, 23, 0.6);
+        transition: background 0.2s; display: flex; justify-content: space-between; align-items: center; 
     }
-    .nav-item {
-        padding: 8px 20px 8px 45px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.02);
-        font-size: 0.9rem; color: #8b949e;
+    .nav-parent:hover { background: rgba(88, 166, 255, 0.2); color: #ffffff; }
+    .nav-day-children { list-style: none; padding: 0; margin: 0; display: none; }
+
+    /* Level 3: Child (Questions) */
+    .nav-child-item {
+        padding: 8px 20px 8px 50px; 
+        cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.02);
+        font-size: 0.95rem; transition: background 0.2s; color: #8b949e;
+        display: flex; justify-content: space-between; align-items: center; 
     }
-    .nav-item:hover { background: rgba(88, 166, 255, 0.1); color: #c9d1d9; }
-    .nav-item.active-nav { background: rgba(88, 166, 255, 0.2); color: #ffffff; border-left: 4px solid #58a6ff; }
+    .nav-child-item:hover { background: rgba(88, 166, 255, 0.1); color: #c9d1d9; }
+    .nav-child-item.active-nav { background: rgba(88, 166, 255, 0.2); color: #ffffff; border-left: 4px solid #58a6ff; font-weight: bold; }
 
     /* Book Mode Adjustments */
     body.book-mode #slides-container { background-color: #fdf6e3; }
@@ -272,49 +284,61 @@
     .book-content h2 { color: #111; font-family: 'Segoe UI', sans-serif; font-size: 2.5rem; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 25px; }
     .book-content p { color: #333; font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; }
 
-    /* --- STRICT RESPONSIVE MOBILE & PORTRAIT OVERRIDE --- */
+    /* --- AGGRESSIVE RESPONSIVE MOBILE & PORTRAIT OVERRIDE --- */
     @media screen and (max-width: 1024px), screen and (orientation: portrait) {
+        body, html {
+            height: 100vh !important;
+            width: 100vw !important;
+            overflow: hidden !important;
+        }
+
         #container {
             border-radius: 0 !important;
-            aspect-ratio: unset !important; /* Aggressively breaks the 16:9 lock */
-            width: 100% !important;
-            height: 100% !important;
-            max-width: none !important;
-            max-height: none !important;
+            aspect-ratio: auto !important; /* Aggressively breaks the 16:9 lock */
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: 100vw !important;
+            max-height: 100vh !important;
+            display: flex;
+            flex-direction: column;
         }
         
-        #main-workspace { flex-direction: row !important; } /* Strictly enforces horizontal split */
-        #teacher-sidebar { width: 200px !important; height: 100% !important; border-bottom: none !important; padding-top: 70px; }
+        #main-workspace { flex-direction: row !important; width: 100%; height: 100%; } 
+        #teacher-sidebar { width: 200px !important; height: 100% !important; border-bottom: none !important; padding-top: 70px; flex-shrink: 0; }
+        #slides-container { flex: 1; height: 100%; }
 
         .slide {
-            padding: 80px 20px 100px 20px; /* Room for header and footer items */
-            justify-content: flex-start; /* Prevents vertical centering from hiding top text */
+            padding: 100px 15px 120px 15px !important; 
+            justify-content: flex-start; 
             overflow-y: auto;
         }
-        .slide h1 { font-size: 1.8rem; margin-bottom: 15px; }
-        .slide h2 { font-size: 1.5rem; margin-bottom: 15px; }
-        .slide p, .slide ul, .question-text { font-size: 1.1rem; }
         
-        .quiz-container { padding: 15px; width: 100%; }
-        .input-field { font-size: 1rem; padding: 12px; }
-        .mcq-option { padding: 12px 15px; font-size: 1rem; margin-bottom: 10px;}
-        .submit-btn, .exp-btn, .back-quiz-btn { font-size: 0.95rem; padding: 12px; width: 100%; margin-right: 0; margin-bottom: 10px; margin-top: 10px;}
-        .quiz-feedback { font-size: 1.1rem; padding: 10px;}
+        /* Font size rectifications for mobile */
+        .slide h1 { font-size: 1.8rem !important; margin-bottom: 15px !important; }
+        .slide h2 { font-size: 1.5rem !important; margin-bottom: 15px !important; }
+        .topic-text { font-size: 0.9rem !important; }
+        .question-text { font-size: 1.1rem !important; margin-bottom: 15px !important; line-height: 1.4; }
         
-        #top-hud { top: 15px; left: 0; width: 100%; }
-        .score-display { right: 15px; font-size: 1rem; padding: 8px 12px; }
-        .timer-display { font-size: 1rem; padding: 8px 12px; }
+        .quiz-container { padding: 15px !important; width: 100% !important; }
+        .input-field { font-size: 1rem !important; padding: 12px !important; }
+        .mcq-option { padding: 10px 15px !important; font-size: 0.95rem !important; margin-bottom: 8px !important; line-height: 1.3;}
+        .submit-btn, .exp-btn, .back-quiz-btn { font-size: 0.95rem !important; padding: 12px !important; width: 100% !important; margin-right: 0 !important; margin-bottom: 10px !important; margin-top: 10px !important;}
+        .quiz-feedback { font-size: 1rem !important; padding: 10px !important;}
         
-        #nav-toggle-btn { top: 15px; left: 15px; font-size: 0.9rem; padding: 8px 12px; }
+        #top-hud { top: 15px !important; left: 0 !important; width: 100% !important; }
+        .score-display { right: 15px !important; top: 0 !important; font-size: 1rem !important; padding: 8px 12px !important; }
+        .timer-display { font-size: 1rem !important; padding: 8px 12px !important; }
         
-        #nav-controls { padding: 0 15px; height: auto; bottom: 30px; position: absolute; width: 100%; z-index: 50; }
-        .nav-btn { font-size: 0.9rem; padding: 10px 15px; }
+        #nav-toggle-btn { top: 15px !important; left: 15px !important; font-size: 0.9rem !important; padding: 8px 12px !important; }
         
-        #question-tracker { bottom: 80px; }
+        #nav-controls { padding: 0 15px !important; height: auto !important; bottom: 30px !important; position: absolute !important; width: 100% !important; z-index: 50 !important; }
+        .nav-btn { font-size: 0.9rem !important; padding: 10px 15px !important; }
         
-        body.book-mode .slide { padding: 80px 15px 100px 15px; }
-        .book-content h2 { font-size: 1.5rem; }
-        .book-content p { font-size: 1rem; }
+        #question-tracker { bottom: 80px !important; }
+        
+        body.book-mode .slide { padding: 80px 15px 100px 15px !important; }
+        .book-content h2 { font-size: 1.4rem !important; }
+        .book-content p { font-size: 1rem !important; }
     }
 
 </style>
@@ -354,7 +378,6 @@
 
         <div id="slides-container">
 
-<!-- QUESTION START -->            
 <div class="slide" id="slide-q1"
      data-question-id="q1" 
      data-type="Theory" 
@@ -362,11 +385,10 @@
      data-difficulty="Easy" 
      data-topic="Introduction to Accounting"
      data-answer="B"
-     data-points="3"
-     data-text="Topic: Introduction to Accounting. What is often referred to as the language of business? A), Economics, B), Accounting, C), Management, D), Marketing,">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Introduction to Accounting</div>
-        <div class="question-text">What is often referred to as the "language of business"?</div>
+        <div class="question-text">What is often referred to as the language of business?</div>
         <ul style="list-style: none; padding: 0;">
             <li class="mcq-option" onclick="selectOption('q1', 'A')">A) Economics</li>
             <li class="mcq-option" onclick="selectOption('q1', 'B')">B) Accounting</li>
@@ -393,8 +415,7 @@
      data-difficulty="Easy" 
      data-topic="Branches of Accounting"
      data-answer="C"
-     data-points="3"
-     data-text="Topic: Branches of Accounting. Which branch of accounting primarily deals with the preparation of general-purpose financial statements for external users? A), Management Accounting, B), Tax Accounting, C), Financial Accounting, D), Cost Accounting,">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Branches of Accounting</div>
         <div class="question-text">Which branch of accounting primarily deals with the preparation of general-purpose financial statements for external users?</div>
@@ -424,8 +445,7 @@
      data-difficulty="Easy" 
      data-topic="Users of Accounting Information"
      data-answer="D"
-     data-points="3"
-     data-text="Topic: Users of Accounting Information. Who among the following is considered an internal user of accounting information? A), Potential Investors, B), Bank Creditors, C), Government Regulators, D), Company Managers,">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Users of Accounting Information</div>
         <div class="question-text">Who among the following is considered an internal user of accounting information?</div>
@@ -455,8 +475,7 @@
      data-difficulty="Easy" 
      data-topic="Forms of Business Organizations"
      data-answer="C"
-     data-points="3"
-     data-text="Topic: Forms of Business Organizations. What type of business organization is owned by only one person who has unlimited liability? A), Corporation, B), Partnership, C), Sole Proprietorship, D), Cooperative,">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Forms of Business Organizations</div>
         <div class="question-text">What type of business organization is owned by only one person who has unlimited liability?</div>
@@ -486,8 +505,7 @@
      data-difficulty="Easy" 
      data-topic="Accounting Concepts and Principles"
      data-answer="A"
-     data-points="3"
-     data-text="Topic: Accounting Concepts and Principles. Which accounting principle assumes that a business will continue to operate indefinitely into the foreseeable future? A), Going Concern Principle, B), Business Entity Principle, C), Periodicity Principle, D), Objectivity Principle,">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Accounting Concepts and Principles</div>
         <div class="question-text">Which accounting principle assumes that a business will continue to operate indefinitely into the foreseeable future?</div>
@@ -517,8 +535,7 @@
      data-difficulty="Easy" 
      data-topic="The Accounting Equation"
      data-answer="B"
-     data-points="3"
-     data-text="Topic: The Accounting Equation. Which of the following represents the correct and fundamental accounting equation? A) Assets = Liabilities - Equity B) Assets = Liabilities + Equity C) Liabilities = Assets + Equity D) Equity = Assets + Liabilities">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: The Accounting Equation</div>
         <div class="question-text">Which of the following represents the correct and fundamental accounting equation?</div>
@@ -548,8 +565,7 @@
      data-difficulty="Easy" 
      data-topic="Books of Accounts"
      data-answer="C"
-     data-points="3"
-     data-text="Topic: Books of Accounts. Which book of accounts is traditionally known as the book of original entry? A) General Ledger B) Subsidiary Ledger C) General Journal D) Trial Balance">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Books of Accounts</div>
         <div class="question-text">Which book of accounts is traditionally known as the "book of original entry"?</div>
@@ -579,8 +595,7 @@
      data-difficulty="Easy" 
      data-topic="Books of Accounts"
      data-answer="B"
-     data-points="3"
-     data-text="Topic: Books of Accounts. A company purchases new equipment for 10,000 pesos in cash. How is this recorded in the General Journal? A) Increase Equipment, Increase Cash B) Increase Equipment, Decrease Cash C) Decrease Equipment, Increase Cash D) Decrease Equipment, Decrease Cash">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Books of Accounts</div>
         <div class="question-text">A company purchases new equipment for ₱10,000 in cash. How is this recorded in the General Journal?</div>
@@ -610,8 +625,7 @@
      data-difficulty="Easy" 
      data-topic="Accounting Cycle (Service)"
      data-answer="B"
-     data-points="3"
-     data-text="Topic: Accounting Cycle (Service). If a service business has total assets amounting to 50,000 pesos and total equity of 30,000 pesos, what is the total amount of its liabilities? A) 80,000 pesos B) 20,000 pesos C) 50,000 pesos D) 30,000 pesos">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Accounting Cycle (Service)</div>
         <div class="question-text">If a service business has total assets amounting to ₱50,000 and total equity of ₱30,000, what is the total amount of its liabilities?</div>
@@ -641,8 +655,7 @@
      data-difficulty="Easy" 
      data-topic="Accounting Cycle (Merchandising)"
      data-answer="D"
-     data-points="3"
-     data-text="Topic: Accounting Cycle (Merchandising). A merchandising business bought inventory worth 5,000 pesos on credit. In which special journal should this transaction be recorded? A) Sales Journal B) Cash Receipts Journal C) Cash Payments Journal D) Purchases Journal">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Accounting Cycle (Merchandising)</div>
         <div class="question-text">A merchandising business bought inventory worth ₱5,000 on credit (on account). In which special journal should this transaction be recorded?</div>
@@ -665,28 +678,27 @@
     </div>
 </div>
 
-<div class="slide" id="slide-q1"
-     data-question-id="q1" 
+<div class="slide" id="slide-b1"
+     data-question-id="b1" 
      data-type="Theory" 
      data-set="Set B" 
      data-difficulty="Easy" 
      data-topic="Introduction to Accounting"
      data-answer="B"
-     data-points="3"
-     data-text="Topic: Introduction to Accounting. Who is widely recognized as the father of modern accounting and bookkeeping? A) Adam Smith B) Luca Pacioli C) Karl Marx D) Henry Fayol">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Introduction to Accounting</div>
         <div class="question-text">Who is widely recognized as the father of modern accounting and bookkeeping?</div>
         <ul style="list-style: none; padding: 0;">
-            <li class="mcq-option" onclick="selectOption('q1', 'A')">A) Adam Smith</li>
-            <li class="mcq-option" onclick="selectOption('q1', 'B')">B) Luca Pacioli</li>
-            <li class="mcq-option" onclick="selectOption('q1', 'C')">C) Karl Marx</li>
-            <li class="mcq-option" onclick="selectOption('q1', 'D')">D) Henry Fayol</li>
+            <li class="mcq-option" onclick="selectOption('b1', 'A')">A) Adam Smith</li>
+            <li class="mcq-option" onclick="selectOption('b1', 'B')">B) Luca Pacioli</li>
+            <li class="mcq-option" onclick="selectOption('b1', 'C')">C) Karl Marx</li>
+            <li class="mcq-option" onclick="selectOption('b1', 'D')">D) Henry Fayol</li>
         </ul>
-        <input type="hidden" id="input-q1" value="">
-        <button class="submit-btn" id="submit-q1" onclick="submitAnswer('q1')">Submit Answer</button>
-        <button class="exp-btn" id="exp-q1" onclick="toggleBookMode()">Show Explanation</button>
-        <div class="quiz-feedback" id="feedback-q1"></div>
+        <input type="hidden" id="input-b1" value="">
+        <button class="submit-btn" id="submit-b1" onclick="submitAnswer('b1')">Submit Answer</button>
+        <button class="exp-btn" id="exp-b1" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-b1"></div>
     </div>
     <div class="book-content">
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
@@ -696,28 +708,27 @@
     </div>
 </div>
 
-<div class="slide" id="slide-q2"
-     data-question-id="q2" 
+<div class="slide" id="slide-b2"
+     data-question-id="b2" 
      data-type="Theory" 
      data-set="Set B" 
      data-difficulty="Easy" 
      data-topic="Branches of Accounting"
      data-answer="B"
-     data-points="3"
-     data-text="Topic: Branches of Accounting. Which branch of accounting involves the independent examination of financial statements to ensure they are fair and comply with accounting standards? A) Cost Accounting B) Auditing C) Tax Accounting D) Management Accounting">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Branches of Accounting</div>
         <div class="question-text">Which branch of accounting involves the independent examination of financial statements to ensure they are fair and comply with accounting standards?</div>
         <ul style="list-style: none; padding: 0;">
-            <li class="mcq-option" onclick="selectOption('q2', 'A')">A) Cost Accounting</li>
-            <li class="mcq-option" onclick="selectOption('q2', 'B')">B) Auditing</li>
-            <li class="mcq-option" onclick="selectOption('q2', 'C')">C) Tax Accounting</li>
-            <li class="mcq-option" onclick="selectOption('q2', 'D')">D) Management Accounting</li>
+            <li class="mcq-option" onclick="selectOption('b2', 'A')">A) Cost Accounting</li>
+            <li class="mcq-option" onclick="selectOption('b2', 'B')">B) Auditing</li>
+            <li class="mcq-option" onclick="selectOption('b2', 'C')">C) Tax Accounting</li>
+            <li class="mcq-option" onclick="selectOption('b2', 'D')">D) Management Accounting</li>
         </ul>
-        <input type="hidden" id="input-q2" value="">
-        <button class="submit-btn" id="submit-q2" onclick="submitAnswer('q2')">Submit Answer</button>
-        <button class="exp-btn" id="exp-q2" onclick="toggleBookMode()">Show Explanation</button>
-        <div class="quiz-feedback" id="feedback-q2"></div>
+        <input type="hidden" id="input-b2" value="">
+        <button class="submit-btn" id="submit-b2" onclick="submitAnswer('b2')">Submit Answer</button>
+        <button class="exp-btn" id="exp-b2" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-b2"></div>
     </div>
     <div class="book-content">
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
@@ -727,28 +738,27 @@
     </div>
 </div>
 
-<div class="slide" id="slide-q3"
-     data-question-id="q3" 
+<div class="slide" id="slide-b3"
+     data-question-id="b3" 
      data-type="Theory" 
      data-set="Set B" 
      data-difficulty="Easy" 
      data-topic="Users of Accounting Information"
      data-answer="C"
-     data-points="3"
-     data-text="Topic: Users of Accounting Information. Which external user evaluates accounting information to determine if a business has the ability to pay back its loans on time? A) Management B) Employees C) Creditors D) Bureau of Internal Revenue">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Users of Accounting Information</div>
         <div class="question-text">Which external user evaluates accounting information to determine if a business has the ability to pay back its loans on time?</div>
         <ul style="list-style: none; padding: 0;">
-            <li class="mcq-option" onclick="selectOption('q3', 'A')">A) Management</li>
-            <li class="mcq-option" onclick="selectOption('q3', 'B')">B) Employees</li>
-            <li class="mcq-option" onclick="selectOption('q3', 'C')">C) Creditors</li>
-            <li class="mcq-option" onclick="selectOption('q3', 'D')">D) Bureau of Internal Revenue (BIR)</li>
+            <li class="mcq-option" onclick="selectOption('b3', 'A')">A) Management</li>
+            <li class="mcq-option" onclick="selectOption('b3', 'B')">B) Employees</li>
+            <li class="mcq-option" onclick="selectOption('b3', 'C')">C) Creditors</li>
+            <li class="mcq-option" onclick="selectOption('b3', 'D')">D) Bureau of Internal Revenue (BIR)</li>
         </ul>
-        <input type="hidden" id="input-q3" value="">
-        <button class="submit-btn" id="submit-q3" onclick="submitAnswer('q3')">Submit Answer</button>
-        <button class="exp-btn" id="exp-q3" onclick="toggleBookMode()">Show Explanation</button>
-        <div class="quiz-feedback" id="feedback-q3"></div>
+        <input type="hidden" id="input-b3" value="">
+        <button class="submit-btn" id="submit-b3" onclick="submitAnswer('b3')">Submit Answer</button>
+        <button class="exp-btn" id="exp-b3" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-b3"></div>
     </div>
     <div class="book-content">
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
@@ -758,28 +768,27 @@
     </div>
 </div>
 
-<div class="slide" id="slide-q4"
-     data-question-id="q4" 
+<div class="slide" id="slide-b4"
+     data-question-id="b4" 
      data-type="Theory" 
      data-set="Set B" 
      data-difficulty="Easy" 
      data-topic="Forms of Business Organizations"
      data-answer="B"
-     data-points="3"
-     data-text="Topic: Forms of Business Organizations. A business organization formed by two or more persons who bind themselves to contribute money, property, or industry to a common fund is called a: A) Sole Proprietorship B) Partnership C) Corporation D) Cooperative">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Forms of Business Organizations</div>
         <div class="question-text">A business organization formed by two or more persons who bind themselves to contribute money, property, or industry to a common fund is called a:</div>
         <ul style="list-style: none; padding: 0;">
-            <li class="mcq-option" onclick="selectOption('q4', 'A')">A) Sole Proprietorship</li>
-            <li class="mcq-option" onclick="selectOption('q4', 'B')">B) Partnership</li>
-            <li class="mcq-option" onclick="selectOption('q4', 'C')">C) Corporation</li>
-            <li class="mcq-option" onclick="selectOption('q4', 'D')">D) Cooperative</li>
+            <li class="mcq-option" onclick="selectOption('b4', 'A')">A) Sole Proprietorship</li>
+            <li class="mcq-option" onclick="selectOption('b4', 'B')">B) Partnership</li>
+            <li class="mcq-option" onclick="selectOption('b4', 'C')">C) Corporation</li>
+            <li class="mcq-option" onclick="selectOption('b4', 'D')">D) Cooperative</li>
         </ul>
-        <input type="hidden" id="input-q4" value="">
-        <button class="submit-btn" id="submit-q4" onclick="submitAnswer('q4')">Submit Answer</button>
-        <button class="exp-btn" id="exp-q4" onclick="toggleBookMode()">Show Explanation</button>
-        <div class="quiz-feedback" id="feedback-q4"></div>
+        <input type="hidden" id="input-b4" value="">
+        <button class="submit-btn" id="submit-b4" onclick="submitAnswer('b4')">Submit Answer</button>
+        <button class="exp-btn" id="exp-b4" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-b4"></div>
     </div>
     <div class="book-content">
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
@@ -789,28 +798,27 @@
     </div>
 </div>
 
-<div class="slide" id="slide-q5"
-     data-question-id="q5" 
+<div class="slide" id="slide-b5"
+     data-question-id="b5" 
      data-type="Theory" 
      data-set="Set B" 
      data-difficulty="Easy" 
      data-topic="Accounting Concepts and Principles"
      data-answer="D"
-     data-points="3"
-     data-text="Topic: Accounting Concepts and Principles. Which principle states that the personal expenses of an owner must be kept entirely separate from the expenses of their business? A) Periodicity Principle B) Going Concern Principle C) Objective Evidence Principle D) Business Entity Principle">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Accounting Concepts and Principles</div>
         <div class="question-text">Which principle states that the personal expenses of an owner must be kept entirely separate from the expenses of their business?</div>
         <ul style="list-style: none; padding: 0;">
-            <li class="mcq-option" onclick="selectOption('q5', 'A')">A) Periodicity Principle</li>
-            <li class="mcq-option" onclick="selectOption('q5', 'B')">B) Going Concern Principle</li>
-            <li class="mcq-option" onclick="selectOption('q5', 'C')">C) Objective Evidence Principle</li>
-            <li class="mcq-option" onclick="selectOption('q5', 'D')">D) Business Entity Principle</li>
+            <li class="mcq-option" onclick="selectOption('b5', 'A')">A) Periodicity Principle</li>
+            <li class="mcq-option" onclick="selectOption('b5', 'B')">B) Going Concern Principle</li>
+            <li class="mcq-option" onclick="selectOption('b5', 'C')">C) Objective Evidence Principle</li>
+            <li class="mcq-option" onclick="selectOption('b5', 'D')">D) Business Entity Principle</li>
         </ul>
-        <input type="hidden" id="input-q5" value="">
-        <button class="submit-btn" id="submit-q5" onclick="submitAnswer('q5')">Submit Answer</button>
-        <button class="exp-btn" id="exp-q5" onclick="toggleBookMode()">Show Explanation</button>
-        <div class="quiz-feedback" id="feedback-q5"></div>
+        <input type="hidden" id="input-b5" value="">
+        <button class="submit-btn" id="submit-b5" onclick="submitAnswer('b5')">Submit Answer</button>
+        <button class="exp-btn" id="exp-b5" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-b5"></div>
     </div>
     <div class="book-content">
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
@@ -820,28 +828,27 @@
     </div>
 </div>
 
-<div class="slide" id="slide-q6"
-     data-question-id="q6" 
+<div class="slide" id="slide-b6"
+     data-question-id="b6" 
      data-type="Theory" 
      data-set="Set B" 
      data-difficulty="Easy" 
      data-topic="The Accounting Equation and Major Accounts"
      data-answer="C"
-     data-points="3"
-     data-text="Topic: The Accounting Equation and Major Accounts. Which of the following is classified as an Asset account? A) Accounts Payable B) Owner's Capital C) Cash D) Service Revenue">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: The Accounting Equation and Major Accounts</div>
         <div class="question-text">Which of the following is classified as an Asset account?</div>
         <ul style="list-style: none; padding: 0;">
-            <li class="mcq-option" onclick="selectOption('q6', 'A')">A) Accounts Payable</li>
-            <li class="mcq-option" onclick="selectOption('q6', 'B')">B) Owner's Capital</li>
-            <li class="mcq-option" onclick="selectOption('q6', 'C')">C) Cash</li>
-            <li class="mcq-option" onclick="selectOption('q6', 'D')">D) Service Revenue</li>
+            <li class="mcq-option" onclick="selectOption('b6', 'A')">A) Accounts Payable</li>
+            <li class="mcq-option" onclick="selectOption('b6', 'B')">B) Owner's Capital</li>
+            <li class="mcq-option" onclick="selectOption('b6', 'C')">C) Cash</li>
+            <li class="mcq-option" onclick="selectOption('b6', 'D')">D) Service Revenue</li>
         </ul>
-        <input type="hidden" id="input-q6" value="">
-        <button class="submit-btn" id="submit-q6" onclick="submitAnswer('q6')">Submit Answer</button>
-        <button class="exp-btn" id="exp-q6" onclick="toggleBookMode()">Show Explanation</button>
-        <div class="quiz-feedback" id="feedback-q6"></div>
+        <input type="hidden" id="input-b6" value="">
+        <button class="submit-btn" id="submit-b6" onclick="submitAnswer('b6')">Submit Answer</button>
+        <button class="exp-btn" id="exp-b6" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-b6"></div>
     </div>
     <div class="book-content">
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
@@ -851,28 +858,27 @@
     </div>
 </div>
 
-<div class="slide" id="slide-q7"
-     data-question-id="q7" 
+<div class="slide" id="slide-b7"
+     data-question-id="b7" 
      data-type="Theory" 
      data-set="Set B" 
      data-difficulty="Easy" 
      data-topic="Books of Accounts"
      data-answer="B"
-     data-points="3"
-     data-text="Topic: Books of Accounts. The General Ledger is commonly referred to as the: A) Book of Original Entry B) Book of Final Entry C) Source Document D) Trial Balance">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Books of Accounts</div>
         <div class="question-text">The General Ledger is commonly referred to as the:</div>
         <ul style="list-style: none; padding: 0;">
-            <li class="mcq-option" onclick="selectOption('q7', 'A')">A) Book of Original Entry</li>
-            <li class="mcq-option" onclick="selectOption('q7', 'B')">B) Book of Final Entry</li>
-            <li class="mcq-option" onclick="selectOption('q7', 'C')">C) Source Document</li>
-            <li class="mcq-option" onclick="selectOption('q7', 'D')">D) Trial Balance</li>
+            <li class="mcq-option" onclick="selectOption('b7', 'A')">A) Book of Original Entry</li>
+            <li class="mcq-option" onclick="selectOption('b7', 'B')">B) Book of Final Entry</li>
+            <li class="mcq-option" onclick="selectOption('b7', 'C')">C) Source Document</li>
+            <li class="mcq-option" onclick="selectOption('b7', 'D')">D) Trial Balance</li>
         </ul>
-        <input type="hidden" id="input-q7" value="">
-        <button class="submit-btn" id="submit-q7" onclick="submitAnswer('q7')">Submit Answer</button>
-        <button class="exp-btn" id="exp-q7" onclick="toggleBookMode()">Show Explanation</button>
-        <div class="quiz-feedback" id="feedback-q7"></div>
+        <input type="hidden" id="input-b7" value="">
+        <button class="submit-btn" id="submit-b7" onclick="submitAnswer('b7')">Submit Answer</button>
+        <button class="exp-btn" id="exp-b7" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-b7"></div>
     </div>
     <div class="book-content">
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
@@ -882,28 +888,27 @@
     </div>
 </div>
 
-<div class="slide" id="slide-q8"
-     data-question-id="q8" 
+<div class="slide" id="slide-b8"
+     data-question-id="b8" 
      data-type="Problem Solving" 
      data-set="Set B" 
      data-difficulty="Easy" 
      data-topic="Books of Accounts"
      data-answer="C"
-     data-points="3"
-     data-text="Topic: Books of Accounts. A business collected 15,000 pesos in cash from a customer for services already rendered. How is this recorded? A) Increase Cash, Increase Accounts Receivable B) Decrease Cash, Increase Service Revenue C) Increase Cash, Increase Service Revenue D) Increase Cash, Decrease Accounts Payable">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Books of Accounts</div>
         <div class="question-text">A business collected ₱15,000 in cash from a customer for services already rendered. How is this recorded in the books?</div>
         <ul style="list-style: none; padding: 0;">
-            <li class="mcq-option" onclick="selectOption('q8', 'A')">A) Increase Cash, Increase Accounts Receivable</li>
-            <li class="mcq-option" onclick="selectOption('q8', 'B')">B) Decrease Cash, Increase Service Revenue</li>
-            <li class="mcq-option" onclick="selectOption('q8', 'C')">C) Increase Cash, Increase Service Revenue</li>
-            <li class="mcq-option" onclick="selectOption('q8', 'D')">D) Increase Cash, Decrease Accounts Payable</li>
+            <li class="mcq-option" onclick="selectOption('b8', 'A')">A) Increase Cash, Increase Accounts Receivable</li>
+            <li class="mcq-option" onclick="selectOption('b8', 'B')">B) Decrease Cash, Increase Service Revenue</li>
+            <li class="mcq-option" onclick="selectOption('b8', 'C')">C) Increase Cash, Increase Service Revenue</li>
+            <li class="mcq-option" onclick="selectOption('b8', 'D')">D) Increase Cash, Decrease Accounts Payable</li>
         </ul>
-        <input type="hidden" id="input-q8" value="">
-        <button class="submit-btn" id="submit-q8" onclick="submitAnswer('q8')">Submit Answer</button>
-        <button class="exp-btn" id="exp-q8" onclick="toggleBookMode()">Show Explanation</button>
-        <div class="quiz-feedback" id="feedback-q8"></div>
+        <input type="hidden" id="input-b8" value="">
+        <button class="submit-btn" id="submit-b8" onclick="submitAnswer('b8')">Submit Answer</button>
+        <button class="exp-btn" id="exp-b8" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-b8"></div>
     </div>
     <div class="book-content">
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
@@ -913,28 +918,27 @@
     </div>
 </div>
 
-<div class="slide" id="slide-q9"
-     data-question-id="q9" 
+<div class="slide" id="slide-b9"
+     data-question-id="b9" 
      data-type="Problem Solving" 
      data-set="Set B" 
      data-difficulty="Easy" 
      data-topic="Accounting Cycle (Service)"
      data-answer="B"
-     data-points="3"
-     data-text="Topic: Accounting Cycle (Service). A service business earned 40,000 pesos in revenues and incurred 25,000 pesos in expenses for the month. What is the net income or net loss? A) 15,000 pesos Net Loss B) 15,000 pesos Net Income C) 65,000 pesos Net Income D) 40,000 pesos Net Income">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Accounting Cycle (Service)</div>
         <div class="question-text">A service business earned ₱40,000 in revenues and incurred ₱25,000 in expenses for the month. What is the net income or net loss?</div>
         <ul style="list-style: none; padding: 0;">
-            <li class="mcq-option" onclick="selectOption('q9', 'A')">A) ₱15,000 Net Loss</li>
-            <li class="mcq-option" onclick="selectOption('q9', 'B')">B) ₱15,000 Net Income</li>
-            <li class="mcq-option" onclick="selectOption('q9', 'C')">C) ₱65,000 Net Income</li>
-            <li class="mcq-option" onclick="selectOption('q9', 'D')">D) ₱40,000 Net Income</li>
+            <li class="mcq-option" onclick="selectOption('b9', 'A')">A) ₱15,000 Net Loss</li>
+            <li class="mcq-option" onclick="selectOption('b9', 'B')">B) ₱15,000 Net Income</li>
+            <li class="mcq-option" onclick="selectOption('b9', 'C')">C) ₱65,000 Net Income</li>
+            <li class="mcq-option" onclick="selectOption('b9', 'D')">D) ₱40,000 Net Income</li>
         </ul>
-        <input type="hidden" id="input-q9" value="">
-        <button class="submit-btn" id="submit-q9" onclick="submitAnswer('q9')">Submit Answer</button>
-        <button class="exp-btn" id="exp-q9" onclick="toggleBookMode()">Show Explanation</button>
-        <div class="quiz-feedback" id="feedback-q9"></div>
+        <input type="hidden" id="input-b9" value="">
+        <button class="submit-btn" id="submit-b9" onclick="submitAnswer('b9')">Submit Answer</button>
+        <button class="exp-btn" id="exp-b9" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-b9"></div>
     </div>
     <div class="book-content">
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
@@ -944,28 +948,27 @@
     </div>
 </div>
 
-<div class="slide" id="slide-q10"
-     data-question-id="q10" 
+<div class="slide" id="slide-b10"
+     data-question-id="b10" 
      data-type="Problem Solving" 
      data-set="Set B" 
      data-difficulty="Easy" 
      data-topic="Accounting Cycle (Merchandising)"
      data-answer="D"
-     data-points="3"
-     data-text="Topic: Accounting Cycle (Merchandising). A merchandising business sold goods worth 8,000 pesos on credit to a customer. In which special journal should this transaction be recorded? A) Cash Receipts Journal B) Cash Payments Journal C) Purchases Journal D) Sales Journal">
+     data-points="3">
     <div class="quiz-container">
         <div class="topic-text">Topic: Accounting Cycle (Merchandising)</div>
         <div class="question-text">A merchandising business sold goods worth ₱8,000 on credit (on account) to a customer. In which special journal should this transaction be recorded?</div>
         <ul style="list-style: none; padding: 0;">
-            <li class="mcq-option" onclick="selectOption('q10', 'A')">A) Cash Receipts Journal</li>
-            <li class="mcq-option" onclick="selectOption('q10', 'B')">B) Cash Payments Journal</li>
-            <li class="mcq-option" onclick="selectOption('q10', 'C')">C) Purchases Journal</li>
-            <li class="mcq-option" onclick="selectOption('q10', 'D')">D) Sales Journal</li>
+            <li class="mcq-option" onclick="selectOption('b10', 'A')">A) Cash Receipts Journal</li>
+            <li class="mcq-option" onclick="selectOption('b10', 'B')">B) Cash Payments Journal</li>
+            <li class="mcq-option" onclick="selectOption('b10', 'C')">C) Purchases Journal</li>
+            <li class="mcq-option" onclick="selectOption('b10', 'D')">D) Sales Journal</li>
         </ul>
-        <input type="hidden" id="input-q10" value="">
-        <button class="submit-btn" id="submit-q10" onclick="submitAnswer('q10')">Submit Answer</button>
-        <button class="exp-btn" id="exp-q10" onclick="toggleBookMode()">Show Explanation</button>
-        <div class="quiz-feedback" id="feedback-q10"></div>
+        <input type="hidden" id="input-b10" value="">
+        <button class="submit-btn" id="submit-b10" onclick="submitAnswer('b10')">Submit Answer</button>
+        <button class="exp-btn" id="exp-b10" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-b10"></div>
     </div>
     <div class="book-content">
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
@@ -975,23 +978,21 @@
     </div>
 </div>
             
-<!-- QUESTION END -->
-            <div class="slide" id="slide-q2"
-                 data-question-id="q2" 
+<div class="slide" id="slide-avg1"
+                 data-question-id="avg1" 
                  data-type="Problem Solving" 
                  data-set="Set A" 
                  data-difficulty="Average" 
                  data-topic="Share Capital Issuance"
                  data-answer="500000"
-                 data-points="6"
-                 data-text="A corporation issues 10,000 shares of P100 par value ordinary shares for P150 per share. What is the amount to be credited to the Share Premium account?">
+                 data-points="6">
                 <div class="quiz-container">
                     <div class="topic-text">Topic: Share Capital Issuance</div>
                     <div class="question-text">A corporation issues 10,000 shares of P100 par value ordinary shares for P150 per share. What is the amount to be credited to the Share Premium account?</div>
-                    <input type="number" class="input-field" id="input-q2" placeholder="Enter numerical amount...">
-                    <button class="submit-btn" id="submit-q2" onclick="submitAnswer('q2')">Submit Answer</button>
-                    <button class="exp-btn" id="exp-q2" onclick="toggleBookMode()">Show Explanation</button>
-                    <div class="quiz-feedback" id="feedback-q2"></div>
+                    <input type="number" class="input-field" id="input-avg1" placeholder="Enter numerical amount...">
+                    <button class="submit-btn" id="submit-avg1" onclick="submitAnswer('avg1')">Submit Answer</button>
+                    <button class="exp-btn" id="exp-avg1" onclick="toggleBookMode()">Show Explanation</button>
+                    <div class="quiz-feedback" id="feedback-avg1"></div>
                 </div>
                 <div class="book-content">
                     <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
@@ -1001,28 +1002,27 @@
                 </div>
             </div>
 
-            <div class="slide" id="slide-q3"
-                 data-question-id="q3" 
+            <div class="slide" id="slide-diff1"
+                 data-question-id="diff1" 
                  data-type="Theory" 
                  data-set="Set A" 
                  data-difficulty="Difficult" 
                  data-topic="Treasury Shares"
                  data-answer="B"
-                 data-points="9"
-                 data-text="When a corporation acquires its own shares, how is this transaction recorded under the cost method?">
+                 data-points="9">
                 <div class="quiz-container">
                     <div class="topic-text">Topic: Treasury Shares</div>
                     <div class="question-text">When a corporation acquires its own shares, how is this transaction recorded under the cost method?</div>
                     <ul style="list-style: none; padding: 0;">
-                        <li class="mcq-option" onclick="selectOption('q3', 'A')">A) As an asset</li>
-                        <li class="mcq-option" onclick="selectOption('q3', 'B')">B) As a deduction from total shareholders' equity</li>
-                        <li class="mcq-option" onclick="selectOption('q3', 'C')">C) As a deduction from retained earnings only</li>
-                        <li class="mcq-option" onclick="selectOption('q3', 'D')">D) As an increase in share premium</li>
+                        <li class="mcq-option" onclick="selectOption('diff1', 'A')">A) As an asset</li>
+                        <li class="mcq-option" onclick="selectOption('diff1', 'B')">B) As a deduction from total shareholders' equity</li>
+                        <li class="mcq-option" onclick="selectOption('diff1', 'C')">C) As a deduction from retained earnings only</li>
+                        <li class="mcq-option" onclick="selectOption('diff1', 'D')">D) As an increase in share premium</li>
                     </ul>
-                    <input type="hidden" id="input-q3" value="">
-                    <button class="submit-btn" id="submit-q3" onclick="submitAnswer('q3')">Submit Answer</button>
-                    <button class="exp-btn" id="exp-q3" onclick="toggleBookMode()">Show Explanation</button>
-                    <div class="quiz-feedback" id="feedback-q3"></div>
+                    <input type="hidden" id="input-diff1" value="">
+                    <button class="submit-btn" id="submit-diff1" onclick="submitAnswer('diff1')">Submit Answer</button>
+                    <button class="exp-btn" id="exp-diff1" onclick="toggleBookMode()">Show Explanation</button>
+                    <div class="quiz-feedback" id="feedback-diff1"></div>
                 </div>
                 <div class="book-content">
                     <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
@@ -1143,71 +1143,93 @@
         showSlide(0);
     }
 
-    // UI Builders - Accordion Navigation
+    // UI Builders - Intelligent 3-Level Accordion (DOM Pattern Search)
     function buildNavigator() {
         const navList = document.getElementById('nav-list');
         navList.innerHTML = '';
-        let currentSet = "";
-        let currentDiff = "";
-        let setUl, diffUl;
+        let qCounters = {}; 
 
         window.slides.forEach((slide, index) => {
-            const sSet = slide.getAttribute('data-set');
-            const sDiff = slide.getAttribute('data-difficulty');
+            const sSet = slide.getAttribute('data-set') || 'Uncategorized';
+            const sDiff = slide.getAttribute('data-difficulty') || 'General';
+            
+            const setKey = sSet.replace(/\s+/g, '-');
+            const diffKey = setKey + '-' + sDiff.replace(/\s+/g, '-');
 
-            if (sSet !== currentSet) {
-                currentSet = sSet;
-                const setLi = document.createElement('li');
-                setLi.className = 'nav-set';
+            // 1. Find or create Set Parent
+            let setLi = navList.querySelector(`li[data-set="${setKey}"]`);
+            let setUl = navList.querySelector(`ul[data-set-ul="${setKey}"]`);
+            
+            if (!setLi) {
+                setLi = document.createElement('li');
+                setLi.className = 'nav-grandparent';
+                setLi.setAttribute('data-set', setKey);
                 setLi.innerHTML = `<span>${sSet}</span> <span>▼</span>`;
+                
                 setUl = document.createElement('ul');
+                setUl.className = 'nav-week-children';
+                setUl.setAttribute('data-set-ul', setKey);
                 setUl.style.display = 'none'; 
                 
                 setLi.onclick = (e) => {
                     e.stopPropagation();
-                    document.querySelectorAll('#nav-list > ul').forEach(ul => {
-                        if (ul !== setUl) ul.style.display = 'none';
-                    });
-                    setUl.style.display = setUl.style.display === 'none' ? 'block' : 'none';
+                    const isOpening = setUl.style.display !== 'block';
+                    document.querySelectorAll('.nav-week-children').forEach(ul => ul.style.display = 'none');
+                    if (isOpening) setUl.style.display = 'block';
                 };
                 
                 navList.appendChild(setLi);
                 navList.appendChild(setUl);
             }
-            if (sDiff !== currentDiff) {
-                currentDiff = sDiff;
-                const diffLi = document.createElement('li');
-                diffLi.className = 'nav-diff';
+
+            // 2. Find or create Difficulty Parent
+            let diffLi = setUl.querySelector(`li[data-diff="${diffKey}"]`);
+            let diffUl = setUl.querySelector(`ul[data-diff-ul="${diffKey}"]`);
+            
+            if (!diffLi) {
+                diffLi = document.createElement('li');
+                diffLi.className = 'nav-parent';
+                diffLi.setAttribute('data-diff', diffKey);
                 diffLi.innerHTML = `<span>${sDiff}</span> <span>▼</span>`;
+                
                 diffUl = document.createElement('ul');
+                diffUl.className = 'nav-day-children';
+                diffUl.setAttribute('data-diff-ul', diffKey);
                 diffUl.style.display = 'none';
                 
                 diffLi.onclick = (e) => {
                     e.stopPropagation();
-                    setUl.querySelectorAll('ul').forEach(ul => {
-                        if (ul !== diffUl) ul.style.display = 'none';
-                    });
-                    diffUl.style.display = diffUl.style.display === 'none' ? 'block' : 'none';
+                    const isOpening = diffUl.style.display !== 'block';
+                    setUl.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
+                    if (isOpening) diffUl.style.display = 'block';
                 };
                 
                 setUl.appendChild(diffLi);
                 setUl.appendChild(diffUl);
+                
+                qCounters[diffKey] = 1;
             }
+
+            // 3. Add Question Leaf Node
             const qLi = document.createElement('li');
-            qLi.className = 'nav-item nav-slide-link';
-            qLi.innerText = `Question ${index + 1}`;
+            qLi.className = 'nav-child-item nav-slide-link';
+            qLi.dataset.index = index;
+            qLi.innerHTML = `<span>Question ${qCounters[diffKey]}</span>`;
+            
             qLi.onclick = (e) => { 
                 e.stopPropagation();
-                if(window.currentUser.role === 'teacher') showSlide(index); 
+                if(window.currentUser && window.currentUser.role === 'teacher') showSlide(index); 
             };
+            
             diffUl.appendChild(qLi);
+            qCounters[diffKey]++;
         });
         
         // Open first Set and Diff by default
-        const firstSetUl = navList.querySelector('ul');
+        const firstSetUl = navList.querySelector('.nav-week-children');
         if(firstSetUl) {
             firstSetUl.style.display = 'block';
-            const firstDiffUl = firstSetUl.querySelector('ul');
+            const firstDiffUl = firstSetUl.querySelector('.nav-day-children');
             if(firstDiffUl) firstDiffUl.style.display = 'block';
         }
     }
@@ -1252,20 +1274,40 @@
         window.speechSynthesis.cancel();
         
         const diff = slide.getAttribute('data-difficulty');
-        const qNum = window.currentSlideIndex + 1;
-        let rawText = slide.getAttribute('data-text');
+        const topic = slide.getAttribute('data-topic');
+        
+        let qNum = 1;
+        const currentSet = slide.getAttribute('data-set');
+        for(let i = 0; i < window.currentSlideIndex; i++) {
+            if(window.slides[i].getAttribute('data-set') === currentSet && window.slides[i].getAttribute('data-difficulty') === diff) {
+                qNum++;
+            }
+        }
         
         let narrationText = "";
-        if (diff) {
-            narrationText += `${diff} Round, Question ${qNum}. `;
+        if (diff) narrationText += `${diff} Round, Question ${qNum}. `;
+        if (topic) narrationText += `Topic: ${topic}. `;
+        
+        const qTextEl = slide.querySelector('.question-text');
+        if (qTextEl) narrationText += `${qTextEl.innerText} `;
+        
+        // Logical MCQ option reading
+        const options = slide.querySelectorAll('.mcq-option');
+        if(options.length > 0) {
+            options.forEach(opt => {
+                let text = opt.innerText.trim();
+                text = text.replace(/^([A-D])\)\s*/i, '$1, ');
+                narrationText += `${text}, `;
+            });
         }
-        narrationText += rawText + ". Timer Starts Now.";
+        
+        narrationText += "Timer Starts Now!";
 
         if ('speechSynthesis' in window) {
             const utterance = new SpeechSynthesisUtterance(narrationText);
-            utterance.rate = 0.95;
+            utterance.rate = 0.85; 
             utterance.onend = () => {
-                if(window.currentUser.role !== 'teacher' && !slide.hasAttribute('data-locked')) {
+                if(window.currentUser && window.currentUser.role !== 'teacher' && !slide.hasAttribute('data-locked')) {
                     startTimer(slide);
                 }
             };
@@ -1320,13 +1362,34 @@
         const currentSlide = window.slides[index];
         currentSlide.classList.add('active');
         
-        // Dynamically rebuild and update green circle tracker
         updateTracker(index);
+
+        const navItems = document.querySelectorAll('.nav-slide-link');
+        navItems.forEach((item) => {
+            if (parseInt(item.dataset.index) === window.currentSlideIndex) {
+                item.classList.add('active-nav');
+                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                const diffUl = item.closest('.nav-day-children');
+                const setUl = item.closest('.nav-week-children');
+                
+                if (setUl) {
+                    document.querySelectorAll('.nav-week-children').forEach(ul => ul.style.display = 'none');
+                    setUl.style.display = 'block';
+                }
+                if (diffUl) {
+                    setUl.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
+                    diffUl.style.display = 'block';
+                }
+            } else {
+                item.classList.remove('active-nav');
+            }
+        });
 
         document.getElementById('btn-prev').disabled = index === 0;
         document.getElementById('btn-next').disabled = index === window.slides.length - 1;
 
-        if (window.currentUser.role !== 'teacher' && !currentSlide.hasAttribute('data-locked')) {
+        if (window.currentUser && window.currentUser.role !== 'teacher' && !currentSlide.hasAttribute('data-locked')) {
             if(index > 0) {
                 setTimeout(() => playNarration(currentSlide), 3000);
             } else {
@@ -1356,7 +1419,6 @@
     };
 
     window.submitAnswer = function(qId, isExpired = false) {
-        // Immediate Narration Cancellation
         window.speechSynthesis.cancel();
         clearInterval(window.timerInterval);
         
@@ -1391,9 +1453,7 @@
 
         window.studentAnswers[qId] = userVal;
         
-        // Re-run tracker to mark current circle as answered visually
         updateTracker(window.currentSlideIndex);
-        
         saveToFirebase();
     };
 
