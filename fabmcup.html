@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corporation Accounting</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #0d1117;
+        color: #ffffff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        max-width: 1920px;
+        max-height: 1080px;
+        aspect-ratio: 16 / 9;
+        background: #000;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        display: flex;
+        flex-direction: column;
+        transition: background-color 0.4s ease;
+    }
+
+    /* Login & Overlays */
+    #overlay, #login-overlay {
+        position: absolute;
+        z-index: 200;
+        width: 100%;
+        height: 100%;
+        background: #0d1117;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .login-box {
+        background: #161b22;
+        padding: 40px;
+        border-radius: 12px;
+        border: 1px solid #30363d;
+        width: 400px;
+        max-width: 90%;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        box-sizing: border-box;
+    }
+    .login-box input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0 20px 0;
+        border-radius: 6px;
+        border: 1px solid #30363d;
+        background: #0d1117;
+        color: white;
+        box-sizing: border-box;
+    }
+    .login-box label { text-align: left; display: block; color: #8b949e; font-size: 0.9rem; }
+
+    button.start-btn {
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: transform 0.2s, background 0.3s;
+        width: 100%;
+    }
+
+    button.start-btn:hover { 
+        background: #2563eb; 
+        transform: scale(1.05);
+    }
+
+    /* Layout Structure for Roles */
+    #main-workspace {
+        display: flex;
+        width: 100%;
+        height: calc(100% - 150px);
+        flex: 1;
+    }
+
+    /* Teacher Sidebar */
+    #teacher-sidebar {
+        display: none;
+        width: 300px;
+        background: #161b22;
+        border-right: 1px solid #30363d;
+        height: 100%;
+        overflow-y: auto;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    body.role-teacher #teacher-sidebar { display: block; }
+    .roster-item {
+        padding: 12px;
+        border-bottom: 1px solid #30363d;
+        cursor: pointer;
+        color: #8b949e;
+        transition: 0.2s;
+    }
+    .roster-item:hover, .roster-item.active { background: rgba(88, 166, 255, 0.1); color: #58a6ff; }
+
+    /* Slide System Styles */
+    #slides-container {
+        flex: 1;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: #161b22;
+        transition: background-color 0.4s ease;
+    }
+
+    .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 100px 80px 100px;
+        box-sizing: border-box;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        pointer-events: none;
+        text-align: center;
+        overflow-y: auto;
+    }
+
+    .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .slide h1 { font-size: 3.5rem; color: #58a6ff; margin-bottom: 30px; }
+    .slide h2 { font-size: 2.5rem; color: #e6edf3; margin-bottom: 20px; }
+    .slide ul { text-align: left; font-size: 1.8rem; line-height: 1.2; color: #c9d1d9; max-width: 1400px; }
+    .slide li { margin-bottom: 15px; }
+    .slide p { font-size: 1.8rem; line-height: 1.6; color: #c9d1d9; max-width: 1400px; }
+
+    /* Quiz Elements */
+    .quiz-container { width: 100%; max-width: 1200px; text-align: left; background: rgba(13,17,23,0.5); padding: 30px; border-radius: 12px; border: 1px solid #30363d; box-sizing: border-box; }
+    .question-text { font-size: 2rem; margin-bottom: 25px; color: #fff; }
+    
+    .mcq-option {
+        margin-bottom: 12px; padding: 15px 20px; background: rgba(13, 17, 23, 0.6);
+        border: 2px solid #30363d; border-radius: 8px; list-style: none; transition: all 0.2s; cursor: pointer;
+    }
+    .mcq-option:hover { border-color: #58a6ff; background: rgba(88, 166, 255, 0.1); }
+    .mcq-option.selected { border-color: #3b82f6; background: rgba(59, 130, 246, 0.2); }
+    
+    .input-field { width: 100%; padding: 15px; font-size: 1.5rem; background: #0d1117; color: white; border: 2px solid #30363d; border-radius: 8px; margin-bottom: 20px; box-sizing: border-box; }
+    .input-field:disabled { background: #f3f4f6; color: #9ca3af; cursor: not-allowed; border-color: #d1d5db; }
+    
+    .submit-btn, .exp-btn, .back-quiz-btn {
+        background: #238636; color: white; padding: 12px 30px; border: none;
+        border-radius: 6px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 20px; margin-right: 15px; transition: background 0.2s; display: inline-block;
+    }
+    .submit-btn:hover { background: #2ea043; }
+    .exp-btn { background: #8b949e; display: none; }
+    .exp-btn:hover { background: #c9d1d9; color: #000; }
+    .back-quiz-btn { background: #3b82f6; display: none; margin-bottom: 20px; }
+
+    .quiz-feedback { margin-top: 20px; font-size: 1.5rem; font-weight: bold; display: none; padding: 15px; border-radius: 8px; }
+    .feedback-correct { background: rgba(46, 160, 67, 0.15); color: #3fb950; border-left: 5px solid #3fb950; }
+    .feedback-wrong { background: rgba(248, 81, 73, 0.15); color: #f85149; border-left: 5px solid #f85149; }
+
+    /* HUD & Trackers */
+    #top-hud {
+        position: absolute; top: 20px; right: 30px; display: flex; align-items: center; gap: 20px; z-index: 60;
+    }
+    .score-display { font-size: 1.8rem; font-weight: bold; color: #58a6ff; background: rgba(0,0,0,0.5); padding: 10px 20px; border-radius: 8px; border: 1px solid #30363d; }
+    .timer-display { font-size: 2rem; font-weight: bold; color: #f85149; background: rgba(0,0,0,0.8); padding: 10px 20px; border-radius: 8px; border: 1px solid #f85149; display: none; }
+
+    #question-tracker {
+        position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 55; flex-wrap: wrap; justify-content: center;
+    }
+    .tracker-circle {
+        width: 16px; height: 16px; border-radius: 50%; border: 2px solid #8b949e; background: #0d1117; transition: 0.3s; cursor: pointer;
+    }
+    .tracker-circle.active { border-color: #3b82f6; background: #3b82f6; box-shadow: 0 0 10px #3b82f6; }
+    .tracker-circle.answered { border-color: #238636; background: #238636; }
+
+    /* Professional Caption Bar */
+    #caption-bar {
+        position: absolute; bottom: 0; width: 100%; height: 100px; background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(10px); border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex; justify-content: center; align-items: center; padding: 0 150px; box-sizing: border-box;
+        z-index: 40; transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+    #caption-text {
+        color: #ffffff; font-size: 1.5rem; text-align: center; max-width: 1400px; width: 100%;
+        max-height: 80px; overflow-y: auto; line-height: 1.4; padding: 10px; box-sizing: border-box;
+    }
+
+    /* Independent Navigation Controls */
+    #nav-controls {
+        position: absolute; bottom: 0; width: 100%; height: 100px; display: flex;
+        justify-content: space-between; align-items: center; padding: 0 40px; box-sizing: border-box;
+        pointer-events: none; z-index: 50;
+    }
+    .nav-btn {
+        padding: 10px 25px; font-size: 1.2rem; cursor: pointer; background: rgba(13, 17, 23, 0.8);
+        color: #58a6ff; border: 2px solid #58a6ff; border-radius: 6px; font-weight: bold;
+        transition: all 0.2s; pointer-events: auto; 
+    }
+    .nav-btn:hover { background: #58a6ff; color: #000; }
+    .nav-btn:disabled { border-color: #555; color: #555; cursor: not-allowed; background: transparent; }
+
+    /* Hierarchy Navigator Styles */
+    #nav-toggle-btn {
+        position: absolute; top: 20px; left: 20px; z-index: 80; background: rgba(13, 17, 23, 0.9);
+        color: #58a6ff; border: 2px solid #58a6ff; border-radius: 6px; padding: 10px 15px;
+        font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.2s;
+    }
+    #nav-toggle-btn:hover { background: #58a6ff; color: #000; }
+
+    #slide-navigator {
+        position: absolute; top: 0; left: 0; width: 320px; height: 100%; background: rgba(13, 17, 23, 0.98);
+        border-right: 1px solid #30363d; z-index: 75; transform: translateX(0); transition: transform 0.3s ease;
+        display: flex; flex-direction: column; backdrop-filter: blur(10px);
+    }
+    #slide-navigator.collapsed { transform: translateX(-100%); }
+
+    .nav-header { padding: 25px 20px 15px 70px; font-size: 1.1rem; font-weight: bold; color: #58a6ff; border-bottom: 1px solid #30363d; text-transform: uppercase; }
+    #nav-list { list-style: none; padding: 0 0 40px 0; margin: 0; overflow-y: auto; flex: 1; }
+
+    .nav-set {
+        padding: 12px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
+        font-size: 1.1rem; font-weight: bold; color: #ffffff; background: rgba(0,0,0,0.6);
+        text-transform: uppercase;
+    }
+    .nav-diff {
+        padding: 10px 20px 10px 30px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 1rem; color: #58a6ff; background: rgba(13, 17, 23, 0.6);
+    }
+    .nav-item {
+        padding: 8px 20px 8px 45px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.02);
+        font-size: 0.9rem; color: #8b949e;
+    }
+    .nav-item:hover { background: rgba(88, 166, 255, 0.1); color: #c9d1d9; }
+    .nav-item.active-nav { background: rgba(88, 166, 255, 0.2); color: #ffffff; border-left: 4px solid #58a6ff; }
+
+    /* Book Mode Adjustments */
+    body.book-mode #slides-container { background-color: #fdf6e3; }
+    body.book-mode .slide { padding: 80px 150px 100px 150px; align-items: flex-start; justify-content: flex-start; }
+    body.book-mode .slide > :not(.book-content) { display: none !important; }
+    body.book-mode .book-content { display: block !important; }
+    body.book-mode #nav-controls { display: none !important; } /* Hidden in Book Mode */
+    
+    .book-content {
+        display: none; font-family: 'Georgia', serif; color: #333333; width: 100%; max-width: 900px; margin: 0 auto; text-align: left;
+    }
+    .book-content h2 { color: #111; font-family: 'Segoe UI', sans-serif; font-size: 2.5rem; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 25px; }
+    .book-content p { color: #333; font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; }
+
+    /* Responsive Mobile & Portrait Mode */
+    @media screen and (max-width: 768px), screen and (orientation: portrait) {
+        #container {
+            border-radius: 0;
+            aspect-ratio: auto;
+        }
+        .slide {
+            padding: 100px 20px 140px 20px;
+            justify-content: flex-start;
+        }
+        .slide h1 { font-size: 2.2rem; margin-bottom: 20px; }
+        .slide h2 { font-size: 1.8rem; margin-bottom: 15px; }
+        .slide p, .slide ul, .question-text { font-size: 1.2rem; }
+        
+        .quiz-container { padding: 20px; }
+        .input-field { font-size: 1.2rem; padding: 12px; }
+        .mcq-option { padding: 12px 15px; font-size: 1.1rem; }
+        .submit-btn, .exp-btn, .back-quiz-btn { font-size: 1rem; padding: 12px 20px; width: 100%; margin-right: 0; margin-bottom: 10px; }
+        .quiz-feedback { font-size: 1.2rem; }
+        
+        #top-hud { top: 70px; right: 20px; flex-direction: column; gap: 10px; align-items: flex-end; }
+        .score-display, .timer-display { font-size: 1.2rem; padding: 8px 15px; }
+        
+        #nav-toggle-btn { top: 20px; left: 20px; font-size: 1rem; padding: 8px 12px; }
+        #caption-bar { height: auto; padding: 15px 20px; }
+        #caption-text { font-size: 1.1rem; max-height: 100px; }
+        #nav-controls { padding: 0 15px; height: 80px; }
+        .nav-btn { font-size: 1rem; padding: 8px 15px; }
+        
+        #question-tracker { bottom: 100px; }
+        
+        body.book-mode .slide { padding: 80px 20px 100px 20px; }
+        .book-content h2 { font-size: 1.8rem; }
+        .book-content p { font-size: 1.1rem; }
+    }
+
+</style>
+</head>
+<body>
+
+<div id="login-overlay">
+    <div class="login-box">
+        <h2 style="color: #58a6ff; margin-bottom: 25px;">JLV CPA Auth Portal</h2>
+        <label>ID Number</label>
+        <input type="text" id="auth-id" placeholder="Enter ID Number">
+        <label>Password</label>
+        <input type="password" id="auth-pass" placeholder="Enter Password">
+        <div id="login-error" style="color: #f85149; margin-bottom: 15px; font-size: 0.9rem; display: none;">Invalid credentials</div>
+        <button class="start-btn" onclick="handleLogin()">Login to Module</button>
+    </div>
+</div>
+
+<div id="container" style="display:none;">
+    <button id="nav-toggle-btn" onclick="toggleNavigator(event)">☰ Menu</button>
+    
+    <div id="slide-navigator" class="collapsed">
+        <div class="nav-header">Course Sets</div>
+        <ul id="nav-list"></ul>
+    </div>
+
+    <div id="top-hud">
+        <div id="timer-display" class="timer-display">00:00</div>
+        <div class="score-display">Score: <span id="user-score">0</span></div>
+    </div>
+    
+    <div id="main-workspace">
+        <div id="teacher-sidebar">
+            <h3 style="color: #c9d1d9; border-bottom: 1px solid #30363d; padding-bottom: 10px;">Student Roster</h3>
+            <div id="roster-list"></div>
+        </div>
+
+        <div id="slides-container">
+            <div class="slide" id="slide-q1"
+                 data-question-id="q1" 
+                 data-type="Theory" 
+                 data-set="Set A" 
+                 data-difficulty="Easy" 
+                 data-answer="C"
+                 data-points="3"
+                 data-text="Which of the following is not a characteristic of a corporation?">
+                <div class="quiz-container">
+                    <div class="question-text">Which of the following is not a characteristic of a corporation?</div>
+                    <ul style="list-style: none; padding: 0;">
+                        <li class="mcq-option" onclick="selectOption('q1', 'A')">A) Right of succession</li>
+                        <li class="mcq-option" onclick="selectOption('q1', 'B')">B) Created by operation of law</li>
+                        <li class="mcq-option" onclick="selectOption('q1', 'C')">C) Unlimited liability of shareholders</li>
+                        <li class="mcq-option" onclick="selectOption('q1', 'D')">D) Artificial being</li>
+                    </ul>
+                    <input type="hidden" id="input-q1" value="">
+                    <button class="submit-btn" id="submit-q1" onclick="submitAnswer('q1')">Submit Answer</button>
+                    <button class="exp-btn" id="exp-q1" onclick="toggleBookMode()">Show Explanation</button>
+                    <div class="quiz-feedback" id="feedback-q1"></div>
+                </div>
+                <div class="book-content">
+                    <button class="back-quiz-btn" style="display:inline-block;" onclick="toggleBookMode()">← Back to Quiz</button>
+                    <h2>Explanation: Corporate Characteristics</h2>
+                    <p><strong>Correct Answer: C</strong></p>
+                    <p>A corporation provides limited liability to its shareholders, meaning they are only liable up to the amount of their investment. Unlimited liability is a characteristic of a sole proprietorship or a general partnership.</p>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-q2"
+                 data-question-id="q2" 
+                 data-type="Problem Solving" 
+                 data-set="Set A" 
+                 data-difficulty="Average" 
+                 data-answer="500000"
+                 data-points="6"
+                 data-text="A corporation issues 10,000 shares of P100 par value ordinary shares for P150 per share. What is the amount to be credited to the Share Premium account?">
+                <div class="quiz-container">
+                    <div class="question-text">A corporation issues 10,000 shares of P100 par value ordinary shares for P150 per share. What is the amount to be credited to the Share Premium account?</div>
+                    <input type="number" class="input-field" id="input-q2" placeholder="Enter numerical amount...">
+                    <button class="submit-btn" id="submit-q2" onclick="submitAnswer('q2')">Submit Answer</button>
+                    <button class="exp-btn" id="exp-q2" onclick="toggleBookMode()">Show Explanation</button>
+                    <div class="quiz-feedback" id="feedback-q2"></div>
+                </div>
+                <div class="book-content">
+                    <button class="back-quiz-btn" style="display:inline-block;" onclick="toggleBookMode()">← Back to Quiz</button>
+                    <h2>Explanation: Share Capital Issuance</h2>
+                    <p><strong>Correct Answer: 500,000</strong></p>
+                    <p>The total cash received is P1,500,000 (10,000 shares * P150). The ordinary share capital account is credited for the par value: P1,000,000 (10,000 shares * P100). The excess over par is credited to share premium: P1,500,000 - P1,000,000 = P500,000.</p>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-q3"
+                 data-question-id="q3" 
+                 data-type="Theory" 
+                 data-set="Set A" 
+                 data-difficulty="Difficult" 
+                 data-answer="B"
+                 data-points="9"
+                 data-text="When a corporation acquires its own shares, how is this transaction recorded under the cost method?">
+                <div class="quiz-container">
+                    <div class="question-text">When a corporation acquires its own shares, how is this transaction recorded under the cost method?</div>
+                    <ul style="list-style: none; padding: 0;">
+                        <li class="mcq-option" onclick="selectOption('q3', 'A')">A) As an asset</li>
+                        <li class="mcq-option" onclick="selectOption('q3', 'B')">B) As a deduction from total shareholders' equity</li>
+                        <li class="mcq-option" onclick="selectOption('q3', 'C')">C) As a deduction from retained earnings only</li>
+                        <li class="mcq-option" onclick="selectOption('q3', 'D')">D) As an increase in share premium</li>
+                    </ul>
+                    <input type="hidden" id="input-q3" value="">
+                    <button class="submit-btn" id="submit-q3" onclick="submitAnswer('q3')">Submit Answer</button>
+                    <button class="exp-btn" id="exp-q3" onclick="toggleBookMode()">Show Explanation</button>
+                    <div class="quiz-feedback" id="feedback-q3"></div>
+                </div>
+                <div class="book-content">
+                    <button class="back-quiz-btn" style="display:inline-block;" onclick="toggleBookMode()">← Back to Quiz</button>
+                    <h2>Explanation: Treasury Shares</h2>
+                    <p><strong>Correct Answer: B</strong></p>
+                    <p>Treasury shares are not assets. Under the cost method, the cost of the acquired shares is recorded in a contra-equity account, which reduces the total shareholders' equity on the statement of financial position.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="question-tracker"></div>
+
+    <div id="nav-controls">
+        <button class="nav-btn" id="btn-prev" onclick="prevSlide()" disabled>&#9664; Prev</button>
+        <button class="nav-btn" id="btn-next" onclick="nextSlide()">Next Question &#9654;</button>
+    </div>
+
+    <div id="caption-bar">
+        <div id="caption-text">Authenticating environment...</div>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs, limit, orderBy, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAgOsKAZWwExUzupxSNytsfOo9BOppF0ng",
+        authDomain: "jlvcpa-quizzes.firebaseapp.com",
+        projectId: "jlvcpa-quizzes",
+        storageBucket: "jlvcpa-quizzes.appspot.com",
+        messagingSenderId: "629158256557",
+        appId: "1:629158256557:web:b3d1a424b32e28cd578b24"
+    };
+
+    let db;
+    try {
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+    } catch (e) {
+        console.error("Firebase Init Error:", e);
+    }
+
+    // Global App State
+    window.currentUser = null;
+    window.currentSlideIndex = 0;
+    window.slides = document.querySelectorAll('.slide');
+    window.score = 0;
+    window.timerInterval = null;
+    window.activityName = "CorpAcc_Module1";
+    window.section = "Default"; 
+    window.studentAnswers = {};
+
+    // Firebase Auth Wrapper
+    async function loginUser(idInput, passInput) {
+        if (!db) return null;
+        let authenticatedUser = null;
+        const studentQuery = query(collection(db, 'students'), where('Idnumber', "==", idInput));
+        const studentSnapshot = await getDocs(studentQuery);
+        if (!studentSnapshot.empty) {
+            studentSnapshot.forEach((doc) => {
+                const data = doc.data();
+                if (String(data.passWord) === passInput) authenticatedUser = { role: 'student', ...data };
+            });
+        }
+        if (!authenticatedUser) {
+            const teacherQuery = query(collection(db, 'teachers'), where('idNumber', "==", idInput));
+            const teacherSnapshot = await getDocs(teacherQuery);
+            if (!teacherSnapshot.empty) {
+                teacherSnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (String(data.passWord) === passInput) authenticatedUser = { role: 'teacher', ...data };
+                });
+            }
+        }
+        return authenticatedUser;
+    }
+
+    window.handleLogin = async function() {
+        const id = document.getElementById('auth-id').value;
+        const pass = document.getElementById('auth-pass').value;
+        const btn = document.querySelector('.login-box .start-btn');
+        btn.innerText = "Authenticating...";
+        
+        try {
+            const user = await loginUser(id, pass);
+            if (user) {
+                window.currentUser = user;
+                if(user.section) window.section = user.section;
+                document.getElementById('login-overlay').style.display = 'none';
+                document.getElementById('container').style.display = 'flex';
+                
+                if (user.role === 'teacher') {
+                    document.body.classList.add('role-teacher');
+                    loadTeacherRoster();
+                } else {
+                    initEnvironment();
+                }
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+                btn.innerText = "Login to Module";
+            }
+        } catch(e) {
+            console.error(e);
+            btn.innerText = "Login to Module";
+        }
+    };
+
+    function initEnvironment() {
+        buildNavigator();
+        buildTracker();
+        showSlide(0);
+    }
+
+    // UI Builders
+    function buildNavigator() {
+        const navList = document.getElementById('nav-list');
+        navList.innerHTML = '';
+        let currentSet = "";
+        let currentDiff = "";
+        let setUl, diffUl;
+
+        window.slides.forEach((slide, index) => {
+            const sSet = slide.getAttribute('data-set');
+            const sDiff = slide.getAttribute('data-difficulty');
+
+            if (sSet !== currentSet) {
+                currentSet = sSet;
+                const setLi = document.createElement('li');
+                setLi.className = 'nav-set';
+                setLi.innerText = sSet;
+                setUl = document.createElement('ul');
+                setUl.style.display = 'block';
+                navList.appendChild(setLi);
+                navList.appendChild(setUl);
+            }
+            if (sDiff !== currentDiff) {
+                currentDiff = sDiff;
+                const diffLi = document.createElement('li');
+                diffLi.className = 'nav-diff';
+                diffLi.innerText = sDiff;
+                diffUl = document.createElement('ul');
+                diffUl.style.display = 'block';
+                setUl.appendChild(diffLi);
+                setUl.appendChild(diffUl);
+            }
+            const qLi = document.createElement('li');
+            qLi.className = 'nav-item nav-slide-link';
+            qLi.innerText = `Question ${index + 1} (${sDiff})`;
+            qLi.onclick = () => { if(window.currentUser.role === 'teacher') showSlide(index); };
+            diffUl.appendChild(qLi);
+        });
+    }
+
+    function buildTracker() {
+        const tracker = document.getElementById('question-tracker');
+        tracker.innerHTML = '';
+        window.slides.forEach((slide, idx) => {
+            const circle = document.createElement('div');
+            circle.className = 'tracker-circle';
+            circle.id = `tracker-${idx}`;
+            tracker.appendChild(circle);
+        });
+    }
+
+    window.toggleNavigator = function(event) {
+        if (event) event.stopPropagation();
+        const nav = document.getElementById('slide-navigator');
+        nav.classList.toggle('collapsed');
+    };
+
+    window.toggleBookMode = function() {
+        document.body.classList.toggle('book-mode');
+    };
+
+    // Auto-Narrator and Timer Mechanics
+    function playNarration(slide) {
+        window.speechSynthesis.cancel();
+        
+        const diff = slide.getAttribute('data-difficulty');
+        const qNum = window.currentSlideIndex + 1;
+        let rawText = slide.getAttribute('data-text');
+        
+        // Dynamic Round and Question pre-text injection
+        let narrationText = "";
+        if (diff) {
+            narrationText += `${diff} Round, Question ${qNum}. `;
+        }
+        narrationText += rawText + ". Timer Starts Now.";
+        
+        document.getElementById('caption-text').innerText = narrationText;
+
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(narrationText);
+            utterance.rate = 0.95;
+            utterance.onend = () => {
+                if(window.currentUser.role !== 'teacher' && !slide.hasAttribute('data-locked')) {
+                    startTimer(slide);
+                }
+            };
+            window.speechSynthesis.speak(utterance);
+        } else {
+            setTimeout(() => { startTimer(slide); }, 3000);
+        }
+    }
+
+    function startTimer(slide) {
+        clearInterval(window.timerInterval);
+        const timerUI = document.getElementById('timer-display');
+        timerUI.style.display = 'block';
+        
+        let duration = 0;
+        const type = slide.getAttribute('data-type');
+        const diff = slide.getAttribute('data-difficulty');
+
+        if (type === 'Theory') duration = 10;
+        else if (diff === 'Easy') duration = 30;
+        else if (diff === 'Average') duration = 45;
+        else if (diff === 'Difficult') duration = 60;
+
+        let timeLeft = duration;
+        timerUI.innerText = formatTime(timeLeft);
+
+        window.timerInterval = setInterval(() => {
+            timeLeft--;
+            timerUI.innerText = formatTime(timeLeft);
+            if (timeLeft <= 0) {
+                clearInterval(window.timerInterval);
+                const qId = slide.getAttribute('data-question-id');
+                window.submitAnswer(qId, true);
+            }
+        }, 1000);
+    }
+
+    function formatTime(seconds) {
+        const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const s = (seconds % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+    }
+
+    // Question Navigation & Answering
+    window.showSlide = function(index) {
+        clearInterval(window.timerInterval);
+        document.getElementById('timer-display').style.display = 'none';
+
+        window.slides.forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tracker-circle').forEach(c => c.classList.remove('active'));
+        
+        window.currentSlideIndex = index;
+        const currentSlide = window.slides[index];
+        currentSlide.classList.add('active');
+        document.getElementById(`tracker-${index}`).classList.add('active');
+
+        document.getElementById('btn-prev').disabled = index === 0;
+        document.getElementById('btn-next').disabled = index === window.slides.length - 1;
+
+        if (window.currentUser.role !== 'teacher' && !currentSlide.hasAttribute('data-locked')) {
+            if(index > 0) {
+                document.getElementById('caption-text').innerText = "Preparing next question...";
+                setTimeout(() => playNarration(currentSlide), 3000);
+            } else {
+                playNarration(currentSlide);
+            }
+        }
+    };
+
+    window.nextSlide = function() {
+        if (window.currentSlideIndex < window.slides.length - 1) {
+            window.showSlide(window.currentSlideIndex + 1);
+        }
+    };
+    window.prevSlide = function() {
+        if (window.currentSlideIndex > 0) {
+            window.showSlide(window.currentSlideIndex - 1);
+        }
+    };
+
+    window.selectOption = function(qId, val) {
+        const slide = document.getElementById(`slide-${qId}`);
+        if(slide.hasAttribute('data-locked')) return;
+
+        document.getElementById(`input-${qId}`).value = val;
+        slide.querySelectorAll('.mcq-option').forEach(el => el.classList.remove('selected'));
+        event.currentTarget.classList.add('selected');
+    };
+
+    window.submitAnswer = function(qId, isExpired = false) {
+        clearInterval(window.timerInterval);
+        const slide = document.getElementById(`slide-${qId}`);
+        const inputEl = document.getElementById(`input-${qId}`);
+        const userVal = inputEl.value.trim();
+        const correctVal = slide.getAttribute('data-answer');
+        const points = parseInt(slide.getAttribute('data-points'));
+        const isCorrect = String(userVal).toLowerCase() === String(correctVal).toLowerCase();
+
+        slide.setAttribute('data-locked', 'true');
+        inputEl.disabled = true;
+        inputEl.style.backgroundColor = '#f3f4f6';
+        inputEl.style.cursor = 'not-allowed';
+        slide.querySelectorAll('.mcq-option').forEach(el => el.style.pointerEvents = 'none');
+        document.getElementById(`submit-${qId}`).style.display = 'none';
+        document.getElementById(`exp-${qId}`).style.display = 'inline-block';
+
+        const fb = document.getElementById(`feedback-${qId}`);
+        fb.style.display = 'block';
+
+        if (isCorrect) {
+            window.score += points;
+            document.getElementById('user-score').innerText = window.score;
+            fb.className = 'quiz-feedback feedback-correct';
+            fb.innerText = `Correct! Well done. (+${points} pts)`;
+        } else {
+            fb.className = 'quiz-feedback feedback-wrong';
+            let msg = isExpired ? "Time Expired. " : "Incorrect. ";
+            fb.innerText = `${msg}The correct answer was: ${correctVal}`;
+        }
+
+        document.getElementById(`tracker-${window.currentSlideIndex}`).classList.add('answered');
+        
+        window.studentAnswers[qId] = userVal;
+        saveToFirebase();
+    };
+
+    async function saveToFirebase() {
+        if (!db || window.currentUser.role === 'teacher') return;
+        
+        const cName = `results_${window.activityName}_${window.section}`;
+        const u = window.currentUser;
+        const docId = `${u.CN || '00'}-${u.Idnumber}-${u.LastName} ${u.FirstName}`;
+
+        let qMap = {};
+        window.slides.forEach(s => {
+            qMap[s.getAttribute('data-question-id')] = {
+                type: s.getAttribute('data-type'),
+                questionText: s.getAttribute('data-text')
+            };
+        });
+
+        const payload = {
+            status: "in_progress",
+            answers: window.studentAnswers,
+            questionsTaken: qMap,
+            metadata: {
+                timestamp: new Date().toISOString(),
+                studentId: u.Idnumber,
+                studentName: `${u.FirstName} ${u.LastName}`,
+                CN: u.CN || "00",
+                section: window.section
+            }
+        };
+
+        try {
+            await setDoc(doc(db, cName, docId), payload, { merge: true });
+            await setDoc(doc(db, 'results_list', `${window.activityName}_${window.section}`), {
+                activityName: window.activityName, section: window.section, lastUpdate: new Date().toISOString()
+            }, { merge: true });
+        } catch (e) {
+            console.error("Save Error:", e);
+        }
+    }
+
+    async function loadTeacherRoster() {
+        if (!db) return;
+        const cName = `results_${window.activityName}_${window.section}`;
+        const rosterQuery = query(collection(db, cName), orderBy('metadata.studentName'));
+        const rosterDiv = document.getElementById('roster-list');
+        
+        try {
+            const snap = await getDocs(rosterQuery);
+            if (snap.empty) { rosterDiv.innerHTML = "<p style='color:#8b949e; padding:10px;'>No student submissions found.</p>"; return; }
+            
+            snap.forEach(docSnap => {
+                const data = docSnap.data();
+                const div = document.createElement('div');
+                div.className = 'roster-item';
+                div.innerText = data.metadata.studentName;
+                div.onclick = () => previewStudent(data, div);
+                rosterDiv.appendChild(div);
+            });
+        } catch(e) { console.error(e); }
+        initEnvironment();
+    }
+
+    function previewStudent(data, rowDiv) {
+        document.querySelectorAll('.roster-item').forEach(el => el.classList.remove('active'));
+        rowDiv.classList.add('active');
+        
+        window.score = 0;
+        window.slides.forEach(slide => {
+            const qId = slide.getAttribute('data-question-id');
+            const inputEl = document.getElementById(`input-${qId}`);
+            const correctVal = slide.getAttribute('data-answer');
+            const points = parseInt(slide.getAttribute('data-points'));
+            const userAns = data.answers[qId];
+
+            if (userAns !== undefined) {
+                inputEl.value = userAns;
+                slide.setAttribute('data-locked', 'true');
+                inputEl.disabled = true;
+                inputEl.style.backgroundColor = '#f3f4f6';
+                inputEl.style.cursor = 'not-allowed';
+                
+                if(slide.getAttribute('data-type') === 'Theory') {
+                    slide.querySelectorAll('.mcq-option').forEach(el => {
+                        el.style.pointerEvents = 'none';
+                        if(el.innerText.startsWith(userAns)) el.classList.add('selected');
+                    });
+                }
+                
+                document.getElementById(`submit-${qId}`).style.display = 'none';
+                document.getElementById(`exp-${qId}`).style.display = 'inline-block';
+                
+                const fb = document.getElementById(`feedback-${qId}`);
+                fb.style.display = 'block';
+                
+                if(String(userAns).toLowerCase() === String(correctVal).toLowerCase()) {
+                    window.score += points;
+                    fb.className = 'quiz-feedback feedback-correct';
+                    fb.innerText = `Student answered correctly: ${userAns}`;
+                } else {
+                    fb.className = 'quiz-feedback feedback-wrong';
+                    fb.innerText = `Student answered: ${userAns} (Expected: ${correctVal})`;
+                }
+            }
+        });
+        document.getElementById('user-score').innerText = window.score;
+        showSlide(0);
+    }
+</script>
+</body>
+</html>
