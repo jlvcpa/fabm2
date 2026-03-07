@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Corporation Accounting</title>
 <style>
     body, html {
@@ -246,7 +246,7 @@
     .nav-grandparent {
         padding: 12px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
         font-size: 1.15rem; font-weight: bold; color: #ffffff; background: rgba(0,0,0,0.6);
-        transition: background 0.2s; text-transform: uppercase; letter-spacing: 1px;
+        transition: background 0.2s; text-transform: uppercase; letter-spacing: 1px; display: flex; justify-content: space-between;
     }
     .nav-grandparent:hover { background: rgba(88, 166, 255, 0.2); }
     .nav-week-children { list-style: none; padding: 0; margin: 0; display: none; }
@@ -284,49 +284,61 @@
     .book-content h2 { color: #111; font-family: 'Segoe UI', sans-serif; font-size: 2.5rem; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 25px; }
     .book-content p { color: #333; font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; }
 
-    /* --- STRICT RESPONSIVE MOBILE & PORTRAIT OVERRIDE --- */
+    /* --- AGGRESSIVE RESPONSIVE MOBILE & PORTRAIT OVERRIDE --- */
     @media screen and (max-width: 1024px), screen and (orientation: portrait) {
+        body, html {
+            height: 100vh !important;
+            width: 100vw !important;
+            overflow: hidden !important;
+        }
+
         #container {
             border-radius: 0 !important;
-            aspect-ratio: unset !important; /* Aggressively breaks the 16:9 lock */
-            width: 100% !important;
-            height: 100% !important;
-            max-width: none !important;
-            max-height: none !important;
+            aspect-ratio: auto !important; /* Aggressively breaks the 16:9 lock */
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: 100vw !important;
+            max-height: 100vh !important;
+            display: flex;
+            flex-direction: column;
         }
         
-        #main-workspace { flex-direction: row !important; } /* Strictly enforces horizontal split */
-        #teacher-sidebar { width: 200px !important; height: 100% !important; border-bottom: none !important; padding-top: 70px; }
+        #main-workspace { flex-direction: row !important; width: 100%; height: 100%; } 
+        #teacher-sidebar { width: 200px !important; height: 100% !important; border-bottom: none !important; padding-top: 70px; flex-shrink: 0; }
+        #slides-container { flex: 1; height: 100%; }
 
         .slide {
-            padding: 80px 20px 100px 20px; /* Room for header and footer items */
-            justify-content: flex-start; /* Prevents vertical centering from hiding top text */
+            padding: 100px 15px 120px 15px !important; 
+            justify-content: flex-start; 
             overflow-y: auto;
         }
-        .slide h1 { font-size: 1.8rem; margin-bottom: 15px; }
-        .slide h2 { font-size: 1.5rem; margin-bottom: 15px; }
-        .slide p, .slide ul, .question-text { font-size: 1.1rem; }
         
-        .quiz-container { padding: 15px; width: 100%; }
-        .input-field { font-size: 1rem; padding: 12px; }
-        .mcq-option { padding: 12px 15px; font-size: 1rem; margin-bottom: 10px;}
-        .submit-btn, .exp-btn, .back-quiz-btn { font-size: 0.95rem; padding: 12px; width: 100%; margin-right: 0; margin-bottom: 10px; margin-top: 10px;}
-        .quiz-feedback { font-size: 1.1rem; padding: 10px;}
+        /* Font size rectifications for mobile */
+        .slide h1 { font-size: 1.8rem !important; margin-bottom: 15px !important; }
+        .slide h2 { font-size: 1.5rem !important; margin-bottom: 15px !important; }
+        .topic-text { font-size: 0.9rem !important; }
+        .question-text { font-size: 1.1rem !important; margin-bottom: 15px !important; line-height: 1.4; }
         
-        #top-hud { top: 15px; left: 0; width: 100%; }
-        .score-display { right: 15px; top: 0; font-size: 1rem; padding: 8px 12px; }
-        .timer-display { font-size: 1rem; padding: 8px 12px; }
+        .quiz-container { padding: 15px !important; width: 100% !important; }
+        .input-field { font-size: 1rem !important; padding: 12px !important; }
+        .mcq-option { padding: 10px 15px !important; font-size: 0.95rem !important; margin-bottom: 8px !important; line-height: 1.3;}
+        .submit-btn, .exp-btn, .back-quiz-btn { font-size: 0.95rem !important; padding: 12px !important; width: 100% !important; margin-right: 0 !important; margin-bottom: 10px !important; margin-top: 10px !important;}
+        .quiz-feedback { font-size: 1rem !important; padding: 10px !important;}
         
-        #nav-toggle-btn { top: 15px; left: 15px; font-size: 0.9rem; padding: 8px 12px; }
+        #top-hud { top: 15px !important; left: 0 !important; width: 100% !important; }
+        .score-display { right: 15px !important; top: 0 !important; font-size: 1rem !important; padding: 8px 12px !important; }
+        .timer-display { font-size: 1rem !important; padding: 8px 12px !important; }
         
-        #nav-controls { padding: 0 15px; height: auto; bottom: 30px; position: absolute; width: 100%; z-index: 50; }
-        .nav-btn { font-size: 0.9rem; padding: 10px 15px; }
+        #nav-toggle-btn { top: 15px !important; left: 15px !important; font-size: 0.9rem !important; padding: 8px 12px !important; }
         
-        #question-tracker { bottom: 80px; }
+        #nav-controls { padding: 0 15px !important; height: auto !important; bottom: 30px !important; position: absolute !important; width: 100% !important; z-index: 50 !important; }
+        .nav-btn { font-size: 0.9rem !important; padding: 10px 15px !important; }
         
-        body.book-mode .slide { padding: 80px 15px 100px 15px; }
-        .book-content h2 { font-size: 1.5rem; }
-        .book-content p { font-size: 1rem; }
+        #question-tracker { bottom: 80px !important; }
+        
+        body.book-mode .slide { padding: 80px 15px 100px 15px !important; }
+        .book-content h2 { font-size: 1.4rem !important; }
+        .book-content p { font-size: 1rem !important; }
     }
 
 </style>
@@ -1058,7 +1070,7 @@
     window.slides = document.querySelectorAll('.slide');
     window.score = 0;
     window.timerInterval = null;
-    window.activityName = "FABM CUP Practice";
+    window.activityName = "CorpAcc_Module1";
     window.section = "Default"; 
     window.studentAnswers = {};
 
@@ -1131,81 +1143,89 @@
         showSlide(0);
     }
 
-    // UI Builders - Accordion Navigation strictly mapped to Set -> Diff -> Question
+    // UI Builders - Intelligent 3-Level Accordion (DOM Pattern Search)
     function buildNavigator() {
         const navList = document.getElementById('nav-list');
         navList.innerHTML = '';
-        let currentSet = null;
-        let currentDiff = null;
-        let currentSetUl = null;
-        let currentDiffUl = null;
-        let qCounter = 1;
+        let qCounters = {}; 
 
         window.slides.forEach((slide, index) => {
-            const sSet = slide.getAttribute('data-set');
-            const sDiff = slide.getAttribute('data-difficulty');
+            const sSet = slide.getAttribute('data-set') || 'Uncategorized';
+            const sDiff = slide.getAttribute('data-difficulty') || 'General';
+            
+            const setKey = sSet.replace(/\s+/g, '-');
+            const diffKey = setKey + '-' + sDiff.replace(/\s+/g, '-');
 
-            if (sSet !== currentSet) {
-                currentSet = sSet;
-                currentDiff = null; // Hard reset the difficulty for a new Set
-
-                const setLi = document.createElement('li');
+            // 1. Find or create Set Parent
+            let setLi = navList.querySelector(`li[data-set="${setKey}"]`);
+            let setUl = navList.querySelector(`ul[data-set-ul="${setKey}"]`);
+            
+            if (!setLi) {
+                setLi = document.createElement('li');
                 setLi.className = 'nav-grandparent';
+                setLi.setAttribute('data-set', setKey);
                 setLi.innerHTML = `<span>${sSet}</span> <span>▼</span>`;
                 
-                currentSetUl = document.createElement('ul');
-                currentSetUl.className = 'nav-week-children';
-                currentSetUl.style.display = 'none'; 
+                setUl = document.createElement('ul');
+                setUl.className = 'nav-week-children';
+                setUl.setAttribute('data-set-ul', setKey);
+                setUl.style.display = 'none'; 
                 
                 setLi.onclick = (e) => {
                     e.stopPropagation();
-                    const isOpening = currentSetUl.style.display !== 'block';
+                    const isOpening = setUl.style.display !== 'block';
                     document.querySelectorAll('.nav-week-children').forEach(ul => ul.style.display = 'none');
-                    if (isOpening) currentSetUl.style.display = 'block';
+                    if (isOpening) setUl.style.display = 'block';
                 };
                 
                 navList.appendChild(setLi);
-                navList.appendChild(currentSetUl);
+                navList.appendChild(setUl);
             }
 
-            if (sDiff !== currentDiff) {
-                currentDiff = sDiff;
-                qCounter = 1; // Hard reset the question number count for a new Diff
-                
-                const diffLi = document.createElement('li');
+            // 2. Find or create Difficulty Parent
+            let diffLi = setUl.querySelector(`li[data-diff="${diffKey}"]`);
+            let diffUl = setUl.querySelector(`ul[data-diff-ul="${diffKey}"]`);
+            
+            if (!diffLi) {
+                diffLi = document.createElement('li');
                 diffLi.className = 'nav-parent';
+                diffLi.setAttribute('data-diff', diffKey);
                 diffLi.innerHTML = `<span>${sDiff}</span> <span>▼</span>`;
                 
-                currentDiffUl = document.createElement('ul');
-                currentDiffUl.className = 'nav-day-children';
-                currentDiffUl.style.display = 'none';
+                diffUl = document.createElement('ul');
+                diffUl.className = 'nav-day-children';
+                diffUl.setAttribute('data-diff-ul', diffKey);
+                diffUl.style.display = 'none';
                 
                 diffLi.onclick = (e) => {
                     e.stopPropagation();
-                    const isOpening = currentDiffUl.style.display !== 'block';
-                    currentSetUl.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
-                    if (isOpening) currentDiffUl.style.display = 'block';
+                    const isOpening = diffUl.style.display !== 'block';
+                    setUl.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
+                    if (isOpening) diffUl.style.display = 'block';
                 };
                 
-                currentSetUl.appendChild(diffLi);
-                currentSetUl.appendChild(currentDiffUl);
+                setUl.appendChild(diffLi);
+                setUl.appendChild(diffUl);
+                
+                qCounters[diffKey] = 1;
             }
 
+            // 3. Add Question Leaf Node
             const qLi = document.createElement('li');
             qLi.className = 'nav-child-item nav-slide-link';
             qLi.dataset.index = index;
-            qLi.innerHTML = `<span>Question ${qCounter}</span>`;
+            qLi.innerHTML = `<span>Question ${qCounters[diffKey]}</span>`;
             
             qLi.onclick = (e) => { 
                 e.stopPropagation();
-                if(window.currentUser.role === 'teacher') showSlide(index); 
+                if(window.currentUser && window.currentUser.role === 'teacher') showSlide(index); 
             };
             
-            currentDiffUl.appendChild(qLi);
-            qCounter++;
+            diffUl.appendChild(qLi);
+            qCounters[diffKey]++;
         });
         
-        // Open first Set and Diff by default on load
+        // Open first Set and Diff by default
         const firstSetUl = navList.querySelector('.nav-week-children');
         if(firstSetUl) {
             firstSetUl.style.display = 'block';
@@ -1256,7 +1276,6 @@
         const diff = slide.getAttribute('data-difficulty');
         const topic = slide.getAttribute('data-topic');
         
-        // Find relative question number within this set & difficulty
         let qNum = 1;
         const currentSet = slide.getAttribute('data-set');
         for(let i = 0; i < window.currentSlideIndex; i++) {
@@ -1265,26 +1284,18 @@
             }
         }
         
-        // Build dynamic string using commas for smooth robotic pacing
         let narrationText = "";
-        if (diff) {
-            narrationText += `${diff} Round, Question ${qNum}. `;
-        }
-        if (topic) {
-            narrationText += `Topic: ${topic}. `;
-        }
+        if (diff) narrationText += `${diff} Round, Question ${qNum}. `;
+        if (topic) narrationText += `Topic: ${topic}. `;
         
         const qTextEl = slide.querySelector('.question-text');
-        if (qTextEl) {
-            narrationText += `${qTextEl.innerText} `;
-        }
+        if (qTextEl) narrationText += `${qTextEl.innerText} `;
         
         // Logical MCQ option reading
         const options = slide.querySelectorAll('.mcq-option');
         if(options.length > 0) {
             options.forEach(opt => {
                 let text = opt.innerText.trim();
-                // Find "A) Something" and replace it to "A, Something,"
                 text = text.replace(/^([A-D])\)\s*/i, '$1, ');
                 narrationText += `${text}, `;
             });
@@ -1294,9 +1305,9 @@
 
         if ('speechSynthesis' in window) {
             const utterance = new SpeechSynthesisUtterance(narrationText);
-            utterance.rate = 0.85; // Decreased speed by 10%
+            utterance.rate = 0.85; 
             utterance.onend = () => {
-                if(window.currentUser.role !== 'teacher' && !slide.hasAttribute('data-locked')) {
+                if(window.currentUser && window.currentUser.role !== 'teacher' && !slide.hasAttribute('data-locked')) {
                     startTimer(slide);
                 }
             };
@@ -1353,7 +1364,6 @@
         
         updateTracker(index);
 
-        // Sync and open navigator menus logically
         const navItems = document.querySelectorAll('.nav-slide-link');
         navItems.forEach((item) => {
             if (parseInt(item.dataset.index) === window.currentSlideIndex) {
@@ -1368,7 +1378,7 @@
                     setUl.style.display = 'block';
                 }
                 if (diffUl) {
-                    document.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
+                    setUl.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
                     diffUl.style.display = 'block';
                 }
             } else {
@@ -1409,7 +1419,6 @@
     };
 
     window.submitAnswer = function(qId, isExpired = false) {
-        // Immediate Narration Cancellation
         window.speechSynthesis.cancel();
         clearInterval(window.timerInterval);
         
