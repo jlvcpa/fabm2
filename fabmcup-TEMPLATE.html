@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Corporation Accounting</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FABM Cup Reviewer</title>
 <style>
     body, html {
         margin: 0;
@@ -25,7 +25,6 @@
         height: 100%;
         max-width: 1920px;
         max-height: 1080px;
-        aspect-ratio: 16 / 9;
         background: #000;
         border-radius: 12px;
         overflow: hidden;
@@ -33,6 +32,14 @@
         display: flex;
         flex-direction: column;
         transition: background-color 0.4s ease;
+    }
+
+    /* Ownership Footer */
+    #courseware-footer {
+        position: absolute;
+        bottom: 0; left: 0; width: 100%; padding: 10px 0;
+        background: #0d1117; color: rgba(255,255,255,0.4); font-size: 0.85rem;
+        text-align: center; border-top: 1px solid #30363d; z-index: 100; pointer-events: none;
     }
 
     /* Login & Overlays */
@@ -50,114 +57,46 @@
     }
     
     .login-box {
-        background: #161b22;
-        padding: 40px;
-        border-radius: 12px;
-        border: 1px solid #30363d;
-        width: 400px;
-        max-width: 90%;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        box-sizing: border-box;
+        background: #161b22; padding: 40px; border-radius: 12px; border: 1px solid #30363d;
+        width: 400px; max-width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); box-sizing: border-box;
     }
     .login-box input {
-        width: 100%;
-        padding: 12px;
-        margin: 10px 0 20px 0;
-        border-radius: 6px;
-        border: 1px solid #30363d;
-        background: #0d1117;
-        color: white;
-        box-sizing: border-box;
+        width: 100%; padding: 12px; margin: 10px 0 20px 0; border-radius: 6px;
+        border: 1px solid #30363d; background: #0d1117; color: white; box-sizing: border-box;
     }
     .login-box label { text-align: left; display: block; color: #8b949e; font-size: 0.9rem; }
 
     button.start-btn {
-        padding: 15px 40px;
-        font-size: 1.2rem;
-        cursor: pointer;
-        background: #3b82f6;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        transition: transform 0.2s, background 0.3s;
-        width: 100%;
+        padding: 15px 40px; font-size: 1.2rem; cursor: pointer; background: #3b82f6;
+        color: white; border: none; border-radius: 8px; font-weight: bold;
+        transition: transform 0.2s, background 0.3s; width: 100%;
     }
+    button.start-btn:hover { background: #2563eb; transform: scale(1.05); }
 
-    button.start-btn:hover { 
-        background: #2563eb; 
-        transform: scale(1.05);
-    }
-
-    /* Layout Structure for Roles */
-    #main-workspace {
-        display: flex;
-        width: 100%;
-        height: 100%;
-        flex: 1;
-        flex-direction: row;
-    }
+    /* Layout Structure */
+    #main-workspace { display: flex; width: 100%; height: 100%; flex: 1; flex-direction: row; }
 
     /* Teacher Sidebar */
     #teacher-sidebar {
-        display: none;
-        width: 200px; /* Constrained width for ~20 chars */
-        background: #161b22;
-        border-right: 1px solid #30363d;
-        height: 100%;
-        overflow-y: auto;
-        padding: 70px 10px 20px 10px; /* Top padding to clear hamburger button */
-        box-sizing: border-box;
+        display: none; width: 200px; background: #161b22; border-right: 1px solid #30363d;
+        height: 100%; overflow-y: auto; padding: 70px 10px 20px 10px; box-sizing: border-box;
     }
     body.role-teacher #teacher-sidebar { display: block; }
     
-    .sidebar-header {
-        color: #c9d1d9; border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-top: 0; font-size: 1.1rem; text-align: center;
-    }
-    .roster-item {
-        padding: 12px; border-bottom: 1px solid #30363d; cursor: pointer; color: #8b949e; transition: 0.2s; font-size: 0.95rem; word-wrap: break-word;
-    }
+    .sidebar-header { color: #c9d1d9; border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-top: 0; font-size: 1.1rem; text-align: center; }
+    .roster-item { padding: 12px; border-bottom: 1px solid #30363d; cursor: pointer; color: #8b949e; transition: 0.2s; font-size: 0.95rem; word-wrap: break-word; }
     .roster-item:hover, .roster-item.active { background: rgba(88, 166, 255, 0.1); color: #58a6ff; }
 
     /* Slide System Styles */
-    #slides-container {
-        flex: 1;
-        position: relative;
-        width: 100%;
-        height: 100%;
-        background: #161b22;
-        transition: background-color 0.4s ease;
-    }
+    #slides-container { flex: 1; position: relative; width: 100%; height: 100%; background: #161b22; transition: background-color 0.4s ease; }
 
     .slide {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 80px 100px 80px 100px;
-        box-sizing: border-box;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-        pointer-events: none;
-        text-align: center;
-        overflow-y: auto;
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex;
+        flex-direction: column; justify-content: center; align-items: center;
+        padding: 80px 100px 80px 100px; box-sizing: border-box; opacity: 0;
+        transition: opacity 0.5s ease-in-out; pointer-events: none; text-align: center; overflow-y: auto;
     }
-
-    .slide.active {
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    .slide h1 { font-size: 3.5rem; color: #58a6ff; margin-bottom: 30px; }
-    .slide h2 { font-size: 2.5rem; color: #e6edf3; margin-bottom: 20px; }
-    .slide ul { text-align: left; font-size: 1.8rem; line-height: 1.2; color: #c9d1d9; max-width: 1400px; }
-    .slide li { margin-bottom: 15px; }
-    .slide p { font-size: 1.8rem; line-height: 1.6; color: #c9d1d9; max-width: 1400px; }
+    .slide.active { opacity: 1; pointer-events: auto; }
 
     /* Quiz Elements */
     .quiz-container { width: 100%; max-width: 1200px; text-align: left; background: rgba(13,17,23,0.5); padding: 30px; border-radius: 12px; border: 1px solid #30363d; box-sizing: border-box; }
@@ -172,11 +111,11 @@
     .mcq-option.selected { border-color: #3b82f6; background: rgba(59, 130, 246, 0.2); }
     
     .input-field { width: 100%; padding: 15px; font-size: 1.5rem; background: #0d1117; color: white; border: 2px solid #30363d; border-radius: 8px; margin-bottom: 20px; box-sizing: border-box; }
-    .input-field:disabled { background: #f3f4f6; color: #9ca3af; cursor: not-allowed; border-color: #d1d5db; }
+    .input-field:disabled { background: #f3f4f6 !important; color: #9ca3af !important; cursor: not-allowed; border-color: #d1d5db !important; }
     
     .submit-btn, .exp-btn, .back-quiz-btn {
-        background: #238636; color: white; padding: 12px 30px; border: none;
-        border-radius: 6px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 20px; margin-right: 15px; transition: background 0.2s; display: inline-block;
+        background: #238636; color: white; padding: 12px 30px; border: none; border-radius: 6px; font-size: 1.2rem;
+        font-weight: bold; cursor: pointer; margin-top: 20px; margin-right: 15px; transition: background 0.2s; display: inline-block;
     }
     .submit-btn:hover { background: #2ea043; }
     .exp-btn { background: #8b949e; display: none; }
@@ -187,7 +126,25 @@
     .feedback-correct { background: rgba(46, 160, 67, 0.15); color: #3fb950; border-left: 5px solid #3fb950; }
     .feedback-wrong { background: rgba(248, 81, 73, 0.15); color: #f85149; border-left: 5px solid #f85149; }
 
-    /* HUD & Trackers */
+    /* Flow Layout for Navigation & Tracker */
+    #question-tracker {
+        display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 30px; z-index: 55; width: 100%; max-width: 1200px;
+    }
+    .tracker-circle { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #8b949e; background: #0d1117; transition: 0.3s; }
+    .tracker-circle.active { border-color: #3b82f6; background: #3b82f6; box-shadow: 0 0 10px #3b82f6; }
+    .tracker-circle.answered { border-color: #238636; background: #238636; }
+
+    #nav-controls {
+        display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1200px; margin-top: 20px; padding: 0 10px; box-sizing: border-box; z-index: 50; margin-bottom: 40px;
+    }
+    .nav-btn {
+        padding: 10px 25px; font-size: 1.2rem; cursor: pointer; background: rgba(13, 17, 23, 0.8);
+        color: #58a6ff; border: 2px solid #58a6ff; border-radius: 6px; font-weight: bold; transition: all 0.2s; 
+    }
+    .nav-btn:hover { background: #58a6ff; color: #000; }
+    .nav-btn:disabled { border-color: #555; color: #555; cursor: not-allowed; background: transparent; }
+
+    /* HUD (Centered Top) */
     #top-hud {
         position: absolute; top: 20px; left: 0; width: 100%; display: flex;
         justify-content: center; align-items: flex-start; z-index: 60; pointer-events: none;
@@ -197,32 +154,9 @@
         padding: 10px 20px; border-radius: 8px; border: 1px solid #f85149; display: none; pointer-events: auto; 
     }
     .score-display { 
-        position: absolute; right: 30px; font-size: 1.8rem; font-weight: bold; color: #58a6ff; 
+        position: absolute; right: 30px; top: 0; font-size: 1.5rem; font-weight: bold; color: #58a6ff; 
         background: rgba(0,0,0,0.5); padding: 10px 20px; border-radius: 8px; border: 1px solid #30363d; pointer-events: auto; 
     }
-
-    #question-tracker {
-        position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 55; flex-wrap: wrap; justify-content: center;
-    }
-    .tracker-circle {
-        width: 16px; height: 16px; border-radius: 50%; border: 2px solid #8b949e; background: #0d1117; transition: 0.3s;
-    }
-    .tracker-circle.active { border-color: #3b82f6; background: #3b82f6; box-shadow: 0 0 10px #3b82f6; }
-    .tracker-circle.answered { border-color: #238636; background: #238636; }
-
-    /* Independent Navigation Controls */
-    #nav-controls {
-        position: absolute; bottom: 0; width: 100%; height: 100px; display: flex;
-        justify-content: space-between; align-items: center; padding: 0 40px; box-sizing: border-box;
-        pointer-events: none; z-index: 50;
-    }
-    .nav-btn {
-        padding: 10px 25px; font-size: 1.2rem; cursor: pointer; background: rgba(13, 17, 23, 0.8);
-        color: #58a6ff; border: 2px solid #58a6ff; border-radius: 6px; font-weight: bold;
-        transition: all 0.2s; pointer-events: auto; 
-    }
-    .nav-btn:hover { background: #58a6ff; color: #000; }
-    .nav-btn:disabled { border-color: #555; color: #555; cursor: not-allowed; background: transparent; }
 
     /* Hierarchy Navigator Styles */
     #nav-toggle-btn {
@@ -239,82 +173,89 @@
     }
     #slide-navigator.collapsed { transform: translateX(-100%); }
 
-    /* 70px top padding perfectly pushes header below the hamburger menu button */
     .nav-header { padding: 70px 20px 15px 20px; font-size: 1.1rem; font-weight: bold; color: #58a6ff; border-bottom: 1px solid #30363d; text-transform: uppercase; text-align: center; }
     #nav-list { list-style: none; padding: 0 0 40px 0; margin: 0; overflow-y: auto; flex: 1; }
 
-    .nav-set {
-        padding: 12px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1);
-        font-size: 1.1rem; font-weight: bold; color: #ffffff; background: rgba(0,0,0,0.6);
-        text-transform: uppercase; display: flex; justify-content: space-between;
-    }
-    .nav-diff {
-        padding: 10px 20px 10px 30px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);
-        font-size: 1rem; color: #58a6ff; background: rgba(13, 17, 23, 0.6); display: flex; justify-content: space-between;
-    }
-    .nav-item {
-        padding: 8px 20px 8px 45px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.02);
-        font-size: 0.9rem; color: #8b949e;
-    }
-    .nav-item:hover { background: rgba(88, 166, 255, 0.1); color: #c9d1d9; }
-    .nav-item.active-nav { background: rgba(88, 166, 255, 0.2); color: #ffffff; border-left: 4px solid #58a6ff; }
+    .nav-grandparent { padding: 12px 20px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 1.15rem; font-weight: bold; color: #ffffff; background: rgba(0,0,0,0.6); transition: background 0.2s; text-transform: uppercase; letter-spacing: 1px; display: flex; justify-content: space-between; }
+    .nav-grandparent:hover { background: rgba(88, 166, 255, 0.2); }
+    .nav-week-children { list-style: none; padding: 0; margin: 0; display: none; }
+
+    .nav-parent { padding: 10px 20px 10px 30px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 1.05rem; font-weight: bold; color: #58a6ff; background: rgba(13, 17, 23, 0.6); transition: background 0.2s; display: flex; justify-content: space-between; align-items: center; }
+    .nav-parent:hover { background: rgba(88, 166, 255, 0.2); color: #ffffff; }
+    .nav-day-children { list-style: none; padding: 0; margin: 0; display: none; }
+
+    .nav-child-item { padding: 8px 20px 8px 50px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 0.95rem; transition: background 0.2s; color: #8b949e; display: flex; justify-content: space-between; align-items: center; }
+    .nav-child-item:hover { background: rgba(88, 166, 255, 0.1); color: #c9d1d9; }
+    .nav-child-item.active-nav { background: rgba(88, 166, 255, 0.2); color: #ffffff; border-left: 4px solid #58a6ff; font-weight: bold; }
 
     /* Book Mode Adjustments */
     body.book-mode #slides-container { background-color: #fdf6e3; }
     body.book-mode .slide { padding: 80px 150px 100px 150px; align-items: flex-start; justify-content: flex-start; }
-    body.book-mode .slide > :not(.book-content) { display: none !important; }
+    body.book-mode .slide > :not(.book-content):not(#nav-controls) { display: none !important; }
     body.book-mode .book-content { display: block !important; }
-    body.book-mode #nav-controls { display: none !important; } /* Hidden in Book Mode / Solution Preview */
+    body.book-mode #nav-controls { display: none !important; }
     
-    .book-content {
-        display: none; font-family: 'Georgia', serif; color: #333333; width: 100%; max-width: 900px; margin: 0 auto; text-align: left;
-    }
+    .book-content { display: none; font-family: 'Georgia', serif; color: #333333; width: 100%; max-width: 900px; margin: 0 auto; text-align: left; }
     .book-content h2 { color: #111; font-family: 'Segoe UI', sans-serif; font-size: 2.5rem; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 25px; }
     .book-content p { color: #333; font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; }
 
-    /* --- STRICT RESPONSIVE MOBILE & PORTRAIT OVERRIDE --- */
-    @media screen and (max-width: 1024px), screen and (orientation: portrait) {
-        #container {
-            border-radius: 0 !important;
-            aspect-ratio: unset !important; /* Aggressively breaks the 16:9 lock */
-            width: 100% !important;
-            height: 100% !important;
-            max-width: none !important;
-            max-height: none !important;
-        }
-        
-        #main-workspace { flex-direction: row !important; } /* Strictly enforces horizontal split */
-        #teacher-sidebar { width: 200px !important; height: 100% !important; border-bottom: none !important; padding-top: 70px; }
+    /* Celebration Modal */
+    #celebration-modal {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(13, 17, 23, 0.95); z-index: 300; display: none;
+        flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        backdrop-filter: blur(10px);
+    }
+    .celeb-box {
+        background: #161b22; padding: 50px; border-radius: 12px; border: 2px solid #58a6ff;
+        box-shadow: 0 0 40px rgba(88, 166, 255, 0.4); transform: scale(0.8); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .celeb-box.show { transform: scale(1); opacity: 1; }
+    .celeb-title { font-size: 3rem; color: #3fb950; margin-bottom: 20px; font-weight: bold; }
+    .celeb-text { font-size: 1.5rem; color: #c9d1d9; margin-bottom: 30px; line-height: 1.5; }
 
-        .slide {
-            padding: 80px 20px 100px 20px; /* Room for header and footer items */
-            justify-content: flex-start; /* Prevents vertical centering from hiding top text */
-            overflow-y: auto;
+    /* --- AGGRESSIVE RESPONSIVE MOBILE & PORTRAIT OVERRIDE --- */
+    @media screen and (max-width: 1024px), screen and (orientation: portrait) {
+        body, html { height: 100vh !important; width: 100vw !important; overflow: hidden !important; }
+
+        #container {
+            border-radius: 0 !important; aspect-ratio: auto !important; width: 100vw !important; height: 100vh !important;
+            max-width: 100vw !important; max-height: 100vh !important; display: flex; flex-direction: column;
         }
-        .slide h1 { font-size: 1.8rem; margin-bottom: 15px; }
-        .slide h2 { font-size: 1.5rem; margin-bottom: 15px; }
-        .slide p, .slide ul, .question-text { font-size: 1.1rem; }
         
-        .quiz-container { padding: 15px; width: 100%; }
-        .input-field { font-size: 1rem; padding: 12px; }
-        .mcq-option { padding: 12px 15px; font-size: 1rem; margin-bottom: 10px;}
-        .submit-btn, .exp-btn, .back-quiz-btn { font-size: 0.95rem; padding: 12px; width: 100%; margin-right: 0; margin-bottom: 10px; margin-top: 10px;}
-        .quiz-feedback { font-size: 1.1rem; padding: 10px;}
+        #main-workspace { flex-direction: row !important; width: 100%; height: 100%; } 
+        #teacher-sidebar { width: 200px !important; height: 100% !important; border-bottom: none !important; padding-top: 70px; flex-shrink: 0; }
+        #slides-container { flex: 1; height: 100%; }
+
+        .slide { padding: 90px 15px 80px 15px !important; justify-content: flex-start; overflow-y: auto; }
         
-        #top-hud { top: 15px; left: 0; width: 100%; }
-        .score-display { right: 15px; font-size: 1rem; padding: 8px 12px; }
-        .timer-display { font-size: 1rem; padding: 8px 12px; }
+        .slide h1 { font-size: 1.8rem !important; margin-bottom: 15px !important; }
+        .slide h2 { font-size: 1.5rem !important; margin-bottom: 15px !important; }
+        .topic-text { font-size: 0.9rem !important; }
+        .question-text { font-size: 1.1rem !important; margin-bottom: 15px !important; line-height: 1.4; }
         
-        #nav-toggle-btn { top: 15px; left: 15px; font-size: 0.9rem; padding: 8px 12px; }
+        .quiz-container { padding: 15px !important; width: 100% !important; }
+        .input-field { font-size: 1rem !important; padding: 12px !important; }
+        .mcq-option { padding: 10px 15px !important; font-size: 0.95rem !important; margin-bottom: 8px !important; line-height: 1.3;}
+        .submit-btn, .exp-btn, .back-quiz-btn { font-size: 0.95rem !important; padding: 12px !important; width: 100% !important; margin-right: 0 !important; margin-bottom: 10px !important; margin-top: 10px !important;}
+        .quiz-feedback { font-size: 1rem !important; padding: 10px !important;}
         
-        #nav-controls { padding: 0 15px; height: auto; bottom: 30px; position: absolute; width: 100%; z-index: 50; }
-        .nav-btn { font-size: 0.9rem; padding: 10px 15px; }
+        #top-hud { top: 15px !important; left: 0 !important; width: 100% !important; }
+        .score-display { right: 15px !important; top: 0 !important; font-size: 0.9rem !important; padding: 8px 12px !important; }
+        .timer-display { font-size: 1rem !important; padding: 8px 12px !important; }
         
-        #question-tracker { bottom: 80px; }
+        #nav-toggle-btn { top: 15px !important; left: 15px !important; font-size: 0.9rem !important; padding: 8px 12px !important; }
         
-        body.book-mode .slide { padding: 80px 15px 100px 15px; }
-        .book-content h2 { font-size: 1.5rem; }
-        .book-content p { font-size: 1rem; }
+        #question-tracker { margin-top: 20px !important; }
+        #nav-controls { margin-top: 15px !important; padding: 0 !important; }
+        .nav-btn { font-size: 0.9rem !important; padding: 10px 15px !important; }
+        
+        body.book-mode .slide { padding: 80px 15px 100px 15px !important; }
+        .book-content h2 { font-size: 1.4rem !important; }
+        .book-content p { font-size: 1rem !important; }
+        
+        .celeb-title { font-size: 2rem !important; }
+        .celeb-text { font-size: 1.1rem !important; }
     }
 
 </style>
@@ -333,6 +274,14 @@
     </div>
 </div>
 
+<div id="celebration-modal">
+    <div class="celeb-box" id="celeb-box">
+        <div class="celeb-title">🎉 Congratulations! 🎉</div>
+        <div class="celeb-text" id="celeb-msg">Thank you for finishing the practice set. You got 0 out of 0 highest possible score!</div>
+        <button class="start-btn" onclick="closeCelebration()">Review Answers</button>
+    </div>
+</div>
+
 <div id="container" style="display:none;">
     <button id="nav-toggle-btn" onclick="toggleNavigator(event)">☰ Menu</button>
     
@@ -343,7 +292,7 @@
 
     <div id="top-hud">
         <div id="timer-display" class="timer-display">00:00</div>
-        <div class="score-display">Score: <span id="user-score">0</span></div>
+        <div class="score-display" id="hud-score">Set Score: <span id="user-score">0 / 0</span></div>
     </div>
     
     <div id="main-workspace">
@@ -353,107 +302,255 @@
         </div>
 
         <div id="slides-container">
-            <div class="slide" id="slide-q1"
-                 data-question-id="q1" 
-                 data-type="Theory" 
-                 data-set="Set A" 
-                 data-difficulty="Easy" 
-                 data-topic="Corporate Characteristics"
-                 data-answer="C"
-                 data-points="3"
-                 data-text="Which of the following is not a characteristic of a corporation?">
-                <div class="quiz-container">
-                    <div class="topic-text">Topic: Corporate Characteristics</div>
-                    <div class="question-text">Which of the following is not a characteristic of a corporation?</div>
-                    <ul style="list-style: none; padding: 0;">
-                        <li class="mcq-option" onclick="selectOption('q1', 'A')">A) Right of succession</li>
-                        <li class="mcq-option" onclick="selectOption('q1', 'B')">B) Created by operation of law</li>
-                        <li class="mcq-option" onclick="selectOption('q1', 'C')">C) Unlimited liability of shareholders</li>
-                        <li class="mcq-option" onclick="selectOption('q1', 'D')">D) Artificial being</li>
-                    </ul>
-                    <input type="hidden" id="input-q1" value="">
-                    <button class="submit-btn" id="submit-q1" onclick="submitAnswer('q1')">Submit Answer</button>
-                    <button class="exp-btn" id="exp-q1" onclick="toggleBookMode()">Show Explanation</button>
-                    <div class="quiz-feedback" id="feedback-q1"></div>
-                </div>
-                <div class="book-content">
-                    <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
-                    <h2>Explanation: Corporate Characteristics</h2>
-                    <p><strong>Correct Answer: C</strong></p>
-                    <p>A corporation provides limited liability to its shareholders, meaning they are only liable up to the amount of their investment. Unlimited liability is a characteristic of a sole proprietorship or a general partnership.</p>
-                </div>
-            </div>
 
-            <div class="slide" id="slide-q2"
-                 data-question-id="q2" 
-                 data-type="Problem Solving" 
-                 data-set="Set A" 
-                 data-difficulty="Average" 
-                 data-topic="Share Capital Issuance"
-                 data-answer="500000"
-                 data-points="6"
-                 data-text="A corporation issues 10,000 shares of P100 par value ordinary shares for P150 per share. What is the amount to be credited to the Share Premium account?">
-                <div class="quiz-container">
-                    <div class="topic-text">Topic: Share Capital Issuance</div>
-                    <div class="question-text">A corporation issues 10,000 shares of P100 par value ordinary shares for P150 per share. What is the amount to be credited to the Share Premium account?</div>
-                    <input type="number" class="input-field" id="input-q2" placeholder="Enter numerical amount...">
-                    <button class="submit-btn" id="submit-q2" onclick="submitAnswer('q2')">Submit Answer</button>
-                    <button class="exp-btn" id="exp-q2" onclick="toggleBookMode()">Show Explanation</button>
-                    <div class="quiz-feedback" id="feedback-q2"></div>
-                </div>
-                <div class="book-content">
-                    <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
-                    <h2>Explanation: Share Capital Issuance</h2>
-                    <p><strong>Correct Answer: 500,000</strong></p>
-                    <p>The total cash received is P1,500,000 (10,000 shares * P150). The ordinary share capital account is credited for the par value: P1,000,000 (10,000 shares * P100). The excess over par is credited to share premium: P1,500,000 - P1,000,000 = P500,000.</p>
-                </div>
-            </div>
+<!--SET A EASY START -->             
+<div class="slide" id="slide-sAeAq01" data-question-id="sAeAq01" data-type="Theory" data-set="Set A" data-difficulty="Easy" data-topic="Introduction to Accounting" data-answer="B" data-points="3">
+    <div class="quiz-container">
+        <div class="topic-text">Topic: Introduction to Accounting</div>
+        <div class="question-text">What is often referred to as the language of business?</div>
+        <ul style="list-style: none; padding: 0;">
+            <li class="mcq-option" onclick="selectOption('sAeAq01', 'A')">A) Economics</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq01', 'B')">B) Accounting</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq01', 'C')">C) Management</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq01', 'D')">D) Marketing</li>
+        </ul>
+        <input type="hidden" id="input-sAeAq01" value="">
+        <button class="submit-btn" id="submit-sAeAq01" onclick="submitAnswer('sAeAq01')">Submit Answer</button>
+        <button class="exp-btn" id="exp-sAeAq01" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-sAeAq01"></div>
+    </div>
+    <div class="book-content">
+        <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
+        <h2>Explanation: Introduction to Accounting</h2>
+        <p><strong>Correct Answer: B</strong></p>
+        <p>Accounting is far more than a statutory requirement or an administrative burden; it is the narrative of an organization's journey through the economic landscape. It provides a standardized framework that allows for the identification, measurement, and communication of the economic events that define the modern world. From the clay tablets of Babylonia to the complex digital ledgers of the 21st century, the drive to record and report has been a constant in human progress.</p>
+        <p>By mastering the "language of business," individuals and organizations gain the ability to make better internal decisions, foster clearer external communications, and build a foundation of trust with stakeholders. Whether it is an investor seeking to build wealth, a manager trying to optimize production, or a regulator ensuring market fairness, all rely on the same structured vocabulary and syntax provided by accounting. As global commerce continues to integrate and complexify, the role of accounting as the universal medium of economic communication will only become more vital, ensuring that every transaction finds its proper place and every business story is told with clarity, integrity, and insight</p>
+    </div>
+</div>
 
-            <div class="slide" id="slide-q3"
-                 data-question-id="q3" 
-                 data-type="Theory" 
-                 data-set="Set A" 
-                 data-difficulty="Difficult" 
-                 data-topic="Treasury Shares"
-                 data-answer="B"
-                 data-points="9"
-                 data-text="When a corporation acquires its own shares, how is this transaction recorded under the cost method?">
-                <div class="quiz-container">
-                    <div class="topic-text">Topic: Treasury Shares</div>
-                    <div class="question-text">When a corporation acquires its own shares, how is this transaction recorded under the cost method?</div>
-                    <ul style="list-style: none; padding: 0;">
-                        <li class="mcq-option" onclick="selectOption('q3', 'A')">A) As an asset</li>
-                        <li class="mcq-option" onclick="selectOption('q3', 'B')">B) As a deduction from total shareholders' equity</li>
-                        <li class="mcq-option" onclick="selectOption('q3', 'C')">C) As a deduction from retained earnings only</li>
-                        <li class="mcq-option" onclick="selectOption('q3', 'D')">D) As an increase in share premium</li>
-                    </ul>
-                    <input type="hidden" id="input-q3" value="">
-                    <button class="submit-btn" id="submit-q3" onclick="submitAnswer('q3')">Submit Answer</button>
-                    <button class="exp-btn" id="exp-q3" onclick="toggleBookMode()">Show Explanation</button>
-                    <div class="quiz-feedback" id="feedback-q3"></div>
-                </div>
-                <div class="book-content">
-                    <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
-                    <h2>Explanation: Treasury Shares</h2>
-                    <p><strong>Correct Answer: B</strong></p>
-                    <p>Treasury shares are not assets. Under the cost method, the cost of the acquired shares is recorded in a contra-equity account, which reduces the total shareholders' equity on the statement of financial position.</p>
-                </div>
-            </div>
+<div class="slide" id="slide-sAeAq02" data-question-id="sAeAq02" data-type="Theory" data-set="Set A" data-difficulty="Easy" data-topic="Branches of Accounting" data-answer="C" data-points="3">
+    <div class="quiz-container">
+        <div class="topic-text">Topic: Branches of Accounting</div>
+        <div class="question-text">Which branch of accounting primarily deals with the preparation of general-purpose financial statements for external users?</div>
+        <ul style="list-style: none; padding: 0;">
+            <li class="mcq-option" onclick="selectOption('sAeAq02', 'A')">A) Management Accounting</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq02', 'B')">B) Tax Accounting</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq02', 'C')">C) Financial Accounting</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq02', 'D')">D) Cost Accounting</li>
+        </ul>
+        <input type="hidden" id="input-sAeAq02" value="">
+        <button class="submit-btn" id="submit-sAeAq02" onclick="submitAnswer('sAeAq02')">Submit Answer</button>
+        <button class="exp-btn" id="exp-sAeAq02" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-sAeAq02"></div>
+    </div>
+    <div class="book-content">
+        <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
+        <h2>Explanation: Branches of Accounting</h2>
+        <p><strong>Correct Answer: C</strong></p>
+        <p>Financial Accounting focuses on recording, summarizing, and reporting the myriad of transactions resulting from business operations over a period of time for the benefit of external users like investors and creditors.</p>
+    </div>
+</div>
+
+<div class="slide" id="slide-sAeAq03" data-question-id="sAeAq03" data-type="Theory" data-set="Set A" data-difficulty="Easy" data-topic="Users of Accounting Information" data-answer="D" data-points="3">
+    <div class="quiz-container">
+        <div class="topic-text">Topic: Users of Accounting Information</div>
+        <div class="question-text">Who among the following is considered an internal user of accounting information?</div>
+        <ul style="list-style: none; padding: 0;">
+            <li class="mcq-option" onclick="selectOption('sAeAq03', 'A')">A) Potential Investors</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq03', 'B')">B) Bank Creditors</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq03', 'C')">C) Government Regulators</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq03', 'D')">D) Company Managers</li>
+        </ul>
+        <input type="hidden" id="input-sAeAq03" value="">
+        <button class="submit-btn" id="submit-sAeAq03" onclick="submitAnswer('sAeAq03')">Submit Answer</button>
+        <button class="exp-btn" id="exp-sAeAq03" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-sAeAq03"></div>
+    </div>
+    <div class="book-content">
+        <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
+        <h2>Explanation: Users of Accounting Information</h2>
+        <p><strong>Correct Answer: D</strong></p>
+        <p>Company managers are internal users because they are directly involved in managing and operating the business. Investors, creditors, and the government are external users.</p>
+    </div>
+</div>
+
+<div class="slide" id="slide-sAeAq04" data-question-id="sAeAq04" data-type="Theory" data-set="Set A" data-difficulty="Easy" data-topic="Forms of Business Organizations" data-answer="C" data-points="3">
+    <div class="quiz-container">
+        <div class="topic-text">Topic: Forms of Business Organizations</div>
+        <div class="question-text">What type of business organization is owned by only one person who has unlimited liability?</div>
+        <ul style="list-style: none; padding: 0;">
+            <li class="mcq-option" onclick="selectOption('sAeAq04', 'A')">A) Corporation</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq04', 'B')">B) Partnership</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq04', 'C')">C) Sole Proprietorship</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq04', 'D')">D) Cooperative</li>
+        </ul>
+        <input type="hidden" id="input-sAeAq04" value="">
+        <button class="submit-btn" id="submit-sAeAq04" onclick="submitAnswer('sAeAq04')">Submit Answer</button>
+        <button class="exp-btn" id="exp-sAeAq04" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-sAeAq04"></div>
+    </div>
+    <div class="book-content">
+        <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
+        <h2>Explanation: Forms of Business Organizations</h2>
+        <p><strong>Correct Answer: C</strong></p>
+        <p>A sole proprietorship is the simplest form of business, owned and run by one individual who takes all the profits but also assumes unlimited liability for all business debts.</p>
+    </div>
+</div>
+
+<div class="slide" id="slide-sAeAq05" data-question-id="sAeAq05" data-type="Theory" data-set="Set A" data-difficulty="Easy" data-topic="Accounting Concepts and Principles" data-answer="A" data-points="3">
+    <div class="quiz-container">
+        <div class="topic-text">Topic: Accounting Concepts and Principles</div>
+        <div class="question-text">Which accounting principle assumes that a business will continue to operate indefinitely into the foreseeable future?</div>
+        <ul style="list-style: none; padding: 0;">
+            <li class="mcq-option" onclick="selectOption('sAeAq05', 'A')">A) Going Concern Principle</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq05', 'B')">B) Business Entity Principle</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq05', 'C')">C) Periodicity Principle</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq05', 'D')">D) Objectivity Principle</li>
+        </ul>
+        <input type="hidden" id="input-sAeAq05" value="">
+        <button class="submit-btn" id="submit-sAeAq05" onclick="submitAnswer('sAeAq05')">Submit Answer</button>
+        <button class="exp-btn" id="exp-sAeAq05" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-sAeAq05"></div>
+    </div>
+    <div class="book-content">
+        <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
+        <h2>Explanation: Accounting Concepts and Principles</h2>
+        <p><strong>Correct Answer: A</strong></p>
+        <p>The Going Concern Principle assumes the business will remain in operation long enough to carry out its existing objectives and commitments, justifying the deferral of certain expenses.</p>
+    </div>
+</div>
+
+<div class="slide" id="slide-sAeAq06" data-question-id="sAeAq06" data-type="Theory" data-set="Set A" data-difficulty="Easy" data-topic="The Accounting Equation" data-answer="B" data-points="3">
+    <div class="quiz-container">
+        <div class="topic-text">Topic: The Accounting Equation</div>
+        <div class="question-text">Which of the following represents the correct and fundamental accounting equation?</div>
+        <ul style="list-style: none; padding: 0;">
+            <li class="mcq-option" onclick="selectOption('sAeAq06', 'A')">A) Assets = Liabilities - Equity</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq06', 'B')">B) Assets = Liabilities + Equity</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq06', 'C')">C) Liabilities = Assets + Equity</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq06', 'D')">D) Equity = Assets + Liabilities</li>
+        </ul>
+        <input type="hidden" id="input-sAeAq06" value="">
+        <button class="submit-btn" id="submit-sAeAq06" onclick="submitAnswer('sAeAq06')">Submit Answer</button>
+        <button class="exp-btn" id="exp-sAeAq06" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-sAeAq06"></div>
+    </div>
+    <div class="book-content">
+        <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
+        <h2>Explanation: The Accounting Equation</h2>
+        <p><strong>Correct Answer: B</strong></p>
+        <p>The fundamental accounting equation states that everything a business owns (Assets) is financed either by borrowing money (Liabilities) or by the owners' investments (Equity).</p>
+    </div>
+</div>
+
+<div class="slide" id="slide-sAeAq07" data-question-id="sAeAq07" data-type="Theory" data-set="Set A" data-difficulty="Easy" data-topic="Books of Accounts" data-answer="C" data-points="3">
+    <div class="quiz-container">
+        <div class="topic-text">Topic: Books of Accounts</div>
+        <div class="question-text">Which book of accounts is traditionally known as the "book of original entry"?</div>
+        <ul style="list-style: none; padding: 0;">
+            <li class="mcq-option" onclick="selectOption('sAeAq07', 'A')">A) General Ledger</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq07', 'B')">B) Subsidiary Ledger</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq07', 'C')">C) General Journal</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq07', 'D')">D) Trial Balance</li>
+        </ul>
+        <input type="hidden" id="input-sAeAq07" value="">
+        <button class="submit-btn" id="submit-sAeAq07" onclick="submitAnswer('sAeAq07')">Submit Answer</button>
+        <button class="exp-btn" id="exp-sAeAq07" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-sAeAq07"></div>
+    </div>
+    <div class="book-content">
+        <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
+        <h2>Explanation: Books of Accounts</h2>
+        <p><strong>Correct Answer: C</strong></p>
+        <p>The General Journal is called the book of original entry because it is the first place where business transactions are recorded in chronological order before they are posted to the ledger.</p>
+    </div>
+</div>
+
+<div class="slide" id="slide-sAeAq08" data-question-id="sAeAq08" data-type="Problem Solving" data-set="Set A" data-difficulty="Easy" data-topic="Books of Accounts" data-answer="B" data-points="3">
+    <div class="quiz-container">
+        <div class="topic-text">Topic: Books of Accounts</div>
+        <div class="question-text">A company purchases new equipment for ₱10,000 in cash. How is this recorded in the General Journal?</div>
+        <ul style="list-style: none; padding: 0;">
+            <li class="mcq-option" onclick="selectOption('sAeAq08', 'A')">A) Increase Equipment, Increase Cash</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq08', 'B')">B) Increase Equipment, Decrease Cash</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq08', 'C')">C) Decrease Equipment, Increase Cash</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq08', 'D')">D) Decrease Equipment, Decrease Cash</li>
+        </ul>
+        <input type="hidden" id="input-sAeAq08" value="">
+        <button class="submit-btn" id="submit-sAeAq08" onclick="submitAnswer('sAeAq08')">Submit Answer</button>
+        <button class="exp-btn" id="exp-sAeAq08" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-sAeAq08"></div>
+    </div>
+    <div class="book-content">
+        <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
+        <h2>Explanation: Books of Accounts</h2>
+        <p><strong>Correct Answer: B</strong></p>
+        <p>When you buy equipment for cash, you are acquiring an asset (Equipment goes up) and giving up an asset (Cash goes down) simultaneously.</p>
+    </div>
+</div>
+
+<div class="slide" id="slide-sAeAq09" data-question-id="sAeAq09" data-type="Problem Solving" data-set="Set A" data-difficulty="Easy" data-topic="Accounting Cycle (Service)" data-answer="B" data-points="3">
+    <div class="quiz-container">
+        <div class="topic-text">Topic: Accounting Cycle (Service)</div>
+        <div class="question-text">If a service business has total assets amounting to ₱50,000 and total equity of ₱30,000, what is the total amount of its liabilities?</div>
+        <ul style="list-style: none; padding: 0;">
+            <li class="mcq-option" onclick="selectOption('sAeAq09', 'A')">A) ₱80,000</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq09', 'B')">B) ₱20,000</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq09', 'C')">C) ₱50,000</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq09', 'D')">D) ₱30,000</li>
+        </ul>
+        <input type="hidden" id="input-sAeAq09" value="">
+        <button class="submit-btn" id="submit-sAeAq09" onclick="submitAnswer('sAeAq09')">Submit Answer</button>
+        <button class="exp-btn" id="exp-sAeAq09" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-sAeAq09"></div>
+    </div>
+    <div class="book-content">
+        <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
+        <h2>Explanation: Accounting Cycle (Service)</h2>
+        <p><strong>Correct Answer: B</strong></p>
+        <p>Using the accounting equation Assets = Liabilities + Equity, we substitute the given values: ₱50,000 = Liabilities + ₱30,000. Therefore, Liabilities = ₱50,000 - ₱30,000 = ₱20,000.</p>
+    </div>
+</div>
+
+<div class="slide" id="slide-sAeAq10" data-question-id="sAeAq10" data-type="Problem Solving" data-set="Set A" data-difficulty="Easy" data-topic="Accounting Cycle (Merchandising)" data-answer="D" data-points="3">
+    <div class="quiz-container">
+        <div class="topic-text">Topic: Accounting Cycle (Merchandising)</div>
+        <div class="question-text">A merchandising business bought inventory worth ₱5,000 on credit (on account). In which special journal should this transaction be recorded?</div>
+        <ul style="list-style: none; padding: 0;">
+            <li class="mcq-option" onclick="selectOption('sAeAq10', 'A')">A) Sales Journal</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq10', 'B')">B) Cash Receipts Journal</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq10', 'C')">C) Cash Payments Journal</li>
+            <li class="mcq-option" onclick="selectOption('sAeAq10', 'D')">D) Purchases Journal</li>
+        </ul>
+        <input type="hidden" id="input-sAeAq10" value="">
+        <button class="submit-btn" id="submit-sAeAq10" onclick="submitAnswer('sAeAq10')">Submit Answer</button>
+        <button class="exp-btn" id="exp-sAeAq10" onclick="toggleBookMode()">Show Explanation</button>
+        <div class="quiz-feedback" id="feedback-sAeAq10"></div>
+    </div>
+    <div class="book-content">
+        <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
+        <h2>Explanation: Accounting Cycle (Merchandising)</h2>
+        <p><strong>Correct Answer: D</strong></p>
+        <p>The Purchases Journal is specifically designed to record all acquisitions of merchandise inventory, supplies, and other assets bought on credit (on account).</p>
+    </div>
+</div>
+<!--SET A EASY END -->
+           
         </div>
     </div>
-
+    
     <div id="question-tracker"></div>
-
     <div id="nav-controls">
         <button class="nav-btn" id="btn-prev" onclick="prevSlide()" disabled>&#9664; Prev</button>
         <button class="nav-btn" id="btn-next" onclick="nextSlide()">Next Question &#9654;</button>
     </div>
 
+    <div id="courseware-footer">This practice courseware is a personal property of Mr. Joselito Villarta, CPA, MBA</div>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs, limit, orderBy, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+    import { getFirestore, collection, query, where, getDocs, limit, orderBy, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAgOsKAZWwExUzupxSNytsfOo9BOppF0ng",
@@ -472,17 +569,15 @@
         console.error("Firebase Init Error:", e);
     }
 
-    // Global App State
     window.currentUser = null;
     window.currentSlideIndex = 0;
     window.slides = document.querySelectorAll('.slide');
-    window.score = 0;
     window.timerInterval = null;
-    window.activityName = "CorpAcc_Module1";
+    window.activityName = "FABM Cup Practice";
     window.section = "Default"; 
     window.studentAnswers = {};
+    window.celebratedSets = new Set(); 
 
-    // Outside click event listener to hide slide navigator
     document.addEventListener('click', function(event) {
         const nav = document.getElementById('slide-navigator');
         const btn = document.getElementById('nav-toggle-btn');
@@ -491,7 +586,6 @@
         }
     });
 
-    // Firebase Auth Wrapper
     async function loginUser(idInput, passInput) {
         if (!db) return null;
         let authenticatedUser = null;
@@ -530,11 +624,18 @@
                 document.getElementById('login-overlay').style.display = 'none';
                 document.getElementById('container').style.display = 'flex';
                 
-                if (user.role === 'teacher') {
+                if(user.role === 'student') {
+                    const cName = `results_${window.activityName}_${window.section}`;
+                    const docId = `${user.CN || '00'}-${user.Idnumber}-${user.LastName} ${user.FirstName}`;
+                    const docRef = doc(db, cName, docId);
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        window.studentAnswers = docSnap.data().answers || {};
+                    }
+                    initEnvironment();
+                } else {
                     document.body.classList.add('role-teacher');
                     loadTeacherRoster();
-                } else {
-                    initEnvironment();
                 }
             } else {
                 document.getElementById('login-error').style.display = 'block';
@@ -548,79 +649,133 @@
 
     function initEnvironment() {
         buildNavigator();
+        
+        window.slides.forEach(slide => {
+            const qId = slide.getAttribute('data-question-id');
+            const ans = window.studentAnswers[qId];
+            if (ans && window.currentUser && window.currentUser.role === 'student') {
+                slide.setAttribute('data-locked', 'true');
+                const inputEl = document.getElementById(`input-${qId}`);
+                if(inputEl) {
+                    inputEl.value = ans;
+                    inputEl.disabled = true;
+                }
+                
+                if(slide.getAttribute('data-type') === 'Theory') {
+                    slide.querySelectorAll('.mcq-option').forEach(el => {
+                        el.style.pointerEvents = 'none';
+                        let optText = el.innerText.trim();
+                        optText = optText.replace(/^([A-D])\)\s*/i, '');
+                        if(optText === ans || el.innerText.startsWith(ans + ')')) el.classList.add('selected');
+                    });
+                }
+                
+                document.getElementById(`submit-${qId}`).style.display = 'none';
+                document.getElementById(`exp-${qId}`).style.display = 'inline-block';
+                
+                const fb = document.getElementById(`feedback-${qId}`);
+                fb.style.display = 'block';
+                const correctVal = slide.getAttribute('data-answer');
+                
+                if(String(ans).toLowerCase() === String(correctVal).toLowerCase()) {
+                    fb.className = 'quiz-feedback feedback-correct';
+                    fb.innerText = `Correct Answer Saved.`;
+                } else {
+                    fb.className = 'quiz-feedback feedback-wrong';
+                    fb.innerText = `Incorrect Answer Saved. (Expected: ${correctVal})`;
+                }
+            }
+        });
+
         showSlide(0);
     }
 
-    // UI Builders - Accordion Navigation
     function buildNavigator() {
         const navList = document.getElementById('nav-list');
         navList.innerHTML = '';
-        let currentSet = "";
-        let currentDiff = "";
-        let setUl, diffUl;
+        let qCounters = {}; 
 
         window.slides.forEach((slide, index) => {
-            const sSet = slide.getAttribute('data-set');
-            const sDiff = slide.getAttribute('data-difficulty');
+            const sSet = slide.getAttribute('data-set') || 'Uncategorized';
+            const sDiff = slide.getAttribute('data-difficulty') || 'General';
+            
+            const setKey = sSet.replace(/\s+/g, '-');
+            const diffKey = setKey + '-' + sDiff.replace(/\s+/g, '-');
 
-            if (sSet !== currentSet) {
-                currentSet = sSet;
-                const setLi = document.createElement('li');
-                setLi.className = 'nav-set';
+            let setLi = navList.querySelector(`li[data-set="${setKey}"]`);
+            let setUl = navList.querySelector(`ul[data-set-ul="${setKey}"]`);
+            
+            if (!setLi) {
+                setLi = document.createElement('li');
+                setLi.className = 'nav-grandparent';
+                setLi.setAttribute('data-set', setKey);
                 setLi.innerHTML = `<span>${sSet}</span> <span>▼</span>`;
+                
                 setUl = document.createElement('ul');
+                setUl.className = 'nav-week-children';
+                setUl.setAttribute('data-set-ul', setKey);
                 setUl.style.display = 'none'; 
                 
                 setLi.onclick = (e) => {
                     e.stopPropagation();
-                    document.querySelectorAll('#nav-list > ul').forEach(ul => {
-                        if (ul !== setUl) ul.style.display = 'none';
-                    });
-                    setUl.style.display = setUl.style.display === 'none' ? 'block' : 'none';
+                    const isOpening = setUl.style.display !== 'block';
+                    document.querySelectorAll('.nav-week-children').forEach(ul => ul.style.display = 'none');
+                    if (isOpening) setUl.style.display = 'block';
                 };
                 
                 navList.appendChild(setLi);
                 navList.appendChild(setUl);
             }
-            if (sDiff !== currentDiff) {
-                currentDiff = sDiff;
-                const diffLi = document.createElement('li');
-                diffLi.className = 'nav-diff';
+
+            let diffLi = setUl.querySelector(`li[data-diff="${diffKey}"]`);
+            let diffUl = setUl.querySelector(`ul[data-diff-ul="${diffKey}"]`);
+            
+            if (!diffLi) {
+                diffLi = document.createElement('li');
+                diffLi.className = 'nav-parent';
+                diffLi.setAttribute('data-diff', diffKey);
                 diffLi.innerHTML = `<span>${sDiff}</span> <span>▼</span>`;
+                
                 diffUl = document.createElement('ul');
+                diffUl.className = 'nav-day-children';
+                diffUl.setAttribute('data-diff-ul', diffKey);
                 diffUl.style.display = 'none';
                 
                 diffLi.onclick = (e) => {
                     e.stopPropagation();
-                    setUl.querySelectorAll('ul').forEach(ul => {
-                        if (ul !== diffUl) ul.style.display = 'none';
-                    });
-                    diffUl.style.display = diffUl.style.display === 'none' ? 'block' : 'none';
+                    const isOpening = diffUl.style.display !== 'block';
+                    setUl.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
+                    if (isOpening) diffUl.style.display = 'block';
                 };
                 
                 setUl.appendChild(diffLi);
                 setUl.appendChild(diffUl);
+                
+                qCounters[diffKey] = 1;
             }
+
             const qLi = document.createElement('li');
-            qLi.className = 'nav-item nav-slide-link';
-            qLi.innerText = `Question ${index + 1}`;
+            qLi.className = 'nav-child-item nav-slide-link';
+            qLi.dataset.index = index;
+            qLi.innerHTML = `<span>Question ${qCounters[diffKey]}</span>`;
+            
             qLi.onclick = (e) => { 
                 e.stopPropagation();
-                if(window.currentUser.role === 'teacher') showSlide(index); 
+                showSlide(index); 
             };
+            
             diffUl.appendChild(qLi);
+            qCounters[diffKey]++;
         });
         
-        // Open first Set and Diff by default
-        const firstSetUl = navList.querySelector('ul');
+        const firstSetUl = navList.querySelector('.nav-week-children');
         if(firstSetUl) {
             firstSetUl.style.display = 'block';
-            const firstDiffUl = firstSetUl.querySelector('ul');
+            const firstDiffUl = firstSetUl.querySelector('.nav-day-children');
             if(firstDiffUl) firstDiffUl.style.display = 'block';
         }
     }
 
-    // Dynamics Child-Scoping Tracker Builder
     function updateTracker(index) {
         const tracker = document.getElementById('question-tracker');
         tracker.innerHTML = '';
@@ -645,6 +800,23 @@
         });
     }
 
+    function updateSetScoreDisplay(setName) {
+        let sScore = 0;
+        let sMax = 0;
+        window.slides.forEach(s => {
+            if(s.getAttribute('data-set') === setName) {
+                const qId = s.getAttribute('data-question-id');
+                const pts = parseInt(s.getAttribute('data-points')) || 0;
+                sMax += pts;
+                if(window.studentAnswers[qId] && String(window.studentAnswers[qId]).toLowerCase() === String(s.getAttribute('data-answer')).toLowerCase()) {
+                    sScore += pts;
+                }
+            }
+        });
+        document.getElementById('user-score').innerText = `${sScore} / ${sMax}`;
+        return { sScore, sMax };
+    }
+
     window.toggleNavigator = function(event) {
         if (event) event.stopPropagation();
         const nav = document.getElementById('slide-navigator');
@@ -655,25 +827,48 @@
         document.body.classList.toggle('book-mode');
     };
 
-    // Auto-Narrator and Timer Mechanics
+    window.closeCelebration = function() {
+        document.getElementById('celebration-modal').style.display = 'none';
+        document.getElementById('celeb-box').classList.remove('show');
+    };
+
     function playNarration(slide) {
         window.speechSynthesis.cancel();
         
         const diff = slide.getAttribute('data-difficulty');
-        const qNum = window.currentSlideIndex + 1;
-        let rawText = slide.getAttribute('data-text');
+        const topic = slide.getAttribute('data-topic');
+        
+        let qNum = 1;
+        const currentSet = slide.getAttribute('data-set');
+        for(let i = 0; i < window.currentSlideIndex; i++) {
+            if(window.slides[i].getAttribute('data-set') === currentSet && window.slides[i].getAttribute('data-difficulty') === diff) {
+                qNum++;
+            }
+        }
         
         let narrationText = "";
-        if (diff) {
-            narrationText += `${diff} Round, Question ${qNum}. `;
+        if (diff) narrationText += `${diff} Round, Question ${qNum}. `;
+        if (topic) narrationText += `Topic: ${topic}. `;
+        
+        const qTextEl = slide.querySelector('.question-text');
+        if (qTextEl) narrationText += `${qTextEl.innerText} `;
+        
+        const options = slide.querySelectorAll('.mcq-option');
+        if(options.length > 0) {
+            options.forEach(opt => {
+                let text = opt.innerText.trim();
+                text = text.replace(/^([A-D])\)\s*/i, '$1, ');
+                narrationText += `${text}, `;
+            });
         }
-        narrationText += rawText + ". Timer Starts Now.";
+        
+        narrationText += "Timer Starts Now!";
 
         if ('speechSynthesis' in window) {
             const utterance = new SpeechSynthesisUtterance(narrationText);
-            utterance.rate = 0.95;
+            utterance.rate = 0.8; 
             utterance.onend = () => {
-                if(window.currentUser.role !== 'teacher' && !slide.hasAttribute('data-locked')) {
+                if(window.currentUser && window.currentUser.role !== 'teacher' && !slide.hasAttribute('data-locked')) {
                     startTimer(slide);
                 }
             };
@@ -717,7 +912,6 @@
         return `${m}:${s}`;
     }
 
-    // Question Navigation & Answering
     window.showSlide = function(index) {
         clearInterval(window.timerInterval);
         document.getElementById('timer-display').style.display = 'none';
@@ -728,18 +922,47 @@
         const currentSlide = window.slides[index];
         currentSlide.classList.add('active');
         
-        // Dynamically rebuild and update green circle tracker
+        const tracker = document.getElementById('question-tracker');
+        const navControls = document.getElementById('nav-controls');
+        currentSlide.appendChild(tracker);
+        currentSlide.appendChild(navControls);
+
         updateTracker(index);
+        updateSetScoreDisplay(currentSlide.getAttribute('data-set'));
+
+        const navItems = document.querySelectorAll('.nav-slide-link');
+        navItems.forEach((item) => {
+            if (parseInt(item.dataset.index) === window.currentSlideIndex) {
+                item.classList.add('active-nav');
+                item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                const diffUl = item.closest('.nav-day-children');
+                const setUl = item.closest('.nav-week-children');
+                
+                if (setUl) {
+                    document.querySelectorAll('.nav-week-children').forEach(ul => ul.style.display = 'none');
+                    setUl.style.display = 'block';
+                }
+                if (diffUl) {
+                    setUl.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
+                    diffUl.style.display = 'block';
+                }
+            } else {
+                item.classList.remove('active-nav');
+            }
+        });
 
         document.getElementById('btn-prev').disabled = index === 0;
         document.getElementById('btn-next').disabled = index === window.slides.length - 1;
 
-        if (window.currentUser.role !== 'teacher' && !currentSlide.hasAttribute('data-locked')) {
+        if (window.currentUser && window.currentUser.role !== 'teacher' && !currentSlide.hasAttribute('data-locked')) {
             if(index > 0) {
                 setTimeout(() => playNarration(currentSlide), 3000);
             } else {
                 playNarration(currentSlide);
             }
+        } else {
+            window.speechSynthesis.cancel();
         }
     };
 
@@ -758,13 +981,21 @@
         const slide = document.getElementById(`slide-${qId}`);
         if(slide.hasAttribute('data-locked')) return;
 
+        let formattedVal = val;
+        slide.querySelectorAll('.mcq-option').forEach(el => {
+            el.classList.remove('selected');
+            if(el.innerText.startsWith(val + ')')) {
+                let optText = el.innerText.trim();
+                optText = optText.replace(/^([A-D])\)\s*/i, '');
+                formattedVal = optText; 
+            }
+        });
+        
         document.getElementById(`input-${qId}`).value = val;
-        slide.querySelectorAll('.mcq-option').forEach(el => el.classList.remove('selected'));
         event.currentTarget.classList.add('selected');
     };
 
     window.submitAnswer = function(qId, isExpired = false) {
-        // Immediate Narration Cancellation
         window.speechSynthesis.cancel();
         clearInterval(window.timerInterval);
         
@@ -787,8 +1018,6 @@
         fb.style.display = 'block';
 
         if (isCorrect) {
-            window.score += points;
-            document.getElementById('user-score').innerText = window.score;
             fb.className = 'quiz-feedback feedback-correct';
             fb.innerText = `Correct! Well done. (+${points} pts)`;
         } else {
@@ -799,10 +1028,28 @@
 
         window.studentAnswers[qId] = userVal;
         
-        // Re-run tracker to mark current circle as answered visually
         updateTracker(window.currentSlideIndex);
+        const currentSet = slide.getAttribute('data-set');
+        const { sScore, sMax } = updateSetScoreDisplay(currentSet);
         
         saveToFirebase();
+
+        let allAnswered = true;
+        window.slides.forEach(s => {
+            if(s.getAttribute('data-set') === currentSet) {
+                const sqId = s.getAttribute('data-question-id');
+                if(!window.studentAnswers[sqId]) allAnswered = false;
+            }
+        });
+
+        if (allAnswered && !window.celebratedSets.has(currentSet) && window.currentUser && window.currentUser.role !== 'teacher') {
+            window.celebratedSets.add(currentSet);
+            setTimeout(() => {
+                document.getElementById('celebration-modal').style.display = 'flex';
+                setTimeout(() => document.getElementById('celeb-box').classList.add('show'), 50);
+                document.getElementById('celeb-msg').innerText = `Thank you for finishing the practice set. You got ${sScore} out of ${sMax} highest possible score!`;
+            }, 1000);
+        }
     };
 
     async function saveToFirebase() {
@@ -871,26 +1118,24 @@
         rowDiv.classList.add('active');
         
         window.studentAnswers = data.answers || {};
-        window.score = 0;
         
         window.slides.forEach(slide => {
             const qId = slide.getAttribute('data-question-id');
             const inputEl = document.getElementById(`input-${qId}`);
             const correctVal = slide.getAttribute('data-answer');
-            const points = parseInt(slide.getAttribute('data-points'));
             const userAns = window.studentAnswers[qId];
 
             if (userAns !== undefined) {
                 inputEl.value = userAns;
                 slide.setAttribute('data-locked', 'true');
                 inputEl.disabled = true;
-                inputEl.style.backgroundColor = '#f3f4f6';
-                inputEl.style.cursor = 'not-allowed';
                 
                 if(slide.getAttribute('data-type') === 'Theory') {
                     slide.querySelectorAll('.mcq-option').forEach(el => {
                         el.style.pointerEvents = 'none';
-                        if(el.innerText.startsWith(userAns)) el.classList.add('selected');
+                        let optText = el.innerText.trim();
+                        optText = optText.replace(/^([A-D])\)\s*/i, '');
+                        if(optText === userAns || el.innerText.startsWith(userAns + ')')) el.classList.add('selected');
                     });
                 }
                 
@@ -901,16 +1146,21 @@
                 fb.style.display = 'block';
                 
                 if(String(userAns).toLowerCase() === String(correctVal).toLowerCase()) {
-                    window.score += points;
                     fb.className = 'quiz-feedback feedback-correct';
                     fb.innerText = `Student answered correctly: ${userAns}`;
                 } else {
                     fb.className = 'quiz-feedback feedback-wrong';
                     fb.innerText = `Student answered: ${userAns} (Expected: ${correctVal})`;
                 }
+            } else {
+                slide.removeAttribute('data-locked');
+                inputEl.value = '';
+                slide.querySelectorAll('.mcq-option').forEach(el => el.classList.remove('selected'));
+                document.getElementById(`submit-${qId}`).style.display = 'inline-block';
+                document.getElementById(`exp-${qId}`).style.display = 'none';
+                document.getElementById(`feedback-${qId}`).style.display = 'none';
             }
         });
-        document.getElementById('user-score').innerText = window.score;
         showSlide(0);
     }
 </script>
