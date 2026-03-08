@@ -78,7 +78,7 @@
 
     /* Teacher Sidebar */
     #teacher-sidebar {
-        display: none; width: 200px; background: #161b22; border-right: 1px solid #30363d;
+        display: none; width: 250px; background: #161b22; border-right: 1px solid #30363d;
         height: 100%; overflow-y: auto; padding: 70px 10px 20px 10px; box-sizing: border-box;
     }
     body.role-teacher #teacher-sidebar { display: block; }
@@ -120,7 +120,7 @@
     .submit-btn:hover { background: #2ea043; }
     .exp-btn { background: #8b949e; display: none; }
     .exp-btn:hover { background: #c9d1d9; color: #000; }
-    .back-quiz-btn { background: #3b82f6; display: none; margin-bottom: 20px; }
+    .back-quiz-btn { background: #3b82f6; margin-bottom: 20px; display: inline-block; }
 
     .quiz-feedback { margin-top: 20px; font-size: 1.5rem; font-weight: bold; display: none; padding: 15px; border-radius: 8px; }
     .feedback-correct { background: rgba(46, 160, 67, 0.15); color: #3fb950; border-left: 5px solid #3fb950; }
@@ -167,7 +167,7 @@
     #nav-toggle-btn:hover { background: #58a6ff; color: #000; }
 
     #slide-navigator {
-        position: absolute; top: 0; left: 0; width: 320px; height: 100%; background: rgba(13, 17, 23, 0.98);
+        position: absolute; top: 0; left: 0; width: 350px; height: 100%; background: rgba(13, 17, 23, 0.98);
         border-right: 1px solid #30363d; z-index: 75; transform: translateX(0); transition: transform 0.3s ease;
         display: flex; flex-direction: column; backdrop-filter: blur(10px);
     }
@@ -184,7 +184,7 @@
     .nav-parent:hover { background: rgba(88, 166, 255, 0.2); color: #ffffff; }
     .nav-day-children { list-style: none; padding: 0; margin: 0; display: none; }
 
-    .nav-child-item { padding: 8px 20px 8px 50px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 0.95rem; transition: background 0.2s; color: #8b949e; display: flex; justify-content: space-between; align-items: center; }
+    .nav-child-item { padding: 12px 15px 12px 40px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 0.90rem; transition: background 0.2s; color: #8b949e; display: flex; justify-content: flex-start; align-items: center; text-align: left; line-height: 1.3;}
     .nav-child-item:hover { background: rgba(88, 166, 255, 0.1); color: #c9d1d9; }
     .nav-child-item.active-nav { background: rgba(88, 166, 255, 0.2); color: #ffffff; border-left: 4px solid #58a6ff; font-weight: bold; }
 
@@ -3586,7 +3586,7 @@
     </div>
 </div>            
 <!--SET E DIFFICULT END -->
-            
+
         </div>
     </div>
     
@@ -3622,11 +3622,11 @@
 
     window.currentUser = null;
     window.currentSlideIndex = 0;
-    window.slides = document.querySelectorAll('.slide');
+    window.slides = []; // Will be populated dynamically after sorting
     window.timerInterval = null;
     window.activityName = "FABM Cup Practice";
     window.section = "Default"; 
-    window.studentAnswers = {};
+    window.studentAnswers = {}; // Format: { qId: { val: "Ans", expired: boolean } } or legacy string { qId: "Ans" }
     window.celebratedSets = new Set(); 
 
     document.addEventListener('click', function(event) {
@@ -3699,16 +3699,42 @@
     };
 
     function initEnvironment() {
+        // 1. Sort Slides Logically (Set A->Z, Diff: Easy->Avg->Diff)
+        const diffWeight = { "Easy": 1, "Average": 2, "Difficult": 3 };
+        const container = document.getElementById('slides-container');
+        const slideArray = Array.from(document.querySelectorAll('.slide'));
+        
+        slideArray.sort((a, b) => {
+            const setA = a.getAttribute('data-set') || '';
+            const setB = b.getAttribute('data-set') || '';
+            if (setA !== setB) return setA.localeCompare(setB);
+
+            const diffA = a.getAttribute('data-difficulty') || '';
+            const diffB = b.getAttribute('data-difficulty') || '';
+            if (diffWeight[diffA] !== diffWeight[diffB]) return (diffWeight[diffA] || 0) - (diffWeight[diffB] || 0);
+
+            return 0; 
+        });
+        
+        slideArray.forEach(slide => container.appendChild(slide)); 
+        window.slides = document.querySelectorAll('.slide'); 
+
+        // 2. Build Navigator
         buildNavigator();
         
+        // 3. Restore & Lock Answered States
         window.slides.forEach(slide => {
             const qId = slide.getAttribute('data-question-id');
-            const ans = window.studentAnswers[qId];
-            if (ans && window.currentUser && window.currentUser.role === 'student') {
+            const storedAnsData = window.studentAnswers[qId];
+            
+            if (storedAnsData && window.currentUser && window.currentUser.role === 'student') {
+                let userAns = typeof storedAnsData === 'object' ? storedAnsData.val : storedAnsData;
+                let isExp = typeof storedAnsData === 'object' ? storedAnsData.expired : false;
+                
                 slide.setAttribute('data-locked', 'true');
                 const inputEl = document.getElementById(`input-${qId}`);
                 if(inputEl) {
-                    inputEl.value = ans;
+                    inputEl.value = userAns;
                     inputEl.disabled = true;
                 }
                 
@@ -3717,7 +3743,7 @@
                         el.style.pointerEvents = 'none';
                         let optText = el.innerText.trim();
                         optText = optText.replace(/^([A-D])\)\s*/i, '');
-                        if(optText === ans || el.innerText.startsWith(ans + ')')) el.classList.add('selected');
+                        if(optText === userAns || el.innerText.startsWith(userAns + ')')) el.classList.add('selected');
                     });
                 }
                 
@@ -3727,13 +3753,16 @@
                 const fb = document.getElementById(`feedback-${qId}`);
                 fb.style.display = 'block';
                 const correctVal = slide.getAttribute('data-answer');
+                const points = parseInt(slide.getAttribute('data-points'));
                 
-                if(String(ans).toLowerCase() === String(correctVal).toLowerCase()) {
+                if(String(userAns).toLowerCase() === String(correctVal).toLowerCase()) {
                     fb.className = 'quiz-feedback feedback-correct';
-                    fb.innerText = `Correct Answer Saved.`;
+                    if(isExp) fb.innerText = `Correct! However, time expired (0 pts awarded).`;
+                    else fb.innerText = `Correct! Well done. (+${points} pts)`;
                 } else {
                     fb.className = 'quiz-feedback feedback-wrong';
-                    fb.innerText = `Incorrect Answer Saved. (Expected: ${correctVal})`;
+                    if(isExp) fb.innerText = `Time Expired & Incorrect Answer Saved. (Expected: ${correctVal})`;
+                    else fb.innerText = `Incorrect Answer Saved. (Expected: ${correctVal})`;
                 }
             }
         });
@@ -3744,63 +3773,67 @@
     function buildNavigator() {
         const navList = document.getElementById('nav-list');
         navList.innerHTML = '';
+        let currentSet = null;
+        let currentDiff = null;
+        let currentSetUl = null;
+        let currentDiffUl = null;
         let qCounters = {}; 
 
         window.slides.forEach((slide, index) => {
             const sSet = slide.getAttribute('data-set') || 'Uncategorized';
             const sDiff = slide.getAttribute('data-difficulty') || 'General';
+            const topic = slide.getAttribute('data-topic') || 'General';
             
             const setKey = sSet.replace(/\s+/g, '-');
             const diffKey = setKey + '-' + sDiff.replace(/\s+/g, '-');
 
-            let setLi = navList.querySelector(`li[data-set="${setKey}"]`);
-            let setUl = navList.querySelector(`ul[data-set-ul="${setKey}"]`);
-            
-            if (!setLi) {
-                setLi = document.createElement('li');
+            if (sSet !== currentSet) {
+                currentSet = sSet;
+                currentDiff = null; 
+
+                let setLi = document.createElement('li');
                 setLi.className = 'nav-grandparent';
                 setLi.setAttribute('data-set', setKey);
                 setLi.innerHTML = `<span>${sSet}</span> <span>▼</span>`;
                 
-                setUl = document.createElement('ul');
-                setUl.className = 'nav-week-children';
-                setUl.setAttribute('data-set-ul', setKey);
-                setUl.style.display = 'none'; 
+                currentSetUl = document.createElement('ul');
+                currentSetUl.className = 'nav-week-children';
+                currentSetUl.setAttribute('data-set-ul', setKey);
+                currentSetUl.style.display = 'none'; 
                 
                 setLi.onclick = (e) => {
                     e.stopPropagation();
-                    const isOpening = setUl.style.display !== 'block';
+                    const isOpening = currentSetUl.style.display !== 'block';
                     document.querySelectorAll('.nav-week-children').forEach(ul => ul.style.display = 'none');
-                    if (isOpening) setUl.style.display = 'block';
+                    if (isOpening) currentSetUl.style.display = 'block';
                 };
                 
                 navList.appendChild(setLi);
-                navList.appendChild(setUl);
+                navList.appendChild(currentSetUl);
             }
 
-            let diffLi = setUl.querySelector(`li[data-diff="${diffKey}"]`);
-            let diffUl = setUl.querySelector(`ul[data-diff-ul="${diffKey}"]`);
-            
-            if (!diffLi) {
-                diffLi = document.createElement('li');
+            if (sDiff !== currentDiff) {
+                currentDiff = sDiff;
+                
+                let diffLi = document.createElement('li');
                 diffLi.className = 'nav-parent';
                 diffLi.setAttribute('data-diff', diffKey);
                 diffLi.innerHTML = `<span>${sDiff}</span> <span>▼</span>`;
                 
-                diffUl = document.createElement('ul');
-                diffUl.className = 'nav-day-children';
-                diffUl.setAttribute('data-diff-ul', diffKey);
-                diffUl.style.display = 'none';
+                currentDiffUl = document.createElement('ul');
+                currentDiffUl.className = 'nav-day-children';
+                currentDiffUl.setAttribute('data-diff-ul', diffKey);
+                currentDiffUl.style.display = 'none';
                 
                 diffLi.onclick = (e) => {
                     e.stopPropagation();
-                    const isOpening = diffUl.style.display !== 'block';
-                    setUl.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
-                    if (isOpening) diffUl.style.display = 'block';
+                    const isOpening = currentDiffUl.style.display !== 'block';
+                    currentSetUl.querySelectorAll('.nav-day-children').forEach(ul => ul.style.display = 'none');
+                    if (isOpening) currentDiffUl.style.display = 'block';
                 };
                 
-                setUl.appendChild(diffLi);
-                setUl.appendChild(diffUl);
+                currentSetUl.appendChild(diffLi);
+                currentSetUl.appendChild(currentDiffUl);
                 
                 qCounters[diffKey] = 1;
             }
@@ -3808,14 +3841,16 @@
             const qLi = document.createElement('li');
             qLi.className = 'nav-child-item nav-slide-link';
             qLi.dataset.index = index;
-            qLi.innerHTML = `<span>Question ${qCounters[diffKey]}</span>`;
+            
+            const qNumStr = String(qCounters[diffKey]).padStart(2, '0');
+            qLi.innerHTML = `<span>${qNumStr}. ${topic}</span>`;
             
             qLi.onclick = (e) => { 
                 e.stopPropagation();
                 showSlide(index); 
             };
             
-            diffUl.appendChild(qLi);
+            currentDiffUl.appendChild(qLi);
             qCounters[diffKey]++;
         });
         
@@ -3859,8 +3894,14 @@
                 const qId = s.getAttribute('data-question-id');
                 const pts = parseInt(s.getAttribute('data-points')) || 0;
                 sMax += pts;
-                if(window.studentAnswers[qId] && String(window.studentAnswers[qId]).toLowerCase() === String(s.getAttribute('data-answer')).toLowerCase()) {
-                    sScore += pts;
+                
+                const ansData = window.studentAnswers[qId];
+                if(ansData) {
+                    let userAns = typeof ansData === 'object' ? ansData.val : ansData;
+                    let isExp = typeof ansData === 'object' ? ansData.expired : false;
+                    if(String(userAns).toLowerCase() === String(s.getAttribute('data-answer')).toLowerCase() && !isExp) {
+                        sScore += pts;
+                    }
                 }
             }
         });
@@ -3952,7 +3993,13 @@
             if (timeLeft <= 0) {
                 clearInterval(window.timerInterval);
                 const qId = slide.getAttribute('data-question-id');
-                window.submitAnswer(qId, true);
+                
+                // Flag slide as expired but leave input open
+                slide.setAttribute('data-timer-expired', 'true');
+                const fb = document.getElementById(`feedback-${qId}`);
+                fb.className = 'quiz-feedback feedback-wrong';
+                fb.innerText = 'Time Expired! Please submit an answer to proceed (0 points will be awarded).';
+                fb.style.display = 'block';
             }
         }, 1000);
     }
@@ -3963,14 +4010,39 @@
         return `${m}:${s}`;
     }
 
-    window.showSlide = function(index) {
+    window.showSlide = function(targetIndex) {
+        // --- STRICT PROGRESSION CHECK ---
+        if (window.currentUser && window.currentUser.role === 'student') {
+            let firstUnanswered = window.slides.length;
+            for (let i = 0; i < window.slides.length; i++) {
+                const qId = window.slides[i].getAttribute('data-question-id');
+                if (!window.studentAnswers[qId]) {
+                    firstUnanswered = i;
+                    break;
+                }
+            }
+            
+            if (targetIndex > firstUnanswered) {
+                const currentUnansweredSlide = window.slides[firstUnanswered];
+                const currentUnansweredSet = currentUnansweredSlide.getAttribute('data-set');
+                const targetSet = window.slides[targetIndex].getAttribute('data-set');
+                
+                if (targetSet !== currentUnansweredSet) {
+                    alert(`Please finish answering all questions in ${currentUnansweredSet} first.`);
+                } else {
+                    alert("Please answer and submit the current question first to proceed.");
+                }
+                return; // Block Navigation
+            }
+        }
+
         clearInterval(window.timerInterval);
         document.getElementById('timer-display').style.display = 'none';
 
         window.slides.forEach(s => s.classList.remove('active'));
-        window.currentSlideIndex = index;
+        window.currentSlideIndex = targetIndex;
         
-        const currentSlide = window.slides[index];
+        const currentSlide = window.slides[targetIndex];
         currentSlide.classList.add('active');
         
         const tracker = document.getElementById('question-tracker');
@@ -3978,7 +4050,7 @@
         currentSlide.appendChild(tracker);
         currentSlide.appendChild(navControls);
 
-        updateTracker(index);
+        updateTracker(targetIndex);
         updateSetScoreDisplay(currentSlide.getAttribute('data-set'));
 
         const navItems = document.querySelectorAll('.nav-slide-link');
@@ -4003,11 +4075,11 @@
             }
         });
 
-        document.getElementById('btn-prev').disabled = index === 0;
-        document.getElementById('btn-next').disabled = index === window.slides.length - 1;
+        document.getElementById('btn-prev').disabled = targetIndex === 0;
+        document.getElementById('btn-next').disabled = targetIndex === window.slides.length - 1;
 
         if (window.currentUser && window.currentUser.role !== 'teacher' && !currentSlide.hasAttribute('data-locked')) {
-            if(index > 0) {
+            if(targetIndex > 0) {
                 setTimeout(() => playNarration(currentSlide), 3000);
             } else {
                 playNarration(currentSlide);
@@ -4046,13 +4118,20 @@
         event.currentTarget.classList.add('selected');
     };
 
-    window.submitAnswer = function(qId, isExpired = false) {
-        window.speechSynthesis.cancel();
-        clearInterval(window.timerInterval);
-        
+    window.submitAnswer = function(qId) {
         const slide = document.getElementById(`slide-${qId}`);
         const inputEl = document.getElementById(`input-${qId}`);
         const userVal = inputEl.value.trim();
+        
+        if(userVal === "") {
+            alert("Please enter or select an answer before submitting.");
+            return;
+        }
+
+        window.speechSynthesis.cancel();
+        clearInterval(window.timerInterval);
+        
+        const isExpired = slide.hasAttribute('data-timer-expired');
         const correctVal = slide.getAttribute('data-answer');
         const points = parseInt(slide.getAttribute('data-points'));
         const isCorrect = String(userVal).toLowerCase() === String(correctVal).toLowerCase();
@@ -4070,14 +4149,15 @@
 
         if (isCorrect) {
             fb.className = 'quiz-feedback feedback-correct';
-            fb.innerText = `Correct! Well done. (+${points} pts)`;
+            if (isExpired) fb.innerText = `Correct! However, time expired (0 pts awarded).`;
+            else fb.innerText = `Correct! Well done. (+${points} pts)`;
         } else {
             fb.className = 'quiz-feedback feedback-wrong';
-            let msg = isExpired ? "Time Expired. " : "Incorrect. ";
-            fb.innerText = `${msg}The correct answer was: ${correctVal}`;
+            if (isExpired) fb.innerText = `Time Expired & Incorrect. (Expected: ${correctVal})`;
+            else fb.innerText = `Incorrect. (Expected: ${correctVal})`;
         }
 
-        window.studentAnswers[qId] = userVal;
+        window.studentAnswers[qId] = { val: userVal, expired: isExpired };
         
         updateTracker(window.currentSlideIndex);
         const currentSet = slide.getAttribute('data-set');
@@ -4174,9 +4254,12 @@
             const qId = slide.getAttribute('data-question-id');
             const inputEl = document.getElementById(`input-${qId}`);
             const correctVal = slide.getAttribute('data-answer');
-            const userAns = window.studentAnswers[qId];
+            const storedAnsData = window.studentAnswers[qId];
 
-            if (userAns !== undefined) {
+            if (storedAnsData !== undefined) {
+                let userAns = typeof storedAnsData === 'object' ? storedAnsData.val : storedAnsData;
+                let isExp = typeof storedAnsData === 'object' ? storedAnsData.expired : false;
+                
                 inputEl.value = userAns;
                 slide.setAttribute('data-locked', 'true');
                 inputEl.disabled = true;
@@ -4198,10 +4281,12 @@
                 
                 if(String(userAns).toLowerCase() === String(correctVal).toLowerCase()) {
                     fb.className = 'quiz-feedback feedback-correct';
-                    fb.innerText = `Student answered correctly: ${userAns}`;
+                    if (isExp) fb.innerText = `Student answered correctly, but time expired (0 pts).`;
+                    else fb.innerText = `Student answered correctly: ${userAns}`;
                 } else {
                     fb.className = 'quiz-feedback feedback-wrong';
-                    fb.innerText = `Student answered: ${userAns} (Expected: ${correctVal})`;
+                    if (isExp) fb.innerText = `Student answered: ${userAns} (Time Expired / Expected: ${correctVal})`;
+                    else fb.innerText = `Student answered: ${userAns} (Expected: ${correctVal})`;
                 }
             } else {
                 slide.removeAttribute('data-locked');
