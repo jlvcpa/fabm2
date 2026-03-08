@@ -241,6 +241,10 @@
     .book-content { display: none; font-family: 'Georgia', serif; color: #333333; width: 100%; max-width: 900px; margin: 0 auto; text-align: left; }
     .book-content h2 { color: #111; font-family: 'Segoe UI', sans-serif; font-size: 2.5rem; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 25px; }
     .book-content p { color: #333; font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; }
+    .correct-line { display: inline-block; width: 100%; margin: 16px 0; padding: 12px 16px; background: linear-gradient(90deg, rgba(59,130,246,0.08), rgba(88,166,255,0.04)); border-left: 4px solid #3b82f6; color: #0f172a; border-radius: 8px; box-shadow: 0 1px 0 rgba(15,23,42,0.04), 0 6px 18px rgba(2,6,23,0.04); font-weight: 600; transition: transform 120ms ease, box-shadow 120ms ease; }
+
+/* subtle hover/focus to show interactivity when keyboard users land on it */
+.correct-line:focus, .correct-line:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(2,6,23,0.08); outline: none; }
 
     /* Celebration Modal */
     #celebration-modal {
@@ -396,7 +400,8 @@
             <li class="book-mcq-option" onclick="selectOption('sAeAq01', 'C')">C) Management</li>
             <li class="book-mcq-option" onclick="selectOption('sAeAq01', 'D')">D) Marketing</li>
         </ul>
-        <p><strong>Correct Answer: B) Accounting</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B) Accounting</strong></p>
+
         <h3>The Conceptual Framework of the "Language"</h3>
     <p>Accounting is universally recognized as the <strong>"language of business"</strong> because it serves as the primary system for communicating financial information about an organization to its stakeholders. Just as spoken languages use structured grammar and vocabulary to share ideas, accounting uses a standardized set of rules (such as GAAP or IFRS) and terms (like assets, liabilities, and equity) to tell a company's financial story.[1, 2] This system translates the daily transactions of a business into a narrative that can be understood and compared by investors, creditors, and managers globally.[1, 2]</p>
     
