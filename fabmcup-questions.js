@@ -424,7 +424,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBeAq01', 'C')">C) Karl Marx</li>
             <li class="book-mcq-option" onclick="selectOption('sBeAq01', 'D')">D) Henry Fayol</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Fra Luca Bartolomeo de Pacioli is recognized as the father of accounting and bookkeeping because he was the first to publish a detailed description of the double-entry bookkeeping system.</p>
     </div>
 </div>
@@ -454,7 +454,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBeAq02', 'C')">C) Tax Accounting</li>
             <li class="book-mcq-option" onclick="selectOption('sBeAq02', 'D')">D) Management Accounting</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Auditing is the independent review and examination of financial records and statements to express an opinion on their fairness and compliance with Generally Accepted Accounting Principles (GAAP).</p>
     </div>
 </div>
@@ -484,7 +484,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBeAq03', 'C')">C) Creditors</li>
             <li class="book-mcq-option" onclick="selectOption('sBeAq03', 'D')">D) Bureau of Internal Revenue (BIR)</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Creditors, such as banks and suppliers, are external users who need financial information to assess the creditworthiness and liquidity of a business before lending money or extending credit.</p>
     </div>
 </div>
@@ -514,7 +514,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBeAq04', 'C')">C) Corporation</li>
             <li class="book-mcq-option" onclick="selectOption('sBeAq04', 'D')">D) Cooperative</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>According to the Civil Code of the Philippines, a partnership is a contract where two or more persons bind themselves to contribute money, property, or industry to a common fund, with the intention of dividing the profits among themselves.</p>
     </div>
 </div>
@@ -544,7 +544,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBeAq05', 'C')">C) Objective Evidence Principle</li>
             <li class="book-mcq-option" onclick="selectOption('sBeAq05', 'D')">D) Business Entity Principle</li>
         </ul>
-        <p><strong>Correct Answer: D</strong></p>
+        <p class="correct-line"><strong>Correct Answer: D</strong></p>
         <p>The Business Entity Principle assumes that a business is a separate and distinct legal entity from its owners. Therefore, personal transactions of the owner should not be recorded in the business's books.</p>
     </div>
 </div>
@@ -574,7 +574,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBeAq06', 'C')">C) Cash</li>
             <li class="book-mcq-option" onclick="selectOption('sBeAq06', 'D')">D) Service Revenue</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Cash is a present economic resource controlled by the entity as a result of past events, making it an asset. Accounts Payable is a liability, Owner's Capital is equity, and Service Revenue is an income account.</p>
     </div>
 </div>
@@ -604,7 +604,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBeAq07', 'C')">C) Source Document</li>
             <li class="book-mcq-option" onclick="selectOption('sBeAq07', 'D')">D) Trial Balance</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>The General Ledger is known as the "book of final entry" because it is the destination where all transactions recorded in the journals (the books of original entry) are eventually posted and summarized by account.</p>
     </div>
 </div>
@@ -634,7 +634,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBeAq08', 'C')">C) Increase Cash, Increase Service Revenue</li>
             <li class="book-mcq-option" onclick="selectOption('sBeAq08', 'D')">D) Increase Cash, Decrease Accounts Payable</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Receiving cash for a service provided immediately increases the company's Cash (an asset) and also increases its Service Revenue (an income account).</p>
     </div>
 </div>
@@ -664,7 +664,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBeAq09', 'C')">C) ₱65,000 Net Income</li>
             <li class="book-mcq-option" onclick="selectOption('sBeAq09', 'D')">D) ₱40,000 Net Income</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Net Income is calculated by subtracting Total Expenses from Total Revenues. Since Revenues (₱40,000) are greater than Expenses (₱25,000), the business has a Net Income of ₱15,000.</p>
     </div>
 </div>
@@ -694,7 +694,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBeAq10', 'C')">C) Purchases Journal</li>
             <li class="book-mcq-option" onclick="selectOption('sBeAq10', 'D')">D) Sales Journal</li>
         </ul>
-        <p><strong>Correct Answer: D</strong></p>
+        <p class="correct-line"><strong>Correct Answer: D</strong></p>
         <p>The Sales Journal is a special journal used exclusively to record all sales of merchandise on account (credit). Cash sales would go in the Cash Receipts Journal.</p>
     </div>
 </div>
@@ -725,7 +725,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCeAq01', 'C')">C) It is a purely creative art form used for storytelling.</li>
             <li class="book-mcq-option" onclick="selectOption('sCeAq01', 'D')">D) It is an activity used only by large corporations.</li>
         </ul>
-        <p><strong>Correct Answer: A</strong></p>
+        <p class="correct-line"><strong>Correct Answer: A</strong></p>
         <p>Accounting is a service activity. Its function is to provide quantitative information, primarily financial in nature, about economic entities that is intended to be useful in making economic decisions.</p>
     </div>
 </div>
@@ -755,7 +755,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCeAq02', 'C')">C) Tax Accounting</li>
             <li class="book-mcq-option" onclick="selectOption('sCeAq02', 'D')">D) Management Accounting</li>
         </ul>
-        <p><strong>Correct Answer: D</strong></p>
+        <p class="correct-line"><strong>Correct Answer: D</strong></p>
         <p>Management Accounting (or Managerial Accounting) focuses on providing information to internal users (management) to aid in decision-making, planning, and controlling the business operations.</p>
     </div>
 </div>
@@ -785,7 +785,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCeAq03', 'C')">C) Human Resources Manager</li>
             <li class="book-mcq-option" onclick="selectOption('sCeAq03', 'D')">D) Chief Executive Officer</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Potential investors are external users. They utilize financial statements to assess the profitability and risk of an entity before committing their capital.</p>
     </div>
 </div>
@@ -815,7 +815,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCeAq04', 'C')">C) Corporation</li>
             <li class="book-mcq-option" onclick="selectOption('sCeAq04', 'D')">D) General Partnership</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>A corporation is an artificial being created by operation of law. It has a separate juridical personality, meaning it can own property and incur debts independently of its stockholders.</p>
     </div>
 </div>
@@ -845,7 +845,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCeAq05', 'C')">C) Conservatism</li>
             <li class="book-mcq-option" onclick="selectOption('sCeAq05', 'D')">D) Entity Concept</li>
         </ul>
-        <p><strong>Correct Answer: A</strong></p>
+        <p class="correct-line"><strong>Correct Answer: A</strong></p>
         <p>The Objectivity Principle (or Objectivity Evidence) states that accounting entries should be supported by business documents, such as invoices or receipts, to ensure the information is verifiable and neutral.</p>
     </div>
 </div>
@@ -875,7 +875,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCeAq06', 'C')">C) Prepaid Insurance</li>
             <li class="book-mcq-option" onclick="selectOption('sCeAq06', 'D')">D) Office Supplies</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Notes Payable represents an obligation to pay a specific amount of money at a future date, usually with interest. Accounts Receivable and Prepaid items are assets.</p>
     </div>
 </div>
@@ -905,7 +905,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCeAq07', 'C')">C) Sales Invoice</li>
             <li class="book-mcq-option" onclick="selectOption('sCeAq07', 'D')">D) Ledger</li>
         </ul>
-        <p><strong>Correct Answer: D</strong></p>
+        <p class="correct-line"><strong>Correct Answer: D</strong></p>
         <p>The Ledger (General Ledger) is known as the "book of final entry." It organizes transactions by account title, allowing the business to see the current balance of each asset, liability, and equity account.</p>
     </div>
 </div>
@@ -935,7 +935,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCeAq08', 'C')">C) ₱3,000</li>
             <li class="book-mcq-option" onclick="selectOption('sCeAq08', 'D')">D) ₱7,000</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Cash is an asset, so its normal balance is a debit. Ending Balance = Beginning Debit + New Debit - New Credit. (₱10,000 + ₱5,000 - ₱2,000 = ₱13,000).</p>
     </div>
 </div>
@@ -965,7 +965,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCeAq09', 'C')">C) ₱1,000</li>
             <li class="book-mcq-option" onclick="selectOption('sCeAq09', 'D')">D) ₱0</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Under the periodicity concept, expenses must be matched to the period they occur. Monthly expense = Annual cost / 12 months. (₱12,000 / 12 = ₱1,000).</p>
     </div>
 </div>
@@ -995,7 +995,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCeAq10', 'C')">C) ₱2,000</li>
             <li class="book-mcq-option" onclick="selectOption('sCeAq10', 'D')">D) ₱7,000</li>
         </ul>
-        <p><strong>Correct Answer: A</strong></p>
+        <p class="correct-line"><strong>Correct Answer: A</strong></p>
         <p>Gross Profit = Sales - Cost of Goods Sold. Sales (10 x 500 = 5,000). COGS (10 x 200 = 2,000). Gross Profit = 5,000 - 2,000 = ₱3,000.</p>
     </div>
 </div>
@@ -1026,7 +1026,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDeAq01', 'C')">C) American Accounting Association (AAA)</li>
             <li class="book-mcq-option" onclick="selectOption('sDeAq01', 'D')">D) PICPA</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>The American Accounting Association (AAA) emphasizes the communication of information for decision-making. The AICPA and ASC definitions focus more on the "art" and "service activity" aspects respectively.</p>
     </div>
 </div>
@@ -1056,7 +1056,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDeAq02', 'C')">C) Management Accounting</li>
             <li class="book-mcq-option" onclick="selectOption('sDeAq02', 'D')">D) Tax Accounting</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Financial Accounting is the branch concerned with the preparation and communication of financial reports for external users based on standard principles (GAAP or PFRS).</p>
     </div>
 </div>
@@ -1086,7 +1086,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDeAq03', 'C')">C) Internal Auditors</li>
             <li class="book-mcq-option" onclick="selectOption('sDeAq03', 'D')">D) Government Agencies</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Investors use financial statements to assess the risk and return on their investment. While creditors look for debt-paying ability, investors look for profitability and dividend potential.</p>
     </div>
 </div>
@@ -1116,7 +1116,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDeAq04', 'C')">C) Sole Partnership</li>
             <li class="book-mcq-option" onclick="selectOption('sDeAq04', 'D')">D) Corporation</li>
         </ul>
-        <p><strong>Correct Answer: D</strong></p>
+        <p class="correct-line"><strong>Correct Answer: D</strong></p>
         <p>In a corporation, the liability of stockholders is limited to the amount of their investment. In a sole proprietorship or general partnership, owners often have unlimited personal liability for business debts.</p>
     </div>
 </div>
@@ -1146,7 +1146,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDeAq05', 'C')">C) Entity Concept</li>
             <li class="book-mcq-option" onclick="selectOption('sDeAq05', 'D')">D) Materiality Principle</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>The Periodicity Concept allows users to receive timely information by dividing the indefinite life of a business into regular time segments (monthly, quarterly, or annually).</p>
     </div>
 </div>
@@ -1176,7 +1176,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDeAq06', 'C')">C) Notes Payable</li>
             <li class="book-mcq-option" onclick="selectOption('sDeAq06', 'D')">D) Salaries Expense</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Accounts Receivable is a resource controlled by the entity (Asset). Unearned Revenue and Notes Payable are Liabilities, while Salaries Expense is an Expense.</p>
     </div>
 </div>
@@ -1206,7 +1206,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDeAq07', 'C')">C) Financial Statement</li>
             <li class="book-mcq-option" onclick="selectOption('sDeAq07', 'D')">D) Subsidiary Ledger</li>
         </ul>
-        <p><strong>Correct Answer: A</strong></p>
+        <p class="correct-line"><strong>Correct Answer: A</strong></p>
         <p>The Journal is called the "Book of Original Entry" because transactions are recorded here chronologically for the first time. The Ledger is the "Book of Final Entry".</p>
     </div>
 </div>
@@ -1229,7 +1229,7 @@
         <button class="exp-btn" id="exp-sDeAq08" onclick="toggleBookMode()">Show Explanation</button>
         <div class="quiz-feedback" id="feedback-sDeAq08"></div>
     </div>
-        <p><strong>Correct Answer: 8,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 8,000</strong></p>
         <p>Calculation: Beginning Balance (10,000) + Total Debits (5,000) - Total Credits (7,000) = 8,000 ending debit balance.</p>
     </div>
 </div>
@@ -1247,7 +1247,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Accounting Cycle (Service)</h2>
         <div class="book-content-question">If a business has total Assets of ₱100,000 and total Equity of ₱40,000, how much are the total Liabilities? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 60,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 60,000</strong></p>
         <p>Using the basic accounting equation: Assets = Liabilities + Equity. 100,000 = Liabilities + 40,000. Therefore, Liabilities = ₱60,000.</p>
     </div>
 </div>
@@ -1265,7 +1265,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Accounting Cycle (Merchandising)</h2>
         <div class="book-content-question">A company sold goods worth ₱50,000 with a term of 2/10, n/30. If the customer pays within 10 days, how much is the sales discount? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 1,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 1,000</strong></p>
         <p>Calculation: Sales amount (₱50,000) × Discount rate (2% or 0.02) = ₱1,000.</p>
     </div>
 </div>
@@ -1297,7 +1297,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEeAq01', 'C')">C) To provide financial information for decision-making</li>
             <li class="book-mcq-option" onclick="selectOption('sEeAq01', 'D')">D) To dictate management policies</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>The primary purpose of accounting is to identify, measure, and communicate economic information to permit informed judgments and decisions by users of the information.</p>
     </div>
 </div>
@@ -1327,7 +1327,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEeAq02', 'C')">C) Tax Accounting</li>
             <li class="book-mcq-option" onclick="selectOption('sEeAq02', 'D')">D) Government Accounting</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Tax accounting focuses on tax planning, compliance with tax laws, and the preparation of tax returns required by agencies like the Bureau of Internal Revenue (BIR).</p>
     </div>
 </div>
@@ -1357,7 +1357,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEeAq03', 'C')">C) Bureau of Internal Revenue (BIR)</li>
             <li class="book-mcq-option" onclick="selectOption('sEeAq03', 'D')">D) Suppliers</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>The Board of Directors and managers are internal users because they are directly involved in running the day-to-day operations and strategic planning of the business.</p>
     </div>
 </div>
@@ -1387,7 +1387,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEeAq04', 'C')">C) Sole Proprietorship</li>
             <li class="book-mcq-option" onclick="selectOption('sEeAq04', 'D')">D) Cooperative</li>
         </ul>
-        <p><strong>Correct Answer: D</strong></p>
+        <p class="correct-line"><strong>Correct Answer: D</strong></p>
         <p>A cooperative is an autonomous and duly registered association of persons, with a common bond of interest, who have voluntarily joined together to achieve their social, economic, and cultural needs.</p>
     </div>
 </div>
@@ -1417,7 +1417,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEeAq05', 'C')">C) Business entity principle</li>
             <li class="book-mcq-option" onclick="selectOption('sEeAq05', 'D')">D) Matching principle</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>The Business Entity Principle dictates that a business is separate and distinct from its owners or other businesses. Personal transactions of the owner should not be mixed with the business's records.</p>
     </div>
 </div>
@@ -1447,7 +1447,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEeAq06', 'C')">C) Equity</li>
             <li class="book-mcq-option" onclick="selectOption('sEeAq06', 'D')">D) Revenue</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Equity (or Capital) represents the residual claim or interest of the owner(s) in the assets of an entity after deducting all of its liabilities (Assets - Liabilities = Equity).</p>
     </div>
 </div>
@@ -1477,7 +1477,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEeAq07', 'C')">C) Adjunct account</li>
             <li class="book-mcq-option" onclick="selectOption('sEeAq07', 'D')">D) Nominal account</li>
         </ul>
-        <p><strong>Correct Answer: A</strong></p>
+        <p class="correct-line"><strong>Correct Answer: A</strong></p>
         <p>A controlling account is a general ledger account whose balance is supported by the detailed balances of a subsidiary ledger (for example, Accounts Receivable is the controlling account for the customer subsidiary ledger).</p>
     </div>
 </div>
@@ -1495,7 +1495,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Books of Accounts</h2>
         <div class="book-content-question">If a company purchases office supplies on account for ₱2,500, what amount should be credited to Accounts Payable? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 2,500</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 2,500</strong></p>
         <p>Purchasing on account means the company owes the supplier. The transaction is a debit to Office Supplies for ₱2,500 and a credit to Accounts Payable for ₱2,500.</p>
     </div>
 </div>
@@ -1513,7 +1513,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Accounting Cycle (Service)</h2>
         <div class="book-content-question">A service business billed a client ₱15,000 for consulting services completed. How much Service Revenue should be recognized? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 15,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 15,000</strong></p>
         <p>Under the accrual basis of accounting, revenue is recognized when the service is performed, regardless of when cash is received. Therefore, the full ₱15,000 is recognized as Service Revenue.</p>
     </div>
 </div>
@@ -1531,7 +1531,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Accounting Cycle (Merchandising)</h2>
         <div class="book-content-question">A merchandising business purchased goods for ₱10,000 with credit terms 2/10, n/30. If payment is made within the discount period, how much is the purchase discount? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 200</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 200</strong></p>
         <p>The term "2/10" means a 2% discount is available if paid within 10 days. The purchase discount is calculated as ₱10,000 × 0.02 = ₱200.</p>
     </div>
 </div>
@@ -1563,7 +1563,7 @@
             <li class="book-mcq-option" onclick="selectOption('sAaVq01', 'C')">C) Tangible and Intangible</li>
             <li class="book-mcq-option" onclick="selectOption('sAaVq01', 'D')">D) Operating and Non-operating</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Under the Philippine Accounting Standards (PAS 1), an entity must present current and non-current assets, and current and non-current liabilities, as separate classifications in its statement of financial position.</p>
     </div>
 </div>
@@ -1593,7 +1593,7 @@
             <li class="book-mcq-option" onclick="selectOption('sAaVq02', 'C')">C) Depreciation expense</li>
             <li class="book-mcq-option" onclick="selectOption('sAaVq02', 'D')">D) Gain on sale of equipment</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Depreciation is a non-cash expense that was deducted to arrive at Net Income. Since no cash actually left the business for depreciation in the current period, it must be added back to compute the actual operating cash flow.</p>
     </div>
 </div>
@@ -1623,7 +1623,7 @@
             <li class="book-mcq-option" onclick="selectOption('sAaVq03', 'C')">C) Acid-Test (Quick) Ratio</li>
             <li class="book-mcq-option" onclick="selectOption('sAaVq03', 'D')">D) Return on Assets</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>The Acid-Test or Quick Ratio strictly measures immediate liquidity by only using highly liquid assets (Cash, Cash Equivalents, and Receivables) divided by Current Liabilities. It specifically excludes Inventory and Prepaid Expenses.</p>
     </div>
 </div>
@@ -1653,7 +1653,7 @@
             <li class="book-mcq-option" onclick="selectOption('sAaVq04', 'C')">C) Added to the book balance</li>
             <li class="book-mcq-option" onclick="selectOption('sAaVq04', 'D')">D) Deducted from the book balance</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>An outstanding check is a check issued and recorded by the company (already deducted from books) but not yet presented to the bank for payment. Therefore, it must be deducted from the bank balance to reconcile.</p>
     </div>
 </div>
@@ -1683,7 +1683,7 @@
             <li class="book-mcq-option" onclick="selectOption('sAaVq05', 'C')">C) Percentage Tax</li>
             <li class="book-mcq-option" onclick="selectOption('sAaVq05', 'D')">D) Documentary Stamp Tax</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Percentage Tax is a business tax imposed on individuals or businesses that sell or lease goods, properties, or services, and whose gross annual sales or receipts do not exceed the VAT threshold.</p>
     </div>
 </div>
@@ -1701,7 +1701,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Comprehensive Income</h2>
         <div class="book-content-question">A merchandising business has Net Sales of ₱250,000, Cost of Goods Sold of ₱140,000, and Operating Expenses of ₱60,000. What is the Net Income? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 50,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 50,000</strong></p>
         <p>First, calculate Gross Profit: Net Sales (250,000) - Cost of Goods Sold (140,000) = 110,000. Then subtract Operating Expenses: Gross Profit (110,000) - Operating Expenses (60,000) = ₱50,000 Net Income.</p>
     </div>
 </div>
@@ -1719,7 +1719,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Changes in Equity</h2>
         <div class="book-content-question">The beginning capital of a sole proprietorship is ₱150,000. During the year, the owner made an additional investment of ₱20,000, withdrew ₱15,000 for personal use, and the business earned a net income of ₱45,000. What is the ending capital balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 200,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 200,000</strong></p>
         <p>Ending Capital = Beginning Capital (150,000) + Additional Investment (20,000) + Net Income (45,000) - Withdrawals (15,000). Total = ₱200,000.</p>
     </div>
 </div>
@@ -1737,7 +1737,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Financial Statement Analysis</h2>
         <div class="book-content-question">A business has a Net Income of ₱60,000 and Average Total Assets of ₱600,000. What is the Return on Assets (ROA) percentage? (Enter the percentage number only, e.g., if 15%, enter 15)</div>
-        <p><strong>Correct Answer: 10</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 10</strong></p>
         <p>Return on Assets (ROA) = Net Income / Average Total Assets. (60,000 / 600,000 = 0.10). Multiply by 100 to get the percentage format: 10%.</p>
     </div>
 </div>
@@ -1755,7 +1755,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Bank Reconciliation Statement</h2>
         <div class="book-content-question">The cash balance per bank statement is ₱85,000. There is a deposit in transit of ₱15,000 and outstanding checks totaling ₱8,000. What is the adjusted cash balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 92,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 92,000</strong></p>
         <p>Adjusted Bank Balance = Unadjusted Bank Balance (85,000) + Deposits in Transit (15,000) - Outstanding Checks (8,000) = ₱92,000.</p>
     </div>
 </div>
@@ -1773,7 +1773,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Cash Flow Statement</h2>
         <div class="book-content-question">A company generated ₱120,000 from operating activities, spent ₱50,000 on investing activities, and received ₱30,000 from financing activities. If the beginning cash balance was ₱25,000, what is the ending cash balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 125,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 125,000</strong></p>
         <p>Net Increase in Cash = Operating Cash (120,000) - Investing Cash outflow (50,000) + Financing Cash inflow (30,000) = 100,000. Ending Cash = Net Increase (100,000) + Beginning Cash (25,000) = ₱125,000.</p>
     </div>
 </div>
@@ -1805,7 +1805,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBaVq01', 'C')">C) As part of owner's equity</li>
             <li class="book-mcq-option" onclick="selectOption('sBaVq01', 'D')">D) It is not recognized or reported</li>
         </ul>
-        <p><strong>Correct Answer: D</strong></p>
+        <p class="correct-line"><strong>Correct Answer: D</strong></p>
         <p>Internally generated goodwill is not recognized as an asset in the Statement of Financial Position because it is not an identifiable resource controlled by the enterprise that can be measured reliably at cost. Only purchased goodwill is recognized.</p>
     </div>
 </div>
@@ -1835,7 +1835,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBaVq02', 'C')">C) Income Tax Expense</li>
             <li class="book-mcq-option" onclick="selectOption('sBaVq02', 'D')">D) Sales Discounts</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Gross Profit is calculated by deducting the Cost of Goods Sold directly from Net Sales. Operating expenses are deducted from the Gross Profit later to find the operating income.</p>
     </div>
 </div>
@@ -1865,7 +1865,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBaVq03', 'C')">C) Current (Checking) Account</li>
             <li class="book-mcq-option" onclick="selectOption('sBaVq03', 'D')">D) Money Market Account</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>A current or checking account is designed for frequent transactions and allows the business to safely issue checks to suppliers and creditors, typically without earning interest.</p>
     </div>
 </div>
@@ -1895,7 +1895,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBaVq04', 'C')">C) Owner's personal withdrawal of cash</li>
             <li class="book-mcq-option" onclick="selectOption('sBaVq04', 'D')">D) Taking out a short-term bank loan</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Withdrawals made by the owner for personal use (drawings) are a return of capital to the owner and directly reduce the owner's equity balance in the business.</p>
     </div>
 </div>
@@ -1925,7 +1925,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBaVq05', 'C')">C) To eliminate corporate competition in the market</li>
             <li class="book-mcq-option" onclick="selectOption('sBaVq05', 'D')">D) To artificially increase the wealth of private individuals</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>The primary and inherent purpose of taxation is to raise revenues to fund government expenditures, infrastructure, and public services.</p>
     </div>
 </div>
@@ -1943,7 +1943,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Financial Position</h2>
         <div class="book-content-question">A company has Current Assets of ₱200,000, Non-current Assets of ₱450,000, and Total Equity of ₱350,000. What is the total amount of Liabilities? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 300,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 300,000</strong></p>
         <p>First, find Total Assets: 200,000 + 450,000 = 650,000. Using the accounting equation (Assets = Liabilities + Equity), we plug in the numbers: 650,000 = Liabilities + 350,000. Therefore, Liabilities = ₱300,000.</p>
     </div>
 </div>
@@ -1961,7 +1961,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Comprehensive Income</h2>
         <div class="book-content-question">A service company has Service Revenues of ₱500,000, Rent Expense of ₱50,000, Salaries Expense of ₱120,000, and Utilities Expense of ₱30,000. What is the Net Income? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 300,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 300,000</strong></p>
         <p>Net Income = Total Revenues - Total Expenses. Total Expenses = 50,000 + 120,000 + 30,000 = 200,000. Net Income = 500,000 - 200,000 = ₱300,000.</p>
     </div>
 </div>
@@ -1979,7 +1979,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Bank Reconciliation Statement</h2>
         <div class="book-content-question">The unadjusted book balance of Cash is ₱50,000. The bank statement reveals a bank service charge of ₱1,000 and an NSF check (bouncing check) from a customer amounting to ₱4,000. What is the adjusted book balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 45,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 45,000</strong></p>
         <p>Both bank service charges and NSF checks represent cash reductions that the bank has processed but the company has not yet recorded in its books. Adjusted Book Balance = Unadjusted Book Balance (50,000) - Bank Service Charge (1,000) - NSF Check (4,000) = ₱45,000.</p>
     </div>
 </div>
@@ -1997,7 +1997,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Financial Statement Analysis</h2>
         <div class="book-content-question">A merchandising company has Current Assets of ₱150,000 and Current Liabilities of ₱50,000. What is the Current Ratio? (Enter the number only, e.g., if 2.5, enter 2.5)</div>
-        <p><strong>Correct Answer: 3</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 3</strong></p>
         <p>The Current Ratio measures short-term liquidity. Current Ratio = Current Assets / Current Liabilities. 150,000 / 50,000 = 3.</p>
     </div>
 </div>
@@ -2015,7 +2015,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Cash Flow Statement</h2>
         <div class="book-content-question">During the year, a company had a Net Income of ₱80,000. Depreciation expense was ₱20,000, Accounts Receivable increased by ₱10,000, and Accounts Payable increased by ₱15,000. Using the indirect method, what is the Net Cash Provided by Operating Activities? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 105,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 105,000</strong></p>
         <p>Net Cash from Operating Activities = Net Income (80,000) + Depreciation (20,000 non-cash expense added back) - Increase in AR (10,000 cash tied up in receivables) + Increase in AP (15,000 cash saved by delaying payment) = ₱105,000.</p>
     </div>
 </div>
@@ -2047,7 +2047,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBaVq01', 'C')">C) As part of owner's equity</li>
             <li class="book-mcq-option" onclick="selectOption('sBaVq01', 'D')">D) It is not recognized or reported</li>
         </ul>
-        <p><strong>Correct Answer: D</strong></p>
+        <p class="correct-line"><strong>Correct Answer: D</strong></p>
         <p>Internally generated goodwill is not recognized as an asset in the Statement of Financial Position because it is not an identifiable resource controlled by the enterprise that can be measured reliably at cost. Only purchased goodwill is recognized.</p>
     </div>
 </div>
@@ -2077,7 +2077,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBaVq02', 'C')">C) Income Tax Expense</li>
             <li class="book-mcq-option" onclick="selectOption('sBaVq02', 'D')">D) Sales Discounts</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Gross Profit is calculated by deducting the Cost of Goods Sold directly from Net Sales. Operating expenses are deducted from the Gross Profit later to find the operating income.</p>
     </div>
 </div>
@@ -2107,7 +2107,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBaVq03', 'C')">C) Current (Checking) Account</li>
             <li class="book-mcq-option" onclick="selectOption('sBaVq03', 'D')">D) Money Market Account</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>A current or checking account is designed for frequent transactions and allows the business to safely issue checks to suppliers and creditors, typically without earning interest.</p>
     </div>
 </div>
@@ -2137,7 +2137,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBaVq04', 'C')">C) Owner's personal withdrawal of cash</li>
             <li class="book-mcq-option" onclick="selectOption('sBaVq04', 'D')">D) Taking out a short-term bank loan</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Withdrawals made by the owner for personal use (drawings) are a return of capital to the owner and directly reduce the owner's equity balance in the business.</p>
     </div>
 </div>
@@ -2167,7 +2167,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBaVq05', 'C')">C) To eliminate corporate competition in the market</li>
             <li class="book-mcq-option" onclick="selectOption('sBaVq05', 'D')">D) To artificially increase the wealth of private individuals</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>The primary and inherent purpose of taxation is to raise revenues to fund government expenditures, infrastructure, and public services.</p>
     </div>
 </div>
@@ -2185,7 +2185,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Financial Position</h2>
         <div class="book-content-question">A company has Current Assets of ₱200,000, Non-current Assets of ₱450,000, and Total Equity of ₱350,000. What is the total amount of Liabilities? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 300,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 300,000</strong></p>
         <p>First, find Total Assets: 200,000 + 450,000 = 650,000. Using the accounting equation (Assets = Liabilities + Equity), we plug in the numbers: 650,000 = Liabilities + 350,000. Therefore, Liabilities = ₱300,000.</p>
     </div>
 </div>
@@ -2203,7 +2203,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Comprehensive Income</h2>
         <div class="book-content-question">A service company has Service Revenues of ₱500,000, Rent Expense of ₱50,000, Salaries Expense of ₱120,000, and Utilities Expense of ₱30,000. What is the Net Income? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 300,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 300,000</strong></p>
         <p>Net Income = Total Revenues - Total Expenses. Total Expenses = 50,000 + 120,000 + 30,000 = 200,000. Net Income = 500,000 - 200,000 = ₱300,000.</p>
     </div>
 </div>
@@ -2221,7 +2221,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Bank Reconciliation Statement</h2>
         <div class="book-content-question">The unadjusted book balance of Cash is ₱50,000. The bank statement reveals a bank service charge of ₱1,000 and an NSF check (bouncing check) from a customer amounting to ₱4,000. What is the adjusted book balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 45,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 45,000</strong></p>
         <p>Both bank service charges and NSF checks represent cash reductions that the bank has processed but the company has not yet recorded in its books. Adjusted Book Balance = Unadjusted Book Balance (50,000) - Bank Service Charge (1,000) - NSF Check (4,000) = ₱45,000.</p>
     </div>
 </div>
@@ -2239,7 +2239,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Financial Statement Analysis</h2>
         <div class="book-content-question">A merchandising company has Current Assets of ₱150,000 and Current Liabilities of ₱50,000. What is the Current Ratio? (Enter the number only, e.g., if 2.5, enter 2.5)</div>
-        <p><strong>Correct Answer: 3</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 3</strong></p>
         <p>The Current Ratio measures short-term liquidity. Current Ratio = Current Assets / Current Liabilities. 150,000 / 50,000 = 3.</p>
     </div>
 </div>
@@ -2257,7 +2257,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Cash Flow Statement</h2>
         <div class="book-content-question">During the year, a company had a Net Income of ₱80,000. Depreciation expense was ₱20,000, Accounts Receivable increased by ₱10,000, and Accounts Payable increased by ₱15,000. Using the indirect method, what is the Net Cash Provided by Operating Activities? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 105,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 105,000</strong></p>
         <p>Net Cash from Operating Activities = Net Income (80,000) + Depreciation (20,000 non-cash expense added back) - Increase in AR (10,000 cash tied up in receivables) + Increase in AP (15,000 cash saved by delaying payment) = ₱105,000.</p>
     </div>
 </div>
@@ -2289,7 +2289,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCaVq01', 'C')">C) Bonds Payable (due in 5 years)</li>
             <li class="book-mcq-option" onclick="selectOption('sCaVq01', 'D')">D) Unearned Revenue (due in 6 months)</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Non-current liabilities are obligations that are not expected to be settled within one year or the normal operating cycle. Bonds payable due in 5 years clearly fall under this classification, while the others are current liabilities.</p>
     </div>
 </div>
@@ -2319,7 +2319,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCaVq02', 'C')">C) Net Sales minus Cost of Goods Sold</li>
             <li class="book-mcq-option" onclick="selectOption('sCaVq02', 'D')">D) Operating Income minus Taxes</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>In a single-step income statement format, all revenues are grouped together, and all expenses are grouped together. Net income is determined in one step by subtracting Total Expenses from Total Revenues.</p>
     </div>
 </div>
@@ -2349,7 +2349,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCaVq03', 'C')">C) Added to the book balance</li>
             <li class="book-mcq-option" onclick="selectOption('sCaVq03', 'D')">D) Deducted from the book balance</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>A credit memo represents an increase in the depositor's bank account (like interest earned or notes collected by the bank). Since the bank has already added it, the company must add it to its book balance to reconcile.</p>
     </div>
 </div>
@@ -2379,7 +2379,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCaVq04', 'C')">C) Net Income</li>
             <li class="book-mcq-option" onclick="selectOption('sCaVq04', 'D')">D) Net Sales</li>
         </ul>
-        <p><strong>Correct Answer: D</strong></p>
+        <p class="correct-line"><strong>Correct Answer: D</strong></p>
         <p>In vertical analysis (common-size financial statements), each line item on the income statement is expressed as a percentage of Net Sales. For the balance sheet, the base is Total Assets.</p>
     </div>
 </div>
@@ -2409,7 +2409,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCaVq05', 'C')">C) Annually</li>
             <li class="book-mcq-option" onclick="selectOption('sCaVq05', 'D')">D) Semi-annually</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Under the updated tax laws (TRAIN Law provisions taking full effect), VAT-registered taxpayers are required to file their VAT returns on a quarterly basis using BIR Form 2550Q.</p>
     </div>
 </div>
@@ -2427,7 +2427,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Changes in Equity</h2>
         <div class="book-content-question">The owner's equity at the beginning of the year is ₱250,000. During the year, total revenues were ₱180,000, total expenses were ₱110,000, and the owner withdrew ₱30,000. What is the ending owner's equity? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 290,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 290,000</strong></p>
         <p>First, compute Net Income: 180,000 (Rev) - 110,000 (Exp) = 70,000. Ending Equity = Beginning Equity (250,000) + Net Income (70,000) - Withdrawals (30,000) = ₱290,000.</p>
     </div>
 </div>
@@ -2445,7 +2445,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Financial Position</h2>
         <div class="book-content-question">A company has Cash of ₱80,000, Accounts Receivable of ₱40,000, Inventory of ₱60,000, and Equipment of ₱150,000. Its Current Liabilities are ₱70,000. What is the total amount of Current Assets? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 180,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 180,000</strong></p>
         <p>Current Assets include Cash, Accounts Receivable, and Inventory. 80,000 + 40,000 + 60,000 = ₱180,000. Equipment is a non-current asset and is excluded from this calculation.</p>
     </div>
 </div>
@@ -2463,7 +2463,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Financial Statement Analysis</h2>
         <div class="book-content-question">A company has Net Sales of ₱500,000 and a Gross Profit of ₱200,000. What is the Cost of Goods Sold ratio? (Enter the percentage number only, e.g., if 40%, enter 40)</div>
-        <p><strong>Correct Answer: 60</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 60</strong></p>
         <p>First, find Cost of Goods Sold: 500,000 (Sales) - 200,000 (Gross Profit) = 300,000 (COGS). The COGS ratio is COGS / Net Sales. 300,000 / 500,000 = 0.60 or 60%.</p>
     </div>
 </div>
@@ -2481,7 +2481,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Bank Reconciliation Statement</h2>
         <div class="book-content-question">The unadjusted bank balance is ₱120,000. There is a deposit in transit of ₱25,000, outstanding checks of ₱15,000, and a bank service charge of ₱2,000 not yet recorded in the books. What is the adjusted bank balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 130,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 130,000</strong></p>
         <p>Adjusted Bank Balance = Unadjusted Bank Balance (120,000) + Deposits in Transit (25,000) - Outstanding Checks (15,000) = ₱130,000. Note: The bank service charge is used to adjust the *book* balance, not the bank balance.</p>
     </div>
 </div>
@@ -2499,7 +2499,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Cash Flow Statement</h2>
         <div class="book-content-question">A company has a Net Income of ₱150,000. Accounts Receivable decreased by ₱20,000, Inventory increased by ₱35,000, and Accounts Payable increased by ₱10,000. Using the indirect method, what is the net cash provided by operating activities? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 145,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 145,000</strong></p>
         <p>Net Cash from Operating Activities = Net Income (150,000) + Decrease in AR (20,000, cash collected) - Increase in Inventory (35,000, cash spent) + Increase in AP (10,000, cash saved) = ₱145,000.</p>
     </div>
 </div>
@@ -2531,7 +2531,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDaVq01', 'C')">C) Land held for speculation</li>
             <li class="book-mcq-option" onclick="selectOption('sDaVq01', 'D')">D) Accounts Receivable</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Patents are non-physical, long-term assets that provide exclusive legal rights, making them intangible assets. Prepaid rent is a current asset, land held for speculation is an investment, and accounts receivable is a financial current asset.</p>
     </div>
 </div>
@@ -2561,7 +2561,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDaVq02', 'C')">C) An operating expense</li>
             <li class="book-mcq-option" onclick="selectOption('sDaVq02', 'D')">D) An Other Comprehensive Income item</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Freight-out represents the cost of delivering goods to customers and is classified as a selling/operating expense. It is not part of Cost of Goods Sold (which includes Freight-in).</p>
     </div>
 </div>
@@ -2591,7 +2591,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDaVq03', 'C')">C) It decreases the owner's capital balance</li>
             <li class="book-mcq-option" onclick="selectOption('sDaVq03', 'D')">D) It increases total liabilities</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>A net loss means that total expenses exceeded total revenues. This directly decreases the owner's claim on the assets of the business, thereby reducing the ending capital balance.</p>
     </div>
 </div>
@@ -2621,7 +2621,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDaVq04', 'C')">C) Added to the book balance</li>
             <li class="book-mcq-option" onclick="selectOption('sDaVq04', 'D')">D) Deducted from the book balance</li>
         </ul>
-        <p><strong>Correct Answer: D</strong></p>
+        <p class="correct-line"><strong>Correct Answer: D</strong></p>
         <p>An NSF check represents a customer payment that was previously added to the company's book balance but bounced. The bank has already deducted it, so the company must now deduct it from its own book balance.</p>
     </div>
 </div>
@@ -2651,7 +2651,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDaVq05', 'C')">C) Only income subject to final withholding tax</li>
             <li class="book-mcq-option" onclick="selectOption('sDaVq05', 'D')">D) Total assets minus total liabilities</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Under the Tax Code, gross income means all income derived from whatever source, including but not limited to compensation for services, business income, gains from property dealings, interests, rents, and royalties.</p>
     </div>
 </div>
@@ -2669,7 +2669,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Financial Statement Analysis</h2>
         <div class="book-content-question">A company has Total Assets of ₱1,200,000 and Total Liabilities of ₱400,000. What is the Debt-to-Equity Ratio? (Enter the decimal number only, e.g., if 1.25, enter 1.25)</div>
-        <p><strong>Correct Answer: 0.5</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 0.5</strong></p>
         <p>First, find Total Equity: Total Assets (1,200,000) - Total Liabilities (400,000) = 800,000. Then, calculate Debt-to-Equity: Total Liabilities (400,000) / Total Equity (800,000) = 0.5.</p>
     </div>
 </div>
@@ -2687,7 +2687,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Comprehensive Income</h2>
         <div class="book-content-question">A business has a Beginning Inventory of ₱40,000, Net Purchases of ₱150,000, and an Ending Inventory of ₱30,000. What is the Cost of Goods Sold? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 160,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 160,000</strong></p>
         <p>Cost of Goods Sold is calculated as: Beginning Inventory (40,000) + Net Purchases (150,000) = Goods Available for Sale (190,000) - Ending Inventory (30,000) = ₱160,000.</p>
     </div>
 </div>
@@ -2705,7 +2705,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Changes in Equity</h2>
         <div class="book-content-question">A sole proprietor's beginning capital was ₱120,000. During the year, the owner invested an additional ₱50,000 and withdrew ₱20,000. The ending capital balance is ₱210,000. How much was the Net Income for the year? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 60,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 60,000</strong></p>
         <p>Using the equity formula: Ending Capital = Beginning Capital + Additional Investment + Net Income - Withdrawals. 210,000 = 120,000 + 50,000 + Net Income - 20,000. Net Income = 210,000 - 150,000 = ₱60,000.</p>
     </div>
 </div>
@@ -2723,7 +2723,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Cash Flow Statement</h2>
         <div class="book-content-question">A business reported a Net Income of ₱95,000. Depreciation expense was ₱15,000, Accounts Receivable decreased by ₱5,000, and Accounts Payable decreased by ₱8,000. What is the Net Cash Provided by Operating Activities? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 107,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 107,000</strong></p>
         <p>Net Cash = Net Income (95,000) + Depreciation (15,000, add back) + Decrease in AR (5,000, cash collected) - Decrease in AP (8,000, cash paid out). Total = ₱107,000.</p>
     </div>
 </div>
@@ -2741,7 +2741,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Bank Reconciliation Statement</h2>
         <div class="book-content-question">The bank statement shows an ending balance of ₱155,000. The company identified deposits in transit of ₱30,000, outstanding checks of ₱20,000, and a bank service charge of ₱500. What is the adjusted bank balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 165,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 165,000</strong></p>
         <p>Adjusted Bank Balance = Unadjusted Bank Balance (155,000) + Deposits in Transit (30,000) - Outstanding Checks (20,000) = ₱165,000. The bank service charge is used to adjust the book balance, not the bank statement balance.</p>
     </div>
 </div>
@@ -2773,7 +2773,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEaVq01', 'C')">C) Only current assets and current liabilities are presented.</li>
             <li class="book-mcq-option" onclick="selectOption('sEaVq01', 'D')">D) It presents revenues and expenses before assets and liabilities.</li>
         </ul>
-        <p><strong>Correct Answer: A</strong></p>
+        <p class="correct-line"><strong>Correct Answer: A</strong></p>
         <p>The report form presents assets, liabilities, and equity in a continuous downward sequence (single column), whereas the account form places assets on the left and liabilities/equity on the right.</p>
     </div>
 </div>
@@ -2803,7 +2803,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEaVq02', 'C')">C) Cost of Goods Sold</li>
             <li class="book-mcq-option" onclick="selectOption('sEaVq02', 'D')">D) Utilities Expense</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>A service business provides services rather than physical products, so it does not calculate "Cost of Goods Sold." This account is unique to merchandising and manufacturing businesses.</p>
     </div>
 </div>
@@ -2833,7 +2833,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEaVq03', 'C')">C) Financing Activity</li>
             <li class="book-mcq-option" onclick="selectOption('sEaVq03', 'D')">D) Non-cash Activity</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Financing activities primarily relate to transactions with the company's owners (such as issuing shares or paying dividends) and its creditors (like borrowing or repaying long-term debt).</p>
     </div>
 </div>
@@ -2863,7 +2863,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEaVq04', 'C')">C) A check issued by the company that bounced.</li>
             <li class="book-mcq-option" onclick="selectOption('sEaVq04', 'D')">D) A direct transfer of funds from a customer to the bank account.</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Deposits in transit are amounts already collected and added to the company's book balance but have not yet cleared or been recorded by the bank at the time the bank statement is generated.</p>
     </div>
 </div>
@@ -2893,7 +2893,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEaVq05', 'C')">C) BIR Form 1702</li>
             <li class="book-mcq-option" onclick="selectOption('sEaVq05', 'D')">D) BIR Form 2550Q</li>
         </ul>
-        <p><strong>Correct Answer: A</strong></p>
+        <p class="correct-line"><strong>Correct Answer: A</strong></p>
         <p>BIR Form 1700 is the Annual Income Tax Return specifically designed for individuals earning purely compensation income, such as standard employees who do not have other businesses or professions.</p>
     </div>
 </div>
@@ -2911,7 +2911,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Financial Position</h2>
         <div class="book-content-question">A company's Total Liabilities are ₱450,000. If Total Equity is twice the amount of Total Liabilities, what is the value of Total Assets? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 1,350,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 1,350,000</strong></p>
         <p>First, find Total Equity: 450,000 × 2 = 900,000. Next, apply the accounting equation (Assets = Liabilities + Equity). Assets = 450,000 + 900,000 = ₱1,350,000.</p>
     </div>
 </div>
@@ -2929,7 +2929,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Comprehensive Income</h2>
         <div class="book-content-question">A merchandising business has Gross Sales of ₱800,000, Sales Returns of ₱20,000, and Sales Discounts of ₱30,000. If the Cost of Goods Sold is ₱450,000, what is the Gross Profit? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 300,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 300,000</strong></p>
         <p>Net Sales = Gross Sales (800,000) - Sales Returns (20,000) - Sales Discounts (30,000) = 750,000. Gross Profit = Net Sales (750,000) - Cost of Goods Sold (450,000) = ₱300,000.</p>
     </div>
 </div>
@@ -2947,7 +2947,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Changes in Equity</h2>
         <div class="book-content-question">The beginning equity is ₱500,000. The owner made no additional investments but withdrew ₱40,000. If the ending equity is ₱620,000, how much is the Net Income for the period? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 160,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 160,000</strong></p>
         <p>Ending Equity = Beginning Equity + Net Income - Withdrawals. 620,000 = 500,000 + Net Income - 40,000. Net Income = 620,000 - 460,000 = ₱160,000.</p>
     </div>
 </div>
@@ -2965,7 +2965,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Bank Reconciliation Statement</h2>
         <div class="book-content-question">The book balance before reconciliation is ₱210,000. The bank statement indicates a bank collection of a note receivable for ₱25,000, an NSF check of ₱5,000, and bank service charges of ₱1,500. What is the adjusted book balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 228,500</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 228,500</strong></p>
         <p>Adjusted Book Balance = Unadjusted Book Balance (210,000) + Notes Collected by Bank (25,000) - NSF Check (5,000) - Bank Service Charges (1,500) = ₱228,500.</p>
     </div>
 </div>
@@ -2983,7 +2983,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Financial Statement Analysis</h2>
         <div class="book-content-question">A company has Net Income of ₱150,000 and Net Sales of ₱750,000. What is the Profit Margin ratio? (Enter the percentage number only, e.g., if 25%, enter 25)</div>
-        <p><strong>Correct Answer: 20</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 20</strong></p>
         <p>Profit Margin is computed by dividing Net Income by Net Sales. 150,000 / 750,000 = 0.20. Multiplying by 100 converts this to a percentage: 20%.</p>
     </div>
 </div>
@@ -3015,7 +3015,7 @@
             <li class="book-mcq-option" onclick="selectOption('sAdIq01', 'C')">C) Advances to Officers</li>
             <li class="book-mcq-option" onclick="selectOption('sAdIq01', 'D')">D) Unappropriated Retained Earnings</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>In standard financial reporting frameworks, PAS 1 mandates specific line items to be shown on the face of the SFP if applicable. Biological assets are explicitly required. Contingent liabilities are disclosed in the notes, not on the face. Advances and specific equity breakdowns are generally lumped or shown in the notes or the Statement of Changes in Equity.</p>
     </div>
 </div>
@@ -3045,7 +3045,7 @@
             <li class="book-mcq-option" onclick="selectOption('sAdIq02', 'C')">C) As a deduction to arrive at cash and cash equivalents</li>
             <li class="book-mcq-option" onclick="selectOption('sAdIq02', 'D')">D) It is not reported as a cash inflow or outflow</li>
         </ul>
-        <p><strong>Correct Answer: D</strong></p>
+        <p class="correct-line"><strong>Correct Answer: D</strong></p>
         <p>A classic board-level conceptual question: The purchase of a 3-month Treasury bill is merely a transfer between "Cash" and "Cash Equivalents". Since both are part of the total cash pool being reconciled in the CFS, the transaction itself does not constitute a cash flow (inflow or outflow) for the entity.</p>
     </div>
 </div>
@@ -3075,7 +3075,7 @@
             <li class="book-mcq-option" onclick="selectOption('sAdIq03', 'C')">C) Deduction from the book balance</li>
             <li class="book-mcq-option" onclick="selectOption('sAdIq03', 'D')">D) Addition to the book balance</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>The company issued a check for ₱5,400 but only deducted ₱4,500 in its books (an under-deduction of ₱900). To correct the book balance to match reality (and the bank, which cleared the true ₱5,400 amount), the company must deduct the remaining ₱900 from the book balance.</p>
     </div>
 </div>
@@ -3093,7 +3093,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Comprehensive Income</h2>
         <div class="book-content-question">An entity reported a Gross Profit of ₱1,500,000. Its ending inventory was ₱400,000, and the total Cost of Goods Available for Sale during the period was ₱2,400,000. Using the reconstruction method, what is the amount of Net Sales? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 3,500,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 3,500,000</strong></p>
         <p>A classic reverse-computation problem: First, find Cost of Goods Sold (COGS). COGS = Goods Available for Sale (2,400,000) - Ending Inventory (400,000) = ₱2,000,000. Since Gross Profit = Net Sales - COGS, then Net Sales = Gross Profit (1,500,000) + COGS (2,000,000) = ₱3,500,000.</p>
     </div>
 </div>
@@ -3111,7 +3111,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Bank Reconciliation Statement</h2>
         <div class="book-content-question">The bank statement shows an unadjusted balance of ₱600,000. Deposits in transit amount to ₱150,000 and outstanding checks total ₱85,000. Upon investigation, a company check for ₱30,000 issued to a supplier was erroneously cleared by the bank as ₱3,000. What is the correct adjusted cash balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 638,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 638,000</strong></p>
         <p>Adjusted Bank Balance = Unadjusted Bank Balance (600,000) + Deposits in Transit (150,000) - Outstanding Checks (85,000) - Bank Error (27,000). The bank error is a deduction because the bank only cleared ₱3,000 instead of the actual ₱30,000 check, meaning the bank balance is currently overstated by ₱27,000.</p>
     </div>
 </div>
@@ -3129,7 +3129,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Cash Flow Statement</h2>
         <div class="book-content-question">Net income for the year is ₱850,000. Additional data: Depreciation is ₱150,000; Gain on sale of equipment is ₱50,000; Accounts receivable increased by ₱120,000; Inventory decreased by ₱90,000; Accounts payable decreased by ₱60,000. Using the indirect method, what is the net cash provided by operating activities? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 860,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 860,000</strong></p>
         <p>Net Cash = Net Income (850,000) + Depreciation (150,000) - Gain on Sale (50,000) - AR Increase (120,000) + Inventory Decrease (90,000) - AP Decrease (60,000) = ₱860,000. Gains are deducted to prevent double counting, as the full cash received from the sale goes to Investing Activities.</p>
     </div>
 </div>
@@ -3147,7 +3147,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Financial Statement Analysis</h2>
         <div class="book-content-question">An entity has current assets of ₱1,200,000 and current liabilities of ₱600,000. If the entity immediately pays ₱200,000 of its accounts payable using cash, what will be the new Current Ratio? (Enter the decimal number only, e.g., if 2.50, enter 2.5)</div>
-        <p><strong>Correct Answer: 2.5</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 2.5</strong></p>
         <p>Original Current Ratio = 1,200k / 600k = 2.0. Paying accounts payable with cash reduces both Current Assets and Current Liabilities by 200,000. New Current Assets = 1,000,000. New Current Liabilities = 400,000. New Ratio = 1,000,000 / 400,000 = 2.5.</p>
     </div>
 </div>
@@ -3165,7 +3165,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Changes in Equity</h2>
         <div class="book-content-question">Total assets at the beginning of the year were ₱2,000,000 and liabilities were ₱800,000. By year-end, assets increased by ₱500,000 and liabilities decreased by ₱100,000. The owner made no additional investments but withdrew ₱150,000. What is the net income for the year? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 750,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 750,000</strong></p>
         <p>Beg Equity = 2M - 800k = 1.2M. End Assets = 2.5M. End Liab = 700k. End Equity = 1.8M. The total increase in equity is 600,000. Change in Equity = Net Income - Withdrawals. 600,000 = Net Income - 150,000. Net Income = ₱750,000.</p>
     </div>
 </div>
@@ -3183,7 +3183,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Income and Business Taxation</h2>
         <div class="book-content-question">A VAT-registered merchandising business has gross sales of ₱3,360,000 (inclusive of 12% VAT) for the quarter. Its purchases from VAT-registered suppliers amounted to ₱2,240,000 (inclusive of 12% VAT). What is the VAT payable for the quarter? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 120,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 120,000</strong></p>
         <p>To extract the VAT from a VAT-inclusive amount, multiply by (12/112). Output VAT = 3,360,000 * (12/112) = 360,000. Input VAT = 2,240,000 * (12/112) = 240,000. VAT Payable = Output VAT (360,000) - Input VAT (240,000) = ₱120,000.</p>
     </div>
 </div>
@@ -3201,7 +3201,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Financial Position</h2>
         <div class="book-content-question">An entity's trial balance included: Cash in bank ₱400,000; Petty cash fund ₱10,000; Cash restricted for plant expansion ₱500,000; Accounts receivable ₱250,000; Allowance for doubtful accounts ₱20,000; Inventory ₱300,000. What is the correct total amount of Current Assets to be reported? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 940,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 940,000</strong></p>
         <p>Current Assets = Cash in bank (400,000) + Petty cash (10,000) + Net Accounts Receivable (250,000 - 20,000 = 230,000) + Inventory (300,000) = ₱940,000. Cash restricted for plant expansion is classified as a non-current asset under PFRS.</p>
     </div>
 </div>
@@ -3233,7 +3233,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBdIq01', 'C')">C) Deducted from financing activities</li>
             <li class="book-mcq-option" onclick="selectOption('sBdIq01', 'D')">D) Ignored entirely as it is a non-cash item</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Amortization of a bond discount increases interest expense (which decreases net income) but does not require an actual outflow of cash during the current period. Therefore, to reconcile net income to actual operating cash flow, this non-cash expense must be added back.</p>
     </div>
 </div>
@@ -3263,7 +3263,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBdIq02', 'C')">C) Equity Ratio</li>
             <li class="book-mcq-option" onclick="selectOption('sBdIq02', 'D')">D) Times Interest Earned</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>The Debt Ratio (Total Liabilities / Total Assets) directly measures the percentage of total assets financed by creditors. The Debt-to-Equity ratio measures liabilities relative to equity, not against total assets.</p>
     </div>
 </div>
@@ -3293,7 +3293,7 @@
             <li class="book-mcq-option" onclick="selectOption('sBdIq03', 'C')">C) 25% surcharge plus 20% interest per annum</li>
             <li class="book-mcq-option" onclick="selectOption('sBdIq03', 'D')">D) 50% surcharge plus 20% interest per annum</li>
         </ul>
-        <p><strong>Correct Answer: A</strong></p>
+        <p class="correct-line"><strong>Correct Answer: A</strong></p>
         <p>For late filing without fraudulent intent (simple neglect), the BIR imposes a 25% surcharge on the tax due, plus a standard interest rate of 12% per annum (updated by the TRAIN Law from the previous 20%). A 50% surcharge applies to willful neglect or fraud.</p>
     </div>
 </div>
@@ -3311,7 +3311,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Financial Position</h2>
         <div class="book-content-question">A company has Total Assets of ₱5,000,000. Its Debt Ratio is 40%. If its current liabilities amount to ₱800,000, what is the amount of non-current liabilities? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 1,200,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 1,200,000</strong></p>
         <p>First, determine Total Liabilities using the Debt Ratio: ₱5,000,000 × 40% = ₱2,000,000. Since Total Liabilities = Current Liabilities + Non-Current Liabilities, then ₱2,000,000 - ₱800,000 = ₱1,200,000 Non-Current Liabilities.</p>
     </div>
 </div>
@@ -3329,7 +3329,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Bank Reconciliation Statement</h2>
         <div class="book-content-question">The bank statement balance is ₱450,000, while the unadjusted book balance is ₱420,000. Reconciling items include: Outstanding checks of ₱60,000, Bank service charges of ₱2,000, NSF Check of ₱8,000, and Notes collected by the bank of ₱30,000. Assuming no errors, what is the amount of the Deposit in Transit? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 50,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 50,000</strong></p>
         <p>First, calculate the true adjusted balance using the book side: 420,000 - 2,000 (service charge) - 8,000 (NSF) + 30,000 (Note collected) = ₱440,000 adjusted balance. The bank side must also equal ₱440,000. Bank Balance (450,000) + DIT - Outstanding Checks (60,000) = 440,000. 390,000 + DIT = 440,000. DIT = ₱50,000.</p>
     </div>
 </div>
@@ -3347,7 +3347,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Comprehensive Income</h2>
         <div class="book-content-question">An entity's net sales are ₱2,500,000. The gross profit rate based on sales is 30%. Operating expenses are strictly computed as 20% of the cost of goods sold. What is the entity's net income? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 400,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 400,000</strong></p>
         <p>Gross Profit = 2,500,000 × 30% = 750,000. Cost of Goods Sold = Sales - Gross Profit = 1,750,000. Operating Expenses = 1,750,000 × 20% = 350,000. Net Income = Gross Profit (750,000) - Operating Expenses (350,000) = ₱400,000.</p>
     </div>
 </div>
@@ -3365,7 +3365,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Changes in Equity</h2>
         <div class="book-content-question">The beginning capital of a sole proprietorship is ₱800,000 and the ending capital is ₱1,100,000. During the year, the owner withdrew ₱150,000 and the business incurred a Net Loss of ₱50,000. How much was the additional investment made by the owner? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 500,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 500,000</strong></p>
         <p>Using the equity formula algebraically: End Cap = Beg Cap + Add Inv - Net Loss - Withdrawals. 1,100,000 = 800,000 + Add Inv - 50,000 - 150,000. 1,100,000 = 600,000 + Add Inv. Additional Investment = ₱500,000.</p>
     </div>
 </div>
@@ -3383,7 +3383,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Cash Flow Statement</h2>
         <div class="book-content-question">An entity reported sales for the year of ₱900,000 (all on credit). Accounts Receivable decreased by ₱40,000 during the year. Furthermore, the entity recorded bad debt expense of ₱10,000 and wrote off uncollectible accounts amounting to ₱15,000. How much cash was actually collected from customers? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 925,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 925,000</strong></p>
         <p>Reconstruct the Accounts Receivable T-account: Decrease in AR = 40,000. Therefore, Beg AR - End AR = 40,000. Formula: End AR = Beg AR + Sales - Collections - Write-offs. Rearranging: Collections = Sales + Decrease in AR - Write-offs. Collections = 900,000 + 40,000 - 15,000 = ₱925,000. (Bad debt expense affects the Allowance account, not gross AR).</p>
     </div>
 </div>
@@ -3401,7 +3401,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Income and Business Taxation</h2>
         <div class="book-content-question">A corporate taxpayer operating in the Philippines has a gross income of ₱5,000,000 and allowable business deductions of ₱3,000,000 for the taxable year. Assuming the applicable regular corporate income tax rate is strictly 25%, what is the income tax due? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 500,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 500,000</strong></p>
         <p>Net Taxable Income is calculated by subtracting allowable deductions from gross income: ₱5,000,000 - ₱3,000,000 = ₱2,000,000. The income tax due is ₱2,000,000 × 25% = ₱500,000.</p>
     </div>
 </div>
@@ -3419,7 +3419,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Financial Statement Analysis</h2>
         <div class="book-content-question">A company's Quick Ratio (Acid-Test Ratio) is 1.5. Its current liabilities are ₱400,000. The only non-quick current asset the company holds is inventory, which amounts to ₱200,000 (prepaid expenses are zero). What is the company's Current Ratio? (Enter the number only, e.g., if 3.5, enter 3.5)</div>
-        <p><strong>Correct Answer: 2</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 2</strong></p>
         <p>First, find the total Quick Assets: Quick Ratio (1.5) × Current Liabilities (400,000) = ₱600,000. Next, find Total Current Assets by adding back Inventory: 600,000 + 200,000 = ₱800,000. Finally, compute the Current Ratio: Current Assets (800,000) / Current Liabilities (400,000) = 2.0.</p>
     </div>
 </div>            
@@ -3451,7 +3451,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCdIq01', 'C')">C) Inventory Turnover</li>
             <li class="book-mcq-option" onclick="selectOption('sCdIq01', 'D')">D) Gross Profit Margin</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>The Times Interest Earned (TIE) ratio measures a company's ability to meet its debt obligations based on its current income. It is calculated as Earnings Before Interest and Taxes (EBIT) divided by Interest Expense, directly assessing solvency and capacity to cover fixed interest charges.</p>
     </div>
 </div>
@@ -3481,7 +3481,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCdIq02', 'C')">C) It is added to the book receipts</li>
             <li class="book-mcq-option" onclick="selectOption('sCdIq02', 'D')">D) It is deducted from the book receipts</li>
         </ul>
-        <p><strong>Correct Answer: A</strong></p>
+        <p class="correct-line"><strong>Correct Answer: A</strong></p>
         <p>In a proof of cash, a deposit in transit at the end of the current month represents cash received by the company during the month but not yet recorded by the bank. To reconcile the bank's receipts to the true total receipts for the period, it must be added to the bank receipts column.</p>
     </div>
 </div>
@@ -3511,7 +3511,7 @@
             <li class="book-mcq-option" onclick="selectOption('sCdIq03', 'C')">C) Capital gain from the sale of real property</li>
             <li class="book-mcq-option" onclick="selectOption('sCdIq03', 'D')">D) Income from general business operations</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Interest income from a regular Philippine peso bank deposit earned by a domestic corporation is subjected to a 20% final withholding tax. Dividend income from another domestic corporation is tax-exempt for domestic corporations.</p>
     </div>
 </div>
@@ -3529,7 +3529,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Financial Position</h2>
         <div class="book-content-question">The allowance for doubtful accounts has a beginning credit balance of ₱15,000. During the year, the company recorded bad debt expense of ₱25,000 and wrote off uncollectible accounts amounting to ₱12,000. What is the ending credit balance of the allowance for doubtful accounts? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 28,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 28,000</strong></p>
         <p>Using T-account analysis for the Allowance account: Beginning Balance (15,000 credit) + Bad Debt Expense recorded (25,000 credit) - Accounts written off (12,000 debit) = ₱28,000 ending credit balance.</p>
     </div>
 </div>
@@ -3547,7 +3547,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Comprehensive Income</h2>
         <div class="book-content-question">An entity provided the following data: Gross purchases ₱800,000, Purchase returns and allowances ₱30,000, Purchase discounts ₱20,000, and Freight-in ₱50,000. If the beginning inventory is ₱100,000 and the ending inventory is ₱150,000, what is the Cost of Goods Sold? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 750,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 750,000</strong></p>
         <p>First, calculate Net Purchases: Gross Purchases (800,000) - Returns (30,000) - Discounts (20,000) + Freight-in (50,000) = 800,000. Then, calculate Cost of Goods Sold: Beginning Inventory (100,000) + Net Purchases (800,000) - Ending Inventory (150,000) = ₱750,000.</p>
     </div>
 </div>
@@ -3565,7 +3565,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Bank Reconciliation Statement</h2>
         <div class="book-content-question">The cash in bank account has an unadjusted book balance of ₱350,000. A review of the bank statement reveals a credit memo for a collected note of ₱40,000 (including ₱5,000 interest), bank service charges of ₱2,000, and an NSF check of ₱15,000. Furthermore, a check payment for rent originally written and cleared for ₱18,000 was erroneously recorded in the books as ₱8,000. What is the adjusted cash balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 363,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 363,000</strong></p>
         <p>Adjusted Book Balance = Unadjusted Book (350,000) + Note Collected (40,000) - Service Charge (2,000) - NSF Check (15,000) - Book Error (10,000). The book error requires a 10,000 deduction because rent expense was under-recorded by that amount (18,000 actual - 8,000 recorded). Total = ₱363,000.</p>
     </div>
 </div>
@@ -3583,7 +3583,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Financial Statement Analysis</h2>
         <div class="book-content-question">A company has Net Sales of ₱2,400,000 and Average Accounts Receivable of ₱400,000. Assuming a 360-day business year, what is the average collection period in days? (Enter the exact number of days only)</div>
-        <p><strong>Correct Answer: 60</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 60</strong></p>
         <p>First, calculate the Accounts Receivable Turnover: Net Sales (2,400,000) / Average AR (400,000) = 6 times per year. To find the collection period in days, divide the days in the year by the turnover rate: 360 / 6 = 60 days.</p>
     </div>
 </div>
@@ -3601,7 +3601,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Cash Flow Statement</h2>
         <div class="book-content-question">Equipment with a historical cost of ₱500,000 and accumulated depreciation of ₱300,000 was sold resulting in a loss on sale of ₱20,000. How much is the actual cash proceeds from the sale of the equipment that should be reported under investing activities? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 180,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 180,000</strong></p>
         <p>First, determine the carrying (book) value of the asset: Cost (500,000) - Accumulated Depreciation (300,000) = 200,000. Since it was sold at a loss of 20,000, the cash proceeds must be the book value minus the loss: 200,000 - 20,000 = ₱180,000.</p>
     </div>
 </div>
@@ -3619,7 +3619,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Changes in Equity</h2>
         <div class="book-content-question">A sole proprietor’s capital account increased by a net amount of ₱400,000 during the year. The owner made personal withdrawals totaling ₱100,000 and invested an additional ₱250,000 into the business. What is the net income for the year? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 250,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 250,000</strong></p>
         <p>The formula for net change in equity is: Net Increase = Additional Investment + Net Income - Withdrawals. Substituting the known values: 400,000 = 250,000 + Net Income - 100,000. Solving for Net Income: 400,000 = 150,000 + Net Income, meaning Net Income is ₱250,000.</p>
     </div>
 </div>
@@ -3637,7 +3637,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Income and Business Taxation</h2>
         <div class="book-content-question">A domestic corporation has a gross income of ₱8,000,000 and allowable business deductions of ₱5,000,000. It also received ₱100,000 in interest from a peso bank deposit, which was subjected to a 20% final withholding tax by the bank. Assuming the regular corporate income tax rate is 25%, what is the regular corporate income tax due to be paid to the BIR? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 750,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 750,000</strong></p>
         <p>Regular corporate income tax is applied only to net taxable income from operations. Passive income subjected to final tax (like the bank interest) is excluded from this computation. Taxable Income = Gross Income (8,000,000) - Deductions (5,000,000) = 3,000,000. Income Tax Due = 3,000,000 × 25% = ₱750,000.</p>
     </div>
 </div>            
@@ -3669,7 +3669,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDdIq01', 'C')">C) Equity</li>
             <li class="book-mcq-option" onclick="selectOption('sDdIq01', 'D')">D) Off-balance sheet disclosure</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Under PAS 1, an entity classifies its financial liabilities as current when they are due to be settled within twelve months after the reporting period, even if an agreement to refinance on a long-term basis is completed after the reporting period and before the financial statements are authorized for issue. The entity must have the discretion to refinance *as of the end of the reporting period* to classify it as non-current.</p>
     </div>
 </div>
@@ -3699,7 +3699,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDdIq02', 'C')">C) Revaluation surplus on property, plant, and equipment</li>
             <li class="book-mcq-option" onclick="selectOption('sDdIq02', 'D')">D) Gain on sale of machinery</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>Other Comprehensive Income (OCI) comprises items of income and expense that are not recognized in profit or loss as required or permitted by PFRS. Revaluation surplus on PPE is a classic example of an OCI item. Trading security gains, impairment losses, and gains on asset sales bypass OCI and go directly to profit or loss.</p>
     </div>
 </div>
@@ -3729,7 +3729,7 @@
             <li class="book-mcq-option" onclick="selectOption('sDdIq03', 'C')">C) 20%</li>
             <li class="book-mcq-option" onclick="selectOption('sDdIq03', 'D')">D) 25%</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>Under the TRAIN Law amendments to the National Internal Revenue Code, the net capital gains realized from the sale, barter, exchange or other disposition of shares of stock in a domestic corporation, except shares sold through the stock exchange, are subject to a flat 15% final tax.</p>
     </div>
 </div>
@@ -3747,7 +3747,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Bank Reconciliation Statement</h2>
         <div class="book-content-question">The bank statement shows an ending balance of ₱850,000. Deposits in transit are ₱120,000, and outstanding checks are ₱90,000. A check for ₱45,000 issued by another company was erroneously deducted by the bank from this company's account. What is the adjusted bank balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 925,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 925,000</strong></p>
         <p>Adjusted Bank Balance = Unadjusted Bank Balance (850,000) + Deposits in Transit (120,000) - Outstanding Checks (90,000) + Bank Error (45,000). The bank erroneously deducted funds that belonged to someone else, so those funds must be added back to correct the bank balance. Total = ₱925,000.</p>
     </div>
 </div>
@@ -3765,7 +3765,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Changes in Equity</h2>
         <div class="book-content-question">A sole proprietorship's unadjusted ending capital balance is ₱600,000. An investigation revealed that depreciation expense of ₱40,000 was omitted, and accrued revenues of ₱25,000 were not recorded. What is the corrected ending capital balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 585,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 585,000</strong></p>
         <p>Adjusting net income directly adjusts ending capital. The unrecorded depreciation is an expense that decreases capital by 40,000. The unrecorded accrued revenue increases capital by 25,000. Corrected Capital = 600,000 - 40,000 + 25,000 = ₱585,000.</p>
     </div>
 </div>
@@ -3783,7 +3783,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Financial Statement Analysis</h2>
         <div class="book-content-question">A company has Net Sales of ₱4,000,000 and a Gross Profit rate of 40%. The beginning inventory is ₱350,000 and the ending inventory is ₱450,000. What is the inventory turnover ratio? (Enter the number only)</div>
-        <p><strong>Correct Answer: 6</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 6</strong></p>
         <p>First, compute Gross Profit: 4,000,000 × 40% = 1,600,000. Next, find Cost of Goods Sold (COGS): Net Sales (4,000,000) - Gross Profit (1,600,000) = 2,400,000. Then find Average Inventory: (350,000 + 450,000) / 2 = 400,000. Finally, Inventory Turnover = COGS / Average Inventory. 2,400,000 / 400,000 = 6 times.</p>
     </div>
 </div>
@@ -3801,7 +3801,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Cash Flow Statement</h2>
         <div class="book-content-question">Net income is ₱1,200,000. Non-cash expenses (depreciation and amortization) amount to ₱300,000. There is a gain on the sale of land of ₱100,000. Current assets (excluding cash) increased by ₱150,000, and current liabilities increased by ₱200,000. What is the net cash provided by operating activities? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 1,450,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 1,450,000</strong></p>
         <p>Net Cash from Operations = Net Income (1,200,000) + Non-cash Expenses (300,000) - Gain on Sale (100,000, removed to avoid double counting) - Increase in Current Assets (150,000) + Increase in Current Liabilities (200,000). Total = ₱1,450,000.</p>
     </div>
 </div>
@@ -3819,7 +3819,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Comprehensive Income</h2>
         <div class="book-content-question">An entity's Cost of Goods Sold is ₱1,800,000, representing 60% of Net Sales. Operating expenses are ₱450,000. What is the Operating Income? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 750,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 750,000</strong></p>
         <p>If COGS is 60% of Net Sales, then Net Sales = 1,800,000 / 0.60 = 3,000,000. Gross Profit = Net Sales (3,000,000) - COGS (1,800,000) = 1,200,000. Operating Income = Gross Profit (1,200,000) - Operating Expenses (450,000) = ₱750,000.</p>
     </div>
 </div>
@@ -3837,7 +3837,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Income and Business Taxation</h2>
         <div class="book-content-question">A resident citizen has a gross business income of ₱800,000 and allowable business deductions of ₱300,000. She also won ₱50,000 in a local sweepstakes/lottery. Excluding the lottery winnings (which are subject to final tax), what is her net taxable business income for the purpose of the regular income tax table? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 500,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 500,000</strong></p>
         <p>Items subject to final tax (like the ₱50,000 lottery winnings) are excluded from the calculation of net taxable income subject to the regular progressive tax table. Net Taxable Business Income = Gross Business Income (800,000) - Allowable Deductions (300,000) = ₱500,000.</p>
     </div>
 </div>
@@ -3855,7 +3855,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Financial Position</h2>
         <div class="book-content-question">A company's unadjusted trial balance shows: Cash ₱500,000; Accounts Receivable ₱300,000; Allowance for Bad Debts ₱20,000; Inventory ₱400,000; Equipment ₱1,500,000; Accumulated Depreciation ₱400,000; Accounts Payable ₱600,000. What is the correct total amount of Assets? (Enter numbers only)</div>
-       <p><strong>Correct Answer: 2280000</strong></p>
+       <p class="correct-line"><strong>Correct Answer: 2280000</strong></p>
         <p>Total Assets = Cash (500,000) + Net Accounts Receivable (300,000 - 20,000 = 280,000) + Inventory (400,000) + Net Equipment (1,500,000 - 400,000 = 1,100,000). Total = 500k + 280k + 400k + 1.1M = ₱2,280,000. Accounts Payable is a liability and is excluded.</p>
     </div>
 </div>            
@@ -3887,7 +3887,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEdIq01', 'C')">C) Deducted from the bank balance</li>
             <li class="book-mcq-option" onclick="selectOption('sEdIq01', 'D')">D) Added to the bank balance</li>
         </ul>
-        <p><strong>Correct Answer: C</strong></p>
+        <p class="correct-line"><strong>Correct Answer: C</strong></p>
         <p>The bank mistakenly credited (added money to) the company's account. This artificially overstates the bank statement balance. To arrive at the true adjusted cash balance, this erroneous credit must be deducted from the bank balance.</p>
     </div>
 </div>
@@ -3917,7 +3917,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEdIq02', 'C')">C) Totally exempt from income tax</li>
             <li class="book-mcq-option" onclick="selectOption('sEdIq02', 'D')">D) Included in gross income subject to regular corporate income tax</li>
         </ul>
-        <p><strong>Correct Answer: D</strong></p>
+        <p class="correct-line"><strong>Correct Answer: D</strong></p>
         <p>While dividends received by a domestic corporation from another domestic corporation are exempt, dividends from a foreign corporation are generally considered part of gross income and subject to the regular corporate income tax rate, unless specific reinvestment requirements under the CREATE Law are satisfied.</p>
     </div>
 </div>
@@ -3947,7 +3947,7 @@
             <li class="book-mcq-option" onclick="selectOption('sEdIq03', 'C')">C) The company has a massive amount of obsolete inventory.</li>
             <li class="book-mcq-option" onclick="selectOption('sEdIq03', 'D')">D) The company relies heavily on long-term equity financing.</li>
         </ul>
-        <p><strong>Correct Answer: B</strong></p>
+        <p class="correct-line"><strong>Correct Answer: B</strong></p>
         <p>A high inventory turnover indicates inventory is sold rapidly (efficient operations). However, a low current ratio implies that total current assets are insufficient compared to current liabilities, signaling potential liquidity risks in settling short-term debts.</p>
     </div>
 </div>
@@ -3965,7 +3965,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Financial Position</h2>
         <div class="book-content-question">The trial balance of a firm shows the following: Accounts Receivable ₱800,000; Allowance for Doubtful Accounts ₱30,000; Advances to Employees ₱45,000; Advances from Customers (Unearned Revenue) ₱60,000. What is the net realizable value of the trade receivables? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 770,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 770,000</strong></p>
         <p>Net Realizable Value of trade receivables = Gross Accounts Receivable - Allowance for Doubtful Accounts. (800,000 - 30,000 = ₱770,000). Advances to employees are non-trade receivables, and advances from customers are current liabilities.</p>
     </div>
 </div>
@@ -3983,7 +3983,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Comprehensive Income</h2>
         <div class="book-content-question">An entity reported gross sales of ₱5,000,000, sales discounts of ₱100,000, and sales returns of ₱200,000. The gross profit rate based on cost is 25%. What is the cost of goods sold? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 3,760,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 3,760,000</strong></p>
         <p>First, find Net Sales: 5,000,000 - 100,000 - 200,000 = 4,700,000. Because the markup is based on cost (25%), the formula is: Net Sales = Cost × 1.25. Therefore, Cost = 4,700,000 / 1.25 = ₱3,760,000.</p>
     </div>
 </div>
@@ -4001,7 +4001,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Statement of Changes in Equity</h2>
         <div class="book-content-question">An entity's total assets decreased by ₱300,000 and total liabilities decreased by ₱500,000 during the year. The owner made personal withdrawals of ₱150,000 and invested an additional ₱50,000. What is the net income for the year? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 300,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 300,000</strong></p>
         <p>Change in Equity = Change in Assets - Change in Liabilities. (-300,000) - (-500,000) = +200,000 overall increase in equity. Using the equity formula: Change in Equity (200,000) = Net Income + Additional Investment (50,000) - Withdrawals (150,000). 200,000 = Net Income - 100,000. Net Income = ₱300,000.</p>
     </div>
 </div>
@@ -4019,7 +4019,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Cash Flow Statement</h2>
         <div class="book-content-question">A company sold a piece of equipment for ₱120,000 cash, recognizing a gain of ₱30,000. The company also purchased new equipment for ₱400,000 cash and paid ₱50,000 in cash dividends to shareholders. What is the net cash flow from investing activities? (Enter as a negative number if it is a net outflow, e.g., -10000)</div>
-        <p><strong>Correct Answer: -280,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: -280,000</strong></p>
         <p>Investing activities involve the purchase and sale of long-term assets. Inflows: Sale of equipment = +120,000. Outflows: Purchase of equipment = -400,000. The dividends paid (50,000) are a financing activity. Net Investing Cash Flow = 120,000 - 400,000 = -280,000.</p>
     </div>
 </div>
@@ -4037,7 +4037,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Bank Reconciliation Statement</h2>
         <div class="book-content-question">The unadjusted book balance is ₱650,000. During reconciliation, you noted: Bank service charge of ₱3,000; Customer's NSF check of ₱12,000; Note collected by the bank of ₱55,000; and a check for ₱24,000 issued for office equipment was erroneously recorded by the bookkeeper as ₱42,000. What is the adjusted book balance? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 708,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 708,000</strong></p>
         <p>Adjusted Book Balance = Unadjusted Book (650,000) - Service Charge (3,000) - NSF Check (12,000) + Note Collected (55,000) + Book Error Correction (18,000). The book error requires an addition of 18,000 because the bookkeeper deducted too much (42,000 instead of 24,000). Total = ₱708,000.</p>
     </div>
 </div>
@@ -4055,7 +4055,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Income and Business Taxation</h2>
         <div class="book-content-question">A VAT-registered taxpayer has the following data for the month (amounts are exclusive of VAT): Sales ₱1,500,000; Purchases of goods from VAT-registered suppliers ₱800,000; Purchases of services from Non-VAT suppliers ₱100,000. What is the VAT payable for the month? (Enter numbers only)</div>
-        <p><strong>Correct Answer: 84,000</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 84,000</strong></p>
         <p>Output VAT = 1,500,000 × 12% = 180,000. Input VAT is only claimable from VAT-registered suppliers: 800,000 × 12% = 96,000 (Non-VAT purchases yield no input VAT). VAT Payable = Output VAT (180,000) - Input VAT (96,000) = ₱84,000.</p>
     </div>
 </div>
@@ -4073,7 +4073,7 @@
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Financial Statement Analysis</h2>
         <div class="book-content-question">A company has an average inventory of ₱500,000 and a gross profit of ₱1,200,000. If the gross profit margin based on sales is 40%, what is the inventory turnover ratio? (Enter the exact decimal number only, e.g., if 2.5, enter 2.5)</div>
-        <p><strong>Correct Answer: 3.6</strong></p>
+        <p class="correct-line"><strong>Correct Answer: 3.6</strong></p>
         <p>First, find Net Sales using the GP Margin: 1,200,000 / 0.40 = 3,000,000. Next, find Cost of Goods Sold: Sales (3,000,000) - Gross Profit (1,200,000) = 1,800,000. Finally, Inventory Turnover = COGS / Average Inventory. 1,800,000 / 500,000 = 3.6 times.</p>
     </div>
 </div>            
