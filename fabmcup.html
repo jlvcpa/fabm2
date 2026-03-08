@@ -235,7 +235,8 @@
     body.book-mode .slide > :not(.book-content):not(#nav-controls) { display: none !important; }
     body.book-mode .book-content { display: block !important; }
     body.book-mode #nav-controls { display: none !important; }
-    
+
+    .book-content-question { font-size: 2rem; margin-bottom: 25px; color: #000; }
     .book-content { display: none; font-family: 'Georgia', serif; color: #333333; width: 100%; max-width: 900px; margin: 0 auto; text-align: left; }
     .book-content h2 { color: #111; font-family: 'Segoe UI', sans-serif; font-size: 2.5rem; border-bottom: 2px solid #ccc; padding-bottom: 10px; margin-bottom: 25px; }
     .book-content p { color: #333; font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; }
@@ -387,7 +388,7 @@
     <div class="book-content">
         <button class="back-quiz-btn" onclick="toggleBookMode()">← Back to Quiz</button>
         <h2>Explanation: Introduction to Accounting</h2>
-        <div class="question-text">What is often referred to as the language of business?</div>
+        <div class="book-content-question">What is often referred to as the language of business?</div>
         <ul style="list-style: none; padding: 0;">
             <li class="mcq-option" onclick="selectOption('sAeAq01', 'A')">A) Economics</li>
             <li class="mcq-option" onclick="selectOption('sAeAq01', 'B')">B) Accounting</li>
