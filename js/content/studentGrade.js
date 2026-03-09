@@ -48,14 +48,14 @@ function getMethod1LetterGrade(score) {
 
 // --- STATE MANAGEMENT ---
 let currentUser = null;
-let currentTerm = 'Term 1'; // Default, can be toggleable if needed
+let currentTerm = 'Term 1'; 
 let currentSection = ''; 
 let activityColumns = {
     coursework: 1,
     performance: 1,
     exam: 1
 };
-let studentsData = []; // Holds the active roster and their grade states
+let studentsData = []; 
 
 // --- MAIN ENTRY POINT ---
 export async function renderGradesView(containerId, user) {
@@ -113,7 +113,6 @@ function renderTeacherLayout(container) {
     `;
     container.innerHTML = html;
 
-    // Attach base event listeners
     document.getElementById('section-selector').addEventListener('change', async (e) => {
         currentSection = e.target.value;
         if (currentSection) {
@@ -158,11 +157,9 @@ async function populateSectionDropdown() {
 
 async function loadTeacherGradesheet() {
     try {
-        // 1. Fetch Students for the selected section
         const studentsQuery = query(collection(db, 'students'), where('Section', '==', currentSection));
         const studentsSnap = await getDocs(studentsQuery);
         
-        // 2. Fetch existing grades for this section and term
         const gradesQuery = query(collection(db, 'studentGrade'), where('section', '==', currentSection), where('gradeTerm', '==', currentTerm));
         const gradesSnap = await getDocs(gradesQuery);
         
@@ -179,12 +176,10 @@ async function loadTeacherGradesheet() {
             const sData = doc.data();
             const existingGrade = existingGradesMap.get(sData.Idnumber) || {};
             
-            // Ensure data structure
             const cw = existingGrade.coursework || [];
             const pt = existingGrade.performance || [];
             const ex = existingGrade.exam || [];
 
-            // Update column counts if existing data has more competencies
             if (cw.length > maxCw) maxCw = cw.length;
             if (pt.length > maxPt) maxPt = pt.length;
             if (ex.length > maxEx) maxEx = ex.length;
@@ -195,10 +190,8 @@ async function loadTeacherGradesheet() {
             });
         });
 
-        // Sort by CN
         studentsData.sort((a, b) => (Number(a.CN) || 999) - (Number(b.CN) || 999));
 
-        // Update global column trackers
         activityColumns = { coursework: maxCw, performance: maxPt, exam: maxEx };
 
         renderGradesheetTable();
@@ -220,21 +213,25 @@ function renderGradesheetTable() {
                         <th class="px-4 py-3 border-r bg-gray-100 sticky left-0 z-30 w-16 text-center">CN</th>
                         <th class="px-4 py-3 border-r bg-gray-100 sticky left-16 z-30 w-48">Student Name</th>
                         
-                        <th class="px-2 py-2 border-r text-center" colspan="${activityColumns.coursework}">
+                        <th class="px-2 py-2 border-r text-center" colspan="${activityColumns.coursework + 1}">
                             <div class="flex items-center justify-between gap-2">
                                 <span>Coursework (30%)</span>
                                 <button class="btn-add-col text-blue-600 hover:text-blue-800 focus:outline-none" data-cat="coursework" title="Add Competency"><i class="fas fa-plus-circle"></i></button>
                             </div>
                         </th>
                         
-                        <th class="px-2 py-2 border-r text-center bg-blue-50" colspan="${activityColumns.performance}">
+                        <th class="w-2 bg-gray-200 border-x border-gray-300"></th>
+
+                        <th class="px-2 py-2 border-r text-center bg-blue-50" colspan="${activityColumns.performance + 1}">
                             <div class="flex items-center justify-between gap-2">
                                 <span>Perf. Task (50%)</span>
                                 <button class="btn-add-col text-blue-600 hover:text-blue-800 focus:outline-none" data-cat="performance" title="Add Competency"><i class="fas fa-plus-circle"></i></button>
                             </div>
                         </th>
                         
-                        <th class="px-2 py-2 border-r text-center" colspan="${activityColumns.exam}">
+                        <th class="w-2 bg-gray-200 border-x border-gray-300"></th>
+
+                        <th class="px-2 py-2 border-r text-center" colspan="${activityColumns.exam + 1}">
                             <div class="flex items-center justify-between gap-2">
                                 <span>Term Exam (20%)</span>
                                 <button class="btn-add-col text-blue-600 hover:text-blue-800 focus:outline-none" data-cat="exam" title="Add Competency"><i class="fas fa-plus-circle"></i></button>
@@ -246,9 +243,18 @@ function renderGradesheetTable() {
                     <tr class="bg-gray-50 border-b text-[10px] text-gray-500 tracking-wider">
                         <th class="border-r bg-gray-100 sticky left-0 z-30 border-b"></th>
                         <th class="border-r bg-gray-100 sticky left-16 z-30 border-b"></th>
+                        
                         ${generateSubHeaders('coursework', activityColumns.coursework)}
+                        <th class="px-2 py-1 border-r border-b text-center font-bold w-16 bg-gray-100 text-blue-700">M2 Avg</th>
+                        <th class="w-2 bg-gray-200 border-x border-gray-300 border-b"></th>
+
                         ${generateSubHeaders('performance', activityColumns.performance, 'bg-blue-50')}
+                        <th class="px-2 py-1 border-r border-b text-center font-bold w-16 bg-blue-100 text-blue-700">M2 Avg</th>
+                        <th class="w-2 bg-gray-200 border-x border-gray-300 border-b"></th>
+
                         ${generateSubHeaders('exam', activityColumns.exam)}
+                        <th class="px-2 py-1 border-r border-b text-center font-bold w-16 bg-gray-100 text-blue-700">M2 Avg</th>
+                        
                         <th class="text-center bg-green-50 border-b p-1">Method 2</th>
                     </tr>
                 </thead>
@@ -280,8 +286,15 @@ function generateTeacherRow(student) {
             <td class="px-4 py-2 border-r font-medium text-slate-800 bg-white group-hover:bg-slate-50 sticky left-16 z-10 whitespace-nowrap truncate max-w-[200px]" title="${student.LastName}, ${student.FirstName}">${student.LastName}, ${student.FirstName}</td>
             
             ${generateInputCells(student, 'coursework', activityColumns.coursework)}
+            <td class="px-2 py-2 border-r text-center font-bold bg-gray-50 text-blue-700" id="cwM2-${student.Idnumber}">${computed.cwM2}</td>
+            <td class="w-2 bg-gray-200 border-x border-gray-300"></td>
+
             ${generateInputCells(student, 'performance', activityColumns.performance, 'bg-blue-50')}
+            <td class="px-2 py-2 border-r text-center font-bold bg-blue-100 text-blue-700" id="ptM2-${student.Idnumber}">${computed.ptM2}</td>
+            <td class="w-2 bg-gray-200 border-x border-gray-300"></td>
+
             ${generateInputCells(student, 'exam', activityColumns.exam)}
+            <td class="px-2 py-2 border-r text-center font-bold bg-gray-50 text-blue-700" id="teM2-${student.Idnumber}">${computed.teM2}</td>
             
             <td class="px-4 py-2 text-center bg-green-50/50 font-bold border-l" id="final-${student.Idnumber}">
                 <span class="text-lg ${computed.finalM2 >= 75 ? 'text-green-700' : 'text-red-600'}">${computed.finalLetter}</span>
@@ -313,16 +326,14 @@ function generateInputCells(student, category, count, bgClass = '') {
 }
 
 function attachGradesheetEvents() {
-    // Add Column Logic
     document.querySelectorAll('.btn-add-col').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const cat = e.currentTarget.getAttribute('data-cat');
             activityColumns[cat]++;
-            renderGradesheetTable(); // Re-render table layout
+            renderGradesheetTable(); 
         });
     });
 
-    // Auto-compute Logic on Input Change
     document.querySelectorAll('.grade-input').forEach(input => {
         input.addEventListener('change', (e) => {
             const studentId = e.target.getAttribute('data-student-id');
@@ -330,15 +341,23 @@ function attachGradesheetEvents() {
             const index = parseInt(e.target.getAttribute('data-index'));
             const value = e.target.value.toUpperCase();
 
-            // Find student and update local state
             const student = studentsData.find(s => s.Idnumber === studentId);
             if (student) {
                 student.grades[category][index] = value;
                 
-                // Recalculate
                 const computed = calculateGrades(student.grades);
                 
-                // DOM Update (Targeted update to avoid full re-render)
+                // Update specific category average cells
+                const cwCell = document.getElementById(`cwM2-${studentId}`);
+                if(cwCell) cwCell.innerText = computed.cwM2;
+
+                const ptCell = document.getElementById(`ptM2-${studentId}`);
+                if(ptCell) ptCell.innerText = computed.ptM2;
+
+                const teCell = document.getElementById(`teM2-${studentId}`);
+                if(teCell) teCell.innerText = computed.teM2;
+
+                // Update final grade cell
                 const finalCell = document.getElementById(`final-${studentId}`);
                 if (finalCell) {
                     const colorClass = computed.finalM2 >= 75 ? 'text-green-700' : 'text-red-600';
@@ -347,7 +366,6 @@ function attachGradesheetEvents() {
                         <span class="text-xs text-gray-500 ml-1">(${computed.finalM2})</span>
                     `;
                     
-                    // Add a subtle flash animation to indicate computation
                     finalCell.classList.add('bg-green-100');
                     setTimeout(() => finalCell.classList.remove('bg-green-100'), 500);
                 }
@@ -374,9 +392,6 @@ function calculateGrades(gradesObj) {
     const teM1 = calcAvg(gradesObj.exam, 'method1');
     const teM2 = Math.round(calcAvg(gradesObj.exam, 'method2'));
 
-    // Final is only computed if there's data in all fields, otherwise it shows progressive total
-    // Modify logic here if zero blanks should be treated as 0 or ignored. 
-    // Currently treating blanks as ignored (not in average).
     const finalM2 = Math.round(
         (cwM2 * WEIGHTS.coursework) + 
         (ptM2 * WEIGHTS.performance) + 
@@ -403,20 +418,17 @@ async function saveGradesToFirebase() {
 
     try {
         const batchPromises = studentsData.map(async (student) => {
-            // Clean up arrays (remove trailing blanks if needed, or save as is to preserve layout)
             const cleanGrades = {
                 coursework: [...student.grades.coursework],
                 performance: [...student.grades.performance],
                 exam: [...student.grades.exam]
             };
 
-            // Requirement: Document Name Format -> $[CN]-$[LastName] $[FirstName]-$[Section]
             const cnFormat = String(student.CN || '0').padStart(2, '0');
             const docId = `${cnFormat}-${student.LastName} ${student.FirstName}-${currentSection}`;
             
             const docRef = doc(db, 'studentGrade', docId);
             
-            // Payload
             const payload = {
                 studentId: student.Idnumber,
                 CN: student.CN,
@@ -428,15 +440,14 @@ async function saveGradesToFirebase() {
                 performance: cleanGrades.performance,
                 exam: cleanGrades.exam,
                 lastUpdated: new Date().toISOString(),
-                updatedBy: currentUser.Idnumber // Tracking who saved it
+                updatedBy: currentUser.Idnumber 
             };
 
-            return setDoc(docRef, payload, { merge: true }); // Merge preserves other terms if they exist on the same doc layout in future
+            return setDoc(docRef, payload, { merge: true }); 
         });
 
         await Promise.all(batchPromises);
 
-        // Success State
         btn.innerHTML = '<i class="fas fa-check mr-2"></i> Saved Successfully';
         btn.classList.replace('bg-green-600', 'bg-blue-600');
         
@@ -503,13 +514,6 @@ async function loadStudentPersonalGrades() {
     const container = document.getElementById('student-grades-content');
     
     try {
-        // Construct the expected Document ID based on the format rule
-        const cnFormat = String(currentUser.CN || '0').padStart(2, '0');
-        const docId = `${cnFormat}-${currentUser.LastName} ${currentUser.FirstName}-${currentUser.Section}`;
-        
-        const docRef = doc(db, 'studentGrade', docId);
-        // We use getDocs with a query instead of direct doc fetch just in case the CN format has slight variations,
-        // but since we strictly build it, a query by Idnumber and gradeTerm is safer.
         const q = query(collection(db, 'studentGrade'), 
                         where('studentId', '==', currentUser.Idnumber),
                         where('gradeTerm', '==', currentTerm));
@@ -529,7 +533,6 @@ async function loadStudentPersonalGrades() {
             return;
         }
 
-        // Extract data (assuming only 1 document matches Term + Student ID)
         let gradeData = null;
         querySnapshot.forEach(doc => gradeData = doc.data());
 
@@ -539,7 +542,6 @@ async function loadStudentPersonalGrades() {
             exam: gradeData.exam || []
         });
 
-        // Render Stacked Layout
         container.innerHTML = `
             ${generateStudentCategoryCard('Courseworks', gradeData.coursework || [], computed.cwM1, 'fa-book')}
             ${generateStudentCategoryCard('Performance Tasks', gradeData.performance || [], computed.ptM1, 'fa-tasks')}
@@ -561,6 +563,43 @@ async function loadStudentPersonalGrades() {
                         <span class="text-[10px] font-bold text-green-600 uppercase tracking-widest mb-1">Equivalent</span>
                         <span class="text-4xl font-black text-green-600 leading-none drop-shadow-sm">${computed.finalLetter}</span>
                     </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6 mt-4 border border-gray-200">
+                <h4 class="font-bold text-slate-800 mb-4 border-b pb-2"><i class="fas fa-table mr-2 text-blue-500"></i> Method 2 Transmutation Table</h4>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-600">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-2 rounded-tl-lg">Letter Grade</th>
+                                <th class="px-4 py-2">Equivalent</th>
+                                <th class="px-4 py-2 rounded-tr-lg">Numerical Range (Method 2)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 font-bold text-green-600">A</td>
+                                <td class="px-4 py-2">Advanced</td>
+                                <td class="px-4 py-2 font-mono">94.50 - 100</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 font-bold text-blue-600">P</td>
+                                <td class="px-4 py-2">Proficient</td>
+                                <td class="px-4 py-2 font-mono">85.50 - 94.49</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 font-bold text-yellow-600">D</td>
+                                <td class="px-4 py-2">Developing</td>
+                                <td class="px-4 py-2 font-mono">74.50 - 85.49</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 font-bold text-red-600">IR</td>
+                                <td class="px-4 py-2">Intervention</td>
+                                <td class="px-4 py-2 font-mono">74.49 and below</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             
@@ -588,7 +627,7 @@ function generateStudentCategoryCard(title, grades, m1Average, icon) {
     }
 
     const gradeRows = grades.map((g, i) => {
-        if (!g) return ''; // Skip empty slots
+        if (!g) return ''; 
         const bg = g === 'A' ? 'bg-green-100 text-green-800 border-green-200' : 
                    g === 'P' ? 'bg-blue-100 text-blue-800 border-blue-200' :
                    g === 'D' ? 'bg-yellow-100 text-yellow-800 border-yellow-200' : 
