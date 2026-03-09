@@ -417,11 +417,22 @@ async function saveGradesToFirebase() {
     btn.classList.add('opacity-75', 'cursor-not-allowed');
 
     try {
+        // HELPER: Replaces undefined or null values with an empty string
+        // This completely prevents Firebase from throwing the "Unsupported field value: undefined" error
+        const cleanArray = (arr, maxSize) => {
+            const cleaned = [];
+            for (let i = 0; i < maxSize; i++) {
+                cleaned.push(arr[i] || ""); 
+            }
+            return cleaned;
+        };
+
         const batchPromises = studentsData.map(async (student) => {
+            
             const cleanGrades = {
-                coursework: [...student.grades.coursework],
-                performance: [...student.grades.performance],
-                exam: [...student.grades.exam]
+                coursework: cleanArray(student.grades.coursework, activityColumns.coursework),
+                performance: cleanArray(student.grades.performance, activityColumns.performance),
+                exam: cleanArray(student.grades.exam, activityColumns.exam)
             };
 
             const cnFormat = String(student.CN || '0').padStart(2, '0');
