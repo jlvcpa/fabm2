@@ -11,6 +11,7 @@ import { renderAccountingCycleActivity } from './content/accountingCycleActivity
 
 import Step05Worksheet, { validateStep05 } from './content/accountingCycle/steps/Step05Worksheet.js';
 import Step06FinancialStatements, { validateStep06 } from './content/accountingCycle/steps/Step06FinancialStatements.js';
+import { renderTeacherGradesView, renderStudentGradesView } from './content/studentGrade.js';
 import React from 'https://esm.sh/react@18.2.0';
 import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
 
