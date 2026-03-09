@@ -409,6 +409,13 @@ function calculateGrades(gradesObj) {
 
 // --- FIREBASE SAVE OPERATION ---
 async function saveGradesToFirebase() {
+    // STRICT ROLE CHECK: Prevents any non-teacher from executing a save
+    if (currentUser.role !== 'teacher') {
+        console.error("Security Block: Unauthorized save attempt.");
+        alert("Unauthorized: Only teachers have permission to save grades.");
+        return;
+    }
+
     const btn = document.getElementById('btn-save-grades');
     const originalText = btn.innerHTML;
     
@@ -418,7 +425,6 @@ async function saveGradesToFirebase() {
 
     try {
         // HELPER: Replaces undefined or null values with an empty string
-        // This completely prevents Firebase from throwing the "Unsupported field value: undefined" error
         const cleanArray = (arr, maxSize) => {
             const cleaned = [];
             for (let i = 0; i < maxSize; i++) {
@@ -436,22 +442,24 @@ async function saveGradesToFirebase() {
             };
 
             const cnFormat = String(student.CN || '0').padStart(2, '0');
-            const docId = `${cnFormat}-${student.LastName} ${student.FirstName}-${currentSection}`;
+            const lastName = student.LastName || 'Unknown';
+            const firstName = student.FirstName || 'Unknown';
+            const docId = `${cnFormat}-${lastName} ${firstName}-${currentSection}`;
             
             const docRef = doc(db, 'studentGrade', docId);
             
             const payload = {
-                studentId: student.Idnumber,
-                CN: student.CN,
-                lastName: student.LastName,
-                firstName: student.FirstName,
+                studentId: student.Idnumber || student.idNumber || 'No-ID',
+                CN: student.CN || '',
+                lastName: lastName,
+                firstName: firstName,
                 section: currentSection,
                 gradeTerm: currentTerm,
                 coursework: cleanGrades.coursework,
                 performance: cleanGrades.performance,
                 exam: cleanGrades.exam,
                 lastUpdated: new Date().toISOString(),
-                updatedBy: currentUser.Idnumber 
+                updatedBy: currentUser.Idnumber || currentUser.idNumber || 'Unknown-Teacher' 
             };
 
             return setDoc(docRef, payload, { merge: true }); 
