@@ -216,7 +216,10 @@ function renderGradesheetTable() {
                         <th class="px-2 py-2 border-r text-center" colspan="${activityColumns.coursework + 1}">
                             <div class="flex items-center justify-between gap-2">
                                 <span>Coursework (30%)</span>
-                                <button class="btn-add-col text-blue-600 hover:text-blue-800 focus:outline-none" data-cat="coursework" title="Add Competency"><i class="fas fa-plus-circle"></i></button>
+                                <div class="flex items-center gap-1">
+                                    <button class="btn-remove-col text-red-400 hover:text-red-600 focus:outline-none transition-colors" data-cat="coursework" title="Remove Competency"><i class="fas fa-minus-circle"></i></button>
+                                    <button class="btn-add-col text-blue-600 hover:text-blue-800 focus:outline-none transition-colors" data-cat="coursework" title="Add Competency"><i class="fas fa-plus-circle"></i></button>
+                                </div>
                             </div>
                         </th>
                         
@@ -225,7 +228,10 @@ function renderGradesheetTable() {
                         <th class="px-2 py-2 border-r text-center bg-blue-50" colspan="${activityColumns.performance + 1}">
                             <div class="flex items-center justify-between gap-2">
                                 <span>Perf. Task (50%)</span>
-                                <button class="btn-add-col text-blue-600 hover:text-blue-800 focus:outline-none" data-cat="performance" title="Add Competency"><i class="fas fa-plus-circle"></i></button>
+                                <div class="flex items-center gap-1">
+                                    <button class="btn-remove-col text-red-400 hover:text-red-600 focus:outline-none transition-colors" data-cat="performance" title="Remove Competency"><i class="fas fa-minus-circle"></i></button>
+                                    <button class="btn-add-col text-blue-600 hover:text-blue-800 focus:outline-none transition-colors" data-cat="performance" title="Add Competency"><i class="fas fa-plus-circle"></i></button>
+                                </div>
                             </div>
                         </th>
                         
@@ -234,7 +240,10 @@ function renderGradesheetTable() {
                         <th class="px-2 py-2 border-r text-center" colspan="${activityColumns.exam + 1}">
                             <div class="flex items-center justify-between gap-2">
                                 <span>Term Exam (20%)</span>
-                                <button class="btn-add-col text-blue-600 hover:text-blue-800 focus:outline-none" data-cat="exam" title="Add Competency"><i class="fas fa-plus-circle"></i></button>
+                                <div class="flex items-center gap-1">
+                                    <button class="btn-remove-col text-red-400 hover:text-red-600 focus:outline-none transition-colors" data-cat="exam" title="Remove Competency"><i class="fas fa-minus-circle"></i></button>
+                                    <button class="btn-add-col text-blue-600 hover:text-blue-800 focus:outline-none transition-colors" data-cat="exam" title="Add Competency"><i class="fas fa-plus-circle"></i></button>
+                                </div>
                             </div>
                         </th>
                         
@@ -326,6 +335,7 @@ function generateInputCells(student, category, count, bgClass = '') {
 }
 
 function attachGradesheetEvents() {
+    // Add Column Event
     document.querySelectorAll('.btn-add-col').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const cat = e.currentTarget.getAttribute('data-cat');
@@ -334,6 +344,24 @@ function attachGradesheetEvents() {
         });
     });
 
+    // Remove Column Event
+    document.querySelectorAll('.btn-remove-col').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const cat = e.currentTarget.getAttribute('data-cat');
+            if (activityColumns[cat] > 1) {
+                activityColumns[cat]--;
+                
+                // Trim the underlying grade arrays so ghost data isn't saved
+                studentsData.forEach(student => {
+                    student.grades[cat] = student.grades[cat].slice(0, activityColumns[cat]);
+                });
+                
+                renderGradesheetTable(); 
+            }
+        });
+    });
+
+    // Input Change Event
     document.querySelectorAll('.grade-input').forEach(input => {
         input.addEventListener('change', (e) => {
             const studentId = e.target.getAttribute('data-student-id');
@@ -409,7 +437,7 @@ function calculateGrades(gradesObj) {
 
 // --- FIREBASE SAVE OPERATION ---
 async function saveGradesToFirebase() {
-    // STRICT ROLE CHECK: Prevents any non-teacher from executing a save
+    // STRICT ROLE CHECK
     if (currentUser.role !== 'teacher') {
         console.error("Security Block: Unauthorized save attempt.");
         alert("Unauthorized: Only teachers have permission to save grades.");
@@ -424,7 +452,6 @@ async function saveGradesToFirebase() {
     btn.classList.add('opacity-75', 'cursor-not-allowed');
 
     try {
-        // HELPER: Replaces undefined or null values with an empty string
         const cleanArray = (arr, maxSize) => {
             const cleaned = [];
             for (let i = 0; i < maxSize; i++) {
