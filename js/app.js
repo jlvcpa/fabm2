@@ -344,6 +344,19 @@ function renderSidebar(role) {
     qaSubmenu.appendChild(termExamsBtn);
     container.appendChild(qaSubmenu);
 
+    // Grade Sheet
+const gradebookBtn = document.createElement('button');
+gradebookBtn.className = "w-full text-left px-6 py-2 text-slate-400 hover:bg-slate-900 hover:text-green-400 transition-colors flex items-center gap-2 border-l-2 border-transparent hover:border-green-500";
+gradebookBtn.innerHTML = '<i class="fas fa-chart-bar text-xs w-4"></i> <span class="text-sm">Gradebook</span>';
+gradebookBtn.onclick = () => {
+elements.pageTitle().innerText = "Gradebook";
+    const content = elements.contentArea();
+    content.innerHTML = '<div id="gradebook-mount" class="p-4 md:p-8 w-full h-full"></div>';
+    renderGradesView('gradebook-mount', currentUser);
+    closeMobileSidebar();
+  };
+  toolsSubmenu.appendChild(gradebookBtn);
+
     // --- TEACHER TOOLS (Teachers Only) ---
     if (role === 'teacher') {
         const creatorHeader = document.createElement('button');
