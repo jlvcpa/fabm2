@@ -1,4 +1,3 @@
-// "quizzesAndActivities-js" -->
 import { getFirestore, collection, getDocs, doc, getDoc, setDoc, updateDoc, query, where, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 import { getLetterGrade } from "../utils.js"; 
@@ -10,7 +9,6 @@ import { qbMerchProblemSolving } from "./questionBank/qbMerchProblemSolving.js";
 import { qbMerchJournalizing } from "./questionBank/qbMerchJournalizing.js";
 
 // --- IMPORT THE NEW PREVIEW MODULE ---
-// Ensure this matches the exported function name in activityResultPreview.js
 import { renderStudentResultDetail } from "./activityResultPreview.js";
 
 const firebaseConfig = {
@@ -27,7 +25,7 @@ const db = getFirestore(app);
 
 let sectionIntervals = []; 
 let currentAntiCheat = null;
-let selectedSectionFilter = "All Sections"; // Default filter
+let selectedSectionFilter = "All Sections"; 
 
 // --- GLOBAL QUESTION MAP (Source of Truth) ---
 const globalQuestionMap = new Map();
@@ -45,13 +43,18 @@ function buildQuestionMap() {
 }
 buildQuestionMap();
 
-// --- HELPER: Expected SCE Generation Logic ---
-function buildExpectedSce(transactions) {
+// --- HELPER: Expected SCE Generation Logic (Dynamic Memo vs Journal Method) ---
+function buildExpectedSce(q) {
+    const transactions = q.transactions || [];
+    const isMemo = q.topic && q.topic.toLowerCase().includes('memorandum');
+
     const accountConfig = {
         "Authorized Common Stock": { type: "Credit", category: "Auth", class: "Common" },
         "Authorized Preferred Stock": { type: "Credit", category: "Auth", class: "Preferred" },
         "Unissued Common Stock": { type: "Debit", category: "Unissued", class: "Common" },
         "Unissued Preferred Stock": { type: "Debit", category: "Unissued", class: "Preferred" },
+        "Common Stock": { type: "Credit", category: "Cap", class: "Common" },
+        "Preferred Stock": { type: "Credit", category: "Cap", class: "Preferred" },
         "Subscribed Common Stock": { type: "Credit", category: "Sub", class: "Common" },
         "Subscribed Preferred Stock": { type: "Credit", category: "Sub", class: "Preferred" },
         "Share Premium - Common": { type: "Credit", category: "Prem", class: "Common" },
@@ -61,18 +64,30 @@ function buildExpectedSce(transactions) {
         "Treasury Stock": { type: "Debit", category: "Treasury", class: "Common" }
     };
 
-    let soceRows = [{
-        desc: "Beginning Balance", date: "",
-        Auth: 0, Unissued: 0, Sub: 0, Prem: 0, RE: 0, Treasury: 0, Total: 0
-    }];
+    let soceRows = [];
+    
+    // 1. Beginning Balance Row
+    let begRow = { desc: "Beginning Balance", date: "" };
+    if (isMemo) Object.assign(begRow, { Cap: 0, Sub: 0, Prem: 0, RE: 0, Treasury: 0, Total: 0 });
+    else Object.assign(begRow, { Auth: 0, Unissued: 0, Sub: 0, Prem: 0, RE: 0, Treasury: 0, Total: 0 });
+    soceRows.push(begRow);
 
-    if (!transactions || !Array.isArray(transactions)) return soceRows;
+    if (!Array.isArray(transactions)) return soceRows;
 
+    // 2. Transaction Rows
     transactions.forEach(tx => {
         let impacts = {
-            Common: { desc: "", date: tx.date, Auth: 0, Unissued: 0, Sub: 0, Prem: 0, RE: 0, Treasury: 0, Total: 0 },
-            Preferred: { desc: "", date: tx.date, Auth: 0, Unissued: 0, Sub: 0, Prem: 0, RE: 0, Treasury: 0, Total: 0 }
+            Common: { desc: "", date: tx.date, Total: 0 },
+            Preferred: { desc: "", date: tx.date, Total: 0 }
         };
+        
+        if (isMemo) {
+            Object.assign(impacts.Common, { Cap: 0, Sub: 0, Prem: 0, RE: 0, Treasury: 0 });
+            Object.assign(impacts.Preferred, { Cap: 0, Sub: 0, Prem: 0, RE: 0, Treasury: 0 });
+        } else {
+            Object.assign(impacts.Common, { Auth: 0, Unissued: 0, Sub: 0, Prem: 0, RE: 0, Treasury: 0 });
+            Object.assign(impacts.Preferred, { Auth: 0, Unissued: 0, Sub: 0, Prem: 0, RE: 0, Treasury: 0 });
+        }
 
         if(tx.solution) {
             tx.solution.forEach(entry => {
@@ -80,9 +95,14 @@ function buildExpectedSce(transactions) {
                 const config = accountConfig[entry.account];
                 const debitAmt = parseFloat(entry.debit) || 0;
                 const creditAmt = parseFloat(entry.credit) || 0;
-                let equityImpact = creditAmt - debitAmt;
-                if (equityImpact !== 0) {
+                
+                // Credit normal accounts increase via Credit. Debit normal (Contra) increase via Debit, but decrease total equity.
+                let equityImpact = creditAmt - debitAmt; 
+
+                if (equityImpact !== 0 || debitAmt !== 0 || creditAmt !== 0) {
                     let classType = config.class;
+                    
+                    // Track gross changes per column logic based on method
                     impacts[classType][config.category] += equityImpact;
                     impacts[classType].Total += equityImpact;
                 }
@@ -90,28 +110,52 @@ function buildExpectedSce(transactions) {
         }
 
         let commonAdded = false;
+        let isAuth = tx.description && tx.description.toLowerCase().includes("authoriz");
+        let authCommon = isAuth && tx.description.toLowerCase().includes("common");
+        let authPref = isAuth && tx.description.toLowerCase().includes("preferred");
+        if (isAuth && !authCommon && !authPref) authCommon = true; // Fallback
 
         const determineDesc = (imp, isPref) => {
-            if(imp.Auth > 0) return isPref ? "Authorization of Preferred shares" : "Authorization of common shares";
+            if(!isMemo && imp.Auth > 0) return isPref ? "Authorization of Preferred shares" : "Authorization of common shares";
+            if(isMemo && isAuth) return isPref ? "Authorization of Preferred shares" : "Authorization of common shares";
             if(imp.Sub > 0) return isPref ? "Subscription of preferred shares" : "Subscription of common shares";
-            if(imp.Unissued < 0) return isPref ? "Issuance of preferred shares" : "Issuance of common shares";
-            if(imp.Treasury > 0) return "Acquisition of treasury shares";
-            if(imp.Treasury < 0) return "Reissuance of treasury shares";
+            if((!isMemo && imp.Unissued < 0) || (isMemo && imp.Cap > 0)) return isPref ? "Issuance of preferred shares" : "Issuance of common shares";
+            if(imp.Treasury < 0) return "Acquisition of treasury shares";
+            if(imp.Treasury > 0) return "Reissuance of treasury shares";
             return "";
         };
 
-        if (impacts.Common.Auth !== 0 || impacts.Common.Unissued !== 0 || impacts.Common.Sub !== 0 || impacts.Common.Prem !== 0 || impacts.Common.Treasury !== 0 || impacts.Common.RE !== 0) {
-            impacts.Common.desc = determineDesc(impacts.Common, false);
+        const hasImpact = (imp) => {
+            return Object.keys(imp).some(k => k !== 'desc' && k !== 'date' && imp[k] !== 0);
+        };
+
+        if (hasImpact(impacts.Common) || authCommon) {
+            impacts.Common.desc = determineDesc(impacts.Common, false) || (authCommon ? "Authorization of common shares" : "");
             soceRows.push(impacts.Common);
             commonAdded = true;
         }
 
-        if (impacts.Preferred.Auth !== 0 || impacts.Preferred.Unissued !== 0 || impacts.Preferred.Sub !== 0 || impacts.Preferred.Prem !== 0) {
-            impacts.Preferred.desc = determineDesc(impacts.Preferred, true);
+        if (hasImpact(impacts.Preferred) || authPref) {
+            impacts.Preferred.desc = determineDesc(impacts.Preferred, true) || (authPref ? "Authorization of Preferred shares" : "");
             if (commonAdded) impacts.Preferred.date = "";
             soceRows.push(impacts.Preferred);
         }
     });
+
+    // 3. Ending Balance Row
+    let endRow = { desc: "Ending Balance", date: "" };
+    let runningTotals = { Total: 0 };
+    if (isMemo) Object.assign(runningTotals, { Cap: 0, Sub: 0, Prem: 0, RE: 0, Treasury: 0 });
+    else Object.assign(runningTotals, { Auth: 0, Unissued: 0, Sub: 0, Prem: 0, RE: 0, Treasury: 0 });
+
+    soceRows.forEach(row => {
+        Object.keys(runningTotals).forEach(key => {
+            runningTotals[key] += (row[key] || 0);
+        });
+    });
+
+    Object.assign(endRow, runningTotals);
+    soceRows.push(endRow);
 
     return soceRows;
 }
@@ -125,7 +169,8 @@ const sceDescOptions = [
     "Issuance of common shares",
     "Issuance of preferred shares",
     "Acquisition of treasury shares",
-    "Reissuance of treasury shares"
+    "Reissuance of treasury shares",
+    "Ending Balance"
 ];
 
 // --- MAIN ENTRY POINT ---
@@ -297,12 +342,10 @@ async function loadStudentActivities(user, customRunner, filterType) {
                 if (activityName.includes('performance')) matchesFilter = true;
             } 
             else if (filterType === 'Exam') {
-                // Rule: Shall have "Midterm Exam" or "Final Exam"
                 if (activityName.includes('midterm exam') || activityName.includes('final exam')) {
                     matchesFilter = true;
                 }
             }
-            // Fallback for general usage if filterType is 'Task' or 'Test'
             else if (filterType === 'Task' || filterType === 'accounting_cycle') {
                 if (data.type === 'accounting_cycle' || activityName.includes('task')) matchesFilter = true;
             }
@@ -598,6 +641,48 @@ async function renderQuizRunner(data, user, customRunner = null) {
     initializeQuizManager(data, generatedContent.data, user, savedState);
 }
 
+// --- GLOBAL HANDLERS (MDAS & Indenting) ---
+window.evaluateMDAS = function(input) {
+    if (!input.value) return;
+    try {
+        let expr = input.value.replace(/,/g, '').trim();
+        // Allow basic numbers and operators
+        if (/^[-]?[\d+\-*/(). ]+$/.test(expr)) {
+            let result = Function('"use strict";return (' + expr + ')')();
+            if (result !== undefined && result !== null && !isNaN(result)) {
+                // Keep integers clean, format decimals to 2 places
+                input.value = Number.isInteger(result) ? result : Number(result).toFixed(2);
+            }
+        }
+    } catch(e) {
+        console.error("MDAS parsing failed for input", e);
+    }
+    // Trigger input event to re-evaluate form completion
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+};
+
+window.handleJournalIndent = function(txId, row) {
+    const acctInput = document.getElementById(`acct-${txId}-${row}`);
+    const drInput = document.getElementById(`dr-${txId}-${row}`);
+    const crInput = document.getElementById(`cr-${txId}-${row}`);
+
+    if (!acctInput) return;
+
+    const drVal = drInput ? drInput.value.trim() : '';
+    const crVal = crInput ? crInput.value.trim() : '';
+
+    if (crVal !== '') {
+        acctInput.style.paddingLeft = '1.25rem'; 
+        acctInput.classList.remove('italic', 'text-gray-500');
+    } else if (drVal === '' && crVal === '') {
+        acctInput.style.paddingLeft = '2rem'; 
+        acctInput.classList.add('italic', 'text-gray-500'); 
+    } else {
+        acctInput.style.paddingLeft = '0.5rem'; 
+        acctInput.classList.remove('italic', 'text-gray-500');
+    }
+};
+
 // --- CONTENT GENERATOR ---
 async function generateQuizContent(activityData, savedState = null) {
     let tabsHtml = '';
@@ -720,7 +805,8 @@ async function generateQuizContent(activityData, savedState = null) {
                             correctAnswer: savedRef.correctAnswer,
                             explanation: savedRef.explanation,
                             transactions: savedRef.transactions, 
-                            instructions: savedRef.instructions
+                            instructions: savedRef.instructions,
+                            topic: savedRef.topic
                         };
                     }
                 }
@@ -787,7 +873,8 @@ async function generateQuizContent(activityData, savedState = null) {
                 options: q.options || [],
                 explanation: q.explanation || '',
                 transactions: q.transactions || [],
-                instructions: q.instructions || null
+                instructions: q.instructions || null,
+                topic: q.topic || section.topics || ''
             });
 
             // NEW INTEGRATED ACTIVITY TYPE
@@ -811,12 +898,18 @@ async function generateQuizContent(activityData, savedState = null) {
                         const rowDisabledAttr = (q.isSaved && isRowSaved) ? 'disabled' : '';
                         const inputDim = (q.isSaved && isRowSaved) ? 'text-gray-500' : 'text-black';
 
+                        let indentStyle = "padding-left: 0.5rem;"; 
+                        let acctClass = "";
+                        if (cellData.cr && String(cellData.cr).trim() !== '') {
+                            indentStyle = "padding-left: 1.25rem;";
+                        }
+
                         rows += `
-                        <tr class="border-b border-gray-200 bg-white">
+                        <tr class="border-b border-gray-200 bg-white hover:bg-gray-50">
                             <td class="p-0 border-r border-gray-300 w-24"><input type="text" name="${transUiId}_r${r}_date" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.date}" ${rowDisabledAttr}></td>
-                            <td class="p-0 border-r border-gray-300 w-auto"><input type="text" name="${transUiId}_r${r}_acct" class="w-full p-2 text-left outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.acct}" ${rowDisabledAttr}></td>
-                            <td class="p-0 border-r border-gray-300 w-28"><input type="number" name="${transUiId}_r${r}_dr" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" style="appearance: textfield; -moz-appearance: textfield; -webkit-appearance: none;" placeholder="" value="${cellData.dr}" ${rowDisabledAttr}></td>
-                            <td class="p-0 w-28"><input type="number" name="${transUiId}_r${r}_cr" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" style="appearance: textfield; -moz-appearance: textfield; -webkit-appearance: none;" placeholder="" value="${cellData.cr}" ${rowDisabledAttr}></td>
+                            <td class="p-0 border-r border-gray-300 w-auto relative align-top"><input type="text" name="${transUiId}_r${r}_acct" id="acct-${transUiId}-${r}" class="w-full h-full p-2 text-left outline-none bg-transparent font-mono text-sm transition-all duration-200 ${inputDim} ${acctClass}" style="${indentStyle}" placeholder="" value="${cellData.acct}" ${rowDisabledAttr}></td>
+                            <td class="p-0 border-r border-gray-300 w-28"><input type="text" name="${transUiId}_r${r}_dr" id="dr-${transUiId}-${r}" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.dr}" oninput="window.handleJournalIndent('${transUiId}', ${r})" onblur="window.evaluateMDAS(this)" ${rowDisabledAttr}></td>
+                            <td class="p-0 w-28"><input type="text" name="${transUiId}_r${r}_cr" id="cr-${transUiId}-${r}" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.cr}" oninput="window.handleJournalIndent('${transUiId}', ${r})" onblur="window.evaluateMDAS(this)" ${rowDisabledAttr}></td>
                         </tr>`;
                     }
 
@@ -845,24 +938,31 @@ async function generateQuizContent(activityData, savedState = null) {
                 });
 
                 // 2. SCE Table Section
-                const expectedSceRowsCount = buildExpectedSce(transactions).length;
+                const expectedSce = buildExpectedSce(q);
+                const expectedSceRowsCount = expectedSce.length;
                 let sceRowsHtml = '';
                 
+                // Dynamic Check for Memorandum vs Journal Entry Method
+                const isMemo = q.topic && q.topic.toLowerCase().includes('memorandum');
+
                 // Add the specific dropdown options dynamically
                 const descOptionsHtml = sceDescOptions.map(opt => `<option value="${opt}">${opt}</option>`).join('');
 
                 for (let r=0; r < expectedSceRowsCount; r++) {
                     const cellKey = `r${r}`;
-                    const sceData = (savedValue && savedValue.SCE && savedValue.SCE[cellKey]) ? savedValue.SCE[cellKey] : { date:'', desc:'', auth:'', unissued:'', sub:'', prem:'', re:'', ts:'', total:'' };
+                    const sceData = (savedValue && savedValue.SCE && savedValue.SCE[cellKey]) ? savedValue.SCE[cellKey] : {};
                     
-                    const isSceRowSaved = Boolean(sceData.date || sceData.desc || sceData.total);
+                    const isSceRowSaved = Object.keys(sceData).length > 0;
                     const sceDisabledAttr = (q.isSaved && isSceRowSaved) ? 'disabled' : '';
                     const sceDim = (q.isSaved && isSceRowSaved) ? 'text-gray-500' : 'text-black';
+                    
+                    const isEndRow = r === expectedSceRowsCount - 1;
+                    const rowClass = isEndRow ? "border-t-2 border-gray-400 font-bold bg-gray-50" : "border-b border-gray-200 bg-white hover:bg-gray-50 transition-colors";
 
                     sceRowsHtml += `
-                        <tr class="border-b border-gray-200 bg-white hover:bg-gray-50 transition-colors">
+                        <tr class="${rowClass}">
                             <td class="p-0 border-r border-gray-300 w-24">
-                                <input type="text" name="${uiId}_SCE_r${r}_date" class="w-full p-2 text-center outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="Mmm d" value="${sceData.date}" ${sceDisabledAttr}>
+                                <input type="text" name="${uiId}_SCE_r${r}_date" class="w-full p-2 text-center outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="Mmm d" value="${sceData.date !== undefined ? sceData.date : ''}" ${sceDisabledAttr}>
                             </td>
                             <td class="p-0 border-r border-gray-300 w-64">
                                 <select name="${uiId}_SCE_r${r}_desc" class="w-full p-2 text-left outline-none bg-transparent text-sm ${sceDim}" ${sceDisabledAttr}>
@@ -870,13 +970,16 @@ async function generateQuizContent(activityData, savedState = null) {
                                     ${sceDescOptions.map(opt => `<option value="${opt}" ${sceData.desc === opt ? 'selected' : ''}>${opt}</option>`).join('')}
                                 </select>
                             </td>
-                            <td class="p-0 border-r border-gray-300 w-28"><input type="number" name="${uiId}_SCE_r${r}_auth" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.auth}" ${sceDisabledAttr}></td>
-                            <td class="p-0 border-r border-gray-300 w-28"><input type="number" name="${uiId}_SCE_r${r}_unissued" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.unissued}" ${sceDisabledAttr}></td>
-                            <td class="p-0 border-r border-gray-300 w-28"><input type="number" name="${uiId}_SCE_r${r}_sub" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.sub}" ${sceDisabledAttr}></td>
-                            <td class="p-0 border-r border-gray-300 w-28"><input type="number" name="${uiId}_SCE_r${r}_prem" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.prem}" ${sceDisabledAttr}></td>
-                            <td class="p-0 border-r border-gray-300 w-28"><input type="number" name="${uiId}_SCE_r${r}_re" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.re}" ${sceDisabledAttr}></td>
-                            <td class="p-0 border-r border-gray-300 w-28"><input type="number" name="${uiId}_SCE_r${r}_ts" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.ts}" ${sceDisabledAttr}></td>
-                            <td class="p-0 w-28"><input type="number" name="${uiId}_SCE_r${r}_total" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm font-bold ${sceDim}" placeholder="" value="${sceData.total}" ${sceDisabledAttr}></td>
+                            ${isMemo 
+                                ? `<td class="p-0 border-r border-gray-300 w-28"><input type="text" name="${uiId}_SCE_r${r}_cap" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.cap !== undefined ? sceData.cap : ''}" onblur="window.evaluateMDAS(this)" ${sceDisabledAttr}></td>`
+                                : `<td class="p-0 border-r border-gray-300 w-28"><input type="text" name="${uiId}_SCE_r${r}_auth" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.auth !== undefined ? sceData.auth : ''}" onblur="window.evaluateMDAS(this)" ${sceDisabledAttr}></td>
+                                   <td class="p-0 border-r border-gray-300 w-28"><input type="text" name="${uiId}_SCE_r${r}_unissued" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.unissued !== undefined ? sceData.unissued : ''}" onblur="window.evaluateMDAS(this)" ${sceDisabledAttr}></td>`
+                            }
+                            <td class="p-0 border-r border-gray-300 w-28"><input type="text" name="${uiId}_SCE_r${r}_sub" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.sub !== undefined ? sceData.sub : ''}" onblur="window.evaluateMDAS(this)" ${sceDisabledAttr}></td>
+                            <td class="p-0 border-r border-gray-300 w-28"><input type="text" name="${uiId}_SCE_r${r}_prem" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.prem !== undefined ? sceData.prem : ''}" onblur="window.evaluateMDAS(this)" ${sceDisabledAttr}></td>
+                            <td class="p-0 border-r border-gray-300 w-28"><input type="text" name="${uiId}_SCE_r${r}_re" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.re !== undefined ? sceData.re : ''}" onblur="window.evaluateMDAS(this)" ${sceDisabledAttr}></td>
+                            <td class="p-0 border-r border-gray-300 w-28"><input type="text" name="${uiId}_SCE_r${r}_ts" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${sceDim}" placeholder="" value="${sceData.ts !== undefined ? sceData.ts : ''}" onblur="window.evaluateMDAS(this)" ${sceDisabledAttr}></td>
+                            <td class="p-0 w-28"><input type="text" name="${uiId}_SCE_r${r}_total" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm font-bold ${sceDim}" placeholder="" value="${sceData.total !== undefined ? sceData.total : ''}" onblur="window.evaluateMDAS(this)" ${sceDisabledAttr}></td>
                         </tr>
                     `;
                 }
@@ -885,7 +988,7 @@ async function generateQuizContent(activityData, savedState = null) {
                     <div class="mt-8 mb-4">
                         <div class="bg-indigo-50 p-3 rounded-t border border-indigo-200 border-b-0">
                             <h3 class="text-sm font-bold text-indigo-900 uppercase tracking-wide"><i class="fas fa-table mr-2"></i>Statement of Changes in Equity</h3>
-                            <p class="text-xs text-indigo-700 mt-1">Update the balances below based on the journal entries above.</p>
+                            <p class="text-xs text-indigo-700 mt-1">Update the balances below based on the journal entries above. (You may use MDAS formulas in the amount fields!)</p>
                         </div>
                         <div class="w-full overflow-x-auto border border-gray-300 rounded-b shadow-sm bg-white">
                             <table class="w-full text-left whitespace-nowrap min-w-[1000px]">
@@ -893,8 +996,11 @@ async function generateQuizContent(activityData, savedState = null) {
                                     <tr>
                                         <th class="px-2 py-2 text-center border-r border-slate-300">Date</th>
                                         <th class="px-2 py-2 text-left border-r border-slate-300">Transaction / Movement</th>
-                                        <th class="px-2 py-2 text-right border-r border-slate-300">Authorized<br>Capital</th>
-                                        <th class="px-2 py-2 text-right border-r border-slate-300">Unissued<br>Capital</th>
+                                        ${isMemo 
+                                            ? `<th class="px-2 py-2 text-right border-r border-slate-300">Capital<br>Stock</th>`
+                                            : `<th class="px-2 py-2 text-right border-r border-slate-300">Authorized<br>Capital</th>
+                                               <th class="px-2 py-2 text-right border-r border-slate-300">Unissued<br>Capital</th>`
+                                        }
                                         <th class="px-2 py-2 text-right border-r border-slate-300">Subscribed<br>Stock</th>
                                         <th class="px-2 py-2 text-right border-r border-slate-300">Share<br>Premium</th>
                                         <th class="px-2 py-2 text-right border-r border-slate-300">Retained<br>Earnings</th>
@@ -956,9 +1062,9 @@ async function generateQuizContent(activityData, savedState = null) {
                         rows += `
                         <tr class="border-b border-gray-200 bg-white">
                             <td class="p-0 border-r border-gray-300 w-24"><input type="text" name="${transUiId}_r${r}_date" class="input-checker w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.date}" ${rowDisabledAttr}></td>
-                            <td class="p-0 border-r border-gray-300 w-auto"><input type="text" name="${transUiId}_r${r}_acct" class="input-checker w-full p-2 text-left outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.acct}" ${rowDisabledAttr}></td>
-                            <td class="p-0 border-r border-gray-300 w-28"><input type="number" name="${transUiId}_r${r}_dr" class="input-checker w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" style="appearance: textfield; -moz-appearance: textfield; -webkit-appearance: none;" placeholder="" value="${cellData.dr}" ${rowDisabledAttr}></td>
-                            <td class="p-0 w-28"><input type="number" name="${transUiId}_r${r}_cr" class="input-checker w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" style="appearance: textfield; -moz-appearance: textfield; -webkit-appearance: none;" placeholder="" value="${cellData.cr}" ${rowDisabledAttr}></td>
+                            <td class="p-0 border-r border-gray-300 w-auto"><input type="text" name="${transUiId}_r${r}_acct" id="acct-${transUiId}-${r}" class="input-checker w-full p-2 text-left outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.acct}" ${rowDisabledAttr}></td>
+                            <td class="p-0 border-r border-gray-300 w-28"><input type="text" name="${transUiId}_r${r}_dr" id="dr-${transUiId}-${r}" class="input-checker w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.dr}" oninput="window.handleJournalIndent('${transUiId}', ${r})" onblur="window.evaluateMDAS(this)" ${rowDisabledAttr}></td>
+                            <td class="p-0 w-28"><input type="text" name="${transUiId}_r${r}_cr" id="cr-${transUiId}-${r}" class="input-checker w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.cr}" oninput="window.handleJournalIndent('${transUiId}', ${r})" onblur="window.evaluateMDAS(this)" ${rowDisabledAttr}></td>
                         </tr>`;
                     }
 
@@ -1661,7 +1767,10 @@ async function submitQuiz(activityData, questionData, user, isFinal = false, for
     questionData.forEach(q => {
         if (q.type === 'Journalizing and Preparing SCE (Corp)') {
             const index = parseInt(q.uiId.split('_')[0].substring(1)); // Extract section index from uiId (e.g. "s0_q0")
-            const expectedSce = buildExpectedSce(q.transactions);
+            const expectedSce = buildExpectedSce(q);
+            const isMemo = q.topic && q.topic.toLowerCase().includes('memorandum');
+            const numericCols = isMemo ? ['Cap', 'Sub', 'Prem', 'RE', 'Treasury', 'Total'] : ['Auth', 'Unissued', 'Sub', 'Prem', 'RE', 'Treasury', 'Total'];
+
             const val = answers[q.uiId];
             
             let jeScore = 0; let jeMax = 0;
@@ -1680,8 +1789,16 @@ async function submitQuiz(activityData, questionData, user, isFinal = false, for
                                 const expVal = row[field];
                                 if (expVal !== undefined && expVal !== null && String(expVal).trim() !== '') {
                                     jeMax++;
-                                    if (studentRow[field] && String(studentRow[field]).trim().toLowerCase() === String(expVal).trim().toLowerCase()) {
-                                        jeScore++;
+                                    if (field === 'debit' || field === 'credit') {
+                                        let sVal = parseFloat(String(studentRow[field] || '').replace(/,/g, ''));
+                                        let eVal = parseFloat(String(expVal).replace(/,/g, ''));
+                                        if (!isNaN(sVal) && !isNaN(eVal) && sVal === eVal) {
+                                            jeScore++;
+                                        }
+                                    } else {
+                                        if (studentRow[field] && String(studentRow[field]).trim().toLowerCase() === String(expVal).trim().toLowerCase()) {
+                                            jeScore++;
+                                        }
                                     }
                                 }
                             });
@@ -1707,12 +1824,21 @@ async function submitQuiz(activityData, questionData, user, isFinal = false, for
                 }
 
                 // Numerics
-                ['Auth', 'Unissued', 'Sub', 'Prem', 'RE', 'Treasury', 'Total'].forEach(col => {
+                numericCols.forEach(col => {
                     const lCol = col.toLowerCase();
                     if (expRow[col] !== 0) {
                         sceMax++;
-                        // Tolerate string to number conversion for flexible grading
-                        if(studentRow[lCol] !== undefined && studentRow[lCol] !== '' && Number(studentRow[lCol]) === Number(expRow[col])) sceScore++;
+                        let sVal = parseFloat(String(studentRow[lCol] || '').replace(/,/g, ''));
+                        let eVal = parseFloat(expRow[col]);
+                        if (!isNaN(sVal) && !isNaN(eVal) && sVal === eVal) sceScore++;
+                    } else if (studentRow[lCol] !== undefined && studentRow[lCol] !== '') {
+                        let sVal = parseFloat(String(studentRow[lCol]).replace(/,/g, ''));
+                        if(sVal === 0) {
+                            sceMax++;
+                            sceScore++;
+                        } else {
+                            sceMax++;
+                        }
                     }
                 });
             });
