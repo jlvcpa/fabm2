@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCE Memo Method</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        input[type=range]::-webkit-slider-thumb {
+            pointer-events: all;
+            width: 24px;
+            height: 24px;
+            -webkit-appearance: none;
+            @apply w-6 h-6 appearance-none pointer-events-auto bg-indigo-600 rounded-full cursor-pointer;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased pb-12">
+
+    <nav class="bg-indigo-700 text-white shadow-md border-b border-indigo-800 sticky top-0 z-50">
+        <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl font-bold tracking-tight">Equity Dynamics</span>
+                </div>
+                <div class="text-sm font-medium text-indigo-100">
+                    Memorandum Entry Method
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-6">
+        
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
+            <h1 class="text-3xl font-bold text-slate-900 mb-2">Statement of Changes in Equity Analysis</h1>
+            <p class="text-slate-600 max-w-4xl text-lg">
+                This interactive tool visualizes corporate equity transactions under the memorandum entry method. 
+                Use the timeline slider below to step through each transaction during the year. Watch how the 
+                formal statement and detailed account roll-forwards update in real-time, starting from a zero beginning balance.
+            </p>
+        </section>
+
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-slate-100 px-6 py-3 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800">Transaction Timeline Simulator</h2>
+                    <p class="text-sm text-slate-500">Drag the slider or click next to apply transactions chronologically.</p>
+                </div>
+                <div class="flex items-center gap-6">
+                    <!-- Voice Narration Toggle -->
+                    <div class="flex items-center gap-3 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
+                        <span class="text-sm font-medium text-slate-600">Voice Narration</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="narration-toggle" class="sr-only peer">
+                            <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+                        </label>
+                    </div>
+                    <!-- Total Equity Display -->
+                    <div class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
+                        <span class="text-sm font-semibold text-slate-600">Total Equity:</span>
+                        <span id="header-total-equity" class="text-lg font-bold text-indigo-700">₱0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="px-6 py-4">
+                <div class="mb-6">
+                    <input type="range" id="transaction-slider" min="0" max="9" value="0" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                    <div class="flex justify-between text-xs font-medium text-slate-400 mt-2 px-1">
+                        <span>Jan 1</span>
+                        <span>Jan 15</span>
+                        <span>Feb 1</span>
+                        <span>Mar 1</span>
+                        <span>Mar 30</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-6 items-stretch">
+                    <div class="flex-1 bg-indigo-50 rounded-lg px-6 py-4 border border-indigo-100 flex flex-col justify-center transition-all duration-300">
+                        <div class="text-sm font-bold text-indigo-800 mb-1 uppercase tracking-wider" id="current-date">Jan 1</div>
+                        <div class="text-xl font-medium text-slate-900 mb-3" id="current-description">Authorized to issue 10,000 shares of P100 par common stock and 5,000 shares of P50 par preferred stock.</div>
+                        <div class="bg-white rounded px-4 py-2 border border-indigo-100 shadow-sm font-mono overflow-x-auto">
+                            <!-- Greatly increased font and reduced padding for projector view -->
+                            <table class="w-full text-left" id="current-journal">
+                                <!-- Journal entry injected here -->
+                            </table>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center gap-3">
+                        <button id="btn-prev" class="px-6 py-3 bg-white border border-slate-300 text-slate-700 font-semibold rounded-lg hover:bg-slate-50 transition shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                            &#8592; Previous
+                        </button>
+                        <button id="btn-next" class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                            Next Transaction &#8594;
+                        </button>
+                        <button id="btn-end" class="px-6 py-2 bg-slate-800 text-white text-sm font-medium rounded-lg hover:bg-slate-700 transition shadow-sm mt-1">
+                            Skip to Year End
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="space-y-6">
+            
+            <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-slate-100 px-6 py-3 border-b border-slate-200">
+                    <h2 class="text-lg font-bold text-slate-800">Statement of Changes in Equity <span class="text-sm font-normal text-slate-500">(Columnar Approach)</span></h2>
+                </div>
+                <div class="p-0 overflow-x-auto">
+                    <table class="w-full text-left whitespace-nowrap">
+                        <thead class="bg-slate-50 text-slate-700 uppercase font-semibold border-b border-slate-200 text-lg">
+                            <tr>
+                                <th class="px-2 py-1">Transaction / Movement</th>
+                                <th class="px-2 py-1 text-right">Capital<br>Stock</th>
+                                <th class="px-2 py-1 text-right">Subscribed<br>Stock</th>
+                                <th class="px-2 py-1 text-right">Share<br>Premium</th>
+                                <th class="px-2 py-1 text-right">Retained<br>Earnings</th>
+                                <th class="px-2 py-1 text-right">Treasury<br>Shares</th>
+                                <th class="px-2 py-1 text-right font-bold text-indigo-700 bg-indigo-50/50">Total<br>Equity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="formal-soce-body" class="divide-y divide-slate-100">
+                            <!-- Populated by JS -->
+                        </tbody>
+                        <tfoot class="bg-slate-50 font-bold border-t-2 border-slate-300" id="formal-soce-foot">
+                            <!-- Populated by JS -->
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-slate-100 px-6 py-3 border-b border-slate-200">
+                    <h2 class="text-lg font-bold text-slate-800">Detailed Account Roll-Forward</h2>
+                </div>
+                <div class="p-0 overflow-x-auto">
+                    <table class="w-full text-lg text-left">
+                        <thead class="bg-slate-50 text-slate-700 uppercase font-semibold border-b border-slate-200 text-base">
+                            <tr>
+                                <th class="px-4 py-1">Account Name</th>
+                                <th class="px-4 py-1 text-right">Beginning</th>
+                                <th class="px-4 py-1 text-right text-emerald-600">Additions</th>
+                                <th class="px-4 py-1 text-right text-rose-600">Deductions</th>
+                                <th class="px-4 py-1 text-right font-bold">Ending</th>
+                                <th class="px-4 py-1 text-center text-xs text-slate-400">Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="roll-forward-body" class="divide-y divide-slate-100">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <script>
+        const rawTransactions = [
+            { 
+                date: "Jan 1", 
+                desc: "Authorized to issue 10,000 shares of P100 par common stock and 5,000 shares of P50 par preferred stock.", 
+                journal: [{a: "Memo Entry", d: "", c: ""}, {a: "Authorized to issue 10,000 Common and 5,000 Preferred shares.", isExp: true}],
+                narration: "Journal Entry: Memorandum entry method used. No formal debit or credit to ledger accounts. Basis: Records the authorized maximum shares per the corporate charter. Statement of Changes in Equity Impact: None. Authorized shares are simply disclosed in the equity header or notes."
+            },
+            { 
+                date: "Jan 5", 
+                desc: "Received subscriptions for 2,000 shares of common stock at P120 per share.", 
+                journal: [{a: "Subscriptions Receivable - Common", d: 240000, c: ""}, {a: "Subscribed Common Stock", d: "", c: 200000}, {a: "Share Premium - Common", d: "", c: 40000}, {a: "Received subscriptions for common stock.", isExp: true}],
+                narration: "Journal Entry: Debit Subscriptions Receivable for 240,000. Credit Subscribed Common Stock at par for 200,000. Credit Share Premium Common for the excess of 40,000. Basis: Recording the contractual obligation of subscribers above the par value. Statement of Changes in Equity Impact: Subscribed Common Stock and Share Premium are directly added to the Statement, increasing Total Equity."
+            },
+            { 
+                date: "Jan 10", 
+                desc: "Received subscriptions for 1,000 shares of preferred stock at P60 per share.", 
+                journal: [{a: "Subscriptions Receivable - Preferred", d: 60000, c: ""}, {a: "Subscribed Preferred Stock", d: "", c: 50000}, {a: "Share Premium - Preferred", d: "", c: 10000}, {a: "Received subscriptions for preferred stock.", isExp: true}],
+                narration: "Journal Entry: Debit Subscriptions Receivable for 60,000. Credit Subscribed Preferred Stock at par for 50,000. Credit Share Premium Preferred for the excess of 10,000. Basis: Recording preferred stock subscriptions above par value. Statement of Changes in Equity Impact: Both Subscribed Preferred Stock and Share Premium entries directly increase Total Equity within the Statement."
+            },
+            { 
+                date: "Jan 15", 
+                desc: "Collected 50% downpayment on the Jan 5 common stock subscriptions.", 
+                journal: [{a: "Cash", d: 120000, c: ""}, {a: "Subscriptions Receivable - Common", d: "", c: 120000}, {a: "Partial collection of subscriptions.", isExp: true}],
+                narration: "Journal Entry: Debit Cash, Credit Subscriptions Receivable Common for 120,000. Basis: Partial collection of the outstanding receivable. Statement of Changes in Equity Impact: None. This is strictly an exchange of assets, converting a receivable to cash, and does not affect any equity balances."
+            },
+            { 
+                date: "Jan 20", 
+                desc: "Collected full payment for the Jan 10 preferred stock subscriptions and issued the shares.", 
+                journal: [{a: "Cash", d: 60000, c: ""}, {a: "Subscriptions Receivable - Preferred", d: "", c: 60000}, {a: "Subscribed Preferred Stock", d: 50000, c: ""}, {a: "Preferred Stock", d: "", c: 50000}, {a: "Full collection and issuance of preferred shares.", isExp: true}],
+                narration: "Journal Entry: Debit Cash, Credit Subscriptions Receivable for 60,000 for collection. Simultaneously, Debit Subscribed Preferred Stock, Credit Preferred Stock at par for 50,000 for issuance. Basis: Full payment obligates the corporation to issue the actual stock certificates. Statement of Changes in Equity Impact: Net total equity is unchanged. However, there is a lateral shift within the Statement: a deduction from the Subscribed Stock column and an addition to the Capital Stock column."
+            },
+            { 
+                date: "Feb 1", 
+                desc: "Issued 500 shares of common stock for cash at P130 per share.", 
+                journal: [{a: "Cash", d: 65000, c: ""}, {a: "Common Stock", d: "", c: 50000}, {a: "Share Premium - Common", d: "", c: 15000}, {a: "Direct issuance of common stock.", isExp: true}],
+                narration: "Journal Entry: Debit Cash for 65,000. Credit Common Stock at par for 50,000. Credit Share Premium for 15,000. Basis: Direct issuance of fully paid shares to investors for cash. Statement of Changes in Equity Impact: The Capital Stock and Share Premium line entries both represent additions to their respective columns, increasing Total Equity."
+            },
+            { 
+                date: "Feb 10", 
+                desc: "Collected the remaining 50% balance of the Jan 5 common stock subscriptions and issued the shares.", 
+                journal: [{a: "Cash", d: 120000, c: ""}, {a: "Subscriptions Receivable - Common", d: "", c: 120000}, {a: "Subscribed Common Stock", d: 200000, c: ""}, {a: "Common Stock", d: "", c: 200000}, {a: "Full collection and issuance of common shares.", isExp: true}],
+                narration: "Journal Entry: Debit Cash, Credit Subscriptions Receivable for the 120,000 balance. Simultaneously, Debit Subscribed Common Stock, Credit Common Stock at par for 200,000. Basis: Final payment received, triggering the formal issuance of common shares. Statement of Changes in Equity Impact: Shift within equity columns: Subscribed Stock experiences a deduction of 200,000 while Capital Stock experiences an addition of 200,000."
+            },
+            { 
+                date: "Mar 1", 
+                desc: "Reacquired 200 shares of common stock to be held in treasury at P140 per share.", 
+                journal: [{a: "Treasury Stock", d: 28000, c: ""}, {a: "Cash", d: "", c: 28000}, {a: "Acquired treasury shares.", isExp: true}],
+                narration: "Journal Entry: Debit Treasury Stock, Credit Cash for 28,000. Basis: Reacquisition of previously issued shares, recorded at cost method. Statement of Changes in Equity Impact: Treasury Stock is a contra-equity account. The transaction is presented as an addition to the Treasury column, which acts as a deduction against Total Equity."
+            },
+            { 
+                date: "Mar 15", 
+                desc: "Reissued 100 treasury shares at P150 per share.", 
+                journal: [{a: "Cash", d: 15000, c: ""}, {a: "Treasury Stock", d: "", c: 14000}, {a: "Share Premium - Treasury", d: "", c: 1000}, {a: "Reissued treasury shares above cost.", isExp: true}],
+                narration: "Journal Entry: Debit Cash for 15,000. Credit Treasury Stock at cost for 14,000. Credit Share Premium Treasury for 1,000. Basis: Reissuance of treasury shares at a price above their original acquisition cost. Statement of Changes in Equity Impact: Decreasing the Treasury Stock contra-account effectively restores total equity. The extra amount generates a gain credited to Share Premium."
+            },
+            { 
+                date: "Mar 30", 
+                desc: "Reissued 50 treasury shares at P135 per share.", 
+                journal: [{a: "Cash", d: 6750, c: ""}, {a: "Share Premium - Treasury", d: 250, c: ""}, {a: "Treasury Stock", d: "", c: 7000}, {a: "Reissued treasury shares below cost.", isExp: true}],
+                narration: "Journal Entry: Debit Cash for 6,750. Debit Share Premium Treasury for the loss of 250. Credit Treasury Stock at cost for 7,000. Basis: Reissuance of treasury shares below cost. The loss is absorbed by the existing treasury share premium. Statement of Changes in Equity Impact: Decreases Treasury Stock which restores equity, but also results in a deduction from Share Premium. The net effect is an equity increase equal to the cash received."
+            }
+        ];
+
+        const accountConfig = {
+            "Common Stock": { type: "Credit", category: "Capital" },
+            "Preferred Stock": { type: "Credit", category: "Capital" },
+            "Subscribed Common Stock": { type: "Credit", category: "Subscribed" },
+            "Subscribed Preferred Stock": { type: "Credit", category: "Subscribed" },
+            "Share Premium - Common": { type: "Credit", category: "Premium" },
+            "Share Premium - Preferred": { type: "Credit", category: "Premium" },
+            "Share Premium - Treasury": { type: "Credit", category: "Premium" },
+            "Retained Earnings": { type: "Credit", category: "Retained Earnings" },
+            "Treasury Stock": { type: "Debit", category: "Treasury" }
+        };
+
+        const formatCurrency = (val) => {
+            if (val === 0) return "-";
+            const formatted = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP', minimumFractionDigits: 0 }).format(Math.abs(val));
+            return val < 0 ? `(${formatted})` : formatted;
+        };
+
+        const speakNarration = (text) => {
+            window.speechSynthesis.cancel(); // Stop current speech
+            if (document.getElementById('narration-toggle').checked) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                window.speechSynthesis.speak(utterance);
+            }
+        };
+
+        const initApp = () => {
+            const slider = document.getElementById('transaction-slider');
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            const btnEnd = document.getElementById('btn-end');
+            const narrationToggle = document.getElementById('narration-toggle');
+
+            const updateState = () => {
+                const index = parseInt(slider.value, 10);
+                btnPrev.disabled = index === 0;
+                btnNext.disabled = index === rawTransactions.length - 1;
+                
+                renderActiveTransaction(index);
+                const processedData = processDataUpToIndex(index);
+                renderFormalSOCE(processedData.soceRows);
+                renderRollForwardTable(processedData.accountBalances);
+                
+                document.getElementById('header-total-equity').innerText = formatCurrency(processedData.totals.Total);
+
+                // Narrate if toggled
+                speakNarration(rawTransactions[index].narration);
+            };
+
+            const toggleNarration = () => {
+                if (!narrationToggle.checked) {
+                    window.speechSynthesis.cancel();
+                } else {
+                    const index = parseInt(slider.value, 10);
+                    speakNarration(rawTransactions[index].narration);
+                }
+            };
+
+            slider.addEventListener('input', updateState);
+            btnPrev.addEventListener('click', () => { slider.value = parseInt(slider.value) - 1; updateState(); });
+            btnNext.addEventListener('click', () => { slider.value = parseInt(slider.value) + 1; updateState(); });
+            btnEnd.addEventListener('click', () => { slider.value = rawTransactions.length - 1; updateState(); });
+            narrationToggle.addEventListener('change', toggleNarration);
+
+            updateState(); // Initial load
+        };
+
+        const renderActiveTransaction = (index) => {
+            const tx = rawTransactions[index];
+            document.getElementById('current-date').innerText = tx.date;
+            document.getElementById('current-description').innerText = tx.desc;
+            
+            // Doubled font size (text-2xl) and 90% reduced padding (py-0)
+            let journalHtml = `
+                <thead>
+                    <tr class="text-slate-400 text-lg border-b border-indigo-100">
+                        <th class="py-0 font-medium w-3/5">Account</th>
+                        <th class="py-0 font-medium text-right w-1/5">Debit</th>
+                        <th class="py-0 font-medium text-right w-1/5">Credit</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-indigo-50/50">
+            `;
+            
+            tx.journal.forEach(entry => {
+                if (entry.isExp) {
+                    journalHtml += `<tr class="text-xl"><td colspan="3" class="py-0 text-slate-500 italic">(${entry.a})</td></tr>`;
+                } else {
+                    const indent = entry.c !== "" ? "pl-8" : "";
+                    const debit = entry.d !== "" ? entry.d.toLocaleString() : "";
+                    const credit = entry.c !== "" ? entry.c.toLocaleString() : "";
+                    journalHtml += `
+                        <tr class="text-slate-800 text-2xl">
+                            <td class="py-0 ${indent}">${entry.a}</td>
+                            <td class="py-0 text-right text-slate-600">${debit}</td>
+                            <td class="py-0 text-right text-slate-600">${credit}</td>
+                        </tr>
+                    `;
+                }
+            });
+            journalHtml += `</tbody>`;
+            document.getElementById('current-journal').innerHTML = journalHtml;
+        };
+
+        const processDataUpToIndex = (endIndex) => {
+            let accountBalances = {};
+            Object.keys(accountConfig).forEach(acc => {
+                accountBalances[acc] = { beg: 0, add: 0, ded: 0, end: 0, type: accountConfig[acc].type };
+            });
+
+            let soceRows = [{
+                desc: "Balance at January 1", date: "Jan 1",
+                Capital: 0, Subscribed: 0, Premium: 0, RE: 0, Treasury: 0, Total: 0
+            }];
+
+            let currentTotals = { Capital: 0, Subscribed: 0, Premium: 0, RE: 0, Treasury: 0, Total: 0 };
+
+            for (let i = 0; i <= endIndex; i++) {
+                const tx = rawTransactions[i];
+                let rowImpact = { desc: tx.desc, date: tx.date, Capital: 0, Subscribed: 0, Premium: 0, RE: 0, Treasury: 0, Total: 0, hasEquityImpact: false };
+
+                tx.journal.forEach(entry => {
+                    if (entry.isExp || !accountConfig[entry.a]) return;
+
+                    const accName = entry.a;
+                    const config = accountConfig[accName];
+                    const debitAmt = parseFloat(entry.d) || 0;
+                    const creditAmt = parseFloat(entry.c) || 0;
+                    
+                    if (config.type === "Credit") {
+                        accountBalances[accName].add += creditAmt;
+                        accountBalances[accName].ded += debitAmt;
+                        accountBalances[accName].end += (creditAmt - debitAmt);
+                    } else { 
+                        accountBalances[accName].add += debitAmt;
+                        accountBalances[accName].ded += creditAmt;
+                        accountBalances[accName].end += (debitAmt - creditAmt);
+                    }
+
+                    let equityImpact = creditAmt - debitAmt; 
+
+                    if (equityImpact !== 0) {
+                        rowImpact.hasEquityImpact = true;
+                        rowImpact[config.category] += equityImpact;
+                        rowImpact.Total += equityImpact;
+                        
+                        currentTotals[config.category] += equityImpact;
+                        currentTotals.Total += equityImpact;
+                    }
+                });
+
+                if (rowImpact.Capital !== 0 || rowImpact.Subscribed !== 0 || rowImpact.Premium !== 0 || rowImpact.Treasury !== 0 || rowImpact.RE !== 0) {
+                    let simpleDesc = tx.desc;
+                    if(tx.date === "Jan 5") simpleDesc = "Subscriptions of Common Stock";
+                    if(tx.date === "Jan 10") simpleDesc = "Subscriptions of Preferred Stock";
+                    if(tx.date === "Jan 20") simpleDesc = "Issuance of Preferred Shares (Full Payment)";
+                    if(tx.date === "Feb 1") simpleDesc = "Issuance of Common Stock for Cash";
+                    if(tx.date === "Feb 10") simpleDesc = "Issuance of Common Shares (Full Payment)";
+                    if(tx.date === "Mar 1") simpleDesc = "Acquisition of Treasury Shares";
+                    if(tx.date === "Mar 15") simpleDesc = "Reissuance of Treasury Shares (Above Cost)";
+                    if(tx.date === "Mar 30") simpleDesc = "Reissuance of Treasury Shares (Below Cost)";
+
+                    rowImpact.desc = simpleDesc;
+                    soceRows.push(rowImpact);
+                }
+            }
+
+            return { accountBalances, soceRows, totals: currentTotals };
+        };
+
+        const renderFormalSOCE = (soceRows) => {
+            const tbody = document.getElementById('formal-soce-body');
+            const tfoot = document.getElementById('formal-soce-foot');
+            tbody.innerHTML = '';
+            
+            let runningTotals = { Capital: 0, Subscribed: 0, Premium: 0, RE: 0, Treasury: 0, Total: 0 };
+
+            // Doubled font size (text-2xl) and drastically reduced padding for projector presentation
+            soceRows.forEach(row => {
+                runningTotals.Capital += row.Capital;
+                runningTotals.Subscribed += row.Subscribed;
+                runningTotals.Premium += row.Premium;
+                runningTotals.RE += row.RE;
+                runningTotals.Treasury += row.Treasury;
+                runningTotals.Total += row.Total;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 transition text-2xl">
+                        <td class="px-2 py-0 text-slate-800">
+                            <span class="font-medium text-base text-slate-400 w-12 inline-block">${row.date}</span> 
+                            ${row.desc}
+                        </td>
+                        <td class="px-2 py-0 text-right ${row.Capital === 0 ? 'text-slate-300' : 'text-slate-700'}">${formatCurrency(row.Capital)}</td>
+                        <td class="px-2 py-0 text-right ${row.Subscribed === 0 ? 'text-slate-300' : 'text-slate-700'}">${formatCurrency(row.Subscribed)}</td>
+                        <td class="px-2 py-0 text-right ${row.Premium === 0 ? 'text-slate-300' : 'text-slate-700'}">${formatCurrency(row.Premium)}</td>
+                        <td class="px-2 py-0 text-right ${row.RE === 0 ? 'text-slate-300' : 'text-slate-700'}">${formatCurrency(row.RE)}</td>
+                        <td class="px-2 py-0 text-right ${row.Treasury === 0 ? 'text-slate-300' : 'text-rose-600'}">${formatCurrency(row.Treasury)}</td>
+                        <td class="px-2 py-0 text-right font-medium ${row.Total === 0 ? 'text-slate-300' : (row.Total > 0 ? 'text-emerald-600' : 'text-rose-600')} bg-indigo-50/10">${formatCurrency(row.Total)}</td>
+                    </tr>
+                `;
+            });
+
+            tfoot.innerHTML = `
+                <tr class="text-2xl">
+                    <td class="px-2 py-1 text-slate-800 uppercase tracking-wider text-xl">Ending Balance</td>
+                    <td class="px-2 py-1 text-right text-slate-900">${formatCurrency(runningTotals.Capital)}</td>
+                    <td class="px-2 py-1 text-right text-slate-900">${formatCurrency(runningTotals.Subscribed)}</td>
+                    <td class="px-2 py-1 text-right text-slate-900">${formatCurrency(runningTotals.Premium)}</td>
+                    <td class="px-2 py-1 text-right text-slate-900">${formatCurrency(runningTotals.RE)}</td>
+                    <td class="px-2 py-1 text-right text-rose-700">${formatCurrency(runningTotals.Treasury)}</td>
+                    <td class="px-2 py-1 text-right text-indigo-800 text-3xl bg-indigo-100/50">${formatCurrency(runningTotals.Total)}</td>
+                </tr>
+            `;
+        };
+
+        const renderRollForwardTable = (balances) => {
+            const tbody = document.getElementById('roll-forward-body');
+            tbody.innerHTML = '';
+
+            Object.keys(balances).forEach(acc => {
+                const b = balances[acc];
+                if (b.add === 0 && b.ded === 0 && b.end === 0) return;
+
+                let badgeColor = b.type === "Credit" ? "bg-emerald-100 text-emerald-800 border-emerald-200" : "bg-orange-100 text-orange-800 border-orange-200";
+                
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50">
+                        <td class="px-4 py-1 text-slate-800 font-medium">${acc}</td>
+                        <td class="px-4 py-1 text-right text-slate-500">${formatCurrency(b.beg)}</td>
+                        <td class="px-4 py-1 text-right text-emerald-600">${b.add === 0 ? '-' : b.add.toLocaleString()}</td>
+                        <td class="px-4 py-1 text-right text-rose-500">${b.ded === 0 ? '-' : b.ded.toLocaleString()}</td>
+                        <td class="px-4 py-1 text-right font-bold text-slate-900">${b.end === 0 ? '-' : b.end.toLocaleString()}</td>
+                        <td class="px-4 py-1 text-center">
+                            <span class="text-[10px] px-2 py-0.5 rounded-full border uppercase tracking-widest ${badgeColor}">${b.type}</span>
+                        </td>
+                    </tr>
+                `;
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', initApp);
+
+    </script>
+</body>
+</html>
