@@ -287,6 +287,9 @@ async function loadStudentActivities(user, customRunner, filterType) {
             if (filterType === 'Formative') {
                 if (activityName.includes('formative')) matchesFilter = true;
             } 
+            else if (filterType === 'Coursework') {
+                if (activityName.includes('coursework')) matchesFilter = true;
+            }
             else if (filterType === 'Summative') {
                 if (activityName.includes('summative')) matchesFilter = true;
             } 
