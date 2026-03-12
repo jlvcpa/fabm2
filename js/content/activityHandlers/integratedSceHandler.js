@@ -127,13 +127,19 @@ export const IntegratedSceHandler = {
         const transactions = q.transactions || [];
         const jHiddenClass = qIdx === 0 ? '' : 'hidden'; 
         
+        // Extract all possible unique descriptions for the dropdowns
+        const allDescriptions = transactions.flatMap(t => t.solution || []).filter(s => s.isExplanation).map(s => s.account);
+        const uniqueDescriptions = [...new Set(allDescriptions)];
+
         let transContent = '';
         
         // 1. Journal Entries Section
         transactions.forEach((trans, tIdx) => {
             const transUiId = `${uiId}_JE_t${tIdx}`;
             
-            const rowCount = trans.rows || 2;
+            const rowCount = trans.rows || (trans.solution ? trans.solution.length : 3);
+            const datePlaceholder = tIdx === 0 ? "Mmm d" : "d";
+
             let rows = '';
             for(let r=0; r < rowCount; r++) {
                 const cellKey = `t${tIdx}_r${r}`;
@@ -149,12 +155,35 @@ export const IntegratedSceHandler = {
                     indentStyle = "padding-left: 1.25rem;";
                 }
 
+                let dateCellHtml = '';
+                let acctCellHtml = '';
+                let drCellHtml = '';
+                let crCellHtml = '';
+
+                // Last row is strictly mapped to the description dropdown
+                if (r === rowCount - 1) {
+                    acctCellHtml = `
+                        <select name="${transUiId}_r${r}_acct" id="acct-${transUiId}-${r}" class="w-full h-full p-2 text-left outline-none bg-transparent font-mono text-sm transition-all duration-200 ${inputDim} italic text-gray-500" style="padding-left: 2rem;" ${rowDisabledAttr}>
+                            <option value="">Select Description...</option>
+                            ${uniqueDescriptions.map(d => `<option value="${d}" ${cellData.acct === d ? 'selected' : ''}>${d}</option>`).join('')}
+                        </select>
+                    `;
+                    dateCellHtml = `<input type="hidden" name="${transUiId}_r${r}_date" value="">`;
+                    drCellHtml = `<input type="hidden" name="${transUiId}_r${r}_dr" value="">`;
+                    crCellHtml = `<input type="hidden" name="${transUiId}_r${r}_cr" value="">`;
+                } else {
+                    dateCellHtml = `<input type="text" name="${transUiId}_r${r}_date" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="${datePlaceholder}" value="${cellData.date}" ${rowDisabledAttr}>`;
+                    acctCellHtml = `<input type="text" name="${transUiId}_r${r}_acct" id="acct-${transUiId}-${r}" class="w-full h-full p-2 text-left outline-none bg-transparent font-mono text-sm transition-all duration-200 ${inputDim} ${acctClass}" style="${indentStyle}" placeholder="" value="${cellData.acct}" ${rowDisabledAttr}>`;
+                    drCellHtml = `<input type="text" name="${transUiId}_r${r}_dr" id="dr-${transUiId}-${r}" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.dr}" oninput="window.handleJournalIndent('${transUiId}', ${r})" onblur="window.evaluateMDAS(this)" ${rowDisabledAttr}>`;
+                    crCellHtml = `<input type="text" name="${transUiId}_r${r}_cr" id="cr-${transUiId}-${r}" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.cr}" oninput="window.handleJournalIndent('${transUiId}', ${r})" onblur="window.evaluateMDAS(this)" ${rowDisabledAttr}>`;
+                }
+
                 rows += `
                 <tr class="border-b border-gray-200 bg-white hover:bg-gray-50">
-                    <td class="p-0 border-r border-gray-300 w-24"><input type="text" name="${transUiId}_r${r}_date" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.date}" ${rowDisabledAttr}></td>
-                    <td class="p-0 border-r border-gray-300 w-auto relative align-top"><input type="text" name="${transUiId}_r${r}_acct" id="acct-${transUiId}-${r}" class="w-full h-full p-2 text-left outline-none bg-transparent font-mono text-sm transition-all duration-200 ${inputDim} ${acctClass}" style="${indentStyle}" placeholder="" value="${cellData.acct}" ${rowDisabledAttr}></td>
-                    <td class="p-0 border-r border-gray-300 w-28"><input type="text" name="${transUiId}_r${r}_dr" id="dr-${transUiId}-${r}" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.dr}" oninput="window.handleJournalIndent('${transUiId}', ${r})" onblur="window.evaluateMDAS(this)" ${rowDisabledAttr}></td>
-                    <td class="p-0 w-28"><input type="text" name="${transUiId}_r${r}_cr" id="cr-${transUiId}-${r}" class="w-full p-2 text-right outline-none bg-transparent font-mono text-sm ${inputDim}" placeholder="" value="${cellData.cr}" oninput="window.handleJournalIndent('${transUiId}', ${r})" onblur="window.evaluateMDAS(this)" ${rowDisabledAttr}></td>
+                    <td class="p-0 border-r border-gray-300 w-24">${dateCellHtml}</td>
+                    <td class="p-0 border-r border-gray-300 w-auto relative align-top">${acctCellHtml}</td>
+                    <td class="p-0 border-r border-gray-300 w-28">${drCellHtml}</td>
+                    <td class="p-0 w-28">${crCellHtml}</td>
                 </tr>`;
             }
 
@@ -188,7 +217,6 @@ export const IntegratedSceHandler = {
         let sceRowsHtml = '';
         
         const isMemo = q.topic && q.topic.toLowerCase().includes('memorandum');
-        const descOptionsHtml = sceDescOptions.map(opt => `<option value="${opt}">${opt}</option>`).join('');
 
         for (let r=0; r < expectedSceRowsCount; r++) {
             const cellKey = `r${r}`;
@@ -274,7 +302,7 @@ export const IntegratedSceHandler = {
         // Interactivity handling is managed directly via the question buttons for this specific integrated format
     },
     checkCompletion: (uiId, form) => {
-        const jeInputs = form.querySelectorAll(`input[name^="${uiId}_JE_"]`);
+        const jeInputs = form.querySelectorAll(`input[name^="${uiId}_JE_"], select[name^="${uiId}_JE_"]`);
         const sceInputs = form.querySelectorAll(`input[name^="${uiId}_SCE_"], select[name^="${uiId}_SCE_"]`);
         
         let hasJeData = false;
@@ -289,7 +317,7 @@ export const IntegratedSceHandler = {
         let integratedValue = { JE: {}, SCE: {} };
         let hasIntegratedData = false;
 
-        const jeInputs = document.querySelectorAll(`input[name^="${uiId}_JE_"]`);
+        const jeInputs = document.querySelectorAll(`input[name^="${uiId}_JE_"], select[name^="${uiId}_JE_"]`);
         jeInputs.forEach(input => {
             if(input.value) hasIntegratedData = true;
             const parts = input.name.split('_'); 
@@ -323,9 +351,19 @@ export const IntegratedSceHandler = {
         
         const transactions = liveQ.transactions || [];
         transactions.forEach((tx, tIdx) => {
+            const rowCount = tx.rows || (tx.solution ? tx.solution.length : 3);
             if (tx.solution) {
                 tx.solution.forEach((row, rIdx) => {
-                    if(row.isExplanation) return;
+                    if(row.isExplanation) {
+                        jeMax++;
+                        const cellKey = `t${tIdx}_r${rowCount - 1}`;
+                        const sr = (studentAns && studentAns.JE && studentAns.JE[cellKey]) ? studentAns.JE[cellKey] : {};
+                        if (sr.acct && String(sr.acct).trim() === String(row.account).trim()) {
+                            jeScore++;
+                        }
+                        return;
+                    }
+
                     const cellKey = `t${tIdx}_r${rIdx}`;
                     const sr = (studentAns && studentAns.JE && studentAns.JE[cellKey]) ? studentAns.JE[cellKey] : {};
                     ['date', 'account', 'debit', 'credit'].forEach(field => {
@@ -336,6 +374,13 @@ export const IntegratedSceHandler = {
                                 let sVal = parseFloat(String(sr[field] || '').replace(/,/g, ''));
                                 let eVal = parseFloat(String(expVal).replace(/,/g, ''));
                                 if (!isNaN(sVal) && !isNaN(eVal) && sVal === eVal) jeScore++;
+                            } else if (field === 'date') {
+                                let expectedDate = String(expVal).trim();
+                                if (tIdx > 0) {
+                                    const parts = expectedDate.split(' ');
+                                    if (parts.length > 1) expectedDate = parts[parts.length - 1];
+                                }
+                                if (sr[field] && String(sr[field]).trim().toLowerCase() === expectedDate.toLowerCase()) jeScore++;
                             } else {
                                 if (sr[field] && String(sr[field]).trim().toLowerCase() === String(expVal).trim().toLowerCase()) jeScore++;
                             }
