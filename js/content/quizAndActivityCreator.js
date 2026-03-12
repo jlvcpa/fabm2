@@ -157,6 +157,7 @@ function addTestSectionUI(existingData = null) {
                     <option value="Multiple Choice">Multiple Choice</option>
                     <option value="Problem Solving">Problem Solving</option>
                     <option value="Journalizing">Journalizing</option>
+                    <option value="Journalizing and Preparing SCE (Corp) 01">Journalizing and Preparing SCE (Corp) 01</option>
                 </select>
             </div>
             <div>
