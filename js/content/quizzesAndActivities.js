@@ -759,15 +759,11 @@ function initializeQuizManager(activityData, questionData, user, savedState) {
                     timerDisplay.parentElement.classList.add('text-red-800');
                 }
                 
-                // EXPIRE HANDLER: AUTO-SUBMIT
                 if (!hasSubmittedOnExpire) {
                     hasSubmittedOnExpire = true;
-                    // Stop all timers
                     sectionIntervals.forEach(i => clearInterval(i));
-                    // Alert the user
-                    alert("Time is up! Your activity is being auto-submitted.");
-                    // Force submit (isFinal=true, forceSubmit=true)
-                    submitQuiz(activityData, questionData, user, true, true);
+                    alert("Time is up! Your progress is being auto-saved and the activity will be locked.");
+                    saveProgress(activityData, questionData, user, true);
                 }
             } else {
                 const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -845,9 +841,9 @@ function initializeQuizManager(activityData, questionData, user, savedState) {
     saveBtn.addEventListener('click', () => saveProgress(activityData, questionData, user));
 }
 
-async function saveProgress(activityData, questionData, user) {
-    if (currentAntiCheat) currentAntiCheat.stopMonitoring();
-    if(!confirm("Save progress? Saved answers cannot be edited later.")) {
+async function saveProgress(activityData, questionData, user, forceSave = false) {
+    if (currentAntiCheat && !forceSave) currentAntiCheat.stopMonitoring();
+    if(!forceSave && !confirm("Save progress? Saved answers cannot be edited later.")) {
         if (currentAntiCheat) currentAntiCheat.startMonitoring();
         return;
     }
@@ -898,7 +894,9 @@ async function saveProgress(activityData, questionData, user) {
             section: activityData.section
         }, { merge: true });
 
-        alert("Progress saved! Page will reload to lock saved answers.");
+        if (!forceSave) {
+            alert("Progress saved! Page will reload to lock saved answers.");
+        }
         renderQuizRunner(activityData, user);
     } catch (e) {
         console.error("Save Error:", e);
