@@ -758,11 +758,16 @@ function initializeQuizManager(activityData, questionData, user, savedState) {
                     timerDisplay.innerHTML = "EXPIRED";
                     timerDisplay.parentElement.classList.add('text-red-800');
                 }
+                
+                // EXPIRE HANDLER: AUTO-SUBMIT
                 if (!hasSubmittedOnExpire) {
                     hasSubmittedOnExpire = true;
+                    // Stop all timers
                     sectionIntervals.forEach(i => clearInterval(i));
-                    alert("Time is up! Your current progress is locked but will not be auto-submitted. Please contact your instructor.");
-                    window.location.reload();
+                    // Alert the user
+                    alert("Time is up! Your activity is being auto-submitted.");
+                    // Force submit (isFinal=true, forceSubmit=true)
+                    submitQuiz(activityData, questionData, user, true, true);
                 }
             } else {
                 const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
