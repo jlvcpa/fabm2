@@ -29,7 +29,11 @@
         .nav-link.active { background-color: #eff6ff; color: #1d4ed8; border-left: 4px solid #2563eb; font-weight: 600; }
         .nav-link { transition: all 0.2s ease-in-out; border-left: 4px solid transparent; }
         
-        .cf-row { animation: fadeIn 0.4s ease-in-out; }
+        .cf-row { 
+            animation: fadeIn 0.4s ease-in-out; 
+            transition: background-color 0.5s ease; /* Smooth background highlighting */
+            border-radius: 4px;
+        }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
 
         table th, table td { padding-top: 2px; padding-bottom: 2px; padding-left: 4px; padding-right: 4px; }
@@ -40,6 +44,7 @@
             width: 100%;
             position: relative;
             overflow: hidden; 
+            touch-action: pan-y; /* allow vertical scroll natively, handle horizontal via JS */
         }
 
         .content-flow {
@@ -67,7 +72,8 @@
             display: inline-block;
             width: 100%;
             height: calc(100% - 10px);
-            overflow: auto; 
+            overflow-y: auto; 
+            overflow-x: hidden;
             break-inside: avoid;
             page-break-inside: avoid;
             vertical-align: top;
@@ -276,19 +282,25 @@
                         </ol>
                     </section>
 
-                    <section id="case-study-indirect" class="interactive-slide section-marker">
-                        <div class="interactive-wrapper bg-slate-900 text-slate-100 p-4 md:p-6 rounded-xl shadow-2xl border border-slate-700">
-                            <div class="sticky top-0 bg-slate-900 z-30 border-b border-indigo-500 pb-3 mb-4 pt-2 flex justify-between items-center">
-                                <h2 class="text-xl md:text-2xl font-extrabold text-indigo-400 tracking-tight">Simple Case Study - Indirect Method</h2>
+                    <section id="case-study-indirect" class="interactive-slide section-marker relative">
+                        <div class="interactive-wrapper bg-slate-900 text-slate-100 p-4 md:p-6 rounded-xl shadow-2xl border border-slate-700 relative">
+                            
+                            <div class="sticky top-[0px] md:top-[-4px] bg-slate-900 z-40 border-b border-indigo-500 pb-4 pt-4 md:pt-5 -mx-4 px-4 md:-mx-6 md:px-6 -mt-4 md:-mt-6 mb-5 flex flex-col items-center gap-3 rounded-t-xl shadow-md">
+                                <h2 class="text-xl md:text-2xl font-extrabold text-indigo-400 tracking-tight text-center">Simple Case Study - Indirect Method</h2>
+                                <div class="flex gap-3 justify-center w-full">
+                                    <button id="btnPrevInd" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded-lg font-bold text-lg transition-colors shadow-md border border-slate-600">&laquo; Prev</button>
+                                    <button id="btnNextInd" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg font-bold text-lg transition-colors shadow-md border border-indigo-500">Next &raquo;</button>
+                                    <button id="btnEndInd" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded-lg font-bold text-lg transition-colors shadow-md border border-slate-600">End</button>
+                                </div>
                             </div>
                             
-                            <p class="text-lg mb-4 text-slate-300">Formative Company's cash increased by <strong>50,000 PHP</strong>. Reconcile this using the step-by-step indirect timeline below.</p>
+                            <p class="text-lg mb-5 text-slate-300 text-center px-4">Formative Company's cash increased by <strong>50,000 PHP</strong>. Reconcile this using the step-by-step indirect timeline below.</p>
 
-                            <div class="flex flex-col gap-4">
+                            <div class="flex flex-col gap-4 mb-5">
                                 <div class="grid lg:grid-cols-2 gap-4">
-                                    <div class="bg-slate-800 rounded-lg p-4 text-base font-mono border border-slate-700 shadow-sm">
+                                    <div class="bg-slate-800 rounded-lg p-4 text-base font-mono border border-slate-700 shadow-sm overflow-x-auto">
                                         <h3 class="font-semibold text-slate-200 border-b border-slate-600 mb-2 pb-2 uppercase tracking-wider text-sm">Financial Position</h3>
-                                        <table class="w-full text-right border-collapse">
+                                        <table class="w-full text-right border-collapse min-w-[300px]">
                                             <thead>
                                                 <tr class="text-slate-400 border-b border-slate-600"><th class="text-left w-1/2 pb-1">Assets</th><th class="text-center pb-1">2025</th><th class="text-center pb-1">2024</th></tr>
                                             </thead>
@@ -307,9 +319,9 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="bg-slate-800 rounded-lg p-4 text-base font-mono border border-slate-700 shadow-sm">
+                                    <div class="bg-slate-800 rounded-lg p-4 text-base font-mono border border-slate-700 shadow-sm overflow-x-auto">
                                         <h3 class="font-semibold text-slate-200 border-b border-slate-600 mb-2 pb-2 uppercase tracking-wider text-sm">Income Statement (2025)</h3>
-                                        <table class="w-full text-right border-collapse text-slate-300">
+                                        <table class="w-full text-right border-collapse text-slate-300 min-w-[300px]">
                                             <tbody>
                                                 <tr><td class="text-left w-2/3 py-1">Sales</td><td class="w-1/3 py-1">500,000</td></tr>
                                                 <tr><td class="text-left py-1">Cost of Goods Sold</td><td class="py-1">(300,000)</td></tr>
@@ -321,53 +333,49 @@
                                         </table>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="bg-slate-800 p-4 rounded-lg flex flex-wrap items-center justify-between gap-4 border border-slate-600 shadow-inner">
-                                    <input type="range" id="sliderInd" min="0" max="9" value="0" class="w-full md:w-1/3 accent-indigo-500 h-2 bg-slate-600 rounded appearance-none cursor-pointer">
-                                    <div class="flex gap-2 w-full md:w-auto justify-center">
-                                        <button id="btnPrevInd" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded font-bold text-lg transition-colors">&laquo; Prev</button>
-                                        <button id="btnNextInd" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded font-bold text-lg transition-colors">Next &raquo;</button>
-                                        <button id="btnEndInd" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded font-bold text-lg transition-colors">End</button>
-                                    </div>
-                                    <label class="flex items-center gap-2 text-lg text-indigo-300 cursor-pointer w-full md:w-auto justify-center font-medium">
-                                        <input type="checkbox" id="voiceInd" class="w-5 h-5 accent-indigo-500"> Voice Narration
-                                    </label>
+                            <div class="flex flex-col md:flex-row items-center md:justify-center gap-4 md:gap-8 mb-5 border-t border-b border-slate-700 py-4 bg-slate-800/50 rounded-lg w-full">
+                                <label class="flex items-center gap-2 text-lg text-indigo-300 cursor-pointer font-medium shrink-0">
+                                    <input type="checkbox" id="voiceInd" class="w-5 h-5 accent-indigo-500"> Voice Narration
+                                </label>
+                                <div id="circlesInd" class="flex flex-wrap justify-center gap-2"></div>
+                            </div>
+
+                            <div class="bg-indigo-950/80 border-l-4 border-indigo-500 p-5 rounded-lg min-h-[140px] shadow-inner mb-5">
+                                <h3 id="titleInd" class="text-xl md:text-2xl font-bold text-white mb-2">Step 0: Start</h3>
+                                <p id="expInd" class="text-lg text-indigo-100 mb-4">Review initial data.</p>
+                                <div class="bg-indigo-900/80 px-3 py-1.5 rounded text-base font-mono text-indigo-200 inline-block border border-indigo-700/50">
+                                    <span class="font-bold text-white uppercase text-xs tracking-wider mr-2 opacity-80">Action:</span> <span id="actInd">Observe data.</span>
                                 </div>
+                            </div>
 
-                                <div class="bg-indigo-950/80 border-l-4 border-indigo-500 p-5 rounded-lg min-h-[140px] shadow-inner">
-                                    <h3 id="titleInd" class="text-xl md:text-2xl font-bold text-white mb-2">Step 0: Start</h3>
-                                    <p id="expInd" class="text-lg text-indigo-100 mb-4">Review initial data.</p>
-                                    <div class="bg-indigo-900/80 px-3 py-1.5 rounded text-base font-mono text-indigo-200 inline-block border border-indigo-700/50">
-                                        <span class="font-bold text-white uppercase text-xs tracking-wider mr-2 opacity-80">Action:</span> <span id="actInd">Observe data.</span>
-                                    </div>
-                                </div>
-
-                                <div class="bg-slate-50 rounded-lg p-5 shadow-inner border-4 border-slate-300 overflow-x-auto">
-                                    <h4 class="font-bold text-xl text-slate-900 border-b-2 border-indigo-600 pb-2 mb-3 text-center uppercase tracking-wider">Statement of Cash Flows (Indirect)</h4>
-                                    <div class="font-mono text-lg text-slate-800 min-w-[600px]">
-                                        <div id="cf-ind-op-hdr" class="cf-row hidden font-bold mt-2 bg-indigo-100 px-3 py-1.5 rounded text-indigo-900">Operating Activities</div>
-                                        <div id="cf-ind-ni" class="cf-row hidden flex justify-between px-4 py-1 text-slate-900 font-bold"><span>Net Income</span><span>45,000</span></div>
-                                        <div id="cf-ind-adj" class="cf-row hidden px-4 py-1 text-slate-500 italic text-base">Adjustments to reconcile NI to cash:</div>
-                                        <div id="cf-ind-dep" class="cf-row hidden flex justify-between px-8 py-1 text-green-700"><span>Depreciation Expense</span><span>30,000</span></div>
-                                        <div id="cf-ind-ar" class="cf-row hidden flex justify-between px-8 py-1 text-red-700"><span>Inc. in Accounts Receivable</span><span>(10,000)</span></div>
-                                        <div id="cf-ind-inv" class="cf-row hidden flex justify-between px-8 py-1 text-green-700"><span>Dec. in Inventory</span><span>10,000</span></div>
-                                        <div id="cf-ind-ap" class="cf-row hidden flex justify-between px-8 py-1 text-red-700"><span>Dec. in Accounts Payable</span><span>(5,000)</span></div>
-                                        <div id="cf-ind-acc" class="cf-row hidden flex justify-between px-8 py-1 text-green-700"><span>Inc. in Accrued Liab.</span><span>5,000</span></div>
+                            <div id="cf-ind-container" class="bg-slate-50 rounded-lg p-5 shadow-inner border-4 border-slate-300 overflow-y-auto max-h-[400px] overflow-x-auto relative">
+                                <div class="pb-[120px]"> <h4 class="font-bold text-xl text-slate-900 border-b-2 border-indigo-600 pb-2 mb-3 text-center uppercase tracking-wider sticky top-0 bg-slate-50 z-10 pt-1">Statement of Cash Flows (Indirect)</h4>
+                                    <div class="font-mono text-lg text-slate-800 min-w-[600px] space-y-1">
+                                        <div id="cf-ind-op-hdr" class="cf-row hidden font-bold mt-2 bg-indigo-100 px-3 py-1.5 text-indigo-900">Operating Activities</div>
+                                        <div id="cf-ind-ni" class="cf-row hidden flex justify-between px-4 py-1.5 text-slate-900 font-bold"><span>Net Income</span><span>45,000</span></div>
+                                        <div id="cf-ind-adj" class="cf-row hidden px-4 py-1.5 text-slate-500 italic text-base">Adjustments to reconcile NI to cash:</div>
+                                        <div id="cf-ind-dep" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Depreciation Expense</span><span>30,000</span></div>
+                                        <div id="cf-ind-ar" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Inc. in Accounts Receivable</span><span>(10,000)</span></div>
+                                        <div id="cf-ind-inv" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Dec. in Inventory</span><span>10,000</span></div>
+                                        <div id="cf-ind-ap" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Dec. in Accounts Payable</span><span>(5,000)</span></div>
+                                        <div id="cf-ind-acc" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Inc. in Accrued Liab.</span><span>5,000</span></div>
                                         <div id="cf-ind-op-net" class="cf-row hidden flex justify-between px-4 py-1.5 font-bold border-t-2 border-slate-300 bg-slate-200 text-slate-900 mt-2"><span>Net Cash from Operating</span><span>75,000</span></div>
 
-                                        <div id="cf-ind-inv-hdr" class="cf-row hidden font-bold mt-5 bg-indigo-100 px-3 py-1.5 rounded text-indigo-900">Investing Activities</div>
-                                        <div id="cf-ind-ppe" class="cf-row hidden flex justify-between px-8 py-1 text-red-700"><span>Purchase of PPE</span><span>(100,000)</span></div>
+                                        <div id="cf-ind-inv-hdr" class="cf-row hidden font-bold mt-5 bg-indigo-100 px-3 py-1.5 text-indigo-900">Investing Activities</div>
+                                        <div id="cf-ind-ppe" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Purchase of PPE</span><span>(100,000)</span></div>
                                         <div id="cf-ind-inv-net" class="cf-row hidden flex justify-between px-4 py-1.5 font-bold border-t-2 border-slate-300 bg-slate-200 text-slate-900 mt-2"><span>Net Cash used in Investing</span><span class="text-red-800">(100,000)</span></div>
 
-                                        <div id="cf-ind-fin-hdr" class="cf-row hidden font-bold mt-5 bg-indigo-100 px-3 py-1.5 rounded text-indigo-900">Financing Activities</div>
-                                        <div id="cf-ind-debt" class="cf-row hidden flex justify-between px-8 py-1 text-green-700"><span>Proceeds from Long-Term Debt</span><span>50,000</span></div>
-                                        <div id="cf-ind-stock" class="cf-row hidden flex justify-between px-8 py-1 text-green-700"><span>Proceeds from Issuance of Stock</span><span>50,000</span></div>
-                                        <div id="cf-ind-div" class="cf-row hidden flex justify-between px-8 py-1 text-red-700"><span>Dividends Paid</span><span>(25,000)</span></div>
+                                        <div id="cf-ind-fin-hdr" class="cf-row hidden font-bold mt-5 bg-indigo-100 px-3 py-1.5 text-indigo-900">Financing Activities</div>
+                                        <div id="cf-ind-debt" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Proceeds from Long-Term Debt</span><span>50,000</span></div>
+                                        <div id="cf-ind-stock" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Proceeds from Issuance of Stock</span><span>50,000</span></div>
+                                        <div id="cf-ind-div" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Dividends Paid</span><span>(25,000)</span></div>
                                         <div id="cf-ind-fin-net" class="cf-row hidden flex justify-between px-4 py-1.5 font-bold border-t-2 border-slate-300 bg-slate-200 text-slate-900 mt-2"><span>Net Cash from Financing</span><span>75,000</span></div>
 
-                                        <div id="cf-ind-sum-net" class="cf-row hidden flex justify-between font-bold mt-5 pt-2 border-t-4 border-slate-800 text-slate-900"><span>Net Increase in Cash</span><span class="text-green-700">50,000</span></div>
-                                        <div id="cf-ind-sum-beg" class="cf-row hidden flex justify-between text-slate-600 font-medium py-1"><span>Cash at beginning of year</span><span>100,000</span></div>
-                                        <div id="cf-ind-sum-end" class="cf-row hidden flex justify-between font-extrabold text-xl bg-indigo-600 text-white px-3 py-2 mt-2 rounded shadow-md"><span>Cash at end of year</span><span>150,000</span></div>
+                                        <div id="cf-ind-sum-net" class="cf-row hidden flex justify-between font-bold mt-5 pt-3 border-t-4 border-slate-800 text-slate-900"><span>Net Increase in Cash</span><span class="text-green-700">50,000</span></div>
+                                        <div id="cf-ind-sum-beg" class="cf-row hidden flex justify-between text-slate-600 font-medium py-1.5"><span>Cash at beginning of year</span><span>100,000</span></div>
+                                        <div id="cf-ind-sum-end" class="cf-row hidden flex justify-between font-extrabold text-xl bg-indigo-600 text-white px-3 py-2 mt-2 shadow-md"><span>Cash at end of year</span><span>150,000</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -402,54 +410,55 @@
                         </ol>
                     </section>
 
-                    <section id="case-study-direct" class="interactive-slide section-marker">
-                        <div class="interactive-wrapper bg-slate-800 text-slate-100 p-4 md:p-6 rounded-xl shadow-2xl border border-slate-600">
-                            <div class="sticky top-0 bg-slate-800 z-30 border-b border-teal-500 pb-3 mb-4 pt-2 flex justify-between items-center">
-                                <h2 class="text-xl md:text-2xl font-extrabold text-teal-400 tracking-tight">Simple Case Study - Direct Method</h2>
+                    <section id="case-study-direct" class="interactive-slide section-marker relative">
+                        <div class="interactive-wrapper bg-slate-800 text-slate-100 p-4 md:p-6 rounded-xl shadow-2xl border border-slate-600 relative">
+                            
+                            <div class="sticky top-[0px] md:top-[-4px] bg-slate-800 z-40 border-b border-teal-500 pb-4 pt-4 md:pt-5 -mx-4 px-4 md:-mx-6 md:px-6 -mt-4 md:-mt-6 mb-5 flex flex-col items-center gap-3 rounded-t-xl shadow-md">
+                                <h2 class="text-xl md:text-2xl font-extrabold text-teal-400 tracking-tight text-center">Simple Case Study - Direct Method</h2>
+                                <div class="flex gap-3 justify-center w-full">
+                                    <button id="btnPrevDir" class="bg-slate-600 hover:bg-slate-500 text-white px-5 py-2 rounded-lg font-bold text-lg transition-colors shadow-md border border-slate-500">&laquo; Prev</button>
+                                    <button id="btnNextDir" class="bg-teal-600 hover:bg-teal-500 text-white px-5 py-2 rounded-lg font-bold text-lg transition-colors shadow-md border border-teal-500">Next &raquo;</button>
+                                    <button id="btnEndDir" class="bg-slate-600 hover:bg-slate-500 text-white px-5 py-2 rounded-lg font-bold text-lg transition-colors shadow-md border border-slate-500">End</button>
+                                </div>
                             </div>
                             
-                            <p class="text-lg mb-4 text-slate-300">Using the identical given data from above, let's build the CF statement using the Direct Method. This method computes gross cash receipts and payments directly.</p>
+                            <p class="text-lg mb-5 text-slate-300 text-center px-4">Using the identical given data from above, let's build the CF statement using the Direct Method. This method computes gross cash receipts and payments directly.</p>
 
-                            <div class="flex flex-col gap-4">
-                                <div class="bg-slate-700 p-4 rounded-lg flex flex-wrap items-center justify-between gap-4 border border-slate-500 shadow-inner">
-                                    <input type="range" id="sliderDir" min="0" max="6" value="0" class="w-full md:w-1/3 accent-teal-500 h-2 bg-slate-500 rounded appearance-none cursor-pointer">
-                                    <div class="flex gap-2 w-full md:w-auto justify-center">
-                                        <button id="btnPrevDir" class="bg-slate-600 hover:bg-slate-500 text-white px-5 py-2 rounded font-bold text-lg transition-colors">&laquo; Prev</button>
-                                        <button id="btnNextDir" class="bg-teal-600 hover:bg-teal-500 text-white px-5 py-2 rounded font-bold text-lg transition-colors">Next &raquo;</button>
-                                        <button id="btnEndDir" class="bg-slate-600 hover:bg-slate-500 text-white px-5 py-2 rounded font-bold text-lg transition-colors">End</button>
-                                    </div>
-                                    <label class="flex items-center gap-2 text-lg text-teal-300 cursor-pointer w-full md:w-auto justify-center font-medium">
-                                        <input type="checkbox" id="voiceDir" class="w-5 h-5 accent-teal-500"> Voice Narration
-                                    </label>
+                            <div class="flex flex-col md:flex-row items-center md:justify-center gap-4 md:gap-8 mb-5 border-t border-b border-slate-600 py-4 bg-slate-700/50 rounded-lg w-full">
+                                <label class="flex items-center gap-2 text-lg text-teal-300 cursor-pointer font-medium shrink-0">
+                                    <input type="checkbox" id="voiceDir" class="w-5 h-5 accent-teal-500"> Voice Narration
+                                </label>
+                                <div id="circlesDir" class="flex flex-wrap justify-center gap-2"></div>
+                            </div>
+
+                            <div class="bg-teal-950/80 border-l-4 border-teal-500 p-5 rounded-lg min-h-[140px] shadow-inner mb-5">
+                                <h3 id="titleDir" class="text-xl md:text-2xl font-bold text-white mb-2">Step 0: Start</h3>
+                                <p id="expDir" class="text-lg text-teal-100 mb-4">We will compute cash from operations directly from line items.</p>
+                                <div class="bg-teal-900/80 px-3 py-1.5 rounded text-base font-mono text-teal-200 inline-block border border-teal-700/50">
+                                    <span class="font-bold text-white uppercase text-xs tracking-wider mr-2 opacity-80">Calculation:</span> <span id="actDir">-</span>
                                 </div>
+                            </div>
 
-                                <div class="bg-teal-950/80 border-l-4 border-teal-500 p-5 rounded-lg min-h-[140px] shadow-inner">
-                                    <h3 id="titleDir" class="text-xl md:text-2xl font-bold text-white mb-2">Step 0: Start</h3>
-                                    <p id="expDir" class="text-lg text-teal-100 mb-4">We will compute cash from operations directly from line items.</p>
-                                    <div class="bg-teal-900/80 px-3 py-1.5 rounded text-base font-mono text-teal-200 inline-block border border-teal-700/50">
-                                        <span class="font-bold text-white uppercase text-xs tracking-wider mr-2 opacity-80">Calculation:</span> <span id="actDir">-</span>
-                                    </div>
-                                </div>
-
-                                <div class="bg-slate-50 rounded-lg p-5 shadow-inner border-4 border-slate-300 overflow-x-auto">
-                                    <h4 class="font-bold text-xl text-slate-900 border-b-2 border-teal-600 pb-2 mb-3 text-center uppercase tracking-wider">Statement of Cash Flows (Direct)</h4>
-                                    <div class="font-mono text-lg text-slate-800 min-w-[600px]">
-                                        <div id="cf-dir-op-hdr" class="cf-row hidden font-bold mt-2 bg-teal-100 px-3 py-1.5 rounded text-teal-900">Operating Activities</div>
+                            <div id="cf-dir-container" class="bg-slate-50 rounded-lg p-5 shadow-inner border-4 border-slate-300 overflow-y-auto max-h-[400px] overflow-x-auto relative">
+                                <div class="pb-[120px]">
+                                    <h4 class="font-bold text-xl text-slate-900 border-b-2 border-teal-600 pb-2 mb-3 text-center uppercase tracking-wider sticky top-0 bg-slate-50 z-10 pt-1">Statement of Cash Flows (Direct)</h4>
+                                    <div class="font-mono text-lg text-slate-800 min-w-[600px] space-y-1">
+                                        <div id="cf-dir-op-hdr" class="cf-row hidden font-bold mt-2 bg-teal-100 px-3 py-1.5 text-teal-900">Operating Activities</div>
                                         
-                                        <div id="cf-dir-cust" class="cf-row hidden flex justify-between px-8 py-1 text-green-700"><span>Cash received from customers</span><span>490,000</span></div>
-                                        <div id="cf-dir-supp" class="cf-row hidden flex justify-between px-8 py-1 text-red-700"><span>Cash paid to suppliers</span><span>(295,000)</span></div>
-                                        <div id="cf-dir-opex" class="cf-row hidden flex justify-between px-8 py-1 text-red-700"><span>Cash paid for operating exp.</span><span>(95,000)</span></div>
-                                        <div id="cf-dir-int" class="cf-row hidden flex justify-between px-8 py-1 text-red-700"><span>Cash paid for interest & taxes</span><span>(25,000)</span></div>
+                                        <div id="cf-dir-cust" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Cash received from customers</span><span>490,000</span></div>
+                                        <div id="cf-dir-supp" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Cash paid to suppliers</span><span>(295,000)</span></div>
+                                        <div id="cf-dir-opex" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Cash paid for operating exp.</span><span>(95,000)</span></div>
+                                        <div id="cf-dir-int" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Cash paid for interest & taxes</span><span>(25,000)</span></div>
                                         
                                         <div id="cf-dir-op-net" class="cf-row hidden flex justify-between px-4 py-1.5 font-bold border-t-2 border-slate-300 bg-slate-200 text-teal-900 mt-2"><span>Net Cash from Operating</span><span>75,000</span></div>
 
-                                        <div id="cf-dir-inv-hdr" class="cf-row hidden font-bold mt-5 bg-teal-100 px-3 py-1.5 rounded text-teal-900">Investing & Financing Activities</div>
-                                        <div id="cf-dir-inv" class="cf-row hidden flex justify-between px-8 py-1 text-red-700"><span>Net Cash used in Investing</span><span>(100,000)</span></div>
-                                        <div id="cf-dir-fin" class="cf-row hidden flex justify-between px-8 py-1 text-green-700"><span>Net Cash from Financing</span><span>75,000</span></div>
+                                        <div id="cf-dir-inv-hdr" class="cf-row hidden font-bold mt-5 bg-teal-100 px-3 py-1.5 text-teal-900">Investing & Financing Activities</div>
+                                        <div id="cf-dir-inv" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Net Cash used in Investing</span><span>(100,000)</span></div>
+                                        <div id="cf-dir-fin" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Net Cash from Financing</span><span>75,000</span></div>
 
-                                        <div id="cf-dir-sum" class="cf-row hidden flex justify-between font-bold mt-5 pt-2 border-t-4 border-slate-800 text-slate-900"><span>Net Increase in Cash</span><span class="text-green-700">50,000</span></div>
-                                        <div id="cf-dir-beg" class="cf-row hidden flex justify-between text-slate-600 font-medium py-1"><span>Cash at beginning of year</span><span>100,000</span></div>
-                                        <div id="cf-dir-end" class="cf-row hidden flex justify-between font-extrabold text-xl bg-teal-600 text-white px-3 py-2 mt-2 rounded shadow-md"><span>Cash at end of year</span><span>150,000</span></div>
+                                        <div id="cf-dir-sum" class="cf-row hidden flex justify-between font-bold mt-5 pt-3 border-t-4 border-slate-800 text-slate-900"><span>Net Increase in Cash</span><span class="text-green-700">50,000</span></div>
+                                        <div id="cf-dir-beg" class="cf-row hidden flex justify-between text-slate-600 font-medium py-1.5"><span>Cash at beginning of year</span><span>100,000</span></div>
+                                        <div id="cf-dir-end" class="cf-row hidden flex justify-between font-extrabold text-xl bg-teal-600 text-white px-3 py-2 mt-2 shadow-md"><span>Cash at end of year</span><span>150,000</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -472,7 +481,6 @@
         
         // --- Global Zoom Logic (Scaling the HTML root) ---
         function updateZoomVar() {
-            // Tailwind relies on rem. Scaling the base html size scales everything perfectly.
             document.documentElement.style.fontSize = (currentZoom / 100 * 16) + 'px';
             zoomInput.value = currentZoom + '%';
             setTimeout(updatePagination, 50);
@@ -495,6 +503,7 @@
             updateZoomVar();
         }
 
+        // --- Pagination Logic ---
         function updatePagination() {
             const topicsContent = document.getElementById('topics-content');
             const topicsViewport = document.getElementById('topics-viewport');
@@ -534,9 +543,15 @@
             });
 
             if (activeId) {
-                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active', 'text-indigo-700', 'text-teal-700', 'bg-indigo-50', 'bg-teal-50', 'bg-slate-100'));
                 const activeLink = document.querySelector(`.nav-link[data-target="${activeId}"]`);
-                if(activeLink) activeLink.classList.add('active');
+                if(activeLink) {
+                    activeLink.classList.add('active');
+                    // Add specific tint back to case study active states if needed
+                    if (activeId === 'case-study-indirect') activeLink.classList.add('text-indigo-700', 'bg-indigo-50');
+                    else if (activeId === 'case-study-direct') activeLink.classList.add('text-teal-700', 'bg-teal-50');
+                    else activeLink.classList.add('bg-slate-100');
+                }
             }
         }
 
@@ -552,6 +567,40 @@
                 currentPage--;
                 updatePagination();
             }
+        }
+
+        // --- Swipe Gesture Logic ---
+        let touchstartX = 0;
+        let touchstartY = 0;
+        let touchendX = 0;
+        let touchendY = 0;
+
+        const sliderViewport = document.getElementById('topics-viewport');
+
+        sliderViewport.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+            touchstartY = e.changedTouches[0].screenY;
+        }, {passive: true});
+
+        sliderViewport.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            touchendY = e.changedTouches[0].screenY;
+            handleSwipe(e);
+        }, {passive: true});
+
+        function handleSwipe(e) {
+            // Ignore if swipe is mostly vertical
+            if (Math.abs(touchstartY - touchendY) > Math.abs(touchstartX - touchendX)) return;
+            
+            // Ignore if swiping inside a horizontally scrollable container (e.g. data tables)
+            const scrollableNode = e.target.closest('.overflow-x-auto');
+            if (scrollableNode && scrollableNode.scrollWidth > scrollableNode.clientWidth) {
+                return; 
+            }
+
+            const swipeDist = touchstartX - touchendX;
+            if (swipeDist > 50) nextPage();
+            else if (swipeDist < -50) prevPage();
         }
 
         window.addEventListener('resize', updatePagination);
@@ -623,27 +672,79 @@
         ];
 
         let currInd = 0;
+
+        function initCirclesInd() {
+            const container = document.getElementById('circlesInd');
+            container.innerHTML = '';
+            indSteps.forEach((_, i) => {
+                const circle = document.createElement('div');
+                circle.id = `circle-ind-${i}`;
+                circle.className = 'w-8 h-8 rounded-full flex items-center justify-center font-bold cursor-pointer transition-colors text-sm shadow-sm';
+                circle.innerText = i;
+                circle.onclick = () => { currInd = i; updateInd(); };
+                container.appendChild(circle);
+            });
+        }
+
         function updateInd() {
             document.getElementById('titleInd').innerText = indSteps[currInd].title;
             document.getElementById('expInd').innerText = indSteps[currInd].exp;
             document.getElementById('actInd').innerText = indSteps[currInd].act;
             
+            // Remove highlighting from all rows first
             indSteps.flatMap(s => s.rev).forEach(id => {
                 const el = document.getElementById(id);
-                if(el) { el.classList.add('hidden'); el.style.animation = 'none'; el.offsetHeight; }
+                if(el) { 
+                    el.classList.add('hidden'); 
+                    el.style.animation = 'none'; 
+                    el.classList.remove('!bg-amber-100'); // Clean up any active highlights
+                }
             });
+
+            let lastRevealedEl = null;
 
             for(let i=0; i<=currInd; i++) {
                 indSteps[i].rev.forEach(id => {
                     const el = document.getElementById(id);
-                    if(el) { el.classList.remove('hidden'); el.style.animation = 'fadeIn 0.5s'; }
+                    if(el) { 
+                        el.classList.remove('hidden'); 
+                        el.style.animation = 'fadeIn 0.5s'; 
+                        
+                        // Apply yellow highlight ONLY to the rows revealed in the CURRENT step
+                        if (i === currInd) {
+                            el.classList.add('!bg-amber-100');
+                            lastRevealedEl = el;
+                        }
+                    }
                 });
             }
-            document.getElementById('sliderInd').value = currInd;
+
+            // Update circles UI
+            indSteps.forEach((_, i) => {
+                const circle = document.getElementById(`circle-ind-${i}`);
+                if(circle) {
+                    if (i === currInd) {
+                        circle.classList.add('bg-indigo-500', 'text-white');
+                        circle.classList.remove('bg-slate-600', 'text-slate-300', 'hover:bg-slate-500');
+                    } else {
+                        circle.classList.add('bg-slate-600', 'text-slate-300', 'hover:bg-slate-500');
+                        circle.classList.remove('bg-indigo-500', 'text-white');
+                    }
+                }
+            });
+
+            // Smooth Auto-scroll CF container so the newly highlighted row is roughly 3 lines from bottom
+            if (lastRevealedEl) {
+                const container = document.getElementById('cf-ind-container');
+                if (container) {
+                    const targetScrollTop = lastRevealedEl.offsetTop - container.clientHeight + 100;
+                    container.scrollTo({ top: Math.max(0, targetScrollTop), behavior: 'smooth' });
+                }
+            }
+
             playVoice(indSteps[currInd].nar, 'voiceInd');
         }
 
-        document.getElementById('sliderInd').addEventListener('input', (e) => { currInd = parseInt(e.target.value); updateInd(); });
         document.getElementById('btnPrevInd').addEventListener('click', () => { if(currInd > 0) { currInd--; updateInd(); } });
         document.getElementById('btnNextInd').addEventListener('click', () => { if(currInd < indSteps.length - 1) { currInd++; updateInd(); } });
         document.getElementById('btnEndInd').addEventListener('click', () => { currInd = indSteps.length - 1; updateInd(); });
@@ -660,32 +761,86 @@
         ];
 
         let currDir = 0;
+
+        function initCirclesDir() {
+            const container = document.getElementById('circlesDir');
+            container.innerHTML = '';
+            dirSteps.forEach((_, i) => {
+                const circle = document.createElement('div');
+                circle.id = `circle-dir-${i}`;
+                circle.className = 'w-8 h-8 rounded-full flex items-center justify-center font-bold cursor-pointer transition-colors text-sm shadow-sm';
+                circle.innerText = i;
+                circle.onclick = () => { currDir = i; updateDir(); };
+                container.appendChild(circle);
+            });
+        }
+
         function updateDir() {
             document.getElementById('titleDir').innerText = dirSteps[currDir].title;
             document.getElementById('expDir').innerText = dirSteps[currDir].exp;
             document.getElementById('actDir').innerText = dirSteps[currDir].act;
             
+            // Remove highlighting from all rows first
             dirSteps.flatMap(s => s.rev).forEach(id => {
                 const el = document.getElementById(id);
-                if(el) { el.classList.add('hidden'); el.style.animation = 'none'; el.offsetHeight; }
+                if(el) { 
+                    el.classList.add('hidden'); 
+                    el.style.animation = 'none'; 
+                    el.classList.remove('!bg-amber-100'); // Clean up any active highlights
+                }
             });
+
+            let lastRevealedEl = null;
 
             for(let i=0; i<=currDir; i++) {
                 dirSteps[i].rev.forEach(id => {
                     const el = document.getElementById(id);
-                    if(el) { el.classList.remove('hidden'); el.style.animation = 'fadeIn 0.5s'; }
+                    if(el) { 
+                        el.classList.remove('hidden'); 
+                        el.style.animation = 'fadeIn 0.5s'; 
+                        
+                        // Apply yellow highlight ONLY to the rows revealed in the CURRENT step
+                        if (i === currDir) {
+                            el.classList.add('!bg-amber-100');
+                            lastRevealedEl = el;
+                        }
+                    }
                 });
             }
-            document.getElementById('sliderDir').value = currDir;
+
+            // Update circles UI
+            dirSteps.forEach((_, i) => {
+                const circle = document.getElementById(`circle-dir-${i}`);
+                if(circle) {
+                    if (i === currDir) {
+                        circle.classList.add('bg-teal-500', 'text-white');
+                        circle.classList.remove('bg-slate-600', 'text-slate-300', 'hover:bg-slate-500');
+                    } else {
+                        circle.classList.add('bg-slate-600', 'text-slate-300', 'hover:bg-slate-500');
+                        circle.classList.remove('bg-teal-500', 'text-white');
+                    }
+                }
+            });
+
+            // Smooth Auto-scroll CF container so the newly highlighted row is roughly 3 lines from bottom
+            if (lastRevealedEl) {
+                const container = document.getElementById('cf-dir-container');
+                if (container) {
+                    const targetScrollTop = lastRevealedEl.offsetTop - container.clientHeight + 100;
+                    container.scrollTo({ top: Math.max(0, targetScrollTop), behavior: 'smooth' });
+                }
+            }
+
             playVoice(dirSteps[currDir].nar, 'voiceDir');
         }
 
-        document.getElementById('sliderDir').addEventListener('input', (e) => { currDir = parseInt(e.target.value); updateDir(); });
         document.getElementById('btnPrevDir').addEventListener('click', () => { if(currDir > 0) { currDir--; updateDir(); } });
         document.getElementById('btnNextDir').addEventListener('click', () => { if(currDir < dirSteps.length - 1) { currDir++; updateDir(); } });
         document.getElementById('btnEndDir').addEventListener('click', () => { currDir = dirSteps.length - 1; updateDir(); });
 
         window.onload = () => { 
+            initCirclesInd();
+            initCirclesDir();
             updateInd(); 
             updateDir();
             setTimeout(updateZoomVar, 50);
