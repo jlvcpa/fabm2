@@ -79,9 +79,25 @@
 
         /* Reduced Topic Padding */
         .topic-section {
-            padding: 0 1.5rem;
+            padding: 0 3rem !important;
             margin-bottom: 1.5rem;
         }
+
+	ol, li, ul {
+            padding-right: 1rem !important;
+	}
+
+	ol, ul {
+    	    padding-left: 3rem !important;
+	}
+
+	li {
+	    padding-left: 0;
+	}
+
+	li::marker {
+	    margin-right: 0.5rem;
+	}
 
         @media (min-width: 1024px) {
             .topic-section { padding: 0 2rem; }
@@ -110,7 +126,7 @@
 
     </style>
 </head>
-<body class="bg-slate-300 flex justify-center items-center h-screen w-full p-0">
+<body class="bg-slate-300 flex justify-center items-center h-screen w-full p-4">
 
     <div class="flex h-full w-full max-w-[1400px] bg-white md:shadow-2xl overflow-hidden relative">
 
@@ -291,7 +307,7 @@
                 </div>
 
                 <div id="view-case-indirect" class="view-section">
-                    <div class="flex flex-col lg:flex-row h-full w-full gap-3 overflow-y-auto p-2 lg:p-4 bg-slate-900 section-marker" id="case-study-indirect">
+                    <div class="flex flex-col lg:flex-row h-full w-full gap-3 overflow-y-auto p-12 lg:p-12 bg-slate-900 section-marker" id="case-study-indirect">
                         
                         <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
                             <div class="sticky top-0 z-30 bg-slate-800 p-3 rounded shadow-md border border-slate-700 flex flex-col gap-2">
@@ -419,7 +435,7 @@
                 </div>
 
                 <div id="view-case-direct" class="view-section">
-                    <div class="flex flex-col lg:flex-row h-full w-full gap-3 overflow-y-auto p-2 lg:p-4 bg-slate-800 section-marker" id="case-study-direct">
+                    <div class="flex flex-col lg:flex-row h-full w-full gap-3 overflow-y-auto p-12 lg:p-12 bg-slate-800 section-marker" id="case-study-direct">
                         
                         <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
                             <div class="sticky top-0 z-30 bg-slate-700 p-3 rounded shadow-md border border-slate-600 flex flex-col gap-2">
