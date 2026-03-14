@@ -10,7 +10,7 @@
     <style>
         /* Base font root. JavaScript will scale this to zoom ALL text globally */
         html { 
-            font-size: 25.6px; /* Base increased by 60% from standard 16px */
+            font-size: 16px; 
             scroll-behavior: smooth; 
         }
 
@@ -145,7 +145,7 @@
 
         <main class="flex-1 flex flex-col h-full relative bg-white w-full">
             
-            <header class="flex justify-between items-center bg-slate-800 text-slate-200 border-b border-slate-700 flex-shrink-0 z-10" style="padding: 2px 8px; font-size: 0.75rem;">
+            <header class="flex justify-between items-center bg-slate-800 text-slate-200 border-b border-slate-700 flex-shrink-0 z-10" style="padding: 2px 8px; font-size: 1rem;">
                 <div class="flex items-center gap-2">
                     <button id="menuBtn" onclick="toggleMenu()" class="text-white hover:text-slate-300 focus:outline-none" style="padding: 2px;">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -303,10 +303,10 @@
                             </div>
 
                             <div class="bg-slate-800 rounded p-3 border border-slate-700 shadow-sm text-sm">
-                                <p class="text-slate-300 mb-2">Formative Company's cash increased by <strong class="text-white">50,000 PHP</strong>. Reconcile this.</p>
-                                
-                                <h3 class="font-semibold text-slate-200 border-b border-slate-600 mb-1 pb-1 text-xs">Financial Position</h3>
-                                <table class="w-full text-right border-collapse font-mono text-xs text-slate-300 mb-3">
+                                <h3 class="font-semibold text-slate-200 pb-0.1 text-lg">Formative Company</p>
+				<h3 class="font-semibold text-slate-200 pb-0.1 text-sm">Statement of Financial Position</p>
+                                <h3 class="text-slate-200 border-b border-slate-600 mb-1 pb-1 text-sm">As of December 31, 2025 (with 2024 comparative)</h3>
+                                <table class="w-full text-right border-collapse font-mono text-sm text-slate-300 mb-3">
                                     <thead><tr class="text-slate-400 border-b border-slate-600"><th class="text-left w-1/2">Assets</th><th class="text-center">2025</th><th class="text-center">2024</th></tr></thead>
                                     <tbody>
                                         <tr class="bg-indigo-900/40 font-bold"><td class="text-left">Cash</td><td class="text-center text-white">150,000</td><td class="text-center">100,000</td></tr>
@@ -323,8 +323,9 @@
                                     </tbody>
                                 </table>
 
-                                <h3 class="font-semibold text-slate-200 border-b border-slate-600 mb-1 pb-1 text-xs">Income Statement (2025)</h3>
-                                <table class="w-full text-right border-collapse font-mono text-xs text-slate-300">
+                                <h3 class="font-semibold text-slate-200 pb-0.1 text-sm">Income Statement (2025)</h3>
+                                <h3 class="text-slate-200 border-b border-slate-600 mb-1 pb-1 text-sm">For the year ended December 31, 2025</h3>
+                                <table class="w-full text-right border-collapse font-mono text-sm text-slate-300">
                                     <tbody>
                                         <tr><td class="text-left w-2/3">Sales</td><td class="w-1/3">500,000</td></tr>
                                         <tr><td class="text-left">Cost of Goods Sold</td><td>(300,000)</td></tr>
@@ -339,39 +340,35 @@
 
                         <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
                             <div class="sticky top-[105px] lg:top-0 z-20 bg-indigo-950 p-3 rounded shadow-md border-l-4 border-indigo-500">
-                                <h3 id="titleInd" class="text-base font-bold text-white mb-1">Step 0: Start</h3>
                                 <p id="expInd" class="text-sm text-indigo-100 mb-2 leading-snug">Review initial data.</p>
-                                <div class="bg-indigo-900 px-2 py-0.5 rounded font-mono text-indigo-200 inline-block border border-indigo-700 text-xs">
-                                    <span class="font-bold text-white mr-1">Action:</span> <span id="actInd">Observe data.</span>
-                                </div>
                             </div>
 
                             <div id="cf-ind-container" class="bg-slate-50 rounded p-3 shadow-inner border-2 border-slate-300 overflow-y-auto max-h-[50vh] lg:max-h-none lg:flex-1 relative font-mono text-sm text-slate-800">
-                                <div class="pb-[90px]"> <h4 class="font-bold text-base text-slate-900 border-b-2 border-indigo-600 pb-1 mb-2 text-center uppercase sticky top-0 bg-slate-50 z-10">Indirect Method</h4>
+                                <div class="pb-[90px]"> <h4 class="font-bold text-base text-slate-900 border-b-2 border-indigo-600 pb-1 mb-2 text-center uppercase bg-slate-50">Statement of Cash Flows (Indirect Method)</h4>
                                     
                                     <div id="cf-ind-op-hdr" class="cf-row hidden font-bold mt-1 bg-indigo-100 px-2 py-0.5 text-indigo-900">Operating Activities</div>
                                     <div id="cf-ind-ni" class="cf-row hidden flex justify-between px-2 py-0.5 font-bold"><span>Net Income</span><span>45,000</span></div>
                                     <div id="cf-ind-adj" class="cf-row hidden px-2 py-0.5 text-slate-500 italic text-xs">Adjustments:</div>
                                     <div id="cf-ind-dep" class="cf-row hidden flex justify-between px-4 py-0.5 text-green-700"><span>Depreciation Exp</span><span>30,000</span></div>
-                                    <div id="cf-ind-ar" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Inc. in AR</span><span>(10,000)</span></div>
+                                    <div id="cf-ind-ar" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Inc. in AR</span><span>-10,000</span></div>
                                     <div id="cf-ind-inv" class="cf-row hidden flex justify-between px-4 py-0.5 text-green-700"><span>Dec. in Inventory</span><span>10,000</span></div>
-                                    <div id="cf-ind-ap" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Dec. in AP</span><span>(5,000)</span></div>
+                                    <div id="cf-ind-ap" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Dec. in AP</span><span>-5,000</span></div>
                                     <div id="cf-ind-acc" class="cf-row hidden flex justify-between px-4 py-0.5 text-green-700"><span>Inc. in Accrued Liab</span><span>5,000</span></div>
-                                    <div id="cf-ind-op-net" class="cf-row hidden flex justify-between px-2 py-0.5 font-bold border-t border-slate-300 bg-slate-200 mt-1"><span>Net from Operating</span><span>75,000</span></div>
+                                    <div id="cf-ind-op-net" class="cf-row hidden flex justify-between px-2 py-0.5 font-bold border-t border-slate-300 bg-slate-200 mt-1"><span>Net cash inflow from Operating</span><span>75,000</span></div>
 
                                     <div id="cf-ind-inv-hdr" class="cf-row hidden font-bold mt-3 bg-indigo-100 px-2 py-0.5 text-indigo-900">Investing Activities</div>
-                                    <div id="cf-ind-ppe" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Purchase of PPE</span><span>(100,000)</span></div>
-                                    <div id="cf-ind-inv-net" class="cf-row hidden flex justify-between px-2 py-0.5 font-bold border-t border-slate-300 bg-slate-200 mt-1"><span>Net from Investing</span><span class="text-red-800">(100,000)</span></div>
+                                    <div id="cf-ind-ppe" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Purchase of PPE</span><span>-100,000</span></div>
+                                    <div id="cf-ind-inv-net" class="cf-row hidden flex justify-between px-2 py-0.5 font-bold border-t border-slate-300 bg-slate-200 mt-1"><span>Net cash outflow from Investing</span><span class="text-red-800">-100,000</span></div>
 
                                     <div id="cf-ind-fin-hdr" class="cf-row hidden font-bold mt-3 bg-indigo-100 px-2 py-0.5 text-indigo-900">Financing Activities</div>
                                     <div id="cf-ind-debt" class="cf-row hidden flex justify-between px-4 py-0.5 text-green-700"><span>Proceeds - Debt</span><span>50,000</span></div>
                                     <div id="cf-ind-stock" class="cf-row hidden flex justify-between px-4 py-0.5 text-green-700"><span>Proceeds - Stock</span><span>50,000</span></div>
-                                    <div id="cf-ind-div" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Dividends Paid</span><span>(25,000)</span></div>
-                                    <div id="cf-ind-fin-net" class="cf-row hidden flex justify-between px-2 py-0.5 font-bold border-t border-slate-300 bg-slate-200 mt-1"><span>Net from Financing</span><span>75,000</span></div>
+                                    <div id="cf-ind-div" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Dividends Paid</span><span>-25,000</span></div>
+                                    <div id="cf-ind-fin-net" class="cf-row hidden flex justify-between px-2 py-0.5 font-bold border-t border-slate-300 bg-slate-200 mt-1"><span>Net cash inflow from Financing</span><span>75,000</span></div>
 
                                     <div id="cf-ind-sum-net" class="cf-row hidden flex justify-between font-bold mt-3 pt-1 border-t-2 border-slate-800"><span>Net Inc. in Cash</span><span class="text-green-700">50,000</span></div>
                                     <div id="cf-ind-sum-beg" class="cf-row hidden flex justify-between text-slate-600 px-1 py-0.5"><span>Cash at beginning</span><span>100,000</span></div>
-                                    <div id="cf-ind-sum-end" class="cf-row hidden flex justify-between font-bold bg-indigo-600 text-white px-2 py-1 mt-1 rounded"><span>Cash at end</span><span>150,000</span></div>
+                                    <div id="cf-ind-sum-end" class="cf-row hidden flex justify-between font-bold bg-indigo-600 px-2 py-1 mt-1 rounded"><span>Cash at end</span><span>150,000</span></div>
                                 </div>
                             </div>
                         </div>
@@ -521,8 +518,7 @@
         let currentZoom = 100;
         
         function updateZoomVar() {
-            // Base font increased by exactly 60% from the default 16px to 25.6px
-            document.documentElement.style.fontSize = (currentZoom / 100 * 25.6) + 'px';
+            document.documentElement.style.fontSize = (currentZoom / 100 * 16) + 'px';
             document.getElementById('zoom-input').value = currentZoom + '%';
             setTimeout(updatePagination, 50);
         }
@@ -558,7 +554,7 @@
             if (!els || !els.content || !els.viewport) {
                 // Not a multi-column text view (it's an interactive example)
                 document.getElementById('page-indicator').innerText = `Ex.`;
-                updateSidebarHighlighting(null, null);
+                updateSidebarHighlighting(null);
                 return;
             }
             
@@ -572,12 +568,13 @@
 
             setTimeout(() => {
                 const totalCols = Math.ceil(els.content.scrollWidth / colWidth);
-                totalPages = Math.max(1, totalCols - colsPerPage + 1); 
+                totalPages = Math.max(1, totalCols - colsPerPage + 1); // Max pages you can slide
                 
                 if (currentPage >= totalPages) currentPage = Math.max(0, totalPages - 1);
                 
                 els.content.style.transform = `translateX(-${currentPage * colWidth}px)`;
                 
+                // Display page info
                 let displayPage = currentPage + 1;
                 let displayTotal = totalPages;
                 document.getElementById('page-indicator').innerText = `${displayPage} / ${displayTotal}`;
@@ -631,7 +628,7 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(views[index]).classList.add('active');
             currentViewIndex = index;
-            currentPage = 0; 
+            currentPage = 0; // reset horizontal page
             
             updatePagination();
         }
@@ -643,10 +640,10 @@
                     currentPage++;
                     updatePagination();
                 } else {
-                    switchView(currentViewIndex + 1); 
+                    switchView(currentViewIndex + 1); // Move to next View
                 }
             } else {
-                switchView(currentViewIndex + 1); 
+                switchView(currentViewIndex + 1); // Move from interactive to next text
             }
         }
 
@@ -657,8 +654,10 @@
                     currentPage--;
                     updatePagination();
                 } else {
+                    // Moving back a view, jump to its last page
                     if(currentViewIndex > 0) {
                         switchView(currentViewIndex - 1);
+                        // Hacky way to jump to end of that view
                         setTimeout(() => {
                             currentPage = totalPages - 1;
                             updatePagination();
@@ -705,7 +704,7 @@
                 }
             }
             updatePagination();
-            if(window.innerWidth < 1024) toggleMenu(); 
+            toggleMenu(); // close mobile menu
         }
 
         // --- Swipe Gesture Logic ---
@@ -726,9 +725,11 @@
         function handleSwipe(e) {
             if (Math.abs(touchstartY - touchendY) > Math.abs(touchstartX - touchendX)) return;
             
+            // Ignore horizontal overflow elements
             const scrollableNode = e.target.closest('.overflow-x-auto');
             if (scrollableNode && scrollableNode.scrollWidth > scrollableNode.clientWidth) return; 
 
+            // Ignore sliders
             if (e.target.type === 'range') return;
 
             const swipeDist = touchstartX - touchendX;
@@ -781,9 +782,7 @@
             });
         }
         function updateInd() {
-            document.getElementById('titleInd').innerText = indSteps[currInd].title;
             document.getElementById('expInd').innerText = indSteps[currInd].exp;
-            document.getElementById('actInd').innerText = indSteps[currInd].act;
             
             indSteps.flatMap(s => s.rev).forEach(id => {
                 const el = document.getElementById(id);
@@ -886,4 +885,3 @@
     </script>
 </body>
 </html>
-
