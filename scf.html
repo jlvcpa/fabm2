@@ -516,25 +516,19 @@
         let currentPage = 0;
         let totalPages = 1;
         let currentZoom = 100;
-        
-        function updateZoomVar() {
-    	// 1. Determine the baseline based on screen width
-    	// 1024px is the standard 'lg' breakpoint in your Tailwind config
-    		const isMobile = window.innerWidth < 1024;
-    
-    	// 2. Set your defaults
-    		const mobileBase = 24;   // Smaller baseline for mobile
-    		const desktopBase = 16;  // Your existing desktop baseline
-    
-    		const activeBase = isMobile ? mobileBase : desktopBase;
 
-    	// 3. Apply the calculation
-    		document.documentElement.style.fontSize = (currentZoom / 100 * activeBase) + 'px';
-    
-    	// Update the UI
-    		document.getElementById('zoom-input').value = currentZoom + '%';
-    		setTimeout(updatePagination, 50);
-		}
+    function updateZoomVar() {
+        const isMobile = window.innerWidth < 1024;
+        const mobileBase = 24;   // Smaller default for mobile screens
+        const desktopBase = 16;  // Your current desktop default
+        const activeBase = isMobile ? mobileBase : desktopBase;
+        document.documentElement.style.fontSize = (currentZoom / 100 * activeBase) + 'px';
+        const zoomInput = document.getElementById('zoom-input');
+        if (zoomInput) {
+            zoomInput.value = currentZoom + '%';
+        }
+        setTimeout(updatePagination, 50);
+    	}
 
         function changeZoom(delta) {
             currentZoom += delta;
@@ -888,13 +882,18 @@
         document.getElementById('btnNextDir').onclick = () => { if(currDir < dirSteps.length - 1) { currDir++; updateDir(); } };
         document.getElementById('btnEndDir').onclick = () => { currDir = dirSteps.length - 1; updateDir(); };
 
-        window.onload = () => { 
-            initCirclesInd();
-            initCirclesDir();
-            updateInd(); 
-            updateDir();
-            setTimeout(updateZoomVar, 50);
-        };
+		window.onload = () => { 
+	        initCirclesInd();
+	        initCirclesDir();
+	        updateInd(); 
+	        updateDir();
+        
+	        // Initialize font size
+	        updateZoomVar();
+        
+	        // Add listener so font size adjusts if user rotates their phone
+	        window.addEventListener('resize', updateZoomVar);
+	    };
     </script>
 </body>
 </html>
