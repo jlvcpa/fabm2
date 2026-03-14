@@ -273,7 +273,7 @@
                     <h3 id="titleInd" class="text-xl md:text-2xl font-bold text-white mb-1">Step 0: Start</h3>
                     <p id="expInd" class="text-lg text-indigo-100 mb-2">Review initial data.</p>
                     <div class="bg-indigo-900 px-2 py-1 rounded text-base font-mono text-indigo-200 inline-block border border-indigo-700">
-                        <span class="font-bold text-white uppercase text-sm mr-1">Action:</span> <span id="actInd">Observe data.</span>
+                        <span class="font-bold text-white uppercase text-base mr-1">Action:</span> <span id="actInd">Observe data.</span>
                     </div>
                 </div>
 
@@ -340,7 +340,7 @@
                     <h3 id="titleDir" class="text-xl md:text-2xl font-bold text-white mb-1">Step 0: Start</h3>
                     <p id="expDir" class="text-lg text-teal-100 mb-2">We will compute cash from operations directly from line items.</p>
                     <div class="bg-teal-900 px-2 py-1 rounded text-base font-mono text-teal-200 inline-block border border-teal-700">
-                        <span class="font-bold text-white uppercase text-sm mr-1">Calculation:</span> <span id="actDir">-</span>
+                        <span class="font-bold text-white uppercase text-base mr-1">Calculation:</span> <span id="actDir">-</span>
                     </div>
                 </div>
 
@@ -407,7 +407,7 @@
             const card = document.createElement('div');
             card.className = "bg-white border border-slate-200 p-2 rounded cursor-pointer hover:bg-slate-50";
             card.innerHTML = `
-                <div class="flex justify-between items-center font-semibold"><span>${item.name}</span><span class="text-sm text-blue-500">Tap</span></div>
+                <div class="flex justify-between items-center font-semibold"><span>${item.name}</span><span class="text-base text-blue-500">Tap</span></div>
                 <div id="ce-ans-${index}" class="hidden mt-1 pt-1 border-t text-lg">
                     ${item.qualifies ? '<span class="text-green-700 font-bold">YES</span>' : '<span class="text-red-700 font-bold">NO</span>'} - ${item.reason}
                 </div>`;
