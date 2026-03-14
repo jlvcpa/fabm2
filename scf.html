@@ -17,11 +17,11 @@
         body { 
             font-family: 'Inter', system-ui, -apple-system, sans-serif; 
             color: #1e293b; 
-            line-height: 1.5; 
+            line-height: 1.4; 
             overflow: hidden; 
         }
         
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 3px; }
         ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
         
@@ -31,20 +31,31 @@
         
         .cf-row { 
             animation: fadeIn 0.4s ease-in-out; 
-            transition: background-color 0.5s ease; /* Smooth background highlighting */
-            border-radius: 4px;
+            transition: background-color 0.5s ease; 
+            border-radius: 3px;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: translateY(0); } }
 
-        table th, table td { padding-top: 2px; padding-bottom: 2px; padding-left: 4px; padding-right: 4px; }
+        /* Tighter table padding */
+        table th, table td { padding-top: 1px; padding-bottom: 1px; padding-left: 3px; padding-right: 3px; }
 
-        /* --- Dynamic Pagination View Switcher Styles --- */
+        /* View section styles */
+        .view-section {
+            display: none;
+            height: 100%;
+            width: 100%;
+            animation: fadeIn 0.3s ease-in-out;
+            position: relative;
+        }
+        .view-section.active { display: flex; flex-direction: column; }
+
+        /* The Viewport window for topics */
         .book-viewport {
             flex: 1;
             width: 100%;
             position: relative;
             overflow: hidden; 
-            touch-action: pan-y; /* allow vertical scroll natively, handle horizontal via JS */
+            touch-action: pan-y;
         }
 
         .content-flow {
@@ -53,436 +64,465 @@
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Prevent awkward splitting across pages for specific elements like lists */
         .avoid-break {
             break-inside: avoid;
             page-break-inside: avoid;
         }
 
-        /* Content Wrappers */
+        /* Reduced Topic Padding */
         .topic-section {
-            padding: 0 4rem;
-            margin-bottom: 2.5rem;
-            max-width: 1000px; 
-            margin-left: auto;
-            margin-right: auto;
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .interactive-slide {
-            display: inline-block;
-            width: 100%;
-            height: calc(100% - 10px);
-            overflow-y: auto; 
-            overflow-x: hidden;
-            break-inside: avoid;
-            page-break-inside: avoid;
-            vertical-align: top;
-            padding: 0 3rem 1rem 3rem;
-            box-sizing: border-box;
+        @media (min-width: 1024px) {
+            .topic-section { padding: 0 2rem; }
         }
 
-        .interactive-wrapper {
-            max-width: 1000px;
-            margin: 0 auto; 
+        /* Nav Arrows overlaying the screen */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2.5rem;
+            height: 4rem;
+            z-index: 30;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.2;
+            transition: opacity 0.2s;
+            background: rgba(241, 245, 249, 0.7);
+            border-radius: 0.5rem;
         }
+        .nav-arrow:hover { opacity: 1; }
+        .nav-arrow-left { left: 0.5rem; }
+        .nav-arrow-right { right: 0.5rem; }
 
-        @media (max-width: 768px) {
-            .topic-section { padding: 0 1.5rem; }
-            .interactive-slide { padding: 0 1.5rem 1rem 1.5rem; }
-        }
     </style>
 </head>
-<body class="bg-slate-200 flex justify-center items-center h-screen w-full p-0 md:p-6">
+<body class="bg-slate-300 flex justify-center items-center h-screen w-full p-0">
 
-    <div class="flex flex-col md:flex-row h-full w-full max-w-7xl bg-white md:rounded-xl shadow-2xl overflow-hidden relative">
+    <div class="flex h-full w-full max-w-[1400px] bg-white md:shadow-2xl overflow-hidden relative">
 
-        <button id="menuBtn" class="md:hidden absolute top-3 left-3 z-50 bg-white text-slate-800 p-2 rounded border border-slate-200 shadow-sm focus:outline-none">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-        </button>
-
-        <nav id="sidebar" class="w-full md:w-64 bg-slate-50 border-r border-slate-200 absolute md:relative h-full z-40 transition-transform -translate-x-full md:translate-x-0 flex-shrink-0 flex flex-col">
-            <div class="p-4 pt-14 md:pt-4 border-b border-slate-200 bg-white">
-                <h1 class="text-xl font-bold text-slate-800 mb-1 leading-tight">Advanced Accounting</h1>
-                <p class="text-sm text-slate-500 font-medium">PAS 7: Cash Flows</p>
+        <nav id="sidebar" class="w-64 bg-slate-50 border-r border-slate-200 absolute h-full z-50 transition-transform -translate-x-full flex flex-col shadow-xl">
+            <div class="p-3 border-b border-slate-200 bg-white flex justify-between items-center">
+                <div>
+                    <h1 class="text-sm font-bold text-slate-800 leading-tight">Advanced Accounting</h1>
+                    <p class="text-xs text-slate-500 font-medium">PAS 7: Cash Flows</p>
+                </div>
+                <button onclick="toggleMenu()" class="text-slate-500 hover:text-slate-800 p-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
             </div>
 
-            <div class="p-3 border-b border-slate-200 bg-slate-50">
-                <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Text Size</div>
+            <div class="p-2 border-b border-slate-200 bg-slate-50">
+                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Text Size</div>
                 <div class="flex items-center justify-between bg-white border border-slate-200 rounded p-1 shadow-sm">
-                    <button class="text-slate-600 px-3 hover:bg-slate-100 rounded font-bold text-lg" onclick="changeZoom(-10)">-</button>
-                    <input type="text" id="zoom-input" class="w-16 text-center bg-transparent text-slate-800 text-sm font-mono font-semibold outline-none" value="100%" onchange="setZoom(this.value)">
-                    <button class="text-slate-600 px-3 hover:bg-slate-100 rounded font-bold text-lg" onclick="changeZoom(10)">+</button>
+                    <button class="text-slate-600 px-2 hover:bg-slate-100 rounded font-bold" onclick="changeZoom(-10)">-</button>
+                    <input type="text" id="zoom-input" class="w-12 text-center bg-transparent text-slate-800 text-xs font-mono font-semibold outline-none" value="100%" onchange="setZoom(this.value)">
+                    <button class="text-slate-600 px-2 hover:bg-slate-100 rounded font-bold" onclick="changeZoom(10)">+</button>
                 </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto py-3">
-                <div class="mb-4">
-                    <div class="px-4 py-1 text-slate-400 uppercase text-xs font-bold tracking-wider">Topics and Examples</div>
-                    <ul class="flex flex-col mt-1 space-y-1">
-                        <li><a href="#" class="nav-link block py-2 px-4 hover:bg-slate-100 text-base text-slate-700 active" data-target="overview" onclick="goToSection('overview')">1. Overview & Purpose</a></li>
-                        <li><a href="#" class="nav-link block py-2 px-4 hover:bg-slate-100 text-base text-slate-700" data-target="cash-equivalents" onclick="goToSection('cash-equivalents')">2. Cash & Equivalents</a></li>
-                        <li><a href="#" class="nav-link block py-2 px-4 hover:bg-slate-100 text-base text-slate-700" data-target="classifications" onclick="goToSection('classifications')">3. Classifications</a></li>
-                        <li><a href="#" class="nav-link block py-2 px-4 hover:bg-slate-100 text-base text-slate-700" data-target="special-items" onclick="goToSection('special-items')">4. Special Treatments</a></li>
-                        <li><a href="#" class="nav-link block py-2 px-4 hover:bg-slate-100 text-base text-slate-700" data-target="reporting-indirect" onclick="goToSection('reporting-indirect')">5. Indirect Method</a></li>
-                        <li><a href="#" class="nav-link block py-2 px-4 hover:bg-indigo-50 text-base text-indigo-700 font-bold" data-target="case-study-indirect" onclick="goToSection('case-study-indirect')">Simple Case Study (Indirect)</a></li>
-                        <li><a href="#" class="nav-link block py-2 px-4 hover:bg-slate-100 text-base text-slate-700" data-target="reporting-direct" onclick="goToSection('reporting-direct')">6. Direct Method</a></li>
-                        <li><a href="#" class="nav-link block py-2 px-4 hover:bg-teal-50 text-base text-teal-700 font-bold" data-target="case-study-direct" onclick="goToSection('case-study-direct')">Simple Case Study (Direct)</a></li>
-                    </ul>
-                </div>
+            <div class="flex-1 overflow-y-auto py-2">
+                <div class="px-3 py-1 text-slate-400 uppercase text-[10px] font-bold tracking-wider">Topics and Examples</div>
+                <ul class="flex flex-col mt-1 space-y-0.5">
+                    <li><a href="#" class="nav-link block py-1.5 px-3 hover:bg-slate-100 text-sm text-slate-700 active" data-target="overview" onclick="goToSection('view-topics-1', 'overview')">1. Overview & Purpose</a></li>
+                    <li><a href="#" class="nav-link block py-1.5 px-3 hover:bg-slate-100 text-sm text-slate-700" data-target="cash-equivalents" onclick="goToSection('view-topics-1', 'cash-equivalents')">2. Cash & Equivalents</a></li>
+                    <li><a href="#" class="nav-link block py-1.5 px-3 hover:bg-slate-100 text-sm text-slate-700" data-target="classifications" onclick="goToSection('view-topics-1', 'classifications')">3. Classifications</a></li>
+                    <li><a href="#" class="nav-link block py-1.5 px-3 hover:bg-slate-100 text-sm text-slate-700" data-target="special-items" onclick="goToSection('view-topics-1', 'special-items')">4. Special Treatments</a></li>
+                    <li><a href="#" class="nav-link block py-1.5 px-3 hover:bg-slate-100 text-sm text-slate-700" data-target="reporting-indirect" onclick="goToSection('view-topics-1', 'reporting-indirect')">5. Indirect Method</a></li>
+                    <li><a href="#" class="nav-link block py-1.5 px-3 hover:bg-indigo-50 text-sm text-indigo-700 font-bold" data-target="case-study-indirect" onclick="goToSection('view-case-indirect', null)">Simple Case Study (Indirect)</a></li>
+                    <li><a href="#" class="nav-link block py-1.5 px-3 hover:bg-slate-100 text-sm text-slate-700" data-target="reporting-direct" onclick="goToSection('view-topics-2', 'reporting-direct')">6. Direct Method</a></li>
+                    <li><a href="#" class="nav-link block py-1.5 px-3 hover:bg-teal-50 text-sm text-teal-700 font-bold" data-target="case-study-direct" onclick="goToSection('view-case-direct', null)">Simple Case Study (Direct)</a></li>
+                </ul>
             </div>
         </nav>
 
-        <div id="menuOverlay" class="fixed inset-0 bg-slate-900 bg-opacity-50 z-30 hidden md:hidden" onclick="toggleMenu()"></div>
+        <div id="menuOverlay" class="fixed inset-0 bg-slate-900 bg-opacity-40 z-40 hidden" onclick="toggleMenu()"></div>
 
-        <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-white">
+        <main class="flex-1 flex flex-col h-full relative bg-white w-full">
             
-            <header class="py-3 px-6 border-b border-slate-200 text-center flex-shrink-0 bg-white z-10">
-                <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Statement of Cash Flows (PAS 7)</h1>
+            <header class="flex justify-between items-center bg-slate-800 text-slate-200 border-b border-slate-700 flex-shrink-0 z-10" style="padding: 2px 8px; font-size: 0.75rem;">
+                <div class="flex items-center gap-2">
+                    <button id="menuBtn" onclick="toggleMenu()" class="text-white hover:text-slate-300 focus:outline-none" style="padding: 2px;">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                    <span id="dynamic-section-title" class="font-bold uppercase tracking-wide truncate max-w-[200px] md:max-w-md">1. Overview and Purpose</span>
+                </div>
+                <div class="font-mono tracking-wider">
+                    PAGE <span id="page-indicator" class="font-bold text-white">1 / ?</span>
+                </div>
             </header>
 
-            <div class="absolute left-0 top-16 bottom-10 w-10 md:w-16 z-20 cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-gradient-to-r from-slate-100 to-transparent" onclick="prevPage()">
-                <svg class="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-            </div>
-            <div class="absolute right-0 top-16 bottom-10 w-10 md:w-16 z-20 cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-gradient-to-l from-slate-100 to-transparent" onclick="nextPage()">
-                <svg class="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </div>
-
-            <div class="book-viewport mt-6" id="topics-viewport">
-                <div class="content-flow" id="topics-content">
-                    
-                    <section id="overview" class="topic-section section-marker">
-                        <p class="text-xl text-slate-600 leading-relaxed mb-6 text-center italic">
-                            "Welcome. Mastering the translation of accrual-based accounting into pure cash reality is paramount. This module guides you through PAS 7."
-                        </p>
-                        
-                        <h2 class="text-2xl font-bold text-slate-800 mb-4 border-l-4 border-blue-600 pl-3">1. Overview and Purpose</h2>
-                        
-                        <h3 class="text-xl font-semibold text-slate-800 mb-2 mt-4">Definition</h3>
-                        <p class="text-slate-700 text-lg mb-6">
-                            The statement of cash flows summarizes cash and cash equivalents entering and leaving a company. It strips away non-cash transactions to reveal pure liquidity over a specific period.
-                        </p>
-                        
-                        <h3 class="text-xl font-semibold text-slate-800 mb-2 mt-4 avoid-break">Purpose & Role</h3>
-                        <ul class="list-disc pl-6 text-lg text-slate-700 space-y-2 mb-6 avoid-break">
-                            <li>Assesses the entity's ability to generate cash to pay obligations.</li>
-                            <li>Reconciles accrual-based Net Income to actual cash flow.</li>
-                            <li>Evaluates the financial structure (debt vs. equity).</li>
-                            <li>Predicts future cash flows based on historical performance.</li>
-                        </ul>
-                    </section>
-
-                    <section id="cash-equivalents" class="topic-section section-marker">
-                        <h2 class="text-2xl font-bold text-slate-800 mb-4 border-l-4 border-blue-600 pl-3 mt-6">2. Cash and Cash Equivalents</h2>
-                        
-                        <h3 class="font-bold text-slate-800 text-xl mb-2 mt-4 avoid-break">The PAS 7 Criteria</h3>
-                        <ol class="list-decimal pl-6 text-lg text-slate-700 space-y-2 mb-4 avoid-break">
-                            <li>Short-term and highly liquid.</li>
-                            <li>Readily convertible to known amounts of cash.</li>
-                            <li>Subject to an insignificant risk of changes in value.</li>
-                        </ol>
-                        <p class="text-lg text-slate-700 mb-6 avoid-break">
-                            <strong class="text-blue-800 bg-blue-100 px-2 py-0.5 rounded">Core Rule:</strong> To qualify as a cash equivalent, an investment must have a maturity of <strong>three months or less from its acquisition date</strong>.
-                        </p>
-                        
-                        <h3 class="font-bold text-slate-800 text-xl mb-3 mt-4 avoid-break">Examples of Classifications</h3>
-                        <ul class="list-disc pl-6 text-lg text-slate-700 space-y-3 mb-6 avoid-break">
-                            <li>
-                                <strong>30-Day Treasury Bill:</strong> 
-                                <span class="text-green-700 font-bold ml-1 mr-1">YES</span> 
-                                It is short-term (< 3 months), highly liquid, and low risk.
-                            </li>
-                            <li>
-                                <strong>Investment in Equity Securities:</strong> 
-                                <span class="text-red-700 font-bold ml-1 mr-1">NO</span> 
-                                Equity securities fail the criteria because they are subject to a significant risk of changes in value.
-                            </li>
-                            <li>
-                                <strong>1-Year Time Deposit:</strong> 
-                                <span class="text-red-700 font-bold ml-1 mr-1">NO</span> 
-                                It fails the time-bound criteria since its maturity is greater than 3 months from the date of acquisition.
-                            </li>
-                        </ul>
-                    </section>
-
-                    <section id="classifications" class="topic-section section-marker">
-                        <h2 class="text-2xl font-bold text-slate-800 mb-6 border-l-4 border-blue-600 pl-3 mt-6">3. Classification of Cash Flows</h2>
-                        
-                        <h3 class="font-bold text-slate-800 text-xl mb-2 mt-4 avoid-break">Operating Activities</h3>
-                        <p class="text-lg text-slate-700 mb-3 avoid-break">These are the principal revenue-producing activities of the entity. They generally result from the transactions and other events that enter into the determination of net income.</p>
-                        <ul class="list-none text-lg text-slate-700 space-y-2 mb-6 avoid-break pl-4 border-l-2 border-slate-200">
-                            <li><span class="text-green-700 font-bold mr-2">(+) Inflows:</span> Sale of goods/services, royalties, fees, and trading securities sales.</li>
-                            <li><span class="text-red-700 font-bold mr-2">(-) Outflows:</span> Payments to suppliers, payments to employees, and trading securities purchases.</li>
-                        </ul>
-
-                        <h3 class="font-bold text-slate-800 text-xl mb-2 mt-4 avoid-break">Investing Activities</h3>
-                        <p class="text-lg text-slate-700 mb-3 avoid-break">These activities relate to the acquisition and disposal of long-term assets and other investments not included in cash equivalents.</p>
-                        <ul class="list-none text-lg text-slate-700 space-y-2 mb-6 avoid-break pl-4 border-l-2 border-slate-200">
-                            <li><span class="text-green-700 font-bold mr-2">(+) Inflows:</span> Sale of Property, Plant, & Equipment (PPE), sale of debt/equity instruments of other entities.</li>
-                            <li><span class="text-red-700 font-bold mr-2">(-) Outflows:</span> Purchase of PPE, loans made to other parties.</li>
-                        </ul>
-
-                        <h3 class="font-bold text-slate-800 text-xl mb-2 mt-4 avoid-break">Financing Activities</h3>
-                        <p class="text-lg text-slate-700 mb-3 avoid-break">These activities result in changes in the size and composition of the contributed equity and borrowings (non-current liabilities and equity) of the entity.</p>
-                        <ul class="list-none text-lg text-slate-700 space-y-2 mb-6 avoid-break pl-4 border-l-2 border-slate-200">
-                            <li><span class="text-green-700 font-bold mr-2">(+) Inflows:</span> Proceeds from issuing shares, proceeds from loans, notes, or bonds.</li>
-                            <li><span class="text-red-700 font-bold mr-2">(-) Outflows:</span> Repayments of borrowed loans, acquiring treasury stock, and cash dividends paid to owners.</li>
-                        </ul>
-                    </section>
-
-                    <section id="special-items" class="topic-section section-marker">
-                        <h2 class="text-2xl font-bold text-slate-800 mb-6 border-l-4 border-blue-600 pl-3 mt-6">4. Special Treatments (PAS 7)</h2>
-                        
-                        <h3 class="font-bold text-slate-800 text-xl mb-2 mt-4 avoid-break">Bank Overdrafts (Philippine Context)</h3>
-                        <p class="text-lg text-slate-700 mb-6 avoid-break">
-                            Bank overdrafts are generally considered financing activities. However, if they are repayable on demand and form an integral part of an entity's cash management, they can be included as a component of cash equivalents. Note: In the Philippines, this is generally not permitted and is strictly classified as a current liability/financing activity.
-                        </p>
-
-                        <h3 class="font-bold text-slate-800 text-xl mb-2 mt-4 avoid-break">Interest and Dividends</h3>
-                        <p class="text-lg text-slate-700 mb-2 avoid-break">
-                            PAS 7 requires consistent classification from period to period:
-                        </p>
-                        <ul class="list-disc pl-6 text-lg text-slate-700 space-y-2 mb-6 avoid-break">
-                            <li><strong>Interest Paid:</strong> Operating or Financing</li>
-                            <li><strong>Interest Received:</strong> Operating or Investing</li>
-                            <li><strong>Dividends Paid:</strong> Financing or Operating</li>
-                            <li><strong>Dividends Received:</strong> Operating or Investing</li>
-                        </ul>
-
-                        <h3 class="font-bold text-slate-800 text-xl mb-2 mt-4 avoid-break">Non-Cash Transactions</h3>
-                        <p class="text-lg text-slate-700 mb-6 avoid-break">
-                            Investing and financing transactions that do not require the use of cash or cash equivalents are excluded from the body of the statement of cash flows. Instead, they must be disclosed in the notes to the financial statements. Examples include converting bonds to shares or acquiring assets via a lease.
-                        </p>
-                    </section>
-
-                    <section id="reporting-indirect" class="topic-section section-marker">
-                        <h2 class="text-2xl font-bold text-slate-800 mb-4 border-l-4 border-indigo-600 pl-3 mt-6">5. Reporting Methods: Indirect Method</h2>
-                        
-                        <p class="text-lg text-slate-700 mb-5">
-                            The <strong>Indirect Method</strong> adjusts accrual Net Income for non-cash effects, deferrals, and accruals. It is widely used in practice due to the ease of preparation directly from the existing Income Statement and comparative Statements of Financial Position.
-                        </p>
-                        
-                        <h3 class="font-bold text-slate-800 text-xl mb-3 mt-4 avoid-break">Step-by-Step Procedure</h3>
-                        <ol class="list-decimal pl-6 text-lg text-slate-700 space-y-4 mb-6 avoid-break">
-                            <li>
-                                <strong>Start with Net Income:</strong> Sourced from the bottom line of the Income Statement.
-                            </li>
-                            <li>
-                                <strong>Add back Non-Cash Expenses:</strong> Since these expenses reduced Net Income but did not consume cash, they must be added back (e.g., Depreciation, Amortization, Impairment).
-                            </li>
-                            <li>
-                                <strong>Adjust for Non-Operating Gains/Losses:</strong> Deduct gains and add back losses from the sale of investing assets (like PPE). The actual full cash received from the sale will be reported in the Investing section, so we remove the accounting gain/loss from Operating to avoid double-counting.
-                            </li>
-                            <li>
-                                <strong>Adjust for Working Capital Changes:</strong> Analyze changes in Current Assets and Current Liabilities.
-                                <ul class="list-disc pl-6 mt-2 text-slate-600 space-y-1">
-                                    <li><em>Current Assets:</em> Increase = Deduct cash, Decrease = Add cash.</li>
-                                    <li><em>Current Liabilities:</em> Increase = Add cash, Decrease = Deduct cash.</li>
-                                </ul>
-                            </li>
-                        </ol>
-                    </section>
-
-                    <section id="case-study-indirect" class="interactive-slide section-marker relative">
-                        <div class="interactive-wrapper bg-slate-900 text-slate-100 p-4 md:p-6 rounded-xl shadow-2xl border border-slate-700 relative">
-                            
-                            <div class="sticky top-[0px] md:top-[-4px] bg-slate-900 z-40 border-b border-indigo-500 pb-4 pt-4 md:pt-5 -mx-4 px-4 md:-mx-6 md:px-6 -mt-4 md:-mt-6 mb-5 flex flex-col items-center gap-3 rounded-t-xl shadow-md">
-                                <h2 class="text-xl md:text-2xl font-extrabold text-indigo-400 tracking-tight text-center">Simple Case Study - Indirect Method</h2>
-                                <div class="flex gap-3 justify-center w-full">
-                                    <button id="btnPrevInd" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded-lg font-bold text-lg transition-colors shadow-md border border-slate-600">&laquo; Prev</button>
-                                    <button id="btnNextInd" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg font-bold text-lg transition-colors shadow-md border border-indigo-500">Next &raquo;</button>
-                                    <button id="btnEndInd" class="bg-slate-700 hover:bg-slate-600 text-white px-5 py-2 rounded-lg font-bold text-lg transition-colors shadow-md border border-slate-600">End</button>
-                                </div>
-                            </div>
-                            
-                            <p class="text-lg mb-5 text-slate-300 text-center px-4">Formative Company's cash increased by <strong>50,000 PHP</strong>. Reconcile this using the step-by-step indirect timeline below.</p>
-
-                            <div class="flex flex-col gap-4 mb-5">
-                                <div class="grid lg:grid-cols-2 gap-4">
-                                    <div class="bg-slate-800 rounded-lg p-4 text-base font-mono border border-slate-700 shadow-sm overflow-x-auto">
-                                        <h3 class="font-semibold text-slate-200 border-b border-slate-600 mb-2 pb-2 uppercase tracking-wider text-sm">Financial Position</h3>
-                                        <table class="w-full text-right border-collapse min-w-[300px]">
-                                            <thead>
-                                                <tr class="text-slate-400 border-b border-slate-600"><th class="text-left w-1/2 pb-1">Assets</th><th class="text-center pb-1">2025</th><th class="text-center pb-1">2024</th></tr>
-                                            </thead>
-                                            <tbody class="text-slate-300">
-                                                <tr class="bg-indigo-900/40 font-bold"><td class="text-left py-1">Cash</td><td class="text-center text-white py-1">150,000</td><td class="text-center py-1">100,000</td></tr>
-                                                <tr><td class="text-left">Accounts Receivable</td><td class="text-center">60,000</td><td class="text-center">50,000</td></tr>
-                                                <tr><td class="text-left">Inventory</td><td class="text-center">70,000</td><td class="text-center">80,000</td></tr>
-                                                <tr><td class="text-left">PPE (Gross)</td><td class="text-center">400,000</td><td class="text-center">300,000</td></tr>
-                                                <tr><td class="text-left pb-2">Accum. Depreciation</td><td class="text-center pb-2">(80,000)</td><td class="text-center pb-2">(50,000)</td></tr>
-                                                <tr class="text-slate-400 border-t border-slate-600"><th class="text-left pt-2 pb-1" colspan="3">Liabilities & Equity</th></tr>
-                                                <tr><td class="text-left">Accounts Payable</td><td class="text-center">35,000</td><td class="text-center">40,000</td></tr>
-                                                <tr><td class="text-left">Accrued Liabilities</td><td class="text-center">15,000</td><td class="text-center">10,000</td></tr>
-                                                <tr><td class="text-left">Long-Term Debt</td><td class="text-center">150,000</td><td class="text-center">100,000</td></tr>
-                                                <tr><td class="text-left">Common Stock</td><td class="text-center">250,000</td><td class="text-center">200,000</td></tr>
-                                                <tr><td class="text-left">Retained Earnings</td><td class="text-center">150,000</td><td class="text-center">130,000</td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="bg-slate-800 rounded-lg p-4 text-base font-mono border border-slate-700 shadow-sm overflow-x-auto">
-                                        <h3 class="font-semibold text-slate-200 border-b border-slate-600 mb-2 pb-2 uppercase tracking-wider text-sm">Income Statement (2025)</h3>
-                                        <table class="w-full text-right border-collapse text-slate-300 min-w-[300px]">
-                                            <tbody>
-                                                <tr><td class="text-left w-2/3 py-1">Sales</td><td class="w-1/3 py-1">500,000</td></tr>
-                                                <tr><td class="text-left py-1">Cost of Goods Sold</td><td class="py-1">(300,000)</td></tr>
-                                                <tr><td class="text-left py-1">Operating Expenses</td><td class="py-1">(100,000)</td></tr>
-                                                <tr><td class="text-left py-1">Depreciation Expense</td><td class="py-1">(30,000)</td></tr>
-                                                <tr><td class="text-left pb-2">Interest & Taxes</td><td class="pb-2">(25,000)</td></tr>
-                                                <tr class="border-t border-slate-600 font-bold text-white text-lg"><td class="text-left pt-2">Net Income</td><td class="text-indigo-400 pt-2">45,000</td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="flex flex-col md:flex-row items-center md:justify-center gap-4 md:gap-8 mb-5 border-t border-b border-slate-700 py-4 bg-slate-800/50 rounded-lg w-full">
-                                <label class="flex items-center gap-2 text-lg text-indigo-300 cursor-pointer font-medium shrink-0">
-                                    <input type="checkbox" id="voiceInd" class="w-5 h-5 accent-indigo-500"> Voice Narration
-                                </label>
-                                <div id="circlesInd" class="flex flex-wrap justify-center gap-2"></div>
-                            </div>
-
-                            <div class="bg-indigo-950/80 border-l-4 border-indigo-500 p-5 rounded-lg min-h-[140px] shadow-inner mb-5">
-                                <h3 id="titleInd" class="text-xl md:text-2xl font-bold text-white mb-2">Step 0: Start</h3>
-                                <p id="expInd" class="text-lg text-indigo-100 mb-4">Review initial data.</p>
-                                <div class="bg-indigo-900/80 px-3 py-1.5 rounded text-base font-mono text-indigo-200 inline-block border border-indigo-700/50">
-                                    <span class="font-bold text-white uppercase text-xs tracking-wider mr-2 opacity-80">Action:</span> <span id="actInd">Observe data.</span>
-                                </div>
-                            </div>
-
-                            <div id="cf-ind-container" class="bg-slate-50 rounded-lg p-5 shadow-inner border-4 border-slate-300 overflow-y-auto max-h-[400px] overflow-x-auto relative">
-                                <div class="pb-[120px]"> <h4 class="font-bold text-xl text-slate-900 border-b-2 border-indigo-600 pb-2 mb-3 text-center uppercase tracking-wider sticky top-0 bg-slate-50 z-10 pt-1">Statement of Cash Flows (Indirect)</h4>
-                                    <div class="font-mono text-lg text-slate-800 min-w-[600px] space-y-1">
-                                        <div id="cf-ind-op-hdr" class="cf-row hidden font-bold mt-2 bg-indigo-100 px-3 py-1.5 text-indigo-900">Operating Activities</div>
-                                        <div id="cf-ind-ni" class="cf-row hidden flex justify-between px-4 py-1.5 text-slate-900 font-bold"><span>Net Income</span><span>45,000</span></div>
-                                        <div id="cf-ind-adj" class="cf-row hidden px-4 py-1.5 text-slate-500 italic text-base">Adjustments to reconcile NI to cash:</div>
-                                        <div id="cf-ind-dep" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Depreciation Expense</span><span>30,000</span></div>
-                                        <div id="cf-ind-ar" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Inc. in Accounts Receivable</span><span>(10,000)</span></div>
-                                        <div id="cf-ind-inv" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Dec. in Inventory</span><span>10,000</span></div>
-                                        <div id="cf-ind-ap" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Dec. in Accounts Payable</span><span>(5,000)</span></div>
-                                        <div id="cf-ind-acc" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Inc. in Accrued Liab.</span><span>5,000</span></div>
-                                        <div id="cf-ind-op-net" class="cf-row hidden flex justify-between px-4 py-1.5 font-bold border-t-2 border-slate-300 bg-slate-200 text-slate-900 mt-2"><span>Net Cash from Operating</span><span>75,000</span></div>
-
-                                        <div id="cf-ind-inv-hdr" class="cf-row hidden font-bold mt-5 bg-indigo-100 px-3 py-1.5 text-indigo-900">Investing Activities</div>
-                                        <div id="cf-ind-ppe" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Purchase of PPE</span><span>(100,000)</span></div>
-                                        <div id="cf-ind-inv-net" class="cf-row hidden flex justify-between px-4 py-1.5 font-bold border-t-2 border-slate-300 bg-slate-200 text-slate-900 mt-2"><span>Net Cash used in Investing</span><span class="text-red-800">(100,000)</span></div>
-
-                                        <div id="cf-ind-fin-hdr" class="cf-row hidden font-bold mt-5 bg-indigo-100 px-3 py-1.5 text-indigo-900">Financing Activities</div>
-                                        <div id="cf-ind-debt" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Proceeds from Long-Term Debt</span><span>50,000</span></div>
-                                        <div id="cf-ind-stock" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Proceeds from Issuance of Stock</span><span>50,000</span></div>
-                                        <div id="cf-ind-div" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Dividends Paid</span><span>(25,000)</span></div>
-                                        <div id="cf-ind-fin-net" class="cf-row hidden flex justify-between px-4 py-1.5 font-bold border-t-2 border-slate-300 bg-slate-200 text-slate-900 mt-2"><span>Net Cash from Financing</span><span>75,000</span></div>
-
-                                        <div id="cf-ind-sum-net" class="cf-row hidden flex justify-between font-bold mt-5 pt-3 border-t-4 border-slate-800 text-slate-900"><span>Net Increase in Cash</span><span class="text-green-700">50,000</span></div>
-                                        <div id="cf-ind-sum-beg" class="cf-row hidden flex justify-between text-slate-600 font-medium py-1.5"><span>Cash at beginning of year</span><span>100,000</span></div>
-                                        <div id="cf-ind-sum-end" class="cf-row hidden flex justify-between font-extrabold text-xl bg-indigo-600 text-white px-3 py-2 mt-2 shadow-md"><span>Cash at end of year</span><span>150,000</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section id="reporting-direct" class="topic-section avoid-break section-marker">
-                        <h2 class="text-2xl font-bold text-slate-800 mb-4 border-l-4 border-teal-600 pl-3 mt-6">6. Reporting Methods: Direct Method</h2>
-                        
-                        <p class="text-lg text-slate-700 mb-5">
-                            The <strong>Direct Method</strong> explicitly shows major classes of gross cash receipts and gross cash payments. It is recommended by PAS 7 because it provides more transparent cash flow insights and higher predictive value than the indirect method.
-                        </p>
-                        
-                        <h3 class="font-bold text-slate-800 text-xl mb-3 mt-4 avoid-break">Step-by-Step Procedure</h3>
-                        <ol class="list-decimal pl-6 text-lg text-slate-700 space-y-4 mb-6 avoid-break">
-                            <li>
-                                <strong>Cash Received from Customers:</strong> <br>
-                                <span class="font-mono text-base bg-slate-100 px-1 py-0.5 rounded">Sales +/- Decrease/Increase in Accounts Receivable</span>
-                            </li>
-                            <li>
-                                <strong>Cash Paid to Suppliers:</strong> <br>
-                                <span class="font-mono text-base bg-slate-100 px-1 py-0.5 rounded">COGS +/- Increase/Decrease in Inventory +/- Decrease/Increase in Accounts Payable</span>
-                            </li>
-                            <li>
-                                <strong>Cash Paid for Operating Expenses:</strong> <br>
-                                <span class="font-mono text-base bg-slate-100 px-1 py-0.5 rounded">Operating Expenses (excluding non-cash items) +/- Increase/Decrease in Prepayments & Accruals</span>
-                            </li>
-                            <li>
-                                <strong>Cash Paid for Interest and Taxes:</strong> <br>
-                                Deduct cash directly paid during the period for these obligations.
-                            </li>
-                        </ol>
-                    </section>
-
-                    <section id="case-study-direct" class="interactive-slide section-marker relative">
-                        <div class="interactive-wrapper bg-slate-800 text-slate-100 p-4 md:p-6 rounded-xl shadow-2xl border border-slate-600 relative">
-                            
-                            <div class="sticky top-[0px] md:top-[-4px] bg-slate-800 z-40 border-b border-teal-500 pb-4 pt-4 md:pt-5 -mx-4 px-4 md:-mx-6 md:px-6 -mt-4 md:-mt-6 mb-5 flex flex-col items-center gap-3 rounded-t-xl shadow-md">
-                                <h2 class="text-xl md:text-2xl font-extrabold text-teal-400 tracking-tight text-center">Simple Case Study - Direct Method</h2>
-                                <div class="flex gap-3 justify-center w-full">
-                                    <button id="btnPrevDir" class="bg-slate-600 hover:bg-slate-500 text-white px-5 py-2 rounded-lg font-bold text-lg transition-colors shadow-md border border-slate-500">&laquo; Prev</button>
-                                    <button id="btnNextDir" class="bg-teal-600 hover:bg-teal-500 text-white px-5 py-2 rounded-lg font-bold text-lg transition-colors shadow-md border border-teal-500">Next &raquo;</button>
-                                    <button id="btnEndDir" class="bg-slate-600 hover:bg-slate-500 text-white px-5 py-2 rounded-lg font-bold text-lg transition-colors shadow-md border border-slate-500">End</button>
-                                </div>
-                            </div>
-                            
-                            <p class="text-lg mb-5 text-slate-300 text-center px-4">Using the identical given data from above, let's build the CF statement using the Direct Method. This method computes gross cash receipts and payments directly.</p>
-
-                            <div class="flex flex-col md:flex-row items-center md:justify-center gap-4 md:gap-8 mb-5 border-t border-b border-slate-600 py-4 bg-slate-700/50 rounded-lg w-full">
-                                <label class="flex items-center gap-2 text-lg text-teal-300 cursor-pointer font-medium shrink-0">
-                                    <input type="checkbox" id="voiceDir" class="w-5 h-5 accent-teal-500"> Voice Narration
-                                </label>
-                                <div id="circlesDir" class="flex flex-wrap justify-center gap-2"></div>
-                            </div>
-
-                            <div class="bg-teal-950/80 border-l-4 border-teal-500 p-5 rounded-lg min-h-[140px] shadow-inner mb-5">
-                                <h3 id="titleDir" class="text-xl md:text-2xl font-bold text-white mb-2">Step 0: Start</h3>
-                                <p id="expDir" class="text-lg text-teal-100 mb-4">We will compute cash from operations directly from line items.</p>
-                                <div class="bg-teal-900/80 px-3 py-1.5 rounded text-base font-mono text-teal-200 inline-block border border-teal-700/50">
-                                    <span class="font-bold text-white uppercase text-xs tracking-wider mr-2 opacity-80">Calculation:</span> <span id="actDir">-</span>
-                                </div>
-                            </div>
-
-                            <div id="cf-dir-container" class="bg-slate-50 rounded-lg p-5 shadow-inner border-4 border-slate-300 overflow-y-auto max-h-[400px] overflow-x-auto relative">
-                                <div class="pb-[120px]">
-                                    <h4 class="font-bold text-xl text-slate-900 border-b-2 border-teal-600 pb-2 mb-3 text-center uppercase tracking-wider sticky top-0 bg-slate-50 z-10 pt-1">Statement of Cash Flows (Direct)</h4>
-                                    <div class="font-mono text-lg text-slate-800 min-w-[600px] space-y-1">
-                                        <div id="cf-dir-op-hdr" class="cf-row hidden font-bold mt-2 bg-teal-100 px-3 py-1.5 text-teal-900">Operating Activities</div>
-                                        
-                                        <div id="cf-dir-cust" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Cash received from customers</span><span>490,000</span></div>
-                                        <div id="cf-dir-supp" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Cash paid to suppliers</span><span>(295,000)</span></div>
-                                        <div id="cf-dir-opex" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Cash paid for operating exp.</span><span>(95,000)</span></div>
-                                        <div id="cf-dir-int" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Cash paid for interest & taxes</span><span>(25,000)</span></div>
-                                        
-                                        <div id="cf-dir-op-net" class="cf-row hidden flex justify-between px-4 py-1.5 font-bold border-t-2 border-slate-300 bg-slate-200 text-teal-900 mt-2"><span>Net Cash from Operating</span><span>75,000</span></div>
-
-                                        <div id="cf-dir-inv-hdr" class="cf-row hidden font-bold mt-5 bg-teal-100 px-3 py-1.5 text-teal-900">Investing & Financing Activities</div>
-                                        <div id="cf-dir-inv" class="cf-row hidden flex justify-between px-8 py-1.5 text-red-700"><span>Net Cash used in Investing</span><span>(100,000)</span></div>
-                                        <div id="cf-dir-fin" class="cf-row hidden flex justify-between px-8 py-1.5 text-green-700"><span>Net Cash from Financing</span><span>75,000</span></div>
-
-                                        <div id="cf-dir-sum" class="cf-row hidden flex justify-between font-bold mt-5 pt-3 border-t-4 border-slate-800 text-slate-900"><span>Net Increase in Cash</span><span class="text-green-700">50,000</span></div>
-                                        <div id="cf-dir-beg" class="cf-row hidden flex justify-between text-slate-600 font-medium py-1.5"><span>Cash at beginning of year</span><span>100,000</span></div>
-                                        <div id="cf-dir-end" class="cf-row hidden flex justify-between font-extrabold text-xl bg-teal-600 text-white px-3 py-2 mt-2 shadow-md"><span>Cash at end of year</span><span>150,000</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    
+            <div class="flex-1 relative flex flex-col overflow-hidden">
+                
+                <div class="nav-arrow nav-arrow-left" onclick="prevPage()">
+                    <svg class="w-6 h-6 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path></svg>
                 </div>
+                <div class="nav-arrow nav-arrow-right" onclick="nextPage()">
+                    <svg class="w-6 h-6 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+
+                <div id="view-topics-1" class="view-section active">
+                    <div class="book-viewport mt-3" id="viewport-1">
+                        <div class="content-flow" id="content-1">
+                            
+                            <section id="overview" class="topic-section section-marker">
+                                <p class="text-base text-slate-600 leading-relaxed mb-3 text-center italic">
+                                    "Welcome. Mastering the translation of accrual-based accounting into pure cash reality is paramount."
+                                </p>
+                                
+                                <h2 class="text-xl font-bold text-slate-800 mb-2 border-l-4 border-blue-600 pl-2">1. Overview and Purpose</h2>
+                                <h3 class="text-lg font-semibold text-slate-800 mb-1 mt-3">Definition</h3>
+                                <p class="text-slate-700 text-base mb-3">
+                                    The statement of cash flows summarizes cash and cash equivalents entering and leaving a company. It strips away non-cash transactions to reveal pure liquidity over a specific period.
+                                </p>
+                                
+                                <h3 class="text-lg font-semibold text-slate-800 mb-1 mt-3 avoid-break">Purpose & Role</h3>
+                                <ul class="list-disc pl-5 text-base text-slate-700 space-y-1 mb-3 avoid-break">
+                                    <li>Assesses the entity's ability to generate cash to pay obligations.</li>
+                                    <li>Reconciles accrual-based Net Income to actual cash flow.</li>
+                                    <li>Evaluates the financial structure (debt vs. equity).</li>
+                                    <li>Predicts future cash flows based on historical performance.</li>
+                                </ul>
+                            </section>
+
+                            <section id="cash-equivalents" class="topic-section section-marker">
+                                <h2 class="text-xl font-bold text-slate-800 mb-2 border-l-4 border-blue-600 pl-2 mt-4">2. Cash and Cash Equivalents</h2>
+                                
+                                <h3 class="font-bold text-slate-800 text-lg mb-1 mt-3 avoid-break">The PAS 7 Criteria</h3>
+                                <ol class="list-decimal pl-5 text-base text-slate-700 space-y-1 mb-2 avoid-break">
+                                    <li>Short-term and highly liquid.</li>
+                                    <li>Readily convertible to known amounts of cash.</li>
+                                    <li>Subject to an insignificant risk of changes in value.</li>
+                                </ol>
+                                <p class="text-base text-slate-700 mb-3 avoid-break">
+                                    <strong class="text-blue-800 bg-blue-50 px-1 py-0.5 rounded text-sm">Core Rule:</strong> To qualify, an investment must have a maturity of <strong>three months or less from its acquisition date</strong>.
+                                </p>
+                                
+                                <h3 class="font-bold text-slate-800 text-lg mb-2 mt-3 avoid-break">Examples</h3>
+                                <ul class="list-disc pl-5 text-base text-slate-700 space-y-2 mb-3 avoid-break">
+                                    <li><strong>30-Day Treasury Bill:</strong> <span class="text-green-700 font-bold ml-1">YES</span> - Short-term, highly liquid.</li>
+                                    <li><strong>Investment in Equity:</strong> <span class="text-red-700 font-bold ml-1">NO</span> - High risk of value change.</li>
+                                    <li><strong>1-Year Time Deposit:</strong> <span class="text-red-700 font-bold ml-1">NO</span> - Maturity > 3 months.</li>
+                                </ul>
+                            </section>
+
+                            <section id="classifications" class="topic-section section-marker">
+                                <h2 class="text-xl font-bold text-slate-800 mb-3 border-l-4 border-blue-600 pl-2 mt-4 avoid-break">3. Classification of Cash Flows</h2>
+                                
+                                <h3 class="font-bold text-slate-800 text-lg mb-1 mt-2 avoid-break bg-slate-100 px-2 py-1 rounded inline-block">Operating Activities</h3>
+                                <p class="text-base text-slate-700 mb-2 avoid-break">Principal revenue-producing activities.</p>
+                                <ul class="list-none text-base text-slate-700 space-y-1 mb-4 avoid-break pl-3 border-l-2 border-blue-200">
+                                    <li><span class="text-green-700 font-bold">(+) Inflows:</span> Sale of goods, royalties, fees.</li>
+                                    <li><span class="text-red-700 font-bold">(-) Outflows:</span> Payments to suppliers, employees.</li>
+                                </ul>
+
+                                <h3 class="font-bold text-slate-800 text-lg mb-1 mt-2 avoid-break bg-slate-100 px-2 py-1 rounded inline-block">Investing Activities</h3>
+                                <p class="text-base text-slate-700 mb-2 avoid-break">Acquisition and disposal of long-term assets.</p>
+                                <ul class="list-none text-base text-slate-700 space-y-1 mb-4 avoid-break pl-3 border-l-2 border-blue-200">
+                                    <li><span class="text-green-700 font-bold">(+) Inflows:</span> Sale of PPE, debt/equity instruments.</li>
+                                    <li><span class="text-red-700 font-bold">(-) Outflows:</span> Purchase of PPE, loans made.</li>
+                                </ul>
+
+                                <h3 class="font-bold text-slate-800 text-lg mb-1 mt-2 avoid-break bg-slate-100 px-2 py-1 rounded inline-block">Financing Activities</h3>
+                                <p class="text-base text-slate-700 mb-2 avoid-break">Changes in size/composition of equity and borrowings.</p>
+                                <ul class="list-none text-base text-slate-700 space-y-1 mb-4 avoid-break pl-3 border-l-2 border-blue-200">
+                                    <li><span class="text-green-700 font-bold">(+) Inflows:</span> Proceeds from issuing shares, loans.</li>
+                                    <li><span class="text-red-700 font-bold">(-) Outflows:</span> Loan repayments, treasury stock, dividends.</li>
+                                </ul>
+                            </section>
+
+                            <section id="special-items" class="topic-section section-marker">
+                                <h2 class="text-xl font-bold text-slate-800 mb-3 border-l-4 border-blue-600 pl-2 mt-4">4. Special Treatments (PAS 7)</h2>
+                                
+                                <h3 class="font-bold text-slate-800 text-lg mb-1 mt-2 avoid-break">Bank Overdrafts</h3>
+                                <p class="text-base text-slate-700 mb-3 avoid-break">
+                                    Generally financing activities. In the PH, they are not permitted to be cash equivalents and are strictly current liability/financing.
+                                </p>
+
+                                <h3 class="font-bold text-slate-800 text-lg mb-1 mt-2 avoid-break">Interest and Dividends</h3>
+                                <ul class="list-disc pl-5 text-base text-slate-700 space-y-1 mb-3 avoid-break">
+                                    <li><strong>Interest Paid:</strong> Operating/Financing</li>
+                                    <li><strong>Interest Received:</strong> Operating/Investing</li>
+                                    <li><strong>Dividends Paid:</strong> Financing/Operating</li>
+                                    <li><strong>Dividends Received:</strong> Operating/Investing</li>
+                                </ul>
+
+                                <h3 class="font-bold text-slate-800 text-lg mb-1 mt-2 avoid-break">Non-Cash Transactions</h3>
+                                <p class="text-base text-slate-700 mb-3 avoid-break">
+                                    Excluded from the body of the CF statement. Disclosed in notes (e.g., converting bonds to shares).
+                                </p>
+                            </section>
+
+                            <section id="reporting-indirect" class="topic-section section-marker">
+                                <h2 class="text-xl font-bold text-slate-800 mb-2 border-l-4 border-indigo-600 pl-2 mt-4">5. Reporting Methods: Indirect</h2>
+                                <p class="text-base text-slate-700 mb-3">
+                                    Adjusts accrual Net Income for non-cash effects, deferrals, and accruals.
+                                </p>
+                                
+                                <h3 class="font-bold text-slate-800 text-lg mb-2 mt-3 avoid-break">Step-by-Step Procedure</h3>
+                                <ol class="list-decimal pl-5 text-base text-slate-700 space-y-2 mb-4 avoid-break">
+                                    <li><strong>Start with Net Income:</strong> From the Income Statement.</li>
+                                    <li><strong>Add back Non-Cash Exp:</strong> e.g., Depreciation.</li>
+                                    <li><strong>Adjust Non-Operating Gains/Losses:</strong> Deduct gains, add losses from asset sales to avoid double counting.</li>
+                                    <li><strong>Adjust Working Capital:</strong>
+                                        <ul class="list-disc pl-4 mt-1 text-sm text-slate-600">
+                                            <li><em>Current Assets:</em> Inc = Deduct, Dec = Add.</li>
+                                            <li><em>Current Liab:</em> Inc = Add, Dec = Deduct.</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                            </section>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-case-indirect" class="view-section">
+                    <div class="flex flex-col lg:flex-row h-full w-full gap-3 overflow-y-auto p-2 lg:p-4 bg-slate-900 section-marker" id="case-study-indirect">
+                        
+                        <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
+                            <div class="sticky top-0 z-30 bg-slate-800 p-3 rounded shadow-md border border-slate-700 flex flex-col gap-2">
+                                <div class="flex w-full justify-center">
+                                    <div class="flex gap-1.5">
+                                        <button id="btnPrevInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600">&laquo; Prev</button>
+                                        <button id="btnNextInd" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-indigo-500">Next &raquo;</button>
+                                        <button id="btnEndInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600">End</button>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 border-t border-slate-700">
+                                    <label class="flex items-center gap-1.5 text-xs text-indigo-300 cursor-pointer font-medium">
+                                        <input type="checkbox" id="voiceInd" class="w-4 h-4 accent-indigo-500"> Voice
+                                    </label>
+                                    <div id="circlesInd" class="flex flex-wrap justify-end gap-1"></div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-800 rounded p-3 border border-slate-700 shadow-sm text-sm">
+                                <p class="text-slate-300 mb-2">Formative Company's cash increased by <strong class="text-white">50,000 PHP</strong>. Reconcile this.</p>
+                                
+                                <h3 class="font-semibold text-slate-200 border-b border-slate-600 mb-1 pb-1 text-xs">Financial Position</h3>
+                                <table class="w-full text-right border-collapse font-mono text-xs text-slate-300 mb-3">
+                                    <thead><tr class="text-slate-400 border-b border-slate-600"><th class="text-left w-1/2">Assets</th><th class="text-center">2025</th><th class="text-center">2024</th></tr></thead>
+                                    <tbody>
+                                        <tr class="bg-indigo-900/40 font-bold"><td class="text-left">Cash</td><td class="text-center text-white">150,000</td><td class="text-center">100,000</td></tr>
+                                        <tr><td class="text-left">Accounts Receivable</td><td class="text-center">60,000</td><td class="text-center">50,000</td></tr>
+                                        <tr><td class="text-left">Inventory</td><td class="text-center">70,000</td><td class="text-center">80,000</td></tr>
+                                        <tr><td class="text-left">PPE (Gross)</td><td class="text-center">400,000</td><td class="text-center">300,000</td></tr>
+                                        <tr><td class="text-left">Accum. Depr.</td><td class="text-center">(80,000)</td><td class="text-center">(50,000)</td></tr>
+                                        <tr class="text-slate-400 border-t border-slate-600"><th class="text-left pt-1" colspan="3">Liabilities & Equity</th></tr>
+                                        <tr><td class="text-left">Accounts Payable</td><td class="text-center">35,000</td><td class="text-center">40,000</td></tr>
+                                        <tr><td class="text-left">Accrued Liab.</td><td class="text-center">15,000</td><td class="text-center">10,000</td></tr>
+                                        <tr><td class="text-left">Long-Term Debt</td><td class="text-center">150,000</td><td class="text-center">100,000</td></tr>
+                                        <tr><td class="text-left">Common Stock</td><td class="text-center">250,000</td><td class="text-center">200,000</td></tr>
+                                        <tr><td class="text-left">Retained Earnings</td><td class="text-center">150,000</td><td class="text-center">130,000</td></tr>
+                                    </tbody>
+                                </table>
+
+                                <h3 class="font-semibold text-slate-200 border-b border-slate-600 mb-1 pb-1 text-xs">Income Statement (2025)</h3>
+                                <table class="w-full text-right border-collapse font-mono text-xs text-slate-300">
+                                    <tbody>
+                                        <tr><td class="text-left w-2/3">Sales</td><td class="w-1/3">500,000</td></tr>
+                                        <tr><td class="text-left">Cost of Goods Sold</td><td>(300,000)</td></tr>
+                                        <tr><td class="text-left">Operating Expenses</td><td>(100,000)</td></tr>
+                                        <tr><td class="text-left">Depreciation Exp.</td><td>(30,000)</td></tr>
+                                        <tr><td class="text-left">Interest & Taxes</td><td>(25,000)</td></tr>
+                                        <tr class="border-t border-slate-600 font-bold text-white"><td class="text-left pt-1">Net Income</td><td class="text-indigo-400 pt-1">45,000</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
+                            <div class="sticky top-[105px] lg:top-0 z-20 bg-indigo-950 p-3 rounded shadow-md border-l-4 border-indigo-500">
+                                <h3 id="titleInd" class="text-base font-bold text-white mb-1">Step 0: Start</h3>
+                                <p id="expInd" class="text-sm text-indigo-100 mb-2 leading-snug">Review initial data.</p>
+                                <div class="bg-indigo-900 px-2 py-0.5 rounded font-mono text-indigo-200 inline-block border border-indigo-700 text-xs">
+                                    <span class="font-bold text-white mr-1">Action:</span> <span id="actInd">Observe data.</span>
+                                </div>
+                            </div>
+
+                            <div id="cf-ind-container" class="bg-slate-50 rounded p-3 shadow-inner border-2 border-slate-300 overflow-y-auto max-h-[50vh] lg:max-h-none lg:flex-1 relative font-mono text-sm text-slate-800">
+                                <div class="pb-[90px]"> <h4 class="font-bold text-base text-slate-900 border-b-2 border-indigo-600 pb-1 mb-2 text-center uppercase sticky top-0 bg-slate-50 z-10">Indirect Method</h4>
+                                    
+                                    <div id="cf-ind-op-hdr" class="cf-row hidden font-bold mt-1 bg-indigo-100 px-2 py-0.5 text-indigo-900">Operating Activities</div>
+                                    <div id="cf-ind-ni" class="cf-row hidden flex justify-between px-2 py-0.5 font-bold"><span>Net Income</span><span>45,000</span></div>
+                                    <div id="cf-ind-adj" class="cf-row hidden px-2 py-0.5 text-slate-500 italic text-xs">Adjustments:</div>
+                                    <div id="cf-ind-dep" class="cf-row hidden flex justify-between px-4 py-0.5 text-green-700"><span>Depreciation Exp</span><span>30,000</span></div>
+                                    <div id="cf-ind-ar" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Inc. in AR</span><span>(10,000)</span></div>
+                                    <div id="cf-ind-inv" class="cf-row hidden flex justify-between px-4 py-0.5 text-green-700"><span>Dec. in Inventory</span><span>10,000</span></div>
+                                    <div id="cf-ind-ap" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Dec. in AP</span><span>(5,000)</span></div>
+                                    <div id="cf-ind-acc" class="cf-row hidden flex justify-between px-4 py-0.5 text-green-700"><span>Inc. in Accrued Liab</span><span>5,000</span></div>
+                                    <div id="cf-ind-op-net" class="cf-row hidden flex justify-between px-2 py-0.5 font-bold border-t border-slate-300 bg-slate-200 mt-1"><span>Net from Operating</span><span>75,000</span></div>
+
+                                    <div id="cf-ind-inv-hdr" class="cf-row hidden font-bold mt-3 bg-indigo-100 px-2 py-0.5 text-indigo-900">Investing Activities</div>
+                                    <div id="cf-ind-ppe" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Purchase of PPE</span><span>(100,000)</span></div>
+                                    <div id="cf-ind-inv-net" class="cf-row hidden flex justify-between px-2 py-0.5 font-bold border-t border-slate-300 bg-slate-200 mt-1"><span>Net from Investing</span><span class="text-red-800">(100,000)</span></div>
+
+                                    <div id="cf-ind-fin-hdr" class="cf-row hidden font-bold mt-3 bg-indigo-100 px-2 py-0.5 text-indigo-900">Financing Activities</div>
+                                    <div id="cf-ind-debt" class="cf-row hidden flex justify-between px-4 py-0.5 text-green-700"><span>Proceeds - Debt</span><span>50,000</span></div>
+                                    <div id="cf-ind-stock" class="cf-row hidden flex justify-between px-4 py-0.5 text-green-700"><span>Proceeds - Stock</span><span>50,000</span></div>
+                                    <div id="cf-ind-div" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Dividends Paid</span><span>(25,000)</span></div>
+                                    <div id="cf-ind-fin-net" class="cf-row hidden flex justify-between px-2 py-0.5 font-bold border-t border-slate-300 bg-slate-200 mt-1"><span>Net from Financing</span><span>75,000</span></div>
+
+                                    <div id="cf-ind-sum-net" class="cf-row hidden flex justify-between font-bold mt-3 pt-1 border-t-2 border-slate-800"><span>Net Inc. in Cash</span><span class="text-green-700">50,000</span></div>
+                                    <div id="cf-ind-sum-beg" class="cf-row hidden flex justify-between text-slate-600 px-1 py-0.5"><span>Cash at beginning</span><span>100,000</span></div>
+                                    <div id="cf-ind-sum-end" class="cf-row hidden flex justify-between font-bold bg-indigo-600 text-white px-2 py-1 mt-1 rounded"><span>Cash at end</span><span>150,000</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="view-topics-2" class="view-section">
+                    <div class="book-viewport mt-3" id="viewport-2">
+                        <div class="content-flow" id="content-2">
+                            <section id="reporting-direct" class="topic-section section-marker">
+                                <h2 class="text-xl font-bold text-slate-800 mb-3 border-l-4 border-teal-600 pl-2 mt-4">6. Reporting Methods: Direct</h2>
+                                
+                                <p class="text-base text-slate-700 mb-4">
+                                    The <strong>Direct Method</strong> explicitly shows major classes of gross cash receipts and payments. It provides more transparent insights than the indirect method.
+                                </p>
+                                
+                                <h3 class="font-bold text-slate-800 text-lg mb-2 mt-3 avoid-break">Step-by-Step Procedure</h3>
+                                <ol class="list-decimal pl-5 text-base text-slate-700 space-y-3 mb-4 avoid-break">
+                                    <li>
+                                        <strong>Cash from Customers:</strong> <br>
+                                        <span class="font-mono text-sm bg-slate-100 px-1 rounded">Sales +/- Dec/Inc in AR</span>
+                                    </li>
+                                    <li>
+                                        <strong>Cash to Suppliers:</strong> <br>
+                                        <span class="font-mono text-sm bg-slate-100 px-1 rounded">COGS +/- Inc/Dec Inventory +/- Dec/Inc AP</span>
+                                    </li>
+                                    <li>
+                                        <strong>Cash for OpEx:</strong> <br>
+                                        <span class="font-mono text-sm bg-slate-100 px-1 rounded">OpEx (no non-cash) +/- Inc/Dec Prepayments/Accruals</span>
+                                    </li>
+                                    <li>
+                                        <strong>Interest and Taxes:</strong> <br>
+                                        Deduct cash directly paid.
+                                    </li>
+                                </ol>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-case-direct" class="view-section">
+                    <div class="flex flex-col lg:flex-row h-full w-full gap-3 overflow-y-auto p-2 lg:p-4 bg-slate-800 section-marker" id="case-study-direct">
+                        
+                        <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
+                            <div class="sticky top-0 z-30 bg-slate-700 p-3 rounded shadow-md border border-slate-600 flex flex-col gap-2">
+                                <div class="flex w-full justify-center">
+                                    <div class="flex gap-1.5">
+                                        <button id="btnPrevDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500">&laquo; Prev</button>
+                                        <button id="btnNextDir" class="bg-teal-600 hover:bg-teal-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-teal-500">Next &raquo;</button>
+                                        <button id="btnEndDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500">End</button>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 border-t border-slate-600">
+                                    <label class="flex items-center gap-1.5 text-xs text-teal-300 cursor-pointer font-medium">
+                                        <input type="checkbox" id="voiceDir" class="w-4 h-4 accent-teal-500"> Voice
+                                    </label>
+                                    <div id="circlesDir" class="flex flex-wrap justify-end gap-1"></div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-700 rounded p-3 border border-slate-600 shadow-sm text-sm">
+                                <p class="text-slate-200 mb-2">Build the CF statement using the Direct Method from the identical data.</p>
+                                
+                                <h3 class="font-semibold text-slate-100 border-b border-slate-500 mb-1 pb-1 text-xs">Financial Position</h3>
+                                <table class="w-full text-right border-collapse font-mono text-xs text-slate-200 mb-3">
+                                    <thead><tr class="text-slate-300 border-b border-slate-500"><th class="text-left w-1/2">Assets</th><th class="text-center">2025</th><th class="text-center">2024</th></tr></thead>
+                                    <tbody>
+                                        <tr class="bg-teal-900/40 font-bold"><td class="text-left">Cash</td><td class="text-center text-white">150,000</td><td class="text-center">100,000</td></tr>
+                                        <tr><td class="text-left">Accounts Receivable</td><td class="text-center">60,000</td><td class="text-center">50,000</td></tr>
+                                        <tr><td class="text-left">Inventory</td><td class="text-center">70,000</td><td class="text-center">80,000</td></tr>
+                                        <tr><td class="text-left">PPE (Gross)</td><td class="text-center">400,000</td><td class="text-center">300,000</td></tr>
+                                        <tr><td class="text-left">Accum. Depr.</td><td class="text-center">(80,000)</td><td class="text-center">(50,000)</td></tr>
+                                        <tr class="text-slate-300 border-t border-slate-500"><th class="text-left pt-1" colspan="3">Liabilities & Equity</th></tr>
+                                        <tr><td class="text-left">Accounts Payable</td><td class="text-center">35,000</td><td class="text-center">40,000</td></tr>
+                                        <tr><td class="text-left">Accrued Liab.</td><td class="text-center">15,000</td><td class="text-center">10,000</td></tr>
+                                        <tr><td class="text-left">Long-Term Debt</td><td class="text-center">150,000</td><td class="text-center">100,000</td></tr>
+                                        <tr><td class="text-left">Common Stock</td><td class="text-center">250,000</td><td class="text-center">200,000</td></tr>
+                                        <tr><td class="text-left">Retained Earnings</td><td class="text-center">150,000</td><td class="text-center">130,000</td></tr>
+                                    </tbody>
+                                </table>
+
+                                <h3 class="font-semibold text-slate-100 border-b border-slate-500 mb-1 pb-1 text-xs">Income Statement (2025)</h3>
+                                <table class="w-full text-right border-collapse font-mono text-xs text-slate-200">
+                                    <tbody>
+                                        <tr><td class="text-left w-2/3">Sales</td><td class="w-1/3">500,000</td></tr>
+                                        <tr><td class="text-left">Cost of Goods Sold</td><td>(300,000)</td></tr>
+                                        <tr><td class="text-left">Operating Expenses</td><td>(100,000)</td></tr>
+                                        <tr><td class="text-left">Depreciation Exp.</td><td>(30,000)</td></tr>
+                                        <tr><td class="text-left">Interest & Taxes</td><td>(25,000)</td></tr>
+                                        <tr class="border-t border-slate-500 font-bold text-white"><td class="text-left pt-1">Net Income</td><td class="text-teal-400 pt-1">45,000</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
+                            <div class="sticky top-[105px] lg:top-0 z-20 bg-teal-950 p-3 rounded shadow-md border-l-4 border-teal-500">
+                                <h3 id="titleDir" class="text-base font-bold text-white mb-1">Step 0: Start</h3>
+                                <p id="expDir" class="text-sm text-teal-100 mb-2 leading-snug">Compute cash from operations directly.</p>
+                                <div class="bg-teal-900 px-2 py-0.5 rounded font-mono text-teal-200 inline-block border border-teal-700 text-xs">
+                                    <span class="font-bold text-white mr-1">Calc:</span> <span id="actDir">-</span>
+                                </div>
+                            </div>
+
+                            <div id="cf-dir-container" class="bg-slate-50 rounded p-3 shadow-inner border-2 border-slate-300 overflow-y-auto max-h-[50vh] lg:max-h-none lg:flex-1 relative font-mono text-sm text-slate-800">
+                                <div class="pb-[90px]">
+                                    <h4 class="font-bold text-base text-slate-900 border-b-2 border-teal-600 pb-1 mb-2 text-center uppercase sticky top-0 bg-slate-50 z-10">Direct Method</h4>
+                                    
+                                    <div id="cf-dir-op-hdr" class="cf-row hidden font-bold mt-1 bg-teal-100 px-2 py-0.5 text-teal-900">Operating Activities</div>
+                                    <div id="cf-dir-cust" class="cf-row hidden flex justify-between px-4 py-0.5 text-green-700"><span>Cash from customers</span><span>490,000</span></div>
+                                    <div id="cf-dir-supp" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Cash paid to suppliers</span><span>(295,000)</span></div>
+                                    <div id="cf-dir-opex" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Cash paid for OpEx</span><span>(95,000)</span></div>
+                                    <div id="cf-dir-int" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Cash paid Int & Tax</span><span>(25,000)</span></div>
+                                    <div id="cf-dir-op-net" class="cf-row hidden flex justify-between px-2 py-0.5 font-bold border-t border-slate-300 bg-slate-200 mt-1"><span>Net from Operating</span><span>75,000</span></div>
+
+                                    <div id="cf-dir-inv-hdr" class="cf-row hidden font-bold mt-3 bg-teal-100 px-2 py-0.5 text-teal-900">Investing & Financing</div>
+                                    <div id="cf-dir-inv" class="cf-row hidden flex justify-between px-4 py-0.5 text-red-700"><span>Net from Investing</span><span>(100,000)</span></div>
+                                    <div id="cf-dir-fin" class="cf-row hidden flex justify-between px-4 py-0.5 text-green-700"><span>Net from Financing</span><span>75,000</span></div>
+
+                                    <div id="cf-dir-sum" class="cf-row hidden flex justify-between font-bold mt-3 pt-1 border-t-2 border-slate-800"><span>Net Inc. in Cash</span><span class="text-green-700">50,000</span></div>
+                                    <div id="cf-dir-beg" class="cf-row hidden flex justify-between text-slate-600 px-1 py-0.5"><span>Cash at beginning</span><span>100,000</span></div>
+                                    <div id="cf-dir-end" class="cf-row hidden flex justify-between font-bold bg-teal-600 text-white px-2 py-1 mt-1 rounded"><span>Cash at end</span><span>150,000</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
             
-            <div class="text-center text-slate-400 py-3 font-mono text-sm tracking-widest flex-shrink-0 bg-white border-t border-slate-100 z-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-                PAGE <span id="page-indicator" class="font-bold text-slate-600">1 / ?</span>
-            </div>
+            <footer class="text-center text-slate-400 py-1.5 font-mono text-[10px] tracking-widest flex-shrink-0 bg-white border-t border-slate-100 z-10">
+                <p>This courseware is a private property of Joselito Villarta, CPA, MBA</p>
+            </footer>
 
         </main>
-    </div> <script>
+    </div>
+
+    <script>
+        // --- View & Pagination Engine ---
+        const views = ['view-topics-1', 'view-case-indirect', 'view-topics-2', 'view-case-direct'];
+        let currentViewIndex = 0;
+        
         let currentPage = 0;
         let totalPages = 1;
         let currentZoom = 100;
-        const zoomInput = document.getElementById('zoom-input');
         
-        // --- Global Zoom Logic (Scaling the HTML root) ---
         function updateZoomVar() {
             document.documentElement.style.fontSize = (currentZoom / 100 * 16) + 'px';
-            zoomInput.value = currentZoom + '%';
+            document.getElementById('zoom-input').value = currentZoom + '%';
             setTimeout(updatePagination, 50);
         }
 
@@ -503,32 +543,66 @@
             updateZoomVar();
         }
 
-        // --- Pagination Logic ---
-        function updatePagination() {
-            const topicsContent = document.getElementById('topics-content');
-            const topicsViewport = document.getElementById('topics-viewport');
-            
-            if (!topicsContent || !topicsViewport) return;
-            
-            const colWidth = topicsViewport.clientWidth;
-            if (colWidth === 0) return; 
+        function getActiveContentViewport() {
+            const activeView = document.getElementById(views[currentViewIndex]);
+            if (!activeView) return null;
+            return {
+                content: activeView.querySelector('.content-flow'),
+                viewport: activeView.querySelector('.book-viewport')
+            };
+        }
 
-            topicsContent.style.columnWidth = colWidth + 'px';
+        function updatePagination() {
+            const els = getActiveContentViewport();
+            if (!els || !els.content || !els.viewport) {
+                // Not a multi-column text view (it's an interactive example)
+                document.getElementById('page-indicator').innerText = `Ex.`;
+                updateSidebarHighlighting(null);
+                return;
+            }
+            
+            const isDesktop = window.innerWidth >= 1024;
+            const colsPerPage = isDesktop ? 2 : 1;
+            const viewportWidth = els.viewport.clientWidth;
+            if (viewportWidth === 0) return; 
+
+            const colWidth = viewportWidth / colsPerPage;
+            els.content.style.columnWidth = colWidth + 'px';
 
             setTimeout(() => {
-                totalPages = Math.max(1, Math.ceil(topicsContent.scrollWidth / colWidth));
+                const totalCols = Math.ceil(els.content.scrollWidth / colWidth);
+                totalPages = Math.max(1, totalCols - colsPerPage + 1); // Max pages you can slide
+                
                 if (currentPage >= totalPages) currentPage = Math.max(0, totalPages - 1);
                 
-                topicsContent.style.transform = `translateX(-${currentPage * colWidth}px)`;
-                document.getElementById('page-indicator').innerText = `${currentPage + 1} / ${totalPages}`;
+                els.content.style.transform = `translateX(-${currentPage * colWidth}px)`;
                 
-                updateSidebarHighlighting(colWidth);
+                // Display page info
+                let displayPage = currentPage + 1;
+                let displayTotal = totalPages;
+                document.getElementById('page-indicator').innerText = `${displayPage} / ${displayTotal}`;
+                
+                updateSidebarHighlighting(els.content, colWidth);
             }, 10);
         }
 
-        function updateSidebarHighlighting(colWidth) {
-            const contentRect = document.getElementById('topics-content').getBoundingClientRect();
-            const markers = document.querySelectorAll('.section-marker');
+        function updateSidebarHighlighting(contentEl, colWidth) {
+            if (!contentEl) {
+                // In an interactive view
+                document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active', 'text-indigo-700', 'text-teal-700', 'bg-indigo-50', 'bg-teal-50', 'bg-slate-100'));
+                const activeId = views[currentViewIndex] === 'view-case-indirect' ? 'case-study-indirect' : 'case-study-direct';
+                const activeLink = document.querySelector(`.nav-link[data-target="${activeId}"]`);
+                if(activeLink) {
+                    activeLink.classList.add('active');
+                    if (activeId === 'case-study-indirect') activeLink.classList.add('text-indigo-700', 'bg-indigo-50');
+                    else activeLink.classList.add('text-teal-700', 'bg-teal-50');
+                    document.getElementById('dynamic-section-title').innerText = activeLink.innerText;
+                }
+                return;
+            }
+
+            const contentRect = contentEl.getBoundingClientRect();
+            const markers = contentEl.querySelectorAll('.section-marker');
             let activeId = null;
             
             const currentScrollPos = currentPage * colWidth;
@@ -536,7 +610,6 @@
             markers.forEach(marker => {
                 const markerRect = marker.getBoundingClientRect();
                 const offsetLeft = markerRect.left - contentRect.left;
-                // Highlight the section that begins before the middle of the current page
                 if (offsetLeft <= currentScrollPos + (colWidth / 2)) {
                     activeId = marker.id;
                 }
@@ -546,89 +619,125 @@
                 document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active', 'text-indigo-700', 'text-teal-700', 'bg-indigo-50', 'bg-teal-50', 'bg-slate-100'));
                 const activeLink = document.querySelector(`.nav-link[data-target="${activeId}"]`);
                 if(activeLink) {
-                    activeLink.classList.add('active');
-                    // Add specific tint back to case study active states if needed
-                    if (activeId === 'case-study-indirect') activeLink.classList.add('text-indigo-700', 'bg-indigo-50');
-                    else if (activeId === 'case-study-direct') activeLink.classList.add('text-teal-700', 'bg-teal-50');
-                    else activeLink.classList.add('bg-slate-100');
+                    activeLink.classList.add('active', 'bg-slate-100');
+                    document.getElementById('dynamic-section-title').innerText = activeLink.innerText;
                 }
             }
         }
 
+        function switchView(index) {
+            if(index < 0 || index >= views.length) return;
+            
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(views[index]).classList.add('active');
+            currentViewIndex = index;
+            currentPage = 0; // reset horizontal page
+            
+            updatePagination();
+        }
+
         function nextPage() {
-            if(currentPage < totalPages - 1) {
-                currentPage++;
-                updatePagination();
+            const els = getActiveContentViewport();
+            if (els && els.content) {
+                if(currentPage < totalPages - 1) {
+                    currentPage++;
+                    updatePagination();
+                } else {
+                    switchView(currentViewIndex + 1); // Move to next View
+                }
+            } else {
+                switchView(currentViewIndex + 1); // Move from interactive to next text
             }
         }
 
         function prevPage() {
-            if(currentPage > 0) {
-                currentPage--;
-                updatePagination();
+            const els = getActiveContentViewport();
+            if (els && els.content) {
+                if(currentPage > 0) {
+                    currentPage--;
+                    updatePagination();
+                } else {
+                    // Moving back a view, jump to its last page
+                    if(currentViewIndex > 0) {
+                        switchView(currentViewIndex - 1);
+                        // Hacky way to jump to end of that view
+                        setTimeout(() => {
+                            currentPage = totalPages - 1;
+                            updatePagination();
+                        }, 50);
+                    }
+                }
+            } else {
+                if(currentViewIndex > 0) {
+                    switchView(currentViewIndex - 1);
+                    setTimeout(() => {
+                        currentPage = totalPages - 1;
+                        updatePagination();
+                    }, 50);
+                }
             }
         }
 
+        function goToSection(viewId, targetId) {
+            const vIndex = views.indexOf(viewId);
+            if(vIndex !== -1) {
+                if (currentViewIndex !== vIndex) {
+                    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+                    document.getElementById(views[vIndex]).classList.add('active');
+                    currentViewIndex = vIndex;
+                }
+            }
+
+            if (targetId) {
+                const els = getActiveContentViewport();
+                if(els && els.content) {
+                    const targetEl = document.getElementById(targetId);
+                    if(targetEl) {
+                        const colWidth = els.viewport.clientWidth / (window.innerWidth >= 1024 ? 2 : 1);
+                        
+                        els.content.style.transition = 'none';
+                        els.content.style.transform = 'translateX(0px)';
+                        void els.content.offsetWidth; 
+                        
+                        const offset = targetEl.getBoundingClientRect().left - els.content.getBoundingClientRect().left;
+                        currentPage = Math.floor(offset / colWidth);
+                        
+                        els.content.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+                    }
+                }
+            }
+            updatePagination();
+            toggleMenu(); // close mobile menu
+        }
+
         // --- Swipe Gesture Logic ---
-        let touchstartX = 0;
-        let touchstartY = 0;
-        let touchendX = 0;
-        let touchendY = 0;
+        let touchstartX = 0; let touchstartY = 0;
+        let touchendX = 0; let touchendY = 0;
 
-        const sliderViewport = document.getElementById('topics-viewport');
-
-        sliderViewport.addEventListener('touchstart', e => {
+        document.body.addEventListener('touchstart', e => {
             touchstartX = e.changedTouches[0].screenX;
             touchstartY = e.changedTouches[0].screenY;
         }, {passive: true});
 
-        sliderViewport.addEventListener('touchend', e => {
+        document.body.addEventListener('touchend', e => {
             touchendX = e.changedTouches[0].screenX;
             touchendY = e.changedTouches[0].screenY;
             handleSwipe(e);
         }, {passive: true});
 
         function handleSwipe(e) {
-            // Ignore if swipe is mostly vertical
             if (Math.abs(touchstartY - touchendY) > Math.abs(touchstartX - touchendX)) return;
             
-            // Ignore if swiping inside a horizontally scrollable container (e.g. data tables)
+            // Ignore horizontal overflow elements
             const scrollableNode = e.target.closest('.overflow-x-auto');
-            if (scrollableNode && scrollableNode.scrollWidth > scrollableNode.clientWidth) {
-                return; 
-            }
+            if (scrollableNode && scrollableNode.scrollWidth > scrollableNode.clientWidth) return; 
+
+            // Ignore sliders
+            if (e.target.type === 'range') return;
 
             const swipeDist = touchstartX - touchendX;
             if (swipeDist > 50) nextPage();
             else if (swipeDist < -50) prevPage();
-        }
-
-        window.addEventListener('resize', updatePagination);
-
-        function goToSection(targetId) {
-            const targetEl = document.getElementById(targetId);
-            const container = document.getElementById('topics-viewport');
-            const content = document.getElementById('topics-content');
-            
-            if (!targetEl || !container || !content) return;
-
-            const colWidth = container.clientWidth;
-            if (colWidth === 0) return;
-
-            content.style.transition = 'none';
-            content.style.transform = 'translateX(0px)';
-            void content.offsetWidth; // Trigger reflow
-            
-            const contentRect = content.getBoundingClientRect();
-            const targetRect = targetEl.getBoundingClientRect();
-            const offset = targetRect.left - contentRect.left;
-            
-            currentPage = Math.floor(offset / colWidth);
-            
-            content.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
-            updatePagination();
-            
-            if(window.innerWidth < 768) closeMenu();
         }
 
         function toggleMenu() {
@@ -637,16 +746,7 @@
             sidebar.classList.toggle('-translate-x-full');
             overlay.classList.toggle('hidden');
         }
-        
-        function closeMenu() {
-            if(window.innerWidth < 768) {
-                document.getElementById('sidebar').classList.add('-translate-x-full');
-                document.getElementById('menuOverlay').classList.add('hidden');
-            }
-        }
-        document.getElementById('menuBtn').addEventListener('click', toggleMenu);
 
-        // --- Speech Synthesis Helper ---
         const synth = window.speechSynthesis;
         function playVoice(text, toggleId) {
             if(document.getElementById(toggleId).checked) {
@@ -657,186 +757,128 @@
             }
         }
 
-        // --- CASE STUDY 6: INDIRECT METHOD ---
+        // --- CASE STUDY INDIRECT ---
         const indSteps = [
-            { title: "Step 0: Initial Setup", exp: "Review the financial statements above. We need to explain why cash increased by exactly 50,000 PHP by preparing the Statement Cash Flows.", act: "Focus on the 50,000 PHP increase in Cash.", nar: "Welcome. Observe the financial statements. Cash increased by 50,000 pesos. Let's explain why by preparing the Statement of Cash Flows, using the indirect method.", rev: [] },
-            { title: "Step 1: Start with Net Income", exp: "Locate the net income on the income statement. In this case, it is 45,000.", act: "Record Net Income: +45,000", nar: "Step 1. We begin the cash flows from operating activities by starting with the accrual‑basis net income. From the income statement, take the 45,000 net income.", rev: ['cf-ind-op-hdr', 'cf-ind-ni', 'cf-ind-adj'] },
-            { title: "Step 2: Add back Depreciation", exp: "Scan the income statement for non‑cash expenses. Look specifically for items like Depreciation Expense.", act: "Add back Depreciation Expense: +30,000", nar: "Step 2. We add back the 30,000 depreciation to cancel out its effect.", rev: ['cf-ind-dep'] },
-            { title: "Step 3: Accounts Receivable Increased", exp: "Sales increased Net Income, but our Receivables grew by 10,000. This means we haven't received the cash yet!", act: "Deduct increase in AR: (10,000)", nar: "Step 3. Accounts receivable increased by 10,000. We must deduct 10,000.", rev: ['cf-ind-ar'] },
-            { title: "Step 4: Inventory Decreased", exp: "Our inventory dropped by 10,000. This means we sold goods we already had on the shelves.", act: "Add decrease in Inventory: +10,000", nar: "Step 4. Inventory decreased by 10,000. We add 10,000.", rev: ['cf-ind-inv'] },
-            { title: "Step 5: Accounts Payable Decreased", exp: "Our debt to suppliers (Accounts Payable) dropped by 5,000. This is a cash outflow.", act: "Deduct decrease in AP: (5,000)", nar: "Step 5. Accounts payable decreased. We deduct 5,000.", rev: ['cf-ind-ap'] },
-            { title: "Step 6: Accrued Liab. Increased", exp: "Accrued liabilities (unpaid expenses) increased by 5,000. We add this 5,000 back.", act: "Add increase in Accrued Liab: +5,000", nar: "Step 6. Accrued liabilities increased. We add 5,000 back.", rev: ['cf-ind-acc', 'cf-ind-op-net'] },
-            { title: "Step 7: Investing Activities (PPE)", exp: "Gross Property, Plant, & Equipment (PPE) jumped from 300k to 400k.", act: "Record Purchase of PPE: (100,000)", nar: "Step 7. Gross P P E increased by 100,000. We bought equipment, resulting in a 100,000 investing outflow.", rev: ['cf-ind-inv-hdr', 'cf-ind-ppe', 'cf-ind-inv-net'] },
-            { title: "Step 8: Financing Activities (Debt/Stock)", exp: "Long-Term Debt increased by 50k (we borrowed money). Common Stock increased by 50k (we issued shares).", act: "Record Proceeds: Debt (+50,000), Stock (+50,000)", nar: "Step 8. We borrowed 50,000 and issued 50,000 in stock.", rev: ['cf-ind-fin-hdr', 'cf-ind-debt', 'cf-ind-stock'] },
-            { title: "Step 9: Where are the Dividends?", exp: "Retained Earnings grew by only 20k (130k to 150k). Since Net Income was 45k, the missing 25k was paid out to owners as Cash Dividends!", act: "Record Dividends Paid: (25,000)", nar: "Step 9. Retained earnings only grew by 20,000 despite a 45,000 net income. The missing 25,000 was paid out as cash dividends.", rev: ['cf-ind-div', 'cf-ind-fin-net', 'cf-ind-sum-net', 'cf-ind-sum-beg', 'cf-ind-sum-end'] }
+            { title: "Step 0: Setup", exp: "Review the financial statements. Cash increased by 50,000 PHP.", act: "Observe data.", nar: "Welcome. Observe the data.", rev: [] },
+            { title: "Step 1: Net Income", exp: "Start with 45,000 Net Income.", act: "+45,000", nar: "Start with net income.", rev: ['cf-ind-op-hdr', 'cf-ind-ni', 'cf-ind-adj'] },
+            { title: "Step 2: Depreciation", exp: "Add non-cash Depr.", act: "+30,000", nar: "Add depreciation.", rev: ['cf-ind-dep'] },
+            { title: "Step 3: Inc in AR", exp: "AR grew by 10k.", act: "(10,000)", nar: "Deduct AR.", rev: ['cf-ind-ar'] },
+            { title: "Step 4: Dec in Inv", exp: "Inventory dropped 10k.", act: "+10,000", nar: "Add inventory.", rev: ['cf-ind-inv'] },
+            { title: "Step 5: Dec in AP", exp: "AP dropped 5k.", act: "(5,000)", nar: "Deduct AP.", rev: ['cf-ind-ap'] },
+            { title: "Step 6: Inc in Accrued", exp: "Accrued increased 5k.", act: "+5,000", nar: "Add accrued.", rev: ['cf-ind-acc', 'cf-ind-op-net'] },
+            { title: "Step 7: PPE", exp: "Bought 100k PPE.", act: "(100,000)", nar: "Deduct PPE.", rev: ['cf-ind-inv-hdr', 'cf-ind-ppe', 'cf-ind-inv-net'] },
+            { title: "Step 8: Debt/Stock", exp: "Borrowed 50k, issued 50k.", act: "+50k / +50k", nar: "Add debt and stock.", rev: ['cf-ind-fin-hdr', 'cf-ind-debt', 'cf-ind-stock'] },
+            { title: "Step 9: Dividends", exp: "Paid 25k out.", act: "(25,000)", nar: "Deduct dividends.", rev: ['cf-ind-div', 'cf-ind-fin-net', 'cf-ind-sum-net', 'cf-ind-sum-beg', 'cf-ind-sum-end'] }
         ];
 
         let currInd = 0;
-
         function initCirclesInd() {
             const container = document.getElementById('circlesInd');
             container.innerHTML = '';
             indSteps.forEach((_, i) => {
                 const circle = document.createElement('div');
                 circle.id = `circle-ind-${i}`;
-                circle.className = 'w-8 h-8 rounded-full flex items-center justify-center font-bold cursor-pointer transition-colors text-sm shadow-sm';
+                circle.className = 'w-6 h-6 rounded-full flex items-center justify-center font-bold cursor-pointer text-[10px] shadow-sm border border-slate-600';
                 circle.innerText = i;
                 circle.onclick = () => { currInd = i; updateInd(); };
                 container.appendChild(circle);
             });
         }
-
         function updateInd() {
             document.getElementById('titleInd').innerText = indSteps[currInd].title;
             document.getElementById('expInd').innerText = indSteps[currInd].exp;
             document.getElementById('actInd').innerText = indSteps[currInd].act;
             
-            // Remove highlighting from all rows first
             indSteps.flatMap(s => s.rev).forEach(id => {
                 const el = document.getElementById(id);
-                if(el) { 
-                    el.classList.add('hidden'); 
-                    el.style.animation = 'none'; 
-                    el.classList.remove('!bg-amber-100'); // Clean up any active highlights
-                }
+                if(el) { el.classList.add('hidden'); el.classList.remove('!bg-amber-100'); }
             });
-
-            let lastRevealedEl = null;
-
+            let lastEl = null;
             for(let i=0; i<=currInd; i++) {
                 indSteps[i].rev.forEach(id => {
                     const el = document.getElementById(id);
                     if(el) { 
                         el.classList.remove('hidden'); 
-                        el.style.animation = 'fadeIn 0.5s'; 
-                        
-                        // Apply yellow highlight ONLY to the rows revealed in the CURRENT step
-                        if (i === currInd) {
-                            el.classList.add('!bg-amber-100');
-                            lastRevealedEl = el;
-                        }
+                        if (i === currInd) { el.classList.add('!bg-amber-100'); lastEl = el; }
                     }
                 });
             }
-
-            // Update circles UI
             indSteps.forEach((_, i) => {
                 const circle = document.getElementById(`circle-ind-${i}`);
                 if(circle) {
-                    if (i === currInd) {
-                        circle.classList.add('bg-indigo-500', 'text-white');
-                        circle.classList.remove('bg-slate-600', 'text-slate-300', 'hover:bg-slate-500');
-                    } else {
-                        circle.classList.add('bg-slate-600', 'text-slate-300', 'hover:bg-slate-500');
-                        circle.classList.remove('bg-indigo-500', 'text-white');
-                    }
+                    if (i === currInd) { circle.classList.add('bg-indigo-500', 'text-white'); circle.classList.remove('bg-slate-700', 'text-slate-300'); } 
+                    else { circle.classList.add('bg-slate-700', 'text-slate-300'); circle.classList.remove('bg-indigo-500', 'text-white'); }
                 }
             });
-
-            // Smooth Auto-scroll CF container so the newly highlighted row is roughly 3 lines from bottom
-            if (lastRevealedEl) {
-                const container = document.getElementById('cf-ind-container');
-                if (container) {
-                    const targetScrollTop = lastRevealedEl.offsetTop - container.clientHeight + 100;
-                    container.scrollTo({ top: Math.max(0, targetScrollTop), behavior: 'smooth' });
-                }
+            if (lastEl) {
+                const c = document.getElementById('cf-ind-container');
+                if (c) c.scrollTo({ top: Math.max(0, lastEl.offsetTop - c.clientHeight + 80), behavior: 'smooth' });
             }
-
             playVoice(indSteps[currInd].nar, 'voiceInd');
         }
+        document.getElementById('btnPrevInd').onclick = () => { if(currInd > 0) { currInd--; updateInd(); } };
+        document.getElementById('btnNextInd').onclick = () => { if(currInd < indSteps.length - 1) { currInd++; updateInd(); } };
+        document.getElementById('btnEndInd').onclick = () => { currInd = indSteps.length - 1; updateInd(); };
 
-        document.getElementById('btnPrevInd').addEventListener('click', () => { if(currInd > 0) { currInd--; updateInd(); } });
-        document.getElementById('btnNextInd').addEventListener('click', () => { if(currInd < indSteps.length - 1) { currInd++; updateInd(); } });
-        document.getElementById('btnEndInd').addEventListener('click', () => { currInd = indSteps.length - 1; updateInd(); });
-
-        // --- CASE STUDY 7: DIRECT METHOD ---
+        // --- CASE STUDY DIRECT ---
         const dirSteps = [
-            { title: "Step 0: The Direct Approach", exp: "The Direct Method mathematically converts accrual revenues/expenses into actual gross cash receipts and payments.", act: "Prepare to calculate gross cash flows.", nar: "Step 0. The direct method computes actual cash receipts and payments. Let's start.", rev: ['cf-dir-op-hdr'] },
-            { title: "Step 1: Cash Received from Customers", exp: "Sales were 500k. But AR increased by 10k (from 50k to 60k). Actual cash collected is Sales minus the increase in AR.", act: "500,000 Sales - 10,000 AR Increase = 490,000", nar: "Step 1. Cash from customers is 500,000 in sales, minus the 10,000 increase in uncollected receivables.", rev: ['cf-dir-cust'] },
-            { title: "Step 2: Cash Paid to Suppliers", exp: "COGS is 300k. Inventory decreased by 10k. AP decreased by 5k. Total payment: 300k - 10k + 5k.", act: "300k COGS - 10k Inv Drop + 5k AP Drop = 295,000 Paid", nar: "Step 2. Cash paid to suppliers equals 300,000 cost of goods, minus the 10,000 inventory drop, plus the 5,000 accounts payable payoff.", rev: ['cf-dir-supp'] },
-            { title: "Step 3: Cash Paid for Operating Expenses", exp: "Op. Expenses are 100k. Accrued Liab increased by 5k. Therefore, cash actually paid is 100k minus the 5k unpaid.", act: "100k OpEx - 5k Accrued Liab Increase = 95,000 Paid", nar: "Step 3. Operating expenses were 100,000, but 5,000 is still unpaid in accrued liabilities. We only paid 95,000.", rev: ['cf-dir-opex'] },
-            { title: "Step 4: Interest and Taxes", exp: "Interest and Taxes on the income statement are 25k.", act: "Record Interest & Taxes Paid: (25,000)", nar: "Step 4. We paid 25,000 for interest and taxes.", rev: ['cf-dir-int', 'cf-dir-op-net'] },
-            { title: "Step 5: Investing and Financing", exp: "Investing and Financing sections are identical under both methods.", act: "Import Investing (-100k) & Financing (+75k)", nar: "Step 5. Investing and Financing remain exactly the same as the indirect method.", rev: ['cf-dir-inv-hdr', 'cf-dir-inv', 'cf-dir-fin'] },
-            { title: "Step 6: Final Cash Reconciliation", exp: "Notice that Net Operating Cash Flow is 75,000. This exactly matches the Indirect Method result!", act: "Reconcile Net Increase (+50k) to Ending Cash (150k)", nar: "Step 6. Notice the net operating cash flow is exactly 75,000, same as the indirect method.", rev: ['cf-dir-sum', 'cf-dir-beg', 'cf-dir-end'] }
+            { title: "Step 0: Setup", exp: "Convert to direct cash.", act: "-", nar: "Start.", rev: ['cf-dir-op-hdr'] },
+            { title: "Step 1: Customers", exp: "500k Sales - 10k AR Inc", act: "490,000", nar: "Cash from customers.", rev: ['cf-dir-cust'] },
+            { title: "Step 2: Suppliers", exp: "300k COGS - 10k Inv + 5k AP", act: "(295,000)", nar: "Paid suppliers.", rev: ['cf-dir-supp'] },
+            { title: "Step 3: OpEx", exp: "100k - 5k Accrued", act: "(95,000)", nar: "Paid opex.", rev: ['cf-dir-opex'] },
+            { title: "Step 4: Int & Tax", exp: "Paid 25k.", act: "(25,000)", nar: "Paid tax.", rev: ['cf-dir-int', 'cf-dir-op-net'] },
+            { title: "Step 5: Inv & Fin", exp: "Same as indirect.", act: "Import", nar: "Import rest.", rev: ['cf-dir-inv-hdr', 'cf-dir-inv', 'cf-dir-fin'] },
+            { title: "Step 6: Finish", exp: "Net 75k.", act: "Done", nar: "Done.", rev: ['cf-dir-sum', 'cf-dir-beg', 'cf-dir-end'] }
         ];
 
         let currDir = 0;
-
         function initCirclesDir() {
             const container = document.getElementById('circlesDir');
             container.innerHTML = '';
             dirSteps.forEach((_, i) => {
                 const circle = document.createElement('div');
                 circle.id = `circle-dir-${i}`;
-                circle.className = 'w-8 h-8 rounded-full flex items-center justify-center font-bold cursor-pointer transition-colors text-sm shadow-sm';
+                circle.className = 'w-6 h-6 rounded-full flex items-center justify-center font-bold cursor-pointer text-[10px] shadow-sm border border-slate-500';
                 circle.innerText = i;
                 circle.onclick = () => { currDir = i; updateDir(); };
                 container.appendChild(circle);
             });
         }
-
         function updateDir() {
             document.getElementById('titleDir').innerText = dirSteps[currDir].title;
             document.getElementById('expDir').innerText = dirSteps[currDir].exp;
             document.getElementById('actDir').innerText = dirSteps[currDir].act;
             
-            // Remove highlighting from all rows first
             dirSteps.flatMap(s => s.rev).forEach(id => {
                 const el = document.getElementById(id);
-                if(el) { 
-                    el.classList.add('hidden'); 
-                    el.style.animation = 'none'; 
-                    el.classList.remove('!bg-amber-100'); // Clean up any active highlights
-                }
+                if(el) { el.classList.add('hidden'); el.classList.remove('!bg-amber-100'); }
             });
-
-            let lastRevealedEl = null;
-
+            let lastEl = null;
             for(let i=0; i<=currDir; i++) {
                 dirSteps[i].rev.forEach(id => {
                     const el = document.getElementById(id);
                     if(el) { 
                         el.classList.remove('hidden'); 
-                        el.style.animation = 'fadeIn 0.5s'; 
-                        
-                        // Apply yellow highlight ONLY to the rows revealed in the CURRENT step
-                        if (i === currDir) {
-                            el.classList.add('!bg-amber-100');
-                            lastRevealedEl = el;
-                        }
+                        if (i === currDir) { el.classList.add('!bg-amber-100'); lastEl = el; }
                     }
                 });
             }
-
-            // Update circles UI
             dirSteps.forEach((_, i) => {
                 const circle = document.getElementById(`circle-dir-${i}`);
                 if(circle) {
-                    if (i === currDir) {
-                        circle.classList.add('bg-teal-500', 'text-white');
-                        circle.classList.remove('bg-slate-600', 'text-slate-300', 'hover:bg-slate-500');
-                    } else {
-                        circle.classList.add('bg-slate-600', 'text-slate-300', 'hover:bg-slate-500');
-                        circle.classList.remove('bg-teal-500', 'text-white');
-                    }
+                    if (i === currDir) { circle.classList.add('bg-teal-500', 'text-white'); circle.classList.remove('bg-slate-600', 'text-slate-300'); } 
+                    else { circle.classList.add('bg-slate-600', 'text-slate-300'); circle.classList.remove('bg-teal-500', 'text-white'); }
                 }
             });
-
-            // Smooth Auto-scroll CF container so the newly highlighted row is roughly 3 lines from bottom
-            if (lastRevealedEl) {
-                const container = document.getElementById('cf-dir-container');
-                if (container) {
-                    const targetScrollTop = lastRevealedEl.offsetTop - container.clientHeight + 100;
-                    container.scrollTo({ top: Math.max(0, targetScrollTop), behavior: 'smooth' });
-                }
+            if (lastEl) {
+                const c = document.getElementById('cf-dir-container');
+                if (c) c.scrollTo({ top: Math.max(0, lastEl.offsetTop - c.clientHeight + 80), behavior: 'smooth' });
             }
-
             playVoice(dirSteps[currDir].nar, 'voiceDir');
         }
-
-        document.getElementById('btnPrevDir').addEventListener('click', () => { if(currDir > 0) { currDir--; updateDir(); } });
-        document.getElementById('btnNextDir').addEventListener('click', () => { if(currDir < dirSteps.length - 1) { currDir++; updateDir(); } });
-        document.getElementById('btnEndDir').addEventListener('click', () => { currDir = dirSteps.length - 1; updateDir(); });
+        document.getElementById('btnPrevDir').onclick = () => { if(currDir > 0) { currDir--; updateDir(); } };
+        document.getElementById('btnNextDir').onclick = () => { if(currDir < dirSteps.length - 1) { currDir++; updateDir(); } };
+        document.getElementById('btnEndDir').onclick = () => { currDir = dirSteps.length - 1; updateDir(); };
 
         window.onload = () => { 
             initCirclesInd();
