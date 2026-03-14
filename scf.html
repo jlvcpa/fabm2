@@ -10,7 +10,7 @@
     <style>
         /* Base font root. JavaScript will scale this to zoom ALL text globally */
         html { 
-            font-size: 48px; 
+            font-size: 16px; 
             scroll-behavior: smooth; 
         }
 
@@ -175,14 +175,14 @@
                                     "Welcome. Mastering the translation of accrual-based accounting into pure cash reality is paramount."
                                 </p>
                                 
-                                <h2 class="text-2xl font-bold text-slate-800 mb-2 border-l-4 border-blue-600 pl-2">1. Overview and Purpose</h2>
-                                <h3 class="text-xl font-semibold text-slate-800 mb-1 mt-3">Definition</h3>
-                                <p class="text-slate-700 text-lg mb-3">
+                                <h2 class="text-xl font-bold text-slate-800 mb-2 border-l-4 border-blue-600 pl-2">1. Overview and Purpose</h2>
+                                <h3 class="text-lg font-semibold text-slate-800 mb-1 mt-3">Definition</h3>
+                                <p class="text-slate-700 text-base mb-3">
                                     The statement of cash flows summarizes cash and cash equivalents entering and leaving a company. It strips away non-cash transactions to reveal pure liquidity over a specific period.
                                 </p>
                                 
-                                <h3 class="text-xl font-semibold text-slate-800 mb-1 mt-3 avoid-break">Purpose & Role</h3>
-                                <ul class="list-disc pl-5 text-lg text-slate-700 space-y-1 mb-3 avoid-break">
+                                <h3 class="text-lg font-semibold text-slate-800 mb-1 mt-3 avoid-break">Purpose & Role</h3>
+                                <ul class="list-disc pl-5 text-base text-slate-700 space-y-1 mb-3 avoid-break">
                                     <li>Assesses the entity's ability to generate cash to pay obligations.</li>
                                     <li>Reconciles accrual-based Net Income to actual cash flow.</li>
                                     <li>Evaluates the financial structure (debt vs. equity).</li>
@@ -518,7 +518,7 @@
         let currentZoom = 100;
         
         function updateZoomVar() {
-            document.documentElement.style.fontSize = (currentZoom / 100 * 16) + 'px';
+            document.documentElement.style.fontSize = (currentZoom / 100 * 24) + 'px';
             document.getElementById('zoom-input').value = currentZoom + '%';
             setTimeout(updatePagination, 50);
         }
