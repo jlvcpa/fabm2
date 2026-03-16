@@ -309,31 +309,15 @@
                 <div id="view-case-indirect" class="view-section">
                     <div class="flex flex-col h-full w-full overflow-y-auto bg-slate-900 section-marker" id="case-study-indirect">
                         
-                        <div class="sticky top-0 z-30 flex flex-col lg:flex-row gap-1 px-6 pb-3 bg-slate-900 w-full shadow-sm">
-                            
-                            <div class="w-full lg:w-1/2 bg-slate-800 p-1 rounded shadow-md border border-slate-700 flex flex-col gap-2">
-                                <div class="flex w-full justify-center">
-                                    <div class="flex gap-1.5">
-                                        <button id="btnPrevInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600 disabled:opacity-50 disabled:cursor-not-allowed">&laquo; Prev</button>
-                                        <button id="btnNextInd" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed">Next &raquo;</button>
-                                        <button id="btnEndInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600">End</button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="w-full lg:w-1/2 bg-indigo-950 p-3 rounded shadow-md border-l-4 border-indigo-500 flex flex-col justify-center">
-                                <p id="expInd" class="text-sm text-indigo-100 leading-snug">Review initial data.</p>
-                            </div>
+                        <div class="flex flex-col sm:flex-row items-center justify-between gap-2 px-6 py-2 border-b border-slate-700 bg-slate-900 sticky top-0 z-30 shadow-sm">
+                            <label class="flex items-center gap-1.5 text-xs text-indigo-300 cursor-pointer font-medium">
+                                <input type="checkbox" id="voiceInd" class="w-4 h-4 accent-indigo-500"> Voice
+                            </label>
+                            <div id="circlesInd" class="flex flex-wrap justify-end gap-1"></div>
                         </div>
-                                <div class="flex flex-col sm:flex-row items-center justify-between gap-2 px-6 border-t border-slate-700">
-                                    <label class="flex items-center gap-1.5 text-xs text-indigo-300 cursor-pointer font-medium">
-                                        <input type="checkbox" id="voiceInd" class="w-4 h-4 accent-indigo-500"> Voice
-                                    </label>
-                                    <div id="circlesInd" class="flex flex-wrap justify-end gap-1"></div>
-                                </div>
 
-
-                        <div class="flex flex-col lg:flex-row gap-3 px-6 pb-6 w-full">
+                        <div class="flex flex-col lg:flex-row gap-4 px-6 py-4 w-full h-full">
+                            
                             <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
                                 <div class="bg-slate-800 rounded p-3 border border-slate-700 shadow-sm text-sm">
                                     <p class="text-slate-200 mb-2">Build the CF statement of Formative Company using the Indirect Method.</p>
@@ -372,13 +356,12 @@
                                 </div>
                             </div>
                             
-                            <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
-                                <div id="cf-ind-container" class="bg-slate-50 rounded p-3 shadow-inner border-2 border-slate-300 overflow-y-auto max-h-none lg:flex-1 relative font-mono text-sm text-slate-800">
+                            <div class="w-full lg:w-1/2 flex flex-col gap-2 relative h-[70vh] lg:h-[calc(100vh-140px)] lg:sticky lg:top-14">
+                                <div id="cf-ind-container" class="bg-slate-50 rounded p-3 shadow-inner border-2 border-slate-300 overflow-y-auto flex-1 font-mono text-sm text-slate-800 pb-24">
                                     <h4 class="font-bold text-base text-slate-900 text-center uppercase bg-slate-50">FORMATIVE COMPANY</h4>
                                     <h4 class="text-sm text-slate-900 text-center bg-slate-50">Statement of Cash Flows (Indirect Method)</h4>
                                     <h4 class="text-xs text-slate-900 text-center bg-slate-50">For the year ended December 31, 2025</h4>
 
-                                        
                                         <div id="cf-ind-op-hdr" class="cf-row hidden font-bold mt-1 bg-indigo-100 px-2 py-0.5 text-indigo-900">Operating Activities</div>
                                         <div id="cf-ind-ni" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold"><span>Net Income</span><span>45,000</span></div>
                                         <div id="cf-ind-adj" class="cf-row hidden px-2 py-0.5 text-slate-500 italic text-xs">Adjustments:</div>
@@ -402,6 +385,19 @@
                                         <div id="cf-ind-sum-net" class="cf-row hidden flex justify-between font-bold mt-3 pl-4 pr-2 pt-1 "><span>Net Inc. in Cash</span><span class="text-green-700">50,000</span></div>
                                         <div id="cf-ind-sum-beg" class="cf-row hidden flex justify-between text-slate-600 pl-4 pr-2 py-0.5 border-b-2 border-slate-800"><span>Cash at beginning</span><span>100,000</span></div>
 					<div id="cf-ind-sum-end" class="cf-row hidden flex justify-between font-bold bg-indigo-600 pl-4 pr-2 py-1 mt-1 rounded border-b-4 border-double border-indigo-800"><span>Cash at end</span><span>150,000</span></div>
+                                </div>
+                                <div class="flex flex-col gap-1.5 flex-shrink-0 w-full mt-1">
+                                    <div class="bg-indigo-950 p-2.5 rounded shadow-md border-l-4 border-indigo-500 min-h-[4rem] flex flex-col justify-center">
+                                        <p id="expInd" class="text-sm text-indigo-100 leading-snug">Review initial data.</p>
+                                    </div>
+                                    <div class="bg-slate-800 p-2 rounded shadow-md border border-slate-700 flex justify-center">
+                                        <div class="flex flex-wrap justify-center gap-1.5">
+                                            <button id="btnStartInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600 disabled:opacity-50 disabled:cursor-not-allowed">Start</button>
+                                            <button id="btnPrevInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600 disabled:opacity-50 disabled:cursor-not-allowed">&laquo; Prev</button>
+                                            <button id="btnNextInd" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed">Next &raquo;</button>
+                                            <button id="btnEndInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600">End</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -446,31 +442,15 @@
                 <div id="view-case-direct" class="view-section">
                     <div class="flex flex-col h-full w-full overflow-y-auto bg-slate-800 section-marker" id="case-study-direct">
                         
-                        <div class="sticky top-0 z-30 flex flex-col lg:flex-row gap-3 px-6 pb-3 lg:px-12 lg:pt-12 bg-slate-800 w-full shadow-sm">
-                            
-                            <div class="w-full lg:w-1/2 bg-slate-700 p-1 rounded shadow-md border border-slate-600 flex flex-col gap-2">
-                                <div class="flex w-full justify-center">
-                                    <div class="flex gap-1.5">
-                                        <button id="btnPrevDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500 disabled:opacity-50 disabled:cursor-not-allowed">&laquo; Prev</button>
-                                        <button id="btnNextDir" class="bg-teal-600 hover:bg-teal-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-teal-500 disabled:opacity-50 disabled:cursor-not-allowed">Next &raquo;</button>
-                                        <button id="btnEndDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500">End</button>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="w-full lg:w-1/2 bg-teal-950 p-3 rounded shadow-md border-l-4 border-teal-500 flex flex-col justify-center">
-                                <p id="expDir" class="text-sm text-teal-100 mb-2 leading-snug">Compute cash from operations directly.</p>
-                            </div>
+                        <div class="flex flex-col sm:flex-row items-center justify-between gap-2 px-6 py-2 border-b border-slate-600 bg-slate-800 sticky top-0 z-30 shadow-sm">
+                            <label class="flex items-center gap-1.5 text-xs text-teal-300 cursor-pointer font-medium">
+                                <input type="checkbox" id="voiceDir" class="w-4 h-4 accent-teal-500"> Voice
+                            </label>
+                            <div id="circlesDir" class="flex flex-wrap justify-end gap-1"></div>
                         </div>
-                                <div class="flex flex-col sm:flex-row items-center justify-between gap-2 px-6 border-t border-slate-600">
-                                    <label class="flex items-center gap-1.5 text-xs text-teal-300 cursor-pointer font-medium">
-                                        <input type="checkbox" id="voiceDir" class="w-4 h-4 accent-teal-500"> Voice
-                                    </label>
-                                    <div id="circlesDir" class="flex flex-wrap justify-end gap-1"></div>
-                                </div>
 
-                        <div class="flex flex-col lg:flex-row gap-3 px-6 pb-6 lg:px-12 lg:pb-12 w-full">
+                        <div class="flex flex-col lg:flex-row gap-4 px-6 py-4 w-full h-full">
+                            
                             <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
                                 <div class="bg-slate-700 rounded p-3 border border-slate-600 shadow-sm text-sm">
                                     <p class="text-slate-200 mb-2">Build the CF statement of Formative Company using the Direct Method.</p>
@@ -509,9 +489,8 @@
                                 </div>
                             </div>
                             
-                            <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
-                                <div id="cf-dir-container" class="bg-slate-50 rounded p-3 shadow-inner border-2 border-slate-300 overflow-y-auto max-h-none lg:flex-1 relative font-mono text-sm text-slate-800">
-                                    <div class="pb-[90px]">
+                            <div class="w-full lg:w-1/2 flex flex-col gap-2 relative h-[70vh] lg:h-[calc(100vh-140px)] lg:sticky lg:top-14">
+                                <div id="cf-dir-container" class="bg-slate-50 rounded p-3 shadow-inner border-2 border-slate-300 overflow-y-auto flex-1 font-mono text-sm text-slate-800 pb-24">
                                     <h4 class="font-bold text-base text-slate-900 text-center uppercase bg-slate-50">FORMATIVE COMPANY</h4>
                                     <h4 class="text-sm text-slate-900 text-center bg-slate-50">Statement of Cash Flows (Direct Method)</h4>
                                     <h4 class="text-xs text-slate-900 text-center bg-slate-50">For the year ended December 31, 2025</h4>
@@ -536,6 +515,18 @@
                                         <div id="cf-dir-sum" class="cf-row hidden flex justify-between pl-2 pr-4 font-bold mt-3 pt-1 border-t-2 border-slate-800"><span>Net Inc. in Cash</span><span class="text-green-700">50,000</span></div>
                                         <div id="cf-dir-beg" class="cf-row hidden flex justify-between pl-2 pr-4 border-b-2 border-slate-800 text-slate-600 px-1 py-0.5"><span>Cash at beginning</span><span>100,000</span></div>
                                         <div id="cf-dir-end" class="cf-row hidden flex justify-between pl-2 pr-4 font-bold bg-teal-600 px-2 py-1 mt-1 rounded border-b-4 border-double border-indigo-800"><span>Cash at end</span><span>150,000</span></div>
+                                </div>
+                                <div class="flex flex-col gap-1.5 flex-shrink-0 w-full mt-1">
+                                    <div class="bg-teal-950 p-2.5 rounded shadow-md border-l-4 border-teal-500 min-h-[4rem] flex flex-col justify-center">
+                                        <p id="expDir" class="text-sm text-teal-100 leading-snug">Compute cash from operations directly.</p>
+                                    </div>
+                                    <div class="bg-slate-700 p-2 rounded shadow-md border border-slate-600 flex justify-center">
+                                        <div class="flex flex-wrap justify-center gap-1.5">
+                                            <button id="btnStartDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500 disabled:opacity-50 disabled:cursor-not-allowed">Start</button>
+                                            <button id="btnPrevDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500 disabled:opacity-50 disabled:cursor-not-allowed">&laquo; Prev</button>
+                                            <button id="btnNextDir" class="bg-teal-600 hover:bg-teal-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-teal-500 disabled:opacity-50 disabled:cursor-not-allowed">Next &raquo;</button>
+                                            <button id="btnEndDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500">End</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -806,40 +797,18 @@
 
         // --- CASE STUDY INDIRECT ---
         const indSteps = [
-            { title: "Step 0: Setup",
-		exp: "Begin with the company name, the name of the statement, and the date. Use the phrase “for the year ended” to indicate that the statement of cash flows presents financial activity for the one‑year period that ended on December 31, 2025. This wording distinguishes a reporting period from a reporting date: a period (for example, a year ended December 31, 2025) summarizes flows over time, whereas a date (for example, as of December 31, 2025) reports balances at a single point in time.", 
-		act: "Observe data.", 
-		nar: "Welcome. Observe the data.", rev: []},
-
-	    { title: "Step 1: Classification of Cash Flows", 
-		exp: "The Statement of Cash Flows has three sections: Cash flows from Operating, Investing, and Financing Activities.", 
-		act: "", 
-		nar: "The Statement of Cash Flows has three sections: Cash flows from Operating, Investing, and Financing Activities.", 
-		rev: ['cf-ind-op-hdr', 'cf-ind-inv-hdr', 'cf-ind-fin-hdr'] },
-
-            { title: "Step 2: Net Income", 
-		exp: "The indirect method begins with the accrual net income because it is normally generated from operating activities. Because accrual net income includes noncash revenues and expenses, the amount is then adjusted for items such as depreciation, amortization, and unrealized gains or losses that affected profit but did not involve cash. It also provides a clear bridge to cash flows by incorporating changes in working capital, showing how accrual earnings convert into actual cash generated or used by operating activities.", 
-		act: "+45,000", 
-		nar: "The indirect method begins with the accrual net income because it is normally generated from operating activities. Because accrual net income includes noncash revenues and expenses, the amount is then adjusted for items such as depreciation, amortization, and unrealized gains or losses that affected profit but did not involve cash. It also provides a clear bridge to cash flows by incorporating changes in working capital, showing how accrual earnings convert into actual cash generated or used by operating activities.",, 
-		rev: ['cf-ind-ni'] },
-
-            { title: "Step 3: Depreciation", 
-		exp: "Add non-cash Depr.", 
-		act: "+30,000", 
-		nar: "Add depreciation.", 
-		rev: ['cf-ind-adj', 'cf-ind-dep'] },
-
-            { title: "Step 4: Inc in AR", 
-		exp: "AR grew by 10k.", 
-		act: "(10,000)", 
-		nar: "Deduct AR.", rev: ['cf-ind-ar'] },
-
-            { title: "Step 5: Dec in Inv", exp: "Inventory dropped 10k.", act: "+10,000", nar: "Add inventory.", rev: ['cf-ind-inv'] },
-            { title: "Step 6: Dec in AP", exp: "AP dropped 5k.", act: "(5,000)", nar: "Deduct AP.", rev: ['cf-ind-ap'] },
-            { title: "Step 7: Inc in Accrued", exp: "Accrued increased 5k.", act: "+5,000", nar: "Add accrued.", rev: ['cf-ind-acc', 'cf-ind-op-net'] },
-            { title: "Step 8: PPE", exp: "Bought 100k PPE.", act: "(100,000)", nar: "Deduct PPE.", rev: ['cf-ind-ppe', 'cf-ind-inv-net'] },
-            { title: "Step 9: Debt/Stock", exp: "Borrowed 50k, issued 50k.", act: "+50k / +50k", nar: "Add debt and stock.", rev: ['cf-ind-debt', 'cf-ind-stock'] },
-            { title: "Step 10: Dividends", exp: "Paid 25k out.", act: "(25,000)", nar: "Deduct dividends.", rev: ['cf-ind-div', 'cf-ind-fin-net', 'cf-ind-sum-net', 'cf-ind-sum-beg', 'cf-ind-sum-end'] }
+            { title: "Setup", exp: "Begin with the company name, the name of the statement, and the date. Use the phrase “for the year ended” to indicate that the statement of cash flows presents financial activity for the one‑year period that ended on December 31, 2025. This wording distinguishes a reporting period from a reporting date: a period (for example, a year ended December 31, 2025) summarizes flows over time, whereas a date (for example, as of December 31, 2025) reports balances at a single point in time.", act: "Observe data.", nar: "Welcome. Observe the data.", rev: []},
+            { title: "Classification of Cash Flows", exp: "The Statement of Cash Flows has three sections: Cash flows from Operating, Investing, and Financing Activities.", act: "", nar: "The Statement of Cash Flows has three sections: Cash flows from Operating, Investing, and Financing Activities.", rev: ['cf-ind-op-hdr', 'cf-ind-inv-hdr', 'cf-ind-fin-hdr'] },
+            { title: "Net Income", exp: "The indirect method begins with the accrual net income because it is normally generated from operating activities.", act: "+45,000", nar: "The indirect method begins with the accrual net income because it is normally generated from operating activities.", rev: ['cf-ind-ni'] },
+            { title: "Adjustments", exp: "Because accrual net income includes noncash revenues and expenses, the amount is then adjusted for items such as depreciation, amortization, and unrealized gains or losses that affected profit but did not involve cash. It also provides a clear bridge to cash flows by incorporating changes in working capital, showing how accrual earnings convert into actual cash generated or used by operating activities.", act: "+30,000", nar: "Because accrual net income includes noncash revenues and expenses, the amount is then adjusted for items such as depreciation, amortization, and unrealized gains or losses that affected profit but did not involve cash. It also provides a clear bridge to cash flows by incorporating changes in working capital, showing how accrual earnings convert into actual cash generated or used by operating activities.", rev: ['cf-ind-adj'] },
+            { title: "Depreciation", exp: "Add non-cash Depr.", act: "+30,000", nar: "Add depreciation.", rev: ['cf-ind-dep'] },
+            { title: "Inc in AR", exp: "AR grew by 10k.", act: "(10,000)", nar: "Deduct AR.", rev: ['cf-ind-ar'] },
+            { title: "Dec in Inv", exp: "Inventory dropped 10k.", act: "+10,000", nar: "Add inventory.", rev: ['cf-ind-inv'] },
+            { title: "Dec in AP", exp: "AP dropped 5k.", act: "(5,000)", nar: "Deduct AP.", rev: ['cf-ind-ap'] },
+            { title: "Inc in Accrued", exp: "Accrued increased 5k.", act: "+5,000", nar: "Add accrued.", rev: ['cf-ind-acc', 'cf-ind-op-net'] },
+            { title: "PPE", exp: "Bought 100k PPE.", act: "(100,000)", nar: "Deduct PPE.", rev: ['cf-ind-ppe', 'cf-ind-inv-net'] },
+            { title: "Debt/Stock", exp: "Borrowed 50k, issued 50k.", act: "+50k / +50k", nar: "Add debt and stock.", rev: ['cf-ind-debt', 'cf-ind-stock'] },
+            { title: "Dividends", exp: "Paid 25k out.", act: "(25,000)", nar: "Deduct dividends.", rev: ['cf-ind-div', 'cf-ind-fin-net', 'cf-ind-sum-net', 'cf-ind-sum-beg', 'cf-ind-sum-end'] }
         ];
 
         let currInd = 0;
@@ -856,8 +825,10 @@
             });
         }
         function updateInd(isEnd = false) {
-            document.getElementById('expInd').innerText = indSteps[currInd].exp;
+            // Dynamically injecting the step number based on currInd
+            document.getElementById('expInd').innerHTML = '<span class="font-bold text-indigo-200">Step ' + currInd + ': ' + indSteps[currInd].title + '</span><br><span class="mt-1 block">' + indSteps[currInd].exp + '</span>';
             
+            document.getElementById('btnStartInd').disabled = (currInd === 0);
             document.getElementById('btnPrevInd').disabled = (currInd === 0);
             document.getElementById('btnNextInd').disabled = (currInd === indSteps.length - 1);
 
@@ -883,27 +854,40 @@
                     else { circle.classList.add('bg-slate-700', 'text-slate-300'); circle.classList.remove('bg-indigo-500', 'text-white'); }
                 }
             });
+            
             if (lastEl) {
-                const c = document.getElementById('cf-ind-container');
-                if (c) c.scrollTo({ top: Math.max(0, lastEl.offsetTop + lastEl.clientHeight - c.clientHeight + 90), behavior: 'smooth' });
+                setTimeout(() => {
+                    const c = document.getElementById('cf-ind-container');
+                    if (c) {
+                        const buffer = 80; // ~3 lines + 20px padding
+                        const scrollBottom = lastEl.offsetTop + lastEl.offsetHeight - c.clientHeight + buffer;
+                        if (scrollBottom > c.scrollTop) {
+                            c.scrollTo({ top: scrollBottom, behavior: 'smooth' });
+                        } else if (lastEl.offsetTop < c.scrollTop) {
+                            c.scrollTo({ top: Math.max(0, lastEl.offsetTop - 20), behavior: 'smooth' });
+                        }
+                    }
+                }, 50);
             }
+            
             playVoice(indSteps[currInd].nar, 'voiceInd');
         }
+        document.getElementById('btnStartInd').onclick = () => { currInd = 0; updateInd(); };
         document.getElementById('btnPrevInd').onclick = () => { if(currInd > 0) { currInd--; updateInd(); } };
         document.getElementById('btnNextInd').onclick = () => { if(currInd < indSteps.length - 1) { currInd++; updateInd(); } };
         document.getElementById('btnEndInd').onclick = () => { currInd = indSteps.length - 1; updateInd(true); };
 
         // --- CASE STUDY DIRECT ---
         const dirSteps = [
-            { title: "Step 0: Setup", exp: "Convert to direct cash.", act: "-", nar: "Start.", rev: ['cf-dir-op-hdr'] },
-            { title: "Step 1: Customers", exp: "500k Sales - 10k AR Inc", act: "490,000", nar: "Cash from customers.", rev: ['cf-dir-cust'] },
-            { title: "Step 2: Suppliers", exp: "300k COGS - 10k Inv + 5k AP", act: "(295,000)", nar: "Paid suppliers.", rev: ['cf-dir-supp'] },
-            { title: "Step 3: OpEx", exp: "100k - 5k Accrued", act: "(95,000)", nar: "Paid opex.", rev: ['cf-dir-opex'] },
-            { title: "Step 4: Int & Tax", exp: "Paid 25k.", act: "(25,000)", nar: "Paid tax.", rev: ['cf-dir-int', 'cf-dir-op-net'] },
-            { title: "Step 5: PPE", exp: "Bought 100k PPE.", act: "(100,000)", nar: "Deduct PPE.", rev: ['cf-dir-inv-hdr', 'cf-dir-ppe', 'cf-dir-inv-net'] },
-            { title: "Step 6: Debt/Stock", exp: "Borrowed 50k, issued 50k.", act: "+50k / +50k", nar: "Add debt and stock.", rev: ['cf-dir-fin-hdr', 'cf-dir-debt', 'cf-dir-stock'] },
-            { title: "Step 7: Dividends", exp: "Paid 25k out.", act: "(25,000)", nar: "Deduct dividends.", rev: ['cf-dir-div', 'cf-dir-fin-net', 'cf-dir-sum-net', 'cf-dir-sum-beg', 'cf-dir-sum-end'] },
-            { title: "Step 8: Finish", exp: "Net 75k.", act: "Done", nar: "Done.", rev: ['cf-dir-sum', 'cf-dir-beg', 'cf-dir-end'] }
+            { title: "Setup", exp: "Convert to direct cash.", act: "-", nar: "Start.", rev: ['cf-dir-op-hdr'] },
+            { title: "Customers", exp: "500k Sales - 10k AR Inc", act: "490,000", nar: "Cash from customers.", rev: ['cf-dir-cust'] },
+            { title: "Suppliers", exp: "300k COGS - 10k Inv + 5k AP", act: "(295,000)", nar: "Paid suppliers.", rev: ['cf-dir-supp'] },
+            { title: "OpEx", exp: "100k - 5k Accrued", act: "(95,000)", nar: "Paid opex.", rev: ['cf-dir-opex'] },
+            { title: "Int & Tax", exp: "Paid 25k.", act: "(25,000)", nar: "Paid tax.", rev: ['cf-dir-int', 'cf-dir-op-net'] },
+            { title: "PPE", exp: "Bought 100k PPE.", act: "(100,000)", nar: "Deduct PPE.", rev: ['cf-dir-inv-hdr', 'cf-dir-ppe', 'cf-dir-inv-net'] },
+            { title: "Debt/Stock", exp: "Borrowed 50k, issued 50k.", act: "+50k / +50k", nar: "Add debt and stock.", rev: ['cf-dir-fin-hdr', 'cf-dir-debt', 'cf-dir-stock'] },
+            { title: "Dividends", exp: "Paid 25k out.", act: "(25,000)", nar: "Deduct dividends.", rev: ['cf-dir-div', 'cf-dir-fin-net', 'cf-dir-sum-net', 'cf-dir-sum-beg', 'cf-dir-sum-end'] },
+            { title: "Finish", exp: "Net 75k.", act: "Done", nar: "Done.", rev: ['cf-dir-sum', 'cf-dir-beg', 'cf-dir-end'] }
         ];
 
         let currDir = 0;
@@ -920,8 +904,10 @@
             });
         }
         function updateDir(isEnd = false) {
-            document.getElementById('expDir').innerText = dirSteps[currDir].exp;
+            // Dynamically injecting the step number based on currDir
+            document.getElementById('expDir').innerHTML = '<span class="font-bold text-teal-200">Step ' + currDir + ': ' + dirSteps[currDir].title + '</span><br><span class="mt-1 block">' + dirSteps[currDir].exp + '</span>';
             
+            document.getElementById('btnStartDir').disabled = (currDir === 0);
             document.getElementById('btnPrevDir').disabled = (currDir === 0);
             document.getElementById('btnNextDir').disabled = (currDir === dirSteps.length - 1);
 
@@ -947,12 +933,25 @@
                     else { circle.classList.add('bg-slate-600', 'text-slate-300'); circle.classList.remove('bg-teal-500', 'text-white'); }
                 }
             });
+            
             if (lastEl) {
-                const c = document.getElementById('cf-dir-container');
-                if (c) c.scrollTo({ top: Math.max(0, lastEl.offsetTop + lastEl.clientHeight - c.clientHeight + 90), behavior: 'smooth' });
+                setTimeout(() => {
+                    const c = document.getElementById('cf-dir-container');
+                    if (c) {
+                        const buffer = 80; // ~3 lines + 20px padding
+                        const scrollBottom = lastEl.offsetTop + lastEl.offsetHeight - c.clientHeight + buffer;
+                        if (scrollBottom > c.scrollTop) {
+                            c.scrollTo({ top: scrollBottom, behavior: 'smooth' });
+                        } else if (lastEl.offsetTop < c.scrollTop) {
+                            c.scrollTo({ top: Math.max(0, lastEl.offsetTop - 20), behavior: 'smooth' });
+                        }
+                    }
+                }, 50);
             }
+            
             playVoice(dirSteps[currDir].nar, 'voiceDir');
         }
+        document.getElementById('btnStartDir').onclick = () => { currDir = 0; updateDir(); };
         document.getElementById('btnPrevDir').onclick = () => { if(currDir > 0) { currDir--; updateDir(); } };
         document.getElementById('btnNextDir').onclick = () => { if(currDir < dirSteps.length - 1) { currDir++; updateDir(); } };
         document.getElementById('btnEndDir').onclick = () => { currDir = dirSteps.length - 1; updateDir(true); };
