@@ -307,18 +307,10 @@
                 </div>
 
                 <div id="view-case-indirect" class="view-section">
-                    <div class="flex flex-col h-full w-full overflow-y-auto bg-slate-900 section-marker" id="case-study-indirect">
+                    <div class="flex flex-col h-full w-full bg-slate-900 section-marker" id="case-study-indirect">
                         
-                        <div class="flex flex-col sm:flex-row items-center justify-between gap-2 px-6 py-2 border-b border-slate-700 bg-slate-900 sticky top-0 z-30 shadow-sm">
-                            <label class="flex items-center gap-1.5 text-xs text-indigo-300 cursor-pointer font-medium">
-                                <input type="checkbox" id="voiceInd" class="w-4 h-4 accent-indigo-500"> Voice
-                            </label>
-                            <div id="circlesInd" class="flex flex-wrap justify-end gap-1"></div>
-                        </div>
-
-                        <div class="flex flex-col lg:flex-row gap-4 px-6 py-4 w-full h-full">
-                            
-                            <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
+                        <div id="scroll-container-ind" class="flex-1 flex flex-col lg:flex-row gap-3 px-6 pt-6 pb-4 min-h-0 w-full overflow-y-auto lg:overflow-hidden">
+                            <div class="w-full lg:w-1/2 flex flex-col gap-3 lg:overflow-y-auto pr-1">
                                 <div class="bg-slate-800 rounded p-3 border border-slate-700 shadow-sm text-sm">
                                     <p class="text-slate-200 mb-2">Build the CF statement of Formative Company using the Indirect Method.</p>
                                     <h3 class="font-semibold text-slate-200 pb-0.1 text-lg">Formative Company</h3>
@@ -356,48 +348,56 @@
                                 </div>
                             </div>
                             
-                            <div class="w-full lg:w-1/2 flex flex-col gap-2 relative h-[70vh] lg:h-[calc(100vh-140px)] lg:sticky lg:top-14">
-                                <div id="cf-ind-container" class="bg-slate-50 rounded p-3 shadow-inner border-2 border-slate-300 overflow-y-auto flex-1 font-mono text-sm text-slate-800 pb-24">
+                            <div class="w-full lg:w-1/2 flex flex-col gap-3 relative lg:overflow-hidden">
+                                <div id="cf-ind-container" class="bg-slate-50 rounded p-3 shadow-inner border-2 border-slate-300 font-mono text-sm text-slate-800 lg:h-full lg:overflow-y-auto pb-6">
                                     <h4 class="font-bold text-base text-slate-900 text-center uppercase bg-slate-50">FORMATIVE COMPANY</h4>
                                     <h4 class="text-sm text-slate-900 text-center bg-slate-50">Statement of Cash Flows (Indirect Method)</h4>
                                     <h4 class="text-xs text-slate-900 text-center bg-slate-50">For the year ended December 31, 2025</h4>
 
-                                        <div id="cf-ind-op-hdr" class="cf-row hidden font-bold mt-1 bg-indigo-100 px-2 py-0.5 text-indigo-900">Operating Activities</div>
-                                        <div id="cf-ind-ni" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold"><span>Net Income</span><span>45,000</span></div>
-                                        <div id="cf-ind-adj" class="cf-row hidden px-2 py-0.5 text-slate-500 italic text-xs">Adjustments:</div>
-                                        <div id="cf-ind-dep" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Depreciation Exp</span><span>30,000</span></div>
-                                        <div id="cf-ind-ar" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Inc. in AR</span><span>-10,000</span></div>
-                                        <div id="cf-ind-inv" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Dec. in Inventory</span><span>10,000</span></div>
-                                        <div id="cf-ind-ap" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Dec. in AP</span><span>-5,000</span></div>
-                                        <div id="cf-ind-acc" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Inc. in Accrued Liab</span><span>5,000</span></div>
-                                        <div id="cf-ind-op-net" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold border-y border-indigo-800 bg-slate-200 mt-1"><span>Net cash inflow from Operating</span><span>75,000</span></div>
+                                    <div id="cf-ind-op-hdr" class="cf-row hidden font-bold mt-1 bg-indigo-100 px-2 py-0.5 text-indigo-900">Operating Activities</div>
+                                    <div id="cf-ind-ni" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold"><span>Net Income</span><span>45,000</span></div>
+                                    <div id="cf-ind-adj" class="cf-row hidden px-2 py-0.5 text-slate-500 italic text-xs">Adjustments:</div>
+                                    <div id="cf-ind-dep" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Depreciation Exp</span><span>30,000</span></div>
+                                    <div id="cf-ind-ar" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Inc. in AR</span><span>-10,000</span></div>
+                                    <div id="cf-ind-inv" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Dec. in Inventory</span><span>10,000</span></div>
+                                    <div id="cf-ind-ap" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Dec. in AP</span><span>-5,000</span></div>
+                                    <div id="cf-ind-acc" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Inc. in Accrued Liab</span><span>5,000</span></div>
+                                    <div id="cf-ind-op-net" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold border-y border-indigo-800 bg-slate-200 mt-1"><span>Net cash inflow from Operating</span><span>75,000</span></div>
 
-                                        <div id="cf-ind-inv-hdr" class="cf-row hidden font-bold mt-3 bg-indigo-100 px-2 py-0.5 text-indigo-900">Investing Activities</div>
-                                        <div id="cf-ind-ppe" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Purchase of PPE</span><span>-100,000</span></div>
-                                        <div id="cf-ind-inv-net" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold border-y border-indigo-800 bg-slate-200 mt-1"><span>Net cash outflow from Investing</span><span class="text-red-800">-100,000</span></div>
+                                    <div id="cf-ind-inv-hdr" class="cf-row hidden font-bold mt-3 bg-indigo-100 px-2 py-0.5 text-indigo-900">Investing Activities</div>
+                                    <div id="cf-ind-ppe" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Purchase of PPE</span><span>-100,000</span></div>
+                                    <div id="cf-ind-inv-net" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold border-y border-indigo-800 bg-slate-200 mt-1"><span>Net cash outflow from Investing</span><span class="text-red-800">-100,000</span></div>
 
-                                        <div id="cf-ind-fin-hdr" class="cf-row hidden font-bold mt-3 bg-indigo-100 px-2 py-0.5 text-indigo-900">Financing Activities</div>
-                                        <div id="cf-ind-debt" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Proceeds - Debt</span><span>50,000</span></div>
-                                        <div id="cf-ind-stock" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Proceeds - Stock</span><span>50,000</span></div>
-                                        <div id="cf-ind-div" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Dividends Paid</span><span>-25,000</span></div>
-                                        <div id="cf-ind-fin-net" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold border-y border-indigo-800 bg-slate-200 mt-1"><span>Net cash inflow from Financing</span><span>75,000</span></div>
+                                    <div id="cf-ind-fin-hdr" class="cf-row hidden font-bold mt-3 bg-indigo-100 px-2 py-0.5 text-indigo-900">Financing Activities</div>
+                                    <div id="cf-ind-debt" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Proceeds - Debt</span><span>50,000</span></div>
+                                    <div id="cf-ind-stock" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Proceeds - Stock</span><span>50,000</span></div>
+                                    <div id="cf-ind-div" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Dividends Paid</span><span>-25,000</span></div>
+                                    <div id="cf-ind-fin-net" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold border-y border-indigo-800 bg-slate-200 mt-1"><span>Net cash inflow from Financing</span><span>75,000</span></div>
 
-                                        <div id="cf-ind-sum-net" class="cf-row hidden flex justify-between font-bold mt-3 pl-4 pr-2 pt-1 "><span>Net Inc. in Cash</span><span class="text-green-700">50,000</span></div>
-                                        <div id="cf-ind-sum-beg" class="cf-row hidden flex justify-between text-slate-600 pl-4 pr-2 py-0.5 border-b-2 border-slate-800"><span>Cash at beginning</span><span>100,000</span></div>
-					<div id="cf-ind-sum-end" class="cf-row hidden flex justify-between font-bold bg-indigo-600 pl-4 pr-2 py-1 mt-1 rounded border-b-4 border-double border-indigo-800"><span>Cash at end</span><span>150,000</span></div>
+                                    <div id="cf-ind-sum-net" class="cf-row hidden flex justify-between font-bold mt-3 pl-4 pr-2 pt-1 "><span>Net Inc. in Cash</span><span class="text-green-700">50,000</span></div>
+                                    <div id="cf-ind-sum-beg" class="cf-row hidden flex justify-between text-slate-600 pl-4 pr-2 py-0.5 border-b-2 border-slate-800"><span>Cash at beginning</span><span>100,000</span></div>
+                                    <div id="cf-ind-sum-end" class="cf-row hidden flex justify-between font-bold bg-indigo-600 pl-4 pr-2 py-1 mt-1 rounded border-b-4 border-double border-indigo-800"><span>Cash at end</span><span>150,000</span></div>
                                 </div>
-                                <div class="flex flex-col gap-1.5 flex-shrink-0 w-full mt-1">
-                                    <div class="bg-indigo-950 p-2.5 rounded shadow-md border-l-4 border-indigo-500 min-h-[4rem] flex flex-col justify-center">
-                                        <p id="expInd" class="text-sm text-indigo-100 leading-snug">Review initial data.</p>
-                                    </div>
-                                    <div class="bg-slate-800 p-2 rounded shadow-md border border-slate-700 flex justify-center">
-                                        <div class="flex flex-wrap justify-center gap-1.5">
-                                            <button id="btnStartInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600 disabled:opacity-50 disabled:cursor-not-allowed">Start</button>
-                                            <button id="btnPrevInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600 disabled:opacity-50 disabled:cursor-not-allowed">&laquo; Prev</button>
-                                            <button id="btnNextInd" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed">Next &raquo;</button>
-                                            <button id="btnEndInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600">End</button>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+
+                        <div class="flex-shrink-0 w-full flex flex-col z-20 shadow-[0_-4px_10px_-1px_rgba(0,0,0,0.2)]">
+                            <div class="w-full bg-indigo-950 p-3 border-t-2 border-indigo-500">
+                                <p id="expInd" class="text-sm text-center text-indigo-100 leading-snug">Review initial data.</p>
+                            </div>
+                            
+                            <div class="w-full bg-slate-800 border-t border-slate-700 p-2 flex flex-col gap-2">
+                                <div class="flex flex-col sm:flex-row items-center justify-between px-2 gap-2">
+                                    <label class="flex items-center gap-1.5 text-xs text-indigo-300 cursor-pointer font-medium">
+                                        <input type="checkbox" id="voiceInd" class="w-4 h-4 accent-indigo-500"> Voice
+                                    </label>
+                                    <div id="circlesInd" class="flex flex-wrap justify-end gap-1"></div>
+                                </div>
+                                <div class="flex flex-wrap justify-center gap-1.5">
+                                    <button id="btnStartInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600 disabled:opacity-50 disabled:cursor-not-allowed">Start</button>
+                                    <button id="btnPrevInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600 disabled:opacity-50 disabled:cursor-not-allowed">&laquo; Prev</button>
+                                    <button id="btnNextInd" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed">Next &raquo;</button>
+                                    <button id="btnEndInd" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-600">End</button>
                                 </div>
                             </div>
                         </div>
@@ -440,18 +440,10 @@
                 </div>
 
                 <div id="view-case-direct" class="view-section">
-                    <div class="flex flex-col h-full w-full overflow-y-auto bg-slate-800 section-marker" id="case-study-direct">
+                    <div class="flex flex-col h-full w-full bg-slate-800 section-marker" id="case-study-direct">
                         
-                        <div class="flex flex-col sm:flex-row items-center justify-between gap-2 px-6 py-2 border-b border-slate-600 bg-slate-800 sticky top-0 z-30 shadow-sm">
-                            <label class="flex items-center gap-1.5 text-xs text-teal-300 cursor-pointer font-medium">
-                                <input type="checkbox" id="voiceDir" class="w-4 h-4 accent-teal-500"> Voice
-                            </label>
-                            <div id="circlesDir" class="flex flex-wrap justify-end gap-1"></div>
-                        </div>
-
-                        <div class="flex flex-col lg:flex-row gap-4 px-6 py-4 w-full h-full">
-                            
-                            <div class="w-full lg:w-1/2 flex flex-col gap-3 relative">
+                        <div id="scroll-container-dir" class="flex-1 flex flex-col lg:flex-row gap-3 px-6 pt-6 pb-4 min-h-0 w-full overflow-y-auto lg:overflow-hidden">
+                            <div class="w-full lg:w-1/2 flex flex-col gap-3 lg:overflow-y-auto pr-1">
                                 <div class="bg-slate-700 rounded p-3 border border-slate-600 shadow-sm text-sm">
                                     <p class="text-slate-200 mb-2">Build the CF statement of Formative Company using the Direct Method.</p>
                                     <h3 class="font-semibold text-slate-200 pb-0.1 text-lg">Formative Company</h3>
@@ -489,45 +481,53 @@
                                 </div>
                             </div>
                             
-                            <div class="w-full lg:w-1/2 flex flex-col gap-2 relative h-[70vh] lg:h-[calc(100vh-140px)] lg:sticky lg:top-14">
-                                <div id="cf-dir-container" class="bg-slate-50 rounded p-3 shadow-inner border-2 border-slate-300 overflow-y-auto flex-1 font-mono text-sm text-slate-800 pb-24">
+                            <div class="w-full lg:w-1/2 flex flex-col gap-3 relative lg:overflow-hidden">
+                                <div id="cf-dir-container" class="bg-slate-50 rounded p-3 shadow-inner border-2 border-slate-300 font-mono text-sm text-slate-800 lg:h-full lg:overflow-y-auto pb-6">
                                     <h4 class="font-bold text-base text-slate-900 text-center uppercase bg-slate-50">FORMATIVE COMPANY</h4>
                                     <h4 class="text-sm text-slate-900 text-center bg-slate-50">Statement of Cash Flows (Direct Method)</h4>
                                     <h4 class="text-xs text-slate-900 text-center bg-slate-50">For the year ended December 31, 2025</h4>
                                         
-                                        <div id="cf-dir-op-hdr" class="cf-row hidden font-bold mt-1 bg-teal-100 px-2 py-0.5 text-teal-900">Operating Activities</div>
-                                        <div id="cf-dir-cust" class="cf-row hidden flex justify-between pl-4 pr-4 py-0.5 text-green-700"><span>Cash from customers</span><span>490,000</span></div>
-                                        <div id="cf-dir-supp" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Cash paid to suppliers</span><span>(295,000)</span></div>
-                                        <div id="cf-dir-opex" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Cash paid for OpEx</span><span>(95,000)</span></div>
-                                        <div id="cf-dir-int" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Cash paid Int & Tax</span><span>(25,000)</span></div>
-                                        <div id="cf-dir-op-net" class="cf-row hidden flex justify-between pl-2 pr-4 py-0.5 font-bold border-t border-indigo-800 bg-slate-200 mt-1"><span>Net from Operating</span><span>75,000</span></div>
+                                    <div id="cf-dir-op-hdr" class="cf-row hidden font-bold mt-1 bg-teal-100 px-2 py-0.5 text-teal-900">Operating Activities</div>
+                                    <div id="cf-dir-cust" class="cf-row hidden flex justify-between pl-4 pr-4 py-0.5 text-green-700"><span>Cash from customers</span><span>490,000</span></div>
+                                    <div id="cf-dir-supp" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Cash paid to suppliers</span><span>(295,000)</span></div>
+                                    <div id="cf-dir-opex" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Cash paid for OpEx</span><span>(95,000)</span></div>
+                                    <div id="cf-dir-int" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Cash paid Int & Tax</span><span>(25,000)</span></div>
+                                    <div id="cf-dir-op-net" class="cf-row hidden flex justify-between pl-2 pr-4 py-0.5 font-bold border-t border-indigo-800 bg-slate-200 mt-1"><span>Net from Operating</span><span>75,000</span></div>
 
-                                        <div id="cf-dir-inv-hdr" class="cf-row hidden font-bold mt-3 bg-indigo-100 px-2 py-0.5 text-indigo-900">Investing Activities</div>
-                                        <div id="cf-dir-ppe" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Purchase of PPE</span><span>-100,000</span></div>
-                                        <div id="cf-dir-inv-net" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold border-y border-indigo-800 bg-slate-200 mt-1"><span>Net cash outflow from Investing</span><span class="text-red-800">-100,000</span></div>
+                                    <div id="cf-dir-inv-hdr" class="cf-row hidden font-bold mt-3 bg-indigo-100 px-2 py-0.5 text-indigo-900">Investing Activities</div>
+                                    <div id="cf-dir-ppe" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Purchase of PPE</span><span>-100,000</span></div>
+                                    <div id="cf-dir-inv-net" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold border-y border-indigo-800 bg-slate-200 mt-1"><span>Net cash outflow from Investing</span><span class="text-red-800">-100,000</span></div>
 
-                                        <div id="cf-dir-fin-hdr" class="cf-row hidden font-bold mt-3 bg-indigo-100 px-2 py-0.5 text-indigo-900">Financing Activities</div>
-                                        <div id="cf-dir-debt" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Proceeds - Debt</span><span>50,000</span></div>
-                                        <div id="cf-dir-stock" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Proceeds - Stock</span><span>50,000</span></div>
-                                        <div id="cf-dir-div" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Dividends Paid</span><span>-25,000</span></div>
-                                        <div id="cf-dir-fin-net" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold border-t border-indigo-800 bg-slate-200 mt-1"><span>Net cash inflow from Financing</span><span>75,000</span></div>
+                                    <div id="cf-dir-fin-hdr" class="cf-row hidden font-bold mt-3 bg-indigo-100 px-2 py-0.5 text-indigo-900">Financing Activities</div>
+                                    <div id="cf-dir-debt" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Proceeds - Debt</span><span>50,000</span></div>
+                                    <div id="cf-dir-stock" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-green-700"><span>Proceeds - Stock</span><span>50,000</span></div>
+                                    <div id="cf-dir-div" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 text-red-700"><span>Dividends Paid</span><span>-25,000</span></div>
+                                    <div id="cf-dir-fin-net" class="cf-row hidden flex justify-between pl-4 pr-2 py-0.5 font-bold border-t border-indigo-800 bg-slate-200 mt-1"><span>Net cash inflow from Financing</span><span>75,000</span></div>
 
-                                        <div id="cf-dir-sum" class="cf-row hidden flex justify-between pl-2 pr-4 font-bold mt-3 pt-1 border-t-2 border-slate-800"><span>Net Inc. in Cash</span><span class="text-green-700">50,000</span></div>
-                                        <div id="cf-dir-beg" class="cf-row hidden flex justify-between pl-2 pr-4 border-b-2 border-slate-800 text-slate-600 px-1 py-0.5"><span>Cash at beginning</span><span>100,000</span></div>
-                                        <div id="cf-dir-end" class="cf-row hidden flex justify-between pl-2 pr-4 font-bold bg-teal-600 px-2 py-1 mt-1 rounded border-b-4 border-double border-indigo-800"><span>Cash at end</span><span>150,000</span></div>
+                                    <div id="cf-dir-sum" class="cf-row hidden flex justify-between pl-2 pr-4 font-bold mt-3 pt-1 border-t-2 border-slate-800"><span>Net Inc. in Cash</span><span class="text-green-700">50,000</span></div>
+                                    <div id="cf-dir-beg" class="cf-row hidden flex justify-between pl-2 pr-4 border-b-2 border-slate-800 text-slate-600 px-1 py-0.5"><span>Cash at beginning</span><span>100,000</span></div>
+                                    <div id="cf-dir-end" class="cf-row hidden flex justify-between pl-2 pr-4 font-bold bg-teal-600 px-2 py-1 mt-1 rounded border-b-4 border-double border-indigo-800"><span>Cash at end</span><span>150,000</span></div>
                                 </div>
-                                <div class="flex flex-col gap-1.5 flex-shrink-0 w-full mt-1">
-                                    <div class="bg-teal-950 p-2.5 rounded shadow-md border-l-4 border-teal-500 min-h-[4rem] flex flex-col justify-center">
-                                        <p id="expDir" class="text-sm text-teal-100 leading-snug">Compute cash from operations directly.</p>
-                                    </div>
-                                    <div class="bg-slate-700 p-2 rounded shadow-md border border-slate-600 flex justify-center">
-                                        <div class="flex flex-wrap justify-center gap-1.5">
-                                            <button id="btnStartDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500 disabled:opacity-50 disabled:cursor-not-allowed">Start</button>
-                                            <button id="btnPrevDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500 disabled:opacity-50 disabled:cursor-not-allowed">&laquo; Prev</button>
-                                            <button id="btnNextDir" class="bg-teal-600 hover:bg-teal-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-teal-500 disabled:opacity-50 disabled:cursor-not-allowed">Next &raquo;</button>
-                                            <button id="btnEndDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500">End</button>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+
+                        <div class="flex-shrink-0 w-full flex flex-col z-20 shadow-[0_-4px_10px_-1px_rgba(0,0,0,0.2)]">
+                            <div class="w-full bg-teal-950 p-3 border-t-2 border-teal-500">
+                                <p id="expDir" class="text-sm text-center text-teal-100 leading-snug">Compute cash from operations directly.</p>
+                            </div>
+                            
+                            <div class="w-full bg-slate-700 border-t border-slate-600 p-2 flex flex-col gap-2">
+                                <div class="flex flex-col sm:flex-row items-center justify-between px-2 gap-2">
+                                    <label class="flex items-center gap-1.5 text-xs text-teal-300 cursor-pointer font-medium">
+                                        <input type="checkbox" id="voiceDir" class="w-4 h-4 accent-teal-500"> Voice
+                                    </label>
+                                    <div id="circlesDir" class="flex flex-wrap justify-end gap-1"></div>
+                                </div>
+                                <div class="flex flex-wrap justify-center gap-1.5">
+                                    <button id="btnStartDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500 disabled:opacity-50 disabled:cursor-not-allowed">Start</button>
+                                    <button id="btnPrevDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500 disabled:opacity-50 disabled:cursor-not-allowed">&laquo; Prev</button>
+                                    <button id="btnNextDir" class="bg-teal-600 hover:bg-teal-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-teal-500 disabled:opacity-50 disabled:cursor-not-allowed">Next &raquo;</button>
+                                    <button id="btnEndDir" class="bg-slate-600 hover:bg-slate-500 text-white px-4 py-1.5 rounded font-bold text-sm transition-colors border border-slate-500">End</button>
                                 </div>
                             </div>
                         </div>
@@ -537,7 +537,7 @@
 
             </div>
             
-            <footer class="text-center text-slate-400 py-1.5 font-mono text-[10px] tracking-widest flex-shrink-0 bg-white border-t border-slate-100 z-10">
+            <footer class="text-center text-slate-400 py-1.5 font-mono text-[10px] tracking-widest flex-shrink-0 bg-white border-t border-slate-100 z-10 relative">
                 <p>This courseware is a private property of Joselito Villarta, CPA, MBA</p>
             </footer>
 
@@ -794,6 +794,37 @@
                 synth.speak(utterance);
             }
         }
+        
+        // Universal Smart Scroll Logic
+        function updateScroll(containerId, lastEl) {
+            if (!lastEl) return;
+            setTimeout(() => {
+                const isMobile = window.innerWidth < 1024;
+                // Determine the correct scrolling container based on screen size
+                let scrollContainerId = containerId;
+                if (isMobile) {
+                    scrollContainerId = containerId.includes('ind') ? 'scroll-container-ind' : 'scroll-container-dir';
+                }
+                
+                const c = document.getElementById(scrollContainerId);
+                if (c) {
+                    // Coordinate based math relative to viewport
+                    const cRect = c.getBoundingClientRect();
+                    const elRect = lastEl.getBoundingClientRect();
+                    
+                    // The bottom of cRect sits exactly at the gap above the explanation container.
+                    // By making the offset positive, we scroll DOWN by that amount, shifting the active row UP.
+                    // 80px ensures it sits roughly 3 lines above the bottom boundary.
+                    const scrollOffset = elRect.bottom - cRect.bottom + 80;
+                    
+                    if (scrollOffset > 0) {
+                        c.scrollBy({ top: scrollOffset, behavior: 'smooth' });
+                    } else if (elRect.top < cRect.top + 20) {
+                        c.scrollBy({ top: elRect.top - cRect.top - 20, behavior: 'smooth' });
+                    }
+                }
+            }, 50);
+        }
 
         // --- CASE STUDY INDIRECT ---
         const indSteps = [
@@ -855,21 +886,7 @@
                 }
             });
             
-            if (lastEl) {
-                setTimeout(() => {
-                    const c = document.getElementById('cf-ind-container');
-                    if (c) {
-                        const buffer = 80; // ~3 lines + 20px padding
-                        const scrollBottom = lastEl.offsetTop + lastEl.offsetHeight - c.clientHeight + buffer;
-                        if (scrollBottom > c.scrollTop) {
-                            c.scrollTo({ top: scrollBottom, behavior: 'smooth' });
-                        } else if (lastEl.offsetTop < c.scrollTop) {
-                            c.scrollTo({ top: Math.max(0, lastEl.offsetTop - 20), behavior: 'smooth' });
-                        }
-                    }
-                }, 50);
-            }
-            
+            updateScroll('cf-ind-container', lastEl);
             playVoice(indSteps[currInd].nar, 'voiceInd');
         }
         document.getElementById('btnStartInd').onclick = () => { currInd = 0; updateInd(); };
@@ -934,21 +951,7 @@
                 }
             });
             
-            if (lastEl) {
-                setTimeout(() => {
-                    const c = document.getElementById('cf-dir-container');
-                    if (c) {
-                        const buffer = 80; // ~3 lines + 20px padding
-                        const scrollBottom = lastEl.offsetTop + lastEl.offsetHeight - c.clientHeight + buffer;
-                        if (scrollBottom > c.scrollTop) {
-                            c.scrollTo({ top: scrollBottom, behavior: 'smooth' });
-                        } else if (lastEl.offsetTop < c.scrollTop) {
-                            c.scrollTo({ top: Math.max(0, lastEl.offsetTop - 20), behavior: 'smooth' });
-                        }
-                    }
-                }, 50);
-            }
-            
+            updateScroll('cf-dir-container', lastEl);
             playVoice(dirSteps[currDir].nar, 'voiceDir');
         }
         document.getElementById('btnStartDir').onclick = () => { currDir = 0; updateDir(); };
