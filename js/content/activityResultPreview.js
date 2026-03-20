@@ -842,7 +842,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                             <div className="flex flex-col gap-4">
                                                 <div className=${`px-3 py-1 rounded border ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
                                                     <span className="text-xs font-bold mb-2 text-gray-500 uppercase mr-2 tracking-wide">Student Answer:</span>
-                                                    <span className="font-mono text-sm whitespace-pre-wrap text-green-800 font-bold">${studentAns || '(No Answer)'}</span>
+                                                    <span className="font-mono text-base whitespace-pre-wrap text-green-800 font-bold">${studentAns || '(No Answer)'}</span>
                                                 </div>
                                                 <div className="px-4 py-1 rounded border bg-gray-50 border-gray-200">
                                                     <div className="text-sm text-gray-800 mb-2">
