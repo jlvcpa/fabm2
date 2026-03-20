@@ -792,22 +792,22 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                 
                                                 // 5. Render Line items
                                                 return html`
-                                                    <div key=${sIdx} className="w-full md:max-w-md font-mono text-sm ml-0 mb-4 bg-white mt-2">
+                                                    <div key=${sIdx} className="w-full md:max-w-md font-mono text-sm ml-0 mb-1 bg-white mt-1">
                                                         ${lines.map((line) => {
                                                             let displayAmt = line.amt;
                                                             let amtClass = "text-right whitespace-nowrap flex-shrink-0";
                                                             let descClass = "text-left flex-grow pr-4 break-words pl-4 -indent-4"; // Applies hanging indent
                                                             
-                                                            let rowClass = "flex justify-between py-1 items-end w-full " + (line.borderClass || '');
+                                                            let rowClass = "flex justify-between py-.05 items-end w-full " + (line.borderClass || '');
                                                             
                                                             // Wrap deducted amounts in parentheses, change color to red, and adjust padding for alignment
                                                             if (line.isDeduction) {
                                                                 displayAmt = "(" + displayAmt + ")";
                                                                 descClass += " text-red-600 font-medium";
-                                                                amtClass += " text-red-600 font-medium pr-0"; // Removes right padding to align numbers
+                                                                amtClass += " text-red-600 font-medium pr-2"; // Removes right padding to align numbers
                                                             } else {
                                                                 descClass += " text-gray-700";
-                                                                amtClass += " text-gray-800 pr-2"; // Standard right padding
+                                                                amtClass += " text-gray-800 pr-.05"; // Standard right padding
                                                             }
                                                             
                                                             // Bolden Foot/Final result
