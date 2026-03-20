@@ -802,7 +802,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                             
                                                             // Wrap deducted amounts in parentheses
                                                             if (line.isDeduction) {
-                                                                displayAmt = \`(\${displayAmt})\`;
+                                                                displayAmt = "(" + displayAmt + ")";
                                                                 descClass += " text-red-600 font-medium";
                                                                 amtClass += " text-red-600 font-medium";
                                                             }
