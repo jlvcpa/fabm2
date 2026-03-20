@@ -807,7 +807,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                                 amtClass += " text-red-600 font-medium pr-2"; // Removes right padding to align numbers
                                                             } else {
                                                                 descClass += " text-gray-700";
-                                                                amtClass += " text-gray-800 pr-.05"; // Standard right padding
+                                                                amtClass += " text-gray-800 pr-4"; // Standard right padding
                                                             }
                                                             
                                                             // Bolden Foot/Final result
