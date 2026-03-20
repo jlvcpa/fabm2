@@ -792,7 +792,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                 
                                                 // 5. Render Line items
                                                 return html`
-                                                    <div key=${sIdx} className="w-full md:max-w-md font-mono text-sm ml-0 mb-1 bg-white mt-1">
+                                                    <div key=${sIdx} className="w-full font-mono text-sm ml-0 mb-1 bg-white mt-1">
                                                         ${lines.map((line) => {
                                                             let displayAmt = line.amt;
                                                             let amtClass = "text-right whitespace-nowrap flex-shrink-0";
