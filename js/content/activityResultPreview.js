@@ -812,8 +812,8 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                             
                                                             // Bolden Foot/Final result
                                                             if (line.borderClass && line.borderClass.includes('border-double')) {
-                                                                descClass = descClass.replace('text-gray-700', 'text-black').replace('text-red-600', 'text-black') + "font-bold";
-                                                                amtClass = amtClass.replace('text-gray-800', 'text-black').replace('text-red-600', 'text-black') + "font-bold";
+                                                                descClass = descClass.replace('text-gray-700', 'text-black').replace('text-red-600', 'text-black') + " font-bold";
+                                                                amtClass = amtClass.replace('text-gray-800', 'text-black').replace('text-red-600', 'text-black') + " font-bold";
                                                             }
 
                                                             return html`
