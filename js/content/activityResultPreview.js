@@ -233,7 +233,8 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                 } 
                 else if (section.type === "Problem Solving") {
                     secMax++;
-                    if (studentAns && liveQ.correctAnswer && studentAns.trim().toLowerCase() === liveQ.correctAnswer.trim().toLowerCase()) secScore++;
+                    const correctAnsStr = liveQ.correctAnswer !== undefined ? String(liveQ.correctAnswer) : (liveQ.solution !== undefined ? String(liveQ.solution) : '');
+                    if (studentAns && correctAnsStr && studentAns.trim().toLowerCase() === correctAnsStr.trim().toLowerCase()) secScore++;
                 }
                 else if (section.type === "Journalizing") {
                     const transactions = liveQ.transactions || [];
@@ -722,78 +723,17 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                     `;
                                 }
                                 else if (section.type === "Problem Solving") {
-                                    const isCorrect = studentAns && liveQ.correctAnswer && studentAns.trim().toLowerCase() === liveQ.correctAnswer.trim().toLowerCase();
+                                    const correctAnsStr = liveQ.correctAnswer !== undefined ? String(liveQ.correctAnswer) : (liveQ.solution !== undefined ? String(liveQ.solution) : '');
+                                    const isCorrect = studentAns && correctAnsStr && studentAns.trim().toLowerCase() === correctAnsStr.trim().toLowerCase();
                                     
                                     let explanationHtml = null;
                                     if (liveQ.explanation) {
-                                        const tokens = [];
-                                        const r = /\(([^)]+):\s*([\d.,]+)\)|([+\-*/=])/g;
-                                        let match;
-                                        while ((match = r.exec(liveQ.explanation)) !== null) {
-                                            if (match[1]) tokens.push({ type: 'factor', desc: match[1].trim(), amt: match[2].trim() });
-                                            else if (match[3]) tokens.push({ type: 'op', value: match[3] });
-                                        }
-
-                                        const factorsCount = tokens.filter(t => t.type === 'factor').length;
-                                        if (factorsCount > 0) {
-                                            let currentOp = '+';
-                                            const rowsHtml = [];
-                                            
-                                            for (let i = 0; i < tokens.length; i++) {
-                                                const token = tokens[i];
-                                                if (token.type === 'op') {
-                                                    currentOp = token.value;
-                                                } else if (token.type === 'factor') {
-                                                    let desc = token.desc;
-                                                    let amt = token.amt;
-                                                    let rowClass = "flex justify-between py-1.5 items-center w-full";
-                                                    let amtClass = "text-right pr-2 whitespace-nowrap flex-shrink-0 text-gray-800";
-                                                    let descClass = "text-left pl-2 flex-grow pr-4 break-words text-gray-700";
-                                                    let displayAmt = amt;
-
-                                                    if (currentOp === '=') {
-                                                        rowsHtml.push(html`<div key="line-${i}" className="w-full border-b border-gray-300 my-2"></div>`);
-                                                        desc = "FINAL ANSWER";
-                                                        descClass = "text-left pl-2 flex-grow pr-4 break-words font-bold text-gray-900";
-                                                        amtClass = "text-right pr-2 whitespace-nowrap flex-shrink-0 font-bold text-gray-900";
-                                                    } else if (currentOp === '-') {
-                                                        displayAmt = "-" + amt;
-                                                        rowClass += " text-red-600";
-                                                        descClass = "text-left pl-2 flex-grow pr-4 break-words text-red-600 font-medium";
-                                                        amtClass = "text-right pr-2 whitespace-nowrap flex-shrink-0 text-red-600 font-medium";
-                                                    } else if (currentOp === '*') {
-                                                        desc = "multiply by " + desc;
-                                                    } else if (currentOp === '/') {
-                                                        desc = "divided by " + desc;
-                                                    }
-
-                                                    rowsHtml.push(html`
-                                                        <div key="row-${i}" className=${rowClass}>
-                                                            <div className=${descClass}>${desc}</div>
-                                                            <div className=${amtClass}>${displayAmt}</div>
-                                                        </div>
-                                                    `);
-                                                    currentOp = '+';
-                                                }
-                                            }
-
-                                            explanationHtml = html`
-                                                <div className="mt-5 pt-4 border-t border-gray-100 explanation-section">
-                                                    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Explanation</h4>
-                                                    <p className="text-sm text-gray-700 mb-3">${liveQ.explanation}</p>
-                                                    <div className="bg-gray-50 border border-gray-200 rounded-md p-4 w-full md:max-w-md font-mono text-sm shadow-sm ml-0">
-                                                        ${rowsHtml}
-                                                    </div>
-                                                </div>
-                                            `;
-                                        } else {
-                                             explanationHtml = html`
-                                                <div className="mt-5 pt-4 border-t border-gray-100 explanation-section">
-                                                    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Explanation</h4>
-                                                    <p className="text-sm text-gray-700">${liveQ.explanation}</p>
-                                                </div>
-                                             `;
-                                        }
+                                         explanationHtml = html`
+                                            <div className="mt-5 pt-4 border-t border-gray-100 explanation-section">
+                                                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Explanation</h4>
+                                                <p className="text-sm text-gray-700 whitespace-pre-wrap">${liveQ.explanation}</p>
+                                            </div>
+                                         `;
                                     }
 
                                     return html`
@@ -806,7 +746,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                                 </div>
                                                 <div className="p-3 rounded border bg-gray-50 border-gray-200">
                                                     <div className="text-xs font-bold mb-1 text-gray-500">Correct Answer</div>
-                                                    <div className="font-mono text-sm whitespace-pre-wrap">${liveQ.correctAnswer}</div>
+                                                    <div className="font-mono text-sm whitespace-pre-wrap">${correctAnsStr}</div>
                                                 </div>
                                             </div>
                                             ${explanationHtml}
