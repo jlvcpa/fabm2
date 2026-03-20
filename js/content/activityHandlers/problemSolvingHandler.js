@@ -14,64 +14,7 @@ export const ProblemSolvingHandler = {
         if (q.explanation) {
             explanationHtml += '<div class="mt-5 pt-4 border-t border-gray-100 explanation-section">';
             explanationHtml += '<h4 class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Explanation</h4>';
-            explanationHtml += '<p class="text-sm text-gray-700 mb-3">' + q.explanation + '</p>';
-
-            const tokens = [];
-            const r = /\(([^)]+):\s*([\d.,]+)\)|([+\-*/=])/g;
-            let match;
-            
-            while ((match = r.exec(q.explanation)) !== null) {
-                if (match[1]) {
-                    tokens.push({ type: 'factor', desc: match[1].trim(), amt: match[2].trim() });
-                } else if (match[3]) {
-                    tokens.push({ type: 'op', value: match[3] });
-                }
-            }
-
-            const factorsCount = tokens.filter(t => t.type === 'factor').length;
-            if (factorsCount > 0) {
-                explanationHtml += '<div class="bg-gray-50 border border-gray-200 rounded-md p-4 w-full md:max-w-md font-mono text-sm shadow-sm ml-0">';
-                let currentOp = '+';
-                
-                for (let i = 0; i < tokens.length; i++) {
-                    const token = tokens[i];
-                    
-                    if (token.type === 'op') {
-                        currentOp = token.value;
-                    } else if (token.type === 'factor') {
-                        let desc = token.desc;
-                        let amt = token.amt;
-                        let rowClass = "flex justify-between py-1.5 items-center w-full";
-                        let amtClass = "text-right pr-2 whitespace-nowrap flex-shrink-0 text-gray-800";
-                        let descClass = "text-left pl-2 flex-grow pr-4 break-words text-gray-700";
-                        let displayAmt = amt;
-
-                        if (currentOp === '=') {
-                            explanationHtml += '<div class="w-full border-b border-gray-300 my-2"></div>';
-                            desc = "FINAL ANSWER";
-                            descClass = "text-left pl-2 flex-grow pr-4 break-words font-bold text-gray-900";
-                            amtClass = "text-right pr-2 whitespace-nowrap flex-shrink-0 font-bold text-gray-900";
-                        } else if (currentOp === '-') {
-                            displayAmt = "-" + amt;
-                            rowClass += " text-red-600";
-                            descClass = "text-left pl-2 flex-grow pr-4 break-words text-red-600 font-medium";
-                            amtClass = "text-right pr-2 whitespace-nowrap flex-shrink-0 text-red-600 font-medium";
-                        } else if (currentOp === '*') {
-                            desc = "multiply by " + desc;
-                        } else if (currentOp === '/') {
-                            desc = "divided by " + desc;
-                        }
-
-                        explanationHtml += '<div class="' + rowClass + '">';
-                        explanationHtml += '<div class="' + descClass + '">' + desc + '</div>';
-                        explanationHtml += '<div class="' + amtClass + '">' + displayAmt + '</div>';
-                        explanationHtml += '</div>';
-
-                        currentOp = '+'; 
-                    }
-                }
-                explanationHtml += '</div>';
-            }
+            explanationHtml += '<p class="text-sm text-gray-700 mb-3 whitespace-pre-wrap">' + q.explanation + '</p>';
             explanationHtml += '</div>';
         }
 
