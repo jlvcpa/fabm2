@@ -197,9 +197,10 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
         if (!val && !isExpected) return '';
         
         if (colType === 'date' || colType === 'amount') {
+            const displayVal = colType === 'amount' && !isNaN(Number(String(val || '').replace(/,/g, ''))) && String(val).trim() !== '' ? (Number.isInteger(Number(String(val).replace(/,/g, ''))) ? Number(String(val).replace(/,/g, '')).toLocaleString('en-US') : Number(String(val).replace(/,/g, '')).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })) : val;
             return html`<div className="flex w-full items-center">
                 <div className="w-4 flex-none flex justify-start">${icon}</div>
-                <div className=${"flex-grow text-right " + textClass + " " + extraClasses}>${val}</div>
+                <div className=${"flex-grow text-right " + textClass + " " + extraClasses}>${displayVal}</div>
             </div>`;
         } else if (colType === 'acct' || colType === 'desc') {
             return html`<div className="flex w-full items-center">
@@ -722,7 +723,8 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                 else if (section.type === "Problem Solving") {
                                     const correctAnsStr = liveQ.correctAnswer !== undefined ? String(liveQ.correctAnswer) : (liveQ.solution !== undefined ? String(liveQ.solution) : '');
                                     const isCorrect = studentAns && correctAnsStr && studentAns.trim().toLowerCase() === correctAnsStr.trim().toLowerCase();
-                                    
+                                    const fmtNum = (v) => { const n = Number(String(v || '').replace(/,/g, '')); return (!isNaN(n) && String(v).trim() !== '') ? (Number.isInteger(n) ? n.toLocaleString('en-US') : n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })) : v; };
+                                
                                     let explanationHtml = null;
                                     if (liveQ.explanation) {
                                         // 1. Break the explanation block into standard sentences
