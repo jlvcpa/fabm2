@@ -114,7 +114,7 @@ export function renderMultipleChoicePreview(q, qIdx, liveQ, studentAns) {
     }
 
     return html`
-        <div key=${q.uiId} className="border rounded p-1 bg-white flex flex-col gap-4">
+        <div key=${q.uiId} className="border rounded p-1 bg-white flex flex-col gap-1">
             <div>
                 <div className="font-bold text-gray-800 mb-3">${qIdx + 1}. ${liveQ.question}</div>
                 <div className="flex flex-col gap-1.5">
