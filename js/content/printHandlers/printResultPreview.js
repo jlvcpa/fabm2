@@ -28,8 +28,12 @@ export const handlePrint = (mode, setPrintMode) => {
         }
         @media print {
             @page {
+                /* 1. Exact Folio Paper Size */
                 size: 8.5in 13in;
-                margin: 0.35in;
+                
+                /* 2. Top, Right, BOTTOM, Left */
+                /* A 1.2in bottom margin creates a hard physical wall that text cannot cross */
+                margin: 0.4in 0.4in 1.2in 0.4in;
             }
 
             html, body {
@@ -41,10 +45,6 @@ export const handlePrint = (mode, setPrintMode) => {
                 padding: 0 !important;
                 background-color: white !important;
             }
-            
-            body {
-                padding-bottom: 0.6in !important;
-            }
 
             .max-w-5xl {
                 width: 100% !important;
@@ -52,10 +52,12 @@ export const handlePrint = (mode, setPrintMode) => {
                 margin: 0 !important;
             }
 
+            /* Custom Footer Layout */
             #dynamic-print-footer {
                 display: flex !important;
                 position: fixed;
-                bottom: 0;
+                /* 3. Drop the footer safely into the 1.2in margin void. It is safe from text and won't trigger a new page. */
+                bottom: -0.5in; 
                 left: 0;
                 width: 100%;
                 font-size: 10px;
@@ -67,7 +69,9 @@ export const handlePrint = (mode, setPrintMode) => {
                 align-items: flex-end;
             }
 
-            .border.rounded.p-4, tr {
+             /* --- AGGRESSIVE PAGINATION RULES --- */
+            /* Simplified to just '.border.rounded' so it always catches the cards and stops them from splitting */
+            .border.rounded, tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
@@ -76,6 +80,7 @@ export const handlePrint = (mode, setPrintMode) => {
                 display: none !important; 
             }
 
+            /* Standardized Table & Formatting */
             table { 
                 width: 100% !important; 
                 border-collapse: collapse !important; 
