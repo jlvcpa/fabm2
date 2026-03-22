@@ -1,4 +1,4 @@
-/**
+/***
  * Clones the active quiz container, strips out all answers, backgrounds, and validation marks,
  * replaces student info with directions, formats it into Times New Roman 12pt (Garamond 9pt for rubrics),
  * applies strict line-height, restores custom padding/gaps, and prints it safely.
