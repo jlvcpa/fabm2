@@ -131,18 +131,6 @@ export const handlePrintTQ = (activityConfig) => {
     tqWrapper.id = 'tq-print-wrapper';
     
     tqWrapper.innerHTML = `
-        <div style="text-align: center; margin-bottom: 1.5rem; font-family: 'Times New Roman', Times, serif; color: black;">
-            <img src="./assets/logo.png" alt="Logo" style="height: 70px; margin-bottom: 5px;" onerror="this.style.display='none'">
-            <div style="font-size: 10px; color: #1e3a8a; text-transform: uppercase; font-family: Arial, sans-serif;">Sacred Heart School - Ateneo de Cebu</div>
-            <div style="font-size: 18px; color: #1e3a8a; font-weight: bold; font-family: Arial, sans-serif; margin-bottom: 10px;">Senior High School<br>Department</div>
-            <div style="font-size: 14px; font-weight: bold;">SY 2025-2026</div>
-            <div style="font-size: 14px; font-weight: bold;">2<sup>nd</sup> Semester</div>
-            <div style="font-size: 16px; font-weight: bold; text-transform: uppercase;">FABM 2 – GRADE 11</div>
-            <div style="font-size: 16px; font-weight: bold; text-transform: uppercase;">FINAL EXAM</div>
-        </div>
-        <div style="border: 2px solid black; padding: 6px; text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 20px; font-family: 'Times New Roman', Times, serif; text-transform: uppercase;">
-            WRITE ALL THE ANSWERS IN THE ANSWER SHEET.
-        </div>
         <div id="tq-content" style="font-family: 'Times New Roman', Times, serif; color: black;"></div>
     `;
 
