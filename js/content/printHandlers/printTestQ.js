@@ -78,9 +78,9 @@ export const handlePrintTQ = () => {
             if (textLen > maxLen) maxLen = textLen;
         });
         
-        if (maxLen <= 25) {
+        if (maxLen <= 15) {
             parent.classList.add('cols-4');
-        } else if (maxLen <= 70) {
+        } else if (maxLen <= 35) {
             parent.classList.add('cols-2');
         } else {
             parent.classList.add('cols-1');
