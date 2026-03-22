@@ -280,7 +280,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                 const instructions = section.instructions || activityConfig.instructions || '';
 
                 return html`
-                    <div key=${idx} className="bg-white border rounded-lg shadow-sm overflow-hidden mb-8 ${hideInPrintClass} print:border-none print:shadow-none print:mb-0">
+                    <div key=${idx} className="bg-white border rounded-lg shadow-sm overflow-hidden mb-2 ${hideInPrintClass} print:border-none print:shadow-none print:mb-0">
                         
                         <div className="bg-blue-900 text-white p-4 flex justify-between items-center print:hidden">
                             <div className="flex items-center gap-4">
@@ -320,7 +320,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                             </div>
                         </div>
                         
-                        <div className="px-6 pb-8 flex flex-col gap-4 print:px-0 print:pb-2">
+                        <div className="px-6 pb-4 flex flex-col gap-4 print:px-0 print:pb-2">
                             ${sectionQs.map((q, qIdx) => {
                                 const studentAns = resultData.answers?.[q.uiId];
                                 const liveQ = (q.dbId && globalQuestionMap.has(q.dbId)) ? globalQuestionMap.get(q.dbId) : q;
