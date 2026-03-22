@@ -28,12 +28,10 @@ export const handlePrint = (mode, setPrintMode) => {
         }
         @media print {
             @page {
-                /* 1. Exact Folio Paper Size */
+                /* Set exact Folio paper dimensions */
                 size: 8.5in 13in;
-                
-                /* 2. Top, Right, BOTTOM, Left */
-                /* A 1.2in bottom margin creates a hard physical wall that text cannot cross */
-                margin: 0.4in 0.4in 1.2in 0.4in;
+                /* Standard margins, with a slightly thicker bottom to protect the footer */
+                margin: 0.4in 0.4in 0.8in 0.4in; 
             }
 
             html, body {
@@ -45,7 +43,7 @@ export const handlePrint = (mode, setPrintMode) => {
                 padding: 0 !important;
                 background-color: white !important;
             }
-
+            
             .max-w-5xl {
                 width: 100% !important;
                 max-width: 100% !important;
@@ -56,8 +54,8 @@ export const handlePrint = (mode, setPrintMode) => {
             #dynamic-print-footer {
                 display: flex !important;
                 position: fixed;
-                /* 3. Drop the footer safely into the 1.2in margin void. It is safe from text and won't trigger a new page. */
-                bottom: -0.5in; 
+                /* MUST be exactly 0 to prevent Chrome from wrapping it to the top of the next page */
+                bottom: 0; 
                 left: 0;
                 width: 100%;
                 font-size: 10px;
@@ -69,9 +67,9 @@ export const handlePrint = (mode, setPrintMode) => {
                 align-items: flex-end;
             }
 
-             /* --- AGGRESSIVE PAGINATION RULES --- */
-            /* Simplified to just '.border.rounded' so it always catches the cards and stops them from splitting */
-            .border.rounded, tr {
+            /* --- BULLETPROOF PAGINATION RULES --- */
+            /* Using the exact 'exercise-item' class from your quizzesAndActivities.js */
+            .exercise-item, tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
