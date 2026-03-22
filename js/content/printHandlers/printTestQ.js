@@ -20,7 +20,7 @@ export const handlePrintTQ = () => {
     const studentInfo = clone.querySelector('#student-print-info');
     if (studentInfo) {
         studentInfo.outerHTML = `
-            <div style="border: 2px solid black; padding: 6px; text-align: center; font-size: 12pt; font-weight: bold; margin-bottom: 20px; font-family: 'Times New Roman', Times, serif; text-transform: uppercase; color: black;">
+            <div style="border: 1px solid black; padding:4px; text-align: center; font-size: 12pt; font-weight: bold; margin-bottom: 20px; font-family: 'Times New Roman', Times, serif; text-transform: uppercase; color: black;">
                 WRITE ALL THE ANSWERS IN THE ANSWER SHEET.
             </div>
         `;
@@ -132,7 +132,7 @@ export const handlePrintTQ = () => {
             @page {
                 size: 8.5in 13in; 
                 /* Strict margins as requested: Top 0.5, Right 0.4, Bottom 0.5, Left 0.4 */
-                margin: 0.5in 0.4in 0.5in 0.4in; 
+                margin: 0.4in 0.4in 0.4in 0.4in; 
             }
 
             body > *:not(#tq-print-wrapper) { display: none !important; }
@@ -156,7 +156,7 @@ export const handlePrintTQ = () => {
                 font-family: "Garamond", serif !important;
                 font-size: 9pt !important;
                 color: black !important;
-                line-height: 1.1 !important;
+                line-height: 1. !important;
             }
 
             #tq-print-wrapper header { border-bottom: none !important; }
