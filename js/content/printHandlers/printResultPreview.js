@@ -11,7 +11,7 @@ export const handlePrint = (mode, setPrintMode) => {
     const footer = document.createElement('div');
     footer.id = 'dynamic-print-footer';
     footer.innerHTML = `
-    <div style="padding: 0.5rem; display: flex;">
+    <div style="padding: 0.25rem; display: flex;">
         <div style="flex: 1; text-align: left; font-weight: bold; font-size: 11px; padding-left: 8px;">FABM 2</div>
         <div style="flex: 2; text-align: center;"><span style="border: 1px solid black; padding: 0.25rem;">4Cs: Christ-centeredness, Competence, Character, Compassion</span></div>
         <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px; padding-right: 8px;">Page <span class="page-num"></span></div>
