@@ -1,7 +1,7 @@
 /**
  * Clones the active quiz container, strips out all answers, backgrounds, and validation marks,
  * replaces student info with directions, formats it into Times New Roman 12pt (Garamond 9pt for rubrics),
- * applies strict line-height for compressed text padding, and prints it safely.
+ * applies strict line-height, restores custom padding/gaps, and prints it safely.
  */
 export const handlePrintTQ = () => {
     // 1. Target the main runner container
@@ -29,20 +29,24 @@ export const handlePrintTQ = () => {
     // B. Completely REMOVE screen headers (e.g., "Test 1: Multiple Choice" blue bar)
     clone.querySelectorAll('.bg-blue-900.text-white, .bg-slate-800.text-white, .print\\:hidden, .hide-in-print').forEach(el => el.remove());
 
-    // C. Remove Explanation Boxes entirely (Targeting the explicit class from your React component)
+    // C. Remove Explanation Boxes entirely
     clone.querySelectorAll('.explanation-section').forEach(el => el.remove());
 
     // D. Remove basic validation items & sticky headers
     clone.querySelectorAll('[id^="ans-"], [id^="msg-"], .sticky, .btn-reveal-set, svg:not(.mx-auto)').forEach(el => el.remove());
 
-    // E. Strip borders, backgrounds, and icons from the Options
-    // FIX: Removed .exercise-item from query so it properly catches the multiple choice options
+    // E. Strip borders, backgrounds, and icons from the Options, but RESTORE padding and gap
     clone.querySelectorAll('.flex.justify-between.items-start').forEach(opt => {
-        // Strip all dynamic Tailwind colors, borders, and rounded corners
-        opt.className = "flex justify-start items-start mb-1"; 
+        // Keep the flex layout for alignment, but remove dynamic Tailwind colors
+        opt.className = "flex justify-start items-start"; 
         opt.style.border = "none";
         opt.style.background = "transparent";
         opt.style.color = "black";
+        
+        // RESTORE: custom px-4 (1rem) and gap-1 (0.25rem bottom margin)
+        opt.style.paddingLeft = "1rem";
+        opt.style.paddingRight = "1rem";
+        opt.style.marginBottom = "0.25rem"; 
         
         // Remove the validation icon container (the trailing check/X mark)
         if (opt.children.length > 1) {
@@ -50,7 +54,7 @@ export const handlePrintTQ = () => {
         }
     });
 
-    // F. Clear all text areas and inputs (Problem Solving & Journalizing)
+    // F. Clear all text areas and inputs
     clone.querySelectorAll('textarea, input[type="text"], input[type="number"]').forEach(input => {
         if (!input.readOnly) {
             input.value = '';
@@ -59,13 +63,16 @@ export const handlePrintTQ = () => {
         }
     });
 
-    // G. Strip borders and padding from the main Question Cards
+    // G. Strip borders and background from main Question Cards, RESTORE padding
     clone.querySelectorAll('.exercise-item').forEach(item => {
         item.className = "exercise-item"; 
         item.style.border = "none";
         item.style.background = "transparent";
-        item.style.padding = "0";
-        item.style.marginBottom = "24px";
+        
+        // RESTORE: custom px-4 (1rem) for the whole question block
+        item.style.paddingLeft = "1rem";
+        item.style.paddingRight = "1rem";
+        item.style.marginBottom = "1.5rem"; // Breathing room between separate questions
     });
 
     // Strip "Question X" blue badges to make them look like normal text
@@ -104,7 +111,7 @@ export const handlePrintTQ = () => {
         @media print {
             @page {
                 size: 8.5in 13in; 
-                /* Top, Right, Bottom, Left Margins */
+                /* Requested Margins: Top 0.5, Right 0.4, Bottom 0.5, Left 0.4 */
                 margin: 0.5in 0.4in 0.5in 0.4in; 
             }
 
@@ -132,23 +139,22 @@ export const handlePrintTQ = () => {
                 line-height: 1.1 !important;
             }
 
-            /* Strip any remaining borders from options */
-            #tq-print-wrapper div.flex.justify-start.items-start {
-                border: none !important;
-                background: transparent !important;
-            }
-
             #tq-print-wrapper header { border-bottom: none !important; }
             #tq-print-wrapper header img { display: block !important; margin: 0 auto 5px auto !important; }
 
-            /* Disable Chrome Flexbox */
-            #tq-print-wrapper div, #tq-print-wrapper form, .exercise-item, .test-section-panel {
+            /* Fix Chrome Flexbox Pagination Bug (ONLY target parent containers) */
+            #tq-print-wrapper, #tq-content, .test-section-panel, .exercise-item {
                 display: block !important;
                 height: auto !important;
                 min-height: auto !important;
                 max-height: none !important;
                 overflow: visible !important;
                 position: static !important;
+            }
+
+            /* ALLOW options to keep their flex layout so the 'A.' aligns with the text! */
+            #tq-print-wrapper .exercise-item .flex {
+                display: flex !important;
             }
 
             /* Pagination */
