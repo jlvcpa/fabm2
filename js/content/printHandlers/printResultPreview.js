@@ -28,12 +28,8 @@ export const handlePrint = (mode, setPrintMode) => {
         }
         @media print {
             @page {
-                /* 1. Force Folio Size */
                 size: 8.5in 13in;
-                
-                /* 2. Top, Right, BOTTOM, Left */
-                /* Force text to stop 1.2 inches from the bottom of the paper */
-                margin: 0.35in 0.35in 0.35in 0.35in;
+                margin: 0.35in;
             }
 
             html, body {
@@ -46,7 +42,9 @@ export const handlePrint = (mode, setPrintMode) => {
                 background-color: white !important;
             }
             
-            /* Removed the old body padding-bottom hack from here */
+            body {
+                padding-bottom: 0.6in !important;
+            }
 
             .max-w-5xl {
                 width: 100% !important;
@@ -54,12 +52,10 @@ export const handlePrint = (mode, setPrintMode) => {
                 margin: 0 !important;
             }
 
-            /* Custom Footer Layout */
             #dynamic-print-footer {
                 display: flex !important;
                 position: fixed;
-                /* 3. Push the footer DOWN into the empty 1.2in margin void */
-                bottom: -0.8in; 
+                bottom: 0;
                 left: 0;
                 width: 100%;
                 font-size: 10px;
@@ -71,8 +67,6 @@ export const handlePrint = (mode, setPrintMode) => {
                 align-items: flex-end;
             }
 
-             /* --- NEW PAGINATION RULES --- */
-            /* Forces whole question blocks and table rows to stay intact on the same page */
             .border.rounded.p-4, tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
@@ -82,7 +76,6 @@ export const handlePrint = (mode, setPrintMode) => {
                 display: none !important; 
             }
 
-            /* Standardized Table & Formatting */
             table { 
                 width: 100% !important; 
                 border-collapse: collapse !important; 
