@@ -33,7 +33,7 @@ export const handlePrint = (mode, setPrintMode) => {
                 
                 /* 2. Top, Right, BOTTOM, Left */
                 /* Force text to stop 1.2 inches from the bottom of the paper */
-                margin: 0.35in 0.35in 1.2in 0.35in;
+                margin: 0.35in 0.35in 0.35in 0.35in;
             }
 
             html, body {
