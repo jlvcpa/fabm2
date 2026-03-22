@@ -342,6 +342,11 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
             <button onClick=${() => triggerPrint('all')} className="px-4 py-2 bg-indigo-600 text-white text-sm font-bold rounded hover:bg-indigo-700 shadow flex items-center gap-2">
                 <${Printer} size=${16}/> Print All Parts
             </button>
+            ${currentUser.role === 'teacher' ? html`
+                <button onClick=${handlePrintTQ} className="px-4 py-2 bg-teal-600 text-white text-sm font-bold rounded hover:bg-teal-700 shadow flex items-center gap-2">
+                    <i className="fas fa-file-alt"></i> Print TQ
+                </button>
+            ` : ''}
             ${currentUser.role === 'teacher' && activityConfig.type !== 'accounting_cycle' ? html`
                 <button onClick=${handleSaveScores} className="px-4 py-2 bg-yellow-600 text-white text-sm font-bold rounded hover:bg-yellow-700 shadow flex items-center gap-2">
                     <${Save} size=${16}/> Update Scores
