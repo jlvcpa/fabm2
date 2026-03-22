@@ -20,7 +20,7 @@ export const handlePrintTQ = () => {
     const studentInfo = clone.querySelector('#student-print-info');
     if (studentInfo) {
         studentInfo.outerHTML = `
-            <div style="border: 1px solid black; padding:4px; text-align: center; font-size: 12pt; font-weight: bold; margin-bottom:4px; font-family: 'Times New Roman', Times, serif; text-transform: uppercase; color: black;">
+            <div style="border: 1px solid black; padding:4px; text-align: center; font-size: 12pt; font-weight: bold; margin-bottom:1px; font-family: 'Times New Roman', Times, serif; text-transform: uppercase; color: black;">
                 WRITE ALL THE ANSWERS IN THE ANSWER SHEET.
             </div>
         `;
@@ -172,7 +172,7 @@ export const handlePrintTQ = () => {
 
             .tq-options-container {
                 width: 100% !important;
-                margin-top: 0.5rem !important;
+                margin-top: 0.01rem !important;
             }
 
             .tq-options-container.cols-4 {
