@@ -10,42 +10,40 @@ export const handlePrint = (mode, setPrintMode) => {
     // 1. Create Custom Footer
     const footer = document.createElement('div');
     footer.id = 'dynamic-print-footer';
+    // Applying inline styles here prevents a micro-second rendering glitch that can cause a blank page
+    footer.style.cssText = "display: flex; position: fixed; bottom: -0.6in; left: 0; width: 100%; font-size: 10px; font-family: sans-serif; background: white; padding: 0.05in; box-sizing: border-box; z-index: 9999; align-items: flex-end;";
     footer.innerHTML = `
-        <div style="flex: 1; text-align: left; font-weight: bold; font-size: 11px;">FABM 2</div>
+        <div style="flex: 1; text-align: left; font-weight: bold; font-size: 11px; padding-left: 8px;">FABM 2</div>
         <div style="flex: 2; text-align: center;">
-            <span style="border: 0.5px solid black; padding: 0.25rem;">4Cs: Christ-centeredness, Competence, Character, Compassion</span>
+            <span style="border: 1px solid black; padding: 0.25rem;">4Cs: Christ-centeredness, Competence, Character, Compassion</span>
         </div>
-        <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px;"></div>
+        <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px; padding-right: 8px;"></div>
     `;
-
     document.body.appendChild(footer);
 
     // 2. Create Print CSS
     const printStyle = document.createElement('style');
     printStyle.id = 'dynamic-print-styles';
     printStyle.innerHTML = `
-        #dynamic-print-footer {
-            display: none;
-        }
         @media print {
             @page {
                 size: auto;
-                /* Top, Right, Bottom, Left */
-                /* INCREASE bottom margin to 1.2 inches to force text to stop printing early */
-                margin: 0.35in 0.35in 1.2in 0.35in;
+                /* Top, Right, BOTTOM, Left */
+                /* The massive 1.0in bottom margin stops the text from printing too low on EVERY page */
+                margin: 0.35in 0.35in 1.0in 0.35in;
             }
 
             html, body {
+                /* Let the pages flow infinitely downwards */
                 height: auto !important;
                 min-height: auto !important;
                 max-height: none !important;
                 width: 100% !important;
                 background-color: white !important;
                 margin: 0 !important;
-                padding: 0 !important; 
+                padding: 0 !important;
+                overflow: visible !important; /* CRITICAL for preventing blank pages */
             }
-            
-            /* (Note: Removed the body { padding-bottom } block completely because it was causing the overlap) */
 
             .max-w-5xl {
                 width: 100% !important;
@@ -53,24 +51,11 @@ export const handlePrint = (mode, setPrintMode) => {
                 margin: 0 !important;
             }
 
-            /* Custom Footer Layout */
             #dynamic-print-footer {
                 display: flex !important;
-                position: fixed;
-                /* PUSH the footer DOWN into the empty 1.2in margin space we created above! */
-                bottom: -0.8in; 
-                left: 0;
-                width: 100%;
-                font-size: 10px;
-                font-family: sans-serif;
-                background: white;
-                padding: 0.15in 0.15in 0.05in 0.15in;
-                box-sizing: border-box;
-                z-index: 9999;
-                align-items: flex-end;
             }
 
-            /* --- NEW PAGINATION RULES --- */
+            /* --- PAGINATION RULES --- */
             .bg-white.border.rounded, 
             .border.rounded.bg-white, 
             tr {
@@ -110,7 +95,7 @@ export const handlePrint = (mode, setPrintMode) => {
     `;
     document.head.appendChild(printStyle);
 
-    // 3. Isolate the target container to aggressively hide sidebars
+    // 3. Isolate the target container and fix ALL parent constraints
     const targetContainer = document.querySelector('.max-w-5xl');
     const hiddenElements = [];
     const modifiedAncestors = [];
@@ -118,6 +103,7 @@ export const handlePrint = (mode, setPrintMode) => {
     if (targetContainer) {
         let currentEl = targetContainer;
         while (currentEl && currentEl !== document.body) {
+            // Hide siblings (sidebars, navbars, etc.)
             const siblings = Array.from(currentEl.parentNode.children);
             siblings.forEach(sibling => {
                 if (
@@ -131,22 +117,24 @@ export const handlePrint = (mode, setPrintMode) => {
                 }
             });
             
+            // Save original styles to restore later
             modifiedAncestors.push({
                 el: currentEl,
                 width: currentEl.style.width,
                 margin: currentEl.style.margin,
                 padding: currentEl.style.padding,
                 position: currentEl.style.position,
-                overflow: currentEl.style.overflow, // <--- FIXED: Capture original overflow
-                height: currentEl.style.height      // <--- FIXED: Capture original height
+                overflow: currentEl.style.overflow, // <--- SAVED
+                height: currentEl.style.height      // <--- SAVED
             });
             
+            // Force this element to expand infinitely for the printer
             currentEl.style.width = '100%';
             currentEl.style.margin = '0';
             currentEl.style.padding = '0';
             currentEl.style.position = 'static';
-            currentEl.style.overflow = 'visible'; // <--- FIXED: Force visible overflow to allow multi-page
-            currentEl.style.height = 'auto';      // <--- FIXED: Force height auto
+            currentEl.style.overflow = 'visible'; // <--- STRIPS SCROLLBARS FOR PRINTING
+            currentEl.style.height = 'auto';      // <--- PREVENTS BLANK NEXT PAGES
             
             currentEl = currentEl.parentNode;
         }
@@ -177,8 +165,8 @@ export const handlePrint = (mode, setPrintMode) => {
                 item.el.style.margin = item.margin;
                 item.el.style.padding = item.padding;
                 item.el.style.position = item.position;
-                item.el.style.overflow = item.overflow; // <--- Restore original
-                item.el.style.height = item.height;     // <--- Restore original
+                item.el.style.overflow = item.overflow; // <--- RESTORED
+                item.el.style.height = item.height;     // <--- RESTORED
             });
             
         }, 500); 
