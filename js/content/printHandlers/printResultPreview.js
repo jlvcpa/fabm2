@@ -13,7 +13,7 @@ export const handlePrint = (mode, setPrintMode) => {
     footer.innerHTML = `
         <div style="flex: 1; text-align: left; font-weight: bold; font-size: 11px;">FABM 2</div>
         <div style="flex: 2; text-align: center;">
-            <span style="border: 1px solid black; padding: 0.25rem;">4Cs: Christ-centeredness, Competence, Character, Compassion</span>
+            <span style="border: 0.5px solid black; padding: 0.25rem;">4Cs: Christ-centeredness, Competence, Character, Compassion</span>
         </div>
         <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px;">Page <span class="page-num"></span></div>
     `;
