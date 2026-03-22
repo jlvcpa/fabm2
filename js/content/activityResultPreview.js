@@ -295,7 +295,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                             </div>
                         </div>
 
-                        <div className="px-6 pt-6 flex flex-col gap-4 print:px-0 print:pt-4">
+                        <div className="px-6 pt-2 flex flex-col gap-2 print:px-0 print:pt-2">
                             <div className="font-serif text-black">
                                 <div className="font-bold text-[14px] uppercase mb-1">
                                     ${roman}. ${section.type}: ${topics}
@@ -320,7 +320,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                             </div>
                         </div>
                         
-                        <div className="px-6 pb-4 flex flex-col gap-4 print:px-0 print:pb-2">
+                        <div className="px-6 pb-4 flex flex-col gap-1 print:px-0 print:pb-1">
                             ${sectionQs.map((q, qIdx) => {
                                 const studentAns = resultData.answers?.[q.uiId];
                                 const liveQ = (q.dbId && globalQuestionMap.has(q.dbId)) ? globalQuestionMap.get(q.dbId) : q;
