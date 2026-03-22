@@ -1,6 +1,6 @@
 /**
  * Clones the active quiz container, strips out all answers, backgrounds, and validation marks,
- * dynamically injects the formal header, instructions, and parsed rubric table,
+ * dynamically injects instructions and parsed rubric table, replaces student info with directions,
  * formats it into Times New Roman, and prints it safely.
  * * @param {object} activityConfig - The activity data containing topics, instructions, and rubrics.
  */
@@ -15,21 +15,31 @@ export const handlePrintTQ = (activityConfig) => {
     // 2. Make a hidden "photocopy" of the container
     const clone = originalContainer.cloneNode(true);
 
-    // 3. AGGRESSIVE CLEANUP: Strip out everything that makes it look like a web app
+    // 3. AGGRESSIVE CLEANUP & TEXT REPLACEMENT
     
-    // A. Remove all Explanations, Warnings, Answer Keys, and Sticky Top Headers
+    // A. Replace the student info block with the Instructions Box
+    const studentInfo = clone.querySelector('#student-print-info');
+    if (studentInfo) {
+        studentInfo.outerHTML = `
+            <div style="border: 2px solid black; padding: 6px; text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 20px; font-family: 'Times New Roman', Times, serif; text-transform: uppercase; color: black;">
+                WRITE ALL THE ANSWERS IN THE ANSWER SHEET.
+            </div>
+        `;
+    }
+
+    // B. Remove all Explanations, Warnings, Answer Keys, and Sticky Top Headers
     clone.querySelectorAll('[id^="ans-"], [id^="msg-"], .sticky, .btn-reveal-set').forEach(el => el.remove());
     
-    // B. Remove all validation SVG icons (Checks and X marks)
-    clone.querySelectorAll('svg, i.fa-check, i.fa-times, i.fa-check-circle, i.fa-times-circle, .fa-key, .fa-info-circle').forEach(el => el.remove());
+    // C. Remove all validation SVG icons (Checks and X marks)
+    clone.querySelectorAll('svg:not(.mx-auto), i.fa-check, i.fa-times, i.fa-check-circle, i.fa-times-circle, .fa-key, .fa-info-circle').forEach(el => el.remove());
 
-    // C. Uncheck all radio buttons and hide them so we only see the text options
+    // D. Uncheck all radio buttons and hide them so we only see the text options
     clone.querySelectorAll('input[type="radio"]').forEach(radio => {
         radio.checked = false;
         radio.style.display = 'none'; // Hide the actual clickable circle
     });
 
-    // D. Clear all text areas and inputs (Problem Solving & Journalizing)
+    // E. Clear all text areas and inputs (Problem Solving & Journalizing)
     clone.querySelectorAll('textarea, input[type="text"], input[type="number"]').forEach(input => {
         if (!input.readOnly) {
             input.value = '';
@@ -38,7 +48,7 @@ export const handlePrintTQ = (activityConfig) => {
         }
     });
 
-    // E. Strip borders, background colors, and padding from Question Cards & Options
+    // F. Strip borders, background colors, and padding from Question Cards & Options
     clone.querySelectorAll('.exercise-item').forEach(item => {
         item.className = "exercise-item"; // Strip all tailwind classes
         item.style.border = "none";
@@ -126,7 +136,7 @@ export const handlePrintTQ = (activityConfig) => {
         panel.insertAdjacentHTML('afterbegin', headerHtml);
     });
 
-    // 5. Build the Master Wrapper with the School Header
+    // 5. Build the Master Wrapper (Header logic removed, relies entirely on clone)
     const tqWrapper = document.createElement('div');
     tqWrapper.id = 'tq-print-wrapper';
     
@@ -170,6 +180,15 @@ export const handlePrintTQ = (activityConfig) => {
             #tq-print-wrapper, #tq-print-wrapper *, #tq-print-wrapper p, #tq-print-wrapper span {
                 font-family: "Times New Roman", Times, serif !important;
                 color: black !important;
+            }
+
+            /* Ensure the logo renders properly */
+            #tq-print-wrapper header {
+                border-bottom: none !important; 
+            }
+            #tq-print-wrapper header img {
+                display: block !important;
+                margin: 0 auto 5px auto !important;
             }
 
             /* Disable Chrome Flexbox on the clone so it paginates perfectly */
