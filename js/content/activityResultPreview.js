@@ -290,7 +290,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                             ` : ''}
                         </div>
                         
-                        <div className="p-6 flex flex-col gap-6">
+                        <div className="px-0 py-6 flex flex-col gap-6">
                             ${sectionQs.map((q, qIdx) => {
                                 const studentAns = resultData.answers?.[q.uiId];
                                 const liveQ = (q.dbId && globalQuestionMap.has(q.dbId)) ? globalQuestionMap.get(q.dbId) : q;
