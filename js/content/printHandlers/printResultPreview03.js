@@ -1,8 +1,6 @@
 /**
- * Injects print-specific styles, isolates the preview container from sidebars,
- * injects the custom footer, triggers the print dialog, and cleans up afterward.
- * * @param {string} mode - 'all' to print everything, or the ID of a specific section (e.g., 'test-0', 'step-1').
- * @param {function} setPrintMode - React state setter to update the component's print state (used for hiding/showing parts).
+ * Injects print-specific styles, injects the custom footer, 
+ * flattens the DOM for printing, triggers the print dialog, and cleans up.
  */
 export const handlePrint = (mode, setPrintMode) => {
     setPrintMode(mode);
@@ -11,11 +9,11 @@ export const handlePrint = (mode, setPrintMode) => {
     const footer = document.createElement('div');
     footer.id = 'dynamic-print-footer';
     footer.innerHTML = `
-        <div style="flex: 1; text-align: left; font-weight: bold; font-size: 11px pl-2;">FABM 2</div>
+        <div style="flex: 1; text-align: left; font-weight: bold; font-size: 11px; padding-left: 8px;">FABM 2</div>
         <div style="flex: 2; text-align: center;">
             <span style="border: 1px solid black; padding: 0.25rem;">4Cs: Christ-centeredness, Competence, Character, Compassion</span>
         </div>
-        <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px pr-2;">Page <span class="page-num"></span></div>
+        <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px; padding-right: 8px;"></div>
     `;
     document.body.appendChild(footer);
 
@@ -26,65 +24,64 @@ export const handlePrint = (mode, setPrintMode) => {
         #dynamic-print-footer {
             display: none;
         }
+        
         @media print {
             @page {
-                size: auto;
-                margin: 0.35in;
+                /* Set exact Folio paper dimensions */
+                size: 8.5in 13in;
+                /* A 1-inch bottom margin ensures text never touches the footer */
+                margin: 0.5in 0.4in 0.6in 0.4in; 
             }
 
-            html, body {
+            /* --- HIDE ALL SIDEBARS AND NAVIGATION --- */
+            /* FIXED: 'header' and 'nav' removed so your titles stay visible! */
+            #sidebar, #qa-sidebar, #student-sidebar, 
+            #qa-toggle-sidebar, #qa-desktop-expand, button, 
+            .print\\:hidden, .hide-in-print { 
+                display: none !important; 
+            }
+
+            /* --- THE CHROME FLEXBOX & SCROLL BUG FIX --- */
+            /* We MUST force all parent wrappers to be basic 'block' elements with no restricted heights. 
+               This stops the final page from cutting off and allows page-breaks to work! */
+            html, body, #app-content, #content-area, #qa-runner-container, 
+            #qa-runner-container > div, #quiz-form, #quiz-form > div, 
+            .test-section-panel, .test-section-panel > div, .flex-1.min-w-0 {
+                display: block !important;
                 height: auto !important;
                 min-height: auto !important;
                 max-height: none !important;
-                width: 100% !important;
-                margin: 0 !important;
-                padding: 0 !important;
+                overflow: visible !important;
+                position: static !important;
                 background-color: white !important;
-            }
-            
-            body {
-                padding-bottom: 0.6in !important; /* Spacing above bottom margin for the footer */
-                counter-reset: page;
-            }
-
-            .max-w-5xl {
-                width: 100% !important;
-                max-width: 100% !important;
-                margin: 0 !important;
             }
 
             /* Custom Footer Layout */
             #dynamic-print-footer {
                 display: flex !important;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
+                position: fixed !important;
+                bottom: 0 !important; /* Anchored safely at the bottom */
+                left: 0 !important;
+                width: 100% !important;
                 font-size: 10px;
                 font-family: sans-serif;
                 background: white;
-                padding: 0 0.05in 0.05in 0.05in;
+                padding: 0.05in 0.05in 0.05in 0.05in;
                 box-sizing: border-box;
                 z-index: 9999;
                 align-items: flex-end;
             }
 
-            .page-num::after {
-                content: counter(page);
-            }
-
-            
-
-            button, .print\\:hidden, .hide-in-print { 
-                display: none !important; 
+            /* --- BULLETPROOF PAGINATION RULES --- */
+            /* Now that the parents are 'block', Chrome will finally respect this! */
+            .exercise-item, tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                margin-bottom: 24px !important; /* Gives breathing room between questions */
             }
 
             /* Standardized Table & Formatting */
-            table { 
-                width: 100% !important; 
-                border-collapse: collapse !important; 
-                font-size: 10px !important; 
-            }
+            table { width: 100% !important; border-collapse: collapse !important; font-size: 10px !important; }
             td, th { padding: 3px !important; }
             thead { display: table-header-group !important; }
             
@@ -107,70 +104,19 @@ export const handlePrint = (mode, setPrintMode) => {
     `;
     document.head.appendChild(printStyle);
 
-    // 3. Isolate the target container to aggressively hide sidebars
-    const targetContainer = document.querySelector('.max-w-5xl');
-    const hiddenElements = [];
-    const modifiedAncestors = [];
-
-    if (targetContainer) {
-        let currentEl = targetContainer;
-        while (currentEl && currentEl !== document.body) {
-            const siblings = Array.from(currentEl.parentNode.children);
-            siblings.forEach(sibling => {
-                if (
-                    sibling !== currentEl && 
-                    sibling.tagName !== 'SCRIPT' && 
-                    sibling.tagName !== 'STYLE' && 
-                    sibling.id !== 'dynamic-print-footer'
-                ) {
-                    hiddenElements.push({ el: sibling, display: sibling.style.display });
-                    sibling.style.display = 'none';
-                }
-            });
-            
-            modifiedAncestors.push({
-                el: currentEl,
-                width: currentEl.style.width,
-                margin: currentEl.style.margin,
-                padding: currentEl.style.padding,
-                position: currentEl.style.position
-            });
-            
-            currentEl.style.width = '100%';
-            currentEl.style.margin = '0';
-            currentEl.style.padding = '0';
-            currentEl.style.position = 'static';
-            
-            currentEl = currentEl.parentNode;
-        }
-    }
-
-    // 4. Trigger Print and Cleanup after completion
+    // 3. Trigger Print and Cleanup after completion
     setTimeout(() => {
         window.print();
         
         setTimeout(() => {
             setPrintMode('all');
             
-            // Cleanup Footer & Styles
+            // Cleanup Styles and Footer to return to normal web view
             const styleElement = document.getElementById('dynamic-print-styles');
             if (styleElement) styleElement.remove();
             
             const footerElement = document.getElementById('dynamic-print-footer');
             if (footerElement) footerElement.remove();
-            
-            // Restore hidden sidebars and containers
-            hiddenElements.forEach(item => {
-                item.el.style.display = item.display;
-            });
-            
-            // Restore ancestor styles
-            modifiedAncestors.forEach(item => {
-                item.el.style.width = item.width;
-                item.el.style.margin = item.margin;
-                item.el.style.padding = item.padding;
-                item.el.style.position = item.position;
-            });
             
         }, 500); 
     }, 100);
