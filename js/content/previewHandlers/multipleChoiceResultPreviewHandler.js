@@ -107,7 +107,12 @@ export function renderMultipleChoicePreview(q, qIdx, liveQ, studentAns) {
 
         explanationHtml = html`
             <div className="px-1 pt-1 border rounded border-dashed border-gray-900 explanation-section">
-                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Explanation</h4>
+                <h4 
+                    className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2" 
+                    style=${{ pageBreakAfter: 'avoid', breakAfter: 'avoid' }}
+                >
+                    Explanation
+                </h4>
                 ${elementsHtml}
             </div>
         `;
