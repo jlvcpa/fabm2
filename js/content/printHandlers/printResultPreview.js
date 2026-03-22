@@ -18,7 +18,7 @@ export const handlePrint = (mode, setPrintMode) => {
                 /* Set exact Folio paper dimensions */
                 size: 8.5in 13in;
                 /* Let's see if the browser actually leaves a 1.2-inch blank space at the bottom */
-                margin: 0.4in 0.4in 0.4in 0.4in; 
+                margin: 0.6in 0.4in 0.4in 0.4in; 
             }
 
             html, body {
