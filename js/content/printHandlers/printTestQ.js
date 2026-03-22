@@ -1,10 +1,9 @@
 /**
  * Clones the active quiz container, strips out all answers, backgrounds, and validation marks,
- * dynamically injects instructions and parsed rubric table, replaces student info with directions,
- * formats it into Times New Roman 12pt (Garamond 9pt for rubrics), and prints it safely.
- * * @param {object} activityConfig - The activity data containing topics, instructions, and rubrics.
+ * replaces student info with directions, formats it into Times New Roman 12pt (Garamond 9pt for rubrics),
+ * and prints it safely.
  */
-export const handlePrintTQ = (activityConfig) => {
+export const handlePrintTQ = () => {
     // 1. Target the main runner container
     const originalContainer = document.getElementById('qa-runner-container');
     if (!originalContainer) {
@@ -31,7 +30,6 @@ export const handlePrintTQ = (activityConfig) => {
     clone.querySelectorAll('.bg-blue-900.text-white, .bg-slate-800.text-white, .print\\:hidden, .hide-in-print').forEach(el => el.remove());
 
     // C. Remove Explanation Boxes
-    // This hunts down any div containing the exact word "EXPLANATION" and deletes its parent box.
     clone.querySelectorAll('div').forEach(div => {
         if (div.textContent.trim() === 'EXPLANATION' || div.innerHTML.includes('EXPLANATION')) {
             if (div.textContent.trim() === 'EXPLANATION' && div.parentElement) {
@@ -43,21 +41,19 @@ export const handlePrintTQ = (activityConfig) => {
     // D. Remove basic validation items & sticky headers
     clone.querySelectorAll('[id^="ans-"], [id^="msg-"], .sticky, .btn-reveal-set, svg:not(.mx-auto)').forEach(el => el.remove());
 
-    // E. Strip borders, backgrounds, and icons from the Options (based on your snippet)
+    // E. Strip borders, backgrounds, and icons from the Options
     clone.querySelectorAll('.exercise-item .flex.justify-between.items-start').forEach(opt => {
-        // Strip all Tailwind colors, borders, and rounded corners
         opt.className = "flex justify-start items-start mb-1"; 
         opt.style.border = "none";
         opt.style.background = "transparent";
         opt.style.color = "black";
         
-        // The snippet has the SVG icon wrapped in a trailing div. This deletes it!
         if (opt.children.length > 1) {
             opt.lastElementChild.remove();
         }
     });
 
-    // F. Clear all text areas and inputs (Problem Solving & Journalizing)
+    // F. Clear all text areas and inputs
     clone.querySelectorAll('textarea, input[type="text"], input[type="number"]').forEach(input => {
         if (!input.readOnly) {
             input.value = '';
@@ -75,75 +71,18 @@ export const handlePrintTQ = (activityConfig) => {
         item.style.marginBottom = "24px";
     });
 
-    // Strip "Question X" blue badges to make them look like normal text
     clone.querySelectorAll('span.bg-blue-100').forEach(span => {
         span.className = "";
         span.style.fontWeight = "bold";
         span.style.marginRight = "8px";
     });
 
-    // Ensure all hidden sections are fully visible for printing
     clone.querySelectorAll('.hidden, .test-section-panel').forEach(el => el.classList.remove('hidden'));
 
-    // 4. INJECT HEADERS & RUBRICS INTO EACH SECTION
-    clone.querySelectorAll('.test-section-panel').forEach((panel, index) => {
-        const sectionConfig = activityConfig?.testQuestions?.[index] || {};
-        const type = sectionConfig.type || 'Test';
-        const topics = sectionConfig.topics || activityConfig.topics || '';
-        const instructions = sectionConfig.instructions || activityConfig.instructions || '';
-        const rubricStr = sectionConfig.gradingRubrics || activityConfig.gradingRubrics || '';
+    // H. Identify the cloned Rubric Tables so we can target them with Garamond 9pt later
+    clone.querySelectorAll('.font-serif table').forEach(tbl => tbl.classList.add('rubric-table'));
 
-        // Build the Rubric Table dynamically (Using Garamond 9pt)
-        let rubricTableHtml = '';
-        if (rubricStr) {
-            const lines = rubricStr.split('\n').filter(l => l.trim().length > 0);
-            let headers = [];
-            let rowData = [];
-            lines.forEach(line => {
-                const colonIdx = line.indexOf(':');
-                if (colonIdx > -1) {
-                    headers.push(line.substring(0, colonIdx).trim());
-                    rowData.push(line.substring(colonIdx + 1).trim());
-                }
-            });
-            
-            if (headers.length > 0) {
-                // Notice the "rubric-table" class used here
-                rubricTableHtml = `
-                <table class="rubric-table" style="width:100%; border-collapse: collapse; margin-bottom: 20px;">
-                    <thead>
-                        <tr>
-                            ${headers.map(h => `<th style="border: 1px solid black; padding: 6px; text-align: left; font-style: italic; font-weight: bold;">${h}</th>`).join('')}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            ${rowData.map(d => `<td style="border: 1px solid black; padding: 6px; vertical-align: top;">${d}</td>`).join('')}
-                        </tr>
-                    </tbody>
-                </table>
-                `;
-            }
-        }
-
-        const roman = ['I', 'II', 'III', 'IV', 'V', 'VI'][index] || (index + 1);
-        
-        const headerHtml = `
-            <div style="margin-bottom: 15px; color: black;">
-                <div style="font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">
-                    ${roman}. ${type}: ${topics}
-                </div>
-                <div style="margin-bottom: 10px; text-align: justify;">
-                    Direction: ${instructions}
-                </div>
-                ${rubricTableHtml}
-            </div>
-        `;
-        
-        panel.insertAdjacentHTML('afterbegin', headerHtml);
-    });
-
-    // 5. Build the Master Wrapper
+    // 4. Build the Master Wrapper
     const tqWrapper = document.createElement('div');
     tqWrapper.id = 'tq-print-wrapper';
     tqWrapper.innerHTML = `<div id="tq-content"></div>`;
@@ -151,13 +90,13 @@ export const handlePrintTQ = (activityConfig) => {
     tqWrapper.querySelector('#tq-content').appendChild(clone);
     document.body.appendChild(tqWrapper);
 
-    // 6. Temporarily clear the native browser title and URL
+    // 5. Temporarily clear the native browser title and URL
     const originalTitle = document.title;
     const originalUrl = window.location.href;
     document.title = " "; 
     window.history.replaceState({}, '', '/');
 
-    // 7. Create the Print CSS
+    // 6. Create the Print CSS
     const printStyle = document.createElement('style');
     printStyle.id = 'tq-print-styles';
     printStyle.innerHTML = `
@@ -227,7 +166,7 @@ export const handlePrintTQ = (activityConfig) => {
     `;
     document.head.appendChild(printStyle);
 
-    // 8. Trigger Print and Cleanup
+    // 7. Trigger Print and Cleanup
     setTimeout(() => {
         window.print();
         setTimeout(() => {
