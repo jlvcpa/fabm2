@@ -30,7 +30,6 @@ export const handlePrint = (mode, setPrintMode) => {
             @page {
                 /* Set exact Folio paper dimensions */
                 size: 8.5in 13in;
-                /* Standard margins, with a slightly thicker bottom to protect the footer */
                 margin: 0.4in 0.4in 0.8in 0.4in; 
             }
 
@@ -54,24 +53,36 @@ export const handlePrint = (mode, setPrintMode) => {
             #dynamic-print-footer {
                 display: flex !important;
                 position: fixed;
-                /* MUST be exactly 0 to prevent Chrome from wrapping it to the top of the next page */
                 bottom: 0; 
                 left: 0;
                 width: 100%;
                 font-size: 10px;
                 font-family: sans-serif;
                 background: white;
-                padding: 0 0.05in 0.05in 0.05in;
+                padding: 10px 0.05in 0.05in 0.05in;
                 box-sizing: border-box;
                 z-index: 9999;
                 align-items: flex-end;
             }
 
+            /* --- THE CHROME FLEXBOX FIX --- */
+            /* Chrome ignores page breaks inside flex containers. We MUST force the main wrappers to 'block'. */
+            #qa-runner-container, 
+            #qa-runner-container > div,
+            #quiz-form, 
+            .test-section-panel, 
+            .exercise-item {
+                display: block !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+
             /* --- BULLETPROOF PAGINATION RULES --- */
-            /* Using the exact 'exercise-item' class from your quizzesAndActivities.js */
+            /* Now that flexbox is disabled on the parents, this will finally work! */
             .exercise-item, tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
+                margin-bottom: 1.5rem !important; /* Gives breathing room between questions */
             }
 
             button, .print\\:hidden, .hide-in-print { 
