@@ -36,7 +36,6 @@ import { renderIntegratedScePreview } from './previewHandlers/integratedSceResul
 import { handlePrint } from './printHandlers/printResultPreview.js';
 import { handlePrintTQ } from './printHandlers/printTestQ.js';
 
-
 const html = htm.bind(React.createElement);
 const db = getFirestore();
 
@@ -102,7 +101,7 @@ const AccountingCycleResultView = ({ resultData, activityConfig, printMode, onPr
 
                 return html`
                     <div key=${stepId} className="bg-white border rounded-lg shadow-sm overflow-hidden break-inside-avoid mb-8 ${hideInPrintClass}">
-                        <div className="bg-slate-800 text-white p-4 flex justify-between items-center">
+                        <div className="bg-slate-800 text-white p-4 flex justify-between items-center print:hidden">
                             <div className="flex items-center gap-4">
                                 <div>
                                     <h3 className="text-lg font-bold">Step ${stepId}: ${task.stepName}</h3>
@@ -122,7 +121,7 @@ const AccountingCycleResultView = ({ resultData, activityConfig, printMode, onPr
                             </div>
                         </div>
                         <div className="p-6">
-                            <div className="mb-6 flex flex-col gap-4">
+                            <div className="mb-6 flex flex-col gap-4 print:hidden">
                                 ${task.instructions || task.description ? html`
                                     <div className="p-4 bg-indigo-50 text-sm text-indigo-900 rounded border border-indigo-100">
                                         <h4 className="font-bold mb-1">Instructions:</h4>
@@ -134,7 +133,7 @@ const AccountingCycleResultView = ({ resultData, activityConfig, printMode, onPr
                                     <div dangerouslySetInnerHTML=${{ __html: rubricHtml }}></div>
                                 </div>
                             </div>
-                            <div className="border border-gray-200 rounded p-2 bg-gray-50">
+                            <div className="border border-gray-200 rounded p-2 bg-gray-50 print:border-none print:p-0">
                                 <${StepComponent} 
                                     activityData=${simData} 
                                     transactions=${simData.transactions} 
@@ -262,9 +261,28 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                 const sectionId = `test-${idx}`;
                 const hideInPrintClass = (printMode !== 'all' && printMode !== sectionId) ? 'hide-in-print' : '';
 
+                // NATIVE RUBRIC PARSING LOGIC
+                const rubricStr = section.gradingRubrics || activityConfig.gradingRubrics || '';
+                let rubricHeaders = [];
+                let rubricRowData = [];
+                if (rubricStr) {
+                    const lines = rubricStr.split('\n').filter(l => l.trim().length > 0);
+                    lines.forEach(line => {
+                        const colonIdx = line.indexOf(':');
+                        if (colonIdx > -1) {
+                            rubricHeaders.push(line.substring(0, colonIdx).trim());
+                            rubricRowData.push(line.substring(colonIdx + 1).trim());
+                        }
+                    });
+                }
+                const roman = ['I', 'II', 'III', 'IV', 'V', 'VI'][idx] || (idx + 1);
+                const topics = section.topics || activityConfig.topics || '';
+                const instructions = section.instructions || activityConfig.instructions || '';
+
                 return html`
-                    <div key=${idx} className="bg-white border rounded-lg shadow-sm overflow-hidden mb-8 ${hideInPrintClass}">
-                        <div className="bg-blue-900 text-white p-4 flex justify-between items-center">
+                    <div key=${idx} className="bg-white border rounded-lg shadow-sm overflow-hidden mb-8 ${hideInPrintClass} print:border-none print:shadow-none print:mb-0">
+                        
+                        <div className="bg-blue-900 text-white p-4 flex justify-between items-center print:hidden">
                             <div className="flex items-center gap-4">
                                 <h3 className="font-bold uppercase">Test ${idx + 1}: ${section.type}</h3>
                                 <button type="button" onClick=${() => onPrint(sectionId)} className="print:hidden p-1.5 bg-blue-800 hover:bg-blue-700 rounded text-white flex items-center shadow-sm transition" title="Print this test only">
@@ -277,22 +295,32 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                             </div>
                         </div>
 
-                        <div className="px-6 pt-6 flex flex-col gap-4">
-                            ${section.instructions ? html`
-                                <div className="p-4 bg-indigo-50 text-sm text-indigo-900 rounded border border-indigo-100">
-                                    <h4 className="font-bold mb-1">Instructions:</h4>
-                                    <div dangerouslySetInnerHTML=${{ __html: section.instructions }}></div>
+                        <div className="px-6 pt-6 flex flex-col gap-4 print:px-0 print:pt-4">
+                            <div className="font-serif text-black">
+                                <div className="font-bold text-[14px] uppercase mb-1">
+                                    ${roman}. ${section.type}: ${topics}
                                 </div>
-                            ` : ''}
-                            ${section.gradingRubrics ? html`
-                                <div className="p-4 bg-blue-50 text-sm text-blue-900 rounded border border-blue-100">
-                                    <h4 className="font-bold mb-1">Rubric:</h4>
-                                    <div dangerouslySetInnerHTML=${{ __html: section.gradingRubrics }}></div>
+                                <div className="text-[13px] mb-3 text-justify">
+                                    Direction: <span dangerouslySetInnerHTML=${{ __html: instructions }}></span>
                                 </div>
-                            ` : ''}
+                                ${rubricHeaders.length > 0 ? html`
+                                    <table className="w-full border-collapse mb-5 text-[11px] border border-black print:border-black">
+                                        <thead>
+                                            <tr>
+                                                ${rubricHeaders.map(h => html`<th key=${h} className="border border-black print:border-black p-1.5 text-left italic font-bold">${h}</th>`)}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                ${rubricRowData.map((d, i) => html`<td key=${i} className="border border-black print:border-black p-1.5 align-top" dangerouslySetInnerHTML=${{__html: d}}></td>`)}
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                ` : ''}
+                            </div>
                         </div>
                         
-                        <div className="px-0 pt-6 pb-8 flex flex-col gap-4">
+                        <div className="px-6 pb-8 flex flex-col gap-4 print:px-0 print:pb-2">
                             ${sectionQs.map((q, qIdx) => {
                                 const studentAns = resultData.answers?.[q.uiId];
                                 const liveQ = (q.dbId && globalQuestionMap.has(q.dbId)) ? globalQuestionMap.get(q.dbId) : q;
@@ -345,8 +373,8 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
                 <${Printer} size=${16}/> Print All Parts
             </button>
             ${currentUser.role === 'teacher' ? html`
-                <button onClick=${handlePrintTQ} className="px-4 py-2 bg-teal-600 text-white text-sm font-bold rounded hover:bg-teal-700 shadow flex items-center gap-2">
-                    <i className="fas fa-file-alt"></i> Print TQ
+                <button onClick=${() => handlePrintTQ(activityConfig)} className="px-4 py-2 bg-teal-600 text-white text-sm font-bold rounded hover:bg-teal-700 shadow flex items-center gap-2">
+                    <i className="fas fa-file-alt mr-2"></i> Print TQ
                 </button>
             ` : ''}
             ${currentUser.role === 'teacher' && activityConfig.type !== 'accounting_cycle' ? html`
@@ -362,7 +390,11 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
             
             return html`
                 <header className="text-center mb-4 pb-4 border-b-4 border-indigo-600 p-4 bg-white text-black print:border-none ${headerHideClass}">
-                    <img src="./shs-adc-logo.png" onError=${(e) => { e.target.style.display='none'; }} alt="School Logo" className="mx-auto mb-1 h-32 w-auto"/>
+                    <img src="./shs-adc-logo.png" onError=${(e) => { e.target.style.display='none'; }} alt="School Logo" className="mx-auto mb-1 h-20 w-auto"/>
+                    <div className="text-[10px] text-blue-900 uppercase font-sans tracking-wide print:text-black">Sacred Heart School - Ateneo de Cebu</div>
+                    <div className="text-xl text-blue-900 font-bold font-sans mb-3 leading-tight print:text-black">
+                        Senior High School<br/>Department
+                    </div>
                     <div className="text-sm font-bold font-serif leading-tight">SY 2025-2026</div>
                     <div className="text-sm font-bold font-serif leading-tight">2<sup>nd</sup> Semester</div>
                     <div className="text-base font-bold font-serif uppercase leading-tight">FABM 2 – GRADE 11</div>
