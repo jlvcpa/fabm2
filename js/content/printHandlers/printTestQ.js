@@ -178,12 +178,17 @@ export const handlePrintTQ = () => {
             .tq-options-container.cols-4 {
                 display: grid !important;
                 grid-template-columns: repeat(4, 1fr) !important;
+                grid-template-rows: auto !important;
+                grid-auto-flow: column !important;
                 gap: 0.1rem 0.5rem !important;
             }
 
             .tq-options-container.cols-2 {
                 display: grid !important;
                 grid-template-columns: repeat(2, 1fr) !important;
+                /* Force 2 rows so A,B are in Col 1, and C,D are in Col 2 */
+                grid-template-rows: repeat(2, auto) !important;
+                grid-auto-flow: column !important;
                 gap: 0.1rem 1rem !important;
             }
 
