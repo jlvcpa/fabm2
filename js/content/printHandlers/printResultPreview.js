@@ -10,14 +10,12 @@ export const handlePrint = (mode, setPrintMode) => {
     // 1. Create Custom Footer
     const footer = document.createElement('div');
     footer.id = 'dynamic-print-footer';
-    // Applying inline styles here prevents a micro-second rendering glitch that can cause a blank page
-    footer.style.cssText = "display: flex; position: fixed; bottom: -0.6in; left: 0; width: 100%; font-size: 10px; font-family: sans-serif; background: white; padding: 0.05in; box-sizing: border-box; z-index: 9999; align-items: flex-end;";
     footer.innerHTML = `
         <div style="flex: 1; text-align: left; font-weight: bold; font-size: 11px; padding-left: 8px;">FABM 2</div>
         <div style="flex: 2; text-align: center;">
             <span style="border: 1px solid black; padding: 0.25rem;">4Cs: Christ-centeredness, Competence, Character, Compassion</span>
         </div>
-        <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px; padding-right: 8px;"></div>
+        <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px; padding-right: 8px;">Page <span class="page-num"></span></div>
     `;
     document.body.appendChild(footer);
 
@@ -25,24 +23,28 @@ export const handlePrint = (mode, setPrintMode) => {
     const printStyle = document.createElement('style');
     printStyle.id = 'dynamic-print-styles';
     printStyle.innerHTML = `
+        #dynamic-print-footer {
+            display: none;
+        }
         @media print {
             @page {
                 size: auto;
-                /* Top, Right, BOTTOM, Left */
-                /* The massive 1.0in bottom margin stops the text from printing too low on EVERY page */
-                margin: 0.35in 0.35in 1.0in 0.35in;
+                margin: 0.35in;
             }
 
             html, body {
-                /* Let the pages flow infinitely downwards */
                 height: auto !important;
                 min-height: auto !important;
                 max-height: none !important;
                 width: 100% !important;
-                background-color: white !important;
                 margin: 0 !important;
                 padding: 0 !important;
-                overflow: visible !important; /* CRITICAL for preventing blank pages */
+                background-color: white !important;
+            }
+            
+            body {
+                padding-bottom: 0.6in !important; /* Spacing above bottom margin for the footer */
+                counter-reset: page;
             }
 
             .max-w-5xl {
@@ -51,14 +53,29 @@ export const handlePrint = (mode, setPrintMode) => {
                 margin: 0 !important;
             }
 
+            /* Custom Footer Layout */
             #dynamic-print-footer {
                 display: flex !important;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                font-size: 10px;
+                font-family: sans-serif;
+                background: white;
+                padding: 0 0.05in 0.05in 0.05in;
+                box-sizing: border-box;
+                z-index: 9999;
+                align-items: flex-end;
             }
 
-            /* --- PAGINATION RULES --- */
-            .bg-white.border.rounded, 
-            .border.rounded.bg-white, 
-            tr {
+            .page-num::after {
+                content: counter(page);
+            }
+
+            /* --- NEW PAGINATION RULES --- */
+            /* Forces whole question blocks and table rows to stay intact on the same page */
+            .border.rounded.p-4, tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
@@ -95,7 +112,7 @@ export const handlePrint = (mode, setPrintMode) => {
     `;
     document.head.appendChild(printStyle);
 
-    // 3. Isolate the target container and fix ALL parent constraints
+    // 3. Isolate the target container to aggressively hide sidebars
     const targetContainer = document.querySelector('.max-w-5xl');
     const hiddenElements = [];
     const modifiedAncestors = [];
@@ -103,7 +120,6 @@ export const handlePrint = (mode, setPrintMode) => {
     if (targetContainer) {
         let currentEl = targetContainer;
         while (currentEl && currentEl !== document.body) {
-            // Hide siblings (sidebars, navbars, etc.)
             const siblings = Array.from(currentEl.parentNode.children);
             siblings.forEach(sibling => {
                 if (
@@ -117,24 +133,18 @@ export const handlePrint = (mode, setPrintMode) => {
                 }
             });
             
-            // Save original styles to restore later
             modifiedAncestors.push({
                 el: currentEl,
                 width: currentEl.style.width,
                 margin: currentEl.style.margin,
                 padding: currentEl.style.padding,
-                position: currentEl.style.position,
-                overflow: currentEl.style.overflow, // <--- SAVED
-                height: currentEl.style.height      // <--- SAVED
+                position: currentEl.style.position
             });
             
-            // Force this element to expand infinitely for the printer
             currentEl.style.width = '100%';
             currentEl.style.margin = '0';
             currentEl.style.padding = '0';
             currentEl.style.position = 'static';
-            currentEl.style.overflow = 'visible'; // <--- STRIPS SCROLLBARS FOR PRINTING
-            currentEl.style.height = 'auto';      // <--- PREVENTS BLANK NEXT PAGES
             
             currentEl = currentEl.parentNode;
         }
@@ -165,8 +175,6 @@ export const handlePrint = (mode, setPrintMode) => {
                 item.el.style.margin = item.margin;
                 item.el.style.padding = item.padding;
                 item.el.style.position = item.position;
-                item.el.style.overflow = item.overflow; // <--- RESTORED
-                item.el.style.height = item.height;     // <--- RESTORED
             });
             
         }, 500); 
