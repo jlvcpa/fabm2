@@ -29,7 +29,7 @@ export const handlePrint = (mode, setPrintMode) => {
         @media print {
             @page {
                 size: auto;
-                margin: 0.05in;
+                margin: 0.35in;
             }
 
             html, body {
