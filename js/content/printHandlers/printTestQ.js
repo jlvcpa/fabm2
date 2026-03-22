@@ -99,7 +99,7 @@ export const handlePrintTQ = () => {
     // Strip "Question X" blue badges to make them look like normal text
     clone.querySelectorAll('span.bg-blue-100').forEach(span => {
         span.className = "";
-        span.style.fontWeight = "bold";
+        span.style.fontWeight = "400";
         span.style.marginRight = "8px";
     });
 
@@ -132,7 +132,7 @@ export const handlePrintTQ = () => {
             @page {
                 size: 8.5in 13in; 
                 /* Strict margins as requested: Top 0.5, Right 0.4, Bottom 0.5, Left 0.4 */
-                margin: 0.2in 0.4in 0.3in 0.4in; 
+                margin: 0.5in 0.4in 0.3in 0.4in; 
             }
 
             body > *:not(#tq-print-wrapper) { display: none !important; }
