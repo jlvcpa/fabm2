@@ -18,7 +18,6 @@ export const handlePrint = (mode, setPrintMode) => {
         <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px;"></div>
     `;
 
-
     document.body.appendChild(footer);
 
     // 2. Create Print CSS
@@ -33,6 +32,7 @@ export const handlePrint = (mode, setPrintMode) => {
                 size: auto;
                 /* Increase bottom margin to create a physical gap for the footer */
                 margin: 0.35in 0.35in 0.8in 0.35in;
+            } /* <--- FIXED: THIS CLOSING BRACKET WAS MISSING */
 
             html, body {
                 /* Let the pages flow infinitely downwards */
@@ -143,13 +143,17 @@ export const handlePrint = (mode, setPrintMode) => {
                 width: currentEl.style.width,
                 margin: currentEl.style.margin,
                 padding: currentEl.style.padding,
-                position: currentEl.style.position
+                position: currentEl.style.position,
+                overflow: currentEl.style.overflow, // <--- FIXED: Capture original overflow
+                height: currentEl.style.height      // <--- FIXED: Capture original height
             });
             
             currentEl.style.width = '100%';
             currentEl.style.margin = '0';
             currentEl.style.padding = '0';
             currentEl.style.position = 'static';
+            currentEl.style.overflow = 'visible'; // <--- FIXED: Force visible overflow to allow multi-page
+            currentEl.style.height = 'auto';      // <--- FIXED: Force height auto
             
             currentEl = currentEl.parentNode;
         }
@@ -180,6 +184,8 @@ export const handlePrint = (mode, setPrintMode) => {
                 item.el.style.margin = item.margin;
                 item.el.style.padding = item.padding;
                 item.el.style.position = item.position;
+                item.el.style.overflow = item.overflow; // <--- Restore original
+                item.el.style.height = item.height;     // <--- Restore original
             });
             
         }, 500); 
