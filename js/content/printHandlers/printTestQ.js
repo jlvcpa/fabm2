@@ -165,7 +165,7 @@ export const handlePrintTQ = () => {
             /* --- DYNAMIC OPTION GRID CSS --- */
             .tq-question-block {
                 display: block !important; /* Defeat Chrome Flexbox bug */
-                margin-bottom: 1rem !important; /* Reduced from 1.5rem */
+                margin-bottom: 0.5rem !important; /* Reduced from 1.5rem */
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
