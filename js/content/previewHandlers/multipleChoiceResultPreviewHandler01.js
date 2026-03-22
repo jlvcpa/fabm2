@@ -135,7 +135,7 @@ export function renderMultipleChoicePreview(q, qIdx, liveQ, studentAns) {
                             style = "bg-green-50 border-green-300 border-dashed text-green-800"; 
                             icon = html`<${Check} size=${16} className="text-green-700 opacity-50"/>`; 
                         }
-                        return html`<div key=${oIdx} className=${`px-3 py-2 border rounded text-sm flex justify-between items-center ${style}`}>${opt} ${icon}</div>`;
+                        return html`<div key=${oIdx} className=${`px-4 py-2 border rounded text-sm flex justify-between items-center ${style}`}>${opt} ${icon}</div>`;
                     })}
                 </div>
             </div>
