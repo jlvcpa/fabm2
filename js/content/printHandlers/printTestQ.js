@@ -1,10 +1,11 @@
 /**
- * Clones the active quiz container, strips out all answers/explanations, 
- * formats it into a formal Times New Roman test questionnaire, 
- * and prints it safely without affecting the live UI.
+ * Clones the active quiz container, strips out all answers, backgrounds, and validation marks,
+ * dynamically injects the formal header, instructions, and parsed rubric table,
+ * formats it into Times New Roman, and prints it safely.
+ * * @param {object} activityConfig - The activity data containing topics, instructions, and rubrics.
  */
-export const handlePrintTQ = () => {
-    // 1. Target the container that holds the questions
+export const handlePrintTQ = (activityConfig) => {
+    // 1. Target the main runner container
     const originalContainer = document.getElementById('qa-runner-container');
     if (!originalContainer) {
         alert("Could not find the activity content to print.");
@@ -14,13 +15,22 @@ export const handlePrintTQ = () => {
     // 2. Make a hidden "photocopy" of the container
     const clone = originalContainer.cloneNode(true);
 
-    // 3. CLEANUP: Strip out all answers, feedback, and scores from the clone
-    // Uncheck all radio buttons for MCQs
-    clone.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    // 3. AGGRESSIVE CLEANUP: Strip out everything that makes it look like a web app
     
-    // Clear all text areas and inputs (Problem Solving & Journalizing)
+    // A. Remove all Explanations, Warnings, Answer Keys, and Sticky Top Headers
+    clone.querySelectorAll('[id^="ans-"], [id^="msg-"], .sticky, .btn-reveal-set').forEach(el => el.remove());
+    
+    // B. Remove all validation SVG icons (Checks and X marks)
+    clone.querySelectorAll('svg, i.fa-check, i.fa-times, i.fa-check-circle, i.fa-times-circle, .fa-key, .fa-info-circle').forEach(el => el.remove());
+
+    // C. Uncheck all radio buttons and hide them so we only see the text options
+    clone.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.checked = false;
+        radio.style.display = 'none'; // Hide the actual clickable circle
+    });
+
+    // D. Clear all text areas and inputs (Problem Solving & Journalizing)
     clone.querySelectorAll('textarea, input[type="text"], input[type="number"]').forEach(input => {
-        // Keep readonly fields intact (like pre-filled dates in journals)
         if (!input.readOnly) {
             input.value = '';
             input.removeAttribute('value');
@@ -28,71 +38,139 @@ export const handlePrintTQ = () => {
         }
     });
 
-    // Delete all Explanation boxes and Warning Messages
-    clone.querySelectorAll('[id^="ans-"], [id^="msg-"]').forEach(el => el.remove());
-    
-    // Delete all checkmarks, cross marks, and score badges
-    clone.querySelectorAll('.fa-check, .fa-times, .fa-check-circle, .fa-times-circle, .text-green-500, .text-red-500, .text-green-600, .text-red-600').forEach(el => el.remove());
-
-    // Strip background colors from question cards to make them plain white
-    clone.querySelectorAll('.exercise-item, .bg-green-50, .bg-red-50, .bg-slate-50, .border-green-200, .border-red-200').forEach(el => {
-        el.classList.remove('bg-green-50', 'bg-red-50', 'bg-slate-50', 'border-green-200', 'border-red-200', 'border-green-500', 'border-red-500');
-        el.style.backgroundColor = 'transparent';
+    // E. Strip borders, background colors, and padding from Question Cards & Options
+    clone.querySelectorAll('.exercise-item').forEach(item => {
+        item.className = "exercise-item"; // Strip all tailwind classes
+        item.style.border = "none";
+        item.style.background = "transparent";
+        item.style.padding = "0";
+        item.style.marginBottom = "24px";
     });
 
-    // Remove the sticky top header from the web view (so it doesn't print awkwardly)
-    const stickyHeader = clone.querySelector('.sticky');
-    if (stickyHeader) stickyHeader.remove();
+    clone.querySelectorAll('label').forEach(label => {
+        label.className = ""; // Strip all tailwind borders/colors
+        label.style.display = "block";
+        label.style.border = "none";
+        label.style.background = "transparent";
+        label.style.padding = "0";
+        label.style.marginBottom = "4px";
+        label.style.color = "black";
+    });
 
-    // 4. Build the custom TQ Wrapper with your Header
+    // Strip "Question X" blue badges to make them look like normal text
+    clone.querySelectorAll('span.bg-blue-100').forEach(span => {
+        span.className = "";
+        span.style.fontWeight = "bold";
+        span.style.marginRight = "8px";
+    });
+
+    // Ensure all hidden sections (Test 2, Test 3) are fully visible for printing
+    clone.querySelectorAll('.hidden, .test-section-panel').forEach(el => el.classList.remove('hidden'));
+
+    // 4. INJECT HEADERS & RUBRICS INTO EACH SECTION
+    clone.querySelectorAll('.test-section-panel').forEach((panel, index) => {
+        const sectionConfig = activityConfig?.testQuestions?.[index] || {};
+        const type = sectionConfig.type || 'Test';
+        const topics = sectionConfig.topics || activityConfig.topics || '';
+        const instructions = sectionConfig.instructions || activityConfig.instructions || '';
+        const rubricStr = sectionConfig.gradingRubrics || activityConfig.gradingRubrics || '';
+
+        // Build the Rubric Table dynamically
+        let rubricTableHtml = '';
+        if (rubricStr) {
+            const lines = rubricStr.split('\n').filter(l => l.trim().length > 0);
+            let headers = [];
+            let rowData = [];
+            lines.forEach(line => {
+                const colonIdx = line.indexOf(':');
+                if (colonIdx > -1) {
+                    headers.push(line.substring(0, colonIdx).trim());
+                    rowData.push(line.substring(colonIdx + 1).trim());
+                }
+            });
+            
+            if (headers.length > 0) {
+                rubricTableHtml = `
+                <table style="width:100%; border-collapse: collapse; margin-bottom: 20px; font-size: 11px; font-family: 'Times New Roman', Times, serif;">
+                    <thead>
+                        <tr>
+                            ${headers.map(h => `<th style="border: 1px solid black; padding: 6px; text-align: left; font-style: italic; font-weight: bold;">${h}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            ${rowData.map(d => `<td style="border: 1px solid black; padding: 6px; vertical-align: top;">${d}</td>`).join('')}
+                        </tr>
+                    </tbody>
+                </table>
+                `;
+            }
+        }
+
+        // Generate Roman Numeral for the Part
+        const roman = ['I', 'II', 'III', 'IV', 'V', 'VI'][index] || (index + 1);
+        
+        const headerHtml = `
+            <div style="margin-bottom: 15px; font-family: 'Times New Roman', Times, serif; color: black;">
+                <div style="font-weight: bold; font-size: 14px; text-transform: uppercase; margin-bottom: 4px;">
+                    ${roman}. ${type}: ${topics}
+                </div>
+                <div style="font-size: 13px; margin-bottom: 10px; text-align: justify;">
+                    Direction: ${instructions}
+                </div>
+                ${rubricTableHtml}
+            </div>
+        `;
+        
+        // Inject header at the top of this specific test section
+        panel.insertAdjacentHTML('afterbegin', headerHtml);
+    });
+
+    // 5. Build the Master Wrapper with the School Header
     const tqWrapper = document.createElement('div');
     tqWrapper.id = 'tq-print-wrapper';
     
-    // You can customize the text inside the brackets [ ] below later!
     tqWrapper.innerHTML = `
-        <div class="tq-header" style="text-align: center; margin-bottom: 2rem; font-family: 'Times New Roman', Times, serif; color: black;">
-            <h2 style="font-size: 18px; font-weight: bold; margin: 0; text-transform: uppercase;">[INSERT SCHOOL NAME]</h2>
-            <h3 style="font-size: 14px; margin: 4px 0;">School Year 202X - 202X | [INSERT TERM / SEMESTER]</h3>
-            <h1 style="font-size: 20px; font-weight: bold; margin: 16px 0; text-transform: uppercase;">[INSERT ACTIVITY TITLE]</h1>
-            
-            <div style="display: flex; justify-content: space-between; text-align: left; margin-top: 30px; font-size: 14px; border-bottom: 2px solid black; padding-bottom: 8px;">
-                <span style="flex: 2;"><strong>Name:</strong> _________________________________________________</span>
-                <span style="flex: 1;"><strong>Section:</strong> _________________</span>
-                <span style="flex: 1;"><strong>Date:</strong> ___________</span>
-                <span style="flex: 1; text-align: right;"><strong>Score:</strong> _______</span>
-            </div>
+        <div style="text-align: center; margin-bottom: 1.5rem; font-family: 'Times New Roman', Times, serif; color: black;">
+            <img src="./assets/logo.png" alt="Logo" style="height: 70px; margin-bottom: 5px;" onerror="this.style.display='none'">
+            <div style="font-size: 10px; color: #1e3a8a; text-transform: uppercase; font-family: Arial, sans-serif;">Sacred Heart School - Ateneo de Cebu</div>
+            <div style="font-size: 18px; color: #1e3a8a; font-weight: bold; font-family: Arial, sans-serif; margin-bottom: 10px;">Senior High School<br>Department</div>
+            <div style="font-size: 14px; font-weight: bold;">SY 2025-2026</div>
+            <div style="font-size: 14px; font-weight: bold;">2<sup>nd</sup> Semester</div>
+            <div style="font-size: 16px; font-weight: bold; text-transform: uppercase;">FABM 2 – GRADE 11</div>
+            <div style="font-size: 16px; font-weight: bold; text-transform: uppercase;">FINAL EXAM</div>
         </div>
-        <div id="tq-content"></div>
+        <div style="border: 2px solid black; padding: 6px; text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 20px; font-family: 'Times New Roman', Times, serif; text-transform: uppercase;">
+            WRITE ALL THE ANSWERS IN THE ANSWER SHEET.
+        </div>
+        <div id="tq-content" style="font-family: 'Times New Roman', Times, serif; color: black;"></div>
     `;
 
     // Inject the cleaned clone into our wrapper, and put the wrapper on the page
     tqWrapper.querySelector('#tq-content').appendChild(clone);
     document.body.appendChild(tqWrapper);
 
-    // 5. Temporarily clear the native browser title to clean up the print header
+    // 6. Temporarily clear the native browser title and URL
     const originalTitle = document.title;
+    const originalUrl = window.location.href;
     document.title = " "; 
+    window.history.replaceState({}, '', '/');
 
-    // 6. Create the Print CSS
+    // 7. Create the Print CSS
     const printStyle = document.createElement('style');
     printStyle.id = 'tq-print-styles';
     printStyle.innerHTML = `
         /* Hide this wrapper completely on the screen */
-        #tq-print-wrapper {
-            display: none;
-        }
+        #tq-print-wrapper { display: none; }
 
         @media print {
             @page {
                 size: 8.5in 13in; /* Folio Size */
-                margin: 0.75in; /* Standard paper margins */
+                margin: 0.75in; /* Clean formal margins */
             }
 
-            /* --- THE MAGIC TRICK --- */
             /* Hide the ENTIRE web app, and ONLY show our custom TQ Wrapper */
-            body > *:not(#tq-print-wrapper) {
-                display: none !important;
-            }
+            body > *:not(#tq-print-wrapper) { display: none !important; }
 
             #tq-print-wrapper {
                 display: block !important;
@@ -101,7 +179,7 @@ export const handlePrintTQ = () => {
             }
 
             /* Force EVERYTHING inside the TQ to be Times New Roman and Black */
-            #tq-print-wrapper, #tq-print-wrapper * {
+            #tq-print-wrapper, #tq-print-wrapper *, #tq-print-wrapper p, #tq-print-wrapper span {
                 font-family: "Times New Roman", Times, serif !important;
                 color: black !important;
             }
@@ -117,65 +195,40 @@ export const handlePrintTQ = () => {
             }
 
             /* Bulletproof Pagination */
-            .exercise-item, tr {
+            .exercise-item, tr, .test-section-panel > div:first-child {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
-                margin-bottom: 24px !important;
             }
 
             /* Hide buttons inside the clone */
-            #tq-print-wrapper button { 
-                display: none !important; 
-            }
+            #tq-print-wrapper button { display: none !important; }
 
             /* Make text inputs printable as empty underlines */
-            #tq-print-wrapper input[type="text"], 
-            #tq-print-wrapper input[type="number"] {
+            #tq-print-wrapper input[type="text"], #tq-print-wrapper input[type="number"] {
                 border-bottom: 1px solid black !important;
-                border-top: none !important;
-                border-left: none !important;
-                border-right: none !important;
-                border-radius: 0 !important;
-                background: transparent !important;
+                border-top: none !important; border-left: none !important; border-right: none !important;
+                border-radius: 0 !important; background: transparent !important; color: transparent !important;
             }
 
             /* Make textareas printable as empty boxes */
             #tq-print-wrapper textarea {
-                border: 1px solid black !important;
-                background: transparent !important;
-                min-height: 100px !important;
-            }
-
-            /* Format Tables for Paper */
-            #tq-print-wrapper table { 
-                width: 100% !important; 
-                border-collapse: collapse !important; 
-            }
-            #tq-print-wrapper th, #tq-print-wrapper td { 
-                border: 1px solid black !important; 
-                padding: 6px !important; 
-            }
-            
-            /* Put a neat black border around each question */
-            #tq-print-wrapper .exercise-item {
-                border: 1px solid black !important;
-                border-radius: 0 !important;
-                padding: 15px !important;
-                margin-bottom: 20px !important;
+                border: 1px solid black !important; background: transparent !important;
+                min-height: 100px !important; color: transparent !important;
             }
         }
     `;
     document.head.appendChild(printStyle);
 
-    // 7. Trigger Print and Cleanup
+    // 8. Trigger Print and Cleanup
     setTimeout(() => {
         window.print();
         
         setTimeout(() => {
-            // Restore native title
+            // Restore native title and URL
             document.title = originalTitle;
+            window.history.replaceState({}, '', originalUrl);
             
-            // Delete the styles and the clone. The original app was never touched!
+            // Delete the styles and the clone
             const styleEl = document.getElementById('tq-print-styles');
             if (styleEl) styleEl.remove();
             
