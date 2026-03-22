@@ -129,7 +129,7 @@ export function renderMultipleChoicePreview(q, qIdx, liveQ, studentAns) {
                         let style = "border-gray-200 bg-gray-50";
                         let icon = null;
                         if (isSelected && isOptCorrect) { 
-                            style = "bg-green-100 border-green-500 text-green-900 font-bold"; 
+                            style = "bg-green-200 border rounded border-green-900 text-green-900 font-bold"; 
                             icon = html`<${Check} size=${16} className="text-green-700"/>`; 
                         }
                         else if (isSelected && !isOptCorrect) { 
