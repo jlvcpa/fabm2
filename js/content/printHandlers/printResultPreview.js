@@ -28,11 +28,12 @@ export const handlePrint = (mode, setPrintMode) => {
         }
         @media print {
             @page {
-                /* Set exact Folio paper dimensions */
-                size: 8.5in 13in; 
-                /* Top, Right, Bottom, Left */
-                /* The 1.0in bottom margin forces the printer to cut the page early so text won't touch the footer */
-                margin: 0.35in 0.35in 1.0in 0.35in;
+                /* 1. Force Folio Size */
+                size: 8.5in 13in;
+                
+                /* 2. Top, Right, BOTTOM, Left */
+                /* Force text to stop 1.2 inches from the bottom of the paper */
+                margin: 0.35in 0.35in 1.2in 0.35in;
             }
 
             html, body {
@@ -45,6 +46,8 @@ export const handlePrint = (mode, setPrintMode) => {
                 background-color: white !important;
             }
             
+            /* Removed the old body padding-bottom hack from here */
+
             .max-w-5xl {
                 width: 100% !important;
                 max-width: 100% !important;
@@ -55,8 +58,8 @@ export const handlePrint = (mode, setPrintMode) => {
             #dynamic-print-footer {
                 display: flex !important;
                 position: fixed;
-                /* Pushes the footer into the 1.0in bottom margin gap we created above */
-                bottom: -0.6in; 
+                /* 3. Push the footer DOWN into the empty 1.2in margin void */
+                bottom: -0.8in; 
                 left: 0;
                 width: 100%;
                 font-size: 10px;
