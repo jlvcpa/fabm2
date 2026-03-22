@@ -1,49 +1,38 @@
 /**
- * Injects print-specific styles, injects the custom footer, 
- * flattens the DOM for printing, triggers the print dialog, and cleans up.
+ * Injects print-specific styles, flattens the DOM for printing, 
+ * temporarily rewrites the document title for native headers, 
+ * triggers the print dialog, and cleans up.
  */
 export const handlePrint = (mode, setPrintMode) => {
     setPrintMode(mode);
 
-    // 1. Create Custom Footer
-    const footer = document.createElement('div');
-    footer.id = 'dynamic-print-footer';
-    footer.innerHTML = `
-        <div style="flex: 1; text-align: left; font-weight: bold; font-size: 11px; padding-left: 8px;">FABM 2</div>
-        <div style="flex: 2; text-align: center;">
-            <span style="border: 1px solid black; padding: 0.25rem;">4Cs: Christ-centeredness, Competence, Character, Compassion</span>
-        </div>
-        <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px; padding-right: 8px;"></div>
-    `;
-    document.body.appendChild(footer);
+    // 1. Temporarily change the document title so Chrome prints it in the native header!
+    const originalTitle = document.title;
+    document.title = "FABM 2 | 4Cs: Christ-centeredness, Competence, Character, Compassion";
 
-    // 2. Create Print CSS
+    // 2. Create Print CSS (No custom footer CSS needed)
     const printStyle = document.createElement('style');
     printStyle.id = 'dynamic-print-styles';
     printStyle.innerHTML = `
-        #dynamic-print-footer {
-            display: none;
-        }
-        
         @media print {
             @page {
-                /* Set exact Folio paper dimensions */
+                /* Exact Folio dimensions */
                 size: 8.5in 13in;
-                /* A 1-inch bottom margin ensures text never touches the footer */
-                margin: 0.5in 0.4in 0.6in 0.4in; 
+                /* Clean, standard margins all around */
+                margin: 0.5in; 
             }
 
-            /* --- HIDE ALL SIDEBARS AND NAVIGATION --- */
-            /* FIXED: 'header' and 'nav' removed so your titles stay visible! */
+            /* --- HIDE UNWANTED UI ELEMENTS --- */
+            /* Added common IDs/classes for page titles to hide the 'Term Examinations' text */
             #sidebar, #qa-sidebar, #student-sidebar, 
             #qa-toggle-sidebar, #qa-desktop-expand, button, 
+            #page-title, .breadcrumb, .page-header-title,
             .print\\:hidden, .hide-in-print { 
                 display: none !important; 
             }
 
             /* --- THE CHROME FLEXBOX & SCROLL BUG FIX --- */
-            /* We MUST force all parent wrappers to be basic 'block' elements with no restricted heights. 
-               This stops the final page from cutting off and allows page-breaks to work! */
+            /* Forces all parent wrappers to be basic 'block' elements so pagination works */
             html, body, #app-content, #content-area, #qa-runner-container, 
             #qa-runner-container > div, #quiz-form, #quiz-form > div, 
             .test-section-panel, .test-section-panel > div, .flex-1.min-w-0 {
@@ -56,28 +45,11 @@ export const handlePrint = (mode, setPrintMode) => {
                 background-color: white !important;
             }
 
-            /* Custom Footer Layout */
-            #dynamic-print-footer {
-                display: flex !important;
-                position: fixed !important;
-                bottom: 0 !important; /* Anchored safely at the bottom */
-                left: 0 !important;
-                width: 100% !important;
-                font-size: 10px;
-                font-family: sans-serif;
-                background: white;
-                padding: 0.05in 0.05in 0.05in 0.05in;
-                box-sizing: border-box;
-                z-index: 9999;
-                align-items: flex-end;
-            }
-
             /* --- BULLETPROOF PAGINATION RULES --- */
-            /* Now that the parents are 'block', Chrome will finally respect this! */
             .exercise-item, tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
-                margin-bottom: 24px !important; /* Gives breathing room between questions */
+                margin-bottom: 24px !important;
             }
 
             /* Standardized Table & Formatting */
@@ -111,12 +83,12 @@ export const handlePrint = (mode, setPrintMode) => {
         setTimeout(() => {
             setPrintMode('all');
             
-            // Cleanup Styles and Footer to return to normal web view
+            // Restore original document title
+            document.title = originalTitle;
+            
+            // Cleanup Styles
             const styleElement = document.getElementById('dynamic-print-styles');
             if (styleElement) styleElement.remove();
-            
-            const footerElement = document.getElementById('dynamic-print-footer');
-            if (footerElement) footerElement.remove();
             
         }, 500); 
     }, 100);
