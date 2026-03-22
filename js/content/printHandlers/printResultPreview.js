@@ -45,7 +45,7 @@ export const handlePrint = (mode, setPrintMode) => {
             }
             
             body {
-                padding-bottom: 1in !important; /* Spacing above bottom margin for the footer */
+                padding-bottom: 6in !important; /* Spacing above bottom margin for the footer */
                 counter-reset: page;
             }
 
