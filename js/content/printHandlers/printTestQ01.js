@@ -1,7 +1,7 @@
-/***
+/**
  * Clones the active quiz container, strips out all answers, backgrounds, and validation marks,
  * replaces student info with directions, formats it into Times New Roman 12pt (Garamond 9pt for rubrics),
- * applies strict line-height, restores custom padding/gaps, and prints it safely.
+ * applies dynamic CSS Grid layouts for options, and prints it safely.
  */
 export const handlePrintTQ = () => {
     // 1. Target the main runner container
@@ -26,53 +26,74 @@ export const handlePrintTQ = () => {
         `;
     }
 
-    // B. Completely REMOVE screen headers (e.g., "Test 1: Multiple Choice" blue bar)
+    // B. Completely REMOVE screen headers 
     clone.querySelectorAll('.bg-blue-900.text-white, .bg-slate-800.text-white, .print\\:hidden, .hide-in-print').forEach(el => el.remove());
 
-    // C. Remove Explanation Boxes entirely
+    // C. Remove Explanation Boxes entirely (Targeting the exact class from your React component)
     clone.querySelectorAll('.explanation-section').forEach(el => el.remove());
+    // Fallback: Also remove any standalone "Explanation" headers just in case
+    clone.querySelectorAll('h4').forEach(h4 => {
+        if (h4.textContent.trim().toLowerCase() === 'explanation' && h4.parentElement) {
+            h4.parentElement.remove();
+        }
+    });
 
     // D. Remove basic validation items & sticky headers
     clone.querySelectorAll('[id^="ans-"], [id^="msg-"], .sticky, .btn-reveal-set, svg:not(.mx-auto)').forEach(el => el.remove());
 
-    // E. Strip borders, backgrounds, and icons from the Options, but RESTORE padding and gap
+    // E. Clean the Multiple Choice Options
     clone.querySelectorAll('.flex.justify-between.items-start').forEach(opt => {
-        // Keep the flex layout for alignment, but remove dynamic Tailwind colors
-        opt.className = "flex justify-start items-start"; 
-        opt.style.border = "none";
-        opt.style.background = "transparent";
-        opt.style.color = "black";
+        // Strip all Tailwind classes and assign our clean class
+        opt.className = "tq-option"; 
+        opt.removeAttribute("style"); // Wipe any inline colors/borders
         
-        // RESTORE: custom px-4 (1rem) and gap-1 (0.25rem bottom margin)
-        opt.style.paddingLeft = "1rem";
-        opt.style.paddingRight = "1rem";
-        opt.style.marginBottom = "0.1rem"; 
-        
-        // Remove the validation icon container (the trailing check/X mark)
+        // Remove the validation icon container (the check/X mark at the end)
         if (opt.children.length > 1) {
             opt.lastElementChild.remove();
         }
     });
 
-    // F. Clear all text areas and inputs
+    // F. Process the Question Cards & Apply Dynamic Grid Layouts
+    // We look for the parents of the options we just cleaned
+    const optionContainers = new Set();
+    clone.querySelectorAll('.tq-option').forEach(opt => {
+        if (opt.parentElement) optionContainers.add(opt.parentElement);
+    });
+
+    optionContainers.forEach(parent => {
+        // 1. Strip Tailwind classes (like flex-col) from the options wrapper
+        parent.className = "tq-options-container";
+        
+        // 2. Identify the main Question Card wrapper to ensure it paginates correctly
+        // Structure: <div px-4 flex-col> -> <div> -> <div tq-options-container>
+        if (parent.parentElement && parent.parentElement.parentElement) {
+            parent.parentElement.parentElement.classList.add('tq-question-block');
+        }
+
+        // 3. Dynamic Grid Logic based on character length
+        const options = Array.from(parent.querySelectorAll('.tq-option'));
+        let maxLen = 0;
+        options.forEach(opt => {
+            const textLen = opt.textContent.trim().length;
+            if (textLen > maxLen) maxLen = textLen;
+        });
+        
+        if (maxLen <= 15) {
+            parent.classList.add('cols-4');
+        } else if (maxLen <= 35) {
+            parent.classList.add('cols-2');
+        } else {
+            parent.classList.add('cols-1');
+        }
+    });
+
+    // G. Clear all text areas and inputs
     clone.querySelectorAll('textarea, input[type="text"], input[type="number"]').forEach(input => {
         if (!input.readOnly) {
             input.value = '';
             input.removeAttribute('value');
             input.textContent = ''; 
         }
-    });
-
-    // G. Strip borders and background from main Question Cards, RESTORE padding
-    clone.querySelectorAll('.exercise-item').forEach(item => {
-        item.className = "exercise-item"; 
-        item.style.border = "none";
-        item.style.background = "transparent";
-        
-        // RESTORE: custom px-4 (1rem) for the whole question block
-        item.style.paddingLeft = "1rem";
-        item.style.paddingRight = "1rem";
-        item.style.marginBottom = "0.5rem"; // Breathing room between separate questions
     });
 
     // Strip "Question X" blue badges to make them look like normal text
@@ -82,7 +103,6 @@ export const handlePrintTQ = () => {
         span.style.marginRight = "8px";
     });
 
-    // Ensure all hidden sections are fully visible for printing
     clone.querySelectorAll('.hidden, .test-section-panel').forEach(el => el.classList.remove('hidden'));
 
     // H. Identify the cloned Rubric Tables so we can target them with Garamond 9pt
@@ -111,7 +131,7 @@ export const handlePrintTQ = () => {
         @media print {
             @page {
                 size: 8.5in 13in; 
-                /* Requested Margins: Top 0.5, Right 0.4, Bottom 0.5, Left 0.4 */
+                /* Strict margins as requested: Top 0.5, Right 0.4, Bottom 0.5, Left 0.4 */
                 margin: 0.5in 0.4in 0.5in 0.4in; 
             }
 
@@ -123,7 +143,7 @@ export const handlePrintTQ = () => {
                 background-color: white !important;
             }
 
-            /* Reduced line padding by approx 70% of standard spacing */
+            /* Global Typography: 12pt Times New Roman, Compressed line-height */
             #tq-print-wrapper, #tq-print-wrapper *:not(.rubric-table):not(.rubric-table *) {
                 font-family: "Times New Roman", Times, serif !important;
                 font-size: 12pt !important;
@@ -131,7 +151,7 @@ export const handlePrintTQ = () => {
                 line-height: 1.15 !important;
             }
 
-            /* Specifically target Rubric Tables for Garamond 9pt */
+            /* Garamond 9pt Rubric */
             #tq-print-wrapper .rubric-table, #tq-print-wrapper .rubric-table * {
                 font-family: "Garamond", serif !important;
                 font-size: 9pt !important;
@@ -142,23 +162,61 @@ export const handlePrintTQ = () => {
             #tq-print-wrapper header { border-bottom: none !important; }
             #tq-print-wrapper header img { display: block !important; margin: 0 auto 5px auto !important; }
 
-            /* Fix Chrome Flexbox Pagination Bug (ONLY target parent containers) */
-            #tq-print-wrapper, #tq-content, .test-section-panel, .exercise-item {
+            /* --- DYNAMIC OPTION GRID CSS --- */
+            .tq-question-block {
+                display: block !important; /* Defeat Chrome Flexbox bug */
+                margin-bottom: 1rem !important; /* Reduced from 1.5rem */
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .tq-options-container {
+                width: 100% !important;
+                margin-top: 0.5rem !important;
+            }
+
+            .tq-options-container.cols-4 {
+                display: grid !important;
+                grid-template-columns: repeat(4, 1fr) !important;
+                gap: 0.1rem 0.5rem !important;
+            }
+
+            .tq-options-container.cols-2 {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 0.1rem 1rem !important;
+            }
+
+            .tq-options-container.cols-1 {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 0.1rem !important;
+            }
+
+            .tq-option {
+                display: flex !important;
+                align-items: flex-start !important;
+                margin-bottom: 0.1rem !important; /* Reduced from 0.25rem */
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+                border: none !important;
+                background: transparent !important;
+            }
+
+            /* Maintains the 'A.' letter alignment next to the option text */
+            .tq-option > div {
+                display: flex !important;
+                width: 100% !important;
+            }
+            /* ------------------------------- */
+
+            .test-section-panel {
                 display: block !important;
-                height: auto !important;
-                min-height: auto !important;
-                max-height: none !important;
                 overflow: visible !important;
                 position: static !important;
             }
 
-            /* ALLOW options to keep their flex layout so the 'A.' aligns with the text! */
-            #tq-print-wrapper .exercise-item .flex {
-                display: flex !important;
-            }
-
-            /* Pagination */
-            .exercise-item, tr, .test-section-panel > div:first-child {
+            tr, .test-section-panel > div:first-child {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
