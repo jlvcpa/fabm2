@@ -362,7 +362,7 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
             
             return html`
                 <header className="text-center mb-4 pb-4 border-b-4 border-indigo-600 p-4 bg-white text-black print:border-none ${headerHideClass}">
-                    <img src="./shs-adc-logo.png" onError=${(e) => { e.target.style.display='none'; }} alt="School Logo" className="mx-auto mb-1 h-20 w-auto"/>
+                    <img src="./shs-adc-logo.png" onError=${(e) => { e.target.style.display='none'; }} alt="School Logo" className="mx-auto mb-1 h-24 w-auto"/>
                     <div className="text-sm font-bold font-serif leading-tight">SY 2025-2026</div>
                     <div className="text-sm font-bold font-serif leading-tight">2<sup>nd</sup> Semester</div>
                     <div className="text-base font-bold font-serif uppercase leading-tight">FABM 2 – GRADE 11</div>
