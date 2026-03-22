@@ -1,15 +1,15 @@
-// --- js/content/activityResultPreview.js ---
-
 import React, { useState, useEffect, useMemo, useCallback } from 'https://esm.sh/react@18.2.0';
 import { createRoot } from 'https://esm.sh/react-dom@18.2.0/client';
 import htm from 'https://esm.sh/htm';
 import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
-import { Check, X, Save, Printer } from 'https://esm.sh/lucide-react@0.263.1';
+import { Save, Printer } from 'https://esm.sh/lucide-react@0.263.1';
 import { getLetterGrade, ActivityHelper } from './accountingCycle/utils.js';
 
 import { qbMerchMultipleChoice } from "./questionBank/qbMerchMultipleChoice.js";
 import { qbMerchProblemSolving } from "./questionBank/qbMerchProblemSolving.js";
 import { qbMerchJournalizing } from "./questionBank/qbMerchJournalizing.js";
+
+import { gradeIntegratedSce } from './activityHandlers/integratedSceHandler.js';
 
 import Step01Analysis from './accountingCycle/steps/Step01Analysis.js';
 import Step02Journalizing from './accountingCycle/steps/Step02Journalizing.js';
@@ -24,6 +24,18 @@ import Step10ReversingEntries from './accountingCycle/steps/Step10ReversingEntri
 
 import { adaptStaticDataToSimulator } from './accountingCycleActivity.js';
 import { merchTransactionsExamData } from './questionBank/qbMerchTransactions.js';
+
+// Modular preview handlers
+import { cleanAmt } from './previewHandlers/previewUtils.js';
+import { evaluateMultipleChoice, renderMultipleChoicePreview } from './previewHandlers/multipleChoiceResultPreviewHandler.js';
+import { evaluateProblemSolving, renderProblemSolvingPreview } from './previewHandlers/problemSolvingResultPreviewHandler.js';
+import { evaluateJournalizing, renderJournalizingPreview } from './previewHandlers/journalizingResultPreviewHandler.js';
+import { renderIntegratedScePreview } from './previewHandlers/integratedSceResultPreviewHandler.js';
+
+// Modular Print Handler
+import { handlePrint } from './printHandlers/printResultPreview.js';
+import { handlePrintTQ } from './printHandlers/printTestQ.js';
+
 
 const html = htm.bind(React.createElement);
 const db = getFirestore();
@@ -48,13 +60,6 @@ function buildQuestionMap() {
     });
 }
 buildQuestionMap();
-
-const cleanAmt = (amt) => {
-    if (amt === null || amt === undefined) return NaN;
-    const str = String(amt).trim();
-    if (str === '') return NaN;
-    return Number(str.replace(/,/g, ''));
-};
 
 const AccountingCycleResultView = ({ resultData, activityConfig, printMode, onPrint }) => {
     const [simData, setSimData] = useState(null);
@@ -182,9 +187,13 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
 
     const questionsTaken = useMemo(() => getQuestionsTaken(), [resultData]);
     const [liveScores, setLiveScores] = useState({});
+    const [integratedRenderData, setIntegratedRenderData] = useState({});
+    const [journalizingRenderData, setJournalizingRenderData] = useState({});
 
     useEffect(() => {
         const newScores = {};
+        const newRenderData = {};
+        const newJournalizingData = {};
         
         activityConfig.testQuestions.forEach((section, idx) => {
             const sectionQs = Object.keys(questionsTaken)
@@ -199,87 +208,26 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                 const liveQ = (q.dbId && globalQuestionMap.has(q.dbId)) ? globalQuestionMap.get(q.dbId) : q;
 
                 if (section.type === "Multiple Choice") {
-                    secMax++;
-                    const correctKey = (liveQ.answer !== undefined) ? liveQ.answer : liveQ.correctAnswer;
-                    if (String(studentAns) === String(correctKey)) secScore++;
+                    const ev = evaluateMultipleChoice(liveQ, studentAns);
+                    secMax += ev.maxScore;
+                    secScore += ev.score;
                 } 
                 else if (section.type === "Problem Solving") {
-                    secMax++;
-                    if (studentAns && liveQ.correctAnswer && studentAns.trim().toLowerCase() === liveQ.correctAnswer.trim().toLowerCase()) secScore++;
+                    const ev = evaluateProblemSolving(liveQ, studentAns);
+                    secMax += ev.maxScore;
+                    secScore += ev.score;
                 }
                 else if (section.type === "Journalizing") {
-                    const transactions = liveQ.transactions || [];
-                    transactions.forEach((trans, tIdx) => {
-                        const solRows = trans.solution || [];
-                        const rowCount = trans.rows || 2;
-                        const isMemoEntry = solRows.length > 0 && !!solRows[0].account && solRows[0].account.trim().toLowerCase() === 'memo entry';
-
-                        const rawStudentRows = [];
-                        for(let r=0; r<rowCount; r++){
-                            rawStudentRows.push((studentAns && studentAns[`t${tIdx}_r${r}`]) ? studentAns[`t${tIdx}_r${r}`] : { date:'', acct:'', dr:'', cr:'' });
-                        }
-
-                        let isValidOrder = true;
-                        let foundCr = false;
-                        rawStudentRows.forEach(sr => {
-                            if (!isNaN(cleanAmt(sr.cr)) && cleanAmt(sr.cr) > 0) foundCr = true;
-                            if (!isNaN(cleanAmt(sr.dr)) && cleanAmt(sr.dr) > 0 && foundCr) isValidOrder = false;
-                        });
-
-                        let transMax = 0;
-                        let transScore = 0;
-
-                        solRows.forEach((sol, r) => {
-                            if (sol.date || r === 0) transMax++;
-                            if (isMemoEntry) transMax++;
-                            else {
-                                if (sol.isExplanation) transMax++;
-                                else transMax += 2;
-                            }
-                        });
-                        secMax += transMax;
-
-                        const matchedSolIndices = new Set();
-
-                        rawStudentRows.forEach((sr, r) => {
-                            const sDate = (sr.date || '').trim();
-                            const sAcct = (sr.acct || '');
-                            const sDr = cleanAmt(sr.dr);
-                            const sCr = cleanAmt(sr.cr);
-
-                            if (r === 0) {
-                                const solWithDate = solRows.find(s => !!s.date && !s.isExplanation);
-                                if (solWithDate) {
-                                    const expectedRegex = (tIdx === 0) ? /^[A-Z][a-z]{2}\s\d{1,2}$/ : /^\d{1,2}$/;
-                                    const expDateStr = (tIdx === 0) ? solWithDate.date : solWithDate.date.split(' ').pop();
-                                    if (sDate.match(expectedRegex) && sDate === expDateStr) transScore++;
-                                } else if (sDate === '') transScore++;
-                            }
-
-                            if (isMemoEntry) {
-                                if (r === 0 && sAcct.trim().toLowerCase() === 'memo entry' && !sAcct.startsWith(' ')) transScore++;
-                                else if (r === 1 && sAcct.match(/^\s{8,}\S/)) transScore++;
-                            } else {
-                                if (sAcct.match(/^\s{5,8}\S/) && isNaN(sDr) && isNaN(sCr)) {
-                                    transScore++;
-                                } else if (sAcct.trim().length > 0) {
-                                    const matchIdx = solRows.findIndex((sol, idx) => !sol.isExplanation && !matchedSolIndices.has(idx) && sol.account?.trim().toLowerCase() === sAcct.trim().toLowerCase());
-                                    if (matchIdx !== -1) {
-                                        matchedSolIndices.add(matchIdx);
-                                        const match = solRows[matchIdx];
-                                        
-                                        const solIsCredit = !!match.credit;
-                                        const sIsIndented = sAcct.startsWith('   ');
-                                        if (solIsCredit === sIsIndented) transScore++;
-
-                                        if (!isNaN(sDr) && sDr > 0 && cleanAmt(match.debit) === sDr && isValidOrder) transScore++;
-                                        else if (!isNaN(sCr) && sCr > 0 && cleanAmt(match.credit) === sCr && isValidOrder) transScore++;
-                                    }
-                                }
-                            }
-                        });
-                        secScore += transScore;
-                    });
+                    const ev = evaluateJournalizing(liveQ, studentAns, cleanAmt);
+                    secMax += ev.secMax;
+                    secScore += ev.secScore;
+                    newJournalizingData[q.uiId] = ev.transEvals;
+                }
+                else if (section.type === "Journalizing and Preparing SCE (Corp)") {
+                    const evalResult = gradeIntegratedSce(studentAns, liveQ);
+                    secScore += evalResult.scores.score;
+                    secMax += evalResult.scores.maxScore;
+                    newRenderData[q.uiId] = evalResult;
                 }
             });
 
@@ -292,6 +240,8 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
         });
 
         setLiveScores(newScores);
+        setIntegratedRenderData(newRenderData);
+        setJournalizingRenderData(newJournalizingData);
         if (onScoreUpdate) onScoreUpdate(newScores);
 
     }, [resultData, questionsTaken]);
@@ -342,224 +292,22 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                             ` : ''}
                         </div>
                         
-                        <div className="p-6 flex flex-col gap-6">
+                        <div className="px-0 pt-6 pb-8 flex flex-col gap-4">
                             ${sectionQs.map((q, qIdx) => {
                                 const studentAns = resultData.answers?.[q.uiId];
                                 const liveQ = (q.dbId && globalQuestionMap.has(q.dbId)) ? globalQuestionMap.get(q.dbId) : q;
 
                                 if (section.type === "Journalizing") {
-                                    return html`
-                                        <div key=${q.uiId} className="border rounded p-4 bg-white">
-                                            <div className="font-bold text-gray-800 mb-2">Question ${qIdx + 1}</div>
-                                            <div className="text-sm italic text-gray-600 mb-4 bg-blue-50 p-2 rounded">${liveQ.question || "Journalize the following transactions."}</div>
-                                            
-                                            ${(liveQ.transactions || []).map((trans, tIdx) => {
-                                                const solRows = trans.solution || [];
-                                                const rowCount = trans.rows || 2;
-                                                const isMemoEntry = solRows.length > 0 && !!solRows[0].account && solRows[0].account.trim().toLowerCase() === 'memo entry';
-                                                
-                                                const rawStudentRows = [];
-                                                for(let r=0; r<rowCount; r++) {
-                                                    const cellKey = `t${tIdx}_r${r}`;
-                                                    rawStudentRows.push((studentAns && studentAns[cellKey]) ? studentAns[cellKey] : { date:'', acct:'', dr:'', cr:'' });
-                                                }
-
-                                                let isValidOrder = true;
-                                                let foundCr = false;
-                                                rawStudentRows.forEach(sr => {
-                                                    if (!isNaN(cleanAmt(sr.cr)) && cleanAmt(sr.cr) > 0) foundCr = true;
-                                                    if (!isNaN(cleanAmt(sr.dr)) && cleanAmt(sr.dr) > 0 && foundCr) isValidOrder = false;
-                                                });
-
-                                                const renderCell = (val, isCorrect, isExpected, colType, indent = '') => {
-                                                    let icon = null;
-                                                    if (isCorrect && val) {
-                                                        icon = html`<${Check} size=${14} className="text-green-600 flex-shrink-0"/>`;
-                                                    } else if (!isCorrect && (val || isExpected)) {
-                                                        icon = html`<${X} size=${14} className="text-red-600 flex-shrink-0"/>`;
-                                                    }
-                                            
-                                                    let textClass = isCorrect ? "text-green-700 font-bold" : "text-red-600 font-bold";
-                                                    if (!val && !isExpected) return '';
-                                            
-                                                    if (colType === 'date' || colType === 'amount') {
-                                                        return html`<div className="flex w-full items-center">
-                                                            <div className="w-4 flex-none flex justify-start">${icon}</div>
-                                                            <div className=${"flex-grow text-right " + textClass}>${val}</div>
-                                                        </div>`;
-                                                    } else if (colType === 'acct') {
-                                                        return html`<div className="flex w-full items-center">
-                                                            <div className=${"flex-grow text-left whitespace-pre " + textClass}>${indent}${val}</div>
-                                                            <div className="w-4 flex-none flex justify-end">${icon}</div>
-                                                        </div>`;
-                                                    }
-                                                };
-
-                                                const matchedSolIndices = new Set();
-                                                const results = new Array(rowCount).fill(null);
-
-                                                rawStudentRows.forEach((sr, r) => {
-                                                    const sDate = (sr.date || '').trim();
-                                                    const sAcct = (sr.acct || '');
-                                                    const rawDr = (sr.dr || '').trim();
-                                                    const rawCr = (sr.cr || '').trim();
-                                                    const sDr = cleanAmt(rawDr);
-                                                    const sCr = cleanAmt(rawCr);
-
-                                                    let dateCorrect = false, acctCorrect = false, drCorrect = false, crCorrect = false;
-                                                    let expDate = false, expAcct = false, expDr = false, expCr = false;
-
-                                                    if (r === 0) {
-                                                        expDate = true;
-                                                        const solWithDate = solRows.find(s => !!s.date && !s.isExplanation);
-                                                        if (solWithDate) {
-                                                            const expectedRegex = (tIdx === 0) ? /^[A-Z][a-z]{2}\s\d{1,2}$/ : /^\d{1,2}$/;
-                                                            const expDateStr = (tIdx === 0) ? solWithDate.date : solWithDate.date.split(' ').pop();
-                                                            dateCorrect = !!sDate.match(expectedRegex) && sDate === expDateStr;
-                                                        } else {
-                                                            dateCorrect = (sDate === '');
-                                                        }
-                                                    } else {
-                                                        dateCorrect = (sDate === '');
-                                                    }
-
-                                                    if (isMemoEntry) {
-                                                        if (r === 0) {
-                                                            expAcct = true;
-                                                            acctCorrect = (sAcct.trim().toLowerCase() === 'memo entry' && !sAcct.startsWith(' '));
-                                                        } else if (r === 1) {
-                                                            expAcct = true;
-                                                            acctCorrect = sAcct.match(/^\s{8,}\S/) !== null;
-                                                        }
-                                                        drCorrect = (rawDr === '');
-                                                        crCorrect = (rawCr === '');
-                                                    } else {
-                                                        if (sAcct.match(/^\s{5,8}\S/) && isNaN(sDr) && isNaN(sCr)) {
-                                                            expAcct = true;
-                                                            acctCorrect = true;
-                                                            drCorrect = (rawDr === '');
-                                                            crCorrect = (rawCr === '');
-                                                        } 
-                                                        else if (sAcct.trim().length > 0 || rawDr !== '' || rawCr !== '') {
-                                                            const matchIdx = solRows.findIndex((sol, idx) => !sol.isExplanation && !matchedSolIndices.has(idx) && sol.account?.trim().toLowerCase() === sAcct.trim().toLowerCase());
-                                                            if (matchIdx !== -1) {
-                                                                matchedSolIndices.add(matchIdx);
-                                                                const match = solRows[matchIdx];
-                                                                expAcct = true;
-                                                                expDr = !!match.debit;
-                                                                expCr = !!match.credit;
-
-                                                                const solIsCredit = !!match.credit;
-                                                                const sIsIndented = sAcct.startsWith('   ');
-                                                                acctCorrect = (solIsCredit === sIsIndented);
-
-                                                                if (expDr) drCorrect = (sDr === cleanAmt(match.debit)) && isValidOrder;
-                                                                else drCorrect = (rawDr === '');
-
-                                                                if (expCr) crCorrect = (sCr === cleanAmt(match.credit)) && isValidOrder;
-                                                                else crCorrect = (rawCr === '');
-                                                            } else {
-                                                                expAcct = true; 
-                                                                acctCorrect = false;
-                                                                drCorrect = false;
-                                                                crCorrect = false;
-                                                            }
-                                                        } else {
-                                                            acctCorrect = true;
-                                                            drCorrect = true;
-                                                            crCorrect = true;
-                                                        }
-                                                    }
-                                                    results[r] = { dateCorrect, acctCorrect, drCorrect, crCorrect, expDate, expAcct, expDr, expCr };
-                                                });
-
-                                                return html`
-                                                    <div key=${tIdx} className="mb-4 border border-gray-300 rounded overflow-hidden">
-                                                        <div className="bg-gray-100 px-3 py-2 text-sm font-bold border-b border-gray-300">
-                                                            Transaction ${tIdx+1}: <span className="font-normal text-gray-600">${trans.date} - ${trans.description}</span>
-                                                        </div>
-                                                        <div className="flex flex-col text-xs">
-                                                            <div className="border-b border-gray-300 bg-white">
-                                                                <div className="bg-blue-100 p-1 font-bold text-center text-blue-900 border-b border-blue-200">Your Answer</div>
-                                                                <table className="w-full">
-                                                                    ${rawStudentRows.map((sr, r) => {
-                                                                        const res = results[r];
-                                                                        return html`
-                                                                            <tr key=${r} className="border-b border-gray-100">
-                                                                                <td className="p-1 w-20 align-top border-r font-mono">${renderCell(sr.date, res.dateCorrect, res.expDate, 'date')}</td>
-                                                                                <td className="p-1 align-top border-r font-mono">${renderCell(sr.acct, res.acctCorrect, res.expAcct, 'acct')}</td>
-                                                                                <td className="p-1 w-28 align-top border-r font-mono">${renderCell(sr.dr, res.drCorrect, res.expDr, 'amount')}</td>
-                                                                                <td className="p-1 w-28 align-top font-mono">${renderCell(sr.cr, res.crCorrect, res.expCr, 'amount')}</td>
-                                                                            </tr>
-                                                                        `;
-                                                                    })}
-                                                                </table>
-                                                            </div>
-                                                            <div className="bg-white">
-                                                                <div className="bg-green-100 p-1 font-bold text-center text-green-900 border-b border-green-200">Solution</div>
-                                                                <table className="w-full">
-                                                                    ${solRows.map((sol, r) => {
-                                                                        const indent = sol.credit ? '   ' : (sol.isExplanation ? (isMemoEntry ? '        ' : '     ') : '');
-                                                                        let displaySolDate = sol.date || '';
-                                                                        if (displaySolDate && tIdx > 0 && r === 0) {
-                                                                            const parts = displaySolDate.split(' ');
-                                                                            displaySolDate = parts[parts.length - 1];
-                                                                        }
-                                                                        return html`
-                                                                            <tr key=${r} className="border-b border-gray-100 bg-green-50/30">
-                                                                                <td className="p-1 w-20 align-top text-right border-r font-mono text-gray-500 pr-2">${displaySolDate}</td>
-                                                                                <td className="p-1 align-top text-left border-r font-mono whitespace-pre text-gray-700 font-bold">${indent}${sol.account || ''}</td>
-                                                                                <td className="p-1 w-28 align-top text-right border-r font-mono text-gray-700 pr-2">${sol.debit || ''}</td>
-                                                                                <td className="p-1 w-28 align-top text-right font-mono text-gray-700 pr-2">${sol.credit || ''}</td>
-                                                                            </tr>
-                                                                        `;
-                                                                    })}
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                `;
-                                            })}
-                                        </div>
-                                    `;
+                                    return renderJournalizingPreview(q, qIdx, liveQ, studentAns, journalizingRenderData[q.uiId] || []);
+                                }
+                                else if (section.type === "Journalizing and Preparing SCE (Corp)") {
+                                    return renderIntegratedScePreview(q, qIdx, liveQ, studentAns, integratedRenderData[q.uiId]);
                                 }
                                 else if (section.type === "Multiple Choice") {
-                                    const correctKey = (liveQ.answer !== undefined) ? liveQ.answer : liveQ.correctAnswer;
-                                    return html`
-                                        <div key=${q.uiId} className="border rounded p-4 bg-white">
-                                            <div className="font-bold text-gray-800 mb-2">${qIdx + 1}. ${liveQ.question}</div>
-                                            <div className="flex flex-col gap-1">
-                                                ${(liveQ.options || []).map((opt, oIdx) => {
-                                                    const isSelected = String(studentAns) === String(oIdx);
-                                                    const isOptCorrect = String(correctKey) === String(oIdx);
-                                                    let style = "border-gray-200";
-                                                    let icon = null;
-                                                    if (isSelected && isOptCorrect) { style = "bg-green-100 border-green-500 text-green-900 font-bold"; icon = html`<${Check} size=${16} className="text-green-700"/>`; }
-                                                    else if (isSelected && !isOptCorrect) { style = "bg-red-100 border-red-500 text-red-900"; icon = html`<${X} size=${16} className="text-red-700"/>`; }
-                                                    else if (!isSelected && isOptCorrect) { style = "bg-green-50 border-green-300 border-dashed text-green-800"; icon = html`<${Check} size=${16} className="text-green-700 opacity-50"/>`; }
-                                                    return html`<div className=${`p-2 border rounded text-sm flex justify-between items-center ${style}`}>${opt} ${icon}</div>`;
-                                                })}
-                                            </div>
-                                        </div>
-                                    `;
+                                    return renderMultipleChoicePreview(q, qIdx, liveQ, studentAns);
                                 }
                                 else if (section.type === "Problem Solving") {
-                                    const isCorrect = studentAns && liveQ.correctAnswer && studentAns.trim().toLowerCase() === liveQ.correctAnswer.trim().toLowerCase();
-                                    return html`
-                                        <div key=${q.uiId} className="border rounded p-4 bg-white">
-                                            <div className="font-bold text-gray-800 mb-2">${qIdx + 1}. ${liveQ.question}</div>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <div className=${`p-3 rounded border ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
-                                                    <div className="text-xs font-bold mb-1 text-gray-500">Student Answer</div>
-                                                    <div className="font-mono text-sm whitespace-pre-wrap">${studentAns || '(No Answer)'}</div>
-                                                </div>
-                                                <div className="p-3 rounded border bg-gray-50 border-gray-200">
-                                                    <div className="text-xs font-bold mb-1 text-gray-500">Correct Answer</div>
-                                                    <div className="font-mono text-sm whitespace-pre-wrap">${liveQ.correctAnswer}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    `;
+                                    return renderProblemSolvingPreview(q, qIdx, liveQ, studentAns);
                                 }
                                 return null;
                             })}
@@ -575,12 +323,8 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
     const [pendingScores, setPendingScores] = useState(null);
     const [printMode, setPrintMode] = useState('all');
 
-    const handlePrint = (mode) => {
-        setPrintMode(mode);
-        setTimeout(() => {
-            window.print();
-            setTimeout(() => setPrintMode('all'), 500); 
-        }, 100);
+    const triggerPrint = (mode) => {
+        handlePrint(mode, setPrintMode);
     };
 
     const handleSaveScores = async () => {
@@ -596,104 +340,15 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
 
     return html`
     <div className="max-w-5xl mx-auto">
-        <style>
-            @media print {
-                /* Hide UI Elements & Isolated Parts */
-                #qa-sidebar, #student-sidebar, button, .print\\:hidden, .hide-in-print { 
-                    display: none !important; 
-                }
-
-                /* Ensure the page uses full width and proper margins */
-                @page {
-                    size: auto;
-                    margin: 10mm;
-                }
-
-                /* 1. RESET MAIN WRAPPERS TO PREVENT LEFT-SHIFTING & WHITE SPACE */
-                html, body, #root, #qa-runner-container, .flex.h-full.relative.overflow-hidden, .max-w-5xl {
-                    height: auto !important;
-                    min-height: auto !important;
-                    max-height: none !important;
-                    width: 100% !important;
-                    max-width: 100% !important;
-                    overflow: visible !important;
-                    position: static !important;
-                    margin: 0 !important;
-                    padding: 0 !important;
-                    display: block !important;
-                    background-color: white !important;
-                }
-                
-                /* Remove flex gaps */
-                .flex-col.gap-12, .flex-col.gap-8, .flex-col.gap-6 { gap: 0 !important; display: block !important; }
-                .mb-8 { margin-bottom: 2rem !important; }
-
-                /* 2. FORCE SCROLLABLE PANELS TO EXPAND */
-                .overflow-y-auto, .overflow-x-auto, .overflow-auto, .overflow-hidden,
-                .absolute, .relative, .fixed, .inset-0, [class*="max-h-"], [class*="h-"], .flex-1 {
-                    height: auto !important;
-                    max-height: none !important;
-                    min-height: auto !important;
-                    overflow: visible !important;
-                    position: static !important;
-                    flex: none !important;
-                }
-
-                .border-gray-200.rounded.p-2.bg-gray-50 *, .border-gray-200.rounded.p-2.bg-gray-50 {
-                    position: static !important;
-                    overflow: visible !important;
-                    height: auto !important;
-                    max-height: none !important;
-                }
-
-                /* 3. FIX PAGE BREAKS AND REMOVE BULKY CONTAINERS */
-                .bg-white.border.rounded-lg, .border.rounded.p-4, .break-inside-avoid, .question-block {
-                    page-break-inside: auto !important;
-                    break-inside: auto !important;
-                    page-break-after: auto !important;
-                    page-break-before: auto !important;
-                    margin: 0 0 20px 0 !important;
-                    border: none !important;
-                    box-shadow: none !important;
-                }
-
-                /* Clean up headers for print (saves ink, fixes spacing) */
-                .bg-slate-800, .bg-blue-900 {
-                    background-color: transparent !important;
-                    color: black !important;
-                    border-bottom: 2px solid black !important;
-                    padding: 5px 0 !important;
-                }
-                .text-yellow-400, .text-yellow-300, .text-white { color: black !important; }
-
-                /* 4. SHRINK AND FIT TABLES TO PREVENT CUTOFF */
-                table { 
-                    page-break-inside: auto !important; 
-                    width: 100% !important; 
-                    max-width: 100% !important;
-                    border-collapse: collapse !important; 
-                    font-size: 10px !important; 
-                }
-                tr { page-break-inside: avoid !important; page-break-after: auto !important; }
-                td, th { page-break-inside: avoid !important; padding: 3px !important; }
-                thead { display: table-header-group !important; }
-                
-                input, textarea {
-                    border: none !important;
-                    background: transparent !important;
-                    font-size: 10px !important;
-                    padding: 0 !important;
-                    margin: 0 !important;
-                    height: auto !important;
-                    resize: none !important;
-                }
-            }
-        </style>
-        
         <div className="flex justify-end gap-2 mb-4 print:hidden">
-            <button onClick=${() => handlePrint('all')} className="px-4 py-2 bg-indigo-600 text-white text-sm font-bold rounded hover:bg-indigo-700 shadow flex items-center gap-2">
+            <button onClick=${() => triggerPrint('all')} className="px-4 py-2 bg-indigo-600 text-white text-sm font-bold rounded hover:bg-indigo-700 shadow flex items-center gap-2">
                 <${Printer} size=${16}/> Print All Parts
             </button>
+            ${currentUser.role === 'teacher' ? html`
+                <button onClick=${handlePrintTQ} className="px-4 py-2 bg-teal-600 text-white text-sm font-bold rounded hover:bg-teal-700 shadow flex items-center gap-2">
+                    <i className="fas fa-file-alt"></i> Print TQ
+                </button>
+            ` : ''}
             ${currentUser.role === 'teacher' && activityConfig.type !== 'accounting_cycle' ? html`
                 <button onClick=${handleSaveScores} className="px-4 py-2 bg-yellow-600 text-white text-sm font-bold rounded hover:bg-yellow-700 shadow flex items-center gap-2">
                     <${Save} size=${16}/> Update Scores
@@ -706,21 +361,23 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
             const headerHideClass = !showHeaderInPrint ? 'hide-in-print' : '';
             
             return html`
-                <header className="text-center mb-4 pb-4 border-b-4 border-indigo-600 p-4 print:bg-white print:text-black print:border-none ${headerHideClass}">
-                    <img src="./shs-adc-logo.png" onError=${(e) => { e.target.style.display='none'; }} alt="School Logo" className="mx-auto mb-2 h-20 w-auto"/>
-                    <p className="text-sm mt-1">SY 2025-2026 | 2nd Semester</p>
-                    <h1 className="text-3xl font-extrabold text-yellow-300 print:text-black">
+                <header className="text-center mb-4 pb-4 border-b-4 border-indigo-600 p-4 bg-white text-black print:border-none ${headerHideClass}">
+                    <img src="./shs-adc-logo.png" onError=${(e) => { e.target.style.display='none'; }} alt="School Logo" className="mx-auto mb-1 h-32 w-auto"/>
+                    <div className="text-sm font-bold font-serif leading-tight">SY 2025-2026</div>
+                    <div className="text-sm font-bold font-serif leading-tight">2<sup>nd</sup> Semester</div>
+                    <div className="text-base font-bold font-serif uppercase leading-tight">FABM 2 – GRADE 11</div>
+                    <h1 className="text-lg font-bold font-serif uppercase leading-tight mt-1">
                         ${activityConfig.activityname || resultData.activityName || activityConfig.title || 'Activity Results'}
                     </h1>
                 </header>
 
                 <div id="student-print-info" className="block mb-4 w-full ${headerHideClass}">
                     <div className="w-full mb-2 text-sm text-black font-bold font-mono border-b-2 border-black pb-2">
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center px-2">
                             <span className="text-left">CN: ${resultData.CN || resultData.classNumber || resultData.studentId || ''}</span>
                             <span className="text-right">Section: ${resultData.section || resultData.gradeSection || ''}</span>
                         </div>
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center px-2">
                             <span className="text-left">Name: ${resultData.studentName || ''}</span>
                             <span className="text-right">Date: ${new Date(resultData.timestamp || resultData.lastUpdated).toLocaleString()}</span>
                         </div>
@@ -730,13 +387,13 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
         })()}
 
         ${(activityConfig.type === 'accounting_cycle' || activityConfig.tasks)
-            ? html`<${AccountingCycleResultView} resultData=${resultData} activityConfig=${activityConfig} printMode=${printMode} onPrint=${handlePrint} />`
+            ? html`<${AccountingCycleResultView} resultData=${resultData} activityConfig=${activityConfig} printMode=${printMode} onPrint=${triggerPrint} />`
             : html`<${StandardQuizResultView} 
                 resultData=${resultData} 
                 activityConfig=${activityConfig} 
                 onScoreUpdate=${(scores) => setPendingScores(scores)} 
                 printMode=${printMode} 
-                onPrint=${handlePrint} 
+                onPrint=${triggerPrint} 
               />`
         }
     </div>
