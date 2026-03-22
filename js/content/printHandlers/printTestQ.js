@@ -1,7 +1,7 @@
-/***
+/**
  * Clones the active quiz container, strips out all answers, backgrounds, and validation marks,
  * replaces student info with directions, formats it into Times New Roman 12pt (Garamond 9pt for rubrics),
- * applies strict line-height, restores custom padding/gaps, and prints it safely.
+ * applies dynamic grid layouts for options to save paper, and prints it safely.
  */
 export const handlePrintTQ = () => {
     // 1. Target the main runner container
@@ -26,7 +26,7 @@ export const handlePrintTQ = () => {
         `;
     }
 
-    // B. Completely REMOVE screen headers (e.g., "Test 1: Multiple Choice" blue bar)
+    // B. Completely REMOVE screen headers 
     clone.querySelectorAll('.bg-blue-900.text-white, .bg-slate-800.text-white, .print\\:hidden, .hide-in-print').forEach(el => el.remove());
 
     // C. Remove Explanation Boxes entirely
@@ -35,7 +35,7 @@ export const handlePrintTQ = () => {
     // D. Remove basic validation items & sticky headers
     clone.querySelectorAll('[id^="ans-"], [id^="msg-"], .sticky, .btn-reveal-set, svg:not(.mx-auto)').forEach(el => el.remove());
 
-    // E. Strip borders, backgrounds, and icons from the Options, but RESTORE padding and gap
+    // E. Strip borders, backgrounds, and icons from the Options
     clone.querySelectorAll('.flex.justify-between.items-start').forEach(opt => {
         // Keep the flex layout for alignment, but remove dynamic Tailwind colors
         opt.className = "flex justify-start items-start"; 
@@ -43,12 +43,12 @@ export const handlePrintTQ = () => {
         opt.style.background = "transparent";
         opt.style.color = "black";
         
-        // RESTORE: custom px-4 (1rem) and gap-1 (0.25rem bottom margin)
+        // Set tighter padding and margins for the options
         opt.style.paddingLeft = "1rem";
         opt.style.paddingRight = "1rem";
-        opt.style.marginBottom = "0.1rem"; 
+        opt.style.marginBottom = "0.1rem"; // User requested reduction to 0.1rem
         
-        // Remove the validation icon container (the trailing check/X mark)
+        // Remove the validation icon container
         if (opt.children.length > 1) {
             opt.lastElementChild.remove();
         }
@@ -63,16 +63,51 @@ export const handlePrintTQ = () => {
         }
     });
 
-    // G. Strip borders and background from main Question Cards, RESTORE padding
+    // G. Process the Main Question Cards (Apply Dynamic Option Grid)
     clone.querySelectorAll('.exercise-item').forEach(item => {
         item.className = "exercise-item"; 
         item.style.border = "none";
         item.style.background = "transparent";
-        
-        // RESTORE: custom px-4 (1rem) for the whole question block
         item.style.paddingLeft = "1rem";
         item.style.paddingRight = "1rem";
-        item.style.marginBottom = "0.5rem"; // Breathing room between separate questions
+        item.style.marginBottom = "1rem"; // User requested reduction to 1rem
+
+        // --- DYNAMIC OPTION GRID LOGIC ---
+        // Find the options inside this specific question
+        const options = Array.from(item.querySelectorAll('.flex.justify-start.items-start'));
+        if (options.length === 4) {
+            const parent = options[0].parentElement; // The container holding the 4 options
+            
+            // Calculate the length of the longest option text
+            let maxLen = 0;
+            options.forEach(opt => {
+                const textLen = opt.textContent.trim().length;
+                if (textLen > maxLen) maxLen = textLen;
+            });
+            
+            // Strip any Tailwind flex-col classes from the parent wrapper
+            parent.className = "";
+            
+            // Apply layout based on text density
+            if (maxLen <= 25) {
+                // 1 line, 4 columns (A B C D horizontally)
+                parent.style.display = "grid";
+                parent.style.gridTemplateColumns = "repeat(4, 1fr)";
+                parent.style.gridTemplateRows = "auto";
+                parent.style.gridAutoFlow = "column";
+            } else if (maxLen <= 65) {
+                // 2 columns, A & B vertically in Col 1, C & D vertically in Col 2
+                parent.style.display = "grid";
+                parent.style.gridTemplateColumns = "repeat(2, 1fr)";
+                parent.style.gridTemplateRows = "auto auto";
+                parent.style.gridAutoFlow = "column";
+                parent.style.columnGap = "1rem";
+            } else {
+                // 1 column (stacked vertically due to long text)
+                parent.style.display = "flex";
+                parent.style.flexDirection = "column";
+            }
+        }
     });
 
     // Strip "Question X" blue badges to make them look like normal text
@@ -82,7 +117,6 @@ export const handlePrintTQ = () => {
         span.style.marginRight = "8px";
     });
 
-    // Ensure all hidden sections are fully visible for printing
     clone.querySelectorAll('.hidden, .test-section-panel').forEach(el => el.classList.remove('hidden'));
 
     // H. Identify the cloned Rubric Tables so we can target them with Garamond 9pt
