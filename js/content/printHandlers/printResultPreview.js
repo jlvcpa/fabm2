@@ -1,16 +1,22 @@
 /**
  * Injects print-specific styles, flattens the DOM for printing, 
- * temporarily rewrites the document title for native headers, 
+ * temporarily rewrites the document title and URL for native headers, 
  * triggers the print dialog, and cleans up.
  */
 export const handlePrint = (mode, setPrintMode) => {
     setPrintMode(mode);
 
-    // 1. Temporarily change the document title so Chrome prints it in the native header!
+    // 1. Temporarily spoof the Title and the URL for the native print dialog
     const originalTitle = document.title;
-    document.title = "FABM 2 | 4Cs: Christ-centeredness, Competence, Character, Compassion";
+    const originalUrl = window.location.href;
+    
+    // Set title to a blank space to empty out the top corner
+    document.title = " "; 
+    
+    // Temporarily rewrite the URL. We use dashes because spaces turn into ugly '%20' in URLs.
+    window.history.replaceState({}, '', '/FABM-2-[4Cs-Christ-centeredness-Competence-Character-Compassion]');
 
-    // 2. Create Print CSS (No custom footer CSS needed)
+    // 2. Create Print CSS (No custom footer needed, relying on native)
     const printStyle = document.createElement('style');
     printStyle.id = 'dynamic-print-styles';
     printStyle.innerHTML = `
@@ -18,12 +24,11 @@ export const handlePrint = (mode, setPrintMode) => {
             @page {
                 /* Exact Folio dimensions */
                 size: 8.5in 13in;
-                /* Clean, standard margins all around */
+                /* Standard margins. The native footer will print inside the bottom margin. */
                 margin: 0.5in; 
             }
 
             /* --- HIDE UNWANTED UI ELEMENTS --- */
-            /* Added common IDs/classes for page titles to hide the 'Term Examinations' text */
             #sidebar, #qa-sidebar, #student-sidebar, 
             #qa-toggle-sidebar, #qa-desktop-expand, button, 
             #page-title, .breadcrumb, .page-header-title,
@@ -83,8 +88,9 @@ export const handlePrint = (mode, setPrintMode) => {
         setTimeout(() => {
             setPrintMode('all');
             
-            // Restore original document title
+            // Restore original document title and URL
             document.title = originalTitle;
+            window.history.replaceState({}, '', originalUrl);
             
             // Cleanup Styles
             const styleElement = document.getElementById('dynamic-print-styles');
