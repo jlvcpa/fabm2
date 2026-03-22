@@ -73,14 +73,7 @@ export const handlePrint = (mode, setPrintMode) => {
                 content: counter(page);
             }
 
-            /* Pagination Rules */
-            .break-inside-avoid, .question-block, tr {
-                page-break-inside: avoid !important;
-            }
             
-            .mb-8 {
-                page-break-inside: auto !important;
-            }
 
             button, .print\\:hidden, .hide-in-print { 
                 display: none !important; 
