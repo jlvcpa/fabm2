@@ -15,7 +15,7 @@ export const handlePrint = (mode, setPrintMode) => {
         <div style="flex: 2; text-align: center;">
             <span style="border: 1px solid black; padding: 0.25rem;">4Cs: Christ-centeredness, Competence, Character, Compassion</span>
         </div>
-        <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px; padding-right: 8px;">Page <span class="page-num"></span></div>
+        <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px; padding-right: 8px;"></div>
     `;
     document.body.appendChild(footer);
 
@@ -44,7 +44,6 @@ export const handlePrint = (mode, setPrintMode) => {
             
             body {
                 padding-bottom: 0.6in !important; /* Spacing above bottom margin for the footer */
-                counter-reset: page;
             }
 
             .max-w-5xl {
@@ -69,11 +68,7 @@ export const handlePrint = (mode, setPrintMode) => {
                 align-items: flex-end;
             }
 
-            .page-num::after {
-                content: counter(page);
-            }
-
-            /* --- NEW PAGINATION RULES --- */
+             /* --- NEW PAGINATION RULES --- */
             /* Forces whole question blocks and table rows to stay intact on the same page */
             .border.rounded.p-4, tr {
                 page-break-inside: avoid !important;
