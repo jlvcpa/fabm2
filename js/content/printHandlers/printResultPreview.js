@@ -65,7 +65,7 @@ export const handlePrint = (mode, setPrintMode) => {
                 font-size: 10px;
                 font-family: sans-serif;
                 background: white;
-                padding: 0.15in 0.15in 0 0.15in;
+                padding: 0.07in 0.15in 0 0.15in;
                 box-sizing: border-box;
                 z-index: 9999;
                 align-items: flex-end;
