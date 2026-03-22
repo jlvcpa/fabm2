@@ -132,7 +132,7 @@ export function renderMultipleChoicePreview(q, qIdx, liveQ, studentAns) {
                             icon = html`<${X} size=${16} className="text-red-700"/>`; 
                         }
                         else if (!isSelected && isOptCorrect) { 
-                            style = "bg-green-50 border-green-900 border-dashed text-green-800"; 
+                            style = "bg-green-50 border rounded border-green-900 border-dashed text-green-800"; 
                             icon = html`<${Check} size=${16} className="text-green-700 opacity-50"/>`; 
                         }
                         const letter = String.fromCharCode(97 + oIdx);
