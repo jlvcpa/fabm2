@@ -30,29 +30,22 @@ export const handlePrint = (mode, setPrintMode) => {
         @media print {
             @page {
                 size: auto;
-                /* Increase bottom margin to create a physical gap for the footer */
-                margin: 0.35in 0.35in 0.8in 0.35in;
-            } /* <--- FIXED: THIS CLOSING BRACKET WAS MISSING */
+                /* Top, Right, Bottom, Left */
+                /* INCREASE bottom margin to 1.2 inches to force text to stop printing early */
+                margin: 0.35in 0.35in 1.2in 0.35in;
+            }
 
             html, body {
-                /* Let the pages flow infinitely downwards */
                 height: auto !important;
                 min-height: auto !important;
                 max-height: none !important;
-                
-                /* Lock the width and background */
                 width: 100% !important;
                 background-color: white !important;
-                
-                /* Kill default browser margins so @page margins work perfectly */
                 margin: 0 !important;
+                padding: 0 !important; 
             }
             
-            body {
-                /* Zero out top/left/right padding, but leave a massive bumper on the bottom for the footer */
-                padding: 0 !important;
-                padding-bottom: 0.8in !important; 
-            }
+            /* (Note: Removed the body { padding-bottom } block completely because it was causing the overlap) */
 
             .max-w-5xl {
                 width: 100% !important;
@@ -64,7 +57,8 @@ export const handlePrint = (mode, setPrintMode) => {
             #dynamic-print-footer {
                 display: flex !important;
                 position: fixed;
-                bottom: 0;
+                /* PUSH the footer DOWN into the empty 1.2in margin space we created above! */
+                bottom: -0.8in; 
                 left: 0;
                 width: 100%;
                 font-size: 10px;
@@ -77,7 +71,6 @@ export const handlePrint = (mode, setPrintMode) => {
             }
 
             /* --- NEW PAGINATION RULES --- */
-            /* Targets the question cards more broadly so it doesn't break if you change padding */
             .bg-white.border.rounded, 
             .border.rounded.bg-white, 
             tr {
