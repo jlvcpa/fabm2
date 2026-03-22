@@ -1,7 +1,7 @@
 /**
  * Clones the active quiz container, strips out all answers, backgrounds, and validation marks,
  * replaces student info with directions, formats it into Times New Roman 12pt (Garamond 9pt for rubrics),
- * applies dynamic grid layouts for options to save paper, and prints it safely.
+ * applies dynamic CSS Grid layouts for options to save paper, and prints it safely.
  */
 export const handlePrintTQ = () => {
     // 1. Target the main runner container
@@ -26,7 +26,7 @@ export const handlePrintTQ = () => {
         `;
     }
 
-    // B. Completely REMOVE screen headers 
+    // B. Completely REMOVE screen headers
     clone.querySelectorAll('.bg-blue-900.text-white, .bg-slate-800.text-white, .print\\:hidden, .hide-in-print').forEach(el => el.remove());
 
     // C. Remove Explanation Boxes entirely
@@ -37,18 +37,10 @@ export const handlePrintTQ = () => {
 
     // E. Strip borders, backgrounds, and icons from the Options
     clone.querySelectorAll('.flex.justify-between.items-start').forEach(opt => {
-        // Keep the flex layout for alignment, but remove dynamic Tailwind colors
-        opt.className = "flex justify-start items-start"; 
-        opt.style.border = "none";
-        opt.style.background = "transparent";
-        opt.style.color = "black";
+        // Strip ALL Tailwind classes and apply our own clean target class
+        opt.className = "tq-option"; 
         
-        // Set tighter padding and margins for the options
-        opt.style.paddingLeft = "1rem";
-        opt.style.paddingRight = "1rem";
-        opt.style.marginBottom = "0.1rem"; // User requested reduction to 0.1rem
-        
-        // Remove the validation icon container
+        // Remove the validation icon container (the check/X mark at the end)
         if (opt.children.length > 1) {
             opt.lastElementChild.remove();
         }
@@ -63,20 +55,17 @@ export const handlePrintTQ = () => {
         }
     });
 
-    // G. Process the Main Question Cards (Apply Dynamic Option Grid)
+    // G. Process Question Cards & Apply Dynamic Grid Layouts
     clone.querySelectorAll('.exercise-item').forEach(item => {
+        // Strip tailwind from the main card
         item.className = "exercise-item"; 
-        item.style.border = "none";
-        item.style.background = "transparent";
-        item.style.paddingLeft = "1rem";
-        item.style.paddingRight = "1rem";
-        item.style.marginBottom = "1rem"; // User requested reduction to 1rem
-
+        
         // --- DYNAMIC OPTION GRID LOGIC ---
-        // Find the options inside this specific question
-        const options = Array.from(item.querySelectorAll('.flex.justify-start.items-start'));
-        if (options.length === 4) {
-            const parent = options[0].parentElement; // The container holding the 4 options
+        const options = Array.from(item.querySelectorAll('.tq-option'));
+        if (options.length > 0) {
+            const parent = options[0].parentElement;
+            // Wipe the parent's Tailwind classes (like flex-col) so CSS Grid can take over
+            parent.className = "tq-options-container";
             
             // Calculate the length of the longest option text
             let maxLen = 0;
@@ -85,27 +74,13 @@ export const handlePrintTQ = () => {
                 if (textLen > maxLen) maxLen = textLen;
             });
             
-            // Strip any Tailwind flex-col classes from the parent wrapper
-            parent.className = "";
-            
-            // Apply layout based on text density
+            // Assign Grid rules based on density (Bumped mid-length up to 70 chars to be safe)
             if (maxLen <= 25) {
-                // 1 line, 4 columns (A B C D horizontally)
-                parent.style.display = "grid";
-                parent.style.gridTemplateColumns = "repeat(4, 1fr)";
-                parent.style.gridTemplateRows = "auto";
-                parent.style.gridAutoFlow = "column";
-            } else if (maxLen <= 65) {
-                // 2 columns, A & B vertically in Col 1, C & D vertically in Col 2
-                parent.style.display = "grid";
-                parent.style.gridTemplateColumns = "repeat(2, 1fr)";
-                parent.style.gridTemplateRows = "auto auto";
-                parent.style.gridAutoFlow = "column";
-                parent.style.columnGap = "1rem";
+                parent.classList.add('cols-4');
+            } else if (maxLen <= 70) {
+                parent.classList.add('cols-2');
             } else {
-                // 1 column (stacked vertically due to long text)
-                parent.style.display = "flex";
-                parent.style.flexDirection = "column";
+                parent.classList.add('cols-1');
             }
         }
     });
@@ -145,7 +120,7 @@ export const handlePrintTQ = () => {
         @media print {
             @page {
                 size: 8.5in 13in; 
-                /* Requested Margins: Top 0.5, Right 0.4, Bottom 0.5, Left 0.4 */
+                /* Strict margins as requested: Top 0.5, Right 0.4, Bottom 0.5, Left 0.4 */
                 margin: 0.5in 0.4in 0.5in 0.4in; 
             }
 
@@ -157,7 +132,7 @@ export const handlePrintTQ = () => {
                 background-color: white !important;
             }
 
-            /* Reduced line padding by approx 70% of standard spacing */
+            /* Global Typography: Compressed line-height */
             #tq-print-wrapper, #tq-print-wrapper *:not(.rubric-table):not(.rubric-table *) {
                 font-family: "Times New Roman", Times, serif !important;
                 font-size: 12pt !important;
@@ -165,7 +140,7 @@ export const handlePrintTQ = () => {
                 line-height: 1.15 !important;
             }
 
-            /* Specifically target Rubric Tables for Garamond 9pt */
+            /* Garamond Rubric */
             #tq-print-wrapper .rubric-table, #tq-print-wrapper .rubric-table * {
                 font-family: "Garamond", serif !important;
                 font-size: 9pt !important;
@@ -176,23 +151,59 @@ export const handlePrintTQ = () => {
             #tq-print-wrapper header { border-bottom: none !important; }
             #tq-print-wrapper header img { display: block !important; margin: 0 auto 5px auto !important; }
 
-            /* Fix Chrome Flexbox Pagination Bug (ONLY target parent containers) */
-            #tq-print-wrapper, #tq-content, .test-section-panel, .exercise-item {
+            /* --- DYNAMIC OPTION GRID CSS --- */
+            .exercise-item {
                 display: block !important;
-                height: auto !important;
-                min-height: auto !important;
-                max-height: none !important;
+                margin-bottom: 1rem !important; /* Reduced from 1.5rem */
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .tq-options-container {
+                width: 100% !important;
+                margin-top: 0.5rem !important;
+            }
+
+            .tq-options-container.cols-4 {
+                display: grid !important;
+                grid-template-columns: repeat(4, 1fr) !important;
+                gap: 0.1rem 0.5rem !important;
+            }
+
+            .tq-options-container.cols-2 {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 0.1rem 1rem !important;
+            }
+
+            .tq-options-container.cols-1 {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 0.1rem !important;
+            }
+
+            .tq-option {
+                display: flex !important;
+                align-items: flex-start !important;
+                margin-bottom: 0.1rem !important; /* Reduced from 0.25rem */
+            }
+
+            /* Maintains the 'A.' letter alignment next to the option text */
+            .tq-option > div {
+                display: flex !important;
+                width: 100% !important;
+            }
+            /* ------------------------------- */
+
+            .test-section-panel {
+                display: block !important;
                 overflow: visible !important;
                 position: static !important;
             }
 
-            /* ALLOW options to keep their flex layout so the 'A.' aligns with the text! */
-            #tq-print-wrapper .exercise-item .flex {
-                display: flex !important;
-            }
-
-            /* Pagination */
-            .exercise-item, tr, .test-section-panel > div:first-child {
+            tr, .test-section-panel > div:first-child {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
