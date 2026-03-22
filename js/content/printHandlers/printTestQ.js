@@ -1,7 +1,7 @@
 /**
  * Clones the active quiz container, strips out all answers, backgrounds, and validation marks,
  * replaces student info with directions, formats it into Times New Roman 12pt (Garamond 9pt for rubrics),
- * applies dynamic CSS Grid layouts for options to save paper, and prints it safely.
+ * applies dynamic CSS Grid layouts for options, and prints it safely.
  */
 export const handlePrintTQ = () => {
     // 1. Target the main runner container
@@ -26,19 +26,26 @@ export const handlePrintTQ = () => {
         `;
     }
 
-    // B. Completely REMOVE screen headers
+    // B. Completely REMOVE screen headers 
     clone.querySelectorAll('.bg-blue-900.text-white, .bg-slate-800.text-white, .print\\:hidden, .hide-in-print').forEach(el => el.remove());
 
-    // C. Remove Explanation Boxes entirely
+    // C. Remove Explanation Boxes entirely (Targeting the exact class from your React component)
     clone.querySelectorAll('.explanation-section').forEach(el => el.remove());
+    // Fallback: Also remove any standalone "Explanation" headers just in case
+    clone.querySelectorAll('h4').forEach(h4 => {
+        if (h4.textContent.trim().toLowerCase() === 'explanation' && h4.parentElement) {
+            h4.parentElement.remove();
+        }
+    });
 
     // D. Remove basic validation items & sticky headers
     clone.querySelectorAll('[id^="ans-"], [id^="msg-"], .sticky, .btn-reveal-set, svg:not(.mx-auto)').forEach(el => el.remove());
 
-    // E. Strip borders, backgrounds, and icons from the Options
+    // E. Clean the Multiple Choice Options
     clone.querySelectorAll('.flex.justify-between.items-start').forEach(opt => {
-        // Strip ALL Tailwind classes and apply our own clean target class
+        // Strip all Tailwind classes and assign our clean class
         opt.className = "tq-option"; 
+        opt.removeAttribute("style"); // Wipe any inline colors/borders
         
         // Remove the validation icon container (the check/X mark at the end)
         if (opt.children.length > 1) {
@@ -46,42 +53,46 @@ export const handlePrintTQ = () => {
         }
     });
 
-    // F. Clear all text areas and inputs
+    // F. Process the Question Cards & Apply Dynamic Grid Layouts
+    // We look for the parents of the options we just cleaned
+    const optionContainers = new Set();
+    clone.querySelectorAll('.tq-option').forEach(opt => {
+        if (opt.parentElement) optionContainers.add(opt.parentElement);
+    });
+
+    optionContainers.forEach(parent => {
+        // 1. Strip Tailwind classes (like flex-col) from the options wrapper
+        parent.className = "tq-options-container";
+        
+        // 2. Identify the main Question Card wrapper to ensure it paginates correctly
+        // Structure: <div px-4 flex-col> -> <div> -> <div tq-options-container>
+        if (parent.parentElement && parent.parentElement.parentElement) {
+            parent.parentElement.parentElement.classList.add('tq-question-block');
+        }
+
+        // 3. Dynamic Grid Logic based on character length
+        const options = Array.from(parent.querySelectorAll('.tq-option'));
+        let maxLen = 0;
+        options.forEach(opt => {
+            const textLen = opt.textContent.trim().length;
+            if (textLen > maxLen) maxLen = textLen;
+        });
+        
+        if (maxLen <= 25) {
+            parent.classList.add('cols-4');
+        } else if (maxLen <= 70) {
+            parent.classList.add('cols-2');
+        } else {
+            parent.classList.add('cols-1');
+        }
+    });
+
+    // G. Clear all text areas and inputs
     clone.querySelectorAll('textarea, input[type="text"], input[type="number"]').forEach(input => {
         if (!input.readOnly) {
             input.value = '';
             input.removeAttribute('value');
             input.textContent = ''; 
-        }
-    });
-
-    // G. Process Question Cards & Apply Dynamic Grid Layouts
-    clone.querySelectorAll('.exercise-item').forEach(item => {
-        // Strip tailwind from the main card
-        item.className = "exercise-item"; 
-        
-        // --- DYNAMIC OPTION GRID LOGIC ---
-        const options = Array.from(item.querySelectorAll('.tq-option'));
-        if (options.length > 0) {
-            const parent = options[0].parentElement;
-            // Wipe the parent's Tailwind classes (like flex-col) so CSS Grid can take over
-            parent.className = "tq-options-container";
-            
-            // Calculate the length of the longest option text
-            let maxLen = 0;
-            options.forEach(opt => {
-                const textLen = opt.textContent.trim().length;
-                if (textLen > maxLen) maxLen = textLen;
-            });
-            
-            // Assign Grid rules based on density (Bumped mid-length up to 70 chars to be safe)
-            if (maxLen <= 25) {
-                parent.classList.add('cols-4');
-            } else if (maxLen <= 70) {
-                parent.classList.add('cols-2');
-            } else {
-                parent.classList.add('cols-1');
-            }
         }
     });
 
@@ -132,7 +143,7 @@ export const handlePrintTQ = () => {
                 background-color: white !important;
             }
 
-            /* Global Typography: Compressed line-height */
+            /* Global Typography: 12pt Times New Roman, Compressed line-height */
             #tq-print-wrapper, #tq-print-wrapper *:not(.rubric-table):not(.rubric-table *) {
                 font-family: "Times New Roman", Times, serif !important;
                 font-size: 12pt !important;
@@ -140,7 +151,7 @@ export const handlePrintTQ = () => {
                 line-height: 1.15 !important;
             }
 
-            /* Garamond Rubric */
+            /* Garamond 9pt Rubric */
             #tq-print-wrapper .rubric-table, #tq-print-wrapper .rubric-table * {
                 font-family: "Garamond", serif !important;
                 font-size: 9pt !important;
@@ -152,11 +163,9 @@ export const handlePrintTQ = () => {
             #tq-print-wrapper header img { display: block !important; margin: 0 auto 5px auto !important; }
 
             /* --- DYNAMIC OPTION GRID CSS --- */
-            .exercise-item {
-                display: block !important;
+            .tq-question-block {
+                display: block !important; /* Defeat Chrome Flexbox bug */
                 margin-bottom: 1rem !important; /* Reduced from 1.5rem */
-                padding-left: 1rem !important;
-                padding-right: 1rem !important;
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
@@ -188,6 +197,10 @@ export const handlePrintTQ = () => {
                 display: flex !important;
                 align-items: flex-start !important;
                 margin-bottom: 0.1rem !important; /* Reduced from 0.25rem */
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+                border: none !important;
+                background: transparent !important;
             }
 
             /* Maintains the 'A.' letter alignment next to the option text */
