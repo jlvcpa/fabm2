@@ -36,6 +36,7 @@ import { renderIntegratedScePreview } from './previewHandlers/integratedSceResul
 import { handlePrint } from './printHandlers/printResultPreview.js';
 import { handlePrintTQ } from './printHandlers/printTestQ.js';
 
+
 const html = htm.bind(React.createElement);
 const db = getFirestore();
 
