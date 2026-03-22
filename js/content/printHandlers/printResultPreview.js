@@ -31,21 +31,27 @@ export const handlePrint = (mode, setPrintMode) => {
         @media print {
             @page {
                 size: auto;
-                margin: 0.3in;
-            }
+                /* Increase bottom margin to create a physical gap for the footer */
+                margin: 0.35in 0.35in 0.8in 0.35in;
 
             html, body {
+                /* Let the pages flow infinitely downwards */
                 height: auto !important;
                 min-height: auto !important;
                 max-height: none !important;
+                
+                /* Lock the width and background */
                 width: 100% !important;
-                margin: 0 !important;
-                padding: 0 !important;
                 background-color: white !important;
+                
+                /* Kill default browser margins so @page margins work perfectly */
+                margin: 0 !important;
             }
             
             body {
-                padding-bottom: 6in !important; /* Spacing above bottom margin for the footer */
+                /* Zero out top/left/right padding, but leave a massive bumper on the bottom for the footer */
+                padding: 0 !important;
+                padding-bottom: 0.8in !important; 
             }
 
             .max-w-5xl {
@@ -71,8 +77,10 @@ export const handlePrint = (mode, setPrintMode) => {
             }
 
             /* --- NEW PAGINATION RULES --- */
-            /* Forces whole question blocks and table rows to stay intact on the same page */
-            .border.rounded.p-4, tr {
+            /* Targets the question cards more broadly so it doesn't break if you change padding */
+            .bg-white.border.rounded, 
+            .border.rounded.bg-white, 
+            tr {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
