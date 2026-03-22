@@ -136,10 +136,17 @@ export function renderMultipleChoicePreview(q, qIdx, liveQ, studentAns) {
                             icon = html`<${Check} size=${16} className="text-green-700 opacity-50"/>`; 
                         }
                         const letter = String.fromCharCode(97 + oIdx);
-                        return html`<div key=${oIdx} className=${`px-4 py-.05 border rounded text-sm flex justify-between items-center ${style}`}>
-                            <span><span className="font-bold mr-2">${letter}.</span>${opt}</span>
-                            ${icon}
-                        </div>`;
+                        return html`
+                            <div key=${oIdx} className=${`px-4 py-2 border rounded text-sm flex justify-between items-start ${style}`}>
+                             <div className="flex">
+                                <span className="font-bold mr-2 w-4 flex-shrink-0">${letter}.</span>
+                                <span className="flex-grow">${opt}</span>
+                            </div>
+                            <div className="flex-shrink-0 ml-3 mt-0.5">
+                                ${icon}
+                            </div>
+                        </div>
+                    `;
                     })}
                 </div>
             </div>
