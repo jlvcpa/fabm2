@@ -46,7 +46,7 @@ export const handlePrintTQ = () => {
         // RESTORE: custom px-4 (1rem) and gap-1 (0.25rem bottom margin)
         opt.style.paddingLeft = "1rem";
         opt.style.paddingRight = "1rem";
-        opt.style.marginBottom = "0.25rem"; 
+        opt.style.marginBottom = "0.1rem"; 
         
         // Remove the validation icon container (the trailing check/X mark)
         if (opt.children.length > 1) {
@@ -72,7 +72,7 @@ export const handlePrintTQ = () => {
         // RESTORE: custom px-4 (1rem) for the whole question block
         item.style.paddingLeft = "1rem";
         item.style.paddingRight = "1rem";
-        item.style.marginBottom = "1.5rem"; // Breathing room between separate questions
+        item.style.marginBottom = "0.5rem"; // Breathing room between separate questions
     });
 
     // Strip "Question X" blue badges to make them look like normal text
