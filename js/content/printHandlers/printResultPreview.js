@@ -15,7 +15,7 @@ export const handlePrint = (mode, setPrintMode) => {
         <div style="flex: 2; text-align: center;">
             <span style="border: 0.5px solid black; padding: 0.25rem;">4Cs: Christ-centeredness, Competence, Character, Compassion</span>
         </div>
-        <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px;">Page <span class="page-num"></span></div>
+        <div style="flex: 1; text-align: right; font-weight: bold; font-size: 11px;"></div>
     `;
 
 
@@ -46,7 +46,6 @@ export const handlePrint = (mode, setPrintMode) => {
             
             body {
                 padding-bottom: 6in !important; /* Spacing above bottom margin for the footer */
-                counter-reset: page;
             }
 
             .max-w-5xl {
@@ -69,10 +68,6 @@ export const handlePrint = (mode, setPrintMode) => {
                 box-sizing: border-box;
                 z-index: 9999;
                 align-items: flex-end;
-            }
-
-            .page-num::after {
-                content: counter(page);
             }
 
             /* --- NEW PAGINATION RULES --- */
