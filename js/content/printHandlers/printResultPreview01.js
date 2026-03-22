@@ -1,87 +1,72 @@
 /**
- * Injects print-specific styles, triggers the print dialog, 
- * and then cleans up the styles afterward.
+ * Injects print-specific styles, isolates the preview container from sidebars,
+ * injects the custom footer, triggers the print dialog, and cleans up afterward.
  * * @param {string} mode - 'all' to print everything, or the ID of a specific section (e.g., 'test-0', 'step-1').
- * @param {function} setPrintMode - React state setter to update the component's print state (used for hiding/showing elements).
+ * @param {function} setPrintMode - React state setter to update the component's print state (used for hiding/showing parts).
  */
 export const handlePrint = (mode, setPrintMode) => {
     setPrintMode(mode);
 
-    // Create a style element for the print CSS
+    // FOOTER CODE COMPLETELY REMOVED FOR DEBUGGING
+
+    // 2. Create Print CSS
     const printStyle = document.createElement('style');
     printStyle.id = 'dynamic-print-styles';
     printStyle.innerHTML = `
         @media print {
-            #qa-sidebar, #student-sidebar, button, .print\\:hidden, .hide-in-print { 
-                display: none !important; 
-            }
-
             @page {
-                size: auto;
-                margin: 10mm;
+                /* Set exact Folio paper dimensions */
+                size: 8.5in 13in;
+                /* Let's see if the browser actually leaves a 1.2-inch blank space at the bottom */
+                margin: 0.6in 0.4in 0.4in 0.4in; 
             }
 
-            html, body, #root, #qa-runner-container, .flex.h-full.relative.overflow-hidden, .max-w-5xl {
+            html, body {
                 height: auto !important;
                 min-height: auto !important;
                 max-height: none !important;
                 width: 100% !important;
-                max-width: 100% !important;
-                overflow: visible !important;
-                position: static !important;
                 margin: 0 !important;
                 padding: 0 !important;
-                display: block !important;
                 background-color: white !important;
             }
             
-            .flex-col.gap-12, .flex-col.gap-8, .flex-col.gap-6 { gap: 0 !important; display: block !important; }
-            .mb-8 { margin-bottom: 2rem !important; }
-
-            .overflow-y-auto, .overflow-x-auto, .overflow-auto, .overflow-hidden,
-            .absolute, .relative, .fixed, .inset-0, [class*="max-h-"], [class*="h-"], .flex-1 {
-                height: auto !important;
-                max-height: none !important;
-                min-height: auto !important;
-                overflow: visible !important;
-                position: static !important;
-                flex: none !important;
-            }
-
-            .border-gray-200.rounded.p-2.bg-gray-50 *, .border-gray-200.rounded.p-2.bg-gray-50 {
-                position: static !important;
-                overflow: visible !important;
-                height: auto !important;
-                max-height: none !important;
-            }
-
-            .bg-white.border.rounded-lg, .border.rounded.p-4, .break-inside-avoid, .question-block {
-                page-break-inside: auto !important;
-                break-inside: auto !important;
-                page-break-after: auto !important;
-                page-break-before: auto !important;
-                margin: 0 0 20px 0 !important;
-                border: none !important;
-                box-shadow: none !important;
-            }
-
-            .bg-slate-800, .bg-blue-900 {
-                background-color: transparent !important;
-                color: black !important;
-                border-bottom: 2px solid black !important;
-                padding: 5px 0 !important;
-            }
-            .text-yellow-400, .text-yellow-300, .text-white { color: black !important; }
-
-            table { 
-                page-break-inside: auto !important; 
-                width: 100% !important; 
+            .max-w-5xl {
+                width: 100% !important;
                 max-width: 100% !important;
+                margin: 0 !important;
+            }
+
+            /* --- THE CHROME FLEXBOX FIX --- */
+            /* Chrome ignores page breaks inside flex containers. We MUST force the main wrappers to 'block'. */
+            #qa-runner-container, 
+            #qa-runner-container > div,
+            #quiz-form, 
+            .test-section-panel, 
+            .exercise-item {
+                display: block !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+
+            /* --- BULLETPROOF PAGINATION RULES --- */
+            .exercise-item, tr {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                margin-bottom: 1.5rem !important;
+            }
+
+            button, .print\\:hidden, .hide-in-print { 
+                display: none !important; 
+            }
+
+            /* Standardized Table & Formatting */
+            table { 
+                width: 100% !important; 
                 border-collapse: collapse !important; 
                 font-size: 10px !important; 
             }
-            tr { page-break-inside: avoid !important; page-break-after: auto !important; }
-            td, th { page-break-inside: avoid !important; padding: 3px !important; }
+            td, th { padding: 3px !important; }
             thead { display: table-header-group !important; }
             
             input, textarea {
@@ -90,23 +75,81 @@ export const handlePrint = (mode, setPrintMode) => {
                 font-size: 10px !important;
                 padding: 0 !important;
                 margin: 0 !important;
-                height: auto !important;
                 resize: none !important;
             }
+            
+            .bg-slate-800, .bg-blue-900 {
+                background-color: transparent !important;
+                color: black !important;
+                border-bottom: 2px solid black !important;
+            }
+            .text-yellow-400, .text-yellow-300, .text-white { color: black !important; }
         }
     `;
-
-    // Inject styles, wait for render cycle, print, then cleanup
     document.head.appendChild(printStyle);
-    
+
+    // 3. Isolate the target container to aggressively hide sidebars
+    const targetContainer = document.querySelector('.max-w-5xl');
+    const hiddenElements = [];
+    const modifiedAncestors = [];
+
+    if (targetContainer) {
+        let currentEl = targetContainer;
+        while (currentEl && currentEl !== document.body) {
+            const siblings = Array.from(currentEl.parentNode.children);
+            siblings.forEach(sibling => {
+                if (
+                    sibling !== currentEl && 
+                    sibling.tagName !== 'SCRIPT' && 
+                    sibling.tagName !== 'STYLE' && 
+                    sibling.id !== 'dynamic-print-footer'
+                ) {
+                    hiddenElements.push({ el: sibling, display: sibling.style.display });
+                    sibling.style.display = 'none';
+                }
+            });
+            
+            modifiedAncestors.push({
+                el: currentEl,
+                width: currentEl.style.width,
+                margin: currentEl.style.margin,
+                padding: currentEl.style.padding,
+                position: currentEl.style.position
+            });
+            
+            currentEl.style.width = '100%';
+            currentEl.style.margin = '0';
+            currentEl.style.padding = '0';
+            currentEl.style.position = 'static';
+            
+            currentEl = currentEl.parentNode;
+        }
+    }
+
+    // 4. Trigger Print and Cleanup after completion
     setTimeout(() => {
         window.print();
+        
         setTimeout(() => {
             setPrintMode('all');
+            
+            // Cleanup Styles
             const styleElement = document.getElementById('dynamic-print-styles');
-            if (styleElement) {
-                styleElement.remove();
-            }
+            if (styleElement) styleElement.remove();
+            
+            // Restore hidden sidebars and containers
+            hiddenElements.forEach(item => {
+                item.el.style.display = item.display;
+            });
+            
+            // Restore ancestor styles
+            modifiedAncestors.forEach(item => {
+                item.el.style.width = item.width;
+                item.el.style.margin = item.margin;
+                item.el.style.padding = item.padding;
+                item.el.style.position = item.position;
+            });
+            
         }, 500); 
     }, 100);
 };
