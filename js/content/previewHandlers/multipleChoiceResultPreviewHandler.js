@@ -106,7 +106,7 @@ export function renderMultipleChoicePreview(q, qIdx, liveQ, studentAns) {
         });
 
         explanationHtml = html`
-            <div className="mt-1 pt-1 border rounded border-dashed border-gray-200 explanation-section">
+            <div className="px-1 pt-1 border rounded border-dashed border-black-200 explanation-section">
                 <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Explanation</h4>
                 ${elementsHtml}
             </div>
@@ -116,7 +116,7 @@ export function renderMultipleChoicePreview(q, qIdx, liveQ, studentAns) {
     return html`
         <div key=${q.uiId} className="px-4 bg-white flex flex-col gap-4">
             <div>
-                <div className="font-bold text-gray-800 mb-3">${qIdx + 1}. ${liveQ.question}</div>
+                <div className="font-bold text-gray-800 mb-2">${qIdx + 1}. ${liveQ.question}</div>
                 <div className="flex flex-col gap-1">
                     ${(liveQ.options || []).map((opt, oIdx) => {
                         const isSelected = String(studentAns) === String(oIdx);
