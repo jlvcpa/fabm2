@@ -36,7 +36,8 @@ export const handlePrintTQ = () => {
     clone.querySelectorAll('[id^="ans-"], [id^="msg-"], .sticky, .btn-reveal-set, svg:not(.mx-auto)').forEach(el => el.remove());
 
     // E. Strip borders, backgrounds, and icons from the Options
-    clone.querySelectorAll('.exercise-item .flex.justify-between.items-start').forEach(opt => {
+    // FIX: Removed .exercise-item from query so it properly catches the multiple choice options
+    clone.querySelectorAll('.flex.justify-between.items-start').forEach(opt => {
         // Strip all dynamic Tailwind colors, borders, and rounded corners
         opt.className = "flex justify-start items-start mb-1"; 
         opt.style.border = "none";
@@ -129,6 +130,12 @@ export const handlePrintTQ = () => {
                 font-size: 9pt !important;
                 color: black !important;
                 line-height: 1.1 !important;
+            }
+
+            /* Strip any remaining borders from options */
+            #tq-print-wrapper div.flex.justify-start.items-start {
+                border: none !important;
+                background: transparent !important;
             }
 
             #tq-print-wrapper header { border-bottom: none !important; }
