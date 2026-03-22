@@ -30,11 +30,12 @@ export const handlePrint = (mode, setPrintMode) => {
                 /* Set exact Folio paper dimensions */
                 size: 8.5in 13in;
                 /* A 1-inch bottom margin ensures text never touches the footer */
-                margin: 0.4in 0.4in 0.4in 0.4in; 
+                margin: 0.4in 0.4in 1.0in 0.4in; 
             }
 
             /* --- HIDE ALL SIDEBARS AND NAVIGATION --- */
-            #sidebar, #qa-sidebar, #student-sidebar, header, nav, 
+            /* FIXED: 'header' and 'nav' removed so your titles stay visible! */
+            #sidebar, #qa-sidebar, #student-sidebar, 
             #qa-toggle-sidebar, #qa-desktop-expand, button, 
             .print\\:hidden, .hide-in-print { 
                 display: none !important; 
