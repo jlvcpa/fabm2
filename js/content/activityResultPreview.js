@@ -364,11 +364,11 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
 
                 <div id="student-print-info" className="block mb-4 w-full ${headerHideClass}">
                     <div className="w-full mb-2 text-sm text-black font-bold font-mono border-b-2 border-black pb-2">
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center px-2">
                             <span className="text-left">CN: ${resultData.CN || resultData.classNumber || resultData.studentId || ''}</span>
                             <span className="text-right">Section: ${resultData.section || resultData.gradeSection || ''}</span>
                         </div>
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center px-2">
                             <span className="text-left">Name: ${resultData.studentName || ''}</span>
                             <span className="text-right">Date: ${new Date(resultData.timestamp || resultData.lastUpdated).toLocaleString()}</span>
                         </div>
