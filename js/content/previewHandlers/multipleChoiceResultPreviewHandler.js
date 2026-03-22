@@ -128,11 +128,11 @@ export function renderMultipleChoicePreview(q, qIdx, liveQ, studentAns) {
                             icon = html`<${Check} size=${16} className="text-green-700"/>`; 
                         }
                         else if (isSelected && !isOptCorrect) { 
-                            style = "bg-red-100 border-red-500 text-red-900"; 
+                            style = "bg-red-100 border rounded border-red-900 text-red-900"; 
                             icon = html`<${X} size=${16} className="text-red-700"/>`; 
                         }
                         else if (!isSelected && isOptCorrect) { 
-                            style = "bg-green-50 border-green-300 border-dashed text-green-800"; 
+                            style = "bg-green-50 border-green-900 border-dashed text-green-800"; 
                             icon = html`<${Check} size=${16} className="text-green-700 opacity-50"/>`; 
                         }
                         const letter = String.fromCharCode(97 + oIdx);
