@@ -10,6 +10,7 @@ export const handlePrint = (mode, setPrintMode) => {
     // 1. Create Custom Footer
     const footer = document.createElement('div');
     footer.id = 'dynamic-print-footer';
+    footer.className = 'p-1';
     footer.innerHTML = `
         <div style="flex: 1; text-align: left; font-weight: bold; font-size: 11px; padding-left: 8px;">FABM 2</div>
         <div style="flex: 2; text-align: center;">
