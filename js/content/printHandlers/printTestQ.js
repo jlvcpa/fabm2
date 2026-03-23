@@ -108,6 +108,16 @@ export const handlePrintTQ = () => {
     // H. Identify the cloned Rubric Tables so we can target them with Garamond 9pt
     clone.querySelectorAll('.font-serif table').forEach(tbl => tbl.classList.add('rubric-table'));
 
+    // --- ADD "END OF EXAM" MARKER ---
+    const endOfExamMarker = document.createElement('div');
+    endOfExamMarker.style.textAlign = 'center';
+    endOfExamMarker.style.fontWeight = 'bold';
+    endOfExamMarker.style.marginTop = '40px';
+    endOfExamMarker.style.marginBottom = '20px';
+    endOfExamMarker.style.pageBreakInside = 'avoid'; // Keeps it with the last question if possible
+    endOfExamMarker.textContent = '--- END OF EXAM ---';
+    clone.appendChild(endOfExamMarker);
+
     // 4. Build the Master Wrapper
     const tqWrapper = document.createElement('div');
     tqWrapper.id = 'tq-print-wrapper';
