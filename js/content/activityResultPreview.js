@@ -295,7 +295,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                             </div>
                         </div>
 
-                        <div className="px-6 pt-2 flex flex-col gap-2 print:px-0 print:pt-2">
+                        <div className="px-6 pt-2 flex flex-col gap-2 print:px-0 print:pt-2 print:break-inside-avoid tq-section-header">
                             <div className="font-serif text-black">
                                 <div className="font-bold text-[14px] uppercase mb-1">
                                     ${roman}. ${section.type}: ${topics}
