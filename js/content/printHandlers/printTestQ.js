@@ -120,7 +120,7 @@ export const handlePrintTQ = () => {
     const originalTitle = document.title;
     const originalUrl = window.location.href;
     document.title = " "; 
-    window.history.replaceState({}, '', '/FABM-2 .................. 4Cs: Christ-centeredness, Competence, Character, Compassion .................. ');
+    window.history.replaceState({}, '', '/FABM-2 . . . . . . . . . . . . . 4Cs: Christ-centeredness, Competence, Character, Compassion . . . . . . . . . . . . . ');
 
     // 6. Create the Print CSS
     const printStyle = document.createElement('style');
@@ -172,7 +172,7 @@ export const handlePrintTQ = () => {
 
             .tq-options-container {
                 width: 100% !important;
-                margin-top: 0.5rem !important;
+                margin-top: 0.1rem !important;
             }
 
             .tq-options-container.cols-4 {
@@ -202,7 +202,7 @@ export const handlePrintTQ = () => {
                 display: flex !important;
                 align-items: flex-start !important;
                 margin-bottom: 0.01rem !important; /* Reduced from 0.25rem */
-                padding-left: 1.8rem !important;
+                padding-left: 1.9rem !important;
                 padding-right: 1rem !important;
                 border: none !important;
                 background: transparent !important;
