@@ -120,7 +120,7 @@ export const handlePrintTQ = () => {
     const originalTitle = document.title;
     const originalUrl = window.location.href;
     document.title = " "; 
-    window.history.replaceState({}, '', '/');
+    window.history.replaceState({}, '', '/FABM-2     [4Cs-Christ-centeredness-Competence-Character-Compassion]');
 
     // 6. Create the Print CSS
     const printStyle = document.createElement('style');
