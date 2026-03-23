@@ -112,6 +112,28 @@ export const handlePrintTQ = () => {
     const testSections = clone.querySelectorAll('.test-section-panel');
     if (testSections.length > 0) {
         const lastSection = testSections[testSections.length - 1];
+
+        // --- MAKE QUESTION NUMBERING CONTINUOUS (1 to X) ---
+    let globalQNum = 1;
+    clone.querySelectorAll('.exercise-item').forEach(item => {
+        // Target the container holding the question text
+        const qHeader = item.querySelector('.font-bold.text-gray-800');
+        if (qHeader) {
+            // Target the specific span you recently added for the hanging indent
+            const numSpan = qHeader.querySelector('.mr-2.flex-shrink-0');
+            if (numSpan && /^\d+\./.test(numSpan.textContent.trim())) {
+                numSpan.textContent = `${globalQNum}.`;
+                globalQNum++;
+            } else {
+                // Fallback for other question types (like Problem Solving)
+                if (/^\s*\d+\./.test(qHeader.textContent)) {
+                    qHeader.innerHTML = qHeader.innerHTML.replace(/^\s*\d+\./, `${globalQNum}.`);
+                    globalQNum++;
+                }
+            }
+        }
+    });
+    // ---------------------------------------------------
         
         const endOfExamMarker = document.createElement('div');
         endOfExamMarker.style.textAlign = 'center';
