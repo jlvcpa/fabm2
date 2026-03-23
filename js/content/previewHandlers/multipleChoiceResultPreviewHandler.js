@@ -121,7 +121,10 @@ export function renderMultipleChoicePreview(q, qIdx, liveQ, studentAns) {
     return html`
         <div key=${q.uiId} className="px-4 bg-white flex flex-col gap-3">
             <div>
-                <div className="font-bold text-gray-800 mb-1">${qIdx + 1}. ${liveQ.question}</div>
+                <div className="flex font-bold text-gray-800 mb-1 items-start">
+                    <span className="mr-2 flex-shrink-0">${qIdx + 1}.</span>
+                    <span className="flex-grow">${liveQ.question}</span>
+                </div>
                 <div className="flex flex-col gap-1">
                     ${(liveQ.options || []).map((opt, oIdx) => {
                         const isSelected = String(studentAns) === String(oIdx);
