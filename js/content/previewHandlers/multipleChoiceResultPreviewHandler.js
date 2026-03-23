@@ -145,7 +145,7 @@ export function renderMultipleChoicePreview(q, qIdx, liveQ, studentAns) {
                         }
                         const letter = String.fromCharCode(97 + oIdx);
                         return html`
-                            <div key=${oIdx} className=${`px-4 py-.05 text-sm flex justify-between items-start ${style}`}>
+                            <div key=${oIdx} className=${`pl-6 py-.05 text-sm flex justify-between items-start ${style}`}>
                              <div className="flex">
                                 <span className="font-bold mr-2 w-4 flex-shrink-0">${letter}.</span>
                                 <span className="flex-grow">${opt}</span>
