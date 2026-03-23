@@ -109,15 +109,22 @@ export const handlePrintTQ = () => {
     clone.querySelectorAll('.font-serif table').forEach(tbl => tbl.classList.add('rubric-table'));
 
     // --- ADD "END OF EXAM" MARKER ---
-    const endOfExamMarker = document.createElement('div');
-    endOfExamMarker.style.textAlign = 'center';
-    endOfExamMarker.style.fontWeight = 'bold';
-    endOfExamMarker.style.marginTop = '40px';
-    endOfExamMarker.style.marginBottom = '20px';
-    endOfExamMarker.style.pageBreakInside = 'avoid'; // Keeps it with the last question if possible
-    endOfExamMarker.textContent = '--- END OF EXAM ---';
-    clone.appendChild(endOfExamMarker);
-
+    const testSections = clone.querySelectorAll('.test-section-panel');
+    if (testSections.length > 0) {
+        const lastSection = testSections[testSections.length - 1];
+        
+        const endOfExamMarker = document.createElement('div');
+        endOfExamMarker.style.textAlign = 'center';
+        endOfExamMarker.style.fontWeight = 'bold';
+        endOfExamMarker.style.marginTop = '40px';
+        endOfExamMarker.style.marginBottom = '20px';
+        endOfExamMarker.style.display = 'block';
+        endOfExamMarker.style.width = '100%';
+        endOfExamMarker.textContent = '--- END OF EXAM ---';
+        
+        lastSection.appendChild(endOfExamMarker);
+    }
+    
     // 4. Build the Master Wrapper
     const tqWrapper = document.createElement('div');
     tqWrapper.id = 'tq-print-wrapper';
