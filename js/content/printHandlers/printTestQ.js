@@ -202,7 +202,7 @@ export const handlePrintTQ = () => {
                 display: flex !important;
                 align-items: flex-start !important;
                 margin-bottom: 0.01rem !important; /* Reduced from 0.25rem */
-                padding-left: 1rem !important;
+                padding-left: 2rem !important;
                 padding-right: 1rem !important;
                 border: none !important;
                 background: transparent !important;
