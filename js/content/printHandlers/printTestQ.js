@@ -120,7 +120,7 @@ export const handlePrintTQ = () => {
     const originalTitle = document.title;
     const originalUrl = window.location.href;
     document.title = " "; 
-    window.history.replaceState({}, '', '/FABM-2     [4Cs-Christ-centeredness-Competence-Character-Compassion]');
+    window.history.replaceState({}, '', '/FABM-2 .................. 4Cs: Christ-centeredness, Competence, Character, Compassion .................. ');
 
     // 6. Create the Print CSS
     const printStyle = document.createElement('style');
@@ -131,8 +131,8 @@ export const handlePrintTQ = () => {
         @media print {
             @page {
                 size: 8.5in 13in; 
-                /* Strict margins as requested: Top 0.5, Right 0.4, Bottom 0.5, Left 0.4 */
-                margin: 0.5in 0.4in 0.5in 0.4in; 
+                /* Strict margins as requested: Top 0.5, Right 0.4, Bottom 04, Left 0.4 */
+                margin: 0.5in 0.4in 0.4in 0.4in; 
             }
 
             body > *:not(#tq-print-wrapper) { display: none !important; }
@@ -165,7 +165,7 @@ export const handlePrintTQ = () => {
             /* --- DYNAMIC OPTION GRID CSS --- */
             .tq-question-block {
                 display: block !important; /* Defeat Chrome Flexbox bug */
-                margin-bottom: 1rem !important; /* Reduced from 1.5rem */
+                margin-bottom: 0.01rem !important; /* Reduced from 1.5rem */
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
@@ -201,8 +201,8 @@ export const handlePrintTQ = () => {
             .tq-option {
                 display: flex !important;
                 align-items: flex-start !important;
-                margin-bottom: 0.1rem !important; /* Reduced from 0.25rem */
-                padding-left: 1rem !important;
+                margin-bottom: 0.01rem !important; /* Reduced from 0.25rem */
+                padding-left: 1.8rem !important;
                 padding-right: 1rem !important;
                 border: none !important;
                 background: transparent !important;
