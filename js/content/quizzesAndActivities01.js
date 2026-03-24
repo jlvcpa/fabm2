@@ -571,6 +571,7 @@ async function generateQuizContent(activityData, savedState = null) {
     sectionsHtml = `<div class="w-full max-w-7xl mx-auto p-2 md:p-4">`; 
 
     for (const [index, section] of activityData.testQuestions.entries()) {
+        const sSubjects = section.subjects ? section.subjects.split(',').map(t => t.trim()).filter(t => t) : [];
         const sTopics = section.topics ? section.topics.split(',').map(t => t.trim()).filter(t => t) : [];
         const sCompetencies = section.competencies ? section.competencies.split(',').map(t => t.trim()).filter(t => t) : [];
         const sSubtopics = section.subtopics ? section.subtopics.split(',').map(t => t.trim()).filter(t => t) : [];
@@ -592,10 +593,12 @@ async function generateQuizContent(activityData, savedState = null) {
         });
 
         let candidates = flattenedCandidates.filter(q => {
-            const subjectMatch = q.subject === "FABM1" || q.subject === "FABM2";
+            // Now it checks the dynamic subjects array instead of being hardcoded
+            const subjectMatch = sSubjects.length === 0 || sSubjects.includes(q.subject);
             const topicMatch = sTopics.length === 0 || sTopics.includes(q.topic);
             const compMatch = sCompetencies.length === 0 || sCompetencies.includes(q.competency);
             const subMatch = sSubtopics.length === 0 || sSubtopics.includes(q.subtopic);
+            
             return subjectMatch && topicMatch && compMatch && subMatch;
         });
 
