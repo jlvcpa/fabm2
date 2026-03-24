@@ -55,7 +55,8 @@ export const handlePrintAnswerSheet = (activityConfig, questionsTaken) => {
             <div class="omr-header text-center">
                 <img src="./shs-adc-logo.png" alt="School Logo" onerror="this.style.display='none'" />
                 <h2 class="text-blue-900 font-bold uppercase">Senior High School<br>Department</h2>
-                <p class="font-bold">SY 2025-2026<br>Second Semester</p>
+                <p class="font-bold">SY 2025-2026</p>
+                <p class="font-bold">Second Semester</p>
                 <p class="font-bold uppercase">${activityConfig.activityname || activityConfig.title || 'Final Exam'}</p>
                 <h1 class="text-xl font-bold uppercase mt-2">Answer Sheet</h1>
                 <h2 class="text-lg font-bold mt-2">FABM 2</h2>
