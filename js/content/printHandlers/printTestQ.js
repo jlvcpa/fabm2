@@ -108,9 +108,7 @@ export const handlePrintTQ = () => {
     // H. Identify the cloned Rubric Tables so we can target them with Garamond 9pt
     clone.querySelectorAll('.font-serif table').forEach(tbl => tbl.classList.add('rubric-table'));
 
-    // ====================================================================
     // --- FEATURE 1: CONTINUOUS QUESTION NUMBERING (1 to X) ---
-    // ====================================================================
     let globalQNum = 1;
     
     // Target the specific class you provided that holds the question text
@@ -127,20 +125,6 @@ export const handlePrintTQ = () => {
             globalQNum++;
         }
     });
-
-    // ====================================================================
-    // --- FEATURE 2: SAFE "END OF EXAM" MARKER ---
-    // ====================================================================
-    // We append a block-level element with inline styles at the very root 
-    // of the clone to prevent CSS grid/flex interference (column bugs).
-    const endOfExamMarker = document.createElement('div');
-    endOfExamMarker.innerHTML = `
-        <div style="display: block !important; width: 100% !important; text-align: center; font-weight: bold; margin-top: 50px; margin-bottom: 20px; font-family: 'Times New Roman', Times, serif; font-size: 12pt; clear: both;">
-            --- END OF EXAM ---
-        </div>
-    `;
-    clone.appendChild(endOfExamMarker);
-    // ====================================================================
     
     // 4. Build the Master Wrapper
     const tqWrapper = document.createElement('div');
