@@ -150,7 +150,7 @@ export const handlePrintTQ = () => {
             @page {
                 size: 8.5in 13in; 
                 /* Strict margins as requested: Top 0.5, Right 0.4, Bottom 04, Left 0.4 */
-                margin: 0.5in 0.4in 0.4in 0.4in; 
+                margin: 0.5in 0.4in 0.6in 0.4in; 
             }
 
             body > *:not(#tq-print-wrapper) { display: none !important; }
