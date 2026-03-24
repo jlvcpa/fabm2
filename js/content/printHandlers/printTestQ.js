@@ -108,44 +108,39 @@ export const handlePrintTQ = () => {
     // H. Identify the cloned Rubric Tables so we can target them with Garamond 9pt
     clone.querySelectorAll('.font-serif table').forEach(tbl => tbl.classList.add('rubric-table'));
 
-    // --- ADD "END OF EXAM" MARKER ---
-    const testSections = clone.querySelectorAll('.test-section-panel');
-    if (testSections.length > 0) {
-        const lastSection = testSections[testSections.length - 1];
-
-        // --- MAKE QUESTION NUMBERING CONTINUOUS (1 to X) ---
+    // ====================================================================
+    // --- FEATURE 1: CONTINUOUS QUESTION NUMBERING (1 to X) ---
+    // ====================================================================
     let globalQNum = 1;
-    clone.querySelectorAll('.exercise-item').forEach(item => {
-        // Target the container holding the question text
-        const qHeader = item.querySelector('.font-bold.text-gray-800');
-        if (qHeader) {
-            // Target the specific span you recently added for the hanging indent
-            const numSpan = qHeader.querySelector('.mr-2.flex-shrink-0');
-            if (numSpan && /^\d+\./.test(numSpan.textContent.trim())) {
-                numSpan.textContent = `${globalQNum}.`;
-                globalQNum++;
-            } else {
-                // Fallback for other question types (like Problem Solving)
-                if (/^\s*\d+\./.test(qHeader.textContent)) {
-                    qHeader.innerHTML = qHeader.innerHTML.replace(/^\s*\d+\./, `${globalQNum}.`);
-                    globalQNum++;
-                }
-            }
+    
+    // Target the specific class you provided that holds the question text
+    clone.querySelectorAll('.font-bold.text-gray-800').forEach(qHeader => {
+        // First, check if you are using the flex-span approach
+        const numSpan = qHeader.querySelector('.mr-2');
+        if (numSpan && /^\d+\./.test(numSpan.textContent.trim())) {
+            numSpan.textContent = `${globalQNum}.`;
+            globalQNum++;
+        } 
+        // Second, check the direct text approach you pasted above
+        else if (/^\s*\d+\./.test(qHeader.textContent)) {
+            qHeader.innerHTML = qHeader.innerHTML.replace(/^\s*\d+\./, `${globalQNum}.`);
+            globalQNum++;
         }
     });
-    // ---------------------------------------------------
-        
-        const endOfExamMarker = document.createElement('div');
-        endOfExamMarker.style.textAlign = 'center';
-        endOfExamMarker.style.fontWeight = 'bold';
-        endOfExamMarker.style.marginTop = '40px';
-        endOfExamMarker.style.marginBottom = '20px';
-        endOfExamMarker.style.display = 'block';
-        endOfExamMarker.style.width = '100%';
-        endOfExamMarker.textContent = '--- END OF EXAM ---';
-        
-        lastSection.appendChild(endOfExamMarker);
-    }
+
+    // ====================================================================
+    // --- FEATURE 2: SAFE "END OF EXAM" MARKER ---
+    // ====================================================================
+    // We append a block-level element with inline styles at the very root 
+    // of the clone to prevent CSS grid/flex interference (column bugs).
+    const endOfExamMarker = document.createElement('div');
+    endOfExamMarker.innerHTML = `
+        <div style="display: block !important; width: 100% !important; text-align: center; font-weight: bold; margin-top: 50px; margin-bottom: 20px; font-family: 'Times New Roman', Times, serif; font-size: 12pt; clear: both;">
+            --- END OF EXAM ---
+        </div>
+    `;
+    clone.appendChild(endOfExamMarker);
+    // ====================================================================
     
     // 4. Build the Master Wrapper
     const tqWrapper = document.createElement('div');
