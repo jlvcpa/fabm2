@@ -377,6 +377,9 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
                 <button onClick=${() => handlePrintTQ(activityConfig)} className="px-4 py-2 bg-teal-600 text-white text-sm font-bold rounded hover:bg-teal-700 shadow flex items-center gap-2">
                     <i className="fas fa-file-alt mr-2"></i> Print TQ
                 </button>
+                <button onClick=${() => handlePrintAnswerSheet(activityConfig, resultData.questionsTaken || {})} className="px-4 py-2 bg-purple-600 text-white text-sm font-bold rounded hover:bg-purple-700 shadow flex items-center gap-2">
+                    <i className="fas fa-list-ol mr-2"></i> Print Answer Sheet
+                </button>
             ` : ''}
             ${currentUser.role === 'teacher' && activityConfig.type !== 'accounting_cycle' ? html`
                 <button onClick=${handleSaveScores} className="px-4 py-2 bg-yellow-600 text-white text-sm font-bold rounded hover:bg-yellow-700 shadow flex items-center gap-2">
