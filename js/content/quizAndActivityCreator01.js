@@ -1,7 +1,6 @@
 import { getFirestore, collection, getDocs, doc, setDoc, query, orderBy, limit, where } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 
-// --- IMPORTS FROM QUESTION BANK ---
 import { qbMerchMultipleChoice } from "./questionBank/qbMerchMultipleChoice.js";
 import { qbMerchProblemSolving } from "./questionBank/qbMerchProblemSolving.js";
 import { qbMerchJournalizing } from "./questionBank/qbMerchJournalizing.js";
@@ -18,7 +17,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// State
 let currentSection = null;
 let selectedStudents = [];
 
@@ -116,7 +114,6 @@ export async function renderQuizActivityCreator(container) {
 }
 
 function attachCreatorListeners() {
-    // Section Change
     document.getElementById('qc-section').addEventListener('change', async (e) => {
         currentSection = e.target.value;
         if(currentSection) {
@@ -125,15 +122,12 @@ function attachCreatorListeners() {
         }
     });
 
-    // Select All Students
     document.getElementById('btn-select-all-students').addEventListener('click', () => {
         document.querySelectorAll('.student-checkbox').forEach(cb => cb.checked = true);
     });
 
-    // Add Test Section
     document.getElementById('btn-add-section').addEventListener('click', () => addTestSectionUI());
 
-    // Save Button
     document.getElementById('btn-save-activity').addEventListener('click', saveActivityToFirebase);
 }
 
@@ -144,8 +138,6 @@ function addTestSectionUI(existingData = null) {
     const div = document.createElement('div');
     div.className = "bg-gray-50 p-3 rounded border border-gray-300 shadow-sm relative text-sm section-card";
     
-    // HTML Structure
-    // NOTE: Changed Selects to 'multiple' and added 'h-32' to keep them open for convenient selection
     div.innerHTML = `
         <div class="absolute top-2 right-2 cursor-pointer text-red-400 hover:text-red-600" onclick="this.parentElement.remove()">
             <i class="fas fa-times"></i>
@@ -169,7 +161,17 @@ function addTestSectionUI(existingData = null) {
         </div>
         
         <div class="mb-2">
-            <label class="block text-xs text-purple-600 font-bold mb-1">1. Filter by Competency</label>
+            <label class="block text-xs text-orange-600 font-bold mb-1">1. Filter by Subject</label>
+            <div class="flex flex-col gap-1">
+                <textarea class="section-subject-area w-full p-1 border rounded bg-white h-8 text-xs bg-orange-50" placeholder="All Subjects (Select below to filter)..."></textarea>
+                <select multiple class="section-subject-select w-full p-1 border rounded bg-white text-xs h-32 cursor-pointer scrollbar-thin">
+                    <option value="">Loading...</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <label class="block text-xs text-purple-600 font-bold mb-1">2. Filter by Competency</label>
             <div class="flex flex-col gap-1">
                 <textarea class="section-competency-area w-full p-1 border rounded bg-white h-8 text-xs bg-purple-50" placeholder="All Competencies (Select below to filter)..."></textarea>
                 <select multiple class="section-competency-select w-full p-1 border rounded bg-white text-xs h-32 cursor-pointer scrollbar-thin">
@@ -179,7 +181,7 @@ function addTestSectionUI(existingData = null) {
         </div>
 
         <div class="mb-2">
-            <label class="block text-xs text-blue-600 font-bold mb-1">2. Filter by Topic</label>
+            <label class="block text-xs text-blue-600 font-bold mb-1">3. Filter by Topic</label>
             <div class="flex flex-col gap-1">
                 <textarea class="section-topics-area w-full p-1 border rounded bg-white h-8 text-xs bg-blue-50" placeholder="All Topics (Select below to filter)..."></textarea>
                 <select multiple class="section-topic-select w-full p-1 border rounded bg-white text-xs h-32 cursor-pointer scrollbar-thin">
@@ -189,7 +191,7 @@ function addTestSectionUI(existingData = null) {
         </div>
 
         <div class="mb-2">
-            <label class="block text-xs text-green-600 font-bold mb-1">3. Filter by Subtopic</label>
+            <label class="block text-xs text-green-600 font-bold mb-1">4. Filter by Subtopic</label>
              <div class="flex flex-col gap-1">
                 <textarea class="section-subtopics-area w-full p-1 border rounded bg-white h-8 text-xs bg-green-50" placeholder="All Subtopics (Select below to filter)..."></textarea>
                 <select multiple class="section-subtopic-select w-full p-1 border rounded bg-white text-xs h-32 cursor-pointer scrollbar-thin">
@@ -225,9 +227,11 @@ function addTestSectionUI(existingData = null) {
     `;
     container.appendChild(div);
 
-    // References
     const typeSelect = div.querySelector('.section-type');
     
+    const subjectSelect = div.querySelector('.section-subject-select');
+    const subjectArea = div.querySelector('.section-subject-area');
+
     const competencySelect = div.querySelector('.section-competency-select');
     const competencyArea = div.querySelector('.section-competency-area');
     
@@ -241,47 +245,34 @@ function addTestSectionUI(existingData = null) {
     const limitInput = div.querySelector('.section-time-limit');
     const expireInput = div.querySelector('.section-expire-time');
 
-    // === DYNAMIC FILTERING LOGIC ===
-    
-    // Main function to refresh all dropdowns based on current textarea values
     const refreshAllDropdowns = () => {
-        // Capture current selected filters
         const filters = {
+            subject: subjectArea.value ? subjectArea.value.split(',').map(s => s.trim()).filter(Boolean) : [],
             competency: competencyArea.value ? competencyArea.value.split(',').map(s => s.trim()).filter(Boolean) : [],
             topic: topicArea.value ? topicArea.value.split(',').map(s => s.trim()).filter(Boolean) : [],
             subtopic: subtopicArea.value ? subtopicArea.value.split(',').map(s => s.trim()).filter(Boolean) : []
         };
         const type = typeSelect.value;
 
-        // Update Competency Dropdown (Filtered by Topic & Subtopic, but NOT by Competency to allow adding more)
-        updateDropdownOptions(competencySelect, type, 'competency', { topic: filters.topic, subtopic: filters.subtopic });
-
-        // Update Topic Dropdown (Filtered by Competency & Subtopic)
-        updateDropdownOptions(topicSelect, type, 'topic', { competency: filters.competency, subtopic: filters.subtopic });
-
-        // Update Subtopic Dropdown (Filtered by Competency & Topic)
-        updateDropdownOptions(subtopicSelect, type, 'subtopic', { competency: filters.competency, topic: filters.topic });
+        updateDropdownOptions(subjectSelect, type, 'subject', { competency: filters.competency, topic: filters.topic, subtopic: filters.subtopic });
+        updateDropdownOptions(competencySelect, type, 'competency', { subject: filters.subject, topic: filters.topic, subtopic: filters.subtopic });
+        updateDropdownOptions(topicSelect, type, 'topic', { subject: filters.subject, competency: filters.competency, subtopic: filters.subtopic });
+        updateDropdownOptions(subtopicSelect, type, 'subtopic', { subject: filters.subject, competency: filters.competency, topic: filters.topic });
     };
 
-    // Initialize
     refreshAllDropdowns();
 
-    // Event: Type Changed (Clear inputs and refresh)
     typeSelect.addEventListener('change', () => {
+        subjectArea.value = "";
         competencyArea.value = "";
         topicArea.value = "";
         subtopicArea.value = "";
         refreshAllDropdowns();
     });
 
-    // Helper to attach listeners to Select boxes (Click to add, then refresh others)
     const attachInteraction = (select, area) => {
-        // Use 'click' on options or 'change' on select. 
-        // For 'multiple' select, 'change' works best.
         select.addEventListener('change', (e) => {
             const selectedVals = Array.from(select.selectedOptions).map(opt => opt.value);
-            
-            // Append selections to textarea
             let current = area.value ? area.value.split(',').map(s => s.trim()).filter(Boolean) : [];
             
             selectedVals.forEach(val => {
@@ -289,31 +280,27 @@ function addTestSectionUI(existingData = null) {
             });
             
             area.value = current.join(', ');
-            
-            // Unselect visual highlights in listbox to indicate "added" (optional, but cleaner for repeated adding)
             select.selectedIndex = -1; 
-            
-            // Trigger filtering of OTHER boxes
             refreshAllDropdowns();
         });
     };
 
-    // Helper to attach listeners to TextAreas (Manual typing updates filters)
     const attachManualTyping = (area) => {
         area.addEventListener('input', () => {
              refreshAllDropdowns();
         });
     };
 
+    attachInteraction(subjectSelect, subjectArea);
     attachInteraction(competencySelect, competencyArea);
     attachInteraction(topicSelect, topicArea);
     attachInteraction(subtopicSelect, subtopicArea);
 
+    attachManualTyping(subjectArea);
     attachManualTyping(competencyArea);
     attachManualTyping(topicArea);
     attachManualTyping(subtopicArea);
 
-    // === TIME LOGIC (Per Section) ===
     limitInput.addEventListener('input', () => {
         if(startInput.value && limitInput.value) {
             const start = new Date(startInput.value);
@@ -333,13 +320,13 @@ function addTestSectionUI(existingData = null) {
         }
     });
 
-    // === POPULATE EXISTING DATA ===
     if(existingData) {
         typeSelect.value = existingData.type;
         div.querySelector('.section-count').value = existingData.noOfQuestions;
         div.querySelector('.section-instructions').value = existingData.instructions;
         div.querySelector('.section-rubrics').value = existingData.gradingRubrics;
         
+        subjectArea.value = existingData.subjects || "";
         competencyArea.value = existingData.competencies || "";
         topicArea.value = existingData.topics || "";
         subtopicArea.value = existingData.subtopics || "";
@@ -348,16 +335,10 @@ function addTestSectionUI(existingData = null) {
         if(existingData.timeLimit) limitInput.value = existingData.timeLimit;
         if(existingData.dateTimeExpire) expireInput.value = existingData.dateTimeExpire;
         
-        // Refresh options based on the loaded text data
         refreshAllDropdowns();
     }
 }
 
-/**
- * Filtered Metadata Loader
- * Loads unique values for targetField from sourceData,
- * but only includes rows that match the constraints in filterCriteria.
- */
 function updateDropdownOptions(selectElement, type, targetField, filterCriteria) {
     let sourceData = [];
     
@@ -375,25 +356,24 @@ function updateDropdownOptions(selectElement, type, targetField, filterCriteria)
         const uniqueValues = new Set();
 
         sourceData.forEach(item => {
-            const q = Object.values(item)[0]; // Get the question object
+            const q = Object.values(item)[0]; 
             
-            // CHECK FILTERS
-            // 1. If competency filters exist, does this question match?
+            if (filterCriteria.subject && filterCriteria.subject.length > 0) {
+                if (!q.subject || !filterCriteria.subject.includes(q.subject.trim())) return;
+            }
+
             if (filterCriteria.competency && filterCriteria.competency.length > 0) {
                 if (!q.competency || !filterCriteria.competency.includes(q.competency.trim())) return;
             }
 
-            // 2. If topic filters exist, does this question match?
             if (filterCriteria.topic && filterCriteria.topic.length > 0) {
                 if (!q.topic || !filterCriteria.topic.includes(q.topic.trim())) return;
             }
 
-            // 3. If subtopic filters exist, does this question match?
             if (filterCriteria.subtopic && filterCriteria.subtopic.length > 0) {
                 if (!q.subtopic || !filterCriteria.subtopic.includes(q.subtopic.trim())) return;
             }
 
-            // If we passed all filters, add the target field value
             if (q[targetField]) {
                 uniqueValues.add(q[targetField].trim());
             }
@@ -401,7 +381,7 @@ function updateDropdownOptions(selectElement, type, targetField, filterCriteria)
 
         const sortedValues = Array.from(uniqueValues).filter(t => t).sort();
 
-        selectElement.innerHTML = ''; // Clear existing
+        selectElement.innerHTML = ''; 
         if (sortedValues.length === 0) {
             const opt = document.createElement('option');
             opt.text = "-- No matching options --";
@@ -507,7 +487,6 @@ async function loadSavedQuizzes(section) {
 
         snapshot.forEach(docSnap => {
             const data = docSnap.data();
-            // Get earliest start time from test sections for display, or N/A
             let displayDate = "N/A";
             if (data.testQuestions && data.testQuestions.length > 0 && data.testQuestions[0].dateTimeStart) {
                 displayDate = new Date(data.testQuestions[0].dateTimeStart).toLocaleDateString();
@@ -535,11 +514,9 @@ function populateCreatorForm(data) {
     document.getElementById('qc-school-year').value = data.schoolYear || '25-26';
     document.getElementById('qc-activity-name').value = data.activityname;
     
-    // Clear existing sections
     const sectionContainer = document.getElementById('qc-test-sections');
     sectionContainer.innerHTML = '';
 
-    // Populate new sections with their specific time/filter data
     if(data.testQuestions && Array.isArray(data.testQuestions)) {
         data.testQuestions.forEach(section => addTestSectionUI(section));
     }
@@ -569,16 +546,14 @@ async function saveActivityToFirebase() {
     const testQuestions = [];
     const sectionDivs = document.getElementById('qc-test-sections').children;
     
-    // Collect all topics/competencies for global metadata if needed (optional)
     let allTopics = new Set();
 
     for(let div of sectionDivs) {
-        // Collect raw string values from textareas
+        const subjects = div.querySelector('.section-subject-area').value;
         const topics = div.querySelector('.section-topics-area').value;
         const competencies = div.querySelector('.section-competency-area').value;
         const subtopics = div.querySelector('.section-subtopics-area').value;
 
-        // Collect Time Data Per Section
         const start = div.querySelector('.section-start-time').value;
         const limit = div.querySelector('.section-time-limit').value;
         const expire = div.querySelector('.section-expire-time').value;
@@ -594,12 +569,11 @@ async function saveActivityToFirebase() {
             type: div.querySelector('.section-type').value,
             noOfQuestions: div.querySelector('.section-count').value,
             
-            // Filters
+            subjects: subjects,
             competencies: competencies,
             topics: topics,
             subtopics: subtopics,
             
-            // Per-Section Timing
             dateTimeStart: start,
             timeLimit: limit,
             dateTimeExpire: expire,
@@ -619,8 +593,6 @@ async function saveActivityToFirebase() {
         activityname: activityName,
         topics: Array.from(allTopics).join(', '),
         testQuestions,
-        // Removed global time properties (dateTimeStart, timeLimit, dateTimeExpire)
-        // as they are now strictly inside testQuestions
         students: selectedStudents,
         section: section,
         dateTimeCreated: new Date().toISOString()
