@@ -424,6 +424,9 @@ const ResultDetailViewer = ({ currentUser, activityConfig, resultData, collectio
                 onPrint=${triggerPrint} 
               />`
         }
+        <div className="hidden text-center font-bold mt-12 mb-8 w-full" style=${{ fontFamily: "'Times New Roman', Times, serif", fontSize: "12pt", clear: "both", pageBreakInside: "avoid" }}>
+            --- END OF EXAM ---
+        </div>
     </div>
 `;
 };
