@@ -20,7 +20,7 @@ export const handlePrintTQ = () => {
     const studentInfo = clone.querySelector('#student-print-info');
     if (studentInfo) {
         studentInfo.outerHTML = `
-            <div style="border: 1px solid black; padding:4px; text-align: center; font-size: 12pt; font-weight: bold; margin-bottom:1px; font-family: 'Times New Roman', Times, serif; text-transform: uppercase; color: black;">
+            <div style="border: 2px solid black; padding: 6px; text-align: center; font-size: 12pt; font-weight: bold; margin-bottom: 20px; font-family: 'Times New Roman', Times, serif; text-transform: uppercase; color: black;">
                 WRITE ALL THE ANSWERS IN THE ANSWER SHEET.
             </div>
         `;
@@ -99,7 +99,7 @@ export const handlePrintTQ = () => {
     // Strip "Question X" blue badges to make them look like normal text
     clone.querySelectorAll('span.bg-blue-100').forEach(span => {
         span.className = "";
-        span.style.fontWeight = "400";
+        span.style.fontWeight = "bold";
         span.style.marginRight = "8px";
     });
 
@@ -108,6 +108,24 @@ export const handlePrintTQ = () => {
     // H. Identify the cloned Rubric Tables so we can target them with Garamond 9pt
     clone.querySelectorAll('.font-serif table').forEach(tbl => tbl.classList.add('rubric-table'));
 
+    // --- FEATURE 1: CONTINUOUS QUESTION NUMBERING (1 to X) ---
+    let globalQNum = 1;
+    
+    // Target the specific class you provided that holds the question text
+    clone.querySelectorAll('.font-bold.text-gray-800').forEach(qHeader => {
+        // First, check if you are using the flex-span approach
+        const numSpan = qHeader.querySelector('.mr-2');
+        if (numSpan && /^\d+\./.test(numSpan.textContent.trim())) {
+            numSpan.textContent = `${globalQNum}.`;
+            globalQNum++;
+        } 
+        // Second, check the direct text approach you pasted above
+        else if (/^\s*\d+\./.test(qHeader.textContent)) {
+            qHeader.innerHTML = qHeader.innerHTML.replace(/^\s*\d+\./, `${globalQNum}.`);
+            globalQNum++;
+        }
+    });
+    
     // 4. Build the Master Wrapper
     const tqWrapper = document.createElement('div');
     tqWrapper.id = 'tq-print-wrapper';
@@ -120,7 +138,7 @@ export const handlePrintTQ = () => {
     const originalTitle = document.title;
     const originalUrl = window.location.href;
     document.title = " "; 
-    window.history.replaceState({}, '', '/');
+    window.history.replaceState({}, '', '/FABM-2 . . . . . . . . . 4Cs: Christ-centeredness, Competence, Character, Compassion . . . . . . . . . . . . . . . . . . . . . . ');
 
     // 6. Create the Print CSS
     const printStyle = document.createElement('style');
@@ -131,8 +149,8 @@ export const handlePrintTQ = () => {
         @media print {
             @page {
                 size: 8.5in 13in; 
-                /* Strict margins as requested: Top 0.5, Right 0.4, Bottom 0.5, Left 0.4 */
-                margin: 0.5in 0.4in 0.3in 0.4in; 
+                /* Strict margins as requested: Top 0.5, Right 0.4, Bottom 04, Left 0.4 */
+                margin: 0.5in 0.4in 0.6in 0.4in; 
             }
 
             body > *:not(#tq-print-wrapper) { display: none !important; }
@@ -156,7 +174,7 @@ export const handlePrintTQ = () => {
                 font-family: "Garamond", serif !important;
                 font-size: 9pt !important;
                 color: black !important;
-                line-height: 1. !important;
+                line-height: 1.1 !important;
             }
 
             #tq-print-wrapper header { border-bottom: none !important; }
@@ -172,7 +190,7 @@ export const handlePrintTQ = () => {
 
             .tq-options-container {
                 width: 100% !important;
-                margin-top: 0.01rem !important;
+                margin-top: 0.1rem !important;
             }
 
             .tq-options-container.cols-4 {
@@ -202,7 +220,7 @@ export const handlePrintTQ = () => {
                 display: flex !important;
                 align-items: flex-start !important;
                 margin-bottom: 0.01rem !important; /* Reduced from 0.25rem */
-                padding-left: 1.8rem !important;
+                padding-left: 1.9rem !important;
                 padding-right: 1rem !important;
                 border: none !important;
                 background: transparent !important;
@@ -215,13 +233,14 @@ export const handlePrintTQ = () => {
             }
             /* ------------------------------- */
 
-            .test-section-panel {
+            /* ANTI-ORPHANING LOGIC: Keep headers/tables together */
+            .test-section-panel, .tq-section-header {
                 display: block !important;
                 overflow: visible !important;
                 position: static !important;
             }
 
-            tr, .test-section-panel > div:first-child {
+            tr, .tq-section-header {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
