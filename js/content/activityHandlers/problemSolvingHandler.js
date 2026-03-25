@@ -27,7 +27,6 @@ export const ProblemSolvingHandler = {
                             <p class="text-base md:text-lg font-bold text-gray-800 mt-1 leading-snug">${q.questionText || q.question}</p>
                         </div>
                         ${innerContent}
-                        ${explanationHtml}
                         <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between">
                             <button type="button" class="nav-prev-btn text-gray-600 hover:text-blue-800 text-sm font-medium px-3 py-1 rounded hover:bg-gray-100">
                                 <i class="fas fa-arrow-left mr-1"></i> Previous
