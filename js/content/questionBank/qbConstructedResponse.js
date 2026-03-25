@@ -1,0 +1,91 @@
+export const qbConstructedResponse = [
+  {
+  "FAR-StatementOfCashFlows-001": {
+    "subject": "FAR",
+    "topic": "Statement of Cash Flows",
+    "subtopic": "Direct Method",
+    "type": "Constructed Response",
+    "competency": "Create",
+    "question": "Forest Company provided the following information for the preparation of a statement of cash flows for the current year:\n\nASSETS\nCash & cash equivalents: 2024=250,000; 2023=150,000\nInvestment in trading securities: 2024=120,000; 2023=0\nAccounts receivable (net): 2024=380,000; 2023=310,000\nRent receivable: 2024=25,000; 2023=10,000\nInventory: 2024=500,000; 2023=900,000\nPrepaid Insurance: 2024=50,000; 2023=40,000\nInvestment in Bonds: 2024=90,000; 2023=85,000\nProperty, plant & equipment: 2024=2,500,000; 2023=1,000,000\nAccumulated depreciation: 2024=-200,000; 2023=-200,000\nGoodwill: 2024=90,000; 2023=100,000\nTotal Assets: 2024=3,805,000; 2023=2,395,000\n\nLiabilities and Equity\nAccounts payable: 2024=120,000; 2023=80,000\nUnearned rent: 2024=20,000; 2023=30,000\nInsurance payable: 2024=60,000; 2023=45,000\nIncome tax payable: 2024=245,000; 2023=155,000\nShort-term loan payable: 2024=0; 2023=50,000\nNotes payable to bank: 2024=920,000; 2023=910,000\nCapital: 2024=2,440,000; 2023=1,125,000\nTotal Liabilities & Equity: 2024=3,805,000; 2023=2,395,000\n\nIncome Statement\nSales: 5,000,000\nCost of goods sold: -3,000,000\nGross income: 2,000,000\nRent income: 450,000\nInterest income: 20,000\nInsurance expense: -100,000\nBad debts expense: -15,000\nInterest expense: -100,000\nLoss on sale of building: -40,000\nUnrealized gain on investment: 20,000\nOther expense: -1,200,000\nIncome before tax: 1,035,000\nIncome tax: -300,000\nNet income: 735,000\n\nAdditional information for 2024\n1. During the year, the company purchased trading securities for P100,000. The fair value of the share on December 31, 2024 is P120,000.\n2. The allowance for doubtful accounts has balances of P20,000 and P10,000 as of December 31, 2024 and 2023, respectively.\n3. During 2024, the company sold an old building with historical cost of P800,000 for P260,000.\n4. The company inadvertently included the depreciation expense in the 'Other Expenses' line item.\n\nPrepare the statement of cash flows using the direct method.",
+    "solution": [
+      {
+        "header": ["Forest Company", "Statement of Cash Flows", "For the year ended December 31, 2024"],
+        "body": [
+          "Cash flow from Operating Activities:",
+          "+ Cash received from customers ₱4,925,000",
+          "+ Cash received from rent ₱425,000",
+          "+ Cash received from interest ₱15,000",
+          "- Cash paid to suppliers ₱(2,560,000)",
+          "- Cash paid for insurance ₱(95,000)",
+          "- Cash paid for other expenses ₱(700,000)",
+          "- Cash paid for interest ₱(100,000)",
+          "- Cash paid for income tax ₱(210,000)",
+          "- Purchase of trading securities ₱(100,000)",
+          "= Net Cash inflow from Operating Activities ₱1,600,000",
+          "Cash flow from Investing Activities:",
+          "+ Sale of old building ₱260,000",
+          "- Purchase of property, plant & equipment ₱(2,300,000)",
+          "= Net Cash Outflow from Investing Activities ₱(2,040,000)",
+          "Cash flow from Financing Activities:",
+          "- Payment of short-term loan ₱(50,000)",
+          "+ Proceeds from notes payable ₱10,000",
+          "+ Additional investment by owner ₱580,000",
+          "= Net Cash Inflow from Financing Activities ₱540,000",
+          "Net cash increase during the year ₱100,000",
+          "+ Cash Balance Beginning ₱150,000",
+          "= Cash Balance ending ₱250,000"
+        ]
+      }
+    ],
+    "explanation": "Calculations for Direct Method:\nCash from customers = Sales 5,000,000 - Increase in Gross AR 80,000 + Accounts Written Off 5,000 = 4,925,000. (Gross AR end = 380k + 20k = 400k. Gross AR beg = 310k + 10k = 320k. Write-offs = Beg Allowance 10k + Bad Debt 15k - End Allowance 20k = 5k).\nRent received = Rent income 450,000 - Inc in Rent Receivable 15,000 - Dec in Unearned Rent 10,000 = 425,000.\nInterest received = Interest income 20,000 - Inc in Investment in Bonds (amortization of discount) 5,000 = 15,000.\nCash paid to suppliers = COGS 3,000,000 - Dec in Inventory 400,000 - Inc in Accounts Payable 40,000 = 2,560,000.\nInsurance paid = Insurance expense 100,000 + Inc in Prepaid Insurance 10,000 - Inc in Insurance Payable 15,000 = 95,000.\nOther expenses paid = Other expense 1,200,000 - Depreciation (500,000) = 700,000. (Depreciation calculation: Acc Dep end (-200k) - Acc Dep beg (-200k) - Acc Dep of sold building. Sold building: Cost 800k, Proceeds 260k, Loss 40k. Book value = 300k. Acc Dep = 800k - 300k = 500k. Depr Exp = 500k).\nInterest paid = Interest expense 100,000.\nTaxes paid = Income tax 300,000 - Inc in Tax Payable 90,000 = 210,000.\nPurchase of trading securities = 100,000 (Given).\nInvesting: Sale of building = 260,000 (Given). Purchase of PPE = PPE end 2,500,000 - PPE beg 1,000,000 + Cost of sold bldg 800,000 = 2,300,000.\nFinancing: Dec in short term loan = 50,000. Inc in Notes Payable = 10,000. Inc in Capital = Cap end 2,440,000 - Cap beg 1,125,000 - Net Income 735,000 = 580,000 (Additional investment)."
+  },
+    
+  "FAR-StatementOfCashFlows-002": {
+    "subject": "FAR",
+    "topic": "Statement of Cash Flows",
+    "subtopic": "Indirect Method",
+    "type": "Constructed Response",
+    "competency": "Create",
+    "question": "Forest Company provided the following information for the preparation of a statement of cash flows for the current year:\n\nASSETS\nCash & cash equivalents: 2024=250,000; 2023=150,000\nInvestment in trading securities: 2024=120,000; 2023=0\nAccounts receivable (net): 2024=380,000; 2023=310,000\nRent receivable: 2024=25,000; 2023=10,000\nInventory: 2024=500,000; 2023=900,000\nPrepaid Insurance: 2024=50,000; 2023=40,000\nInvestment in Bonds: 2024=90,000; 2023=85,000\nProperty, plant & equipment: 2024=2,500,000; 2023=1,000,000\nAccumulated depreciation: 2024=-200,000; 2023=-200,000\nGoodwill: 2024=90,000; 2023=100,000\nTotal Assets: 2024=3,805,000; 2023=2,395,000\n\nLiabilities and Equity\nAccounts payable: 2024=120,000; 2023=80,000\nUnearned rent: 2024=20,000; 2023=30,000\nInsurance payable: 2024=60,000; 2023=45,000\nIncome tax payable: 2024=245,000; 2023=155,000\nShort-term loan payable: 2024=0; 2023=50,000\nNotes payable to bank: 2024=920,000; 2023=910,000\nCapital: 2024=2,440,000; 2023=1,125,000\nTotal Liabilities & Equity: 2024=3,805,000; 2023=2,395,000\n\nIncome Statement\nSales: 5,000,000\nCost of goods sold: -3,000,000\nGross income: 2,000,000\nRent income: 450,000\nInterest income: 20,000\nInsurance expense: -100,000\nBad debts expense: -15,000\nInterest expense: -100,000\nLoss on sale of building: -40,000\nUnrealized gain on investment: 20,000\nOther expense: -1,200,000\nIncome before tax: 1,035,000\nIncome tax: -300,000\nNet income: 735,000\n\nAdditional information for 2024\n1. During the year, the company purchased trading securities for P100,000. The fair value of the share on December 31, 2024 is P120,000.\n2. The allowance for doubtful accounts has balances of P20,000 and P10,000 as of December 31, 2024 and 2023, respectively.\n3. During 2024, the company sold an old building with historical cost of P800,000 for P260,000.\n4. The company inadvertently included the depreciation expense in the 'Other Expenses' line item.\n\nPrepare the statement of cash flows using the indirect method.",
+    "solution": [
+      {
+        "header": ["Forest Company", "Statement of Cash Flows", "For the year ended December 31, 2024"],
+        "body": [
+          "Cash flow from Operating Activities:",
+          "Net Income ₱735,000",
+          "Adjustments to reconcile net income to net cash:",
+          "+ Depreciation Expense ₱500,000",
+          "+ Loss on Sale of Building ₱40,000",
+          "- Unrealized Gain on Investment ₱(20,000)",
+          "+ Bad Debts Expense ₱15,000",
+          "+ Accounts Written Off ₱5,000",
+          "- Increase in Gross Accounts Receivable ₱(80,000)",
+          "- Increase in Rent Receivable ₱(15,000)",
+          "+ Decrease in Inventory ₱400,000",
+          "- Increase in Prepaid Insurance ₱(10,000)",
+          "- Amortization of Bond Discount ₱(5,000)",
+          "+ Increase in Accounts Payable ₱40,000",
+          "- Decrease in Unearned Rent ₱(10,000)",
+          "+ Increase in Insurance Payable ₱15,000",
+          "+ Increase in Income Tax Payable ₱90,000",
+          "- Purchase of Trading Securities ₱(100,000)",
+          "= Net Cash inflow from Operating Activities ₱1,600,000",
+          "Cash flow from Investing Activities:",
+          "+ Sale of old building ₱260,000",
+          "- Purchase of property, plant & equipment ₱(2,300,000)",
+          "= Net Cash Outflow from Investing Activities ₱(2,040,000)",
+          "Cash flow from Financing Activities:",
+          "- Payment of short-term loan ₱(50,000)",
+          "+ Proceeds from notes payable ₱10,000",
+          "+ Additional investment by owner ₱580,000",
+          "= Net Cash Inflow from Financing Activities ₱540,000",
+          "Net cash increase during the year ₱100,000",
+          "+ Cash Balance Beginning ₱150,000",
+          "= Cash Balance ending ₱250,000"
+        ]
+      }
+    ],
+    "explanation": "Calculations for Indirect Method Operating Activities:\nStart with Net Income: 735,000\nAdd back non-cash expenses: Depreciation 500,000 (calculated via Acc Depr: End -200k = Beg -200k + Sold 500k - Depr Exp 500k), Bad Debt Expense 15,000.\nAdd back non-operating losses: Loss on sale of building 40,000.\nDeduct non-cash/non-operating gains: Unrealized gain on trading securities (20,000). Amortization of bond discount embedded in interest income (5,000).\nWorking Capital Adjustments: Increase in Gross AR (80,000). Add back write-offs of (5,000) which reduced gross AR without cash. Increase in Rent Rec (15,000). Decrease in Inventory 400,000. Increase in Prepaid Insurance (10,000). Increase in AP 40,000. Decrease in Unearned Rent (10,000). Increase in Ins Payable 15,000. Increase in Tax Payable 90,000.\nCash Flows from Trading Securities: Purchase of trading securities (100,000).\nTotal Operating Cash Flow = 735k + 500k + 40k - 20k + 15k + 5k - 80k - 15k + 400k - 10k - 5k + 40k - 10k + 15k + 90k - 100k = 1,600,000.\nInvesting and Financing sections remain identical to the direct method."
+  }
+}
+  ]
