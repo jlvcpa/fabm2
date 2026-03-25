@@ -4,6 +4,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebas
 import { qbMerchMultipleChoice } from "./questionBank/qbMerchMultipleChoice.js";
 import { qbMerchProblemSolving } from "./questionBank/qbMerchProblemSolving.js";
 import { qbMerchJournalizing } from "./questionBank/qbMerchJournalizing.js";
+import { qbConstructedResponse } from "./questionBank/qbConstructedResponse.js"; // <-- NEW IMPORT
 
 const firebaseConfig = {
     apiKey: "AIzaSyAgOsKAZWwExUzupxSNytsfOo9BOppF0ng",
@@ -137,7 +138,6 @@ function attachCreatorListeners() {
 
     document.getElementById('btn-save-activity').addEventListener('click', saveActivityToFirebase);
 
-    // Global listener to close custom dropdowns when clicking outside
     if (!window.__qcDropdownListenerAdded) {
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.custom-dropdown')) {
@@ -171,7 +171,7 @@ function addTestSectionUI(existingData = null) {
                     <option value="Problem Solving">Problem Solving</option>
                     <option value="Journalizing">Journalizing</option>
                     <option value="Journalizing and Preparing SCE (Corp)">Journalizing and Preparing SCE (Corp)</option>
-                </select>
+                    <option value="Constructed Response">Constructed Response</option> </select>
             </div>
             <div>
                 <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Qty</label>
@@ -254,7 +254,6 @@ function addTestSectionUI(existingData = null) {
     const limitInput = div.querySelector('.section-time-limit');
     const expireInput = div.querySelector('.section-expire-time');
 
-    // Helper to setup custom dropdowns
     const setupCustomDropdown = (inputClass, defaultLabel) => {
         const dropdown = div.querySelector(inputClass).closest('.custom-dropdown');
         const toggle = dropdown.querySelector('.dropdown-toggle');
@@ -264,7 +263,6 @@ function addTestSectionUI(existingData = null) {
 
         toggle.addEventListener('click', (e) => {
             e.stopPropagation();
-            // Close other dropdowns inside this section card
             div.querySelectorAll('.dropdown-menu').forEach(m => {
                 if (m !== menu) m.classList.add('hidden');
             });
@@ -369,10 +367,12 @@ function addTestSectionUI(existingData = null) {
 function updateDropdownOptions(menuElement, hiddenInput, type, targetField, filterCriteria) {
     let sourceData = [];
     
+    // UPDATED TO INCLUDE CONSTRUCTED RESPONSE MAPPING
     if (type === "Multiple Choice") sourceData = qbMerchMultipleChoice;
     else if (type === "Problem Solving") sourceData = qbMerchProblemSolving;
     else if (type === "Journalizing") sourceData = qbMerchJournalizing;
     else if (type === "Journalizing and Preparing SCE (Corp)") sourceData = qbMerchJournalizing;   
+    else if (type === "Constructed Response") sourceData = qbConstructedResponse; 
 
     if (!sourceData || sourceData.length === 0) {
         menuElement.innerHTML = '<div class="p-3 text-xs text-gray-500 italic">No data found</div>';
