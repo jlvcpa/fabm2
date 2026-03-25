@@ -588,6 +588,7 @@ async function generateQuizContent(activityData, savedState = null) {
         if (section.type === "Multiple Choice") localSource = qbMerchMultipleChoice;
         else if (section.type === "Problem Solving") localSource = qbMerchProblemSolving;
         else if (section.type === "Journalizing" || section.type === "Journalizing and Preparing SCE (Corp)") localSource = qbMerchJournalizing;
+        else if (section.type === "Constructed Response") localSource = qbConstructedResponse;
 
         const flattenedCandidates = localSource.map(obj => {
             const id = Object.keys(obj)[0];
