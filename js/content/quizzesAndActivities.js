@@ -12,6 +12,7 @@ import { ConstructedResponseHandler } from "./activityHandlers/constructedRespon
 import { qbMerchMultipleChoice } from "./questionBank/qbMerchMultipleChoice.js";
 import { qbMerchProblemSolving } from "./questionBank/qbMerchProblemSolving.js";
 import { qbMerchJournalizing } from "./questionBank/qbMerchJournalizing.js";
+import { qbConstructedResponse } from "./questionBank/qbConstructedResponse.js";
 
 import { renderStudentResultDetail } from "./activityResultPreview.js";
 
