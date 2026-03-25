@@ -1,7 +1,7 @@
 export const qbConstructedResponse = [
   { "FAR-StatementOfCashFlows-001": {
     "subject": "FAR",
-    "topic": "Statement of Cash Flows (Direct)",
+    "topic": "Statement of Cash Flows",
     "subtopic": "Direct Method",
     "type": "Constructed Response",
     "competency": "Create",
@@ -41,7 +41,7 @@ export const qbConstructedResponse = [
   },
   { "FAR-StatementOfCashFlows-002": {
     "subject": "FAR",
-    "topic": "Statement of Cash Flows (Indirect)",
+    "topic": "Statement of Cash Flows",
     "subtopic": "Indirect Method",
     "type": "Constructed Response",
     "competency": "Create",
