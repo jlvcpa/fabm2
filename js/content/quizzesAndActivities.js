@@ -81,7 +81,7 @@ window.handleJournalIndent = function(txId, row) {
 const globalQuestionMap = new Map();
 function buildQuestionMap() {
     if (globalQuestionMap.size > 0) return;
-    const allSources = [qbMerchMultipleChoice, qbMerchProblemSolving, qbMerchJournalizing];
+    const allSources = [qbMerchMultipleChoice, qbMerchProblemSolving, qbMerchJournalizing, qbConstructedResponse];
     allSources.forEach(sourceArray => {
         if(Array.isArray(sourceArray)) {
             sourceArray.forEach(item => {
