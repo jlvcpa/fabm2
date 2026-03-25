@@ -6,6 +6,7 @@ export const ConstructedResponseHandler = {
             : (qIdx === 0 ? 'tracker-btn w-9 h-9 m-0.5 rounded-full border bg-blue-600 text-white border-blue-600 font-bold flex items-center justify-center ring-2 ring-blue-300' : 'tracker-btn w-9 h-9 m-0.5 rounded-full border bg-white text-gray-700 border-gray-300 font-bold flex items-center justify-center hover:bg-blue-100');
         return `<button type="button" class="${trackerClass}" data-target-question="${uiId}" ${q.isSaved ? 'data-is-answered="true"' : ''}>${qIdx + 1}</button>`;
     },
+    
     renderQuestion: (q, qIdx, uiId, savedValue, disabledAttr, dimClass, hiddenClass) => {
         const val = savedValue || '';
         const innerContent = `<textarea name="${uiId}" class="input-checker w-full mt-2 p-3 border border-gray-300 rounded h-64 md:h-80 focus:ring-2 focus:ring-blue-500 outline-none font-mono text-sm resize-y ${dimClass}" placeholder="Type your comprehensive statement or answer here..." ${disabledAttr}>${val}</textarea>`;
