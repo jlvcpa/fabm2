@@ -58,6 +58,13 @@ export async function renderQuizActivityCreator(container) {
                                     <option value="S2T2 Formative Test 01">S2T2 Formative Test 01</option>
                                     <option value="S2T2 Formative Test 02">S2T2 Formative Test 02</option>
                                     <option value="S2T2 Formative Test 03">S2T2 Formative Test 03</option>
+                                    <option value="S2T2 Formative Test 04">S2T2 Formative Test 04</option>
+                                    <option value="S2T2 Formative Test 05">S2T2 Formative Test 05</option>
+                                    <option value="S2T2 Formative Test 06">S2T2 Formative Test 06</option>
+                                    <option value="S2T2 Formative Test 07">S2T2 Formative Test 07</option>
+                                    <option value="S2T2 Formative Test 08">S2T2 Formative Test 08</option>
+                                    <option value="S2T2 Formative Test 09">S2T2 Formative Test 09</option>
+                                    <option value="S2T2 Formative Test 10">S2T2 Formative Test 10</option>
                                     <option value="S2T2 Coursework 01">S2T2 Coursework 01</option>
                                     <option value="S2T2 Coursework 02">S2T2 Coursework 02</option>
                                     <option value="S2T2 Summative Test 01">S2T2 Summative Test 01</option>
@@ -129,6 +136,18 @@ function attachCreatorListeners() {
     document.getElementById('btn-add-section').addEventListener('click', () => addTestSectionUI());
 
     document.getElementById('btn-save-activity').addEventListener('click', saveActivityToFirebase);
+
+    // Global listener to close custom dropdowns when clicking outside
+    if (!window.__qcDropdownListenerAdded) {
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.custom-dropdown')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.add('hidden');
+                });
+            }
+        });
+        window.__qcDropdownListenerAdded = true;
+    }
 }
 
 function addTestSectionUI(existingData = null) {
@@ -136,18 +155,18 @@ function addTestSectionUI(existingData = null) {
     const index = container.children.length + 1;
     
     const div = document.createElement('div');
-    div.className = "bg-gray-50 p-3 rounded border border-gray-300 shadow-sm relative text-sm section-card";
+    div.className = "bg-white p-4 rounded border border-gray-300 shadow-sm relative text-sm section-card";
     
     div.innerHTML = `
         <div class="absolute top-2 right-2 cursor-pointer text-red-400 hover:text-red-600" onclick="this.parentElement.remove()">
             <i class="fas fa-times"></i>
         </div>
-        <h4 class="font-bold text-gray-800 mb-2">Test Section ${index}</h4>
+        <h4 class="font-bold text-gray-800 mb-3 border-b pb-1">Test Section ${index}</h4>
         
-        <div class="grid grid-cols-2 gap-2 mb-2">
+        <div class="grid grid-cols-2 gap-4 mb-3">
             <div>
-                <label class="block text-xs text-gray-500 mb-1">Type</label>
-                <select class="section-type w-full p-1 border rounded bg-white">
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Type</label>
+                <select class="section-type w-full p-2 border rounded bg-gray-50">
                     <option value="Multiple Choice">Multiple Choice</option>
                     <option value="Problem Solving">Problem Solving</option>
                     <option value="Journalizing">Journalizing</option>
@@ -155,151 +174,152 @@ function addTestSectionUI(existingData = null) {
                 </select>
             </div>
             <div>
-                <label class="block text-xs text-gray-500 mb-1">Qty</label>
-                <input type="number" class="section-count w-full p-1 border rounded bg-white" value="5">
+                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Qty</label>
+                <input type="number" class="section-count w-full p-2 border rounded bg-gray-50" value="5">
             </div>
         </div>
         
-        <div class="mb-2">
-            <label class="block text-xs text-orange-600 font-bold mb-1">1. Filter by Subject</label>
-            <div class="flex flex-col gap-1">
-                <textarea class="section-subject-area w-full p-1 border rounded bg-white h-8 text-xs bg-orange-50" placeholder="All Subjects (Select below to filter)..."></textarea>
-                <select multiple class="section-subject-select w-full p-1 border rounded bg-white text-xs h-32 cursor-pointer scrollbar-thin">
-                    <option value="">Loading...</option>
-                </select>
+        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Filters</label>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-3 bg-gray-50 p-3 rounded border border-gray-200">
+            <div class="relative custom-dropdown">
+                <label class="block text-[10px] text-orange-600 font-bold mb-1 uppercase">1. Subject</label>
+                <button type="button" class="dropdown-toggle w-full flex items-center justify-between p-2 border border-orange-200 rounded bg-white text-xs text-left min-h-[34px] hover:border-orange-400 transition-colors">
+                    <span class="dropdown-label whitespace-normal break-words text-orange-900 font-medium leading-tight">All Subjects</span>
+                    <i class="fas fa-chevron-down ml-2 text-orange-400 shrink-0"></i>
+                </button>
+                <div class="dropdown-menu absolute hidden z-50 bg-white border border-gray-300 rounded shadow-xl mt-1 min-w-full w-max max-h-[300px] overflow-y-auto"></div>
+                <input type="hidden" class="section-subject-area" value="">
+            </div>
+
+            <div class="relative custom-dropdown">
+                <label class="block text-[10px] text-purple-600 font-bold mb-1 uppercase">2. Competency</label>
+                <button type="button" class="dropdown-toggle w-full flex items-center justify-between p-2 border border-purple-200 rounded bg-white text-xs text-left min-h-[34px] hover:border-purple-400 transition-colors">
+                    <span class="dropdown-label whitespace-normal break-words text-purple-900 font-medium leading-tight">All Competencies</span>
+                    <i class="fas fa-chevron-down ml-2 text-purple-400 shrink-0"></i>
+                </button>
+                <div class="dropdown-menu absolute hidden z-50 bg-white border border-gray-300 rounded shadow-xl mt-1 min-w-full w-max max-h-[300px] overflow-y-auto"></div>
+                <input type="hidden" class="section-competency-area" value="">
+            </div>
+
+            <div class="relative custom-dropdown">
+                <label class="block text-[10px] text-blue-600 font-bold mb-1 uppercase">3. Topic</label>
+                <button type="button" class="dropdown-toggle w-full flex items-center justify-between p-2 border border-blue-200 rounded bg-white text-xs text-left min-h-[34px] hover:border-blue-400 transition-colors">
+                    <span class="dropdown-label whitespace-normal break-words text-blue-900 font-medium leading-tight">All Topics</span>
+                    <i class="fas fa-chevron-down ml-2 text-blue-400 shrink-0"></i>
+                </button>
+                <div class="dropdown-menu absolute hidden z-50 bg-white border border-gray-300 rounded shadow-xl mt-1 min-w-full w-max max-h-[300px] overflow-y-auto"></div>
+                <input type="hidden" class="section-topics-area" value="">
+            </div>
+
+            <div class="relative custom-dropdown">
+                <label class="block text-[10px] text-green-600 font-bold mb-1 uppercase">4. Subtopic</label>
+                <button type="button" class="dropdown-toggle w-full flex items-center justify-between p-2 border border-green-200 rounded bg-white text-xs text-left min-h-[34px] hover:border-green-400 transition-colors">
+                    <span class="dropdown-label whitespace-normal break-words text-green-900 font-medium leading-tight">All Subtopics</span>
+                    <i class="fas fa-chevron-down ml-2 text-green-400 shrink-0"></i>
+                </button>
+                <div class="dropdown-menu absolute hidden z-50 bg-white border border-gray-300 rounded shadow-xl mt-1 min-w-full w-max max-h-[300px] overflow-y-auto"></div>
+                <input type="hidden" class="section-subtopics-area" value="">
             </div>
         </div>
 
-        <div class="mb-2">
-            <label class="block text-xs text-purple-600 font-bold mb-1">2. Filter by Competency</label>
-            <div class="flex flex-col gap-1">
-                <textarea class="section-competency-area w-full p-1 border rounded bg-white h-8 text-xs bg-purple-50" placeholder="All Competencies (Select below to filter)..."></textarea>
-                <select multiple class="section-competency-select w-full p-1 border rounded bg-white text-xs h-32 cursor-pointer scrollbar-thin">
-                    <option value="">Loading...</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="mb-2">
-            <label class="block text-xs text-blue-600 font-bold mb-1">3. Filter by Topic</label>
-            <div class="flex flex-col gap-1">
-                <textarea class="section-topics-area w-full p-1 border rounded bg-white h-8 text-xs bg-blue-50" placeholder="All Topics (Select below to filter)..."></textarea>
-                <select multiple class="section-topic-select w-full p-1 border rounded bg-white text-xs h-32 cursor-pointer scrollbar-thin">
-                    <option value="">Loading...</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="mb-2">
-            <label class="block text-xs text-green-600 font-bold mb-1">4. Filter by Subtopic</label>
-             <div class="flex flex-col gap-1">
-                <textarea class="section-subtopics-area w-full p-1 border rounded bg-white h-8 text-xs bg-green-50" placeholder="All Subtopics (Select below to filter)..."></textarea>
-                <select multiple class="section-subtopic-select w-full p-1 border rounded bg-white text-xs h-32 cursor-pointer scrollbar-thin">
-                    <option value="">Loading...</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-3 gap-2 mb-2 bg-blue-100 p-2 rounded">
+        <div class="grid grid-cols-3 gap-2 mb-3 bg-blue-50 border border-blue-100 p-3 rounded">
             <div>
                 <label class="block text-[10px] font-bold text-blue-800 uppercase mb-1">Start</label>
-                <input type="datetime-local" class="section-start-time w-full p-1 border rounded text-xs">
+                <input type="datetime-local" class="section-start-time w-full p-1.5 border rounded text-xs">
             </div>
             <div>
                 <label class="block text-[10px] font-bold text-blue-800 uppercase mb-1">Mins</label>
-                <input type="number" class="section-time-limit w-full p-1 border rounded text-xs" value="60">
+                <input type="number" class="section-time-limit w-full p-1.5 border rounded text-xs" value="60">
             </div>
             <div>
                 <label class="block text-[10px] font-bold text-blue-800 uppercase mb-1">Expire</label>
-                <input type="datetime-local" class="section-expire-time w-full p-1 border rounded text-xs">
+                <input type="datetime-local" class="section-expire-time w-full p-1.5 border rounded text-xs">
             </div>
         </div>
 
-        <div class="mb-2">
-            <label class="block text-xs text-gray-500 mb-1">Instructions</label>
-            <input type="text" class="section-instructions w-full p-1 border rounded bg-white">
+        <div class="mb-3">
+            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Instructions</label>
+            <input type="text" class="section-instructions w-full p-2 border rounded bg-gray-50">
         </div>
 
         <div>
-            <label class="block text-xs text-gray-500 mb-1">Rubrics</label>
-            <textarea class="section-rubrics w-full p-1 border rounded bg-white h-12"></textarea>
+            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Rubrics</label>
+            <textarea class="section-rubrics w-full p-2 border rounded bg-gray-50 h-12"></textarea>
         </div>
     `;
     container.appendChild(div);
 
     const typeSelect = div.querySelector('.section-type');
-    
-    const subjectSelect = div.querySelector('.section-subject-select');
-    const subjectArea = div.querySelector('.section-subject-area');
-
-    const competencySelect = div.querySelector('.section-competency-select');
-    const competencyArea = div.querySelector('.section-competency-area');
-    
-    const topicSelect = div.querySelector('.section-topic-select');
-    const topicArea = div.querySelector('.section-topics-area');
-    
-    const subtopicSelect = div.querySelector('.section-subtopic-select');
-    const subtopicArea = div.querySelector('.section-subtopics-area');
-
     const startInput = div.querySelector('.section-start-time');
     const limitInput = div.querySelector('.section-time-limit');
     const expireInput = div.querySelector('.section-expire-time');
 
+    // Helper to setup custom dropdowns
+    const setupCustomDropdown = (inputClass, defaultLabel) => {
+        const dropdown = div.querySelector(inputClass).closest('.custom-dropdown');
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        const menu = dropdown.querySelector('.dropdown-menu');
+        const hiddenInput = dropdown.querySelector(inputClass);
+        const label = dropdown.querySelector('.dropdown-label');
+
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Close other dropdowns inside this section card
+            div.querySelectorAll('.dropdown-menu').forEach(m => {
+                if (m !== menu) m.classList.add('hidden');
+            });
+            menu.classList.toggle('hidden');
+        });
+
+        menu.addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox') {
+                const checked = Array.from(menu.querySelectorAll('input:checked')).map(cb => cb.value);
+                hiddenInput.value = checked.join(', ');
+                label.textContent = checked.length > 0 ? checked.join(', ') : defaultLabel;
+                refreshAllDropdowns();
+            }
+        });
+
+        return { menu, hiddenInput, label, defaultLabel };
+    };
+
+    const subj = setupCustomDropdown('.section-subject-area', 'All Subjects');
+    const comp = setupCustomDropdown('.section-competency-area', 'All Competencies');
+    const topic = setupCustomDropdown('.section-topics-area', 'All Topics');
+    const subtopic = setupCustomDropdown('.section-subtopics-area', 'All Subtopics');
+
     const refreshAllDropdowns = () => {
         const filters = {
-            subject: subjectArea.value ? subjectArea.value.split(',').map(s => s.trim()).filter(Boolean) : [],
-            competency: competencyArea.value ? competencyArea.value.split(',').map(s => s.trim()).filter(Boolean) : [],
-            topic: topicArea.value ? topicArea.value.split(',').map(s => s.trim()).filter(Boolean) : [],
-            subtopic: subtopicArea.value ? subtopicArea.value.split(',').map(s => s.trim()).filter(Boolean) : []
+            subject: subj.hiddenInput.value ? subj.hiddenInput.value.split(',').map(s => s.trim()).filter(Boolean) : [],
+            competency: comp.hiddenInput.value ? comp.hiddenInput.value.split(',').map(s => s.trim()).filter(Boolean) : [],
+            topic: topic.hiddenInput.value ? topic.hiddenInput.value.split(',').map(s => s.trim()).filter(Boolean) : [],
+            subtopic: subtopic.hiddenInput.value ? subtopic.hiddenInput.value.split(',').map(s => s.trim()).filter(Boolean) : []
         };
         const type = typeSelect.value;
 
-        updateDropdownOptions(subjectSelect, type, 'subject', { competency: filters.competency, topic: filters.topic, subtopic: filters.subtopic });
-        updateDropdownOptions(competencySelect, type, 'competency', { subject: filters.subject, topic: filters.topic, subtopic: filters.subtopic });
-        updateDropdownOptions(topicSelect, type, 'topic', { subject: filters.subject, competency: filters.competency, subtopic: filters.subtopic });
-        updateDropdownOptions(subtopicSelect, type, 'subtopic', { subject: filters.subject, competency: filters.competency, topic: filters.topic });
+        updateDropdownOptions(subj.menu, subj.hiddenInput, type, 'subject', { competency: filters.competency, topic: filters.topic, subtopic: filters.subtopic });
+        updateDropdownOptions(comp.menu, comp.hiddenInput, type, 'competency', { subject: filters.subject, topic: filters.topic, subtopic: filters.subtopic });
+        updateDropdownOptions(topic.menu, topic.hiddenInput, type, 'topic', { subject: filters.subject, competency: filters.competency, subtopic: filters.subtopic });
+        updateDropdownOptions(subtopic.menu, subtopic.hiddenInput, type, 'subtopic', { subject: filters.subject, competency: filters.competency, topic: filters.topic });
     };
 
     refreshAllDropdowns();
 
     typeSelect.addEventListener('change', () => {
-        subjectArea.value = "";
-        competencyArea.value = "";
-        topicArea.value = "";
-        subtopicArea.value = "";
+        subj.hiddenInput.value = "";
+        subj.label.textContent = subj.defaultLabel;
+        
+        comp.hiddenInput.value = "";
+        comp.label.textContent = comp.defaultLabel;
+        
+        topic.hiddenInput.value = "";
+        topic.label.textContent = topic.defaultLabel;
+        
+        subtopic.hiddenInput.value = "";
+        subtopic.label.textContent = subtopic.defaultLabel;
+        
         refreshAllDropdowns();
     });
-
-    const attachInteraction = (select, area) => {
-        select.addEventListener('change', (e) => {
-            const selectedVals = Array.from(select.selectedOptions).map(opt => opt.value);
-            let current = area.value ? area.value.split(',').map(s => s.trim()).filter(Boolean) : [];
-            
-            selectedVals.forEach(val => {
-                if(!current.includes(val)) current.push(val);
-            });
-            
-            area.value = current.join(', ');
-            select.selectedIndex = -1; 
-            refreshAllDropdowns();
-        });
-    };
-
-    const attachManualTyping = (area) => {
-        area.addEventListener('input', () => {
-             refreshAllDropdowns();
-        });
-    };
-
-    attachInteraction(subjectSelect, subjectArea);
-    attachInteraction(competencySelect, competencyArea);
-    attachInteraction(topicSelect, topicArea);
-    attachInteraction(subtopicSelect, subtopicArea);
-
-    attachManualTyping(subjectArea);
-    attachManualTyping(competencyArea);
-    attachManualTyping(topicArea);
-    attachManualTyping(subtopicArea);
 
     limitInput.addEventListener('input', () => {
         if(startInput.value && limitInput.value) {
@@ -326,10 +346,17 @@ function addTestSectionUI(existingData = null) {
         div.querySelector('.section-instructions').value = existingData.instructions;
         div.querySelector('.section-rubrics').value = existingData.gradingRubrics;
         
-        subjectArea.value = existingData.subjects || "";
-        competencyArea.value = existingData.competencies || "";
-        topicArea.value = existingData.topics || "";
-        subtopicArea.value = existingData.subtopics || "";
+        subj.hiddenInput.value = existingData.subjects || "";
+        subj.label.textContent = existingData.subjects || subj.defaultLabel;
+
+        comp.hiddenInput.value = existingData.competencies || "";
+        comp.label.textContent = existingData.competencies || comp.defaultLabel;
+
+        topic.hiddenInput.value = existingData.topics || "";
+        topic.label.textContent = existingData.topics || topic.defaultLabel;
+
+        subtopic.hiddenInput.value = existingData.subtopics || "";
+        subtopic.label.textContent = existingData.subtopics || subtopic.defaultLabel;
 
         if(existingData.dateTimeStart) startInput.value = existingData.dateTimeStart;
         if(existingData.timeLimit) limitInput.value = existingData.timeLimit;
@@ -339,7 +366,7 @@ function addTestSectionUI(existingData = null) {
     }
 }
 
-function updateDropdownOptions(selectElement, type, targetField, filterCriteria) {
+function updateDropdownOptions(menuElement, hiddenInput, type, targetField, filterCriteria) {
     let sourceData = [];
     
     if (type === "Multiple Choice") sourceData = qbMerchMultipleChoice;
@@ -348,7 +375,7 @@ function updateDropdownOptions(selectElement, type, targetField, filterCriteria)
     else if (type === "Journalizing and Preparing SCE (Corp)") sourceData = qbMerchJournalizing;   
 
     if (!sourceData || sourceData.length === 0) {
-        selectElement.innerHTML = '<option value="">No data found</option>';
+        menuElement.innerHTML = '<div class="p-3 text-xs text-gray-500 italic">No data found</div>';
         return;
     }
 
@@ -380,25 +407,27 @@ function updateDropdownOptions(selectElement, type, targetField, filterCriteria)
         });
 
         const sortedValues = Array.from(uniqueValues).filter(t => t).sort();
+        const currentSelected = hiddenInput.value ? hiddenInput.value.split(',').map(s => s.trim()) : [];
 
-        selectElement.innerHTML = ''; 
+        menuElement.innerHTML = ''; 
         if (sortedValues.length === 0) {
-            const opt = document.createElement('option');
-            opt.text = "-- No matching options --";
-            opt.disabled = true;
-            selectElement.appendChild(opt);
+            menuElement.innerHTML = `<div class="p-3 text-xs text-gray-500 italic">No matching ${targetField}s</div>`;
         } else {
             sortedValues.forEach(val => {
-                const opt = document.createElement('option');
-                opt.value = val;
-                opt.text = val;
-                selectElement.appendChild(opt);
+                const isChecked = currentSelected.includes(val);
+                const item = document.createElement('label');
+                item.className = "flex items-start gap-2 p-2.5 hover:bg-gray-100 cursor-pointer text-xs whitespace-nowrap border-b border-gray-50 last:border-0 transition-colors";
+                item.innerHTML = `
+                    <input type="checkbox" class="mt-0.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500" value="${val}" ${isChecked ? 'checked' : ''}>
+                    <span class="text-gray-800 flex-1">${val}</span>
+                `;
+                menuElement.appendChild(item);
             });
         }
 
     } catch (e) {
         console.error(`Error filtering ${targetField}:`, e);
-        selectElement.innerHTML = '<option value="">Error loading</option>';
+        menuElement.innerHTML = '<div class="p-3 text-xs text-red-500 italic">Error loading</div>';
     }
 }
 
