@@ -7,6 +7,7 @@ import { MultipleChoiceHandler } from "./activityHandlers/multipleChoiceHandler.
 import { ProblemSolvingHandler } from "./activityHandlers/problemSolvingHandler.js";
 import { JournalizingHandler } from "./activityHandlers/journalizingHandler.js";
 import { IntegratedSceHandler } from "./activityHandlers/integratedSceHandler.js";
+import { ConstructedResponseHandler } from "./activityHandlers/constructedResponseHandler.js";
 
 import { qbMerchMultipleChoice } from "./questionBank/qbMerchMultipleChoice.js";
 import { qbMerchProblemSolving } from "./questionBank/qbMerchProblemSolving.js";
@@ -34,7 +35,8 @@ const Handlers = {
     "Multiple Choice": MultipleChoiceHandler,
     "Problem Solving": ProblemSolvingHandler,
     "Journalizing": JournalizingHandler,
-    "Journalizing and Preparing SCE (Corp)": IntegratedSceHandler
+    "Journalizing and Preparing SCE (Corp)": IntegratedSceHandler,
+    "Constructed Response": ConstructedResponseHandler
 };
 
 // --- GLOBAL HANDLERS (MDAS & Indenting) ---
