@@ -31,6 +31,7 @@ import { evaluateMultipleChoice, renderMultipleChoicePreview } from './previewHa
 import { evaluateProblemSolving, renderProblemSolvingPreview } from './previewHandlers/problemSolvingResultPreviewHandler.js';
 import { evaluateJournalizing, renderJournalizingPreview } from './previewHandlers/journalizingResultPreviewHandler.js';
 import { renderIntegratedScePreview } from './previewHandlers/integratedSceResultPreviewHandler.js';
+import { evaluateConstructedResponse, renderConstructedResponsePreview } from './previewHandlers/constructedResponseResultPreviewHandler.js';
 
 // Modular Print Handler
 import { handlePrint } from './printHandlers/printResultPreview.js';
@@ -217,6 +218,11 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                     secMax += ev.maxScore;
                     secScore += ev.score;
                 }
+                else if (section.type === "Constructed Response") {
+                    const ev = evaluateConstructedResponse(liveQ, studentAns);
+                    secMax += ev.maxScore;
+                    secScore += ev.score;
+                }
                 else if (section.type === "Journalizing") {
                     const ev = evaluateJournalizing(liveQ, studentAns, cleanAmt);
                     secMax += ev.secMax;
@@ -337,6 +343,9 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                 }
                                 else if (section.type === "Problem Solving") {
                                     return renderProblemSolvingPreview(q, qIdx, liveQ, studentAns);
+                                }
+                                else if (section.type === "Constructed Response") {
+                                    return renderConstructedResponsePreview(q, qIdx, liveQ, studentAns);
                                 }
                                 return null;
                             })}
