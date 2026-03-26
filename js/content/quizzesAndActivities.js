@@ -470,21 +470,44 @@ async function renderQuizRunner(data, user, customRunner = null) {
     const expireDate = data.dateTimeExpire ? new Date(data.dateTimeExpire) : new Date(data.testQuestions?.[0]?.dateTimeExpire);
     
     if (now > expireDate && user.role !== 'teacher') {
+        const notificationMsg = savedState ? 'The activity has expired and you failed to complete it.' : 'The activity has expired and you failed to answer it.';
+        
         container.innerHTML = `
-            <div class="h-full flex flex-col items-center justify-center text-center p-8 bg-white">
-                <div class="bg-red-50 p-10 rounded-2xl border-2 border-red-100 shadow-sm max-w-md">
+            <div class="h-full flex flex-col items-center justify-center text-center p-8 bg-white overflow-y-auto">
+                <div class="bg-red-50 p-10 rounded-2xl border-2 border-red-100 shadow-sm max-w-md w-full my-auto">
                     <i class="fas fa-clock text-red-400 text-6xl mb-6"></i>
                     <h2 class="text-2xl font-bold text-gray-800 mb-2">Activity Expired</h2>
                     <p class="text-gray-500 mb-6">The deadline for this activity was <strong>${expireDate.toLocaleString()}</strong>.</p>
-                    <div class="p-4 bg-red-100 text-red-800 rounded-lg font-medium text-sm">
+                    <div class="p-4 bg-red-100 text-red-800 rounded-lg font-medium text-sm mb-6">
                         <i class="fas fa-exclamation-circle mr-2"></i>
-                        The activity has expired and you failed to answer or complete it.
+                        ${notificationMsg}
                     </div>
-                    <button onclick="document.getElementById('qa-toggle-sidebar').click()" class="mt-8 px-6 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition shadow">
-                        Return to List
-                    </button>
+                    <div id="expired-action-container" class="flex flex-col gap-3">
+                        <button id="btn-force-submit-expired" class="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition shadow w-full">
+                            Submit Activity and View Score
+                        </button>
+                        <button onclick="document.getElementById('qa-toggle-sidebar').click()" class="px-6 py-3 bg-gray-800 text-white font-bold rounded-lg hover:bg-gray-900 transition shadow w-full">
+                            Return to List
+                        </button>
+                    </div>
                 </div>
             </div>`;
+            
+        document.getElementById('btn-force-submit-expired').addEventListener('click', async () => {
+            const actionContainer = document.getElementById('expired-action-container');
+            actionContainer.innerHTML = '<div class="text-blue-600 font-bold p-4"><i class="fas fa-spinner fa-spin mr-2 text-2xl"></i><br>Processing submission...</div>';
+            
+            const generatedContent = await generateQuizContent(data, savedState);
+            
+            const hiddenForm = document.createElement('form');
+            hiddenForm.id = 'quiz-form';
+            hiddenForm.style.display = 'none';
+            document.body.appendChild(hiddenForm);
+            
+            await submitQuiz(data, generatedContent.data, user, true, true, savedState);
+            
+            hiddenForm.remove();
+        });
         return;
     }
 
@@ -597,7 +620,6 @@ async function generateQuizContent(activityData, savedState = null) {
         });
 
         let candidates = flattenedCandidates.filter(q => {
-            // Now it checks the dynamic subjects array instead of being hardcoded
             const subjectMatch = sSubjects.length === 0 || sSubjects.includes(q.subject);
             const topicMatch = sTopics.length === 0 || sTopics.includes(q.topic);
             const compMatch = sCompetencies.length === 0 || sCompetencies.includes(q.competency);
@@ -769,8 +791,8 @@ function initializeQuizManager(activityData, questionData, user, savedState) {
                 if (!hasSubmittedOnExpire) {
                     hasSubmittedOnExpire = true;
                     sectionIntervals.forEach(i => clearInterval(i));
-                    alert("Time is up! Your progress is being auto-saved and the activity will be locked.");
-                    saveProgress(activityData, questionData, user, true);
+                    alert("Time has expired. Unanswered questions were submitted unanswered.");
+                    submitQuiz(activityData, questionData, user, true, true, savedState);
                 }
             } else {
                 const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -911,7 +933,7 @@ async function saveProgress(activityData, questionData, user, forceSave = false)
     }
 }
 
-async function submitQuiz(activityData, questionData, user, isFinal = false, forceSubmit = false) {
+async function submitQuiz(activityData, questionData, user, isFinal = false, forceSubmit = false, savedState = null) {
     if(!forceSubmit && !confirm("Are you sure you want to submit? This is final.")) return;
     
     if(currentAntiCheat) {
@@ -922,7 +944,7 @@ async function submitQuiz(activityData, questionData, user, isFinal = false, for
     sectionIntervals.forEach(i => clearInterval(i));
 
     const form = document.getElementById('quiz-form');
-    const formData = new FormData(form);
+    const formData = form ? new FormData(form) : new FormData(); 
     const answers = {};
     const questionsTaken = {};
 
@@ -930,8 +952,15 @@ async function submitQuiz(activityData, questionData, user, isFinal = false, for
         questionsTaken[q.uiId] = { dbId: q.dbId, questionText: q.questionText, type: q.type };
         const handler = Handlers[q.type];
         if (handler) {
-            const ext = handler.extractData(q.uiId, formData, form);
-            answers[q.uiId] = ext.value;
+            const ext = handler.extractData(q.uiId, formData, form || document.createElement('form'));
+            
+            if (ext.hasValue) {
+                answers[q.uiId] = ext.value;
+            } else if (savedState && savedState.answers && savedState.answers[q.uiId] !== undefined) {
+                answers[q.uiId] = savedState.answers[q.uiId];
+            } else {
+                answers[q.uiId] = ext.value; 
+            }
         }
     });
 
