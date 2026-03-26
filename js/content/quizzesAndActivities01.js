@@ -7,10 +7,12 @@ import { MultipleChoiceHandler } from "./activityHandlers/multipleChoiceHandler.
 import { ProblemSolvingHandler } from "./activityHandlers/problemSolvingHandler.js";
 import { JournalizingHandler } from "./activityHandlers/journalizingHandler.js";
 import { IntegratedSceHandler } from "./activityHandlers/integratedSceHandler.js";
+import { ConstructedResponseHandler } from "./activityHandlers/constructedResponseHandler.js";
 
 import { qbMerchMultipleChoice } from "./questionBank/qbMerchMultipleChoice.js";
 import { qbMerchProblemSolving } from "./questionBank/qbMerchProblemSolving.js";
 import { qbMerchJournalizing } from "./questionBank/qbMerchJournalizing.js";
+import { qbConstructedResponse } from "./questionBank/qbConstructedResponse.js";
 
 import { renderStudentResultDetail } from "./activityResultPreview.js";
 
@@ -34,7 +36,8 @@ const Handlers = {
     "Multiple Choice": MultipleChoiceHandler,
     "Problem Solving": ProblemSolvingHandler,
     "Journalizing": JournalizingHandler,
-    "Journalizing and Preparing SCE (Corp)": IntegratedSceHandler
+    "Journalizing and Preparing SCE (Corp)": IntegratedSceHandler,
+    "Constructed Response": ConstructedResponseHandler
 };
 
 // --- GLOBAL HANDLERS (MDAS & Indenting) ---
@@ -79,7 +82,7 @@ window.handleJournalIndent = function(txId, row) {
 const globalQuestionMap = new Map();
 function buildQuestionMap() {
     if (globalQuestionMap.size > 0) return;
-    const allSources = [qbMerchMultipleChoice, qbMerchProblemSolving, qbMerchJournalizing];
+    const allSources = [qbMerchMultipleChoice, qbMerchProblemSolving, qbMerchJournalizing, qbConstructedResponse];
     allSources.forEach(sourceArray => {
         if(Array.isArray(sourceArray)) {
             sourceArray.forEach(item => {
@@ -586,6 +589,7 @@ async function generateQuizContent(activityData, savedState = null) {
         if (section.type === "Multiple Choice") localSource = qbMerchMultipleChoice;
         else if (section.type === "Problem Solving") localSource = qbMerchProblemSolving;
         else if (section.type === "Journalizing" || section.type === "Journalizing and Preparing SCE (Corp)") localSource = qbMerchJournalizing;
+        else if (section.type === "Constructed Response") localSource = qbConstructedResponse;
 
         const flattenedCandidates = localSource.map(obj => {
             const id = Object.keys(obj)[0];
