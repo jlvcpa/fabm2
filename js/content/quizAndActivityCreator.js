@@ -4,7 +4,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebas
 import { qbMerchMultipleChoice } from "./questionBank/qbMerchMultipleChoice.js";
 import { qbMerchProblemSolving } from "./questionBank/qbMerchProblemSolving.js";
 import { qbMerchJournalizing } from "./questionBank/qbMerchJournalizing.js";
-import { qbConstructedResponse } from "./questionBank/qbCFS.js"; // <-- NEW IMPORT
+import { qbCFS } from "./questionBank/qbCFS.js"; // <-- NEW IMPORT
 
 const firebaseConfig = {
     apiKey: "AIzaSyAgOsKAZWwExUzupxSNytsfOo9BOppF0ng",
