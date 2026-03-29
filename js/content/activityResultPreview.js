@@ -32,6 +32,7 @@ import { evaluateProblemSolving, renderProblemSolvingPreview } from './previewHa
 import { evaluateJournalizing, renderJournalizingPreview } from './previewHandlers/journalizingResultPreviewHandler.js';
 import { renderIntegratedScePreview } from './previewHandlers/integratedSceResultPreviewHandler.js';
 import { evaluateConstructedResponse, renderConstructedResponsePreview } from './previewHandlers/constructedResponseResultPreviewHandler.js';
+import { renderCFSPreview } from './previewHandlers/cFSResultPreviewHandler.js';
 
 // Modular Print Handler
 import { handlePrint } from './printHandlers/printResultPreview.js';
@@ -345,7 +346,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                                     return renderProblemSolvingPreview(q, qIdx, liveQ, studentAns);
                                 }
                                 else if (section.type === "Constructed Response") {
-                                    return renderConstructedResponsePreview(q, qIdx, liveQ, studentAns);
+                                    return renderCFSPreview(q, qIdx, liveQ, studentAns);
                                 }
                                 return null;
                             })}
