@@ -13,7 +13,7 @@ import { CFSHandler } from "./activityHandlers/cFSHandler.js";
 import { qbMerchMultipleChoice } from "./questionBank/qbMerchMultipleChoice.js";
 import { qbMerchProblemSolving } from "./questionBank/qbMerchProblemSolving.js";
 import { qbMerchJournalizing } from "./questionBank/qbMerchJournalizing.js";
-import { qbConstructedResponse } from "./questionBank/qbConstructedResponse.js";
+import { qbCFS } from "./questionBank/qbCFS.js";
 
 import { renderStudentResultDetail } from "./activityResultPreview.js";
 
@@ -83,7 +83,7 @@ window.handleJournalIndent = function(txId, row) {
 const globalQuestionMap = new Map();
 function buildQuestionMap() {
     if (globalQuestionMap.size > 0) return;
-    const allSources = [qbMerchMultipleChoice, qbMerchProblemSolving, qbMerchJournalizing, qbConstructedResponse];
+    const allSources = [qbMerchMultipleChoice, qbMerchProblemSolving, qbMerchJournalizing, qbCFS];
     allSources.forEach(sourceArray => {
         if(Array.isArray(sourceArray)) {
             sourceArray.forEach(item => {
@@ -613,7 +613,7 @@ async function generateQuizContent(activityData, savedState = null) {
         if (section.type === "Multiple Choice") localSource = qbMerchMultipleChoice;
         else if (section.type === "Problem Solving") localSource = qbMerchProblemSolving;
         else if (section.type === "Journalizing" || section.type === "Journalizing and Preparing SCE (Corp)") localSource = qbMerchJournalizing;
-        else if (section.type === "Constructed Response") localSource = qbConstructedResponse;
+        else if (section.type === "Constructed Response") localSource = qbCFS;
 
         const flattenedCandidates = localSource.map(obj => {
             const id = Object.keys(obj)[0];
