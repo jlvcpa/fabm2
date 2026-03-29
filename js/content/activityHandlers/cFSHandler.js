@@ -74,7 +74,6 @@ export const CFSHandler = {
                             <p class="text-base md:text-lg font-bold text-gray-800 mt-1 leading-snug whitespace-pre-wrap">${q.questionText || q.question}</p>
                         </div>
                         ${innerContent}
-                        ${explanationHtml}
                         <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between">
                             <button type="button" class="nav-prev-btn text-gray-600 hover:text-blue-800 text-sm font-medium px-3 py-1 rounded hover:bg-gray-100"><i class="fas fa-arrow-left mr-1"></i> Previous</button>
                             <button type="button" class="nav-next-btn bg-blue-800 text-white text-sm font-medium px-4 py-1.5 rounded hover:bg-blue-900 shadow">Next <i class="fas fa-arrow-right ml-1"></i></button>
