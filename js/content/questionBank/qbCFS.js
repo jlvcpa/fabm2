@@ -1,4 +1,4 @@
-export const qbConstructedResponse = [
+export const qbCFS = [
 {
   "FAR-StatementOfCashFlows-001": {
     "subject": "FAR",
