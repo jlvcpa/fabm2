@@ -1,5 +1,4 @@
 // Helper function to turn raw string data into beautiful financial tables
-// Helper function to turn raw string data into beautiful financial tables
 const formatQuestionText = (text) => {
     if (!text.includes("ASSETS") && !text.includes("Liabilities")) return `<p class="whitespace-pre-wrap">${text}</p>`;
     
