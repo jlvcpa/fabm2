@@ -15,6 +15,9 @@ export function renderCFSPreview(q, qIdx, liveQ, studentAns) {
     const noIndent = ["Cash flow from Operating Activities:", "Cash flow from Investing Activities:", "Cash flow from Financing Activities:", "Net cash increase during the year", "Net cash decrease during the year", "Cash Balance Beginning", "Cash Balance ending"];
     const doubleTopSingleBot = ["Net Cash inflow from Operating Activities", "Net Cash outflow from Operating Activities", "Net Cash inflow from Investing Activities", "Net Cash outflow from Investing Activities", "Net Cash inflow from Financing Activities", "Net Cash outflow from Financing Activities"];
     const singleTopDoubleBot = ["Cash Balance ending"];
+    
+    // Define headers that do NOT have amounts
+    const noAmountHeaders = ["Cash flow from Operating Activities:", "Cash flow from Investing Activities:", "Cash flow from Financing Activities:"];
 
     let explanationHtml = null;
     if (liveQ.explanation) {
@@ -59,10 +62,13 @@ export function renderCFSPreview(q, qIdx, liveQ, studentAns) {
 
                             <div className="flex flex-col w-full font-mono text-sm">
                                 ${details.body.map((r, i) => {
+                                    // Identify if this row should hide its amount completely
+                                    const isNoAmount = noAmountHeaders.includes(r.desc);
+                                    
                                     // Number formatting & Colors
                                     const isNeg = r.amt.includes('-') || r.amt.includes('(');
                                     const rawNum = parseFloat(r.amt.replace(/[^\d.-]/g, ''));
-                                    const formattedNum = isNaN(rawNum) ? r.amt : Math.abs(rawNum).toLocaleString('en-US', {minimumFractionDigits: 2});
+                                    const formattedNum = isNaN(rawNum) ? r.amt : Math.abs(rawNum).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
                                     const finalAmtStr = (isNeg || rawNum < 0) ? `(${formattedNum})` : formattedNum;
                                     const colorClass = (isNeg || rawNum < 0) ? 'text-red-600' : 'text-gray-800';
 
@@ -85,17 +91,19 @@ export function renderCFSPreview(q, qIdx, liveQ, studentAns) {
                                                 </div>
                                             </div>
 
-                                            <div className="w-48 flex justify-between items-end pl-2">
-                                                <div className="w-6 shrink-0 text-left pb-0.5">
-                                                    ${r.amtCorrect 
-                                                        ? html`<span className="text-green-500 font-bold text-sm">✓</span>` 
-                                                        : html`<span className="text-red-500 font-bold text-sm" title=${`Expected: ${r.expAmt}`}>X</span>`
-                                                    }
+                                            ${!isNoAmount ? html`
+                                                <div className="w-48 flex justify-between items-end pl-2">
+                                                    <div className="w-6 shrink-0 text-left pb-0.5">
+                                                        ${r.amtCorrect 
+                                                            ? html`<span className="text-green-500 font-bold text-sm">✓</span>` 
+                                                            : html`<span className="text-red-500 font-bold text-sm" title=${`Expected: ${r.expAmt}`}>X</span>`
+                                                        }
+                                                    </div>
+                                                    <span className=${`${borderClass} ${colorClass} text-right flex-1 pb-0.5`}>
+                                                        ${r.amt ? finalAmtStr : '\u00A0'}
+                                                    </span>
                                                 </div>
-                                                <span className=${`${borderClass} ${colorClass} text-right flex-1 pb-0.5`}>
-                                                    ${r.amt ? finalAmtStr : '\u00A0'}
-                                                </span>
-                                            </div>
+                                            ` : html`<div className="w-48 shrink-0"></div>`}
 
                                         </div>
                                     `;
