@@ -1,4 +1,5 @@
 // Helper function to turn raw string data into beautiful financial tables
+// Helper function to turn raw string data into beautiful financial tables
 const formatQuestionText = (text) => {
     if (!text.includes("ASSETS") && !text.includes("Liabilities")) return `<p class="whitespace-pre-wrap">${text}</p>`;
     
@@ -13,7 +14,7 @@ const formatQuestionText = (text) => {
         
         // Render Balance Sheet Sections
         if (header === "ASSETS" || header.includes("Liabilities and Equity")) {
-            htmlStr += `<div class="mb-6"><h4 class="font-bold text-center border-b-2 border-gray-800 pb-1 mb-2 uppercase text-gray-800 tracking-wider">${header}</h4><table class="w-full text-sm font-mono max-w-2xl mx-auto">`;
+            htmlStr += `<div class="mb-4"><h4 class="font-bold text-center border-b-2 border-gray-800 pb-1 mb-1 uppercase text-gray-800 tracking-wider">${header}</h4><table class="w-full text-sm font-mono max-w-2xl mx-auto">`;
             
             let y1 = "Current", y2 = "Prior";
             if(lines[1] && lines[1].includes('=')) {
@@ -23,7 +24,7 @@ const formatQuestionText = (text) => {
                 }
             }
             
-            htmlStr += `<thead><tr class="border-b border-gray-400 text-gray-700"><th class="text-left pb-2 font-bold">Account</th><th class="text-right w-28 pb-2 font-bold">${y1}</th><th class="text-right w-28 pb-2 font-bold">${y2}</th></tr></thead><tbody>`;
+            htmlStr += `<thead><tr class="border-b border-gray-400 text-gray-700"><th class="text-left pb-1 pt-1 font-bold">Account</th><th class="text-right w-28 pb-1 pt-1 font-bold">${y1}</th><th class="text-right w-28 pb-1 pt-1 font-bold">${y2}</th></tr></thead><tbody>`;
             
             for(let i=1; i<lines.length; i++) {
                 if(lines[i].includes(':')) {
@@ -42,23 +43,26 @@ const formatQuestionText = (text) => {
                     const isTotal = acct.toLowerCase().includes('total');
                     const rowClass = isTotal ? "font-bold text-gray-900 border-t-2 border-b-4 border-double border-gray-800" : "hover:bg-gray-50 border-b border-gray-100 text-gray-700";
                     
-                    htmlStr += `<tr class="${rowClass}"><td class="text-left py-1.5">${acct.trim()}</td><td class="text-right py-1.5">${formatVal(v1)}</td><td class="text-right py-1.5">${formatVal(v2)}</td></tr>`;
+                    // Reduced py-1.5 to py-0.5 for tighter row spacing
+                    htmlStr += `<tr class="${rowClass}"><td class="text-left py-0.5">${acct.trim()}</td><td class="text-right py-0.5">${formatVal(v1)}</td><td class="text-right py-0.5">${formatVal(v2)}</td></tr>`;
                 } else {
-                    htmlStr += `<tr><td colspan="3" class="text-left py-2 font-bold text-gray-800">${lines[i]}</td></tr>`;
+                    htmlStr += `<tr><td colspan="3" class="text-left pt-2 pb-0.5 font-bold text-gray-800">${lines[i]}</td></tr>`;
                 }
             }
             htmlStr += `</tbody></table></div>`;
         } 
         // Render Income Statement Section
         else if (header === "Income Statement") {
-            htmlStr += `<div class="mb-6"><h4 class="font-bold text-center border-b-2 border-gray-800 pb-1 mb-2 uppercase text-gray-800 tracking-wider">${header}</h4><table class="w-full text-sm font-mono max-w-lg mx-auto"><tbody>`;
+            htmlStr += `<div class="mb-4"><h4 class="font-bold text-center border-b-2 border-gray-800 pb-1 mb-1 uppercase text-gray-800 tracking-wider">${header}</h4><table class="w-full text-sm font-mono max-w-lg mx-auto"><tbody>`;
             for(let i=1; i<lines.length; i++) {
                 if(lines[i].includes(':')) {
                     let [acct, val] = lines[i].split(':');
                     let num = parseFloat((val||'').replace(/,/g,'').trim());
                     let fmtVal = isNaN(num) ? val : (num < 0 ? `(${Math.abs(num).toLocaleString('en-US')})` : num.toLocaleString('en-US'));
                     let isTotal = acct.toLowerCase().includes('income') || acct.toLowerCase().includes('gross');
-                    htmlStr += `<tr class="hover:bg-gray-50 border-b border-gray-100 ${isTotal ? 'font-bold text-gray-900 border-t-2' : 'text-gray-700'}"><td class="text-left py-1.5">${acct.trim()}</td><td class="text-right py-1.5 w-32">${fmtVal}</td></tr>`;
+                    
+                    // Reduced py-1.5 to py-0.5 for tighter row spacing
+                    htmlStr += `<tr class="hover:bg-gray-50 border-b border-gray-100 ${isTotal ? 'font-bold text-gray-900 border-t-2' : 'text-gray-700'}"><td class="text-left py-0.5">${acct.trim()}</td><td class="text-right py-0.5 w-32">${fmtVal}</td></tr>`;
                 }
             }
             htmlStr += `</tbody></table></div>`;
@@ -66,13 +70,13 @@ const formatQuestionText = (text) => {
         // Render Text/List Info
         else {
             if (header.includes("Additional information")) {
-                htmlStr += `<div class="mt-6 bg-blue-50 p-4 rounded border border-blue-100"><h4 class="font-bold text-blue-900 border-b border-blue-200 pb-2 mb-3 uppercase tracking-wide">${header}</h4><ul class="list-none space-y-2 text-sm text-blue-800">`;
+                htmlStr += `<div class="mt-4 bg-blue-50 p-3 rounded border border-blue-100"><h4 class="font-bold text-blue-900 border-b border-blue-200 pb-1 mb-2 uppercase tracking-wide">${header}</h4><ul class="list-none space-y-1 text-sm text-blue-800">`;
                 for(let i=1; i<lines.length; i++) {
                     htmlStr += `<li>${lines[i]}</li>`;
                 }
                 htmlStr += `</ul></div>`;
             } else {
-                htmlStr += `<div class="mb-4 text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">${sec}</div>`;
+                htmlStr += `<div class="mb-3 text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">${sec}</div>`;
             }
         }
     });
