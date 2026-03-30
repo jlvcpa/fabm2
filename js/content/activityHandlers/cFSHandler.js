@@ -102,7 +102,7 @@ export const CFSHandler = {
         if(!saved.headers || saved.headers.length < 3) saved.headers = ["", "", ""];
         if(!saved.body || saved.body.length === 0) saved.body = [{desc: '', amt: ''}, {desc: '', amt: ''}, {desc: '', amt: ''}];
 
-        const optionsHtml = (q.options || []).map(opt => `<option value="${opt}">${opt}</option>`).join('');
+        const optionsHtml = [...(q.options || [])].sort((a, b) => a.localeCompare(b)).map(opt => `<option value="${opt}">${opt}</option>`).join('');
         const noAmountHeaders = ["Cash flow from Operating Activities:", "Cash flow from Investing Activities:", "Cash flow from Financing Activities:"];
 
         // Apply lock/dim only if the specific input HAS a value when saved
