@@ -43,7 +43,7 @@ const formatQuestionText = (text) => {
                     const rowClass = isTotal ? "font-bold text-gray-900 border-t-2 border-b-4 border-double border-gray-800" : "hover:bg-gray-50 border-b border-gray-100 text-gray-700";
                     
                     // Reduced py-1.5 to py-0.5 for tighter row spacing
-                    htmlStr += `<tr class="${rowClass}"><td class="text-left py-0.5">${acct.trim()}</td><td class="text-right py-0.5">${formatVal(v1)}</td><td class="text-right py-0.5">${formatVal(v2)}</td></tr>`;
+                    htmlStr += `<tr class="${rowClass}"><td class="text-left py-0.2">${acct.trim()}</td><td class="text-right py-0.2">${formatVal(v1)}</td><td class="text-right py-0.5">${formatVal(v2)}</td></tr>`;
                 } else {
                     htmlStr += `<tr><td colspan="3" class="text-left pt-2 pb-0.5 font-bold text-gray-800">${lines[i]}</td></tr>`;
                 }
@@ -61,7 +61,7 @@ const formatQuestionText = (text) => {
                     let isTotal = acct.toLowerCase().includes('income') || acct.toLowerCase().includes('gross');
                     
                     // Reduced py-1.5 to py-0.5 for tighter row spacing
-                    htmlStr += `<tr class="hover:bg-gray-50 border-b border-gray-100 ${isTotal ? 'font-bold text-gray-900 border-t-2' : 'text-gray-700'}"><td class="text-left py-0.5">${acct.trim()}</td><td class="text-right py-0.5 w-32">${fmtVal}</td></tr>`;
+                    htmlStr += `<tr class="hover:bg-gray-50 border-b border-gray-100 ${isTotal ? 'font-bold text-gray-900 border-t-2' : 'text-gray-700'}"><td class="text-left py-0.2">${acct.trim()}</td><td class="text-right py-0.2 w-32">${fmtVal}</td></tr>`;
                 }
             }
             htmlStr += `</tbody></table></div>`;
