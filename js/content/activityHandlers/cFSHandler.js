@@ -110,7 +110,7 @@ export const CFSHandler = {
         const getDim = (val) => (disabledAttr && val.toString().trim() !== '') ? 'bg-gray-100 cursor-not-allowed' : 'bg-transparent';
 
         const headerHtml = `
-            <div class="mb-8 flex flex-col items-center w-full max-w-lg mx-auto gap-3">
+            <div class="mb-5 flex flex-col items-center w-full max-w-lg mx-auto gap-2">
                 <input type="text" class="cfs-head text-center w-full font-bold border-b-2 border-gray-400 outline-none focus:border-blue-500 ${getDim(saved.headers[0])}" placeholder="Company Name" value="${saved.headers[0]}" ${getLock(saved.headers[0])}>
                 <input type="text" class="cfs-head text-center w-full font-bold border-b border-gray-400 outline-none focus:border-blue-500 ${getDim(saved.headers[1])}" placeholder="Statement of Cash Flows" value="${saved.headers[1]}" ${getLock(saved.headers[1])}>
                 <input type="text" class="cfs-head text-center w-full border-b border-gray-400 outline-none focus:border-blue-500 text-sm ${getDim(saved.headers[2])}" placeholder="For the year ended..." value="${saved.headers[2]}" ${getLock(saved.headers[2])}>
@@ -118,7 +118,7 @@ export const CFSHandler = {
         `;
 
         const rowHtml = saved.body.map(row => `
-            <div class="cfs-row flex items-end gap-3 w-full mb-1">
+            <div class="cfs-row flex items-end gap-2 w-full mb-1">
                 <select class="cfs-desc flex-1 border-b border-gray-400 outline-none text-sm py-1 ${getDim(row.desc)}" ${getLock(row.desc)} data-saved="${row.desc}">
                     <option value="">-- Select Line Description --</option>
                     ${optionsHtml}
@@ -133,7 +133,7 @@ export const CFSHandler = {
         const innerContent = `
             <div class="w-full mt-6 mb-4">
                 <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Answerspace</h4>
-                <div class="w-full overflow-x-auto bg-white border border-gray-300 rounded shadow-inner pb-6 pt-4 px-4">
+                <div class="w-full overflow-x-auto bg-white border border-gray-300 rounded shadow-inner pb-4 pt-4 px-4">
                     <div class="min-w-[600px]">
                         ${headerHtml}
                         <div class="cfs-body-container flex flex-col w-full max-w-3xl mx-auto">
