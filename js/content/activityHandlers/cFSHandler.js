@@ -129,7 +129,7 @@ export const CFSHandler = {
 
         const innerContent = `
             <div class="w-full mt-6 mb-4">
-                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Workspace</h4>
+                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Answerspace</h4>
                 <div class="w-full overflow-x-auto bg-white border border-gray-300 rounded shadow-inner pb-6 pt-4 px-4">
                     <div class="min-w-[600px]">
                         ${headerHtml}
@@ -158,7 +158,7 @@ export const CFSHandler = {
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
                     <div class="p-5 md:p-8">
                         <div class="mb-6">
-                            <span class="inline-block bg-blue-100 text-blue-800 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded mb-3">Item ${qIdx+1}</span>
+                            <span class="inline-block bg-blue-100 text-blue-800 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded mb-3">Question ${qIdx+1}</span>
                             <div class="text-base text-gray-800 mt-1 leading-snug">${formattedQuestionData}</div>
                         </div>
                         
