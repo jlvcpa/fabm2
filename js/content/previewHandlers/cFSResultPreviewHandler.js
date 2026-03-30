@@ -5,8 +5,40 @@ import { X, AlertCircle } from 'https://esm.sh/lucide-react@0.263.1';
 const html = htm.bind(React.createElement);
 
 export function evaluateCFS(liveQ, studentAns) {
-    // Grading is done in the handler directly during submission
-    return { maxScore: 1, score: 0, needsReview: true }; 
+    const details = studentAns?.computedScores;
+    
+    // If no answer was provided or graded yet, return 0
+    if (!details || (!details.headers && !details.body)) {
+        return { maxScore: 1, score: 0, needsReview: true };
+    }
+
+    let score = 0;
+    let maxScore = 0;
+
+    // 1. Tally up the Header scores
+    (details.headers || []).forEach(h => {
+        if (h.expected !== '') {
+            maxScore++;
+            if (h.isCorrect) score++;
+        }
+    });
+
+    // 2. Tally up the Body line-by-line scores
+    (details.body || []).forEach(b => {
+        if (b.expDesc !== '') {
+            maxScore++;
+            if (b.descCorrect) score++;
+        }
+        if (b.expAmt !== '') {
+            maxScore++;
+            if (b.amtCorrect) score++;
+        }
+    });
+
+    // Safety fallback in case the solution JSON is completely empty
+    if (maxScore === 0) maxScore = 1;
+
+    return { maxScore, score, needsReview: false };
 }
 
 export function renderCFSPreview(q, qIdx, liveQ, studentAns) {
