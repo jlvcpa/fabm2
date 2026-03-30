@@ -31,8 +31,7 @@ import { evaluateMultipleChoice, renderMultipleChoicePreview } from './previewHa
 import { evaluateProblemSolving, renderProblemSolvingPreview } from './previewHandlers/problemSolvingResultPreviewHandler.js';
 import { evaluateJournalizing, renderJournalizingPreview } from './previewHandlers/journalizingResultPreviewHandler.js';
 import { renderIntegratedScePreview } from './previewHandlers/integratedSceResultPreviewHandler.js';
-import { evaluateConstructedResponse, renderConstructedResponsePreview } from './previewHandlers/constructedResponseResultPreviewHandler.js';
-import { renderCFSPreview } from './previewHandlers/cFSResultPreviewHandler.js';
+import { evaluateCFS, renderCFSPreview } from './previewHandlers/cFSResultPreviewHandler.js';
 
 // Modular Print Handler
 import { handlePrint } from './printHandlers/printResultPreview.js';
@@ -220,7 +219,7 @@ const StandardQuizResultView = ({ resultData, activityConfig, onScoreUpdate, pri
                     secScore += ev.score;
                 }
                 else if (section.type === "Constructed Response") {
-                    const ev = evaluateConstructedResponse(liveQ, studentAns);
+                    const ev = evaluateCFS(liveQ, studentAns);
                     secMax += ev.maxScore;
                     secScore += ev.score;
                 }
