@@ -5,11 +5,16 @@ import { X, AlertCircle } from 'https://esm.sh/lucide-react@0.263.1';
 const html = htm.bind(React.createElement);
 
 export function evaluateCFS(liveQ, studentAns) {
-    return { maxScore: 1, score: 0, needsReview: true }; // Grading is done in the handler directly
+    // Grading is done in the handler directly during submission
+    return { maxScore: 1, score: 0, needsReview: true }; 
 }
 
 export function renderCFSPreview(q, qIdx, liveQ, studentAns) {
-    const details = studentAns?.computedScores || { headers: [], body: [] };
+    // SAFE FALLBACK: Check if studentAns exists before trying to read computedScores
+    const details = (studentAns && studentAns.computedScores) 
+        ? studentAns.computedScores 
+        : { headers: [], body: [] };
+        
     const hasData = details.headers.length > 0 || details.body.length > 0;
 
     const noIndent = ["Cash flow from Operating Activities:", "Cash flow from Investing Activities:", "Cash flow from Financing Activities:", "Net cash increase during the year", "Net cash decrease during the year", "Cash Balance Beginning", "Cash Balance ending"];
