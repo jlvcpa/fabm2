@@ -119,11 +119,11 @@ export const CFSHandler = {
 
         const rowHtml = saved.body.map(row => `
             <div class="cfs-row flex items-end gap-2 w-full mb-1">
-                <select class="cfs-desc flex-1 border-b border-gray-400 outline-none text-sm py-1 ${getDim(row.desc)}" ${getLock(row.desc)} data-saved="${row.desc}">
+                <select class="cfs-desc flex-1 border-b border-gray-400 outline-none text-sm py-0.2 ${getDim(row.desc)}" ${getLock(row.desc)} data-saved="${row.desc}">
                     <option value="">-- Select Line Description --</option>
                     ${optionsHtml}
                 </select>
-                <input type="text" class="cfs-amt w-40 text-right border-b border-gray-400 outline-none text-sm py-1 font-mono ${getDim(row.amt)} ${noAmountHeaders.includes(row.desc) ? 'hidden' : ''}" placeholder="Amount" value="${row.amt}" onblur="window.evaluateMDAS(this)" ${getLock(row.amt)}>
+                <input type="text" class="cfs-amt w-40 text-right border-b border-gray-400 outline-none text-sm py-0.2 font-mono ${getDim(row.amt)} ${noAmountHeaders.includes(row.desc) ? 'hidden' : ''}" placeholder="Amount" value="${row.amt}" onblur="window.evaluateMDAS(this)" ${getLock(row.amt)}>
                 ${(!disabledAttr || (!row.desc && !row.amt)) ? `<button type="button" class="cfs-del-row text-red-400 hover:text-red-600 px-2"><i class="fas fa-times"></i></button>` : `<div class="px-2 w-7 shrink-0"></div>`}
             </div>
         `).join('');
