@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Exam Practice Questions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+        .scrollbar-thin::-webkit-scrollbar-track { background: #f1f1f1; }
+        .scrollbar-thin::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="bg-gray-100 h-screen flex flex-col font-sans overflow-hidden">
+
+    <div id="login-screen" class="flex-1 flex items-center justify-center bg-gray-100 z-50 absolute inset-0">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <div class="text-center mb-6">
+                <i class="fas fa-graduation-cap text-4xl text-blue-700 mb-3"></i>
+                <h2 class="text-2xl font-bold text-gray-800">Practice Exam Login</h2>
+                <p class="text-sm text-gray-500 mt-1">Please enter your credentials to continue</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">ID Number</label>
+                    <input type="text" id="login-id" class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. 12345">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Password</label>
+                    <input type="password" id="login-pass" class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none" placeholder="••••••••">
+                </div>
+                <button id="btn-login" class="w-full bg-blue-700 text-white font-bold py-3 rounded shadow hover:bg-blue-800 transition mt-2">
+                    Log In
+                </button>
+                <div id="login-error" class="hidden text-red-500 text-xs text-center font-bold mt-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="app-screen" class="hidden flex-col h-full w-full">
+        
+        <header class="bg-blue-900 text-white shadow-md z-20 px-6 py-3 flex justify-between items-center shrink-0">
+            <div>
+                <h1 class="text-xl font-bold">Final Exam Practice Questions</h1>
+                <p id="user-info-display" class="text-xs text-blue-200"></p>
+            </div>
+            <div class="flex gap-3">
+                <button id="btn-save" class="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold transition shadow border border-blue-500">
+                    <i class="fas fa-save mr-2"></i>Save Progress
+                </button>
+                <button id="btn-submit" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded text-sm font-bold transition shadow">
+                    <i class="fas fa-check-circle mr-2"></i>Submit Final
+                </button>
+            </div>
+        </header>
+
+        <div class="bg-white border-b border-gray-300 shadow-sm shrink-0">
+            <div id="tabs-container" class="flex overflow-x-auto scrollbar-thin px-4 py-2 gap-2">
+                </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 bg-gray-100 scrollbar-thin" id="questions-scroll-area">
+            <div class="max-w-4xl mx-auto">
+                <form id="quiz-form">
+                    <div id="questions-container" class="space-y-6">
+                        </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+        
+        // Import Question Bank (Ensure qbMultipleChoice.js is in the same directory)
+        import { qbMultipleChoice } from "./qbMultipleChoice.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAgOsKAZWwExUzupxSNytsfOo9BOppF0ng",
+            authDomain: "jlvcpa-quizzes.firebaseapp.com",
+            projectId: "jlvcpa-quizzes",
+            storageBucket: "jlvcpa-quizzes.appspot.com",
+            messagingSenderId: "629158256557",
+            appId: "1:629158256557:web:b3d1a424b32e28cd578b24"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // State Variables
+        let currentUser = null;
+        let flattenedQuestions = [];
+        let savedAnswers = {};
+        let isFinalSubmitted = false;
+        const QUESTIONS_PER_TAB = 25;
+        let currentTab = 0;
+
+        // --- AUTHENTICATION LOGIC ---
+        document.getElementById('btn-login').addEventListener('click', async () => {
+            const idInput = document.getElementById('login-id').value.trim();
+            const passInput = document.getElementById('login-pass').value.trim();
+            const errorDiv = document.getElementById('login-error');
+            const btn = document.getElementById('btn-login');
+
+            if (!idInput || !passInput) {
+                errorDiv.textContent = "Please enter both ID and Password.";
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+            errorDiv.classList.add('hidden');
+
+            try {
+                let authenticatedUser = null;
+                const studentQuery = query(collection(db, 'students'), where('Idnumber', "==", idInput));
+                const studentSnapshot = await getDocs(studentQuery);
+
+                if (!studentSnapshot.empty) {
+                    studentSnapshot.forEach((doc) => {
+                        const data = doc.data();
+                        if (String(data.passWord) === passInput) authenticatedUser = { role: 'student', ...data };
+                    });
+                }
+
+                if (!authenticatedUser) {
+                    const teacherQuery = query(collection(db, 'teachers'), where('idNumber', "==", idInput));
+                    const teacherSnapshot = await getDocs(teacherQuery);
+                    if (!teacherSnapshot.empty) {
+                        teacherSnapshot.forEach((doc) => {
+                            const data = doc.data();
+                            if (String(data.passWord) === passInput) authenticatedUser = { role: 'teacher', ...data };
+                        });
+                    }
+                }
+
+                if (authenticatedUser) {
+                    currentUser = authenticatedUser;
+                    document.getElementById('login-screen').classList.add('hidden');
+                    document.getElementById('app-screen').classList.remove('hidden');
+                    document.getElementById('app-screen').classList.add('flex');
+                    document.getElementById('user-info-display').textContent = `${currentUser.LastName}, ${currentUser.FirstName} | ID: ${currentUser.Idnumber || currentUser.idNumber}`;
+                    
+                    await initializeExam();
+                } else {
+                    errorDiv.textContent = "Invalid ID or Password.";
+                    errorDiv.classList.remove('hidden');
+                    btn.textContent = "Log In";
+                }
+            } catch (e) {
+                console.error("Login Error:", e);
+                errorDiv.textContent = "Connection error. Please try again.";
+                errorDiv.classList.remove('hidden');
+                btn.textContent = "Log In";
+            }
+        });
+
+        // --- APP INITIALIZATION ---
+        async function initializeExam() {
+            // Flatten Question Bank
+            flattenedQuestions = qbMultipleChoice.map(obj => {
+                const id = Object.keys(obj)[0];
+                return { id, ...obj[id] };
+            });
+
+            // Fetch Saved Progress
+            const docName = `practice_exam_${currentUser.Idnumber || currentUser.idNumber}`;
+            try {
+                const resultDoc = await getDoc(doc(db, "practice_results", docName));
+                if (resultDoc.exists()) {
+                    const data = resultDoc.data();
+                    if (data.answers) savedAnswers = data.answers;
+                    if (data.status === "final") isFinalSubmitted = true;
+                }
+            } catch (e) {
+                console.error("Error fetching progress:", e);
+            }
+
+            if (isFinalSubmitted) {
+                document.getElementById('btn-save').classList.add('hidden');
+                document.getElementById('btn-submit').classList.add('hidden');
+            }
+
+            buildTabs();
+            renderTab(0);
+            
+            // Attach Delegated Event Listeners for Dynamic Buttons
+            document.getElementById('questions-container').addEventListener('change', trackAnswer);
+            document.getElementById('questions-container').addEventListener('click', handleViewSolution);
+            document.getElementById('btn-save').addEventListener('click', () => saveProgress(false));
+            document.getElementById('btn-submit').addEventListener('click', () => saveProgress(true));
+        }
+
+        // --- UI RENDERING ---
+        function buildTabs() {
+            const tabsContainer = document.getElementById('tabs-container');
+            const totalTabs = Math.ceil(flattenedQuestions.length / QUESTIONS_PER_TAB);
+            let tabsHtml = '';
+
+            for (let i = 0; i < totalTabs; i++) {
+                const start = (i * QUESTIONS_PER_TAB) + 1;
+                const end = Math.min((i + 1) * QUESTIONS_PER_TAB, flattenedQuestions.length);
+                tabsHtml += `
+                    <button type="button" class="tab-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-colors border ${i === 0 ? 'bg-blue-100 text-blue-800 border-blue-300' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}" data-index="${i}">
+                        Items ${start}-${end}
+                    </button>
+                `;
+            }
+            tabsContainer.innerHTML = tabsHtml;
+
+            tabsContainer.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = parseInt(e.target.dataset.index);
+                    renderTab(idx);
+                });
+            });
+        }
+
+        function renderTab(tabIndex) {
+            currentTab = tabIndex;
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach((t, i) => {
+                if (i === tabIndex) {
+                    t.className = "tab-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-colors border bg-blue-100 text-blue-800 border-blue-300";
+                } else {
+                    t.className = "tab-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-colors border bg-white text-gray-600 border-gray-300 hover:bg-gray-50";
+                }
+            });
+
+            const container = document.getElementById('questions-container');
+            const startIdx = tabIndex * QUESTIONS_PER_TAB;
+            const endIdx = Math.min(startIdx + QUESTIONS_PER_TAB, flattenedQuestions.length);
+            
+            let html = '';
+            for (let i = startIdx; i < endIdx; i++) {
+                html += generateQuestionHTML(flattenedQuestions[i], i);
+            }
+            container.innerHTML = html;
+            document.getElementById('questions-scroll-area').scrollTop = 0;
+        }
+
+        function generateQuestionHTML(q, index) {
+            const uiId = `q_${q.id}`;
+            const savedVal = savedAnswers[uiId];
+            const disabledAttr = isFinalSubmitted ? 'disabled' : '';
+            const dimClass = isFinalSubmitted ? 'opacity-75 cursor-not-allowed bg-gray-50' : 'hover:bg-blue-50 cursor-pointer bg-white';
+
+            const optionsHtml = q.options.map((opt, optIdx) => {
+                const isChecked = String(savedVal) === String(optIdx) ? 'checked' : '';
+                return `
+                    <label class="flex items-start p-3 border border-gray-200 rounded transition-colors mb-2 shadow-sm ${dimClass}">
+                        <input type="radio" name="${uiId}" value="${optIdx}" class="mt-1 mr-3 h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500 shrink-0" ${disabledAttr} ${isChecked}>
+                        <span class="text-sm text-gray-700">${opt}</span>
+                    </label>
+                `;
+            }).join('');
+
+            return `
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden animate-fade-in" id="block_${uiId}">
+                    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                        <span class="text-xs font-bold text-gray-500 uppercase tracking-wide">Item ${index + 1}</span>
+                        <span class="text-[10px] text-gray-400 font-mono">${q.id}</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-base font-bold text-gray-800 mb-4 leading-relaxed">${q.question}</p>
+                        <div class="flex flex-col">${optionsHtml}</div>
+                        
+                        <div class="mt-4 pt-4 border-t border-gray-100 text-right">
+                            <button type="button" class="btn-view-solution text-sm font-bold text-indigo-600 hover:text-indigo-800 hover:underline transition" data-target="${uiId}" data-answer="${q.answer}">
+                                <i class="fas fa-lightbulb mr-1"></i> View Solution
+                            </button>
+                        </div>
+
+                        <div id="solution_${uiId}" class="hidden mt-4 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                            <div class="mb-2">
+                                <span class="text-xs font-bold text-indigo-800 uppercase tracking-wide">Correct Answer:</span>
+                                <p class="text-sm font-bold text-gray-800 mt-1">${q.options[q.answer]}</p>
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-indigo-800 uppercase tracking-wide">Explanation:</span>
+                                <p class="text-sm text-gray-700 mt-1 whitespace-pre-wrap">${q.explanation || 'No explanation provided.'}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- INTERACTIVITY & LOGIC ---
+        function trackAnswer(e) {
+            if (e.target.type === 'radio') {
+                savedAnswers[e.target.name] = e.target.value;
+            }
+        }
+
+        function handleViewSolution(e) {
+            const btn = e.target.closest('.btn-view-solution');
+            if (!btn) return;
+
+            const targetId = btn.dataset.target;
+            const correctIdx = btn.dataset.answer;
+            const solDiv = document.getElementById(`solution_${targetId}`);
+            const blockDiv = document.getElementById(`block_${targetId}`);
+
+            if (solDiv.classList.contains('hidden')) {
+                solDiv.classList.remove('hidden');
+                btn.innerHTML = '<i class="fas fa-eye-slash mr-1"></i> Hide Solution';
+                
+                // Highlight Correct Option Visually
+                const inputs = blockDiv.querySelectorAll(`input[name="${targetId}"]`);
+                inputs.forEach(input => {
+                    if (input.value === correctIdx) {
+                        input.closest('label').classList.add('border-green-500', 'bg-green-50');
+                        input.closest('label').classList.remove('border-gray-200', 'bg-white');
+                    }
+                });
+            } else {
+                solDiv.classList.add('hidden');
+                btn.innerHTML = '<i class="fas fa-lightbulb mr-1"></i> View Solution';
+                
+                // Remove Visual Highlight
+                const inputs = blockDiv.querySelectorAll(`input[name="${targetId}"]`);
+                inputs.forEach(input => {
+                    if (input.value === correctIdx) {
+                        input.closest('label').classList.remove('border-green-500', 'bg-green-50');
+                        input.closest('label').classList.add('border-gray-200', 'bg-white');
+                    }
+                });
+            }
+        }
+
+        // --- FIREBASE SAVING ---
+        async function saveProgress(isFinal = false) {
+            if (isFinal && !confirm("Are you sure you want to submit your final answers? You cannot edit them after this.")) return;
+
+            const btnSave = document.getElementById('btn-save');
+            const btnSub = document.getElementById('btn-submit');
+            
+            const origSaveText = btnSave.innerHTML;
+            btnSave.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            btnSave.disabled = true;
+            btnSub.disabled = true;
+
+            const docName = `practice_exam_${currentUser.Idnumber || currentUser.idNumber}`;
+            const payload = {
+                studentName: `${currentUser.LastName}, ${currentUser.FirstName}`,
+                studentId: currentUser.Idnumber || currentUser.idNumber,
+                timestamp: new Date().toISOString(),
+                status: isFinal ? "final" : "in_progress",
+                answers: savedAnswers
+            };
+
+            if (isFinal) {
+                // Calculate Score
+                let score = 0;
+                flattenedQuestions.forEach(q => {
+                    const uiId = `q_${q.id}`;
+                    if (String(savedAnswers[uiId]) === String(q.answer)) score++;
+                });
+                payload.score = score;
+                payload.maxScore = flattenedQuestions.length;
+            }
+
+            try {
+                await setDoc(doc(db, "practice_results", docName), payload);
+                if (isFinal) {
+                    isFinalSubmitted = true;
+                    alert(`Exam submitted successfully!\nYour Score: ${payload.score} / ${payload.maxScore}`);
+                    location.reload(); // Reload to lock UI
+                } else {
+                    alert("Progress saved successfully!");
+                    btnSave.innerHTML = origSaveText;
+                    btnSave.disabled = false;
+                    btnSub.disabled = false;
+                }
+            } catch (e) {
+                console.error("Save Error:", e);
+                alert("Error saving to server. Please check your connection.");
+                btnSave.innerHTML = origSaveText;
+                btnSave.disabled = false;
+                btnSub.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
