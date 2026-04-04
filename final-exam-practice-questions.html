@@ -169,10 +169,12 @@
                 return { id, ...obj[id] };
             });
 
-            // Fetch Saved Progress
-            const docName = `practice_exam_${currentUser.Idnumber || currentUser.idNumber}`;
+            // Fetch Saved Progress using the new dynamic collection and doc names
+            const collectionName = `results_S2T2 Final Exam Practice_${currentUser.Section}`;
+            const docName = `${currentUser.CN}-${currentUser.Idnumber || currentUser.idNumber}-${currentUser.LastName} ${currentUser.FirstName}`;
+            
             try {
-                const resultDoc = await getDoc(doc(db, "practice_results", docName));
+                const resultDoc = await getDoc(doc(db, collectionName, docName));
                 if (resultDoc.exists()) {
                     const data = resultDoc.data();
                     if (data.answers) savedAnswers = data.answers;
@@ -193,8 +195,19 @@
             // Attach Delegated Event Listeners for Dynamic Buttons
             document.getElementById('questions-container').addEventListener('change', trackAnswer);
             document.getElementById('questions-container').addEventListener('click', handleViewSolution);
-            document.getElementById('btn-save').addEventListener('click', () => saveProgress(false));
-            document.getElementById('btn-submit').addEventListener('click', () => saveProgress(true));
+            
+            // Re-attach listeners cleanly
+            const btnSave = document.getElementById('btn-save');
+            const btnSubmit = document.getElementById('btn-submit');
+            
+            // Remove old listeners to prevent duplicates if initialized multiple times
+            const newBtnSave = btnSave.cloneNode(true);
+            const newBtnSubmit = btnSubmit.cloneNode(true);
+            btnSave.parentNode.replaceChild(newBtnSave, btnSave);
+            btnSubmit.parentNode.replaceChild(newBtnSubmit, btnSubmit);
+
+            newBtnSave.addEventListener('click', () => saveProgress(false));
+            newBtnSubmit.addEventListener('click', () => saveProgress(true));
         }
 
         // --- UI RENDERING ---
@@ -347,7 +360,8 @@
             btnSave.disabled = true;
             btnSub.disabled = true;
 
-            const docName = `practice_exam_${currentUser.Idnumber || currentUser.idNumber}`;
+            const collectionName = `results_S2T2 Final Exam Practice_${currentUser.Section}`;
+            const docName = `${currentUser.CN}-${currentUser.Idnumber || currentUser.idNumber}-${currentUser.LastName} ${currentUser.FirstName}`;
             const payload = {
                 studentName: `${currentUser.LastName}, ${currentUser.FirstName}`,
                 studentId: currentUser.Idnumber || currentUser.idNumber,
@@ -368,7 +382,9 @@
             }
 
             try {
-                await setDoc(doc(db, "practice_results", docName), payload);
+                // FIX: Removed quotes around collectionName so it uses the variable
+                await setDoc(doc(db, collectionName, docName), payload);
+                
                 if (isFinal) {
                     isFinalSubmitted = true;
                     alert(`Exam submitted successfully!\nYour Score: ${payload.score} / ${payload.maxScore}`);
